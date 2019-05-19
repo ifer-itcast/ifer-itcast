@@ -7,7 +7,7 @@ categories: Web API
 
 ## 常规操作
 
-大家都清楚 appendChild 可以把创建好的元素插入到另一个元素内容的最后面，常规操作如下：
+大家都清楚 [appendChild](https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild) 可以把创建好的元素插入到另一个元素内容的最后面，常规操作如下：
 
 ```javascript
 // 创建元素
