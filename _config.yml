@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 危险
-subtitle: 为之则易，不为则难💪
-description: 学习路上的查漏补缺✍疑难杂症💊
+title: Hexo
+subtitle:
+description:
 keywords:
-author: 危险
-language: zh-Hans
+author: John Doe
+language:
 timezone:
 
 # URL
@@ -73,11 +73,9 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: landscape
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
-  repository: git@github.com:ifer-itcast/ifer-itcast.git
-  branch: master
+  type:
