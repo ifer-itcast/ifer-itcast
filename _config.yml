@@ -80,4 +80,4 @@ theme: next
 deploy:
   type: git
   repository: git@github.com:ifer-itcast/ifer-itcast.git
-  branck: master
+  branch: master
