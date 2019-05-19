@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[test]]></title>
-    <url>%2F2019%2F05%2F19%2Ftest%2F</url>
-    <content type="text"></content>
+    <title><![CDATA[认清 Node.appendChild()]]></title>
+    <url>%2F2019%2F05%2F19%2FappendChild%2F</url>
+    <content type="text"><![CDATA[常规操作大家都清楚 appendChild 可以把创建好的元素插入到另一个元素内容的最后面，常规操作如下： 123456// 创建元素var oDiv = document.createElement('div');// 给创建好的元素加点内容oDiv.innerHTML = 'hello world';// 添加到 body 里面document.body.appendChild(oDiv); 需要注意上面代码必然没有任何问题，但这里还有一点需要大家注意的是，appendChild 在插入已存在元素的时候其实是做了两件事的： 先把原来已存在的元素删除 再进行后续的添加操作 具体是什么意思呢？大家看下面的例子就清楚了。需求：每次点击按钮把上面 ul 中的第一个元素移动到下面的 ul 中： 1234567891011121314151617181920&lt;ul id="ul1"&gt; &lt;li&gt;aaa&lt;/li&gt; &lt;li&gt;bbb&lt;/li&gt; &lt;li&gt;ccc&lt;/li&gt; &lt;li&gt;ddd&lt;/li&gt;&lt;/ul&gt;&lt;button id="btn"&gt;插入下面&lt;/button&gt;&lt;ul id="ul2"&gt;&lt;/ul&gt;&lt;script&gt;// 选择元素var oUl1 = document.querySelector('#ul1');var oBtn = document.querySelector('#btn');var oUl2 = document.querySelector('#ul2');oBtn.onclick = function() &#123; var oLi = oUl1.children[0]; // 每次点击按钮确实在 oUl2 中添加了一个新的元素，但同时 oUl1 中也相应少了这个元素 // 所以 appendChild 时相当于偷偷帮我们做了这么一步操作：oUl1.removeChild(oLi); oUl2.appendChild(oLi);&#125;;&lt;/script&gt; 实际应用好，现在我们清楚了当用 appendChild 插入已存在元素时会先删除之前再进行插入，那明白这个特性有什么实际的用处吗？答案是肯定的。例如下面一个需求，点击按钮，根据元素中的数字大小对这组元素进行排序： 123456789&lt;!-- HTML 结构 --&gt;&lt;ul id="ul1"&gt; &lt;li&gt;5&lt;/li&gt; &lt;li&gt;2&lt;/li&gt; &lt;li&gt;3&lt;/li&gt; &lt;li&gt;1&lt;/li&gt; &lt;li&gt;4&lt;/li&gt;&lt;/ul&gt;&lt;button id="btn"&gt;点击&lt;/button&gt; 123456789101112131415161718192021222324252627282930313233// 选择元素var oUl1 = document.querySelector('#ul1');var aLi = oUl1.querySelectorAll('li');var oBtn = document.querySelector('#btn');// 把伪数组 aLi 中的每一项都放到数组里面，目的是为了进行排序var arr = [];for(var i = 0; i &lt; aLi.length; i ++) &#123; arr.push(aLi[i]);&#125;oBtn.onclick = function () &#123; // 这就是我们熟悉的冒泡排序，你还记得吗 for (var i = 0; i &lt; arr.length - 1; i++) &#123; // 需要走 arr.length - 1 轮 for (var j = 0; j &lt; arr.length - i - 1; j++) &#123; // 每轮比较 arr.length - i - 1 次 var prevNum = parseFloat(arr[j].innerText); var nextNum = parseFloat(arr[j + 1].innerText); if (prevNum &gt; nextNum) &#123; // 不能对伪数组中其中一些直接赋值，例如：aLi[j] = aLi[j+1]，所以需要把伪数组转换成数组后再进行排序 var temp = null; temp = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = temp; &#125; &#125; &#125; // 此时 arr 中装的已经是排好序的一堆 li 元素了 for(var i = 0; i &lt; arr.length; i ++) &#123; // 分别把排好序的数组中的每个元素插入到 oUl1 内容的最后 // 注意每次插入的同时也会把 oUl1 中那个相同的元素先给干掉，所以 oUl1 中也就不会存在重复元素的问题 oUl1.appendChild(arr[i]); &#125;&#125;; 优化代码这里优化相关的代码我们并没有学，是给你们以后看的，优化后的 JS 代码如下： 123456789101112const oUl1 = document.querySelector('#ul1');const aLi = oUl1.querySelectorAll('li');const oBtn = document.querySelector('#btn');oBtn.addEventListener('click', () =&gt; &#123; // Array.from 可以把伪数组转成数组，sort 的原理就是上面写的冒泡排序 Array.from(aLi).sort((li1, li2) =&gt; &#123; return parseFloat(li1.innerText) - parseFloat(li2.innerText); &#125;).forEach(li =&gt; &#123; oUl1.appendChild(li); &#125;)&#125;);]]></content>
       <categories>
-        <category>测试</category>
+        <category>Web API</category>
       </categories>
       <tags>
-        <tag>测试呀</tag>
+        <tag>appendChild</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2019%2F05%2F19%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[记录大家问的最多的一些问题、Bug、技巧、细节、扩展、或者其他我认为有用的东西，作为大家学习路上的一个总结或者记录…]]></content>
   </entry>
 </search>
