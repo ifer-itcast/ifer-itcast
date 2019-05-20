@@ -104,7 +104,7 @@ oBtn.onclick = function () {
 
 ## 优化代码
 
-这里优化相关的代码我们并没有学，是给你们**以后看**的，优化后的 JS 代码如下：
+这里优化相关的代码我们并没有学（不建议查看），我这里也提供一种较佳实战，是给你们**以后看**的（甚至是工作后），优化后的 JS 代码如下：
 
 ```javascript
 const oUl1 = document.querySelector('#ul1');
