@@ -9,18 +9,27 @@
 </head>
 
 <body>
-    <ul id="ul1">
-        <li>5</li>
-        <li>2</li>
-        <li>3</li>
-        <li>1</li>
-        <li>4</li>
-    </ul>
-    <button id="btn">点击</button>
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+    <button>5</button>
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
     <script>
+    var aBtn = document.querySelectorAll('button');
+    var prev = 0;
 
-
-
+    for (var i = 0; i < aBtn.length; i++) {
+        aBtn[i].index = i;
+        aBtn[i].onclick = function () {
+            // Step1: 先干掉上一个，“排上”
+            aBtn[prev].style.backgroundColor = "";
+            // Step2: 再操作自己的
+            this.style.backgroundColor = 'red';
+            // Step3: 操作完别忘了把自己也变成“上一个”
+            prev = this.index;
+        };
+    }
     </script>
 </body>
 

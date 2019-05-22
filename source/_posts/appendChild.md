@@ -5,6 +5,8 @@ tags: appendChild
 categories: Web API
 ---
 
+Node.appendChild() 方法用于将一个节点添加到指定父节点的子节点列表的末尾，但在具体使用时还有其他一些需要我们关注的细节，以及对应的应用场景。
+
 ## 常规操作
 
 大家都清楚 [appendChild](https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild) 可以把创建好的元素插入到另一个元素内容的最后面，常规操作如下：
