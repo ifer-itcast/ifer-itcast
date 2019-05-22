@@ -6,30 +6,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        ul {
+            margin: 0;
+        }
+
+        li {
+            float: left;
+            list-style: none;
+        }
+
+        #wrap>div,
+        #wrap>ul {
+            float: left;
+        }
+    </style>
 </head>
 
 <body>
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-    <button>4</button>
-    <button>5</button>
-    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+    <div id="wrap">
+        <div>
+            <input type="checkbox" id="all">
+            <label for="all">全选</label>
+        </div>
+        <ul>
+            <li>
+                <input type="checkbox" id="watermelon">
+                <label for="watermelon">西瓜</label>
+            </li>
+            <li>
+                <input type="checkbox" id="apple">
+                <label for="apple">苹果</label>
+            </li>
+            <li>
+                <input type="checkbox" id="orange">
+                <label for="orange">橘子</label>
+            </li>
+            <li>
+                <input type="checkbox" id="banana">
+                <label for="banana">香蕉</label>
+            </li>
+        </ul>
+    </div>
     <script>
-    var aBtn = document.querySelectorAll('button');
-    var prev = 0;
+        var oAllInput = document.querySelector('#all');
+        var aInput = document.querySelectorAll('ul input');
 
-    for (var i = 0; i < aBtn.length; i++) {
-        aBtn[i].index = i;
-        aBtn[i].onclick = function () {
-            // Step1: 先干掉上一个，“排上”
-            aBtn[prev].style.backgroundColor = "";
-            // Step2: 再操作自己的
-            this.style.backgroundColor = 'red';
-            // Step3: 操作完别忘了把自己也变成“上一个”
-            prev = this.index;
+        // 点击全选 input 时根据自己的状态来控制其他列表项的 input
+        oAllInput.onchange = function () {
+            for (var i = 0; i < aInput.length; i++) {
+                aInput[i].checked = this.checked;
+            }
         };
-    }
+
+        for (var i = 0; i < aInput.length; i++) {
+            aInput[i].onclick = function () {
+                if (!this.checked) {
+                    // 如果当前点击的按钮未选中，那就可以直接确定全选按钮的状态了
+                    oAllInput.checked = false;
+                    // 也就没有必要进行下去了
+                    return;
+                }
+                for (var i = 0; i < aInput.length; i++) {
+                    if (!aInput[i].checked) {
+                        oAllInput.checked = false;
+                        // 这里的 break 是必须要加的！不然全选按钮的状态永远是以最后一个的选中状态为准，这并不是我们所希望的
+                        break;
+                    } else {
+                        oAllInput.checked = true;
+                    }
+                }
+            };
+        }
+
     </script>
 </body>
 
