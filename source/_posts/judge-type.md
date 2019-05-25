@@ -1,5 +1,5 @@
 ---
-title: 数据类型检测
+title: 数据类型检测的 N 中方式
 date: 2019-05-26 00:40:04
 tags: 判断数据类型
 categories: JS 高级
