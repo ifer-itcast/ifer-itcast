@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[数据在内存中的存储形式]]></title>
+    <url>%2F2019%2F05%2F25%2Fsnake-question%2F</url>
+    <content type="text"><![CDATA[学习贪吃蛇时，往蛇身体增加最后一节，当时代码是直接这样写的 this.body.push({ x: last.x, y: last.y, color: last.color })，有些同学问 last 这个变量保存的数据和 { x: last.x, y: last.y, color: last.color } “长的一样”，为什么不能直接 this.body.push(last) 呢？ 基本数据类型存储要说清楚上面的问题，首先大家要明白不同数据类型在内存中的存储形式是怎样的。我们都知道 JS 中的数据类型分为 2 大类，分别是： 基本数据类型：Number、String、Boolean、Null、Undefined、Symbol(ES6) 复杂数据类型：Object(包括数组、对象、函数、正则) 其中基本数据类型存储在栈内存中，他们是按值存放的，例如： 1234var age1 = 18;var age2 = age1;age2 = 20;console.log(age1, age2); // 18 20 上面代码在内存中的表现形式如下： 复杂数据类型存储复杂数据类型的真实数据是存放在堆内存中的，变量保存的只是在栈内存中的一个地址，这个地址指向堆内存中数据。例如： 1234var obj1 = &#123; age: 18 &#125;;var obj2 = obj1;obj2.age = 20; // obj2 是改变堆内存中的同一份数据console.log(obj1.age); // 所以 obj1 的数据也被影响了，结果是 20 上面代码在内存中的表现形式如下： 解释贪吃蛇的问题讲贪吃蛇时，关于蛇如何吃到食物我们说了这么一段话：在蛇运动时，判断蛇头的坐标是否与食物的坐标吻合，如果吻合，则往蛇身体后增加一节，然后再随机食物的坐标即可，代码如下： 12345678if (headX === food.x &amp;&amp; headY === food.y) &#123; // Step1: 获取蛇的最后一节 var last = this.body[this.body.length - 1]; // Step2: 添加到身体的最后 this.body.push(&#123; x: last.x, y: last.y, color: last.color &#125;); // Step3: 随机随机食物坐标 food.render(map);&#125; 如果直接 this.body.push(last) 的话，相当于每次添加的还是堆内存中的同一个 last，那在下次 move 修改数据的时候就会相互影响，无论你往后面 push 多少项 last，在修改到最前面的 three 时也会把后面的给修改掉（因为都是堆内存中的同一份数据），所以你看到的结果是后面的数据都是重复的，对应到页面上也就是最后一节的元素都是覆盖在一起的。测试代码如下： 12345678910var one = &#123;x: 26, y: 14, color: "red"&#125;;var two = &#123;x: 25, y: 14, color: "blue"&#125;;var three = &#123;x: 24, y: 14, color: "blue"&#125;;var arr = [one, two, three, three];for (var i = arr.length - 1; i &gt; 0; i--) &#123; arr[i].x = arr[i - 1].x; arr[i].y = arr[i - 1].y;&#125;console.log(arr); 该如何解决12345678910111213141516171819var arr = [ &#123;x: 26, y: 14, color: "red"&#125;, &#123;x: 25, y: 14, color: "blue"&#125;, &#123;x: 24, y: 14, color: "blue"&#125;];var last = arr[arr.length - 1];// 每次造一个全新的对象var newObj = &#123; x: last.x, y: last.y, color: last.color &#125;;// 或者拷贝原来的对象// var newObj = JSON.parse(JSON.stringify(last));arr.push(newObj);for (var i = arr.length - 1; i &gt; 0; i--) &#123; arr[i].x = arr[i - 1].x; arr[i].y = arr[i - 1].y;&#125;console.log(arr);]]></content>
+      <categories>
+        <category>JS 高级</category>
+      </categories>
+      <tags>
+        <tag>贪吃蛇</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[JS 中的隐式转换]]></title>
+    <url>%2F2019%2F05%2F24%2Finvisible-transform%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>JS 基础</category>
+      </categories>
+      <tags>
+        <tag>隐式转换</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[触发全选按钮的几种思路]]></title>
     <url>%2F2019%2F05%2F22%2Fselect-all%2F</url>
     <content type="text"><![CDATA[需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。 常规操作点击每个列表选项时，遍历所有列表选项并检查是否有未选中的，如果有则可以确定全选按钮的状态为未选中，否则全选按钮置为选中。 1234567891011121314151617181920212223242526272829303132var oAllInput = document.querySelector('#all');var aInput = document.querySelectorAll('ul input');// 点击全选 input 时根据自己的状态来控制其他列表项的 inputoAllInput.onchange = function() &#123; for(var i = 0; i &lt; aInput.length; i ++) &#123; aInput[i].checked = this.checked; &#125;&#125;;// 每次点击每一个列表项的 input 时，判断全选的 input 是否需要被选中for(var i = 0; i &lt; aInput.length; i ++) &#123; aInput[i].onclick = function() &#123; if (!this.checked) &#123; // 如果当前点击的按钮未选中，那就可以直接确定全选按钮的状态了 oAllInput.checked = false; // 也就没有必要进行下去了 return; &#125; var bBar = true; for(var i = 0; i &lt; aInput.length; i ++) &#123; // 发现有一个没选中的 if(!aInput[i].checked) &#123; bBar = false; // 发现有一个没选中的也就可以断定 oAllInput 的状态了，就没有必要再进行下去了 // 当然你不写 break 逻辑上也是对的，只是存在性能浪费 break; &#125; &#125; oAllInput.checked = bBar; &#125;;&#125; 注意细节思路和上面一样，下面的写法也是可以的，但有一点需要注意：点击列表中的每一项进行循环时，碰到未选中的一定要跳出循环，不然前面全选按钮的状态都会被最后一个按钮的状态所覆盖。 12345678910111213141516171819for (var i = 0; i &lt; aInput.length; i++) &#123; aInput[i].onclick = function () &#123; if (!this.checked) &#123; // 如果当前点击的按钮未选中，那就可以直接确定全选按钮的状态了 oAllInput.checked = false; // 也就没有必要进行下去了 return; &#125; for (var i = 0; i &lt; aInput.length; i++) &#123; if (!aInput[i].checked) &#123; oAllInput.checked = false; // 这里的 break 是必须要加的！不然全选按钮的状态永远是以最后一个的选中状态为准，这并不是我们所希望的 break; &#125; else &#123; oAllInput.checked = true; &#125; &#125; &#125;;&#125; 其他方法每次点击列表中的按钮时，获取所有已选中 input 的长度，并判断已选中 input 的 length 是否等于所有 input 的 length，如果相等，就可以激活全选按钮啦，否则则取消全选。 1234567891011for (var i = 0; i &lt; aInput.length; i++) &#123; aInput[i].onclick = function () &#123; var aInputChecked = document.querySelectorAll('ul input:checked'); // 已选中 length 等于所有 length 就证明全选中了，也就可以激活全选按钮啦 if (aInputChecked.length === aInput.length) &#123; oAllInput.checked = true; &#125; else &#123; oAllInput.checked = false; &#125; &#125;;&#125;]]></content>

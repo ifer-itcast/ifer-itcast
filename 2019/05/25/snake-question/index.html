@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="贪吃蛇,">
 
 
 
@@ -79,16 +79,21 @@
 
 
 
-<meta name="description" content="学习路上的查漏补缺✍疑难杂症💊">
-<meta property="og:type" content="website">
-<meta property="og:title" content="危险">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+<meta name="description" content="学习贪吃蛇时，往蛇身体增加最后一节，当时代码是直接这样写的 this.body.push({ x: last.x, y: last.y, color: last.color })，有些同学问 last 这个变量保存的数据和 { x: last.x, y: last.y, color: last.color } “长的一样”，为什么不能直接 this.body.push(last) 呢？">
+<meta name="keywords" content="贪吃蛇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据在内存中的存储形式">
+<meta property="og:url" content="http://yoursite.com/2019/05/25/snake-question/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="学习路上的查漏补缺✍疑难杂症💊">
+<meta property="og:description" content="学习贪吃蛇时，往蛇身体增加最后一节，当时代码是直接这样写的 this.body.push({ x: last.x, y: last.y, color: last.color })，有些同学问 last 这个变量保存的数据和 { x: last.x, y: last.y, color: last.color } “长的一样”，为什么不能直接 this.body.push(last) 呢？">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/resource/images/pages/jsadvanced/snake.jpg">
+<meta property="og:image" content="http://yoursite.com/resource/images/pages/jsadvanced/snake2.jpg">
+<meta property="og:updated_time" content="2019-05-25T05:58:56.268Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="危险">
-<meta name="twitter:description" content="学习路上的查漏补缺✍疑难杂症💊">
+<meta name="twitter:title" content="数据在内存中的存储形式">
+<meta name="twitter:description" content="学习贪吃蛇时，往蛇身体增加最后一节，当时代码是直接这样写的 this.body.push({ x: last.x, y: last.y, color: last.color })，有些同学问 last 这个变量保存的数据和 { x: last.x, y: last.y, color: last.color } “长的一样”，为什么不能直接 this.body.push(last) 呢？">
+<meta name="twitter:image" content="http://yoursite.com/resource/images/pages/jsadvanced/snake.jpg">
 
 
 
@@ -118,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2019/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/25/snake-question/">
 
 
 
 
 
-  <title>归档 | 危险</title>
+  <title>数据在内存中的存储形式 | 危险</title>
   
 
 
@@ -153,7 +158,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -289,212 +294,229 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/25/snake-question/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="危险">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">数据在内存中的存储形式</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-25T10:09:44+08:00">
+                2019-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 5 篇日志。 继续努力。
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JS-高级/" itemprop="url" rel="index">
+                    <span itemprop="name">JS 高级</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2019/05/25/snake-question/" class="leancloud_visitors" data-flag-title="数据在内存中的存储形式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/25/snake-question/" itemprop="url">
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">数据在内存中的存储形式</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  806
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-25T10:09:44+08:00" content="2019-05-25">
-          05-25
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/24/invisible-transform/" itemprop="url">
-              
-                <span itemprop="name">JS 中的隐式转换</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-24T17:50:44+08:00" content="2019-05-24">
-          05-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/22/select-all/" itemprop="url">
-              
-                <span itemprop="name">触发全选按钮的几种思路</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-22T15:50:24+08:00" content="2019-05-22">
-          05-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/21/kill-other/" itemprop="url">
-              
-                <span itemprop="name">排他思想</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-21T00:13:24+08:00" content="2019-05-21">
-          05-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+        <p>学习贪吃蛇时，往蛇身体增加最后一节，当时代码是直接这样写的 <code>this.body.push({ x: last.x, y: last.y, color: last.color })</code>，有些同学问 last 这个变量保存的数据和 <code>{ x: last.x, y: last.y, color: last.color }</code> “长的一样”，为什么不能直接 <code>this.body.push(last)</code> 呢？</p>
+<a id="more"></a>
+<h2 id="基本数据类型存储"><a href="#基本数据类型存储" class="headerlink" title="基本数据类型存储"></a>基本数据类型存储</h2><p>要说清楚上面的问题，首先大家要明白不同数据类型在内存中的存储形式是怎样的。我们都知道 JS 中的数据类型分为 2 大类，分别是：</p>
+<ul>
+<li>基本数据类型：Number、String、Boolean、Null、Undefined、Symbol(ES6)</li>
+<li>复杂数据类型：Object(包括数组、对象、函数、正则)</li>
+</ul>
+<p>其中基本数据类型存储在栈内存中，他们是按值存放的，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> age1 = <span class="number">18</span>;</span><br><span class="line"><span class="keyword">var</span> age2 = age1;</span><br><span class="line">age2 = <span class="number">20</span>;</span><br><span class="line"><span class="built_in">console</span>.log(age1, age2); <span class="comment">// 18 20</span></span><br></pre></td></tr></table></figure>
+<p>上面代码在内存中的表现形式如下：</p>
+<p><img src="/resource/images/pages/jsadvanced/snake.jpg" alt></p>
+<h2 id="复杂数据类型存储"><a href="#复杂数据类型存储" class="headerlink" title="复杂数据类型存储"></a>复杂数据类型存储</h2><p>复杂数据类型的真实数据是存放在堆内存中的，变量保存的只是在栈内存中的一个地址，这个地址指向堆内存中数据。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123; <span class="attr">age</span>: <span class="number">18</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = obj1;</span><br><span class="line">obj2.age = <span class="number">20</span>; <span class="comment">// obj2 是改变堆内存中的同一份数据</span></span><br><span class="line"><span class="built_in">console</span>.log(obj1.age); <span class="comment">// 所以 obj1 的数据也被影响了，结果是 20</span></span><br></pre></td></tr></table></figure>
+<p>上面代码在内存中的表现形式如下：</p>
+<p><img src="/resource/images/pages/jsadvanced/snake2.jpg" alt></p>
+<h2 id="解释贪吃蛇的问题"><a href="#解释贪吃蛇的问题" class="headerlink" title="解释贪吃蛇的问题"></a>解释贪吃蛇的问题</h2><p>讲贪吃蛇时，关于蛇如何吃到食物我们说了这么一段话：在蛇<strong>运动时</strong>，判断蛇头的坐标是否与食物的坐标吻合，如果吻合，则往蛇身体后增加一节，然后再随机食物的坐标即可，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (headX === food.x &amp;&amp; headY === food.y) &#123;</span><br><span class="line">    <span class="comment">// Step1: 获取蛇的最后一节</span></span><br><span class="line">    <span class="keyword">var</span> last = <span class="keyword">this</span>.body[<span class="keyword">this</span>.body.length - <span class="number">1</span>];</span><br><span class="line">    <span class="comment">// Step2: 添加到身体的最后</span></span><br><span class="line">    <span class="keyword">this</span>.body.push(&#123; <span class="attr">x</span>: last.x, <span class="attr">y</span>: last.y, <span class="attr">color</span>: last.color &#125;);</span><br><span class="line">    <span class="comment">// Step3: 随机随机食物坐标</span></span><br><span class="line">    food.render(map);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果直接 this.body.push(last) 的话，相当于每次添加的还是堆内存中的同一个 last，那在下次 move 修改数据的时候就会相互影响，无论你往后面 push 多少项 last，在修改到最前面的 three 时也会把后面的给修改掉（因为都是堆内存中的同一份数据），所以你看到的结果是后面的数据都是重复的，对应到页面上也就是最后一节的元素都是覆盖在一起的。测试代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> one = &#123;<span class="attr">x</span>: <span class="number">26</span>, <span class="attr">y</span>: <span class="number">14</span>, <span class="attr">color</span>: <span class="string">"red"</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> two = &#123;<span class="attr">x</span>: <span class="number">25</span>, <span class="attr">y</span>: <span class="number">14</span>, <span class="attr">color</span>: <span class="string">"blue"</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> three = &#123;<span class="attr">x</span>: <span class="number">24</span>, <span class="attr">y</span>: <span class="number">14</span>, <span class="attr">color</span>: <span class="string">"blue"</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> arr = [one, two, three, three];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = arr.length - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">  	arr[i].x = arr[i - <span class="number">1</span>].x;</span><br><span class="line">  	arr[i].y = arr[i - <span class="number">1</span>].y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(arr);</span><br></pre></td></tr></table></figure>
+<h2 id="该如何解决"><a href="#该如何解决" class="headerlink" title="该如何解决"></a>该如何解决</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [</span><br><span class="line">    &#123;<span class="attr">x</span>: <span class="number">26</span>, <span class="attr">y</span>: <span class="number">14</span>, <span class="attr">color</span>: <span class="string">"red"</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">x</span>: <span class="number">25</span>, <span class="attr">y</span>: <span class="number">14</span>, <span class="attr">color</span>: <span class="string">"blue"</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">x</span>: <span class="number">24</span>, <span class="attr">y</span>: <span class="number">14</span>, <span class="attr">color</span>: <span class="string">"blue"</span>&#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> last = arr[arr.length - <span class="number">1</span>];</span><br><span class="line"><span class="comment">// 每次造一个全新的对象</span></span><br><span class="line"><span class="keyword">var</span> newObj = &#123; <span class="attr">x</span>: last.x, <span class="attr">y</span>: last.y, <span class="attr">color</span>: last.color &#125;;</span><br><span class="line"><span class="comment">// 或者拷贝原来的对象</span></span><br><span class="line"><span class="comment">// var newObj = JSON.parse(JSON.stringify(last));</span></span><br><span class="line"></span><br><span class="line">arr.push(newObj);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = arr.length - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">  	arr[i].x = arr[i - <span class="number">1</span>].x;</span><br><span class="line">  	arr[i].y = arr[i - <span class="number">1</span>].y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(arr);</span><br></pre></td></tr></table></figure>
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/19/appendChild/" itemprop="url">
-              
-                <span itemprop="name">认清 Node.appendChild()</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-19T21:55:45+08:00" content="2019-05-19">
-          05-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/贪吃蛇/" rel="tag"># 贪吃蛇</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/24/invisible-transform/" rel="next" title="JS 中的隐式转换">
+                <i class="fa fa-chevron-left"></i> JS 中的隐式转换
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -502,6 +524,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDI5Ni8yMDgyOA=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -522,8 +553,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -593,6 +633,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据类型存储"><span class="nav-text">基本数据类型存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂数据类型存储"><span class="nav-text">复杂数据类型存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释贪吃蛇的问题"><span class="nav-text">解释贪吃蛇的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#该如何解决"><span class="nav-text">该如何解决</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -733,6 +789,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -761,6 +821,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
