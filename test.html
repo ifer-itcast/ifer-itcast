@@ -6,79 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <style>
-        ul {
-            margin: 0;
-        }
-
-        li {
-            float: left;
-            list-style: none;
-        }
-
-        #wrap>div,
-        #wrap>ul {
-            float: left;
-        }
-    </style>
 </head>
 
 <body>
-    <div id="wrap">
-        <div>
-            <input type="checkbox" id="all">
-            <label for="all">全选</label>
-        </div>
-        <ul>
-            <li>
-                <input type="checkbox" id="watermelon">
-                <label for="watermelon">西瓜</label>
-            </li>
-            <li>
-                <input type="checkbox" id="apple">
-                <label for="apple">苹果</label>
-            </li>
-            <li>
-                <input type="checkbox" id="orange">
-                <label for="orange">橘子</label>
-            </li>
-            <li>
-                <input type="checkbox" id="banana">
-                <label for="banana">香蕉</label>
-            </li>
-        </ul>
-    </div>
     <script>
-        var oAllInput = document.querySelector('#all');
-        var aInput = document.querySelectorAll('ul input');
+var arr = [
+    {x: 26, y: 14, color: "red"},
+    {x: 25, y: 14, color: "blue"},
+    {x: 24, y: 14, color: "blue"}
+];
 
-        // 点击全选 input 时根据自己的状态来控制其他列表项的 input
-        oAllInput.onchange = function () {
-            for (var i = 0; i < aInput.length; i++) {
-                aInput[i].checked = this.checked;
-            }
-        };
+var last = arr[arr.length - 1];
 
-        for (var i = 0; i < aInput.length; i++) {
-            aInput[i].onclick = function () {
-                if (!this.checked) {
-                    // 如果当前点击的按钮未选中，那就可以直接确定全选按钮的状态了
-                    oAllInput.checked = false;
-                    // 也就没有必要进行下去了
-                    return;
-                }
-                for (var i = 0; i < aInput.length; i++) {
-                    if (!aInput[i].checked) {
-                        oAllInput.checked = false;
-                        // 这里的 break 是必须要加的！不然全选按钮的状态永远是以最后一个的选中状态为准，这并不是我们所希望的
-                        break;
-                    } else {
-                        oAllInput.checked = true;
-                    }
-                }
-            };
-        }
+arr.push({ x: last.x, y: last.y, color: last.color });
 
+for (var i = arr.length - 1; i > 0; i--) {
+  	arr[i].x = arr[i - 1].x;
+  	arr[i].y = arr[i - 1].y;
+}
+console.log(arr);
     </script>
 </body>
 
