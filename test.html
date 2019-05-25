@@ -10,21 +10,17 @@
 
 <body>
     <script>
-var arr = [
-    {x: 26, y: 14, color: "red"},
-    {x: 25, y: 14, color: "blue"},
-    {x: 24, y: 14, color: "blue"}
-];
+console.log({}.toString.call(233)); // [object Number]
+console.log({}.toString.call('233')); // [object String]
+console.log({}.toString.call(true)); // [object Boolean]
+console.log({}.toString.call(null)); // [object Null]
+console.log({}.toString.call(undefined)); // [object Undefined]
+console.log({}.toString.call(Symbol())); // [object Symbol]
 
-var last = arr[arr.length - 1];
-
-arr.push({ x: last.x, y: last.y, color: last.color });
-
-for (var i = arr.length - 1; i > 0; i--) {
-  	arr[i].x = arr[i - 1].x;
-  	arr[i].y = arr[i - 1].y;
-}
-console.log(arr);
+console.log({}.toString.call([])); // [object Array]
+console.log({}.toString.call(new Function)); // [object Function]
+console.log({}.toString.call(new Date)); // [object Date]
+console.log({}.toString.call(new RegExp)); // [object RegExp]
     </script>
 </body>
 
