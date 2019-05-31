@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .box{
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 256px;
+        height: 506px;
+        background: url(images/yuanfang.png) repeat-y;
+        animation: move 2s steps(165) infinite;
+    }
+    @keyframes move {
+        0%{
+            background-position: 0 83490px;
+        }
+        100%{
+            background-position: 0 0;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+</html>
