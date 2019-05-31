@@ -17,3 +17,5 @@
 - [ ] 数组塌陷
 - [ ] Object.prototype.slice.call 系列原理
 - [ ] 判断数据类型的 N 中方式及利弊分析
+- [ ] 你真的了解 steps() 吗
+- [ ] 关于 perspective 你要知道的
