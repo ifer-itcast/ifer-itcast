@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="学习路上的查漏补缺✍疑难杂症💊">
+<meta name="description" content="JS 中有个“经典”的面试题：请问 [] == ![] 的结果是什么？一眼看上去肯定是 false，但结果却是 true，要清楚为什么是这样，就要了解 JS 在进行数据比较时的隐式转换规则是怎样的？">
 <meta name="keywords" content="隐式转换">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS 中的隐式转换">
 <meta property="og:url" content="http://yoursite.com/2019/05/24/invisible-transform/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="学习路上的查漏补缺✍疑难杂症💊">
+<meta property="og:description" content="JS 中有个“经典”的面试题：请问 [] == ![] 的结果是什么？一眼看上去肯定是 false，但结果却是 true，要清楚为什么是这样，就要了解 JS 在进行数据比较时的隐式转换规则是怎样的？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-25T05:58:56.268Z">
+<meta property="og:image" content="http://yoursite.com/resource/images/pages/jsbase/compare.png">
+<meta property="og:updated_time" content="2019-06-01T12:03:15.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS 中的隐式转换">
-<meta name="twitter:description" content="学习路上的查漏补缺✍疑难杂症💊">
+<meta name="twitter:description" content="JS 中有个“经典”的面试题：请问 [] == ![] 的结果是什么？一眼看上去肯定是 false，但结果却是 true，要清楚为什么是这样，就要了解 JS 在进行数据比较时的隐式转换规则是怎样的？">
+<meta name="twitter:image" content="http://yoursite.com/resource/images/pages/jsbase/compare.png">
 
 
 
@@ -399,7 +401,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  841
                 </span>
               
 
@@ -415,7 +417,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -436,7 +438,25 @@
       
 
       
-        
+        <p>JS 中有个“经典”的面试题：请问 <code>[] == ![]</code> 的结果是什么？一眼看上去肯定是 false，但结果却是 true，要清楚为什么是这样，就要了解 JS 在进行数据比较时的隐式转换规则是怎样的？</p>
+<a id="more"></a>
+<blockquote>
+<p>注：除了对本问题的解释部分，其他都来自 <strong>JavaScript 高级程序设计</strong>，建议看书！我这里摘出了其中两点，来作为对常见问题的解释，其实还有其他细节或特殊注意的地方，建议在精力充沛的情况下可以自己去探索！</p>
+</blockquote>
+<h2 id="相等操作符规则"><a href="#相等操作符规则" class="headerlink" title="相等操作符规则"></a>相等操作符规则</h2><p>在转换不同的数据类型时，相等和不相等操作符遵循下列基本规则： </p>
+<p>1 . 如果有一个操作数是布尔值，则在比较相等性之前先将其转换为数值，false 转换为 0，而 true 转换为 1<br>2 . 如果一个操作数是字符串，另一个操作数是数值，在比较相等性之前先将字符串转换为数值<br>3 . 如果一个操作数是对象，另一个操作数不是，则调用对象的 valueOf()方法，用得到的基本类型值按照前面的规则进行比较</p>
+<p>这两个操作符在进行比较时又要遵循下列特殊的情况：</p>
+<p>1 . null 和 undefined 是相等的<br>2 . 要比较相等性之前，不能将 null 和 undefined 转换成其他任何值<br>3 . 如果有一个操作数是 NaN，则相等操作符返回 false，而不相等操作符返回 true。重要提示：即使两个操作数都是 NaN，相等操作符也返回 false；因为按照规则，NaN 不等于 NaN<br>4 . 如果两个操作数都是对象，则比较它们是不是同一个对象。如果两个操作数都指向同一个对象，则相等操作符返回 true；否则，返回 false</p>
+<p><img src="/resource/images/pages/jsbase/compare.png" alt></p>
+<h2 id="关系操作符规则"><a href="#关系操作符规则" class="headerlink" title="关系操作符规则"></a>关系操作符规则</h2><p>当关系操作符的操作数使用了非数值时，也要进行数据转换或完成某些奇怪的操作。以下就是相应的规则：</p>
+<p>1 . 如果两个操作数都是数值，则执行数值比较<br>2 . 如果两个操作数都是字符串，则比较两个字符串对应的字符编码值<br>3 . 如果一个操作数是数值，则将另一个操作数转换为一个数值，然后执行数值比较<br>4 . 如果一个操作数是对象，则调用这个对象的 valueOf()方法，用得到的结果按照前面的规则执行比较。如果对象没有 valueOf()方法，则调用 toString()方法，并用得到的结果根据前面的规则执行比较<br>5 . 如果一个操作数是布尔值，则先将其转换为数值，然后再执行比较</p>
+<h2 id="解释"><a href="#解释" class="headerlink" title="解释 [] == ![]"></a>解释 [] == ![]</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[] == ![]</span><br></pre></td></tr></table></figure>
+<p><strong>Step1:</strong> ! 的优先级比 == 高，先执行 ![]，除了 null、undefined、’’、NaN、0 都是 true，所以 ![] 是 false</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[] == <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p><strong>Step2</strong>: 参考相等操作符比较的第 1 条规则，<code>如果有一个操作数是布尔值，则在比较相等性之前先将其转换为数值</code>，故结果如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[] == <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p><strong>Step3</strong>: 参考相等操作符比较的第 3 条规则，<code>调用对象的 valueOf() 方法得到原始值，并将原始值转换为数字</code>结果如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>([].valueOf()) == <span class="number">0</span></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -535,8 +555,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -606,6 +635,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#相等操作符规则"><span class="nav-text">相等操作符规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关系操作符规则"><span class="nav-text">关系操作符规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释"><span class="nav-text">解释 [] == ![]</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
