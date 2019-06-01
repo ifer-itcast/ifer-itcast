@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="危险">
 <meta property="og:description" content="从 JS 基础第一天开始，我们就学习了如何使用 typeof 去判断数据类型，学习构造函数时我们又说了  constructor 以及 instanceof 也可以去进行类型检测，到 JS 高级时还讲了 Object.prototype.toString() 方法也可以去判断数据类型，那么问题来了，这么多方法它们之间有什么异同吗？不同场景下该怎样使用才比较合适呢？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-25T16:46:28.372Z">
+<meta property="og:updated_time" content="2019-06-01T05:19:11.633Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据类型检测的 N 中方式">
 <meta name="twitter:description" content="从 JS 基础第一天开始，我们就学习了如何使用 typeof 去判断数据类型，学习构造函数时我们又说了  constructor 以及 instanceof 也可以去进行类型检测，到 JS 高级时还讲了 Object.prototype.toString() 方法也可以去判断数据类型，那么问题来了，这么多方法它们之间有什么异同吗？不同场景下该怎样使用才比较合适呢？">
@@ -468,7 +468,7 @@
 <p>constructor 的小问题：</p>
 <ul>
 <li>null 和 undefined 上没有 constructor 这属性，不能通过 constructor 来判断</li>
-<li><p>当 prototype 被不小写重写后，会导致 constructor 判断不准确的问题，例如：</p>
+<li><p>当 prototype 被不小心重写后，会导致 constructor 判断不准确的问题，例如：</p>
   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> t1 = <span class="keyword">new</span> Test;</span><br><span class="line"><span class="built_in">console</span>.log(t1.constructor === Test); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 重写原型会导致 Test.prototype.constructor 指向不正确</span></span><br><span class="line"><span class="comment">// 当然对应的实例对象在用 constructor 去判断类型的时候也就会指向不正确</span></span><br><span class="line">Test.prototype = &#123;</span><br><span class="line">    showAge: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> t2 = <span class="keyword">new</span> Test();</span><br><span class="line"><span class="built_in">console</span>.log(t2.constructor === Test); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
