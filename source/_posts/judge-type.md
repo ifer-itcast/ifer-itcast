@@ -84,7 +84,7 @@ console.log(document.constructor === HTMLDocument);
 constructor 的小问题：
 
 - null 和 undefined 上没有 constructor 这属性，不能通过 constructor 来判断
-- 当 prototype 被不小写重写后，会导致 constructor 判断不准确的问题，例如：
+- 当 prototype 被不小心重写后，会导致 constructor 判断不准确的问题，例如：
 
     ```javascript
     function Test() {}
