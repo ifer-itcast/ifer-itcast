@@ -10,17 +10,7 @@
 
 <body>
     <script>
-console.log({}.toString.call(233)); // [object Number]
-console.log({}.toString.call('233')); // [object String]
-console.log({}.toString.call(true)); // [object Boolean]
-console.log({}.toString.call(null)); // [object Null]
-console.log({}.toString.call(undefined)); // [object Undefined]
-console.log({}.toString.call(Symbol())); // [object Symbol]
-
-console.log({}.toString.call([])); // [object Array]
-console.log({}.toString.call(new Function)); // [object Function]
-console.log({}.toString.call(new Date)); // [object Date]
-console.log({}.toString.call(new RegExp)); // [object RegExp]
+    console.log([] == ![]);
     </script>
 </body>
 
