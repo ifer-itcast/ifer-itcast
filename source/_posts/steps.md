@@ -1,7 +1,8 @@
 ---
 title: steps(number[, end | start])
 date: 2019-05-31 21:03:25
-tags:
+tags: [steps(), 帧动画]
+categories: HTML5/CSS3
 ---
 
 <img src="/resource/images/pages/h5css3/wolf.gif" alt="">
