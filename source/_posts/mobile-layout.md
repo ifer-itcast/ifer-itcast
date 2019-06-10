@@ -25,7 +25,9 @@ categories: 移动 Web 开发
 
 **特点**：宽、高、间距...都使用 REM 单位。
 
-注意 em 是相对于**当前元素**继承得到的字体大小的单位。
+<font color=#ccc size=2>注意 em 是相对于**当前元素**继承得到的字体大小的单位。</font>
+
+<a href="/resource/demos/demo02/03_index.html">举例</a>
 
 ## VW、VH 布局
 
