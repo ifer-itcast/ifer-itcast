@@ -8,7 +8,7 @@ layout: false
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>百分比</title>
+    <title>弹性布局</title>
     <style>
         * {
             margin: 0;
@@ -40,12 +40,13 @@ layout: false
             font-size: 12px;
             overflow: hidden;
             color: #fff;
+            display: flex;
+            align-items: center;
         }
 
         .top-l {
-            position: absolute;
-            top: 6px;
-            left: 13px;
+            width: 47px;
+            text-align: center;
         }
 
         .top-l::before {
@@ -60,7 +61,7 @@ layout: false
         }
 
         .top-c {
-            margin: 8px 47px 0;
+            flex: 1;
             position: relative;
             height: 30px;
             background: -webkit-linear-gradient(left, #ddebf7, #dfdef4);
@@ -90,10 +91,6 @@ layout: false
 
         .top-r {
             width: 47px;
-            line-height: 46px;
-            position: absolute;
-            top: 0;
-            right: 0;
             text-align: center;
             font-size: 14px;
         }
@@ -104,22 +101,23 @@ layout: false
 
         .top-nav {
             padding-top: 12px;
-            overflow: hidden;
             font-size: 14px;
+            display: flex;
+            flex-wrap: wrap;
             background-color: #fff;
         }
 
         .top-nav a {
-            float: left;
-            width: 20%;
-            text-align: center;
+            flex: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-bottom: 10px;
         }
 
         .top-nav a::before {
             content: "";
             display: block;
-            margin: 0 auto 6px;
             width: 44px;
             height: 44px;
             background: url(./images/cs.png) no-repeat;
