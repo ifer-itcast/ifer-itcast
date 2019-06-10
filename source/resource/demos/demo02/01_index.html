@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>百分比</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        a {
+            text-decoration: none;
+            color: #444444;
+        }
+
+
+        body {
+            max-width: 750px;
+            min-width: 320px;
+            margin: 0 auto;
+            background-color: #f2f2f2;
+        }
+
+        .top {
+            height: 46px;
+            width: 100%;
+            max-width: 750px;
+            position: fixed;
+            font-size: 12px;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .top-l {
+            position: absolute;
+            top: 6px;
+            left: 13px;
+        }
+
+        .top-l::before {
+            content: "";
+            margin-right: auto;
+            margin-left: auto;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: url(./images/classify.png) no-repeat;
+            background-size: 20px auto;
+        }
+
+        .top-c {
+            margin: 8px 47px 0;
+            position: relative;
+            height: 30px;
+            background: -webkit-linear-gradient(left, #ddebf7, #dfdef4);
+            border-radius: 15px;
+        }
+
+        .top-c::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 20px;
+            height: 20px;
+            background: url(./images/search_icon.png) no-repeat;
+            background-size: 20px 20px;
+        }
+
+        .top-c input {
+            outline: none;
+            width: 100%;
+            border: none;
+            height: 100%;
+            background-color: transparent;
+            color: #585450;
+            text-indent: 30px;
+        }
+
+        .top-r {
+            width: 47px;
+            line-height: 46px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .banner img {
+            width: 100%;
+        }
+
+        .top-nav {
+            padding-top: 12px;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        .top-nav a {
+            float: left;
+            width: 20%;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .top-nav a::before {
+            content: "";
+            display: block;
+            margin: 0 auto 6px;
+            width: 44px;
+            height: 44px;
+            background: url(./images/cs.png) no-repeat;
+            background-size: contain;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <div class="top-l">
+            <span>分类</span>
+        </div>
+        <div class="top-c">
+            <input type="text" value="啤酒饮料矿泉水">
+        </div>
+        <div class="top-r">
+            <span>登录</span>
+        </div>
+    </div>
+    <div class="banner">
+        <img src="./images/banner.png" alt="">
+    </div>
+    <nav class="top-nav">
+        <a href="javascript:;">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;">
+            <span>爆款手机</span>
+        </a>
+    </nav>
+</body>
+
+</html>
