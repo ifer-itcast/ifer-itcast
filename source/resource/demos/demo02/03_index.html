@@ -8,7 +8,7 @@ layout: false
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>弹性布局</title>
+    <title>REM 布局</title>
     <script src="./js/flexible.js"></script>
     <style>
         * {
@@ -34,9 +34,8 @@ layout: false
 
         body {
             width: 10rem;
-            /* 注意，最大最小还是用px去限制的 */
-            max-width: 750px;
-            min-width: 320px;
+            max-width: 10rem;
+            min-width: 4.266667rem;
             margin: 0 auto;
             background-color: #f2f2f2;
         }
@@ -44,9 +43,9 @@ layout: false
         .top {
             height: 1.173333rem;
             width: 100%;
-            max-width: 750px;
+            max-width: 10rem;
             position: fixed;
-            font-size: 12px;
+            font-size: .32rem;
             overflow: hidden;
             color: #fff;
             display: flex;
@@ -54,7 +53,7 @@ layout: false
         }
 
         .top-l {
-            width: 47px;
+            width: 1.066667rem;
             text-align: center;
         }
 
@@ -63,10 +62,10 @@ layout: false
             margin-right: auto;
             margin-left: auto;
             display: block;
-            width: 20px;
-            height: 20px;
+            width: .533333rem;
+            height: .533333rem;
             background: url(./images/classify.png) no-repeat;
-            background-size: 20px auto;
+            background-size: .533333rem auto;
         }
 
         .top-c {
@@ -74,14 +73,14 @@ layout: false
             position: relative;
             height: .8rem;
             background: -webkit-linear-gradient(left, #ddebf7, #dfdef4);
-            border-radius: 15px;
+            border-radius: .4rem;
         }
 
         .top-c::before {
             content: "";
             position: absolute;
-            top: 5px;
-            left: 5px;
+            top: .186667rem;
+            left: .186667rem;
             width: .426667rem;
             height: .426667rem;
             background: url(./images/search_icon.png) no-repeat;
@@ -95,13 +94,13 @@ layout: false
             height: 100%;
             background-color: transparent;
             color: #585450;
-            text-indent: 30px;
+            text-indent: .8rem;
         }
 
         .top-r {
-            width: 47px;
+            width: 1.066667rem;
             text-align: center;
-            font-size: 14px;
+            font-size: .373333rem;
         }
 
         .banner img {
@@ -109,8 +108,8 @@ layout: false
         }
 
         .top-nav {
-            padding-top: 12px;
-            font-size: 14px;
+            padding-top: .32rem;
+            font-size: .373333rem;
             display: flex;
             flex-wrap: wrap;
             background-color: #fff;
@@ -121,14 +120,15 @@ layout: false
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: .213333rem;
         }
 
         .top-nav a::before {
             content: "";
             display: block;
-            width: 44px;
-            height: 44px;
+            margin-bottom: .08rem;
+            width: 1.173333rem;
+            height: 1.173333rem;
             background: url(./images/cs.png) no-repeat;
             background-size: contain;
         }
