@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>REM 布局</title>
+    <script src="./js/flexible.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        a {
+            text-decoration: none;
+            color: #444444;
+        }
+
+        @media screen and (min-width: 750px) {
+            html{
+                font-size: 75px!important;
+            }
+        }
+
+
+        body {
+            width: 10rem;
+            max-width: 10rem;
+            min-width: 4.266667rem;
+            margin: 0 auto;
+            background-color: #f2f2f2;
+        }
+
+        .top {
+            height: 1.173333rem;
+            width: 100%;
+            max-width: 10rem;
+            position: fixed;
+            font-size: .32rem;
+            overflow: hidden;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        .top-l {
+            width: 1.066667rem;
+            text-align: center;
+        }
+
+        .top-l::before {
+            content: "";
+            margin-right: auto;
+            margin-left: auto;
+            display: block;
+            width: .533333rem;
+            height: .533333rem;
+            background: url(./images/classify.png) no-repeat;
+            background-size: .533333rem auto;
+        }
+
+        .top-c {
+            flex: 1;
+            position: relative;
+            height: .8rem;
+            background: -webkit-linear-gradient(left, #ddebf7, #dfdef4);
+            border-radius: .4rem;
+        }
+
+        .top-c::before {
+            content: "";
+            position: absolute;
+            top: .186667rem;
+            left: .186667rem;
+            width: .426667rem;
+            height: .426667rem;
+            background: url(./images/search_icon.png) no-repeat;
+            background-size: .426667rem .426667rem;
+        }
+
+        .top-c input {
+            outline: none;
+            width: 100%;
+            border: none;
+            height: 100%;
+            background-color: transparent;
+            color: #585450;
+            text-indent: .8rem;
+        }
+
+        .top-r {
+            width: 1.066667rem;
+            text-align: center;
+            font-size: .373333rem;
+        }
+
+        .banner img {
+            width: 100%;
+        }
+
+        .top-nav {
+            padding-top: .32rem;
+            font-size: .373333rem;
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #fff;
+        }
+
+        .top-nav a {
+            flex: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: .213333rem;
+        }
+
+        .top-nav a::before {
+            content: "";
+            display: block;
+            margin-bottom: .08rem;
+            width: 1.173333rem;
+            height: 1.173333rem;
+            background: url(./images/cs.png) no-repeat;
+            background-size: contain;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <div class="top-l">
+            <span>分类</span>
+        </div>
+        <div class="top-c">
+            <input type="text" value="啤酒饮料矿泉水">
+        </div>
+        <div class="top-r">
+            <span>登录</span>
+        </div>
+    </div>
+    <div class="banner">
+        <img src="./images/banner.png" alt>
+    </div>
+    <nav class="top-nav">
+        <a href="javascript:;" target="_blank" rel="noopener">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;" target="_blank" rel="noopener">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;" target="_blank" rel="noopener">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;" target="_blank" rel="noopener">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;" target="_blank" rel="noopener">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;" target="_blank" rel="noopener">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;" target="_blank" rel="noopener">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;" target="_blank" rel="noopener">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;" target="_blank" rel="noopener">
+            <span>爆款手机</span>
+        </a>
+        <a href="javascript:;" target="_blank" rel="noopener">
+            <span>爆款手机</span>
+        </a>
+    </nav>
+</body>
+
+</html>

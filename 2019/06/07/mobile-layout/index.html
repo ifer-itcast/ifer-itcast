@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="学习路上的查漏补缺✍疑难杂症💊">
+<meta name="description" content="作为前端，在今天来说，移动端布局必须是一件必知必会的事情，重要程度不言而喻！这里我总结了同一案例下不同布局的写法（原理就不再赘述，直接右键查看源代码即可），方便大家回忆。">
 <meta name="keywords" content="移动端布局">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于移动端布局那点事">
+<meta property="og:title" content="移动端布局那点事">
 <meta property="og:url" content="http://yoursite.com/2019/06/07/mobile-layout/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="学习路上的查漏补缺✍疑难杂症💊">
+<meta property="og:description" content="作为前端，在今天来说，移动端布局必须是一件必知必会的事情，重要程度不言而喻！这里我总结了同一案例下不同布局的写法（原理就不再赘述，直接右键查看源代码即可），方便大家回忆。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-07T14:53:12.784Z">
+<meta property="og:updated_time" content="2019-06-13T10:24:47.856Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于移动端布局那点事">
-<meta name="twitter:description" content="学习路上的查漏补缺✍疑难杂症💊">
+<meta name="twitter:title" content="移动端布局那点事">
+<meta name="twitter:description" content="作为前端，在今天来说，移动端布局必须是一件必知必会的事情，重要程度不言而喻！这里我总结了同一案例下不同布局的写法（原理就不再赘述，直接右键查看源代码即可），方便大家回忆。">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>关于移动端布局那点事 | 危险</title>
+  <title>移动端布局那点事 | 危险</title>
   
 
 
@@ -322,7 +322,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">关于移动端布局那点事</h1>
+          <h1 class="post-title" itemprop="name headline">移动端布局那点事</h1>
         
 
         <div class="post-meta">
@@ -374,7 +374,7 @@
 
           
           
-             <span id="/2019/06/07/mobile-layout/" class="leancloud_visitors" data-flag-title="关于移动端布局那点事">
+             <span id="/2019/06/07/mobile-layout/" class="leancloud_visitors" data-flag-title="移动端布局那点事">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -399,7 +399,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  372
                 </span>
               
 
@@ -436,7 +436,18 @@
       
 
       
-        
+        <p>作为前端，在今天来说，移动端布局必须是一件必知必会的事情，重要程度不言而喻！这里我总结了同一案例下不同布局的写法（原理就不再赘述，直接右键查看源代码即可），方便大家回忆。</p>
+<a id="more"></a>
+<h2 id="百分比布局"><a href="#百分比布局" class="headerlink" title="百分比布局"></a>百分比布局</h2><p><strong>特点</strong>：宽度百分比、高度写死（750的设计稿下一般除以2）。<br><strong>缺点</strong>：高度或文字很难自适应。</p>
+<p><a href="/resource/demos/demo02/01_index.html">举例</a></p>
+<h2 id="Flexible-布局"><a href="#Flexible-布局" class="headerlink" title="Flexible 布局"></a>Flexible 布局</h2><p><strong>特点</strong>：宽度弹性布局、高度写死。<br><strong>缺点</strong>：高度或文字还是很难自适应。<br><strong>优点</strong>：灵活、简洁。</p>
+<p><a href="/resource/demos/demo02/02_index.html">举例</a></p>
+<h2 id="REM-布局"><a href="#REM-布局" class="headerlink" title="REM 布局"></a>REM 布局</h2><p><strong>原理</strong>：不同尺寸屏幕下给根元素设置不同的文字大小（利用媒体查询或JS），宽、高、间距…都统一使用 REM 单位。<br><strong>使用</strong>：量取到的设计稿尺寸除以根元素字体大小（基准值）即可，例如使用 flexible.js，150px 用 rem 表示就是 2rem。<br><strong>优点</strong>：高度和文字可以自适应。</p>
+<font color="#ccc" size="2">注意 em 是相对于<strong>当前元素</strong>的字体大小（如果当前元素没有设置字体大小那就是继承过来的大小）的单位。</font>
+
+<p><a href="/resource/demos/demo02/03_index.html">举例</a></p>
+<h2 id="响应式布局"><a href="#响应式布局" class="headerlink" title="响应式布局"></a>响应式布局</h2><p><strong>原理</strong>：利用 bootstrap 的栅格系统（核心还是媒体查询），不同尺寸下设置不同的样式，实现 PC 和移动端布局使用同一套代码！<br><strong>场景</strong>：适用于相对简单的页面，复杂页面下的响应式开发成本太高。</p>
+
       
     </div>
     
@@ -531,8 +542,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -608,6 +628,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#百分比布局"><span class="nav-text">百分比布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flexible-布局"><span class="nav-text">Flexible 布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REM-布局"><span class="nav-text">REM 布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应式布局"><span class="nav-text">响应式布局</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
