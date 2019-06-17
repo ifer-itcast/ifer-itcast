@@ -50,6 +50,7 @@ layout: false
             color: #fff;
             display: flex;
             align-items: center;
+            background-color: rgba(0,0,0,.5);
         }
 
         .top-l {
@@ -132,6 +133,86 @@ layout: false
             background: url(./images/cs.png) no-repeat;
             background-size: contain;
         }
+        /* 商品列表 */
+        .sku-list {
+            margin-top: .213333rem;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .sku-list li {
+            width: 5rem;
+            list-style: none;
+            box-sizing: border-box;
+            padding-bottom: .213333rem;
+        }
+
+        .sku-list li:nth-child(odd) {
+            padding-right: .106667rem;
+        }
+
+        .sku-list li:nth-child(even) {
+            padding-left: .106667rem;
+        }
+
+        .sku-list a {
+            display: block;
+            background-color: #fff;
+            padding-bottom: .266667rem;
+        }
+
+        .img-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 4.693333rem;
+            overflow: hidden;
+            padding: .533333rem;
+        }
+
+        .img-wrap img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .img-desc {
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            word-break: break-word;
+            color: #232326;
+            height: 1.066667rem;
+            line-height: .533333rem;
+            overflow: hidden;
+            padding-right: .266667rem;
+            padding-left: .266667rem;
+            font-size: .426667rem;
+        }
+
+        .img-desc span {
+            color: #fff;
+            padding-right: .133333rem;
+            padding-left: .133333rem;
+            display: inline-block;
+            vertical-align: top;
+            height: .533333rem;
+            border-radius: .266667rem;
+            font-size: .346667rem;
+            background: -webkit-linear-gradient(left, #ff8c00, #ff5400);
+        }
+
+        .img-price {
+            margin-top: .16rem;
+            padding-right: .266667rem;
+            padding-left: .266667rem;
+            color: #f23030;
+            font-size: .373333rem;
+        }
+
+        .img-price span {
+            font-size: .533333rem;
+        }
     </style>
 </head>
 
@@ -182,6 +263,44 @@ layout: false
             <span>爆款手机</span>
         </a>
     </nav>
+    <ul class="sku-list">
+        <li>
+            <a href="javascript:;">
+                <div class="img-wrap">
+                    <img src="./images/dva.jpg" alt="">
+                </div>
+                <p class="img-desc">
+                    <span>自营</span>
+                    荣耀V20 胡歌同款 麒麟980芯片 魅眼全视屏 4800万深感相机 6GB+128GB 幻影蓝 移动联通电信4G全面屏手机
+                </p>
+                <div class="img-price">¥&nbsp;<span>3788</span></div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <div class="img-wrap">
+                    <img src="./images/dva.jpg" alt="">
+                </div>
+                <p class="img-desc">
+                    <span>自营</span>
+                    荣耀V20 胡歌同款 麒麟980芯片 魅眼全视屏 4800万深感相机 6GB+128GB 幻影蓝 移动联通电信4G全面屏手机
+                </p>
+                <div class="img-price">¥&nbsp;<span>3788</span></div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <div class="img-wrap">
+                    <img src="./images/dva.jpg" alt="">
+                </div>
+                <p class="img-desc">
+                    <span>自营</span>
+                    荣耀V20 胡歌同款 麒麟980芯片 魅眼全视屏 4800万深感相机 6GB+128GB 幻影蓝 移动联通电信4G全面屏手机
+                </p>
+                <div class="img-price">¥&nbsp;<span>3788</span></div>
+            </a>
+        </li>
+    </ul>
 </body>
 
 </html>
