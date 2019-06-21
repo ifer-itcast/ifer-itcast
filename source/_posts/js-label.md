@@ -71,3 +71,57 @@ do {
     }
 } while (true);
 ```
+
+**下面是测试代码：**
+
+```javascript
+var num = 0;
+for (var i = 0; i < 6; i++) {
+    for (var j = 0; j < 6; j++) {
+        // 当 i 等于 3 并且 j 等于 3 时，会直接 break 里面一层的 for 循环，继续外面的 for 循环
+        // 当 i 等于 3 时，导致 j 值为 [3,6) 之间的没有进行，num 少加了 3 次
+        // 所以最终的 num 值为 33
+        if (i == 3 && j == 3) {
+            // 跳出当前循环
+            break;
+        }
+        num++;
+    }
+}
+console.log(num); // 打印结果是多少？
+```
+
+```javascript
+var num = 0;
+outerMark:
+for (var i = 0; i < 6; i++) {
+    // 外层 for 循环，i 等于 0 时，里层执行完 6 次
+    // 外层 for 循环，i 等于 1 时，里层执行完 6 次
+    // 外层 for 循环，i 等于 2 时，里层执行完 6 次
+    // 外层 for 循环，i 等于 3 时，里层循环 j 执行了 3 次 [0, 3)
+    // 最终的 num 值是 21
+    for (var j = 0; j < 6; j++) {
+        if (i == 3 && j == 3) {
+            // 跳出到 outerMark 标记的地方
+            break outerMark;
+        }
+        num++;
+    }
+}
+console.log(num); // 打印结果是多少？
+```
+
+```javascript
+var num = 0;
+outerMark:
+for (var i = 0; i < 6; i++) {
+    for (var j = 0; j < 6; j++) {
+        if (i == 3 && j == 3) {
+            // 跳出外层的当前循环，继续下次 i++
+            continue outerMark;
+        }
+        num++;
+    }
+}
+console.log(num);  // 打印结果是多少？
+```
