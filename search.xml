@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[标记语句]]></title>
+    <url>%2F2019%2F06%2F21%2Fjs-label%2F</url>
+    <content type="text"><![CDATA[之前课上做过一个计算器的案例，选择 1、2、3、4 后会对后面填入的数字进行对应的运算并弹出结果，点击确定后又会回到初始界面。如果用户在初始界面输入的是数字 5，点击确定就会进行退出操作，不再回到初始界面了！ 可实现代码如下： 123456789101112131415161718192021222324252627282930313233343536373839// 输入内容并返回function inputValue() &#123; var num1 = parseFloat(prompt('请输入第一个数：')); var num2 = parseFloat(prompt('请输入第二个数：')); return [num1, num2];&#125;// 相当于创建了一个开关，默认开启状态var bBar = true;do &#123; var opration = prompt('请选择要进行的运算：\n1. 加法运算\n2. 减法运算\n3. 乘法运算\n4. 除法运算\n5. 退出'); opration = parseInt(opration); switch (opration) &#123; case 1: var arr = inputValue(); alert('相加的结果是：' + (arr[0] + arr[1])); break; case 2: var arr = inputValue(); alert('相减的结果是：' + (arr[0] - arr[1])); break; case 3: var arr = inputValue(); alert('相乘的结果是：' + (arr[0] * arr[1])); break; case 4: var arr = inputValue(); alert('相除的结果是：' + (arr[0] / arr[1])); break; case 5: alert('退出...'); // 如果用户输入的是 5，则关闭开关，那下次的循环 bBar 就是 false，while(bBar) 也就不会执行了 bBar = false; // 默认只会退出当前的 switch break; &#125;&#125; while (bBar); 其实上面退出循环的操作也可以使用标记语句来完成，感兴趣的同学可以点击链接进去学习下，修改后的代码如下： 123456789101112// Step1: 指定标记点loopPoint:do &#123; // ... switch (opration) &#123; // ... case 5: alert('退出...'); // Step2: 跳到标记点 break loopPoint; &#125;&#125; while (true);]]></content>
+      <categories>
+        <category>JS 基础</category>
+      </categories>
+      <tags>
+        <tag>标记语句</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[移动端布局那点事]]></title>
     <url>%2F2019%2F06%2F07%2Fmobile-layout%2F</url>
     <content type="text"><![CDATA[作为前端，在今天来说，移动端布局必须是一件必知必会的事情，重要程度不言而喻！这里我总结了同一案例下不同布局的写法（原理就不再赘述，直接右键查看源代码即可），方便大家回忆。 百分比布局特点：宽度百分比、高度写死（750的设计稿下一般除以2）。缺点：高度或文字很难自适应。 举例 Flexible 布局特点：宽度弹性布局、高度写死。缺点：高度或文字还是很难自适应。优点：灵活、简洁。 举例 REM 布局原理：不同尺寸屏幕下给根元素设置不同的文字大小（利用媒体查询或JS），宽、高、间距…都统一使用 REM 单位。使用：量取到的设计稿尺寸除以根元素字体大小（基准值）即可，例如使用 flexible.js，150px 用 rem 表示就是 2rem。优点：高度和文字可以自适应。 注意 em 是相对于当前元素的字体大小（如果当前元素没有设置字体大小那就是继承过来的大小）的单位。 举例 响应式布局原理：利用 bootstrap 的栅格系统（核心还是媒体查询），不同尺寸下设置不同的样式，实现 PC 和移动端布局使用同一套代码！场景：适用于相对简单的页面，复杂页面下的响应式开发成本太高。]]></content>
