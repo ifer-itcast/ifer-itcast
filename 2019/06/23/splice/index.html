@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="全选,">
+  <meta name="keywords" content="数组塌陷,splice,">
 
 
 
@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。">
-<meta name="keywords" content="全选">
+<meta name="description" content="关于数组的方法有很多，splice 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！ 基本语法123456// start: 从哪里开始，也支持负值，-n 相当于 arr.length - n// deleteCount: 要删除几个（可选）// item1, item2: 要添加进数组的元素（可选）// 返回值: 以数组的形式返回删除的那些元素array.splic">
+<meta name="keywords" content="数组塌陷,splice">
 <meta property="og:type" content="article">
-<meta property="og:title" content="触发全选按钮的几种思路">
-<meta property="og:url" content="http://yoursite.com/2019/05/22/select-all/index.html">
+<meta property="og:title" content="关于数组塌陷">
+<meta property="og:url" content="http://yoursite.com/2019/06/23/splice/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。">
+<meta property="og:description" content="关于数组的方法有很多，splice 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！ 基本语法123456// start: 从哪里开始，也支持负值，-n 相当于 arr.length - n// deleteCount: 要删除几个（可选）// item1, item2: 要添加进数组的元素（可选）// 返回值: 以数组的形式返回删除的那些元素array.splic">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/resource/images/pages/webapi/select-all__0.png">
-<meta property="og:updated_time" content="2019-05-22T10:42:43.007Z">
+<meta property="og:updated_time" content="2019-06-23T04:53:53.124Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="触发全选按钮的几种思路">
-<meta name="twitter:description" content="需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。">
-<meta name="twitter:image" content="http://yoursite.com/resource/images/pages/webapi/select-all__0.png">
+<meta name="twitter:title" content="关于数组塌陷">
+<meta name="twitter:description" content="关于数组的方法有很多，splice 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！ 基本语法123456// start: 从哪里开始，也支持负值，-n 相当于 arr.length - n// deleteCount: 要删除几个（可选）// item1, item2: 要添加进数组的元素（可选）// 返回值: 以数组的形式返回删除的那些元素array.splic">
 
 
 
@@ -122,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/22/select-all/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/23/splice/">
 
 
 
 
 
-  <title>触发全选按钮的几种思路 | 危险</title>
+  <title>关于数组塌陷 | 危险</title>
   
 
 
@@ -307,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/22/select-all/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/splice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="危险">
@@ -324,7 +322,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">触发全选按钮的几种思路</h1>
+          <h1 class="post-title" itemprop="name headline">关于数组塌陷</h1>
         
 
         <div class="post-meta">
@@ -336,8 +334,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-22T15:50:24+08:00">
-                2019-05-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-23T10:53:16+08:00">
+                2019-06-23
               </time>
             
 
@@ -359,8 +357,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Web-API/" itemprop="url" rel="index">
-                    <span itemprop="name">Web API</span>
+                  <a href="/categories/JS-基础/" itemprop="url" rel="index">
+                    <span itemprop="name">JS 基础</span>
                   </a>
                 </span>
 
@@ -376,7 +374,7 @@
 
           
           
-             <span id="/2019/05/22/select-all/" class="leancloud_visitors" data-flag-title="触发全选按钮的几种思路">
+             <span id="/2019/06/23/splice/" class="leancloud_visitors" data-flag-title="关于数组塌陷">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -401,7 +399,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  696
+                  982
                 </span>
               
 
@@ -417,7 +415,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  4
                 </span>
               
             </div>
@@ -438,15 +436,38 @@
       
 
       
-        <p><img src="/resource/images/pages/webapi/select-all__0.png" alt></p>
-<p>需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。</p>
-<a id="more"></a>
-<h2 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h2><p>点击每个列表选项时，遍历所有列表选项并检查是否有未选中的，如果有则可以确定全选按钮的状态为未选中，否则全选按钮置为选中。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oAllInput = <span class="built_in">document</span>.querySelector(<span class="string">'#all'</span>);</span><br><span class="line"><span class="keyword">var</span> aInput = <span class="built_in">document</span>.querySelectorAll(<span class="string">'ul input'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 点击全选 input 时根据自己的状态来控制其他列表项的 input</span></span><br><span class="line">oAllInput.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i ++) &#123;</span><br><span class="line">        aInput[i].checked = <span class="keyword">this</span>.checked;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每次点击每一个列表项的 input 时，判断全选的 input 是否需要被选中</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i ++) &#123;</span><br><span class="line">    aInput[i].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>.checked) &#123;</span><br><span class="line">            <span class="comment">// 如果当前点击的按钮未选中，那就可以直接确定全选按钮的状态了</span></span><br><span class="line">            oAllInput.checked = <span class="literal">false</span>;</span><br><span class="line">            <span class="comment">// 也就没有必要进行下去了</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> bBar = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i ++) &#123;</span><br><span class="line">            <span class="comment">// 发现有一个没选中的</span></span><br><span class="line">            <span class="keyword">if</span>(!aInput[i].checked) &#123;</span><br><span class="line">                bBar = <span class="literal">false</span>;</span><br><span class="line">                <span class="comment">// 发现有一个没选中的也就可以断定 oAllInput 的状态了，就没有必要再进行下去了</span></span><br><span class="line">                <span class="comment">// 当然你不写 break 逻辑上也是对的，只是存在性能浪费</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        oAllInput.checked = bBar;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="注意细节"><a href="#注意细节" class="headerlink" title="注意细节"></a>注意细节</h2><p>思路和上面一样，下面的写法也是可以的，但有一点需要注意：点击列表中的每一项进行循环时，碰到未选中的一定要跳出循环，不然前面全选按钮的状态都会被最后一个按钮的状态所覆盖。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i++) &#123;</span><br><span class="line">    aInput[i].onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>.checked) &#123;</span><br><span class="line">            <span class="comment">// 如果当前点击的按钮未选中，那就可以直接确定全选按钮的状态了</span></span><br><span class="line">            oAllInput.checked = <span class="literal">false</span>;</span><br><span class="line">            <span class="comment">// 也就没有必要进行下去了</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!aInput[i].checked) &#123;</span><br><span class="line">                oAllInput.checked = <span class="literal">false</span>;</span><br><span class="line">                <span class="comment">// 这里的 break 是必须要加的！不然全选按钮的状态永远是以最后一个的选中状态为准，这并不是我们所希望的</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                oAllInput.checked = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p>每次点击列表中的按钮时，获取所有已选中 input 的长度，并判断已选中 input 的 length 是否等于所有 input 的 length，如果相等，就可以激活全选按钮啦，否则则取消全选。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i++) &#123;</span><br><span class="line">    aInput[i].onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> aInputChecked = <span class="built_in">document</span>.querySelectorAll(<span class="string">'ul input:checked'</span>);</span><br><span class="line">        <span class="comment">// 已选中 length 等于所有 length 就证明全选中了，也就可以激活全选按钮啦</span></span><br><span class="line">        <span class="keyword">if</span> (aInputChecked.length === aInput.length) &#123;</span><br><span class="line">            oAllInput.checked = <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            oAllInput.checked = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>关于数组的方法有很多，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice" target="_blank" rel="noopener">splice</a> 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！</p>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// start: 从哪里开始，也支持负值，-n 相当于 arr.length - n</span></span><br><span class="line"><span class="comment">// deleteCount: 要删除几个（可选）</span></span><br><span class="line"><span class="comment">// item1, item2: 要添加进数组的元素（可选）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回值: 以数组的形式返回删除的那些元素</span></span><br><span class="line">array.splice(start, deleteCount, item1, item2);</span><br></pre></td></tr></table></figure>
+<h2 id="代码演练"><a href="#代码演练" class="headerlink" title="代码演练"></a>代码演练</h2><p>删除：从第 2 位开始，删除 2 个</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line">arr.splice(<span class="number">2</span>, <span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ['apple', 'orange']</span></span><br></pre></td></tr></table></figure>
+<p>添加：从第 2 位开始，删除 0 个，添加 🤣😎</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line">arr.splice(<span class="number">2</span>, <span class="number">0</span>, <span class="string">'🤣'</span>, <span class="string">'😎'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["apple", "orange", "🤣", "😎", "banana", "watermelon"]</span></span><br></pre></td></tr></table></figure>
+<p>替换：从第 2 项开始，删除 2 项并添加🍌和🍉</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line">arr.splice(<span class="number">2</span>, <span class="number">2</span>, <span class="string">'🍌'</span>, <span class="string">'🍉'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["apple", "orange", "🍌", "🍉"]</span></span><br></pre></td></tr></table></figure>
+<h2 id="数组塌陷"><a href="#数组塌陷" class="headerlink" title="数组塌陷"></a>数组塌陷</h2><p>需求：利用 splice 删除数组中的指定元素</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line"><span class="comment">// 从 0 开始删到最后，并不能指定删除某个元素</span></span><br><span class="line">arr.splice(<span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// []</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 删除指定的某个元素时就需要遍历，但最终的结果和我们想的不一样！</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i ++) &#123;</span><br><span class="line">    <span class="comment">// 从第 i 个开始，删除 1 个</span></span><br><span class="line">    arr.splice(i, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["orange", "watermelon"]</span></span><br></pre></td></tr></table></figure>
+<p>上面的写法删不干净，因为 splice 每删除一个元素就会改变原来数组的索引以及长度，而 i 的值永远是个递增的状态，代码分析如下（建议断点调试）：</p>
+<p><font color="#ccc" size="2">第 1 次 i 等于 0， arr.splice(0, 1) 后的结果是 [‘orange’, ‘banana’, ‘watermelon’]，arr 的 length 变为了 3；</font></p>
+
+<p style="margin-top:-15px"><font color="#ccc" size="2">第 2 次 i 等于 1，arr.splice(1, 1) 后的结果是 [‘orange’, ‘watermelon’]，arr 的 length 变为了 2；</font></p>
+
+<p style="margin-top:-15px"><font color="#ccc" size="2">第 3 次 i 等于 2， i &lt; arr.length 条件为假，结束循环；</font></p>
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>需求：解决上面利用 splice 删除不干净的问题！</p>
+<p><strong>每次删除数组的第一个元素</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i ++) &#123;</span><br><span class="line">    arr.splice(i, <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 每次删除后进行 i--，这样就能保证删除的永远都是数组的第一个元素（说第一个元素不太准确，取决于i的值变化到哪里了）</span></span><br><span class="line">    i --;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// []</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原理和上面一样，永远删除数组最前面那个元素</span></span><br><span class="line"><span class="keyword">while</span>(arr.length) &#123;</span><br><span class="line">    arr.splice(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>倒着删</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可以通过断点调试查看代码执行过程</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = arr.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i --) &#123;</span><br><span class="line">    arr.splice(i, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(arr);</span><br></pre></td></tr></table></figure>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>数组去重：每次用当前元素和后面的所有元素进行比较，如果相同就利用 splice 删除掉后面相同的那个元素 j（或当前的 i）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'apple'</span>, <span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'apple'</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i ++) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j = i + <span class="number">1</span>; j &lt; arr.length; j ++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[i] === arr[j]) &#123;</span><br><span class="line">            arr.splice(j, <span class="number">1</span>);</span><br><span class="line">            <span class="comment">// 解决 splice 后带来的数组塌陷问题</span></span><br><span class="line">            j --;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="题目测试"><a href="#题目测试" class="headerlink" title="题目测试"></a>题目测试</h2><p>需求：在数组 <code>var arr = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;];</code> 每一项的前面添加 @ 字符</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Way1</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = arr.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i --) &#123;</span><br><span class="line">    arr.splice(i, <span class="number">0</span>, <span class="string">'@'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["@", "a", "@", "b", "@", "c", "@", "d"]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Way2</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i ++) &#123;</span><br><span class="line">    arr.splice(i, <span class="number">0</span>, <span class="string">'@'</span>);</span><br><span class="line">    <span class="comment">// ['@', 'a', 'b', 'c', 'd'] 下次 'b' 的索引已经是 2 了，需要再次进行 i++</span></span><br><span class="line">    i++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["@", "a", "@", "b", "@", "c", "@", "d"]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Way3</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i ++) &#123;</span><br><span class="line">    arr.splice(i, <span class="number">1</span>, <span class="string">'@'</span>+arr[i]);</span><br><span class="line">&#125;</span><br><span class="line">arr = arr.join(<span class="string">''</span>).split(<span class="string">''</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["@", "a", "@", "b", "@", "c", "@", "d"]</span></span><br></pre></td></tr></table></figure>
+<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p>用 splice 删除指定元素的目的，换句话说无非是想得到<strong>想要</strong>的元素，其实数组也提供了 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank" rel="noopener">filter</a> 方法，可以帮我们筛选出想要的数组元素！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 具体使用看文档，这里不再啰嗦了！</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line"><span class="comment">// 返回一个新的、由通过测试的元素组成的新数组</span></span><br><span class="line"><span class="keyword">var</span> newArr = arr.filter(<span class="function"><span class="params">word</span> =&gt;</span> !word);</span><br><span class="line"><span class="built_in">console</span>.log(newArr); <span class="comment">// []</span></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -463,7 +484,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/全选/" rel="tag"># 全选</a>
+            <a href="/tags/数组塌陷/" rel="tag"># 数组塌陷</a>
+          
+            <a href="/tags/splice/" rel="tag"># splice</a>
           
         </div>
       
@@ -476,8 +499,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/21/kill-other/" rel="next" title="排他思想">
-                <i class="fa fa-chevron-left"></i> 排他思想
+              <a href="/2019/06/21/js-label/" rel="next" title="标记语句">
+                <i class="fa fa-chevron-left"></i> 标记语句
               </a>
             
           </div>
@@ -485,10 +508,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/24/invisible-transform/" rel="prev" title="JS 中的隐式转换">
-                JS 中的隐式转换 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -641,7 +660,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常规操作"><span class="nav-text">常规操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意细节"><span class="nav-text">注意细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他方法"><span class="nav-text">其他方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本语法"><span class="nav-text">基本语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码演练"><span class="nav-text">代码演练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组塌陷"><span class="nav-text">数组塌陷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法"><span class="nav-text">解决方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目测试"><span class="nav-text">题目测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他方法"><span class="nav-text">其他方法</span></a></li></ol></div>
             
 
           </div>
