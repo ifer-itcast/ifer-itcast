@@ -7,6 +7,8 @@ categories: JS 基础
 
 关于数组的方法有很多，[splice](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！
 
+<!-- more -->
+
 ## 基本语法
 
 ```javascript
