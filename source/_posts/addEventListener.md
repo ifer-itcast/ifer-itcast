@@ -83,7 +83,7 @@ for(var i = 0; i < aBtn.length; i ++) {
 
 **Way1:** 使用普通的事件绑定形式（onclick）
 
-**Way2:** 对于**同样的事件处理程序**独立出去（本需求做不到），每次保证绑定的是同一个（函数），例如：
+**Way2:** 对于**同样的事件处理程序**独立出去变成同一个函数（本需求做不到），每次保证绑定的是同一个（函数），例如：
 
 ```javascript
 var oBtn = document.querySelector('button');
@@ -104,4 +104,16 @@ oBtn.addEventListener('click', function() {
 });
 oBtn.innerHTML = '删除';
 oLi.appendChild(oBtn);
+```
+
+**Way4:** 使用事件委托，推荐！
+
+```javascript
+// 把事件绑定在父级上
+oUl.addEventListener('click', function(e) {
+    // 根据点击当前元素的名字（或其他）来判断是否是 span（即删除按钮），然后做相应的操作
+    if(e.target.nodeName.toLowerCase() === 'span') {
+        e.currentTarget.removeChild(e.target.parentNode);
+    }
+});
 ```
