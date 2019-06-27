@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/resource/images/pages/webapi/send-message__1.png">
 <meta property="og:image" content="http://yoursite.com/resource/images/pages/webapi/send-message__2.png">
-<meta property="og:updated_time" content="2019-06-27T05:34:47.664Z">
+<meta property="og:updated_time" content="2019-06-27T10:25:19.254Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="再说事件绑定">
 <meta name="twitter:description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定形式，例如 oBtn.onclick = fn; 还有一种是通过事件监听的形式，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个">
@@ -402,7 +402,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1k
+                  1.1k
                 </span>
               
 
@@ -418,7 +418,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  4
                 </span>
               
             </div>
@@ -454,11 +454,12 @@
 <p>第 2 次点击添加按钮完成后，会通过 <code>var aBtn = document.querySelectorAll(&#39;span&#39;);</code> 选择所有的删除按钮，绑定事件。问题就出在这里，选择所有删除按钮并绑定事件的操作，其实又会把之前<strong>已经绑定事件的元素再次绑定了一次</strong>。所以点击删除按钮时会发现 <code>oUl.removeChild(this.parentNode);</code> 执行了多次（取决于重复绑定了多少次），第 1 次执行时已经把当前 li 从 ul 中移除，下次再执行 <code>oUl.removeChild(this.parentNode);</code> 时其实 ul 中已经没有了这个 li，删除一个不存在的子节点就会报错！</p>
 <p>第 3 次点击添加按钮完成后，同理…</p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p><strong>Way1:</strong> 使用普通的事件绑定形式（onclick）</p>
-<p><strong>Way2:</strong> 对于<strong>同样的事件处理程序</strong>独立出去（本需求做不到），每次保证绑定的是同一个（函数），例如：</p>
+<p><strong>Way2:</strong> 对于<strong>同样的事件处理程序</strong>独立出去变成同一个函数（本需求做不到），每次保证绑定的是同一个（函数），例如：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oBtn = <span class="built_in">document</span>.querySelector(<span class="string">'button'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line">oBtn.addEventListener(<span class="string">'click'</span>, fn);</span><br><span class="line">oBtn.addEventListener(<span class="string">'click'</span>, fn);</span><br></pre></td></tr></table></figure>
 <p><strong>Way3:</strong> 其实前面每次添加列表就通过 <code>querySelectorAll</code> 重新选择所有删除按钮并绑定事件，本身就是一个糟糕的思路！正确的方式是：每次添加列表的时候，给当前创建的删除按钮单独绑定事件，这样无论是从效率，还是代码简洁度上都最佳，代码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oBtn = <span class="built_in">document</span>.createElement(<span class="string">'span'</span>);</span><br><span class="line"><span class="comment">// 给一个创建的元素单独绑定事件，而不是每次点击通过 querySelectorAll 选择的形式</span></span><br><span class="line">oBtn.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    oUl.removeChild(<span class="keyword">this</span>.parentNode);</span><br><span class="line">&#125;);</span><br><span class="line">oBtn.innerHTML = <span class="string">'删除'</span>;</span><br><span class="line">oLi.appendChild(oBtn);</span><br></pre></td></tr></table></figure>
-
+<p><strong>Way4:</strong> 使用事件委托，推荐！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 把事件绑定在父级上</span></span><br><span class="line">oUl.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 根据点击当前元素的名字（或其他）来判断是否是 span（即删除按钮），然后做相应的操作</span></span><br><span class="line">    <span class="keyword">if</span>(e.target.nodeName.toLowerCase() === <span class="string">'span'</span>) &#123;</span><br><span class="line">        e.currentTarget.removeChild(e.target.parentNode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
       
     </div>
     
