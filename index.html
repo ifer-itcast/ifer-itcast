@@ -304,6 +304,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/27/addEventListener/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="危险">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/27/addEventListener/" itemprop="url">再说事件绑定</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-27T11:03:11+08:00">
+                2019-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web-API/" itemprop="url" rel="index">
+                    <span itemprop="name">Web API</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/06/27/addEventListener/" class="leancloud_visitors" data-flag-title="再说事件绑定">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>大家都清楚，常用的事件绑定有两种形式，一种是<strong>传统绑定</strong>形式，例如 <code>oBtn.onclick = fn;</code> 还有一种是通过<strong>事件监听</strong>的形式，例如 <code>oBtn.addEventListener(&#39;click&#39;, fn, false);</code> 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个事件处理程序时都会生效。</p>
+<p><strong>但是在具体使用时你可能会不小心忽略这个特点，造成一些看似怪异的问题！</strong>这里我模拟了问题出现的场景以及对应的解决方案。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/27/addEventListener/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/splice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -438,40 +627,14 @@
 
       
         
-          
-            <p>关于数组的方法有很多，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice" target="_blank" rel="noopener">splice</a> 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！</p>
-<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// start: 从哪里开始，也支持负值，-n 相当于 arr.length - n</span></span><br><span class="line"><span class="comment">// deleteCount: 要删除几个（可选）</span></span><br><span class="line"><span class="comment">// item1, item2: 要添加进数组的元素（可选）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回值: 以数组的形式返回删除的那些元素</span></span><br><span class="line">array.splice(start, deleteCount, item1, item2);</span><br></pre></td></tr></table></figure>
-<h2 id="代码演练"><a href="#代码演练" class="headerlink" title="代码演练"></a>代码演练</h2><p>删除：从第 2 位开始，删除 2 个</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line">arr.splice(<span class="number">2</span>, <span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ['apple', 'orange']</span></span><br></pre></td></tr></table></figure>
-<p>添加：从第 2 位开始，删除 0 个，添加 🤣😎</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line">arr.splice(<span class="number">2</span>, <span class="number">0</span>, <span class="string">'🤣'</span>, <span class="string">'😎'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["apple", "orange", "🤣", "😎", "banana", "watermelon"]</span></span><br></pre></td></tr></table></figure>
-<p>替换：从第 2 项开始，删除 2 项并添加🍌和🍉</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line">arr.splice(<span class="number">2</span>, <span class="number">2</span>, <span class="string">'🍌'</span>, <span class="string">'🍉'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["apple", "orange", "🍌", "🍉"]</span></span><br></pre></td></tr></table></figure>
-<h2 id="数组塌陷"><a href="#数组塌陷" class="headerlink" title="数组塌陷"></a>数组塌陷</h2><p>需求：利用 splice 删除数组中的指定元素</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line"><span class="comment">// 从 0 开始删到最后，并不能指定删除某个元素</span></span><br><span class="line">arr.splice(<span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// []</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 删除指定的某个元素时就需要遍历，但最终的结果和我们想的不一样！</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i ++) &#123;</span><br><span class="line">    <span class="comment">// 从第 i 个开始，删除 1 个</span></span><br><span class="line">    arr.splice(i, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["orange", "watermelon"]</span></span><br></pre></td></tr></table></figure>
-<p>上面的写法删不干净，因为 splice 每删除一个元素就会改变原来数组的索引以及长度，而 i 的值永远是个递增的状态，代码分析如下（建议断点调试）：</p>
-<p><font color="#ccc" size="2">第 1 次 i 等于 0， arr.splice(0, 1) 后的结果是 [‘orange’, ‘banana’, ‘watermelon’]，arr 的 length 变为了 3；</font></p>
-
-<p style="margin-top:-15px"><font color="#ccc" size="2">第 2 次 i 等于 1，arr.splice(1, 1) 后的结果是 [‘orange’, ‘watermelon’]，arr 的 length 变为了 2；</font></p>
-
-<p style="margin-top:-15px"><font color="#ccc" size="2">第 3 次 i 等于 2， i &lt; arr.length 条件为假，结束循环；</font></p>
-
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>需求：解决上面利用 splice 删除不干净的问题！</p>
-<p><strong>每次删除数组的第一个元素</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i ++) &#123;</span><br><span class="line">    arr.splice(i, <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 每次删除后进行 i--，这样就能保证删除的永远都是数组的第一个元素（说第一个元素不太准确，取决于i的值变化到哪里了）</span></span><br><span class="line">    i --;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// []</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原理和上面一样，永远删除数组最前面那个元素</span></span><br><span class="line"><span class="keyword">while</span>(arr.length) &#123;</span><br><span class="line">    arr.splice(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>倒着删</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可以通过断点调试查看代码执行过程</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = arr.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i --) &#123;</span><br><span class="line">    arr.splice(i, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(arr);</span><br></pre></td></tr></table></figure>
-<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>数组去重：每次用当前元素和后面的所有元素进行比较，如果相同就利用 splice 删除掉后面相同的那个元素 j（或当前的 i）</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'apple'</span>, <span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'apple'</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i ++) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j = i + <span class="number">1</span>; j &lt; arr.length; j ++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[i] === arr[j]) &#123;</span><br><span class="line">            arr.splice(j, <span class="number">1</span>);</span><br><span class="line">            <span class="comment">// 解决 splice 后带来的数组塌陷问题</span></span><br><span class="line">            j --;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="题目测试"><a href="#题目测试" class="headerlink" title="题目测试"></a>题目测试</h2><p>需求：在数组 <code>var arr = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;];</code> 每一项的前面添加 @ 字符</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Way1</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = arr.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i --) &#123;</span><br><span class="line">    arr.splice(i, <span class="number">0</span>, <span class="string">'@'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["@", "a", "@", "b", "@", "c", "@", "d"]</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Way2</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i ++) &#123;</span><br><span class="line">    arr.splice(i, <span class="number">0</span>, <span class="string">'@'</span>);</span><br><span class="line">    <span class="comment">// ['@', 'a', 'b', 'c', 'd'] 下次 'b' 的索引已经是 2 了，需要再次进行 i++</span></span><br><span class="line">    i++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["@", "a", "@", "b", "@", "c", "@", "d"]</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Way3</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i ++) &#123;</span><br><span class="line">    arr.splice(i, <span class="number">1</span>, <span class="string">'@'</span>+arr[i]);</span><br><span class="line">&#125;</span><br><span class="line">arr = arr.join(<span class="string">''</span>).split(<span class="string">''</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["@", "a", "@", "b", "@", "c", "@", "d"]</span></span><br></pre></td></tr></table></figure>
-<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p>用 splice 删除指定元素的目的，换句话说无非是想得到<strong>想要</strong>的元素，其实数组也提供了 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank" rel="noopener">filter</a> 方法，可以帮我们筛选出想要的数组元素！</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 具体使用看文档，这里不再啰嗦了！</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line"><span class="comment">// 返回一个新的、由通过测试的元素组成的新数组</span></span><br><span class="line"><span class="keyword">var</span> newArr = arr.filter(<span class="function"><span class="params">word</span> =&gt;</span> !word);</span><br><span class="line"><span class="built_in">console</span>.log(newArr); <span class="comment">// []</span></span><br></pre></td></tr></table></figure>
-          
+          <p>关于数组的方法有很多，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice" target="_blank" rel="noopener">splice</a> 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/23/splice/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2010,197 +2173,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/19/appendChild/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="危险">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="危险">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/19/appendChild/" itemprop="url">认清 Node.appendChild()</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-19T21:55:45+08:00">
-                2019-05-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Web-API/" itemprop="url" rel="index">
-                    <span itemprop="name">Web API</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/05/19/appendChild/" class="leancloud_visitors" data-flag-title="认清 Node.appendChild()">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  983
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Node.appendChild() 方法用于将一个节点添加到指定父节点的子节点列表的末尾，但在具体使用时还有其他一些需要我们关注的细节，以及对应的应用场景。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/05/19/appendChild/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2244,7 +2223,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2266,7 +2245,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

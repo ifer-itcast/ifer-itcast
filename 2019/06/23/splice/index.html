@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="关于数组的方法有很多，splice 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！ 基本语法123456// start: 从哪里开始，也支持负值，-n 相当于 arr.length - n// deleteCount: 要删除几个（可选）// item1, item2: 要添加进数组的元素（可选）// 返回值: 以数组的形式返回删除的那些元素array.splic">
+<meta name="description" content="关于数组的方法有很多，splice 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！">
 <meta name="keywords" content="数组塌陷,splice">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于数组塌陷">
 <meta property="og:url" content="http://yoursite.com/2019/06/23/splice/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="关于数组的方法有很多，splice 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！ 基本语法123456// start: 从哪里开始，也支持负值，-n 相当于 arr.length - n// deleteCount: 要删除几个（可选）// item1, item2: 要添加进数组的元素（可选）// 返回值: 以数组的形式返回删除的那些元素array.splic">
+<meta property="og:description" content="关于数组的方法有很多，splice 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-23T04:53:53.124Z">
+<meta property="og:updated_time" content="2019-06-27T03:01:44.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于数组塌陷">
-<meta name="twitter:description" content="关于数组的方法有很多，splice 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！ 基本语法123456// start: 从哪里开始，也支持负值，-n 相当于 arr.length - n// deleteCount: 要删除几个（可选）// item1, item2: 要添加进数组的元素（可选）// 返回值: 以数组的形式返回删除的那些元素array.splic">
+<meta name="twitter:description" content="关于数组的方法有很多，splice 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！">
 
 
 
@@ -437,6 +437,7 @@
 
       
         <p>关于数组的方法有很多，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice" target="_blank" rel="noopener">splice</a> 算是比较强大的一个，它能用来删除、添加、替换数组中的元素，实际开发中非常实用！</p>
+<a id="more"></a>
 <h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// start: 从哪里开始，也支持负值，-n 相当于 arr.length - n</span></span><br><span class="line"><span class="comment">// deleteCount: 要删除几个（可选）</span></span><br><span class="line"><span class="comment">// item1, item2: 要添加进数组的元素（可选）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回值: 以数组的形式返回删除的那些元素</span></span><br><span class="line">array.splice(start, deleteCount, item1, item2);</span><br></pre></td></tr></table></figure>
 <h2 id="代码演练"><a href="#代码演练" class="headerlink" title="代码演练"></a>代码演练</h2><p>删除：从第 2 位开始，删除 2 个</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'apple'</span>, <span class="string">'orange'</span>, <span class="string">'banana'</span>, <span class="string">'watermelon'</span>];</span><br><span class="line">arr.splice(<span class="number">2</span>, <span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ['apple', 'orange']</span></span><br></pre></td></tr></table></figure>
@@ -508,6 +509,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/27/addEventListener/" rel="prev" title="再说事件绑定">
+                再说事件绑定 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -589,7 +594,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -611,7 +616,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

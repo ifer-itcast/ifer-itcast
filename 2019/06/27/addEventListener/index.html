@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="steps(),帧动画,">
+  <meta name="keywords" content="addEventListener,">
 
 
 
@@ -79,19 +79,21 @@
 
 
 
-<meta name="keywords" content="steps(),帧动画">
+<meta name="description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定形式，例如 oBtn.onclick = fn; 还有一种是通过事件监听的形式，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个">
+<meta name="keywords" content="addEventListener">
 <meta property="og:type" content="article">
-<meta property="og:title" content="steps(number[, end | start])">
-<meta property="og:url" content="http://yoursite.com/2019/05/31/steps/index.html">
+<meta property="og:title" content="再说事件绑定">
+<meta property="og:url" content="http://yoursite.com/2019/06/27/addEventListener/index.html">
 <meta property="og:site_name" content="危险">
+<meta property="og:description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定形式，例如 oBtn.onclick = fn; 还有一种是通过事件监听的形式，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/resource/images/pages/h5css3/wolf.gif">
-<meta property="og:image" content="http://yoursite.com/resource/images/pages/h5css3/steps.png">
-<meta property="og:image" content="http://yoursite.com/resource/images/pages/h5css3/boxmove.gif">
-<meta property="og:updated_time" content="2019-06-04T01:46:25.940Z">
+<meta property="og:image" content="http://yoursite.com/resource/images/pages/webapi/send-message__1.png">
+<meta property="og:image" content="http://yoursite.com/resource/images/pages/webapi/send-message__2.png">
+<meta property="og:updated_time" content="2019-06-27T05:34:47.664Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="steps(number[, end | start])">
-<meta name="twitter:image" content="http://yoursite.com/resource/images/pages/h5css3/wolf.gif">
+<meta name="twitter:title" content="再说事件绑定">
+<meta name="twitter:description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定形式，例如 oBtn.onclick = fn; 还有一种是通过事件监听的形式，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个">
+<meta name="twitter:image" content="http://yoursite.com/resource/images/pages/webapi/send-message__1.png">
 
 
 
@@ -121,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/31/steps/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/27/addEventListener/">
 
 
 
 
 
-  <title>steps(number[, end | start]) | 危险</title>
+  <title>再说事件绑定 | 危险</title>
   
 
 
@@ -306,7 +308,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/31/steps/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/27/addEventListener/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="危险">
@@ -323,7 +325,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">steps(number[, end | start])</h1>
+          <h1 class="post-title" itemprop="name headline">再说事件绑定</h1>
         
 
         <div class="post-meta">
@@ -335,8 +337,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-31T21:03:25+08:00">
-                2019-05-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-27T11:03:11+08:00">
+                2019-06-27
               </time>
             
 
@@ -358,8 +360,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/HTML5-CSS3/" itemprop="url" rel="index">
-                    <span itemprop="name">HTML5/CSS3</span>
+                  <a href="/categories/Web-API/" itemprop="url" rel="index">
+                    <span itemprop="name">Web API</span>
                   </a>
                 </span>
 
@@ -375,7 +377,7 @@
 
           
           
-             <span id="/2019/05/31/steps/" class="leancloud_visitors" data-flag-title="steps(number[, end | start])">
+             <span id="/2019/06/27/addEventListener/" class="leancloud_visitors" data-flag-title="再说事件绑定">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -400,7 +402,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  1k
                 </span>
               
 
@@ -416,7 +418,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  3
                 </span>
               
             </div>
@@ -437,37 +439,25 @@
       
 
       
-        <p><img src="/resource/images/pages/h5css3/wolf.gif" alt></p>
+        <p>大家都清楚，常用的事件绑定有两种形式，一种是<strong>传统绑定</strong>形式，例如 <code>oBtn.onclick = fn;</code> 还有一种是通过<strong>事件监听</strong>的形式，例如 <code>oBtn.addEventListener(&#39;click&#39;, fn, false);</code> 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个事件处理程序时都会生效。</p>
+<p><strong>但是在具体使用时你可能会不小心忽略这个特点，造成一些看似怪异的问题！</strong>这里我模拟了问题出现的场景以及对应的解决方案。</p>
 <a id="more"></a>
-<h2 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h2><p>CSS3 中用于设置动画的 animation 语法如下：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">animation</span>: <span class="selector-tag">name</span> <span class="selector-tag">duration</span> <span class="selector-tag">timing-function</span> <span class="selector-tag">delay</span> <span class="selector-tag">iteration-count</span> <span class="selector-tag">direction</span>;</span><br></pre></td></tr></table></figure>
-<p>其中，timing-function 取值如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timing-function: linear / ease / ease-in / ease-out / ease-in-out / cubic-bezier() / steps()</span><br></pre></td></tr></table></figure>
-<p>上面 <code>timing-function</code> 的取值除了 steps() 都代表补间动画（线性动画），steps() 代表帧动画，有时候一些动画效果必须用它才能实现，例如上面图奔跑的动物是我们曾经做过的动画，就是通过 steps() 配合改变雪碧图（1600px宽）的位置实现的，代码如下：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">keyframes</span> aniSelf &#123;</span><br><span class="line">    0% &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    100% &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: -<span class="number">1600px</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wolf</span>&#123;</span><br><span class="line">    <span class="attribute">animation</span>: aniSelf <span class="number">1s</span> <span class="built_in">steps</span>(8) infinite;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面代码确实能实现预期的效果，但不知道大家有没有这样一个疑问：当背景位置为 <code>background-position: -1600px 0;</code> 时，图片在盒子中应该是看不到的才对（因为图片总共是1600px，这样刚好是图片的最右边卡到盒子的最左边），但为什么动画还能正常跑起来，而没有出现空白的问题呢？</p>
-<p>要解答上面的疑问，我们就要明白关于 <code>steps(number[, end | start])</code> 参数的含义，第一个参数大家都知道是什么意思，第二个参数是可选的，表示<strong>在每个间隔的起点或是终点发生阶跃变化</strong>，如果忽略，<strong>默认是 end</strong>。</p>
-<p>看完上面加粗部分的定义，我不知道你作何感想…😣</p>
-<h2 id="我的感性认识"><a href="#我的感性认识" class="headerlink" title="我的感性认识"></a>我的感性认识</h2><p>我的理解：steps() 第二个参数如果是 end 则代表<strong>忽略结束帧</strong>，如果是 start 则代表<strong>忽略开始帧</strong>，如何理解这句话呢？</p>
-<p><img src="/resource/images/pages/h5css3/steps.png" alt></p>
-<p>上面是一张 <code>50 * 200</code> 的图片，作为 <code>50 * 50</code> 盒子的背景图，我想实现在 hover 盒子的时候背景从 A 变化到 A 的逐帧动画。由于我们知道 steps(4, end) 时会忽略最后一帧，动画走完时没有 forwards，又会回到初始状态，故可以用以下方法来实现：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#333</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">url</span>(./images/steps.png) no-repeat;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.box</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="comment">/* 分为 4 步来完成，会忽略最后一步 background-position: 0 -150px; 到 background-position: 0 -200px; 这个区间！ */</span></span><br><span class="line">    <span class="attribute">animation</span>: way1 <span class="number">2s</span> <span class="built_in">steps</span>(4);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">keyframes</span> way1 &#123;</span><br><span class="line">    0% &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    100% &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: <span class="number">0</span> -<span class="number">200px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面代码其实就是和我们课上实现动物运动的代码是一样的思路，那如果我把上面的代码改为 steps(4, start) 会怎样的，根据我们之前的结论，start 会忽略第一帧，也就是 hover 上的一刹那就会定位到 B，然后也会走 <code>background-position: 0 -150px;</code> 到 <code>background-position: 0 -200px;</code> 最后一帧这个区间，即会出现空白，最后又回到初始状态 A，可见，这并不是我们所需要的。</p>
-<h2 id="我就想用-start"><a href="#我就想用-start" class="headerlink" title="我就想用 start"></a>我就想用 start</h2><p>如果实在想用 start 可以改写代码如下：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Step1: 分为 3 步走 */</span></span><br><span class="line"><span class="selector-class">.box</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">animation</span>: way1 <span class="number">2s</span> <span class="built_in">steps</span>(3, start);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Step2: 最后一帧的位置改成严丝合缝的最后一样图片 */</span></span><br><span class="line">@<span class="keyword">keyframes</span> way1 &#123;</span><br><span class="line">    0% &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    100% &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: <span class="number">0</span> -<span class="number">150px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意：以上代码虽然能实现 hover 时背景从 A、B、C、D 到 A 的变换，但并不推荐这样做，因为 hover 的一刹那 A 到 B 的变换是没有动画的（逐帧动画也是动画）</p>
-</blockquote>
-<h2 id="其他写法"><a href="#其他写法" class="headerlink" title="其他写法"></a>其他写法</h2><p>注意看我的注释部分！</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#333</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="comment">/* Step1: 背景重复！ */</span></span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">url</span>(./images/steps.png) repeat-y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.box</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="comment">/* Step2: 这时候 steps 第二个参数是 start or end 只是开始时第一帧有没有动画的区别，并不会出现空白了，因为背景平铺了 */</span></span><br><span class="line">    <span class="attribute">animation</span>: way1 <span class="number">2s</span> <span class="built_in">steps</span>(4);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">keyframes</span> way1 &#123;</span><br><span class="line">    0% &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>; <span class="comment">/* A */</span></span><br><span class="line">    &#125;</span><br><span class="line">    100% &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: <span class="number">0</span> -<span class="number">200px</span>; <span class="comment">/* A */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 设置是这样的写法 */</span></span><br><span class="line">@<span class="keyword">keyframes</span> way1 &#123;</span><br><span class="line">    0% &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">200px</span>; <span class="comment">/* A */</span></span><br><span class="line">    &#125;</span><br><span class="line">    100% &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0px</span>; <span class="comment">/* A */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="其他属性对-step-的影响"><a href="#其他属性对-step-的影响" class="headerlink" title="其他属性对 step 的影响"></a>其他属性对 step 的影响</h2><p>当 steps() 第二个参数为 end 时会忽略结束帧，但 <code>animation-fill-mode: forwards;</code> 是会影响 steps() 的表现的，例如我想让一个盒子从 0 运动到 100，可写代码如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">.box&#123;</span><br><span class="line">    width: <span class="number">100</span>px;</span><br><span class="line">    height: <span class="number">100</span>px;</span><br><span class="line">    background-color: pink;</span><br><span class="line">    position: absolute;</span><br><span class="line">    top: <span class="number">70</span>px;</span><br><span class="line">    animation: move <span class="number">3</span>s steps(<span class="number">5</span>) forwards;</span><br><span class="line">&#125;</span><br><span class="line">@keyframes move &#123;</span><br><span class="line">    <span class="number">0</span>%&#123;</span><br><span class="line">        left: <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="number">100</span>%&#123;</span><br><span class="line">        left: <span class="number">100</span>px;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>结果如下：</p>
-<p><img src="/resource/images/pages/h5css3/boxmove.gif" alt></p>
-<p>说好的 steps() 第二个参数为 end 时会忽略最后一帧，但最后却停在了 100px 的位置上，说明 animation-fill-mode 为 forwards 时会对 steps() 帧动画造成影响，以 forwards 为准！当然你如果又设置了 infinite，那 forwards 也就“失效”了…</p>
-<h2 id="再来个小栗子"><a href="#再来个小栗子" class="headerlink" title="再来个小栗子"></a>再来个小栗子</h2><p><a href="/resource/demos/demo01/index.html">点我去远方</a></p>
+<h2 id="基本需求"><a href="#基本需求" class="headerlink" title="基本需求"></a>基本需求</h2><p><img src="/resource/images/pages/webapi/send-message__1.png" alt></p>
+<p>需求：点击添加按钮，把 input 框中的内容放入新创建的 li，并添加到 ul 中，如上图</p>
+<p>代码实现：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>添加<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">style</span>=<span class="string">"width: 200px;"</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">var oInput = document.querySelector('input');</span></span><br><span class="line"><span class="undefined">var oBtn = document.querySelector('button');</span></span><br><span class="line"><span class="undefined">var oUl = document.querySelector('ul');</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">oBtn.onclick = function() &#123;</span></span><br><span class="line"><span class="undefined">    // 创建 li</span></span><br><span class="line"><span class="undefined">    var oLi = document.createElement('li');</span></span><br><span class="line"><span class="undefined">    // 给 li 添加内容</span></span><br><span class="line"><span class="undefined">    oLi.innerHTML = oInput.value;</span></span><br><span class="line"><span class="undefined">    // 添加 li 到 ul</span></span><br><span class="line"><span class="undefined">    oUl.appendChild(oLi);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 创建删除按钮 span</span></span><br><span class="line"><span class="undefined">    var oBtn = document.createElement('span');</span></span><br><span class="line"><span class="undefined">    // 添加文字</span></span><br><span class="line"><span class="undefined">    oBtn.innerHTML = '删除';</span></span><br><span class="line"><span class="undefined">    // 添加删除按钮到 li</span></span><br><span class="line"><span class="undefined">    oLi.appendChild(oBtn);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 每次点击时选择所有按钮，并绑定点击事件做删除操作</span></span><br><span class="line"><span class="undefined">    var aBtn = document.querySelectorAll('span');</span></span><br><span class="line"><span class="undefined">    for(var i = 0; i &lt; aBtn.length; i ++) &#123;</span></span><br><span class="line"><span class="undefined">        aBtn[i].onclick = function() &#123;</span></span><br><span class="line"><span class="undefined">            oUl.removeChild(this.parentNode);</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">&#125;;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="问题重现"><a href="#问题重现" class="headerlink" title="问题重现"></a>问题重现</h2><p>上面删除当前列表的功能，我们是用普通的事件绑定形式(onclick)去做的，没有什么问题。有同学尝试用事件监听的形式(addEventListener)改写代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> aBtn = <span class="built_in">document</span>.querySelectorAll(<span class="string">'span'</span>);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aBtn.length; i ++) &#123;</span><br><span class="line">    aBtn[i].addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        oUl.removeChild(<span class="keyword">this</span>.parentNode);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>点击添加按钮，增加了 2 个或大于 2 个元素，此时再删除非最后一个列表时（非最后一个还是非第一个取决于是用 appendChild 还是 insertBefore 插入的），却发现出现了错误！打开控制台报错信息如下（删除了一个不是 oUl 子元素的节点）：</p>
+<p><img src="/resource/images/pages/webapi/send-message__2.png" alt></p>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>第 1 次点击按钮添加完成后，会通过 <code>var aBtn = document.querySelectorAll(&#39;span&#39;);</code> 选择所有的删除按钮，绑定事件</p>
+<p>第 2 次点击添加按钮完成后，会通过 <code>var aBtn = document.querySelectorAll(&#39;span&#39;);</code> 选择所有的删除按钮，绑定事件。问题就出在这里，选择所有删除按钮并绑定事件的操作，其实又会把之前<strong>已经绑定事件的元素再次绑定了一次</strong>。所以点击删除按钮时会发现 <code>oUl.removeChild(this.parentNode);</code> 执行了多次（取决于重复绑定了多少次），第 1 次执行时已经把当前 li 从 ul 中移除，下次再执行 <code>oUl.removeChild(this.parentNode);</code> 时其实 ul 中已经没有了这个 li，删除一个不存在的子节点就会报错！</p>
+<p>第 3 次点击添加按钮完成后，同理…</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p><strong>Way1:</strong> 使用普通的事件绑定形式（onclick）</p>
+<p><strong>Way2:</strong> 对于<strong>同样的事件处理程序</strong>独立出去（本需求做不到），每次保证绑定的是同一个（函数），例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oBtn = <span class="built_in">document</span>.querySelector(<span class="string">'button'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line">oBtn.addEventListener(<span class="string">'click'</span>, fn);</span><br><span class="line">oBtn.addEventListener(<span class="string">'click'</span>, fn);</span><br></pre></td></tr></table></figure>
+<p><strong>Way3:</strong> 其实前面每次添加列表就通过 <code>querySelectorAll</code> 重新选择所有删除按钮并绑定事件，本身就是一个糟糕的思路！正确的方式是：每次添加列表的时候，给当前创建的删除按钮单独绑定事件，这样无论是从效率，还是代码简洁度上都最佳，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oBtn = <span class="built_in">document</span>.createElement(<span class="string">'span'</span>);</span><br><span class="line"><span class="comment">// 给一个创建的元素单独绑定事件，而不是每次点击通过 querySelectorAll 选择的形式</span></span><br><span class="line">oBtn.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    oUl.removeChild(<span class="keyword">this</span>.parentNode);</span><br><span class="line">&#125;);</span><br><span class="line">oBtn.innerHTML = <span class="string">'删除'</span>;</span><br><span class="line">oLi.appendChild(oBtn);</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -485,9 +475,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/steps/" rel="tag"># steps()</a>
-          
-            <a href="/tags/帧动画/" rel="tag"># 帧动画</a>
+            <a href="/tags/addEventListener/" rel="tag"># addEventListener</a>
           
         </div>
       
@@ -500,8 +488,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/26/judge-type/" rel="next" title="数据类型检测的 N 中方式">
-                <i class="fa fa-chevron-left"></i> 数据类型检测的 N 中方式
+              <a href="/2019/06/23/splice/" rel="next" title="关于数组塌陷">
+                <i class="fa fa-chevron-left"></i> 关于数组塌陷
               </a>
             
           </div>
@@ -509,10 +497,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/07/mobile-layout/" rel="prev" title="移动端布局那点事">
-                移动端布局那点事 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -665,7 +649,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#缘起"><span class="nav-text">缘起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的感性认识"><span class="nav-text">我的感性认识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我就想用-start"><span class="nav-text">我就想用 start</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他写法"><span class="nav-text">其他写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他属性对-step-的影响"><span class="nav-text">其他属性对 step 的影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再来个小栗子"><span class="nav-text">再来个小栗子</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本需求"><span class="nav-text">基本需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题重现"><span class="nav-text">问题重现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析"><span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-text">解决方案</span></a></li></ol></div>
             
 
           </div>
