@@ -13,7 +13,7 @@ categories: Web API
 
 <img src="/resource/images/pages/webapi/send-message__1.png" alt="">
 
-需求：点击添加按钮，把 input 框中的内容放入新创建的 li，并添加到 ul 中，如上图
+需求：点击添加按钮，把 input 框中的内容放入新创建的 li，并给 li 中添加删除按钮可以删除当前行，最后把 li 添加到 ul 中，如上图
 
 代码实现：
 
@@ -21,7 +21,9 @@ categories: Web API
 <input type="text">
 <button>添加</button>
 <ul style="width: 200px;"></ul>
-<script>
+```
+
+```javascript
 var oInput = document.querySelector('input');
 var oBtn = document.querySelector('button');
 var oUl = document.querySelector('ul');
@@ -49,7 +51,6 @@ oBtn.onclick = function() {
         };
     }
 };
-</script>
 ```
 
 ## 问题重现
