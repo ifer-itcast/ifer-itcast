@@ -6,10 +6,10 @@
 
 
 <html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="addEventListener,">
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,21 +79,17 @@
 
 
 
-<meta name="description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定形式，例如 oBtn.onclick = fn; 还有一种是通过事件监听的形式，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个">
-<meta name="keywords" content="addEventListener">
-<meta property="og:type" content="article">
-<meta property="og:title" content="再说事件绑定">
-<meta property="og:url" content="http://yoursite.com/2019/06/27/addEventListener/index.html">
+<meta name="description" content="Document                 ~(function($, window, document, undefined) {         // 传递 $, window, document 提高访问速度，传递 undefined 防止被外部修改掉         const Tab = function(eles, opts) {">
+<meta property="og:type" content="website">
+<meta property="og:title" content="危险">
+<meta property="og:url" content="http://yoursite.com/resource/demos/demo03/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定形式，例如 oBtn.onclick = fn; 还有一种是通过事件监听的形式，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个">
+<meta property="og:description" content="Document                 ~(function($, window, document, undefined) {         // 传递 $, window, document 提高访问速度，传递 undefined 防止被外部修改掉         const Tab = function(eles, opts) {">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/resource/images/pages/webapi/send-message__1.png">
-<meta property="og:image" content="http://yoursite.com/resource/images/pages/webapi/send-message__2.png">
-<meta property="og:updated_time" content="2019-06-28T04:40:36.635Z">
+<meta property="og:updated_time" content="2019-06-27T23:58:58.190Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="再说事件绑定">
-<meta name="twitter:description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定形式，例如 oBtn.onclick = fn; 还有一种是通过事件监听的形式，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个">
-<meta name="twitter:image" content="http://yoursite.com/resource/images/pages/webapi/send-message__1.png">
+<meta name="twitter:title" content="危险">
+<meta name="twitter:description" content="Document                 ~(function($, window, document, undefined) {         // 传递 $, window, document 提高访问速度，传递 undefined 防止被外部修改掉         const Tab = function(eles, opts) {">
 
 
 
@@ -123,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/27/addEventListener/">
+  <link rel="canonical" href="http://yoursite.com/resource/demos/demo03/"/>
 
 
 
 
 
-  <title>再说事件绑定 | 危险</title>
+  <title> | 危险</title>
   
 
 
@@ -167,7 +163,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">危险</span>
         <span class="logo-line-after"><i></i></span>
@@ -197,7 +193,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -207,7 +203,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分类
           </a>
@@ -217,7 +213,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -227,7 +223,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
           </a>
@@ -237,7 +233,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
             关于
           </a>
@@ -250,7 +246,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             搜索
           </a>
@@ -271,7 +267,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -296,229 +294,164 @@
 
   <div id="posts" class="posts-expand">
     
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/27/addEventListener/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="危险">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="危险">
-    </span>
-
     
+    
+    <div class="post-block page">
       <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">再说事件绑定</h1>
-        
+	<h1 class="post-title" itemprop="name headline"></h1>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-27T11:03:11+08:00">
-                2019-06-27
-              </time>
-            
 
-            
 
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Web-API/" itemprop="url" rel="index">
-                    <span itemprop="name">Web API</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/06/27/addEventListener/" class="leancloud_visitors" data-flag-title="再说事件绑定">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</header>
 
       
       
-
       
-        <p>大家都清楚，常用的事件绑定有两种形式，一种是<strong>传统绑定</strong>形式，例如 <code>oBtn.onclick = fn;</code> 还有一种是通过<strong>事件监听</strong>的形式，例如 <code>oBtn.addEventListener(&#39;click&#39;, fn, false);</code> 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个<strong>不同的</strong>事件处理程序时都会生效。但是在具体使用时<strong>用什么方式绑</strong>？<strong>绑定在谁身上</strong>（是点击的当前元素还是父元素）？<strong>什么时候绑</strong>（是点击的时候绑还是程序加载的时候绑）？都是你需要关注的细节，这里我举了一个例子来说明这三个问题！</p>
-<a id="more"></a>
-<h2 id="基本需求"><a href="#基本需求" class="headerlink" title="基本需求"></a>基本需求</h2><p><img src="/resource/images/pages/webapi/send-message__1.png" alt></p>
-<p>需求：点击添加按钮，把 input 框中的内容放入新创建的 li，并给 li 中添加删除按钮可以删除当前行，最后把 li 添加到 ul 中，如上图</p>
-<p>代码实现：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>添加<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">style</span>=<span class="string">"width: 200px;"</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oInput = <span class="built_in">document</span>.querySelector(<span class="string">'input'</span>);</span><br><span class="line"><span class="keyword">var</span> oBtn = <span class="built_in">document</span>.querySelector(<span class="string">'button'</span>);</span><br><span class="line"><span class="keyword">var</span> oUl = <span class="built_in">document</span>.querySelector(<span class="string">'ul'</span>);</span><br><span class="line"></span><br><span class="line">oBtn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 创建 li</span></span><br><span class="line">    <span class="keyword">var</span> oLi = <span class="built_in">document</span>.createElement(<span class="string">'li'</span>);</span><br><span class="line">    <span class="comment">// 给 li 添加内容</span></span><br><span class="line">    oLi.innerHTML = oInput.value;</span><br><span class="line">    <span class="comment">// 添加 li 到 ul</span></span><br><span class="line">    oUl.appendChild(oLi);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建删除按钮 span</span></span><br><span class="line">    <span class="keyword">var</span> oBtn = <span class="built_in">document</span>.createElement(<span class="string">'span'</span>);</span><br><span class="line">    <span class="comment">// 添加文字</span></span><br><span class="line">    oBtn.innerHTML = <span class="string">'删除'</span>;</span><br><span class="line">    <span class="comment">// 添加删除按钮到 li</span></span><br><span class="line">    oLi.appendChild(oBtn);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 每次点击时选择所有按钮，并绑定点击事件做删除操作</span></span><br><span class="line">    <span class="keyword">var</span> aBtn = <span class="built_in">document</span>.querySelectorAll(<span class="string">'span'</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aBtn.length; i ++) &#123;</span><br><span class="line">        aBtn[i].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            oUl.removeChild(<span class="keyword">this</span>.parentNode);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="问题重现"><a href="#问题重现" class="headerlink" title="问题重现"></a>问题重现</h2><p>上面删除当前列表的功能，我们是用普通的事件绑定形式(onclick)去做的，没有什么问题。有同学尝试用事件监听的形式(addEventListener)改写代码如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> aBtn = <span class="built_in">document</span>.querySelectorAll(<span class="string">'span'</span>);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aBtn.length; i ++) &#123;</span><br><span class="line">    aBtn[i].addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        oUl.removeChild(<span class="keyword">this</span>.parentNode);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>点击添加按钮，增加了 2 个或大于 2 个元素，此时再删除非最后一个列表时（非最后一个还是非第一个取决于是用 appendChild 还是 insertBefore 插入的），却发现出现了错误！打开控制台报错信息如下（删除了一个不是 oUl 子元素的节点）：</p>
-<p><img src="/resource/images/pages/webapi/send-message__2.png" alt></p>
-<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>第 1 次点击按钮添加完成后，会通过 <code>var aBtn = document.querySelectorAll(&#39;span&#39;);</code> 选择所有的删除按钮，绑定事件</p>
-<p>第 2 次点击添加按钮完成后，会通过 <code>var aBtn = document.querySelectorAll(&#39;span&#39;);</code> 选择所有的删除按钮，绑定事件。问题就出在这里，选择所有删除按钮并绑定事件的操作，其实又会把之前<strong>已经绑定事件的元素再次绑定了一次</strong>。所以点击删除按钮时会发现 <code>oUl.removeChild(this.parentNode);</code> 执行了多次（取决于重复绑定了多少次），第 1 次执行时已经把当前 li 从 ul 中移除，下次再执行 <code>oUl.removeChild(this.parentNode);</code> 时其实 ul 中已经没有了这个 li，删除一个不存在的子节点就会报错！</p>
-<p>第 3 次点击添加按钮完成后，同理…</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p><strong>Way1:</strong> 使用普通的事件绑定形式（onclick）</p>
-<p><strong>Way2:</strong> 对于<strong>同样的事件处理程序</strong>独立出去变成同一个函数，每次保证绑定的是同一个（函数），例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> aBtn = <span class="built_in">document</span>.querySelectorAll(<span class="string">'span'</span>);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aBtn.length; i ++) &#123;</span><br><span class="line">    <span class="comment">// aBtn[i].removeEventListener('click', rm); // 这里就没有必要进行先解绑了，因为每次绑定的是同一个 rm，会覆盖掉之前的</span></span><br><span class="line">    aBtn[i].addEventListener(<span class="string">'click'</span>, rm);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 注意这里巧妙的用到了 e.target 查找当前点击的元素，不要试图通过传参的形式使用 this 查找当前元素！</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rm</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    oUl.removeChild(e.target.parentNode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Way3:</strong> 其实前面每次添加列表就通过 <code>querySelectorAll</code> 重新选择所有删除按钮并绑定事件，本身就是一个糟糕的思路！其实只需要找到最新添加的那一个进行事件绑定就可以了，往前插入的话可以直接通过 <code>var oBtn = document.querySelector(&#39;span&#39;);</code> 找到最新添加的那个，往后插入的话代码如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oBtn = <span class="built_in">document</span>.querySelectorAll(<span class="string">'span'</span>)[oUl.children.length<span class="number">-1</span>];</span><br><span class="line">oBtn.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    oUl.removeChild(<span class="keyword">this</span>.parentNode);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>除了上面通过元素选择的方式查找最新添加的那一个，最正确的方式其实是根本不用查找，它就在那里！每次添加列表的时候，当前创建的删除按钮就是最新的，直接给其绑定事件即可，这样无论是从效率，还是代码简洁度上都最佳，代码如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oBtn = <span class="built_in">document</span>.createElement(<span class="string">'span'</span>);</span><br><span class="line"><span class="comment">// 给一个创建的元素单独绑定事件，而不是每次点击通过 querySelectorAll 选择的形式</span></span><br><span class="line">oBtn.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    oUl.removeChild(<span class="keyword">this</span>.parentNode);</span><br><span class="line">&#125;);</span><br><span class="line">oBtn.innerHTML = <span class="string">'删除'</span>;</span><br><span class="line">oLi.appendChild(oBtn);</span><br></pre></td></tr></table></figure>
-<p><strong>Way4:</strong> 使用事件委托，推荐！</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 把事件绑定在父级上</span></span><br><span class="line">oUl.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 根据点击当前元素的名字（或其他）来判断是否是 span（即删除按钮），然后做相应的操作</span></span><br><span class="line">    <span class="keyword">if</span>(e.target.nodeName.toLowerCase() === <span class="string">'span'</span>) &#123;</span><br><span class="line">        e.currentTarget.removeChild(e.target.parentNode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+      <div class="post-body">
+        
+        
+          <!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="js/jquery-3.4.1.js"></script>
+    <script>
+    ~(function($, window, document, undefined) {
+        // 传递 $, window, document 提高访问速度，传递 undefined 防止被外部修改掉
+        const Tab = function(eles, opts) {
+            // eles => jQuery 对象
+            // opts => 自定义参数
+            // 传过来的 jQuery 对象
+            this.$elements = eles;
+
+            // 外包裹
+            this.$wrap = $('<div id="ifer-wrap">');
+
+            this.defaults = {
+                titles: ['标题1', '标题2', '标题3'],
+                contents: ['内容1', '内容2', '内容3'],
+                eventType: 'click',
+                delayTime: 0
+            };
+
+            // 不要覆盖默认参数 this.defaults，后续可能会用到
+            this.options = $.extend({}, this.defaults, opts);
+        };
+        Tab.prototype = {
+            constructor: Tab,
+            init: function() {
+                // 创建元素
+                this.createEle();
+                // 切换功能
+                this.changeTab();
+                // 默认样式
+                this.defaultStyle();
+            },
+            defaultStyle: function() {
+                this.$wrap.find(".ifer-title").css({'list-style': 'none','display': 'flex','margin': 0,'padding': 0}).end().find(".ifer-title li").css({'margin': '0 10px','cursor': 'pointer'}).end().find(".ifer-con div").css({'height': '100px','display': 'none'});
+                this.$wrap.find(".ifer-title li").eq(0).css('backgroundColor', 'pink');
+                this.$wrap.find(".ifer-con div").eq(0).css('display', 'block');
+            },
+            createEle: function() {
+                // 创建标题
+                let $ul = $('<ul class="ifer-title">');
+                $.each(this.options.titles, function(idx, data) {
+                    $ul.append($('<li>'+ data +'</li>'));
+                });
+                this.$wrap.append($ul);
+                this.$titles = $ul.find('li');
+
+                // 创建内容
+                let $div = $('<div class="ifer-con">');
+                $.each(this.options.contents, function(idx, data) {
+                    $div.append($('<div>' + data + '</div>'));
+                });
+                this.$wrap.append($div);
+                this.$contents = $div.find('div');
+
+                // 添加
+                this.$elements.prepend(this.$wrap);
+            },
+            changeTab: function() {
+                let timer = null, _this = this;
+                this.$titles.on(this.options.eventType, function(ele) {
+                    if(_this.options.eventType === 'mouseover') {
+                        clearInterval(timer);
+                        timer = setTimeout(() => {
+                            tabFn(_this, this);
+                        }, _this.options.delayTime);
+                    } else {
+                        tabFn(_this, this);
+                    }
+                });
+            }
+        };
+
+        function tabFn(_this, nowThis) {
+            _this.$wrap.trigger('prevTab');
+            $(nowThis).css('backgroundColor', 'pink').siblings().css('background', '').parents("#ifer-wrap").find(".ifer-con div").eq($(nowThis).index()).show().siblings().hide();
+            _this.$wrap.trigger('nextTab');
+        }
+
+        $.fn.iferTab = function(options) {
+            // this => 选中的 jQuery 元素
+            const tab = new Tab(this, options);
+            tab.init();
+        };
+    })(jQuery, window, document);
+
+
+    /* $('body').iferTab({
+        titles: ['体育', '新闻'],
+        contents: ['体育的内容', '新闻的内容']
+    }); */
+
+    /* $('body').iferTab({
+        eventType: 'mouseover'
+    }); */
+
+    /* $('body').iferTab({
+        eventType: 'mouseover',
+        delayTime: '100'
+    }); */
+    $('body').iferTab({
+        eventType: 'mouseover',
+        delayTime: '200'
+    });
+    $('body').on('prevTab', function() {
+        console.log($(this).find('.ifer-con div:visible').html());
+    });
+    $('body').on('nextTab', function() {
+        console.log($(this).find('.ifer-con div:visible').html());
+    });
+
+    // todoList
+    // 默认样式美化
+    // 样式配置
+    // 调研其他选项卡插件
+    // 代码风格统一
+    // 自动播放
+    // 切换效果
+    // 精简代码
+    // ...
+    </script>
+</body>
+</html>
+        
+      </div>
+      
+      
       
     </div>
     
     
     
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/addEventListener/" rel="tag"># addEventListener</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/06/23/splice/" rel="next" title="关于数组塌陷">
-                <i class="fa fa-chevron-left"></i> 关于数组塌陷
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
 
@@ -556,17 +489,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -642,22 +566,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本需求"><span class="nav-text">基本需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题重现"><span class="nav-text">问题重现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析"><span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-text">解决方案</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
