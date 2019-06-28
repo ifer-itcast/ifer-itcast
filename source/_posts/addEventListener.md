@@ -82,18 +82,30 @@ for(var i = 0; i < aBtn.length; i ++) {
 
 **Way1:** 使用普通的事件绑定形式（onclick）
 
-**Way2:** 对于**同样的事件处理程序**独立出去变成同一个函数（本需求做不到），每次保证绑定的是同一个（函数），例如：
+**Way2:** 对于**同样的事件处理程序**独立出去变成同一个函数，每次保证绑定的是同一个（函数），例如：
 
 ```javascript
-var oBtn = document.querySelector('button');
-function fn() {
-    console.log(1);
+var aBtn = document.querySelectorAll('span');
+for(var i = 0; i < aBtn.length; i ++) {
+    // aBtn[i].removeEventListener('click', rm); // 这里就没有必要进行先解绑了，因为每次绑定的是同一个 rm，会覆盖掉之前的
+    aBtn[i].addEventListener('click', rm);
 }
-oBtn.addEventListener('click', fn);
-oBtn.addEventListener('click', fn);
+// 注意这里巧妙的用到了 e.target 查找当前点击的元素，不要试图通过传参的形式使用 this 查找当前元素！
+function rm(e) {
+    oUl.removeChild(e.target.parentNode);
+}
 ```
 
-**Way3:** 其实前面每次添加列表就通过 `querySelectorAll` 重新选择所有删除按钮并绑定事件，本身就是一个糟糕的思路！正确的方式是：每次添加列表的时候，给当前创建的删除按钮单独绑定事件，这样无论是从效率，还是代码简洁度上都最佳，代码如下：
+**Way3:** 其实前面每次添加列表就通过 `querySelectorAll` 重新选择所有删除按钮并绑定事件，本身就是一个糟糕的思路！其实只需要找到最新添加的那一个进行事件绑定就可以了，往前插入的话可以直接通过 `var oBtn = document.querySelector('span');` 找到最新添加的那个，往后插入的话代码如下：
+
+```javascript
+var oBtn = document.querySelectorAll('span')[oUl.children.length-1];
+oBtn.addEventListener('click', function() {
+    oUl.removeChild(this.parentNode);
+});
+```
+
+除了上面通过元素选择的方式查找最新添加的那一个，最正确的方式其实是根本不用查找，它就在那里！每次添加列表的时候，当前创建的删除按钮就是最新的，直接给其绑定事件即可，这样无论是从效率，还是代码简洁度上都最佳，代码如下：
 
 ```javascript
 var oBtn = document.createElement('span');
