@@ -46,3 +46,33 @@ oBox.onmousemove = function (e) {
 
 思考：如果对盒子初始位置的改变使用 margin，那么再拖拽时还能得到正确的效果吗？
 
+## 使用 translate 改变盒子的位置
+
+可以直接把之前对 oBox.style.left 的修改变成 oBox.style.transform 吗？
+
+```javascript
+document.onmousemove = function (e) {
+    var l = e.clientX - disX;
+    var t = e.clientY - disY;
+    // oBox.style.left = l + 'px';
+    // oBox.style.top = t + 'px';
+    oBox.style.transform = 'translate(' + l + 'px, ' + t + 'px)';
+};
+```
+
+l 本来指的应该是 oBox 的 left 值，这里直接把 l 使用在了 translate 上，那就相当于在原来定位的基础上又直接 translate 了 l 的值，肯定是不行的！
+
+核心原理：上次移动位置变成下次起始位置！
+
+<a href="/resource/demos/demo04/03_drag.html">代码实现1</a>
+
+<a href="/resource/demos/demo04/04_drag.html">代码实现2</a>
+
+<a href="/resource/demos/demo04/05_drag.html">代码实现3</a>
+
+
+
+
+
+
+

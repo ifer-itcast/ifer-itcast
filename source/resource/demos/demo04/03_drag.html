@@ -1,0 +1,55 @@
+---
+layout: false
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            left: 200px;
+            background-color: pink;
+            transform: translate(50px, 100px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        var oBox = document.querySelector('#box');
+        // 这个是初始的 translate 值
+        var moveX = 50;
+        var moveY = 100;
+        oBox.onmousedown = function (e) {
+            // 下次移动的时候用当前的 moveX 再加上 1 次原来的 moveX 就可以了，注意是 1 此，所以不能在 mousemove 中加
+            var originPageX = e.pageX - moveX;
+            var originPageY = e.pageY - moveY;
+            document.onmousemove = function (e) {
+                moveX = e.pageX - originPageX
+                moveY = e.pageY - originPageY;
+
+                // 注意这里改变的是 transform 不再是 oBox.style.left 了
+                oBox.style.transform = 'translate(' + moveX + 'px, ' + moveY + 'px)';
+            };
+            document.onmouseup = function () {
+                this.onmousemove = this.onmouseup = null;
+            };
+            return false;
+        };
+    </script>
+</body>
+
+</html>
