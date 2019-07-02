@@ -44,7 +44,7 @@ oBox.onmousemove = function (e) {
 
 当使用了 translate 移动了盒子之后，光标到盒子的计算结果是不对的，那为什么最终还能实现正确的拖拽效果呢？那是因为 offsetLeft 的计算并不会把 translateX 包括在内，移动时再对 oDiv.style.left 赋值时刚好也就能得到正确的结果！
 
-思考：如果对盒子初始位置的改变使用 margin，那么再拖拽时还能得到正确的效果吗？
+*思考：如果对盒子初始位置的改变使用 margin，那么再拖拽时还能得到正确的效果吗？*
 
 ## 使用 translate 改变盒子的位置
 
