@@ -9,6 +9,11 @@
 </head>
 
 <body>
+    <div id="box1"></div>
+    <div id="box2"></div>
+    <div id="box3"></div>
+    <div id="box4"></div>
+    <div id="box5"></div>
     <script src="js/jquery-3.4.1.js"></script>
     <script>
         ~(function ($, window, document, undefined) {
@@ -181,7 +186,27 @@
         }); */
 
         // 自动播放
-        $("body").iferTab({
+        $("#box1").iferTab({
+            eventType: "mouseover",
+            delayTime: "200",
+            color: "#848484"
+        });
+        $("#box2").iferTab({
+            eventType: "mouseover",
+            delayTime: "200",
+            color: "#e23839"
+        });
+        $("#box3").iferTab({
+            eventType: "mouseover",
+            delayTime: "200",
+            color: "#267280"
+        });
+        $("#box4").iferTab({
+            eventType: "mouseover",
+            delayTime: "200",
+            color: "#22a554"
+        });
+        $("#box5").iferTab({
             eventType: "mouseover",
             delayTime: "200",
         });
