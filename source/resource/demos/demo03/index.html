@@ -1,122 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
     <script src="js/jquery-3.4.1.js"></script>
     <script>
-    ~(function($, window, document, undefined) {
-        // 传递 $, window, document 提高访问速度，传递 undefined 防止被外部修改掉
-        const Tab = function(eles, opts) {
-            // eles => jQuery 对象
-            // opts => 自定义参数
-            // 传过来的 jQuery 对象
-            this.$elements = eles;
+        ~(function ($, window, document, undefined) {
+            // 传递 $, window, document 提高访问速度，传递 undefined 防止被外部修改掉
+            const Tab = function (eles, opts) {
+                // eles => jQuery 对象
+                // opts => 自定义参数
+                // 传过来的 jQuery 对象
+                this.$elements = eles;
+                // 定时器
+                this.timer = null;
+                // 外包裹
+                this.$wrap = $("<div id='ifer-wrap'>");
+                // 默认配置
+                this.defaults = {
+                    titles: ["News", "Sports", "Education"],
+                    contents: ["News con...", "Sports con...", "Education ..."],
+                    eventType: "click",
+                    delayTime: 0,
+                    color: "#6341a5",
+                    effect: "default",
+                    autoPlay: 3000
+                };
 
-            // 外包裹
-            this.$wrap = $('<div id="ifer-wrap">');
-
-            this.defaults = {
-                titles: ['标题1', '标题2', '标题3'],
-                contents: ['内容1', '内容2', '内容3'],
-                eventType: 'click',
-                delayTime: 0
+                // 不要覆盖默认参数 this.defaults，后续可能会用到
+                this.options = $.extend({}, this.defaults, opts);
             };
+            Tab.prototype = {
+                constructor: Tab,
+                init: function () {
+                    // 创建元素
+                    this.createEle();
+                    // 切换功能
+                    this.changeTab();
+                    // 默认样式
+                    this.defaultStyle();
+                    // 自动播放
+                    this.options.autoPlay && this.autoPlay();
+                },
+                defaultStyle: function () {
+                    // 外包裹
+                    this.$wrap.css({ "display": "inline-block", "border": "1px solid #dbdbdb", "box-shadow": "rgb(164, 160, 157) 1px 1px 9px -3px" })
+                    // 标题包裹
+                    this.$wrap.find(".ifer-title").css({ "list-style": "none", "display": "flex", "margin": 0, "padding": 0, "border-bottom": "2px solid " + this.options.color })
+                    // 标题
+                    this.$wrap.find(".ifer-title li").css({ "margin-left": "10px", "cursor": "pointer", "padding": "10px 30px", "color": "#333" }).eq(0).css({ "margin-left": 0 });
+                    // 第一个标题
+                    this.$wrap.find(".ifer-title li").eq(0).css({ "backgroundColor": this.options.color, "color": "#fff" });
+                    // 内容
+                    this.$wrap.find(".ifer-con div").css({ "display": "none", "padding": "20px" });
+                    // 第一个内容
+                    this.$wrap.find(".ifer-con div").eq(0).css("display", "block");
+                },
+                createEle: function () {
+                    // 创建标题
+                    let $ul = $("<ul class='ifer-title'>");
+                    $.each(this.options.titles, function (idx, data) {
+                        $ul.append($("<li>" + data + "</li>"));
+                    });
+                    this.$wrap.append($ul);
+                    this.$titles = $ul.find("li");
 
-            // 不要覆盖默认参数 this.defaults，后续可能会用到
-            this.options = $.extend({}, this.defaults, opts);
-        };
-        Tab.prototype = {
-            constructor: Tab,
-            init: function() {
-                // 创建元素
-                this.createEle();
-                // 切换功能
-                this.changeTab();
-                // 默认样式
-                this.defaultStyle();
-            },
-            defaultStyle: function() {
-                this.$wrap.find(".ifer-title").css({'list-style': 'none','display': 'flex','margin': 0,'padding': 0}).end().find(".ifer-title li").css({'margin': '0 10px','cursor': 'pointer'}).end().find(".ifer-con div").css({'height': '100px','display': 'none'});
-                this.$wrap.find(".ifer-title li").eq(0).css('backgroundColor', 'pink');
-                this.$wrap.find(".ifer-con div").eq(0).css('display', 'block');
-            },
-            createEle: function() {
-                // 创建标题
-                let $ul = $('<ul class="ifer-title">');
-                $.each(this.options.titles, function(idx, data) {
-                    $ul.append($('<li>'+ data +'</li>'));
-                });
-                this.$wrap.append($ul);
-                this.$titles = $ul.find('li');
+                    // 创建内容
+                    let $div = $("<div class='ifer-con'>");
+                    $.each(this.options.contents, function (idx, data) {
+                        $div.append($("<div>" + data + "</div>"));
+                    });
+                    this.$wrap.append($div);
+                    this.$contents = $div.find("div");
 
-                // 创建内容
-                let $div = $('<div class="ifer-con">');
-                $.each(this.options.contents, function(idx, data) {
-                    $div.append($('<div>' + data + '</div>'));
-                });
-                this.$wrap.append($div);
-                this.$contents = $div.find('div');
-
-                // 添加
-                this.$elements.prepend(this.$wrap);
-            },
-            changeTab: function() {
-                let timer = null, _this = this;
-                this.$titles.on(this.options.eventType, function(ele) {
-                    if(_this.options.eventType === 'mouseover') {
-                        clearInterval(timer);
-                        timer = setTimeout(() => {
-                            tabFn(_this, this);
-                        }, _this.options.delayTime);
-                    } else {
-                        tabFn(_this, this);
+                    // 添加
+                    this.$elements.prepend(this.$wrap);
+                },
+                changeTab: function () {
+                    let timer = null, _this = this;
+                    // 改成bind
+                    this.$titles.on(this.options.eventType, function (ele) {
+                        // ele 是 jQuery 元素
+                        // this 是原生
+                        _this.iNum = $(this).index();
+                        if (_this.options.eventType === "mouseover") {
+                            clearInterval(timer);
+                            timer = setTimeout(() => {
+                                _changeTab(_this, $(this).index());
+                            }, _this.options.delayTime);
+                        } else {
+                            _changeTab(_this, $(this).index());
+                        }
+                    });
+                },
+                autoPlay: function () {
+                    this.iNum = 0;
+                    _autoPlay(this);
+                    this.$wrap.hover(function () {
+                        clearInterval(this.timer);
+                    }.bind(this), function () {
+                        _autoPlay(this);
+                    }.bind(this));
+                }
+            };
+            function _autoPlay(_this) {
+                _this.timer = setInterval(function () {
+                    _this.iNum++;
+                    if (_this.iNum === _this.$titles.length) {
+                        _this.iNum = 0;
                     }
-                });
+                    _changeTab(_this, _this.iNum);
+                }.bind(_this), _this.options.autoPlay);
             }
-        };
+            function _changeTab(_this, idx) {
+                // 切换前
+                _this.$wrap.trigger("prevTab");
+                // $(nowThis).css({"backgroundColor": _this.options.color, "color": "#fff"}).siblings().css({"background": "", "color": "#333"}).parents("#ifer-wrap").find(".ifer-con div").eq(idx).show().siblings().hide();
+                // 标题
+                _this.$wrap.find(".ifer-title li").eq(idx).css({ "backgroundColor": _this.options.color, "color": "#fff" }).siblings().css({ "background": "", "color": "#333" });
+                // 内容
+                const thisCon = _this.$wrap.find(".ifer-con div").eq(idx);
+                switch (_this.options.effect) {
+                    case "slide":
+                        thisCon.slideDown().siblings().slideUp();
+                        break;
+                    case "fade":
+                        thisCon.fadeIn().siblings().fadeOut();
+                        break;
+                    default:
+                        thisCon.show().siblings().hide();
+                }
+                // 切换后
+                _this.$wrap.trigger("nextTab");
+            }
+            $.fn.iferTab = function (options) {
+                // this => 选中的 jQuery 元素
+                const tab = new Tab(this, options);
+                tab.init();
+            };
+        })(jQuery, window, document);
 
-        function tabFn(_this, nowThis) {
-            _this.$wrap.trigger('prevTab');
-            $(nowThis).css('backgroundColor', 'pink').siblings().css('background', '').parents("#ifer-wrap").find(".ifer-con div").eq($(nowThis).index()).show().siblings().hide();
-            _this.$wrap.trigger('nextTab');
-        }
 
-        $.fn.iferTab = function(options) {
-            // this => 选中的 jQuery 元素
-            const tab = new Tab(this, options);
-            tab.init();
-        };
-    })(jQuery, window, document);
+        /* $("body").iferTab({
+            titles: ["体育", "新闻"],
+            contents: ["体育的内容", "新闻的内容"]
+        }); */
 
+        /* $("body").iferTab({
+            eventType: "mouseover"
+        }); */
 
-    /* $('body').iferTab({
-        titles: ['体育', '新闻'],
-        contents: ['体育的内容', '新闻的内容']
-    }); */
+        /* $("body").iferTab({
+            eventType: "mouseover",
+            delayTime: "100"
+        }); */
 
-    /* $('body').iferTab({
-        eventType: 'mouseover'
-    }); */
+        // 主题
+        /* $("body").iferTab({
+            eventType: "mouseover",
+            delayTime: "200",
+            color: "red",
+        });
+        $("body").on("prevTab", function() {
+            console.log($(this).find(".ifer-con div:visible").html());
+        });
+        $("body").on("nextTab", function() {
+            console.log($(this).find(".ifer-con div:visible").html());
+        }); */
 
-    /* $('body').iferTab({
-        eventType: 'mouseover',
-        delayTime: '100'
-    }); */
-    $('body').iferTab({
-        eventType: 'mouseover',
-        delayTime: '200'
-    });
-    $('body').on('prevTab', function() {
-        console.log($(this).find('.ifer-con div:visible').html());
-    });
-    $('body').on('nextTab', function() {
-        console.log($(this).find('.ifer-con div:visible').html());
-    });
+        // 支持切换效果
+        /* $("body").iferTab({
+            eventType: "mouseover",
+            delayTime: "200",
+        }); */
+
+        // 自动播放
+        $("body").iferTab({
+            eventType: "mouseover",
+            delayTime: "200",
+        });
 
     // todoList
     // 默认样式美化
@@ -129,4 +197,5 @@
     // ...
     </script>
 </body>
+
 </html>
