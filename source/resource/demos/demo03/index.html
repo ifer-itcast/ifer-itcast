@@ -26,7 +26,7 @@
                 // 定时器
                 this.timer = null;
                 // 外包裹
-                this.$wrap = $("<div id='ifer-wrap'>");
+                this.$wrap = $("<div id='i35-wrap'>");
                 // 默认配置
                 this.defaults = {
                     titles: ["News", "Sports", "Education"],
@@ -35,7 +35,7 @@
                     delayTime: 0,
                     color: "#6341a5",
                     effect: "default",
-                    autoPlay: 3000
+                    autoPlay: false
                 };
 
                 // 不要覆盖默认参数 this.defaults，后续可能会用到
@@ -57,19 +57,19 @@
                     // 外包裹
                     this.$wrap.css({ "display": "inline-block", "border": "1px solid #dbdbdb", "box-shadow": "rgb(164, 160, 157) 1px 1px 9px -3px" })
                     // 标题包裹
-                    this.$wrap.find(".ifer-title").css({ "list-style": "none", "display": "flex", "margin": 0, "padding": 0, "border-bottom": "2px solid " + this.options.color })
+                    this.$wrap.find(".i35-title").css({ "list-style": "none", "display": "flex", "margin": 0, "padding": 0, "border-bottom": "2px solid " + this.options.color })
                     // 标题
-                    this.$wrap.find(".ifer-title li").css({ "margin-left": "10px", "cursor": "pointer", "padding": "10px 30px", "color": "#333" }).eq(0).css({ "margin-left": 0 });
+                    this.$wrap.find(".i35-title li").css({ "margin-left": "10px", "cursor": "pointer", "padding": "10px 30px", "color": "#333" }).eq(0).css({ "margin-left": 0 });
                     // 第一个标题
-                    this.$wrap.find(".ifer-title li").eq(0).css({ "backgroundColor": this.options.color, "color": "#fff" });
+                    this.$wrap.find(".i35-title li").eq(0).css({ "backgroundColor": this.options.color, "color": "#fff" });
                     // 内容
-                    this.$wrap.find(".ifer-con div").css({ "display": "none", "padding": "20px" });
+                    this.$wrap.find(".i35-con div").css({ "display": "none", "padding": "20px" });
                     // 第一个内容
-                    this.$wrap.find(".ifer-con div").eq(0).css("display", "block");
+                    this.$wrap.find(".i35-con div").eq(0).css("display", "block");
                 },
                 createEle: function () {
                     // 创建标题
-                    let $ul = $("<ul class='ifer-title'>");
+                    let $ul = $("<ul class='i35-title'>");
                     $.each(this.options.titles, function (idx, data) {
                         $ul.append($("<li>" + data + "</li>"));
                     });
@@ -77,7 +77,7 @@
                     this.$titles = $ul.find("li");
 
                     // 创建内容
-                    let $div = $("<div class='ifer-con'>");
+                    let $div = $("<div class='i35-con'>");
                     $.each(this.options.contents, function (idx, data) {
                         $div.append($("<div>" + data + "</div>"));
                     });
@@ -125,12 +125,12 @@
             }
             function _changeTab(_this, idx) {
                 // 切换前
-                _this.$wrap.trigger("prevTab");
-                // $(nowThis).css({"backgroundColor": _this.options.color, "color": "#fff"}).siblings().css({"background": "", "color": "#333"}).parents("#ifer-wrap").find(".ifer-con div").eq(idx).show().siblings().hide();
+                _this.$wrap.trigger("prevChange");
+                // $(nowThis).css({"backgroundColor": _this.options.color, "color": "#fff"}).siblings().css({"background": "", "color": "#333"}).parents("#i35-wrap").find(".i35-con div").eq(idx).show().siblings().hide();
                 // 标题
-                _this.$wrap.find(".ifer-title li").eq(idx).css({ "backgroundColor": _this.options.color, "color": "#fff" }).siblings().css({ "background": "", "color": "#333" });
+                _this.$wrap.find(".i35-title li").eq(idx).css({ "backgroundColor": _this.options.color, "color": "#fff" }).siblings().css({ "background": "", "color": "#333" });
                 // 内容
-                const thisCon = _this.$wrap.find(".ifer-con div").eq(idx);
+                const thisCon = _this.$wrap.find(".i35-con div").eq(idx);
                 switch (_this.options.effect) {
                     case "slide":
                         thisCon.slideDown().siblings().slideUp();
@@ -142,9 +142,9 @@
                         thisCon.show().siblings().hide();
                 }
                 // 切换后
-                _this.$wrap.trigger("nextTab");
+                _this.$wrap.trigger("nextChange");
             }
-            $.fn.iferTab = function (options) {
+            $.fn.i35Tab = function (options) {
                 // this => 选中的 jQuery 元素
                 const tab = new Tab(this, options);
                 tab.init();
@@ -152,64 +152,61 @@
         })(jQuery, window, document);
 
 
-        /* $("body").iferTab({
-            titles: ["体育", "新闻"],
-            contents: ["体育的内容", "新闻的内容"]
-        }); */
+        $("body").i35Tab();
 
-        /* $("body").iferTab({
+        /* $("body").i35Tab({
             eventType: "mouseover"
         }); */
 
-        /* $("body").iferTab({
+        /* $("body").i35Tab({
             eventType: "mouseover",
             delayTime: "100"
         }); */
 
         // 主题
-        /* $("body").iferTab({
+        $("body").i35Tab({
             eventType: "mouseover",
             delayTime: "200",
             color: "red",
         });
-        $("body").on("prevTab", function() {
-            console.log($(this).find(".ifer-con div:visible").html());
+        $("body").on("prevChange", function(e) {
+            console.log($(e.target).find(".i35-con div:visible").html());
         });
-        $("body").on("nextTab", function() {
-            console.log($(this).find(".ifer-con div:visible").html());
-        }); */
+        $("body").on("nextChange", function(e) {
+            console.log($(e.target).find(".i35-con div:visible").html());
+        });
 
         // 支持切换效果
-        /* $("body").iferTab({
+        /* $("body").i35Tab({
             eventType: "mouseover",
             delayTime: "200",
         }); */
 
         // 自动播放
-        $("#box1").iferTab({
+        /* $("#box1").i35Tab({
             eventType: "mouseover",
             delayTime: "200",
             color: "#848484"
         });
-        $("#box2").iferTab({
+        $("#box2").i35Tab({
             eventType: "mouseover",
             delayTime: "200",
             color: "#e23839"
         });
-        $("#box3").iferTab({
+        $("#box3").i35Tab({
             eventType: "mouseover",
             delayTime: "200",
             color: "#267280"
         });
-        $("#box4").iferTab({
+        $("#box4").i35Tab({
             eventType: "mouseover",
             delayTime: "200",
             color: "#22a554"
         });
-        $("#box5").iferTab({
+        $("#box5").i35Tab({
             eventType: "mouseover",
             delayTime: "200",
-        });
+        }); */
 
     // todoList
     // 默认样式美化
