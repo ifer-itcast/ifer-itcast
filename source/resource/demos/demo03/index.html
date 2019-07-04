@@ -9,11 +9,7 @@
 </head>
 
 <body>
-    <div id="box1"></div>
-    <div id="box2"></div>
-    <div id="box3"></div>
-    <div id="box4"></div>
-    <div id="box5"></div>
+
     <script src="js/jquery-3.4.1.js"></script>
     <script>
         ~(function ($, window, document, undefined) {
@@ -35,17 +31,29 @@
                     delayTime: 0,
                     color: "#6341a5",
                     effect: "default",
-                    autoPlay: false
+                    autoPlay: false,
+                    prevChange: function () { },
+                    nextChange: function () { },
+                    styles: {
+                        wrap: { display: "inline-block", verticalAlign: "top", border: "1px solid #dbdbdb", boxShadow: "rgb(164, 160, 157) 1px 1px 9px -3px" },
+                        title: { listStyle: "none", display: "flex", margin: 0, padding: 0, borderBottom: "2px solid " + (opts.color || "#6341a5") },
+                        titleItem: { flex: 1, cursor: "pointer", padding: "10px 30px", color: "#333" },
+                        titleItemFirst: { marginLeft: 0, "backgroundColor": opts.color || "#6341a5", "color": "#fff" },
+                        content: {},
+                        contentItem: { display: "none", padding: "20px" },
+                        contentItemFirst: { display: "block" }
+                    }
                 };
-
                 // 不要覆盖默认参数 this.defaults，后续可能会用到
-                this.options = $.extend({}, this.defaults, opts);
+                this.options = $.extend(true, {}, this.defaults, opts);
             };
             Tab.prototype = {
                 constructor: Tab,
                 init: function () {
                     // 创建元素
                     this.createEle();
+                    // 绑定事件
+                    this.bindEvent();
                     // 切换功能
                     this.changeTab();
                     // 默认样式
@@ -54,18 +62,27 @@
                     this.options.autoPlay && this.autoPlay();
                 },
                 defaultStyle: function () {
+                    const { wrap, title, titleItem, titleItemFirst, content, contentItem, contentItemFirst } = this.options.styles;
                     // 外包裹
-                    this.$wrap.css({ "display": "inline-block", "border": "1px solid #dbdbdb", "box-shadow": "rgb(164, 160, 157) 1px 1px 9px -3px" })
+                    this.$wrap.css(wrap)
                     // 标题包裹
-                    this.$wrap.find(".i35-title").css({ "list-style": "none", "display": "flex", "margin": 0, "padding": 0, "border-bottom": "2px solid " + this.options.color })
+                    this.$wrap.find(".i35-title").css(title)
                     // 标题
-                    this.$wrap.find(".i35-title li").css({ "margin-left": "10px", "cursor": "pointer", "padding": "10px 30px", "color": "#333" }).eq(0).css({ "margin-left": 0 });
+                    this.$wrap.find(".i35-title li").css(titleItem);
                     // 第一个标题
-                    this.$wrap.find(".i35-title li").eq(0).css({ "backgroundColor": this.options.color, "color": "#fff" });
+                    this.$wrap.find(".i35-title li").eq(0).css(titleItemFirst);
+                    // 内容包裹
+                    this.$wrap.find(".i35-con").css(content);
                     // 内容
-                    this.$wrap.find(".i35-con div").css({ "display": "none", "padding": "20px" });
+                    this.$wrap.find(".i35-con div").css(contentItem);
                     // 第一个内容
-                    this.$wrap.find(".i35-con div").eq(0).css("display", "block");
+                    this.$wrap.find(".i35-con div").eq(0).css(contentItemFirst);
+
+                },
+                bindEvent: function () {
+                    // 防止 this.$elements 中添加多个重复触发，要绑定在 this.$wrap 上
+                    this.$wrap.on("prevChange", this.options.prevChange);
+                    this.$wrap.on("nextChange", this.options.nextChange);
                 },
                 createEle: function () {
                     // 创建标题
@@ -85,7 +102,7 @@
                     this.$contents = $div.find("div");
 
                     // 添加
-                    this.$elements.prepend(this.$wrap);
+                    this.$elements.append(this.$wrap);
                 },
                 changeTab: function () {
                     let timer = null, _this = this;
@@ -152,66 +169,26 @@
         })(jQuery, window, document);
 
 
+        $("body").i35Tab({
+            color: 'red'
+        });
 
-        /* $("body").i35Tab({
-            eventType: "mouseover",
-            delayTime: "100"
-        }); */
-
-        // 主题
-       /*  $("body").i35Tab({
-            eventType: "mouseover",
-            delayTime: "200",
-            color: "red",
+        $("body").i35Tab({
+            titles: ["布丽吉塔", "秩序之光", "士兵 76", "末日铁拳"],
+            contents: [
+                '<video src="./vedio/布丽吉塔.mp4" controls width="494" poster="./images/bjlt.jpg">',
+                '<img width="100%" src="./images/zxzg.jpg" alt="">',
+                '<img width="100%" src="./images/76.jpg" alt="">',
+                '<img width="100%" src="./images/2_media_artwork_doomfist-concept.jpg" alt="">'
+            ],
+            effect: 'slide',
+            styles: {
+                title: {
+                    height: 60,
+                    lineHeight: "40px"
+                }
+            }
         });
-        $("body").on("prevChange", function(e) {
-            console.log($(e.target).find(".i35-con div:visible").html());
-        });
-        $("body").on("nextChange", function(e) {
-            console.log($(e.target).find(".i35-con div:visible").html());
-        }); */
-
-        // 支持切换效果
-        /* $("body").i35Tab({
-            eventType: "mouseover",
-            delayTime: "200",
-        }); */
-
-        // 自动播放
-        /* $("#box1").i35Tab({
-            eventType: "mouseover",
-            delayTime: "200",
-            color: "#848484"
-        });
-        $("#box2").i35Tab({
-            eventType: "mouseover",
-            delayTime: "200",
-            color: "#e23839"
-        });
-        $("#box3").i35Tab({
-            eventType: "mouseover",
-            delayTime: "200",
-            color: "#267280"
-        });
-        $("#box4").i35Tab({
-            eventType: "mouseover",
-            delayTime: "200",
-            color: "#22a554"
-        });
-        $("#box5").i35Tab({
-            eventType: "mouseover",
-            delayTime: "200",
-        }); */
-
-    // todoList
-    // 默认样式美化
-    // 样式配置
-    // 调研其他选项卡插件
-    // 代码风格统一
-    // 自动播放
-    // 切换效果
-    // 精简代码
-    // ...
     </script>
 </body>
 

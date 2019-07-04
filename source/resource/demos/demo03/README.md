@@ -15,6 +15,7 @@ Step1:
 Step2:
 
 ```javascript
+// 添加到 body 的最后
 $("body").i35Tab();
 ```
 
@@ -39,24 +40,16 @@ delayTime | number | 否 | 0 | eventType 为 mouseover 时才生效，节流时�
 color | string | 否 | #6341a5 | 主题颜色
 effect | string | 否 | default | 默认普通的显示/隐藏；支持 slide、fade
 autoPlay | boolean/number | 否 | false | 自动播放时间间隔
-
-### 事件回调
-
-- prevChange: 切换之前触发
-
-```javascript
-$("body").on("prevChange", function(e) {
-    console.log($(e.target).find(".i35-con div:visible").html());
-});
-```
-
-- nextChange: 切换之后触发
-
-```javascript
-$("body").on("nextChange", function(e) {
-    console.log($(e.target).find(".i35-con div:visible").html());
-});
-```
+prevChange | function | 否 | function() {} | 切换之前触发的回调
+nextChange | function | 否 | function() {} | 切换之后触发的回调
+styles | object | 否 | ... | 所有的样式配置必须写在次对象下面
+wrap | ... | 否 | ... | 外包裹
+title| ... | 否 | ... | 标题包裹
+titleItem| ... | 否  | 标题列表
+titleItemFirst| ... | 否 | 第一个标题
+content|... | 否 | ... | 内容包裹
+contentItem| ... | 否 | ... | 内容列表
+contentItemFirst| ... | 否 | ... | 第一个内容
 
 ## 测试
 
@@ -66,12 +59,50 @@ $("body").on("nextChange", function(e) {
 $("body").i35Tab();
 ```
 
-mouseover 时触发
+mouseover 时延迟 100ms 触发
 
 ```javascript
-// 
 $("body").i35Tab({
-    eventType: "mouseover"
+    eventType: "mouseover",
+    delayTime: "100"
 });
 ```
 
+改变主题
+
+```javascript
+$("body").i35Tab({
+    eventType: "mouseover",
+    delayTime: "200",
+    color: "#e23839",
+});
+```
+
+改变切换效果
+
+```javascript
+$("body").i35Tab({
+    effect: "slide"
+});
+```
+
+自动播放
+
+```javascript
+$("#box5").i35Tab({
+    autoPlay: 2000
+});
+```
+
+事件回调
+
+```javascript
+$("body").i35Tab({
+    prevChange: function(e) {
+        console.log($(e.target).find(".i35-con div:visible").html());
+    },
+    nextChange: function(e) {
+        console.log($(e.target).find(".i35-con div:visible").html());
+    }
+});
+```
