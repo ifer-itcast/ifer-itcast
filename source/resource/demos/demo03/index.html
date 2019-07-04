@@ -23,6 +23,8 @@
                 this.timer = null;
                 // 外包裹
                 this.$wrap = $("<div id='i35-wrap'>");
+                // 防止 opts 不传报错
+                opts = opts || {};
                 // 默认配置
                 this.defaults = {
                     titles: ["News", "Sports", "Education"],
@@ -77,7 +79,6 @@
                     this.$wrap.find(".i35-con div").css(contentItem);
                     // 第一个内容
                     this.$wrap.find(".i35-con div").eq(0).css(contentItemFirst);
-
                 },
                 bindEvent: function () {
                     // 防止 this.$elements 中添加多个重复触发，要绑定在 this.$wrap 上
@@ -150,10 +151,10 @@
                 const thisCon = _this.$wrap.find(".i35-con div").eq(idx);
                 switch (_this.options.effect) {
                     case "slide":
-                        thisCon.slideDown().siblings().slideUp();
+                        thisCon.stop().slideDown().siblings().stop().slideUp();
                         break;
                     case "fade":
-                        thisCon.fadeIn().siblings().fadeOut();
+                        thisCon.stop().fadeIn().siblings().stop().fadeOut();
                         break;
                     default:
                         thisCon.show().siblings().hide();
@@ -168,10 +169,7 @@
             };
         })(jQuery, window, document);
 
-
-        $("body").i35Tab({
-            color: 'red'
-        });
+        $("body").i35Tab();
 
         $("body").i35Tab({
             titles: ["布丽吉塔", "秩序之光", "士兵 76", "末日铁拳"],

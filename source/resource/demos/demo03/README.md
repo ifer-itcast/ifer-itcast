@@ -32,7 +32,7 @@ $("body").i35Tab({
 ### 配置列表
 
 参数名 | 类型 | 是否必填 | 默认值 | 描述
--    |  -  | - | - | -
+-|  -  | - | - | -
 titles | array | 否 | ["News", "Sports", "Education"] |标题
 contents | array | 否 | ["News con...", "Sports con...", "Education ..."] |内容
 eventType | string | 否 | click | 事件类型
@@ -43,13 +43,13 @@ autoPlay | boolean/number | 否 | false | 自动播放时间间隔
 prevChange | function | 否 | function() {} | 切换之前触发的回调
 nextChange | function | 否 | function() {} | 切换之后触发的回调
 styles | object | 否 | ... | 所有的样式配置必须写在次对象下面
-wrap | ... | 否 | ... | 外包裹
-title| ... | 否 | ... | 标题包裹
-titleItem| ... | 否  | 标题列表
-titleItemFirst| ... | 否 | 第一个标题
-content|... | 否 | ... | 内容包裹
-contentItem| ... | 否 | ... | 内容列表
-contentItemFirst| ... | 否 | ... | 第一个内容
+wrap | object | 否 | ... | 外包裹
+title| object | 否 | ... | 标题包裹
+titleItem| object | 否  | ... | 标题列表
+titleItemFirst| object | 否 | ... | 第一个标题
+content| object | 否 | ... | 内容包裹
+contentItem| object | 否 | ... | 内容列表
+contentItemFirst| object | 否 | ... | 第一个内容
 
 ## 测试
 
