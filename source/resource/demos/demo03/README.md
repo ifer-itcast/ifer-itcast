@@ -42,3 +42,36 @@ autoPlay | boolean/number | 否 | false | 自动播放时间间隔
 
 ### 事件回调
 
+- prevChange: 切换之前触发
+
+```javascript
+$("body").on("prevChange", function(e) {
+    console.log($(e.target).find(".i35-con div:visible").html());
+});
+```
+
+- nextChange: 切换之后触发
+
+```javascript
+$("body").on("nextChange", function(e) {
+    console.log($(e.target).find(".i35-con div:visible").html());
+});
+```
+
+## 测试
+
+最基础使用
+
+```javascript
+$("body").i35Tab();
+```
+
+mouseover 时触发
+
+```javascript
+// 
+$("body").i35Tab({
+    eventType: "mouseover"
+});
+```
+
