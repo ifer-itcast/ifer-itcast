@@ -2,17 +2,22 @@
 
 ## 简介
 
+基于 jQuery 的 Tab 选项卡
+
 ## 特点
+
+简单
 
 ## 使用
 
-Step1:
+1. 引入依赖文件
 
 ```javascript
+<script src="js/jquery-3.4.1.js"></script>
 <script src="./js/i35tab.js"></script>
 ```
 
-Step2:
+2. 初始化代码
 
 ```javascript
 // 添加到 body 的最后
