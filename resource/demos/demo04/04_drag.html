@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            left: 200px;
+            background-color: pink;
+            transform: translate(50px, 100px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        var oBox = document.querySelector('#box');
+        // 上次的 translate 值
+        var startX = 50;
+        var startY = 100;
+
+        // 当前需要移动的值
+        var transX = 0;
+        var transY = 0;
+        oBox.onmousedown = function (e) {
+            var originPageX = e.pageX;
+            var originPageY = e.pageY;
+            document.onmousemove = function (e) {
+                var moveX = e.pageX - originPageX
+                var moveY = e.pageY - originPageY;
+
+                transX = startX + moveX;
+                transY = startY + moveY;
+
+                // 注意这里改变的是 transform 不再是 oBox.style.left 了
+                oBox.style.transform = 'translate(' + transX + 'px, ' + transY + 'px)';
+            };
+            document.onmouseup = function () {
+                // up 的时候把上次移动的值作为下次的开始值
+                startX = transX;
+                startY = transY;
+                this.onmousemove = this.onmouseup = null;
+            };
+            return false;
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            left: 200px;
+            background-color: pink;
+            transform: translate(50px, 100px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        var oBox = document.querySelector('#box');
+
+        oBox.onmousedown = function (e) {
+            var originPageX = e.pageX;
+            var originPageY = e.pageY;
+
+            // 起始位置
+            this.startX = this.startX || 50;
+            this.startY = this.startY || 100;
+
+            document.onmousemove = function (e) {
+                // 移动位置，挂载到 oBox 上，方便在 onmouseup 时使用
+                oBox.moveX = oBox.startX + e.pageX - originPageX;
+                oBox.moveY = oBox.startY + e.pageY - originPageY;
+                oBox.style.transform = 'translate(' + oBox.moveX + 'px, ' + oBox.moveY + 'px)';
+            };
+            document.onmouseup = function () {
+                // 上次移动位置变成下次的起始位置
+                oBox.startX = oBox.moveX;
+                oBox.startY = oBox.moveY;
+                this.onmousemove = this.onmouseup = null;
+            };
+            return false;
+        };
+    </script>
+</body>
+
+</html>
