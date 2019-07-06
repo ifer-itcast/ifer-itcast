@@ -68,6 +68,7 @@ module.exports = {
 ``` javascript
 // 可以通过 -- 的形式传参，相当于执行 webpack --config webpack.config.my.js
 npm run build -- --config webpack.config.my.js
+npm run build -- --config development
 ```
 
 ## 本地启动服务
@@ -136,7 +137,7 @@ module.exports = {
 </html>
 ```
 
-通过 localhost:8080 访问，修改 JS 文件会发现页面也进行了刷新。我想不刷新页面的情况下也更新 JS，这就是热更新！
+通过 localhost:8080 访问，修改 JS 文件会发现页面也进行了刷新。想在不刷新页面的情况下也更新 JS，这就是热更新（注意把 index.html 放在和 webpack.config.js 平级目录下，或通过 contentBase 修改根目录并在 index.html 放在其中）！
 
 ``` javascript
 const path = require('path');
@@ -227,5 +228,12 @@ module.exports = {
 
 ### 测试
 
-此时修改 `src/index.js` 和 `src/index.html` 会自动的帮我们刷新页面！
+此时修改 `src/index.js` 和 `src/index.html` 会自动的帮我们刷新页面！注意此时我删除了 index.js 中的如下热更新代码：
+
+```javascript
+// 暂时关闭热更新，为了让修改 index.html 时也实时刷新页面
+if(module.hot) {
+    module.hot.accept();
+}
+```
 
