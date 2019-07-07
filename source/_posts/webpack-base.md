@@ -728,3 +728,124 @@ console.log('aaa'.includes('a'));
 注意：Babel 7.4.0 以后使用有变化，[参见](https://babeljs.io/docs/en/babel-polyfill#docsNav)
 
 [以上代码](https://github.com/ifer-itcast/webpack/tree/master/04_js)
+
+## 使用 TS
+
+### 安装
+
+```javascript
+cnpm i typescript -g
+cnpm i typescript ts-loader -D
+```
+
+### 配置
+
+```javascript
+// 生成 tsconfig.json 配置文件
+tsc --init
+```
+
+```javascript
+{
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                use: 'ts-loader',
+                // 注意这里我配在了 src/ts 目录下
+                include: path.resolve(__dirname, 'src/ts'),
+                exclude: /node_modules/
+            }
+        ]
+    }
+}
+```
+
+### 使用
+
+``` typescript
+function sum(...args:number[]): number {
+    return eval( args.join('+') );
+}
+export default sum;
+```
+
+``` javascript
+import sum from './ts/test.ts';
+console.log(sum(1, 2, 3));
+```
+
+[以上代码](https://github.com/ifer-itcast/webpack/tree/master/05_ts)
+
+## 使用 React
+
+### 安装
+
+```
+cnpm i react react-dom -S
+```
+
+### 使用
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// 元素类型、属性、子节点
+const virtualH1 = React.createElement('h1', {
+    id: 'title',
+    title: 'hello world'
+}, 'hello world');
+
+const virtualDiv = React.createElement('div', null, '嘻嘻', virtualH1);
+
+// 要渲染的虚拟 DOM、容器
+ReactDOM.render(virtualDiv, document.querySelector('#root'));
+```
+
+## 使用 JSX
+
+上面的 React.createElement 的写法太累，想使用 JSX 语法，注意 JSX 最终还是会转换成 React.createElement 的形式去执行
+
+### 安装
+
+```
+cnpm install @babel/preset-react -D
+```
+
+### 配置
+
+```javascript
+{
+    test: /\.js$/,
+    use: {
+        loader: 'babel-loader',
+        options: {
+            presets: [
+                '@babel/preset-env',
+                '@babel/preset-react'
+            ],
+        }
+    }
+}
+```
+
+``` javascript
+// 也可以在 .babelrc 中进行配置
+{
+    "presets": ["@babel/preset-env", "@babel/preset-react"]
+}
+```
+
+### 使用
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(<div>
+    hello world
+</div>, document.querySelector('#root'));
+```
+
+[以上代码](https://github.com/ifer-itcast/webpack/tree/master/06_react)
