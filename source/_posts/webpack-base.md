@@ -950,3 +950,58 @@ console.log($, window.$);
 ```
 
 [以上代码](https://github.com/ifer-itcast/webpack/tree/master/07_jquery)
+
+## 文件压缩
+
+注意在 production 模式下 build 文件，压缩功能才会生效！
+
+### JS
+
+Webpack4 中 production 模式会自动对 JS 文件进行压缩，再配合此插件如虎添翼！
+
+#### 安装
+
+```
+cnpm i uglifyjs-webpack-plugin -D
+```
+
+#### 配置
+
+``` javascript
+optimization: {
+    minimizer: [
+        // 注意对 JS 的压缩需要在配置 babel 之后
+        new UglifyjsWebpackPlugin({
+            cache: true,
+            parallel: true, // 多线程打包
+            sourceMap: true // ES5 到 ES6 的映射方便调试
+        })
+    ]
+}
+```
+
+### CSS
+
+Webpack4 中 production 模式会自动对 JS 压缩不假，但并不会对 CSS 压缩
+
+#### 安装
+
+```
+cnpm i optimize-css-assets-webpack-plugin -D
+```
+
+#### 配置
+
+```javascript
+{
+    optimization: {
+        minimizer: [
+            new OptimizeCssAssetsWebpackPlugin()
+        ]
+    }
+}
+```
+
+
+
+
