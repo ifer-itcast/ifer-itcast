@@ -237,3 +237,494 @@ if(module.hot) {
 }
 ```
 
+[以上代码](https://github.com/ifer-itcast/webpack/tree/master/00_base)
+
+## 使用 Loader
+
+使用 loader 常写的有三种方式，以 css-loader 和 style-loader 为例，如下：
+
+- loader
+
+``` javascript
+module: {
+    rules: [
+        {
+            test: /\.css$/,
+            loader: ["style-loader", "css-loader"]
+        }
+    ]
+}
+```
+
+- use
+
+``` javascript
+module: {
+    rules: [
+        {
+            test: /\.css$/,
+            use: ["style-loader", "css-loader"],
+        }
+    ]
+}
+```
+
+- use + loader
+
+``` javascript
+module: {
+    rules: [
+        {
+            test: /\.css$/,
+            use: [{
+                loader: "style-loader",
+                options: {
+                    // 插入头部
+                    insertAt: 'top'
+                }
+            }, "css-loader"]
+        }
+    ]
+}
+```
+
+## 使用样式
+
+### 使用 CSS
+
+#### 安装
+
+```
+cnpm i style-loader css-loader -D
+```
+
+#### 配置
+
+``` javascript
+module: {
+    rules: [
+        {
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader']
+        }
+    ]
+}
+```
+
+#### 使用
+
+``` javascript
+import './index.css';
+require('./index.css');
+```
+
+### 使用 Less
+
+#### 安裝
+
+```
+cnpm i less less-loader -D
+```
+
+#### 配置
+
+module rules 下配置 loader
+
+``` javascript
+module: {
+    rules: [
+        {
+            test: /\.less$/,
+            use: ['style-loader', 'css-loader', 'less-loader']
+        }
+    ]
+}
+```
+
+### 使用 Sass
+
+#### 安裝
+
+```
+cnpm i node-sass sass-loader -D
+```
+
+#### 配置
+
+``` javascript
+module: {
+    rules: [
+        {
+            test: /\.scss$/,
+            use: ['style-loader', 'css-loader', 'sass-loader']
+        }
+    ]
+}
+```
+
+### 给样式加前缀
+
+使用 autoprefixer，并配合 postcss-loader 可以处理 CSS3 的前缀，最后打包时会自动带上
+
+#### 安装
+
+```
+cnpm i postcss-loader autoprefixer -D
+```
+
+#### 配置
+
+``` javascript
+// 配置 loader
+module: {
+    rules: [
+        {
+            test: /\.css$/,
+            use: ['style-loader', "css-loader", "postcss-loader"]
+        }
+    ]
+}
+```
+
+根目录新建 postcss.config.js 并配置如下：
+
+``` javascript
+module.exports = {
+    plugins: [require('autoprefixer')]
+};
+```
+
+### 抽离样式
+
+利用 `mini-css-extract-plugin` 插件可以抽离出 CSS，但使用此插件再次修改 CSS 后页面不会自动刷新或热更新，所以一般生产环境才使用！
+
+#### 安装
+
+```
+cnpm i mini-css-extract-plugin -D
+```
+
+#### 配置
+
+``` javascript
+// 抽离 Less 同理
+module: {
+    rules: [
+        {
+            test: /\.css$/,
+            use: [{
+                // Step 1
+                loader: MiniCssExtractPlugin.loader
+            }, "css-loader", "postcss-loader"]
+        }
+    ]
+},
+plugins: [
+    // Step 2
+    new MiniCssExtractPlugin({
+        // name 指的是入口文件的属性名，单入口默认是 main
+        filename: '[name].css'
+    })
+]
+```
+
+#### 修改 CSS 导出的路径
+
+也可以给导出的 CSS 划分目录等
+
+``` javascript
+new MiniCssExtractPlugin({
+    // entry 的名字 main
+    filename: 'css/[name].css'
+})
+```
+
+[以上代码](https://github.com/ifer-itcast/webpack/tree/master/02_style)
+
+## 使用图片
+
+### JS 和 CSS 中使用
+
+- file-loader 解决 CSS 和 JS 文件引入图片的路径问题
+- url-loader 当图片小于 limit 的时候对图片进行 BASE64 编码，大于 limit 调用 file-loader 进行拷贝
+
+#### 安装
+
+```
+cnpm i file-loader url-loader@1.0.1 -D
+```
+
+#### 配置
+
+``` javascript
+module: {
+    rules: [
+        {
+            test: /\.(gif|jpg|jpeg|png|bmp|eot|woff|woff2|ttf|svg)$/,
+            use: [
+                {
+                    // url-loader 里面封装了 file-loader
+                    loader: 'url-loader',
+                    options: {
+                        // 小于 10kb 才需要 base64，这时候起作用的 url-loader
+                        // 大于 10kb 会在内部自动调用 file-loader 去处理图片
+                        // 默认不加这个参数全部是用 url-loader 搞成 base64
+                        limit: 10 * 1024,
+                        // 将打包的图片放到 img 目录，图片并不会放到缓存中，缓存的是 HTML、JS 和 CSS 文件
+                        // 可以先 npm run build 到 dist/img 目录，当然也要把 devServer 的 contentBase 配置为 dist
+                        outputPath: '/img/',
+                        // 给引入的图片资源加上前缀
+                        publicPath: 'http://www.zhihur.com'
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+
+#### 使用
+
+``` javascript
+// 若图片大小小于 limit imgSrc 将是一个 base64，否则是一个路径
+import imgSrc from './images/timg.jpg';
+const img = new Image();
+img.src = imgSrc;
+img.width = 100;
+document.body.appendChild(img);
+```
+
+``` css
+.logo {
+    width: 300px;
+    height: 100px;
+    background: url(./images/timg.jpg) no-repeat;
+}
+```
+
+### HTML 中使用
+
+此 `html-withimg-loader` 插件可以帮助我们在 HTML 中使用图片
+
+#### 安裝
+
+```
+cnpm i html-withimg-loader -D
+```
+
+#### 配置
+
+``` javascript
+module: {
+    rules: [
+        {
+            test: /\.html$/,
+            use: 'html-withimg-loader'
+        }
+    ]
+}
+```
+
+#### 使用
+
+``` html
+<img src="timg.jpg" width="100" alt="">
+```
+
+[以上代码](https://github.com/ifer-itcast/webpack/tree/master/03_image)
+
+## 使用 JS
+
+主要是对高版本的 JS 代码进行转换，使浏览器兼容
+
+### 转换箭头函数等
+
+如下使用箭头函数，会发现打包后的代码也是箭头函数，没有转成 ES5，这不是我们所期望的
+
+```javascript
+let aaa = () => {
+    console.log('hello1');
+}
+aaa();
+```
+
+解决如下
+
+```javascript
+// 需要使用 loader 并配合 presets
+cnpm i babel-loader @babel/core @babel/preset-env -D
+```
+
+```javascript
+{
+    test: /\.js$/,
+    use: {
+        loader: 'babel-loader',
+        options: {
+            presets: [
+                '@babel/preset-env'
+            ]
+        }
+    },
+    // 别忘记排除这个，注意这里的值没有引号！
+    exclude: /node_modules/,
+    // 最好写上
+    include: path.resolve(__dirname, 'src')
+}
+```
+
+上面 presets 的配置也可以写在 `.babelrc` 单独的文件中，例如：
+
+```javascript
+{
+    "presets": ["@babel/preset-env"]
+}
+```
+
+配置完上面再使用 uglifyjs 进行代码压缩时也就不会报错了
+
+### 转换类等
+
+```javascript
+// 直接使用报错
+class A {
+    a = 1
+}
+let b = new A();
+console.log(b.a);
+```
+
+```javascript
+// 注意这里使用的是一个针对 JS 文件的插件，而不是 loader 或 预设
+cnpm i @babel/plugin-proposal-class-properties -D
+```
+
+```javascript
+{
+    test: /\.js$/,
+    use: {
+        loader: 'babel-loader',
+        options: {
+            presets: [
+                '@babel/preset-env'
+            ],
+            plugins: [
+                ['@babel/plugin-proposal-class-properties',{loose: true}]
+            ]
+        }
+    }
+}
+```
+
+或 `.bablerc` 中配置如下：
+
+```javascript
+{
+    "presets": [
+        "@babel/preset-env"
+    ],
+    "plugins": [
+        ["@babel/plugin-proposal-class-properties",{"loose": true}]
+    ]
+}
+```
+
+### 转换装饰器等
+
+VSCode 中修改这个参数 `experimentalDecorators` 可以禁用使用装饰器时的警告
+
+```javascript
+@log
+class A {
+    a = 1
+}
+
+function log(target) {
+    console.log(target);
+}
+```
+
+```javascript
+// 使用的也是一个插件
+cnpm i @babel/plugin-proposal-decorators -D
+```
+
+```javascript
+{
+    test: /\.js$/,
+    use: {
+        loader: 'babel-loader',
+        options: {
+            presets: [
+                '@babel/preset-env'
+            ],
+            plugins: [
+                // 注意这里是有顺序讲究的
+                ['@babel/plugin-proposal-decorators', {legacy: true}],
+                ['@babel/plugin-proposal-class-properties',{loose: true}]
+            ]
+        }
+    }
+}
+```
+
+### 转换生成器等
+
+```javascript
+function *aaa(x) {
+    yield x + 1;
+    yield x + 2;
+    return x + 3;
+}
+let it = aaa(1);
+console.log(it.next()); // {value: 2, done: false}
+console.log(it.next()); // {value: 3, done: false}
+console.log(it.next()); // {value: 4, done: true}
+```
+
+```javascript
+// 注意 @babel/runtime 是生产依赖
+cnpm i @babel/plugin-transform-runtime -D
+cnpm i @babel/runtime -S
+```
+
+```javascript
+{
+    test: /\.js$/,
+    use: {
+        loader: 'babel-loader',
+        options: {
+            presets: [
+                '@babel/preset-env'
+            ],
+            plugins: [
+                // 注意这里是有顺序讲究的
+                ['@babel/plugin-proposal-decorators', {legacy: true}],
+                ['@babel/plugin-proposal-class-properties',{loose: true}],
+                ['@babel/plugin-transform-runtime']
+            ]
+        }
+    }
+}
+```
+
+### 转换 includes 等
+
+```javascript
+// 直接使用是可以允许，但并不会将打包后的代码转换成 ES5
+console.log('aaa'.includes('a'));
+```
+
+```
+cnpm i @babel/polyfill -S
+```
+
+```javascript
+// 使用
+require('@babel/polyfill')
+console.log('aaa'.includes('a'));
+```
+
+注意：Babel 7.4.0 以后使用有变化，[参见](https://babeljs.io/docs/en/babel-polyfill#docsNav)
+
+[以上代码](https://github.com/ifer-itcast/webpack/tree/master/04_js)
