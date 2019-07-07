@@ -1002,9 +1002,327 @@ cnpm i optimize-css-assets-webpack-plugin -D
 }
 ```
 
-## 打包分类
+## 打包资源分类
 
 - 图片分类通过配置 outputPath 将其统一分配到对应目录
 - CSS 分类通过配置 plugins 中的 MiniCssExtractPlugin
 - 通过配置 publicPath 可以在引用资源（例如CSS、Img）的时候会统一加上一个前缀
 - 若只想给图片加前缀，也可以单独配置图片的 publicPath
+
+## 打包多页应用
+
+多入口 JS 文件，利用 html-webpack-plugin 它也可以自动帮我们引入 JS，src 指定多入口时也同样会帮我们打包进去，打包成一个文件引入
+
+### 多入口单出口
+
+``` javascript
+const path = require('path');
+
+module.exports = {
+    // 注意这里一个数组，最后会把代码合成一个 index.js
+    entry: [
+        './src/test.js',
+        './src/index.js'
+    ],
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'index.js' // 合成 index.js
+    },
+    mode: 'development'
+};
+```
+
+### 多入口多出口
+
+``` javascript
+module.exports = {
+    // 注意这里是一个 JSON
+    entry: {
+        test: './src/test.js',
+        index: './src/index.js'
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js' // 这里 name 是一个变量，会输出多个文件并引入到 index.html
+    }
+};
+```
+
+### 多入口多出口多文件
+
+``` javascript
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const htmlIndexPlugin = new HtmlWebpackPlugin({
+    // 模板文件
+    template: path.join(__dirname, './src/index.html'),
+    // 生成文件
+    filename: 'index.html',
+    // 引入的 JS 文件
+    chunks: ['test', 'index']
+});
+
+const htmlTestPlugin = new HtmlWebpackPlugin({
+    template: path.join(__dirname, './src/test.html'),
+    filename: 'test.html',
+    chunks: ['test']
+});
+
+module.exports = {
+    entry: {
+        test: './src/test.js',
+        index: './src/index.js'
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js'
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        htmlIndexPlugin,
+        htmlTestPlugin
+    ],
+    mode: 'development'
+};
+```
+
+## 调试打包后的代码
+
+解析 JS 的过程中可能会把高级语法转成低级语法，也可能对代码进行压缩，配置 source-map（源码映射） 可以调试原味代码
+
+- devtool: 'source-map', 生成一个新的 sourcemap 文件，可以映射到列
+- devtool: 'eval-source-map', 在当前打包文件中生成，可以映射到列
+- devtool: 'cheap-module-source-map', 生成一个新的 sourcemap 文件，可以保留起来，不能调试
+- devtool: 'cheap-module-eval-source-map', 在同一文件中生成，不能映射到列
+
+## 实时打包
+
+npx webpack --mode development 编译完就断开了，默认 watch: false，希望实时打包成实体文件
+
+``` javascript
+watch: true,
+watchOptions: {
+    ignored: /node_modules/,
+    // 每秒向文件询问的次数
+    poll: 1000,
+    // 多少毫秒内重复保存不打包
+    aggregateTimeout: 500
+}
+```
+
+用 webpack-dev-server 其实对上面已经处理了
+
+## 版权声明
+
+``` javascript
+// 会在请求头加上代码信息
+new webpack.BannerPlugin('weixian')
+```
+
+## 拷贝静态文件
+
+例如文档，设计稿等
+
+### 安装
+
+```
+npm i copy-webpack-plugin -D
+```
+
+### 配置
+
+```
+new CopyWebpackPlugin([{
+    from: path.resolve(__dirname, 'src/assets'),
+    to: path.resolve(__dirname, 'dist/assets')
+}])
+```
+
+## 打包前先清空输出目录
+
+### 安装
+
+```
+npm i clean-webpack-plugin -D
+```
+### 配置
+
+```javascript
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+```
+
+```javascript
+plugins: [
+    new CleanWebpackPlugin()
+]
+```
+
+## 服务器代理
+
+### 场景一
+
+**前端代码**
+
+``` javascript
+// 8080 下的页面请求 3001 下的数据必然不行
+fetch('/api/user').then(res => {
+    return res.json();
+}).then(data => {
+    console.log(data);
+});
+```
+
+**Webpack 配置**
+
+``` javascript
+devServer: {
+    contentBase: './dist',
+    port: 8080,
+    host: 'localhost',
+    proxy: {
+        // 如果请求 `localhost:8080/api/users` 开头的就会被代理到 `localhost:3001/api/users`
+        // 自己定义个接口的特点，例如 call
+        "/api": "http://localhost:3001"
+    }
+}
+```
+
+**服务端代码**
+
+``` javascript
+const express = require('express');
+const app = express();
+
+app.get('/api/user', (req, res) => {
+    res.send({
+        name: 'ifer',
+        age: 18
+    });
+});
+
+app.listen(3001);
+```
+
+### 场景二
+
+后端写接口的时候不可能都加上 /api 吧，太蛋疼了，需要路径的重命名！
+
+``` javascript
+devServer: {
+    // 生成静态文件根目录
+    contentBase: './dist',
+    port: 8080,
+    host: 'localhost',
+    proxy: {
+        // 请求的 http://localhost:8080/api/users 映射到 http://localhost:3001/users
+        // 如果请求的是 /api/users 把 /api 去掉
+        "/api": {
+            target: "http://localhost:3001",
+            pathRewrite: {
+                // "^/api": ""
+                "/api": ""
+            }
+        }
+    }
+},
+```
+
+**后端只需**
+
+``` javascript
+app.get('/user', (req, res) => {
+    res.send({
+        name: 'test',
+        age: 18
+    });
+});
+```
+
+### 场景三
+
+通过配置 Webpack 也可以实现简单的数据 Mock
+
+``` javascript
+devServer: {
+    // 生成静态文件根目录
+    contentBase: './dist',
+    port: 8080,
+    host: 'localhost',
+    // 钩子，启动服务之前做一些事情
+    before(app) {
+        app.get('/api/user', (req, res)=> {
+            res.send({
+                user: 'ifer',
+                age: 18
+            });
+        });
+    }
+},
+```
+
+一般使用的时候最好把 mock 数据独立成一个文件，例如：
+
+``` javascript
+const mock = require('./mock');
+devServer: {
+    // 生成静态文件根目录
+    contentBase: './dist',
+    port: 8080,
+    host: 'localhost',
+    before(app) {
+        mock(app);
+    }
+},
+```
+
+```javascript
+// mock.js
+module.exports = function(app) {
+    app.get('/api/user', (req, res) => {
+        res.send({
+            user: 'ifer',
+            age: 18
+        });
+    });
+};
+```
+
+### 场景四
+
+希望在已有的 Express 服务中集成 webpack，好处是方便利用 Express，不需要代理了，下次只需要启动一个服务（server.js）即可，webpack.config.js 的 devServer 最好不要再配置 proxy 了
+
+```javascript
+npm i webpack-dev-middleware -D
+```
+
+``` javascript
+// express 虽然 package.json 中没有，webpack-dev-server 已经依赖了 ...
+const express = require('express');
+const morgan = require('morgan');
+const app = express();
+const webpack = require('webpack');
+
+/**
+ * 1、webpack 中集成了 express(webpack-dev-server)
+ * 2、express 中集成 webpack
+ */
+
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackConfig = require('./webpack.config.js');
+const compiler = webpack(webpackConfig);
+app.use(webpackDevMiddleware(compiler));
+app.use(morgan('dev'));
+
+app.get('/user', (req, res) => {
+    res.send({
+        name: "ifer",
+        age: 17
+    });
+});
+
+app.listen(3001);
+```
+
+[以上代码](https://github.com/ifer-itcast/webpack/tree/master/10_server)
