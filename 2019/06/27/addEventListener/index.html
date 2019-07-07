@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定形式，例如 oBtn.onclick = fn; 还有一种是通过事件监听的形式，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个">
+<meta name="description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定，例如 oBtn.onclick = fn; 还有一种是通过事件监听，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个不同的事件">
 <meta name="keywords" content="addEventListener">
 <meta property="og:type" content="article">
 <meta property="og:title" content="再说事件绑定">
 <meta property="og:url" content="http://yoursite.com/2019/06/27/addEventListener/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定形式，例如 oBtn.onclick = fn; 还有一种是通过事件监听的形式，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个">
+<meta property="og:description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定，例如 oBtn.onclick = fn; 还有一种是通过事件监听，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个不同的事件">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/resource/images/pages/webapi/send-message__1.png">
 <meta property="og:image" content="http://yoursite.com/resource/images/pages/webapi/send-message__2.png">
-<meta property="og:updated_time" content="2019-06-30T14:35:08.485Z">
+<meta property="og:updated_time" content="2019-07-05T17:32:59.217Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="再说事件绑定">
-<meta name="twitter:description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定形式，例如 oBtn.onclick = fn; 还有一种是通过事件监听的形式，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个">
+<meta name="twitter:description" content="大家都清楚，常用的事件绑定有两种形式，一种是传统绑定，例如 oBtn.onclick = fn; 还有一种是通过事件监听，例如 oBtn.addEventListener(&amp;#39;click&amp;#39;, fn, false); 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个不同的事件">
 <meta name="twitter:image" content="http://yoursite.com/resource/images/pages/webapi/send-message__1.png">
 
 
@@ -103,7 +103,7 @@
     root: '/',
     scheme: 'Pisces',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -158,7 +158,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -174,7 +174,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">为之则易，不为则难💪</p>
+        <p class="site-subtitle">为之则易，不为则难</p>
       
   </div>
 
@@ -313,7 +313,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="危险">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/dog3.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -439,8 +439,7 @@
       
 
       
-        <p>大家都清楚，常用的事件绑定有两种形式，一种是<strong>传统绑定</strong>形式，例如 <code>oBtn.onclick = fn;</code> 还有一种是通过<strong>事件监听</strong>的形式，例如 <code>oBtn.addEventListener(&#39;click&#39;, fn, false);</code> 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个<strong>不同的</strong>事件处理程序时都会生效。但是在具体使用时<strong>用什么方式绑</strong>？<strong>绑定在谁身上</strong>（是点击的当前元素还是父元素）？<strong>什么时候绑</strong>（是点击的时候绑还是程序加载的时候绑）？都是你需要关注的细节，这里我举了一个例子来说明这三个问题！</p>
-<a id="more"></a>
+        <p>大家都清楚，常用的事件绑定有两种形式，一种是<strong>传统绑定</strong>，例如 <code>oBtn.onclick = fn;</code> 还有一种是通过<strong>事件监听</strong>，例如 <code>oBtn.addEventListener(&#39;click&#39;, fn, false);</code> 两种绑定方式最大的差异我相信大家也比较清楚，就是传统方式给同一元素绑定多个事件处理程序时生效的是最后的那个（后面的覆盖前面的），事件监听的形式给同一元素绑定多个<strong>不同的</strong>事件处理程序时都会生效。<a id="more"></a>但是在具体使用时<strong>用什么方式绑</strong>？<strong>绑定在谁身上</strong>（是点击的当前元素还是父元素）？<strong>什么时候绑</strong>（是点击的时候绑还是程序加载的时候绑）？都是你需要关注的细节，这里我举了一个例子来说明这三个问题！</p>
 <h2 id="基本需求"><a href="#基本需求" class="headerlink" title="基本需求"></a>基本需求</h2><p><img src="/resource/images/pages/webapi/send-message__1.png" alt></p>
 <p>需求：点击添加按钮，把 input 框中的内容放入新创建的 li，并给 li 中添加删除按钮可以删除当前行，最后把 li 添加到 ul 中，如上图</p>
 <p>代码实现：</p>
@@ -500,6 +499,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/06/webpack-base/" rel="prev" title="Webpack 基础篇">
+                Webpack 基础篇 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -570,6 +573,8 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image" src="/images/dog3.png" alt="危险">
+            
               <p class="site-author-name" itemprop="name">危险</p>
               <p class="site-description motion-element" itemprop="description">学习路上的查漏补缺✍疑难杂症💊</p>
           </div>
@@ -581,7 +586,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -603,7 +608,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
