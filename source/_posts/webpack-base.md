@@ -849,3 +849,104 @@ ReactDOM.render(<div>
 ```
 
 [以上代码](https://github.com/ifer-itcast/webpack/tree/master/06_react)
+
+## 使用 jQuery
+
+### 安装
+
+```
+cnpm i jquery -S
+```
+
+### 使用
+
+``` javascript
+import $ from 'jquery';
+console.log($);
+console.log(window.$);  // undefined
+```
+
+### 暴露给 window
+
+为什么要暴露给 window 呢？因为有一些第三方模块依赖的是**全局** $，这时候就会出问题，例如 jQueryUI 依赖的就是 window.$
+
+```
+cnpm i expose-loader -D
+```
+
+``` javascript
+// 注意 index.html 中需要 DOMContentLoaded 后才能拿到 $ 或 window.$
+let $ = require('expose-loader?$!jquery');
+console.log($);
+console.log(window.$);
+```
+
+也可以在 rules 中进行如下配置：
+
+```javascript
+{
+    test: require.resolve('jquery'),
+    use: 'expose-loader?$'
+}
+// 后面只需下面写法
+import $ from 'jquery';
+```
+
+### 全局变量
+
+不希望每个模块使用时都 import $ from 'jquery'; 麻烦！
+
+```javascript
+{
+    plugins: [
+        new webpack.ProvidePlugin({
+            $: 'jquery' // $ 来自于 jquery 包，相当于 import $ from 'jquery'，每个模块中都注入了 $，并且 window 下也有，因为上面配置了 expose-loader
+        })
+    ]
+}
+```
+
+``` javascript
+// 无需引用，直接使用，真好！
+console.log($);
+console.log(window.$);
+```
+
+### 使用 CDN
+
+``` javascript
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+```
+
+``` javascript
+// 模块和 HTML 文件中都可以直接使用 $ 和 window.$ 了
+console.log($);
+console.log(window.$);
+```
+
+### 最后优化
+
+上面虽然模块中不引用也可以直接使用 $，但感觉怪怪的，并且使用 TS 时也通不过语法检查！我想引用后再使用，这样就解决了看起来奇怪和通不过 TS 语法检查的问题！
+
+但是又引来了一个新的问题，HTML 中以及 通过 CDN 引入 jQuery 了，模块中再次引入的话会被打包，这样就多了一套重复的代码！
+
+目的：JS 文件中引入第三方库但不想被打包！
+
+解决：配置 [externals](https://webpack.docschina.org/configuration/externals/)，它可以指定一个变量是外部（script）来的，不需要被打包
+
+``` javascript
+module.exports = { 
+    externals: {
+        // 意思是这个 jquery 是外部提供的，别再给老子打包进去了
+        jquery: '$'
+    }
+};
+```
+
+``` javascript
+// 模块中随便用，不会被打包，美滋滋~
+import $ from 'jquery';
+console.log($, window.$);
+```
+
+[以上代码](https://github.com/ifer-itcast/webpack/tree/master/07_jquery)
