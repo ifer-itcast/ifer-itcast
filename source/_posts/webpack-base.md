@@ -1002,6 +1002,9 @@ cnpm i optimize-css-assets-webpack-plugin -D
 }
 ```
 
+## 打包分类
 
-
-
+- 图片分类通过配置 outputPath 将其统一分配到对应目录
+- CSS 分类通过配置 plugins 中的 MiniCssExtractPlugin
+- 通过配置 publicPath 可以在引用资源（例如CSS、Img）的时候会统一加上一个前缀
+- 若只想给图片加前缀，也可以单独配置图片的 publicPath
