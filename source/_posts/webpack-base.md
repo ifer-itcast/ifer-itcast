@@ -19,13 +19,45 @@ npm init -y
 ### 安装 webpack 和命令行工具
 
 ```javascript
-// 为了避免不必要的版本问题，不建议全局安装！
+// 为了避免不必要的版本问题，不建议全局安装！webpack 是核心模块，webpack-cli 是命令行工具
 npm i webpack webpack-cli -D
 ```
 
-### 配置 webpack.config.js
+```javascript
+// 安装完成后可以使用以下命令检测版本号
+npx webpack -v
+npx webpack-cli -v
+```
 
-约定大于配置，默认会把 `src/index.js` 打包到 `dist/main.js`，这里的默认配置名是 `webpack.config.js`，如果修改了需要按这种方式 `npx webpack --config webpack.config.my.js` 去寻找配置文件
+### 打包第一个应用
+
+entry: 资源打包的入口，webpack 默认的入口就是 src/index.js，其实可以省略 entry 配置
+output-filename: 输出资源名，默认会输出到 dist 目录
+mode: 打包模式，webpack 会自动添加适合当前模式的一些配置
+
+```javascript
+npx webpack --entry=./src/index.js --output-filename=bundle.js --mode=development
+```
+
+### 使用 npm scripts
+
+上面每次打包都要输入一大串命令，不好！这时候可以配置 package.json 如下：
+
+```javascript
+{
+    "scripts": {
+        "build": "webpack --output-filename=bundle.js --mode=development"
+    }
+}
+```
+
+下次只需执行 `npm run build` 即可
+
+### 使用配置文件
+
+可以使用 `npx webpack -h` 查看 webpack 相关的配置项以及命令行参数！当项目需要越来越多的配置项时，往 package.json 中添加就会变得越来越难以维护，为了解决这个问题，可以把所有的配置放在某个文件中，webpack 每次打包的时候会读取该文件的配置。
+
+这里的默认配置文件是 `webpack.config.js`，如果修改了需要按这种方式 `npx webpack --config webpack.config.my.js` 去寻找对应的配置文件！约定大于配置，默认会把 `src/index.js` 打包到 `dist/main.js`。
 
 ```javascript
 const path = require('path');
@@ -73,11 +105,16 @@ npm run build -- --config development
 
 ## 本地启动服务
 
-通过 `webpack-dev-server` 可以启动一个服务（内部依赖的是 Express），它也可以在内存中生成打包后的代码 main.js，这点可以通过访问 `localhost:8080/main.js` 可以证明！也可以对 index 中的代码进行热更新等，需要在 index.html 中引入 `<script src="/main.js"></script>`
+通过 `webpack-dev-server` 可以启动一个服务（内部依赖的是 Express），它也可以在内存中生成打包后的代码 main.js，这点可以通过访问 `localhost:8080/main.js` 可以证明！
+
+还有一项特性是 live-reloading（自动刷新），在 index.html 中引入 `<script src="/main.js"></script>` 可以进行测试！
+
+还有更先进的功能 hot-module-replacement（模块热替换），不需要刷新浏览器就能展示更新后的内容！
 
 ### 安装
 
 ``` javascript
+// 注意是开发依赖，项目上线时可以通过 npm install --production 过滤掉 devDependencies 中的模块
 cnpm i webpack-dev-server -D
 ```
 
@@ -105,7 +142,8 @@ cnpm i webpack-dev-server -D
 module.exports = {
     mode: 'development',
     devServer: {
-        contentBase: path.join(__dirname, "dist"), // 无论这里怎么配置，内存中的 main.js 还是通过 localhost:8080/main.js 访问
+        contentBase: path.join(__dirname, "dist"), // 无论这里怎么配置，内存中的 main.js 还是通过 localhost:8080/main.js 访问，但这样配置时会影响实际资源的存放路径，例如通过 localhost:8080 想访问首页时，就要把 index.html 就要放在 dist 目录下
+        // publicPath: '/dist', // 会为内存中的资源添加一个前缀，这时候再访问内存中的 main.js 就需要 localhost:8080/dist/main.js
         progress: true, // 显示打包进度
         compress: true, // 开启 GZIP 压缩
         port: 9000,
@@ -834,6 +872,13 @@ cnpm install @babel/preset-react -D
 // 也可以在 .babelrc 中进行配置
 {
     "presets": ["@babel/preset-env", "@babel/preset-react"]
+}
+```
+
+```javascript
+// 或者简写
+{
+    "presets": ["@babel/env", "@babel/react"]
 }
 ```
 
