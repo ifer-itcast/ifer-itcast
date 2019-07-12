@@ -1395,3 +1395,99 @@ app.listen(3001);
 ```
 
 [以上代码](https://github.com/ifer-itcast/webpack/tree/master/10_server)
+
+## resolve 解析
+
+### extensions
+
+指定 extensions 之后可以不用在 require 或是 import 的时候加文件扩展名，会依次寻找。当然本来默认引入 JS 也是不用加扩展名的，例如可以自定义个 .yangk 的文件。
+
+```javascript
+resolve: {
+    extensions: ['.js', '.jsx', '.json', '.css']
+}
+```
+
+### alias
+
+```javascript
+// 会根据 bootstrap 下的 package.json 中的 main 字段查找，main 中是什么这里引入的就是什么
+import 'bootstrap';
+```
+
+```javascript
+// 所以一般引入CSS时一般这样引入，查找慢，容易出错
+import 'bootstrap/dist/css/bootstrap.min.css';
+```
+
+
+
+```javascript
+// 解决，配置别名，可以加快 webpack 查找模块的速度
+const bootstrapPath = path.resolve(__dirname, 'node_modules/bootstrap/dist/css/bootstrap.min.css');
+
+resolve: {
+    extensions: ['.js', '.jsx', '.json', '.css'],
+    alias: {
+        bootstrap: bootstrapPath
+    }
+}
+```
+
+使用
+
+```javascript
+// 应用的就是 node_modules/bootstrap/dist/css/bootstrap.min.css
+import 'bootstrap';
+```
+
+在 HTML 文件中测试是否成功
+
+``` html
+<button class="btn btn-primary">hello world</button>
+```
+
+### modules
+
+寻找 modules 的配置
+
+``` javascript
+modules: [
+    // 不要东奔西走了，都去 node_modules 下找，node_modules 找不到去 test 下找
+    path.resolve(__dirname, 'node_modules'),
+    path.resolve(__dirname, 'test')
+]
+```
+
+```javascript
+// node_modules 同级目录下新建 test 文件夹，里面存放 a.js
+import 'a.js';
+```
+
+### resolveLoader
+
+寻找 loader 的配置，单独有一个入口
+
+``` javascript
+resolveLoader: {
+    modules: [
+        path.resolve('node_modules'),
+        path.resolve('src/loaders')
+    ]
+}
+```
+
+### mainFiles
+
+``` javascript
+// 默认先找先找模块中的 index.js 再找 root
+mainFiles: ['index', 'root'],
+```
+
+### mainFields
+
+默认情况下 package.json 文件按照文件中 main 字段的文件名来查找文件，其实是否先找 main 是可以配置的。先找 package.json 中的 style，再找 main，那上面 bootstrap alias 就不用配了，因为 style 中有指明路径。
+
+```javascript
+mainFields: ['style', 'main'],
+```
