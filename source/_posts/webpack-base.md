@@ -326,6 +326,30 @@ module: {
 }
 ```
 
+## 使用 HTML 片段
+
+```javascript
+cnpm i html-loader -D
+```
+
+```javascript
+{
+    module: {
+        rules: [
+            {
+                test: /\.html$/,
+                use: 'html-loader'
+            }
+        ]
+    }
+}
+```
+
+```javascript
+import headerHtml from './header.html';
+document.body.innerHTML = headerHtml;
+```
+
 ## 使用样式
 
 ### 使用 CSS
@@ -510,9 +534,9 @@ module: {
                         limit: 10 * 1024,
                         // 将打包的图片放到 img 目录，图片并不会放到缓存中，缓存的是 HTML、JS 和 CSS 文件
                         // 可以先 npm run build 到 dist/img 目录，当然也要把 devServer 的 contentBase 配置为 dist
-                        outputPath: '/img/',
+                        outputPath: '/img/', // 资源的打包路径
                         // 给引入的图片资源加上前缀
-                        publicPath: 'http://www.zhihur.com'
+                        publicPath: 'http://www.zhihur.com' // 资源的引用路径
                     }
                 }
             ]
