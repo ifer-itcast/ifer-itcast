@@ -1491,3 +1491,559 @@ mainFiles: ['index', 'root'],
 ```javascript
 mainFields: ['style', 'main'],
 ```
+
+## 开发和线上环境
+
+生产环境一般需要分离 CSS 成单独的文件，以便多个页面共享同一个CSS文件、需要压缩 HTML/CSS/JS 代码、需要压缩图片等
+
+开发环境需要生成 sourcemap 文件、需要打印 debug 信息、需要 live reload 或者 hot reload 功能等
+
+### 定义可以到处使用的全局变量
+
+```javascript
+plugins: [
+    new webpack.DefinePlugin({
+        // DEV: "'dev'" // 'dev': 代表的是 dev 变量
+        DEV: JSON.stringify('dev'),
+        FLAG: 'true' // 会把单引号去掉，就是布尔 true
+    })
+]
+```
+
+### 怎么拿到 mode
+
+env 环境变量，argv 命令行环境变量
+
+``` javascript
+module.exports = (env,argv) => ({
+    // 优化相关的
+    optimization: {
+        minimizer: argv.mode === 'production' ? [
+            new UglifyjsWebpackPlugin(), // 压缩 JS
+            new OptimizeCssAssetsWebpackPlugin() // 压缩 CSS
+        ] : []
+    }
+})
+```
+
+### 拆分配置
+
+```
+yarn add webpack-merge -D
+```
+
+```javascript
+// webpack.prod.js
+const {smart} = require('webpack-merge');
+const base = require('./webpack.base.js');
+
+module.exports = smart(base, {
+    mode: 'production',
+    optimization: {
+        minimizer: []
+    },
+    plugins: []
+});
+```
+
+```javascript
+// webpack.dev.js
+const {smart} = require('webpack-merge');
+const base = require('./webpack.base.js');
+
+module.exports = smart(base, {
+    mode: 'development',
+    devServer: {},
+    devtool: 'source-map'
+});
+```
+
+```
+npm run build -- --config webpack.dev.js
+```
+
+## Webpack 优化
+
+### noParse
+
+如果知道一个包没有依赖项，可以使用 noParse 将其忽略掉
+
+```javascript
+module: {
+    noParse: /jquery/ // 不再去解析 jQuery 中的依赖关系
+}
+```
+
+### exclude 和 include
+
+匹配文件解析时进行排除和包含
+
+### IgnorePlugin
+
+忽略不希望打包的模块，例如 moment 语言包
+
+```javascript
+plugins: [
+    // moment 中引入的包忽略掉 ./locale 引入的文件
+    new webpack.IgnorePlugin(/^\.\/locale/,/moment$/)
+]
+```
+
+```javascript
+import moment from 'moment';
+import 'moment/locale/zh-cn'; // 需要手动引入 moment 下的中文包
+moment.locale('zh-cn');
+
+let r = moment().endOf('day').fromNow();
+console.log(r);
+```
+
+### DefinePlugin
+
+定义一些可以在模块中使用的全局变量，例如 PRODUCTION、VERSION 等等
+
+``` javascript
+new webpack.DefinePlugin({
+    PRODUCTION: JSON.stringify(false), // 是否生成环境
+    VERSION: "1+1",
+    INFO: {
+        NAME: JSON.stringify("XXX")
+    }
+}),
+```
+
+### 动态链接库
+
+打包时速度和主文件大小（dll文件会当做单独的文件引入）优化
+
+把 React 和 ReactDOM 不需要每次都重新打包，可以先打包好，在开发时引用打包好的文件即可
+
+下次引入 import React from 'react' 时，会去 react.manifest.json 中找有没有 var 这个文件的 name，这里就是有没有 var react_dll，然后会找 content 中的属性，例如 "./node_modules/_react-dom@16.7.0@react-dom/index.js" 在 dll.js 中对应的区域代码，这个文件就是打包好的文件了
+
+DLL 文件是动态链接库，动态库中可以包含给其他模块调用的函数和数据
+
+react，redux，react-dom 很大，我希望只编译一次再也不需要编译了
+
+- 把基础模块独立出来打包到单独的动态链接库
+
+- 当需要导入的模块在动态库里的时候，模块不能再次被打包，而是去动态库里获取
+
+- 生成 dll 依赖 webpack/lib/DllPlugin
+
+- 引入 dll 依赖 webpack/lib/DllReferencePlugin
+
+#### 新建 dll 配置文件
+
+例如：react.webpack.config.js
+
+#### 配置单独的生成 dll 的 webpack
+
+```
+npx webpack --config react.webpack.config.js --mode development
+```
+
+``` javascript
+// 或 packge.json 中
+{
+    "test": "webpack --config react.webpack.config.js"
+}
+```
+
+``` javascript
+const path = require('path');
+const DllPlugin = require('webpack/lib/DllPlugin');
+
+// 动态链接库，会打包出 dll.js 和 react.manifest.json
+module.exports = {
+    mode: 'development',
+    entry: {
+        // 这里的 react key 随便起不是固定的
+        react: ['react', 'react-dom']
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'dll.js',
+        library: '[name]_dll' // var react_dll = xxx
+    },
+    plugins: [
+        new DllPlugin({
+            name: '[name]_dll',
+            path: path.resolve(__dirname, 'dist', '[name].manifest.json')
+        })
+    ]
+};
+```
+
+```
+// 先生成动态链接库
+npm run test
+```
+
+#### 打包并引用
+
+``` javascript
+// 另外一个主 webpack 配置文件中再次进行关联 manifest 的配置
+const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
+plugins: [
+    // 关联
+    new DllReferencePlugin({
+        manifest: path.resolve(__dirname, 'dist', 'react.manifest.json')
+    })
+]
+```
+
+```
+// 速度大提升
+npm run build
+```
+
+需要先 npm run test 保证 dist 中存在 dll 和 manifest 文件
+
+重新 npm run dev 发现并不可用，需要在模板文件中引如 dll 文件，然后再 npm run dev
+
+``` html
+<div id="root"></div>
+<script src="/dll.js"></script>
+```
+
+### 多线程打包
+
+HappyPack 打包时优化，快乐打包，多线程打包 ~~
+
+基于NodeJS 的 Webpack 是单线程的，CPU 处理慢，Node IO 操作还可以，但 CPU 计算不行，因为是单线程的
+
+需要修改和配置 module rules 下的 loader 和 plugins，npm run build 进行测试
+
+项目小的时候慎用！例如切一张破图分给10个人，还要合在一起。分配进程（需要时间）的时间都打包好了
+
+``` javascript
+const HappyPack = require('happypack');
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: 'happypack/loader?id=css'
+            },
+            {
+                test: /\.jsx?$/,
+                // use: 'babel-loader',
+                use: 'happypack/loader?id=js',
+                exclude: /node_modules/,
+                include: path.resolve(__dirname, 'src')
+            }
+        ]
+    },
+    plugins: [
+        // 把上面的 use 移到了这里
+        // 上面的 use 可以不用数组，例如 babel-loader，但这里必须是数组的形式
+        new HappyPack({
+            id: 'js',
+            use: ['babel-loader']
+        }),
+        new HappyPack({
+            id: 'css',
+            use: ['style-loader', 'css-loader', 'postcss-loader']
+        })
+    ]
+};
+```
+
+### Tree Shaking
+
+webpack4 production 模式默认就实现 Tree Shaking，打包时 production mode 下并不会打包 minus，会自动去除掉死（无用的）代码
+
+内部调用的是 uglifyjs
+
+注意 Tree Shaking 默认只会针对 ES6 import 的语法，不支持 require 语法
+
+```javascript
+let sum = (a, b) => {
+    return a + b + 'sum';
+};
+let minus = (a, b) => {
+    return a - b + 'minus';
+};
+
+export default {
+    sum, minus
+};
+```
+
+```javascript
+import calc from './test2.js';
+calc.sum(1,2);
+```
+
+### Scope Hoisting
+
+Webpack4 production mode 下实现了 Scope Hoisting，作用域提升，可以让 webpack 打包出来的代码更小更快
+
+```javascript
+let a = 1;
+let b = 2;
+let c = 3;
+let d = a + b + c; // 在 webpack 中可以自动省略简化一些代码，直接 1+2+3
+console.log(d);
+```
+
+### 提取公共代码
+
+可以实现多页面打包的时候抽离出公共的代码文件
+
+```javascript
+// 新版本无需安装了
+cnpm i common-chunk-and-vendor-chunk -D
+```
+
+```javascript
+// index.js
+import './a';
+import './b';
+console.log('index.js');
+```
+
+```javascript
+// other.js
+import './a';
+import './b';
+console.log('other.js');
+```
+
+上面会抽离出一个 common~index~other.js
+
+假如 A 页面用了 jQuery，B 页面也引用了 jQuery，需要提取出公共的代码块 jQuery
+
+``` javascript
+module.exports = {
+    entry: {
+        pageA: './src/pageA.js',
+        pageB: './src/pageB.js'
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js'
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                common: {
+                    chunks: 'initial',
+                    minChunks: 2,
+                    minSize: 0, // 有1个字符重了就拿出来
+                },
+                vendor: {
+                    test: /node_modules/, // 只有第三方的我要
+                    chunks: 'initial',
+                    minChunks: 2,
+                    minSize: 0,
+                    priority: 10 // 权重，先走这里，先抽离第三方，再抽离自己的
+                }
+            }
+        }
+    }
+};
+```
+
+### 懒加载
+
+```
+yarn add @babel/plugin-syntax-dynamic-import -D
+```
+
+```javascript
+// 配置
+{
+    test: /\.js$/,
+    use: [{
+        loader: 'babel-loader',
+        options: {
+            presets: [
+                '@babel/preset-env',
+                '@babel/preset-react'
+            ],
+            plugins: [
+                '@babel/plugin-syntax-dynamic-import'
+            ]
+        }
+    }]
+}
+```
+
+```javascript
+// source.js
+export default 'xxx';
+
+// 使用
+let btn = document.createElement('button');
+btn.innerHTML = 'xxx';
+btn.addEventListener('click', function() {
+    // ES6 草案中的语法，JSONP 实现动态加载文件
+    import('./source.js').then(res => {
+        console.log(res.default);
+    });
+});
+document.body.appendChild(btn);
+```
+
+### 热更新
+
+HMR 可以理解为增强版的 Hot Reloading，但不用整个页面刷新，而是局部替换掉部分模块代码并且使其生效
+
+```javascript
+// devServer
+hot 为 true
+```
+
+```javascript
+{
+    plugins: [
+        new webpack.NamedModulesPlugin(), // 打印哪个模块更新了
+        new webpack.HotModuleReplacementPlugin(),
+    ]
+}
+```
+
+```javascript
+// JS 模块中
+if(module.hot) {
+    module.hot.accept();
+}
+```
+
+
+``` javascript
+// 可以在入口里面一气呵成
+render();
+if(DEVELOPMENT) {
+    if(module.hot) {
+        // 不指定入口代表所有的模块
+        module.hot.accept(() => {
+            render();
+        });
+    }
+}
+```
+
+### 封装 log 方法
+
+webpack 时传递的 mode 参数，是可以在我们的应用代码运行时，通过 process.env.NODE_ENV 这个变量获取的
+
+``` javascript
+export default function log(...args) {
+    if(process.env.NODE_ENV === 'development') {
+        console.log.apply(console,args);
+    }
+}
+```
+
+### 拆分配置
+
+- webpack.base.js
+- webpack.development.js
+- webpack.production.js
+- webpack.test.js
+
+可以把 webpack 的配置按照不同的环境拆分成多个文件，运行时根据环境加载
+
+依赖 webpack-merge 组合到一起
+
+以上代码 `03_development`
+
+### 多入口
+
+最后会生成 pageA.js 和 pageB.js
+
+``` javascript
+// 多文件，多入口
+module.exports = {
+    entry: {
+        pageA: './src/pageA',
+        pageB: './src/pageB'
+    },
+    output: {
+        path: path.resolve('dist'),
+        // name 就是入口的 key，例如 pageA
+        filename: '[name].js'
+    },
+};
+```
+
+生成多 HTML 引用对应的多 JS
+
+``` javascript
+module.exports = {
+    entry: {
+        pageA: './src/pageA',
+        pageB: './src/pageB'
+    },
+    output: {
+        path: path.resolve('dist'),
+        // name 就是入口的 key，例如 pageA
+        filename: '[name].js'
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            filename: 'pageA.html',
+            chunks: ['pageA']
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            filename: 'pageB.html',
+            chunks: ['pageB']
+        }),
+    ]
+};
+```
+
+### librayTarget 和 library
+
+当用 webpack 去构建一个可以被其他模块导入使用的库时需要用到它们
+
+- libraryTarget 配置以何种方式导出库
+
+- library 配置导出库的名称
+
+``` javascript
+const path = require('path');
+const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
+const HappyPack = require('happypack');
+
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        path: path.resolve('dist'),
+        filename: 'bundle.js',
+        libraryTarget: 'var', // 默认
+        // libraryTarget: 'commonjs',
+        // libraryTarget: 'commonjs2',
+        // libraryTarget: 'this',
+        // libraryTarget: 'window',
+        // libraryTarget: 'global',
+        library: 'weixian'
+    }
+};
+```
+
+打包的结果就是：
+
+``` javascript
+var weixian=(function(mudules){})();
+```
+
+### CDN
+
+- 内容分发网络，把资源部署到世界各地可以就近获取资源，从而加快速度
+- 文件名加上 Hash 值避免缓存
+- 为了并行加载不阻塞，把不同的静态资源分配到不同的CDN服务器上
+
+### 输出分析
+
+```
+npx webpack --profile --json > stats.json
+```
+
+```
+https://webpack.github.io/analyse
+```
