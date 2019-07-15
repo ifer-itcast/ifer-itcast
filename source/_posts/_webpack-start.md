@@ -386,3 +386,62 @@ module.exports = {
 
 **为了避免开发环境和生产环境的不一致，建议把 output.path 和 webpack-dev-server 的 publicPath 设置的路径一直！**
 
+## 预处理器
+
+通过 loader，JS 文件中也可以引入 CSS 文件，打包的结果不会对 JS 文件造成影响，但这样做的意义在于描述了 JS 与 CSS 文件之间的关系！
+
+假如有一个日历组件，这个组件的 JS 和 CSS 可以作为一个整体被页面引入进来，这样就更加清晰的描述了资源之间的关系！
+
+### loader 概述
+
+每个 loader 的本质都是一个函数，用公式表示如下：
+
+```javascript
+// input 可能是工程源文件的字符串，也可能是上一个 loader 转化后的结果
+output = loader(input)
+```
+
+举一个例子：
+
+```javascript
+ES5 = babel-loader(ES6+)
+```
+
+### loader 配置
+
+```javascript
+module: {
+    rules: [
+        {
+            test: /\.css/,
+            use: ['style-loader', 'css-loader'],
+            // exclude 比 include 优先级高
+            exclude: /node_modules/
+        }
+    ]
+}
+```
+
+### 常用 loader 介绍
+
+#### babel-loader
+
+- babel-loader：Babel 与 Webpack 协同工作的模块
+- @babel/core：Babel 编译器的核心模块
+- @babel/preset-env：官方推荐的预设器，可根据用户设置的目标环境自动添加所需的插件和补丁来编译 ES6+ 代码
+
+```javascript
+npm i babel-loader @babel/core @babel/preset-env -D
+```
+
+#### ts-loader
+
+用于连接 Webpack 与 Typescript 的模块
+
+#### html-loader
+
+可以通过 JS 来加载 HTML 片段
+
+### 自定义 loader
+
+
