@@ -470,241 +470,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/webpack-start/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="危险">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/49337922.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="危险">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/14/webpack-start/" itemprop="url">Webpack 基础梳理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-14T08:15:38+08:00">
-                2019-07-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/07/14/webpack-start/" class="leancloud_visitors" data-flag-title="Webpack 基础梳理">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.6k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>内容来自《Webpack 实战：入门、进阶与调优》</strong></p>
-<h2 id="Webpack-简介"><a href="#Webpack-简介" class="headerlink" title="Webpack 简介"></a>Webpack 简介</h2><h3 id="何为-Webpack"><a href="#何为-Webpack" class="headerlink" title="何为 Webpack"></a>何为 Webpack</h3><p>一个开源的 JS 模块打包工具，核心是解决模块之间的依赖，把各个模块按照特定到的规则和顺序组织在一起，最终合并成一个或多个 JS 文件，这个过程叫做模块打包！</p>
-<h3 id="为什么需要-Webpack"><a href="#为什么需要-Webpack" class="headerlink" title="为什么需要 Webpack"></a>为什么需要 Webpack</h3><h4 id="何为模块"><a href="#何为模块" class="headerlink" title="何为模块"></a>何为模块</h4><p>项目中引入的一个日期处理的 npm 包，或者编写的一个提供工具方法的 JS 文件都可以称为模块！</p>
-<h4 id="JavaScript-中的模块"><a href="#JavaScript-中的模块" class="headerlink" title="JavaScript 中的模块"></a>JavaScript 中的模块</h4><p>AMD、CommonJS、CMD、ES6 模块等</p>
-<h4 id="模块打包工具"><a href="#模块打包工具" class="headerlink" title="模块打包工具"></a>模块打包工具</h4><p>就是为了解决模块间的依赖，使其打包后的结果能运行在浏览器上，比较流行的有 Webpack、Parcel、Rollup 等。</p>
-<h4 id="为什么选择-Webpack"><a href="#为什么选择-Webpack" class="headerlink" title="为什么选择 Webpack"></a>为什么选择 Webpack</h4><p>完备！</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm init -y <span class="comment">// 初始化 package.json</span></span><br><span class="line">npm install webpack webpack-cli --save-dev <span class="comment">// 安装 webpack 核心模块和命令行工具</span></span><br><span class="line">npx webpack -v <span class="comment">// 查看 webpack 版本号</span></span><br><span class="line">npx webpack-cli -v <span class="comment">// 查看 webpack-cli 版本号</span></span><br></pre></td></tr></table></figure>
-<h3 id="打包第一个应用"><a href="#打包第一个应用" class="headerlink" title="打包第一个应用"></a>打包第一个应用</h3><h4 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以开发模式打包 ./index.js 文件到 ./dist/bundle.js</span></span><br><span class="line">npx webpack --entry=./index.js --output-filename=bundle.js --mode=development</span><br></pre></td></tr></table></figure>
-<h4 id="使用-npm-scripts"><a href="#使用-npm-scripts" class="headerlink" title="使用 npm scripts"></a>使用 npm scripts</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"scripts"</span>: &#123;</span><br><span class="line">        <span class="string">"build"</span>: <span class="string">"webpack --entry=./index.js --output-filename=bundle.js --mode=development"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="使用默认目录配置"><a href="#使用默认目录配置" class="headerlink" title="使用默认目录配置"></a>使用默认目录配置</h4><p>Webpack 默认的源代码入口是 src/index.js，把 index.js 放到 src 下可以省略 –entry 配置，默认出口是 dist</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"scripts"</span>: &#123;</span><br><span class="line">        <span class="string">"build"</span>: <span class="string">"webpack --output-filename=bundle.js --mode=development"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="使用配置文件"><a href="#使用配置文件" class="headerlink" title="使用配置文件"></a>使用配置文件</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx webpack -h <span class="comment">// 查看 webpack 配置项以及命令行</span></span><br></pre></td></tr></table></figure>
-<p>当项目需要越来越多的配置时，都添加到 package.json 中后期就会变得难以维护！为了解决这个问题，可以把这些配置项专门放到一个配置文件里，这个文件默认就是 webpack.config.js。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'bundle.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mode: <span class="string">'development'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"scripts"</span>: &#123;</span><br><span class="line">        <span class="string">"build"</span>: <span class="string">"webpack"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack-dev-server"></a>webpack-dev-server</h4><p>每次改变 JS 都要执行 npm run build，然后刷新页面才能看到效果，有没有更好的方法呢？答案是使用 wepack-dev-server，两大好处：快（打包结果在内存中）、live-reloading（自动刷新）</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 项目上线时就可以通过 npm install --production 过滤掉 devDependencies 中的冗余模块</span></span><br><span class="line">npm install webpack-dev-server --save-dev</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        <span class="comment">// 生成的 bundle.js 在内存中的路径</span></span><br><span class="line">        <span class="comment">// http://localhost:8080/dist/bundle.js</span></span><br><span class="line">        publicPath: <span class="string">'/dist'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"scripts"</span>: &#123;</span><br><span class="line">        <span class="string">"build"</span>: <span class="string">"webpack"</span>,</span><br><span class="line">        <span class="string">"dev"</span>: <span class="string">"webpack-dev-server"</span></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="模块打包"><a href="#模块打包" class="headerlink" title="模块打包"></a>模块打包</h2><h3 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h3><p>CommonJS 是 JS 社区 2009 年提出的标准，Node.js 采用了 CommonJS 标准的一部分并在此基础上进行了调整！</p>
-<h4 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h4><p>CommonJS 规定每个文件是一个模块！所有的变量及函数只有自己能访问，对外是不可见的。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// calculator.js</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">'calculator.js'</span>;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">'index.js'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./calculator'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(name); <span class="comment">// index.js</span></span><br></pre></td></tr></table></figure>
-<h4 id="导出与导入"><a href="#导出与导入" class="headerlink" title="导出与导入"></a>导出与导入</h4><p>导出是一个模块向外暴露自身的唯一方式！除了 module.exports 外，使用 exports 也可以导出，但注意不要直接对 exports 进行赋值！</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// calculator.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    name: <span class="string">'calculator'</span>,</span><br><span class="line">    add: <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'hello ~'</span>);</span><br></pre></td></tr></table></figure>
-<p>下面代码尽管有两个地方 require 了 calculator，但 calculator.js 内部代码只执行了一次！</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> calculator = <span class="built_in">require</span>(<span class="string">'./calculator'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./calculator'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sum = calculator.add(<span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"><span class="built_in">console</span>.log(sum);</span><br></pre></td></tr></table></figure>
-<h3 id="ES6-module"><a href="#ES6-module" class="headerlink" title="ES6 module"></a>ES6 module</h3><p>2015 年 6 月，TC39 标准委员会正式发布了 ES6，从此 JS 这门语言才具备了模块这一特性！</p>
-<h4 id="模块-1"><a href="#模块-1" class="headerlink" title="模块"></a>模块</h4><p>ES6 module 也是将每个文件作为一个模块，每个模块拥有自身的作用域，它还会自动采用严格模式！</p>
-<h4 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h4><ul>
-<li>命名导出</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写法1</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> name = <span class="string">'calculator'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> add = <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写法2</span></span><br><span class="line"><span class="keyword">const</span> name = <span class="string">'calculator'</span>;</span><br><span class="line"><span class="keyword">const</span> add = <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可以使用 as 关键字对变量进行重命名</span></span><br><span class="line"><span class="keyword">export</span> &#123;name, add <span class="keyword">as</span> getSum&#125;;</span><br></pre></td></tr></table></figure>
-<p>第 1 种写法将变量的声明和导出写在一行；第 2 种先声明再统一导出，两种写法效果一样！</p>
-<ul>
-<li>默认导出</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="string">'This is calculator.js'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> </span>&#123;&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// calculator.js</span></span><br><span class="line"><span class="keyword">const</span> name = <span class="string">'calculator'</span>;</span><br><span class="line"><span class="keyword">const</span> add = <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;name, add&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="comment">// 加载带有命名导出的模块时，import 后面要跟一对大括号将导入的变量名包裹起来，并且这些变量名需要与导出时的一致！</span></span><br><span class="line"><span class="keyword">import</span> &#123;name, add <span class="keyword">as</span> getSum&#125; <span class="keyword">from</span> <span class="string">'./calculator.js'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(getSum(<span class="number">2</span>, <span class="number">3</span>));</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入多个变量时，还可以采用整体导入的方式</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> calculator <span class="keyword">from</span> <span class="string">'./calculator.js'</span>;</span><br><span class="line">calculator.add(<span class="number">2</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="加载-npm-模块"><a href="#加载-npm-模块" class="headerlink" title="加载 npm 模块"></a>加载 npm 模块</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 实际加载的时 ./node_modules/lodash/package.json 中 main.js 对应的 lodash.js 文件</span></span><br><span class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span>;</span><br></pre></td></tr></table></figure>
-<p>也可以单独引入某个用到的 JS 文件，减小打包资源的体积！</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> all <span class="keyword">from</span> <span class="string">'lodash/fp/all.js'</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="资源输入输出"><a href="#资源输入输出" class="headerlink" title="资源输入输出"></a>资源输入输出</h2><h3 id="配置资源入口"><a href="#配置资源入口" class="headerlink" title="配置资源入口"></a>配置资源入口</h3><h4 id="context"><a href="#context" class="headerlink" title="context"></a>context</h4><p>资源入口的路径前缀，默认为当前工程的根目录，可以让 entry 的编写更加简洁，尤其在过入口情况下！</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    context: path.join(__dirname, <span class="string">'./src'</span>),</span><br><span class="line">    entry: <span class="string">'./index.js'</span>,</span><br><span class="line">    mode: <span class="string">'development'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h4 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h4><p>entry 的值可以是字符串、数组、对象、函数！</p>
-<ul>
-<li>字符串类型入口</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'bundle.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mode: <span class="string">'development'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>数组类型入口</li>
-</ul>
-<p>将多个资源预先合并，将数组中的最后一个元素作为实际的入口路径！可以<strong>多入口单出口</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: [<span class="string">'babel-polyfill'</span>, <span class="string">'./src/index.js'</span>],</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'bundle.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mode: <span class="string">'development'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>上面配置等同于</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'bundle.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mode: <span class="string">'development'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'babel-polyfill'</span>;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>对象类型入口</li>
-</ul>
-<p>使用字符串或数组定义单入口时，没有办法更改 chunk name，只能为默认的 main。使用对象定义多入口时，则必须为每一个出口定义 chunk name，即必须<strong>多入口多出口</strong>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        <span class="comment">// 对象的属性值也可以为字符串或数组</span></span><br><span class="line">        index: [<span class="string">'babel-polyfill'</span>, <span class="string">'./src/index.js'</span>],</span><br><span class="line">        lib: <span class="string">'./src/lib.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'[name].js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mode: <span class="string">'development'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>函数类型入口</li>
-</ul>
-<p>用函数作为入口时，只需返回上面介绍的任何配置形式即可！使用函数的优势是可以在里面写入一些动态逻辑来获取工程的入口！</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="function"><span class="params">()</span> =&gt;</span> <span class="string">'./src/index.js'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'bundle.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mode: <span class="string">'development'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><ul>
-<li>单页应用</li>
-</ul>
-<p>对于 SPA 来说，一般单一入口即可！好处是只会产生一个 JS 文件依赖关系清晰，弊端是当应用规模上升后导致资源体积过大，降低页面的渲染速度！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/27/addEventListener/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2196,6 +1961,195 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/22/select-all/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="危险">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/49337922.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/22/select-all/" itemprop="url">触发全选按钮的几种思路</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-22T15:50:24+08:00">
+                2019-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web-API/" itemprop="url" rel="index">
+                    <span itemprop="name">Web API</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/22/select-all/" class="leancloud_visitors" data-flag-title="触发全选按钮的几种思路">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  696
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="/resource/images/pages/webapi/select-all__0.png" alt></p>
+<p>需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/05/22/select-all/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -2248,7 +2202,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
