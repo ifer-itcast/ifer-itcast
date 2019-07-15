@@ -1,7 +1,8 @@
 ---
 title: ES2015(ES6)
 date: 2019-07-15 21:23:57
-tags:
+tags: ES2015
+categories: JS 高级
 ---
 
 主要是 ES6 的知识梳理 ~
