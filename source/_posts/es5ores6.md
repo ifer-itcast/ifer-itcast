@@ -461,7 +461,7 @@ let arr = [{
 }); */
 
 let res = arr.reduce((prev, next, nextIndex, arr) => {
-    // 第一次没问题，第二次返回的结果 3 会作为下一次的 prev，3.count 这是什么鬼
+    // 第一次 prev 为 0，next.count 就是 1，它们的和作为下一次的 prev，下一次的 next.count 又是 2
     return prev + next.count;
 },0);
 ```
@@ -580,9 +580,10 @@ console.log(found); // 1
 let arr = [1, 2, 3, 4];
 // some 判断是否有至少一个元素符合条件，返回true or false
 let result2 = arr.some(function (item, index) {
-    if (item < 4) {
+    /* if (item < 4) {
         return true;
-    }
+    } */
+    return item < 4;
 });
 console.log(result2); // true
 ```
@@ -593,9 +594,10 @@ console.log(result2); // true
 // every 判断所有元素是否都符合条件，返回true or false
 let arr = [1, 2, 3, 4];
 let result = arr.every(function(item, index) {
-    if(item < 4) {
+    /* if(item < 4) {
         return true;
-    }
+    } */
+    return item < 4;
 });
 console.log(result); // false
 ```
@@ -665,6 +667,35 @@ console.log(arrName); //  ["y", "a", "n", "g", "k"]
 ``` javascript
 let arr = Array.of(1,2,3,4,5);
 console.log(arr); // [1, 2, 3, 4, 5]
+```
+
+### flat
+
+会按照一个可指定的深度递归遍历数组，并将所有元素与遍历到的子数组中的元素合并为一个新数组返回
+
+```javascript
+// depth 默认1
+var newArray = arr.flat(depth)
+```
+
+```javascript
+var arr1 = [1, 2, [3, 4]];
+arr1 = arr1.flat();
+console.log(arr1); // [1, 2, 3, 4]
+```
+
+```javascript
+var arr = [1, 2, [3, 4, [5, 6]]];
+// 使用 Infinity 作为深度，展开任意深度的嵌套数组
+arr = arr.flat(Infinity);
+console.log(arr);
+```
+
+```javascript
+// 去重扁平化后的数组并排序
+var arr = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10];
+arr = Array.from(new Set(arr.flat(Infinity))).sort((a,b) => a-b);
+console.log(arr); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 ```
 
 ## 函数变更
