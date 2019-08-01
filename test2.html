@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <style>
-    *{
-        margin: 0;
-        padding: 0;
-    }
-    .wrap{
-        /* 20px */
-        font-size: 1.25em;
-    }
-    .test {
-        /* 24px */
-        /* 24*1.5 = 36 */
-        font-size: 14px;
-        padding-top: 1.5em;
-        width: 100px;
-        height: 100px;
-        background-color: pink;
-    }
-    </style>
 </head>
+
 <body>
-    <div class="wrap">
-        <div class="test">111</div>
-    </div>
+    <script>
+let str = '张三工资：10000，李四工资：20000，我：30000';
+
+let reg = /\d+/g;
+let arr = str.split(reg);
+console.log(arr); // ["张三工资：", "10000", "，李四工资：", "20000", "，我：", "30000", ""]
+let newArr = [];
+for(let i = 1; i < arr.length; i +=2) {
+    newArr.push(arr[i]);
+}
+console.log(newArr); // ["10000", "20000", "30000"]
+    </script>
 </body>
+
 </html>

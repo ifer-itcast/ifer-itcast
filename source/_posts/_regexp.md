@@ -205,7 +205,7 @@ console.log(useTest()); // ["111", "12"]
 - 同：两则都可以用来捕获小分组
 - 异：exec 可以用来捕获大正则，test 不行
 
-## 翻车案例
+## 获取工资案例
 
 需求：匹配所有工资 `let str = '张三工资：10000，李四工资：20000，我：30000';`
 
@@ -239,6 +239,8 @@ match 并不能改变 reg 下的 lastIndex 的值！<font size=2 color=#ccc>正�
 let str = '张三工资：10000，李四工资：20000，我：30000';
 
 let reg = /(\d+)，[\u4e00-\u9fa5]+：(\d+)，[\u4e00-\u9fa5]+：(\d+)/g;
+// 完全匹配的正则，通过下列的任意一个方法，都可以拿到对应的分组
+// 不完全匹配的正则，可以通过多次 reg.exec 和 reg.test 来拿到对应的内容
 // reg.test(str); // ok
 // reg.exec(str); // ok
 // str.split(reg); // ok
@@ -297,3 +299,64 @@ while(reg.test(str)) {
 console.log(arr); // ["10000", "20000", "30000"]
 ```
 
+## Split
+
+需求，取到下面字符串的 key 和 value 值：
+
+```javascript
+let str = 'name=weixian&age=20&job=student';
+```
+
+有些同学一般这样做：
+
+```javascript
+let str = 'name=weixian&age=20&job=student';
+
+// 先以 & split 第一次
+let arr1 = str.split('&');
+let obj = {};
+for(let i = 0; i < arr1.length; i ++) {
+    // 再以 = split 第二次
+    let arr2 = arr1[i].split('=');
+    obj[arr2[0]] = arr2[1];
+}
+```
+
+其实 split 也是支持正则的，可以改造如下：
+
+```javascript
+let str = 'name=weixian&age=20&job=student';
+
+let arr = str.split(/=|&/);
+
+let obj = {};
+for(let i = 0; i < arr.length; i += 2) {
+    obj[arr[i]] = arr[i+1];
+}
+```
+
+split 也支持捕获小分组：
+
+```javascript
+let str = 'name=weixian&age=20&job=student';
+let arr1 = str.split(/(=|&)/);
+let arr2 = str.split(/=|&/);
+
+console.log(arr1); // ["name", "=", "weixian", "&", "age", "=", "20", "&", "job", "=", "student"]
+console.log(arr2); // ["name", "weixian", "age", "20", "job", "student"]
+```
+
+用 split 改造上面获取工资的案例如下：
+
+```javascript
+let str = '张三工资：10000，李四工资：20000，我：30000';
+
+let reg = /(\d+)/g;
+let arr = str.split(reg);
+console.log(arr); // ["张三工资：", "10000", "，李四工资：", "20000", "，我：", "30000", ""]
+let newArr = [];
+for(let i = 1; i < arr.length; i +=2) {
+    newArr.push(arr[i]);
+}
+console.log(newArr); // ["10000", "20000", "30000"]
+```
