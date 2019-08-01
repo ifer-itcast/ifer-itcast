@@ -7,7 +7,7 @@ categories: JS 高级
 
 需求：取出字符串 `'张三工资：10000，李四工资：20000，我：30000'` 中的所有工资放到数组中。
 
-分别用字符串下的 `match`、`split`、`replace`、`search` 和正则下的 `exec`、`test` 实现，希望大家对正则配合 JS 的使用有一个最基础的认识！
+分别用字符串下的 `match`、`split`、`replace`、`search` 和正则下的 `exec`、`test` 实现，希望大家对正则配合 JS 的使用有一个基础的认识！
 
 <!-- more -->
 
