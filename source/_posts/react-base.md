@@ -11,7 +11,7 @@ categories: React
 
 ## 常见绑定事件的操作
 
-**根据是否需要传值的情况择优使用！**
+**结论：应尽量避免 render 中使用箭头函数或 bind 绑定！**
 
 bind 的形式
 
@@ -25,7 +25,7 @@ handleClick() {
 <Button type="primary" onClick={this.handleClick.bind(this)}>点击</Button>
 ```
 
-定义实例方法时采用箭头函数的形式
+定义实例方法时采用箭头函数的形式，推荐！
 
 ```javascript
 handleClick = () => {
@@ -34,7 +34,7 @@ handleClick = () => {
 ```
 
 ```javascript
-<Button type="primary" onClick={this.handleClick.bind(this)}>点击</Button>
+<Button type="primary" onClick={this.handleClick}>点击</Button>
 ```
 
 绑定事件时采用箭头函数的形式
@@ -133,4 +133,110 @@ componentDidMount() {
 
 ```javascript
 <input type="text" ref={this.inputRef}/>
+```
+
+## 生命周期
+
+```javascript
+static getDerivedStateFromProps(nextProps, prevState) {
+    // 将传入的 props 映射到 state 上面
+    const { number } = nextProps;
+    return number % 2 === 0 ? { num: number + 1 } : { num: number + 3 };
+}
+```
+
+```javascript
+getSnapshotBeforeUpdate() {
+    // 发生于 render 之后，但并没有渲染完毕，可以从 DOM 中捕获一些信息（例如滚动之前的高度）
+    // 返回值会作为 componentDidUpdate 的第三个参数
+    console.log(2);
+    return this.ulRef.current.offsetHeight
+}
+componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log(snapshot);
+}
+```
+
+## 跨组件传值
+
+### 旧版 Context API
+
+```javascript
+// Step1: 父
+static childContextTypes={
+	color: PropTypes.string,
+	changeColor:PropTypes.func
+}
+```
+
+```javascript
+// Step2: 父
+getChildContext() {
+	return {
+		color: this.state.color,
+		changeColor:(color)=>{
+			this.setState({color})
+		}
+	}
+}
+```
+
+```javascript
+// step3: 子孙
+static contextTypes={
+	color: PropTypes.string,
+	changeColor:PropTypes.func
+}
+```
+
+```javascript
+// step4: 子孙
+<button onClick={() => this.context.changeColor('pink')}>改变孙子的颜色</button>
+```
+
+### 新版 Context API
+
+```javascript
+// Step1: 全局
+const ThemeContent = React.createContext();
+```
+
+```javascript
+// Step2: 父
+const ctx = {
+    color: this.state.color,
+    changeColor: this.changeColor
+};
+<ThemeContent.Provider value={ctx}>
+    <div style={{ border: '3px solid red' }}>
+        <h1>父</h1>
+        <Large1 />
+        <Large2 />
+    </div>
+</ThemeContent.Provider>
+```
+
+```javascript
+// Step3: 子孙
+static contextType = ThemeContent;
+```
+
+```javascript
+// Step4: 子孙
+<button onClick={() => this.context.changeColor('pink')}>改变孙子的颜色</button>
+```
+
+**上面的 Step3 和 Step4 也可以改写如下：**
+
+```javascript
+<ThemeContent.Consumer>
+{
+	value => (
+		<div style={{ border: '3px solid red', margin: 10, color: value.color }}>
+			<h4>孙子2</h4>
+			<button onClick={() => value.changeColor('pink')}>改变孙子的颜色</button>
+		</div>
+	)
+}
+</ThemeContent.Consumer>
 ```
