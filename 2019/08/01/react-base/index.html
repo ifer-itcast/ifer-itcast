@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="危险">
 <meta property="og:description" content="努力更新中…">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-02T09:49:48.608Z">
+<meta property="og:updated_time" content="2019-08-02T11:47:34.275Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React 必知必会">
 <meta name="twitter:description" content="努力更新中…">
@@ -399,7 +399,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  766
+                  997
                 </span>
               
 
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  5
                 </span>
               
             </div>
@@ -479,6 +479,11 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Step4: 子孙</span></span><br><span class="line">&lt;button onClick=&#123;() =&gt; <span class="keyword">this</span>.context.changeColor(<span class="string">'pink'</span>)&#125;&gt;改变孙子的颜色&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
 <p><strong>上面的 Step3 和 Step4 也可以改写如下：</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ThemeContent.Consumer&gt;</span><br><span class="line">&#123;</span><br><span class="line">	value =&gt; (</span><br><span class="line">		&lt;div style=&#123;&#123; <span class="attr">border</span>: <span class="string">'3px solid red'</span>, <span class="attr">margin</span>: <span class="number">10</span>, <span class="attr">color</span>: value.color &#125;&#125;&gt;</span><br><span class="line">			&lt;h4&gt;孙子<span class="number">2</span>&lt;<span class="regexp">/h4&gt;</span></span><br><span class="line"><span class="regexp">			&lt;button onClick=&#123;() =&gt; value.changeColor('pink')&#125;&gt;改变孙子的颜色&lt;/</span>button&gt;</span><br><span class="line">		&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">	)</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">&lt;/</span>ThemeContent.Consumer&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="PureComponent"><a href="#PureComponent" class="headerlink" title="PureComponent"></a>PureComponent</h2><p>浅比较新旧 props 和 state，发生变化时才会更新组件，提高效率！<a href="https://github.com/ifer-itcast/react-skill/tree/master/src/components/04" target="_blank" rel="noopener">查看代码</a></p>
+<h2 id="React-memo"><a href="#React-memo" class="headerlink" title="React.memo()"></a>React.memo()</h2><p>PureComponent 要和 class component 配合使用，而 React.memo() 可以和 function component 一起使用，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'res 没有变化时我不会 render ~~'</span>);</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            结果是：&#123;props.res&#125;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">Child = React.memo(Child);</span></span><br></pre></td></tr></table></figure>
+<h2 id="React-lazy"><a href="#React-lazy" class="headerlink" title="React.lazy()"></a>React.lazy()</h2><p>可以实现基于路由的代码分割/懒加载</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Suspense, lazy, Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; HashRouter <span class="keyword">as</span> Router, Route, Switch, Link &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Home = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./Home'</span>));</span><br><span class="line"><span class="keyword">const</span> News = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./News'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// render 时需要 return 的内容如下</span></span><br><span class="line">&lt;Router&gt;</span><br><span class="line">    &lt;Suspense fallback=&#123;&lt;div&gt;loading...&lt;<span class="regexp">/div&gt;&#125;&gt;</span></span><br><span class="line"><span class="regexp">        &lt;ul&gt;</span></span><br><span class="line"><span class="regexp">            &lt;li&gt;</span></span><br><span class="line"><span class="regexp">                &lt;Link to="/</span><span class="string">"&gt;Home&lt;/Link&gt;</span></span><br><span class="line"><span class="string">            &lt;/li&gt;</span></span><br><span class="line"><span class="string">            &lt;li&gt;</span></span><br><span class="line"><span class="string">                &lt;Link to="</span>/news<span class="string">"&gt;News&lt;/Link&gt;</span></span><br><span class="line"><span class="string">            &lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;/ul&gt;</span></span><br><span class="line"><span class="string">        &lt;Switch&gt;</span></span><br><span class="line"><span class="string">            &lt;Route exact path="</span>/<span class="string">" component=&#123;Home&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route path="</span>/news<span class="string">" component=&#123;News&#125; /&gt;</span></span><br><span class="line"><span class="string">        &lt;/Switch&gt;</span></span><br><span class="line"><span class="string">    &lt;/Suspense&gt;</span></span><br><span class="line"><span class="string">&lt;/Router&gt;</span></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -624,7 +629,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -657,7 +662,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见绑定事件的操作"><span class="nav-text">常见绑定事件的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过-Ref-获取元素的几种方式"><span class="nav-text">通过 Ref 获取元素的几种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期"><span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨组件传值"><span class="nav-text">跨组件传值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#旧版-Context-API"><span class="nav-text">旧版 Context API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新版-Context-API"><span class="nav-text">新版 Context API</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见绑定事件的操作"><span class="nav-text">常见绑定事件的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过-Ref-获取元素的几种方式"><span class="nav-text">通过 Ref 获取元素的几种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期"><span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨组件传值"><span class="nav-text">跨组件传值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#旧版-Context-API"><span class="nav-text">旧版 Context API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新版-Context-API"><span class="nav-text">新版 Context API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PureComponent"><span class="nav-text">PureComponent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-memo"><span class="nav-text">React.memo()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-lazy"><span class="nav-text">React.lazy()</span></a></li></ol></div>
             
 
           </div>
