@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="判断数据类型,">
+  <meta name="keywords" content="React 技巧,React 必知必会,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="从 JS 基础第一天开始，我们就学习了如何使用 typeof 去判断数据类型，学习构造函数时我们又说了  constructor 以及 instanceof 也可以去进行类型检测，到 JS 高级时还讲了 Object.prototype.toString() 方法也可以去判断数据类型，那么问题来了，这么多方法它们之间有什么异同吗？不同场景下该怎样使用才比较合适呢？">
-<meta name="keywords" content="判断数据类型">
+<meta name="description" content="努力更新中…">
+<meta name="keywords" content="React 技巧,React 必知必会">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据类型检测的 N 中方式">
-<meta property="og:url" content="http://yoursite.com/2019/05/26/judge-type/index.html">
+<meta property="og:title" content="React 必知必会">
+<meta property="og:url" content="http://yoursite.com/2019/08/01/react-base/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="从 JS 基础第一天开始，我们就学习了如何使用 typeof 去判断数据类型，学习构造函数时我们又说了  constructor 以及 instanceof 也可以去进行类型检测，到 JS 高级时还讲了 Object.prototype.toString() 方法也可以去判断数据类型，那么问题来了，这么多方法它们之间有什么异同吗？不同场景下该怎样使用才比较合适呢？">
+<meta property="og:description" content="努力更新中…">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-01T05:19:11.633Z">
+<meta property="og:updated_time" content="2019-08-02T09:49:48.608Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据类型检测的 N 中方式">
-<meta name="twitter:description" content="从 JS 基础第一天开始，我们就学习了如何使用 typeof 去判断数据类型，学习构造函数时我们又说了  constructor 以及 instanceof 也可以去进行类型检测，到 JS 高级时还讲了 Object.prototype.toString() 方法也可以去判断数据类型，那么问题来了，这么多方法它们之间有什么异同吗？不同场景下该怎样使用才比较合适呢？">
+<meta name="twitter:title" content="React 必知必会">
+<meta name="twitter:description" content="努力更新中…">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/26/judge-type/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/01/react-base/">
 
 
 
 
 
-  <title>数据类型检测的 N 中方式 | 危险</title>
+  <title>React 必知必会 | 危险</title>
   
 
 
@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/26/judge-type/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/01/react-base/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="危险">
@@ -322,7 +322,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">数据类型检测的 N 中方式</h1>
+          <h1 class="post-title" itemprop="name headline">React 必知必会</h1>
         
 
         <div class="post-meta">
@@ -334,8 +334,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-26T00:40:04+08:00">
-                2019-05-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-01T19:13:39+08:00">
+                2019-08-01
               </time>
             
 
@@ -357,8 +357,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JS-高级/" itemprop="url" rel="index">
-                    <span itemprop="name">JS 高级</span>
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
                   </a>
                 </span>
 
@@ -374,7 +374,7 @@
 
           
           
-             <span id="/2019/05/26/judge-type/" class="leancloud_visitors" data-flag-title="数据类型检测的 N 中方式">
+             <span id="/2019/08/01/react-base/" class="leancloud_visitors" data-flag-title="React 必知必会">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -399,7 +399,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  766
                 </span>
               
 
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  4
                 </span>
               
             </div>
@@ -436,53 +436,49 @@
       
 
       
-        <p>从 JS 基础第一天开始，我们就学习了如何使用 <code>typeof</code> 去判断数据类型，学习构造函数时我们又说了  <code>constructor</code> 以及 <code>instanceof</code> 也可以去进行类型检测，到 JS 高级时还讲了 <code>Object.prototype.toString()</code> 方法也可以去判断数据类型，那么问题来了，这么多方法它们之间有什么异同吗？不同场景下该怎样使用才比较合适呢？</p>
+        <p>努力更新中…</p>
 <a id="more"></a>
-<h2 id="数据类型知多少"><a href="#数据类型知多少" class="headerlink" title="数据类型知多少"></a>数据类型知多少</h2><p>既然要检测数据类型，首先要明确 JS 中的数据类型有以下 7 种：</p>
-<ul>
-<li>简单数据类型：Number、String、Boolean、Null、Undefined、Symbol（ES6）</li>
-<li>复杂数据类型：Object（包括函数、数组、对象、正则、日期等）</li>
-</ul>
-<h2 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h2><p>typeof 它的使用方法有两种：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可以不带括号，直接跟数据</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="number">36</span>);</span><br><span class="line"><span class="comment">// 也可以带括号</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span>(<span class="number">36</span>));</span><br></pre></td></tr></table></figure>
-<p>typeof 的返回值永远是一个<strong>全小写字符串</strong>，例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> (<span class="keyword">typeof</span> (<span class="keyword">typeof</span> <span class="number">66</span>))); <span class="comment">// string</span></span><br></pre></td></tr></table></figure>
-<p>typeof 的返回值除了上面 7 种数据类型外，还多了一个 function，例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> test); <span class="comment">// function</span></span><br></pre></td></tr></table></figure>
-<p>总结：</p>
-<ul>
-<li>除了 Null（返回 object），typeof 对于基本数据类型都能返回正确的结果</li>
-<li>除了 Function（返回 function），typeof 对于复杂数据类型都返回 object</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>typeof 对于复杂数据类型的处理，只能返回处于原型链最顶端的 Object 类型，不能细分</li>
-</ul>
-<h2 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h2><p>新建一个（构造）函数 Fn 时，JS 引擎会给自 Fn 添加一个 prototype 属性，prototype 下又有一个 constructor 指向 Fn 函数，可用如下代码表示：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(Fn.prototype.constructor === Fn); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<p>当我们执行 <code>new Fn</code> 来创建 Fn 的实例后，这个实例的 constructor 也就指向 Fn，如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> f1 = <span class="keyword">new</span> Fn;</span><br><span class="line"><span class="comment">// f1 下本没有 constructor，自己没有则会通过原型链向上查找到 Fn.prototype 上</span></span><br><span class="line"><span class="built_in">console</span>.log(f1.constructor === Fn); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<p>如此一来我们就可以通过 constructor 来判断某个实例对象具体的类型（来源），例如上面代码从原型链的角度来说 f1 的类型（来源）就是 Fn。</p>
-<p>同样的道理，其他数据的也可以通过 constructor 来判断具体的类型，它可以解决 typeof 对应复杂数据类型的判断无能为力的问题，测试如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log([].constructor === <span class="built_in">Array</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Date</span>().constructor === <span class="built_in">Date</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Function</span>().constructor === <span class="built_in">Function</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">''</span>.constructor === <span class="built_in">String</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">true</span>.constructor === <span class="built_in">Boolean</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Error</span>().constructor === <span class="built_in">Error</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">document</span>.constructor === HTMLDocument);</span><br></pre></td></tr></table></figure>
-<p>constructor 的小问题：</p>
-<ul>
-<li>null 和 undefined 上没有 constructor 这属性，不能通过 constructor 来判断</li>
-<li><p>当 prototype 被不小心重写后，会导致 constructor 判断不准确的问题，例如：</p>
-  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> t1 = <span class="keyword">new</span> Test;</span><br><span class="line"><span class="built_in">console</span>.log(t1.constructor === Test); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 重写原型会导致 Test.prototype.constructor 指向不正确</span></span><br><span class="line"><span class="comment">// 当然对应的实例对象在用 constructor 去判断类型的时候也就会指向不正确</span></span><br><span class="line">Test.prototype = &#123;</span><br><span class="line">    showAge: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> t2 = <span class="keyword">new</span> Test();</span><br><span class="line"><span class="built_in">console</span>.log(t2.constructor === Test); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h2><p>它主要用来判断一个对象是否能够通过原型链找到另一个对象的原型，什么意思呢？例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [] 可以通过 __proto__ 找到 Array.prototype，所以结果是 true</span></span><br><span class="line"><span class="built_in">console</span>.log([] <span class="keyword">instanceof</span> <span class="built_in">Array</span>);</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [].__proto__.__proto__ === Object.prototype</span></span><br><span class="line"><span class="comment">// 说明 [] 也是可以通过原型链找过 Object 的原型，所以下面结果也是 true</span></span><br><span class="line"><span class="built_in">console</span>.log([] <span class="keyword">instanceof</span> <span class="built_in">Object</span>);</span><br></pre></td></tr></table></figure>
-<p>所以大家也看到了，instanceof 并不能准确的找到某个实例的类型，但它相对于 constructor 有这样一个特点，<strong>即便构造函数的原型被重写后，实例也能通过 instanceof 去判断自己的类型</strong>，例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">Test.prototype = &#123;</span><br><span class="line">    showAge: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> t1 = <span class="keyword">new</span> Test();</span><br><span class="line"><span class="built_in">console</span>.log(t1 <span class="keyword">instanceof</span> Test); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t1 <span class="keyword">instanceof</span> <span class="built_in">Object</span>); <span class="comment">// 当然对应顶级对象 Object 也是 true，还是不能准确判断就是 Test 类型</span></span><br></pre></td></tr></table></figure>
-<p>instanceof 还有另外一个问题需要你注意的，当页面中引入 iframe 时，实例化<strong> iframe 窗口</strong>下的对象和<strong>当前窗口</strong>下相对应的构造函数进行 instanceof 判断时也会出现问题。例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oFrame = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>);</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(oFrame);</span><br><span class="line"><span class="comment">// ifame 窗口下实例化的 arr</span></span><br><span class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">window</span>.frames[<span class="number">0</span>].Array;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr <span class="keyword">instanceof</span> <span class="built_in">window</span>.frames[<span class="number">0</span>].Array); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 针对上面的问题 ES5 提供了 Array.isArray() 这个方法进行判断</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Array</span>.isArray(arr)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<h2 id="Object-prototype-toString"><a href="#Object-prototype-toString" class="headerlink" title="Object.prototype.toString"></a>Object.prototype.toString</h2><p>他返回的信息格式是 <code>[object Xxx]</code>（注意第一个 X 是大写），对于 {} 直接调用 toString 既可以返回 <code>[object Object]</code>，其他类型需要借助 call/apply 方法去调用，例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 也可以把 Object.prototype 替换成 &#123;&#125;</span></span><br><span class="line"><span class="comment">// 因为调用 &#123;&#125; 下的 toString() 方法，自己没有会通过原型链去 Object.prototype 上面找</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(<span class="number">233</span>)); <span class="comment">// [object Number]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(<span class="string">'233'</span>)); <span class="comment">// [object String]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(<span class="literal">true</span>)); <span class="comment">// [object Boolean]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(<span class="literal">null</span>)); <span class="comment">// [object Null]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(<span class="literal">undefined</span>)); <span class="comment">// [object Undefined]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(<span class="built_in">Symbol</span>())); <span class="comment">// [object Symbol]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call([])); <span class="comment">// [object Array]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(<span class="keyword">new</span> <span class="built_in">Function</span>)); <span class="comment">// [object Function]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(<span class="keyword">new</span> <span class="built_in">Date</span>)); <span class="comment">// [object Date]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(<span class="keyword">new</span> <span class="built_in">RegExp</span>)); <span class="comment">// [object RegExp]</span></span><br></pre></td></tr></table></figure>
-<p>可见 <code>Object.prototype.toString()</code> 简直太好用啦，推荐使用！</p>
-
+<h2 id="常见绑定事件的操作"><a href="#常见绑定事件的操作" class="headerlink" title="常见绑定事件的操作"></a>常见绑定事件的操作</h2><p><strong>结论：应尽量避免 render 中使用箭头函数或 bind 绑定！</strong></p>
+<p>bind 的形式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handleClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(<span class="function">(<span class="params">prevState, props</span>) =&gt;</span> (&#123;<span class="attr">num</span>: prevState.num+<span class="number">1</span>&#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button type=<span class="string">"primary"</span> onClick=&#123;<span class="keyword">this</span>.handleClick.bind(<span class="keyword">this</span>)&#125;&gt;点击&lt;<span class="regexp">/Button&gt;</span></span><br></pre></td></tr></table></figure>
+<p>定义实例方法时采用箭头函数的形式，推荐！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handleClick = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(<span class="function">(<span class="params">prevState, props</span>) =&gt;</span> (&#123;<span class="attr">num</span>: prevState.num+<span class="number">1</span>&#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button type=<span class="string">"primary"</span> onClick=&#123;<span class="keyword">this</span>.handleClick&#125;&gt;点击&lt;<span class="regexp">/Button&gt;</span></span><br></pre></td></tr></table></figure>
+<p>绑定事件时采用箭头函数的形式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handleClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(<span class="function">(<span class="params">prevState, props</span>) =&gt;</span> (&#123;<span class="attr">num</span>: prevState.num+<span class="number">1</span>&#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button type=<span class="string">"primary"</span> onClick=&#123;() =&gt; <span class="keyword">this</span>.handleClick()&#125;&gt;点击&lt;<span class="regexp">/Button&gt;</span></span><br></pre></td></tr></table></figure>
+<p>实例方法和绑定事件都采用箭头函数的形式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handleClick = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(<span class="function">(<span class="params">prevState, props</span>) =&gt;</span> (&#123;<span class="attr">num</span>: prevState.num+<span class="number">1</span>&#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方便值的传递</span></span><br><span class="line">&lt;Button type=<span class="string">"primary"</span> onClick=&#123;() =&gt; <span class="keyword">this</span>.handleClick()&#125;&gt;点击&lt;<span class="regexp">/Button&gt;</span></span><br></pre></td></tr></table></figure>
+<p>constructor 中就扭正 this 的指向</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">        num: <span class="number">0</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">this</span>.handleClick = <span class="keyword">this</span>.handleClick.bind(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handleClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(<span class="function">(<span class="params">prevState, props</span>) =&gt;</span> (&#123;<span class="attr">num</span>: prevState.num+<span class="number">1</span>&#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button type=<span class="string">"primary"</span> onClick=&#123;<span class="keyword">this</span>.handleClick&#125;&gt;点击&lt;<span class="regexp">/Button&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="通过-Ref-获取元素的几种方式"><a href="#通过-Ref-获取元素的几种方式" class="headerlink" title="通过 Ref 获取元素的几种方式"></a>通过 Ref 获取元素的几种方式</h2><p><strong>需求：打开页面使 Input 获取焦点</strong></p>
+<p>通过 this.refs.xxx</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"text"</span> ref=<span class="string">"inputRef"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意是 componentDidMount</span></span><br><span class="line">componentDidMount() &#123;</span><br><span class="line">    <span class="keyword">this</span>.refs.inputRef.focus();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过 ref 接受一个函数进行处理</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"text"</span> ref=&#123;ele =&gt; ele.focus()&#125;/&gt;</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">    <span class="keyword">this</span>.inputRef.focus();</span><br><span class="line">&#125;</span><br><span class="line">&lt;input type=<span class="string">"text"</span> ref=&#123;ele =&gt; <span class="keyword">this</span>.inputRef=ele&#125;/&gt;</span><br></pre></td></tr></table></figure>
+<p>利用 React.createRef()</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.inputRef = React.createRef();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">    <span class="keyword">this</span>.inputRef.current.focus();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"text"</span> ref=&#123;<span class="keyword">this</span>.inputRef&#125;/&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> getDerivedStateFromProps(nextProps, prevState) &#123;</span><br><span class="line">    <span class="comment">// 将传入的 props 映射到 state 上面</span></span><br><span class="line">    <span class="keyword">const</span> &#123; number &#125; = nextProps;</span><br><span class="line">    <span class="keyword">return</span> number % <span class="number">2</span> === <span class="number">0</span> ? &#123; <span class="attr">num</span>: number + <span class="number">1</span> &#125; : &#123; <span class="attr">num</span>: number + <span class="number">3</span> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">getSnapshotBeforeUpdate() &#123;</span><br><span class="line">    <span class="comment">// 发生于 render 之后，但并没有渲染完毕，可以从 DOM 中捕获一些信息（例如滚动之前的高度）</span></span><br><span class="line">    <span class="comment">// 返回值会作为 componentDidUpdate 的第三个参数</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.ulRef.current.offsetHeight</span><br><span class="line">&#125;</span><br><span class="line">componentDidUpdate(prevProps, prevState, snapshot) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(snapshot);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="跨组件传值"><a href="#跨组件传值" class="headerlink" title="跨组件传值"></a>跨组件传值</h2><h3 id="旧版-Context-API"><a href="#旧版-Context-API" class="headerlink" title="旧版 Context API"></a>旧版 Context API</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Step1: 父</span></span><br><span class="line"><span class="keyword">static</span> childContextTypes=&#123;</span><br><span class="line">	color: PropTypes.string,</span><br><span class="line">	changeColor:PropTypes.func</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Step2: 父</span></span><br><span class="line">getChildContext() &#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		color: <span class="keyword">this</span>.state.color,</span><br><span class="line">		changeColor:<span class="function">(<span class="params">color</span>)=&gt;</span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.setState(&#123;color&#125;)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// step3: 子孙</span></span><br><span class="line"><span class="keyword">static</span> contextTypes=&#123;</span><br><span class="line">	color: PropTypes.string,</span><br><span class="line">	changeColor:PropTypes.func</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// step4: 子孙</span></span><br><span class="line">&lt;button onClick=&#123;() =&gt; <span class="keyword">this</span>.context.changeColor(<span class="string">'pink'</span>)&#125;&gt;改变孙子的颜色&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="新版-Context-API"><a href="#新版-Context-API" class="headerlink" title="新版 Context API"></a>新版 Context API</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Step1: 全局</span></span><br><span class="line"><span class="keyword">const</span> ThemeContent = React.createContext();</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Step2: 父</span></span><br><span class="line"><span class="keyword">const</span> ctx = &#123;</span><br><span class="line">    color: <span class="keyword">this</span>.state.color,</span><br><span class="line">    changeColor: <span class="keyword">this</span>.changeColor</span><br><span class="line">&#125;;</span><br><span class="line">&lt;ThemeContent.Provider value=&#123;ctx&#125;&gt;</span><br><span class="line">    &lt;div style=&#123;&#123; <span class="attr">border</span>: <span class="string">'3px solid red'</span> &#125;&#125;&gt;</span><br><span class="line">        &lt;h1&gt;父&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Large1 /</span>&gt;</span><br><span class="line">        &lt;Large2 /&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>ThemeContent.Provider&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Step3: 子孙</span></span><br><span class="line"><span class="keyword">static</span> contextType = ThemeContent;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Step4: 子孙</span></span><br><span class="line">&lt;button onClick=&#123;() =&gt; <span class="keyword">this</span>.context.changeColor(<span class="string">'pink'</span>)&#125;&gt;改变孙子的颜色&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>上面的 Step3 和 Step4 也可以改写如下：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ThemeContent.Consumer&gt;</span><br><span class="line">&#123;</span><br><span class="line">	value =&gt; (</span><br><span class="line">		&lt;div style=&#123;&#123; <span class="attr">border</span>: <span class="string">'3px solid red'</span>, <span class="attr">margin</span>: <span class="number">10</span>, <span class="attr">color</span>: value.color &#125;&#125;&gt;</span><br><span class="line">			&lt;h4&gt;孙子<span class="number">2</span>&lt;<span class="regexp">/h4&gt;</span></span><br><span class="line"><span class="regexp">			&lt;button onClick=&#123;() =&gt; value.changeColor('pink')&#125;&gt;改变孙子的颜色&lt;/</span>button&gt;</span><br><span class="line">		&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">	)</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">&lt;/</span>ThemeContent.Consumer&gt;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -499,7 +495,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/判断数据类型/" rel="tag"># 判断数据类型</a>
+            <a href="/tags/React-技巧/" rel="tag"># React 技巧</a>
+          
+            <a href="/tags/React-必知必会/" rel="tag"># React 必知必会</a>
           
         </div>
       
@@ -512,8 +510,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/25/snake-question/" rel="next" title="数据在内存中的存储形式">
-                <i class="fa fa-chevron-left"></i> 数据在内存中的存储形式
+              <a href="/2019/07/28/regexp-case/" rel="next" title="一个栗子认识正则">
+                <i class="fa fa-chevron-left"></i> 一个栗子认识正则
               </a>
             
           </div>
@@ -521,10 +519,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/31/steps/" rel="prev" title="steps(number[, end | start])">
-                steps(number[, end | start]) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -663,7 +657,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型知多少"><span class="nav-text">数据类型知多少</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typeof"><span class="nav-text">typeof</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#constructor-NaN"><span class="nav-text">constructor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instanceof"><span class="nav-text">instanceof</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-prototype-toString"><span class="nav-text">Object.prototype.toString</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见绑定事件的操作"><span class="nav-text">常见绑定事件的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过-Ref-获取元素的几种方式"><span class="nav-text">通过 Ref 获取元素的几种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期"><span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨组件传值"><span class="nav-text">跨组件传值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#旧版-Context-API"><span class="nav-text">旧版 Context API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新版-Context-API"><span class="nav-text">新版 Context API</span></a></li></ol></li></ol></div>
             
 
           </div>
