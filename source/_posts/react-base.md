@@ -240,3 +240,53 @@ static contextType = ThemeContent;
 }
 </ThemeContent.Consumer>
 ```
+
+## PureComponent
+
+浅比较新旧 props 和 state，发生变化时才会更新组件，提高效率！[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/04)
+
+## React.memo()
+
+PureComponent 要和 class component 配合使用，而 React.memo() 可以和 function component 一起使用，例如：
+
+```javascript
+function Child(props) {
+    console.log('res 没有变化时我不会 render ~~');
+    return (
+        <div>
+            结果是：{props.res}
+        </div>
+    )
+}
+Child = React.memo(Child);
+```
+
+## React.lazy()
+
+可以实现基于路由的代码分割/懒加载
+
+```javascript
+import React, { Suspense, lazy, Component } from 'react';
+import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom';
+
+const Home = lazy(() => import('./Home'));
+const News = lazy(() => import('./News'));
+
+// render 时需要 return 的内容如下
+<Router>
+    <Suspense fallback={<div>loading...</div>}>
+        <ul>
+            <li>
+                <Link to="/">Home</Link>
+            </li>
+            <li>
+                <Link to="/news">News</Link>
+            </li>
+        </ul>
+        <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/news" component={News} />
+        </Switch>
+    </Suspense>
+</Router>
+```
