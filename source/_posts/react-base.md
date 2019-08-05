@@ -86,6 +86,143 @@ handleClick() {
 <Button type="primary" onClick={this.handleClick}>点击</Button>
 ```
 
+## Error Boundaries
+
+部分 UI 的 JavaScript 错误不应该导致整个应用崩溃，为了解决这个问题，React 16 引入了一个新的概念 —— 错误边界。[查看代码](https://react.docschina.org/docs/error-boundaries.html)
+
+```javascript
+export default class App extends Component {
+    render() {
+        return (
+            <ErrorBoundary>
+                <Test/>
+            </ErrorBoundary>
+        );
+    }
+}
+```
+
+```javascript
+export class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: false
+        };
+    }
+    componentDidCatch(error, info) {
+        this.setState({
+            error,
+            info
+        });
+    }
+    render() {
+        if(this.state.error) {
+            return (
+                <h1>出错啦！</h1>
+            );
+        }
+        return this.props.children;
+    }
+}
+```
+
+## Portals
+
+[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/08)
+
+可以将子节点渲染到存在于父组件以外的 DOM 节点，常用于弹框、对话框等。
+
+```javascript
+class Modal extends Component {
+    constructor(props) {
+        super(props);
+        this.container = document.createElement('div');
+        document.body.appendChild(this.container);
+    }
+    componentWillUnmount() {
+        document.body.removeChild(this.container);
+    }
+    render() {
+        return ReactDOM.createPortal(
+            <div className="modal">
+                <span className="close" onClick={this.props.onClose}>&times;</span>
+                <div className="content">
+                    {this.props.children}
+                </div>
+            </div>,
+            this.container
+        )
+    }
+}
+```
+
+```javascript
+export default class Test extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showModal: true
+        };
+    }
+    closeModal = () => {
+        this.setState({
+            showModal: false
+        });
+    }
+    render() {
+        return (
+            <>
+                <h2>标题</h2>
+                {
+                    this.state.showModal && (
+                        <Modal onClose={this.closeModal}>
+                            Modal Dialog
+                        </Modal>
+                    )
+                }
+            </>
+        );
+    }
+}
+```
+
+## Fragments
+
+[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/09)
+
+Fragments 允许你将子列表分组，而无需向 DOM 添加额外节点
+
+```javascript
+export default class Fragment extends Component {
+    render() {
+        return (
+            <React.Fragment>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+            </React.Fragment>
+        );
+    }
+}
+```
+
+以上代码等同于
+
+```javascript
+export default class Fragment extends Component {
+    render() {
+        return (
+            <>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+            </>
+        );
+    }
+}
+```
+
 ## Ref 获取元素/组件
 
 **需求：打开页面使 Input 获取焦点**，[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/01)
@@ -200,88 +337,10 @@ componentDidUpdate(prevProps, prevState, snapshot) {
 }
 ```
 
-## Error Boundaries
 
-部分 UI 的 JavaScript 错误不应该导致整个应用崩溃，为了解决这个问题，React 16 引入了一个新的概念 —— 错误边界。[查看代码](https://react.docschina.org/docs/error-boundaries.html)
 
-```javascript
-export default class App extends Component {
-    render() {
-        return (
-            <ErrorBoundary>
-                <Test/>
-            </ErrorBoundary>
-        );
-    }
-}
-```
 
-```javascript
-export class ErrorBoundary extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: false
-        };
-    }
-    componentDidCatch(error, info) {
-        this.setState({
-            error,
-            info
-        });
-    }
-    render() {
-        if(this.state.error) {
-            return (
-                <h1>出错啦！</h1>
-            );
-        }
-        return this.props.children;
-    }
-}
-```
 
-## createPortal
-
-[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/08)
-
-可以将子节点渲染到存在于父组件以外的 DOM 节点，常用于弹框、对话框等。
-
-## Fragments
-
-[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/09)
-
-Fragments 允许你将子列表分组，而无需向 DOM 添加额外节点
-
-```javascript
-export default class Fragment extends Component {
-    render() {
-        return (
-            <React.Fragment>
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
-            </React.Fragment>
-        );
-    }
-}
-```
-
-以上代码等同于
-
-```javascript
-export default class Fragment extends Component {
-    render() {
-        return (
-            <>
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
-            </>
-        );
-    }
-}
-```
 
 ## 跨组件传值
 
