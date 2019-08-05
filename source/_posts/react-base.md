@@ -11,6 +11,8 @@ categories: React
 
 ## 常见绑定事件的操作
 
+[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/00)
+
 **结论：应尽量避免 render 中使用箭头函数或 bind 绑定！**
 
 bind 的形式
@@ -84,9 +86,9 @@ handleClick() {
 <Button type="primary" onClick={this.handleClick}>点击</Button>
 ```
 
-## 通过 Ref 获取元素的几种方式
+## Ref 获取元素/组件
 
-**需求：打开页面使 Input 获取焦点**
+**需求：打开页面使 Input 获取焦点**，[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/01)
 
 通过 this.refs.xxx
 
@@ -135,11 +137,52 @@ componentDidMount() {
 <input type="text" ref={this.inputRef}/>
 ```
 
-## 生命周期
+如何自取子组件（函数）中的 DOM 节点？
+
+```javascript
+import React, {Component} from 'react';
+
+export default class AboutRef extends Component {
+    constructor(props) {
+        super(props);
+        this.inputRef = React.createRef();
+    }
+    handleClick = () => {
+        // this.inputRef.current.refs.test.style.backgroundColor = 'red';
+        this.inputRef.current.style.backgroundColor = 'red';
+    }
+    render() {
+        return (
+            <div>
+                <Test ref={this.inputRef}/>
+                <button onClick={this.handleClick}>改变组件</button>
+            </div>
+        );
+    }
+}
+
+/* class Test extends Component {
+    render() {
+        return (
+            <div ref="test">hello world</div>
+        );
+    }
+} */
+
+const Test = React.forwardRef((props, ref) => {
+    return (
+        <div ref={ref}>hello world</div>
+    );
+});
+```
+
+## 新增生命周期
+
+v16.3 新增，v16.4 再次更新了 getDerivedStateFromProps，[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/02)
 
 ```javascript
 static getDerivedStateFromProps(nextProps, prevState) {
-    // 将传入的 props 映射到 state 上面
+    // 将传入的 props 映射到 state 上面，props 更新 和 setState 时都会触发
     const { number } = nextProps;
     return number % 2 === 0 ? { num: number + 1 } : { num: number + 3 };
 }
@@ -157,35 +200,120 @@ componentDidUpdate(prevProps, prevState, snapshot) {
 }
 ```
 
+## Error Boundaries
+
+部分 UI 的 JavaScript 错误不应该导致整个应用崩溃，为了解决这个问题，React 16 引入了一个新的概念 —— 错误边界。[查看代码](https://react.docschina.org/docs/error-boundaries.html)
+
+```javascript
+export default class App extends Component {
+    render() {
+        return (
+            <ErrorBoundary>
+                <Test/>
+            </ErrorBoundary>
+        );
+    }
+}
+```
+
+```javascript
+export class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: false
+        };
+    }
+    componentDidCatch(error, info) {
+        this.setState({
+            error,
+            info
+        });
+    }
+    render() {
+        if(this.state.error) {
+            return (
+                <h1>出错啦！</h1>
+            );
+        }
+        return this.props.children;
+    }
+}
+```
+
+## createPortal
+
+[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/08)
+
+可以将子节点渲染到存在于父组件以外的 DOM 节点，常用于弹框、对话框等。
+
+## Fragments
+
+[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/09)
+
+Fragments 允许你将子列表分组，而无需向 DOM 添加额外节点
+
+```javascript
+export default class Fragment extends Component {
+    render() {
+        return (
+            <React.Fragment>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+            </React.Fragment>
+        );
+    }
+}
+```
+
+以上代码等同于
+
+```javascript
+export default class Fragment extends Component {
+    render() {
+        return (
+            <>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+            </>
+        );
+    }
+}
+```
+
 ## 跨组件传值
+
+[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/03)
 
 ### 旧版 Context API
 
 ```javascript
 // Step1: 父
 static childContextTypes={
-	color: PropTypes.string,
-	changeColor:PropTypes.func
+    color: PropTypes.string,
+    changeColor:PropTypes.func
 }
 ```
 
 ```javascript
 // Step2: 父
 getChildContext() {
-	return {
-		color: this.state.color,
-		changeColor:(color)=>{
-			this.setState({color})
-		}
-	}
+    return {
+        color: this.state.color,
+        changeColor:(color)=>{
+            this.setState({color})
+        }
+    }
 }
 ```
 
 ```javascript
 // step3: 子孙
 static contextTypes={
-	color: PropTypes.string,
-	changeColor:PropTypes.func
+    color: PropTypes.string,
+    changeColor:PropTypes.func
 }
 ```
 
@@ -195,6 +323,8 @@ static contextTypes={
 ```
 
 ### 新版 Context API
+
+React 16.3
 
 ```javascript
 // Step1: 全局
@@ -218,27 +348,28 @@ const ctx = {
 
 ```javascript
 // Step3: 子孙
+<ThemeContent.Consumer>
+{
+    value => (
+        <div style={{ border: '3px solid red', margin: 10, color: value.color }}>
+            <h4>孙子2</h4>
+            <button onClick={() => value.changeColor('pink')}>改变孙子的颜色</button>
+        </div>
+    )
+}
+</ThemeContent.Consumer>
+```
+
+**上面的 Step3 也可以改写如下：**
+
+React16.6 提供的 API
+
+```javascript
 static contextType = ThemeContent;
 ```
 
 ```javascript
-// Step4: 子孙
 <button onClick={() => this.context.changeColor('pink')}>改变孙子的颜色</button>
-```
-
-**上面的 Step3 和 Step4 也可以改写如下：**
-
-```javascript
-<ThemeContent.Consumer>
-{
-	value => (
-		<div style={{ border: '3px solid red', margin: 10, color: value.color }}>
-			<h4>孙子2</h4>
-			<button onClick={() => value.changeColor('pink')}>改变孙子的颜色</button>
-		</div>
-	)
-}
-</ThemeContent.Consumer>
 ```
 
 ## PureComponent
@@ -246,6 +377,8 @@ static contextType = ThemeContent;
 浅比较新旧 props 和 state，发生变化时才会更新组件，提高效率！[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/04)
 
 ## React.memo()
+
+[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/05)
 
 PureComponent 要和 class component 配合使用，而 React.memo() 可以和 function component 一起使用，例如：
 
@@ -263,7 +396,7 @@ Child = React.memo(Child);
 
 ## React.lazy()
 
-可以实现基于路由的代码分割/懒加载
+可以实现基于路由的代码分割/懒加载，[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/06)
 
 ```javascript
 import React, { Suspense, lazy, Component } from 'react';
