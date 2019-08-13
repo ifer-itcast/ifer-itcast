@@ -207,17 +207,19 @@ export default class Fragment extends Component {
 }
 ```
 
-以上代码等同于
+原理实现如下
 
 ```javascript
+// const Fragment = ({children}) => children;
+const Fragment = (props) => props.children;
 export default class Fragment extends Component {
     render() {
         return (
-            <>
+            <Fragment>
                 <p>1</p>
                 <p>2</p>
                 <p>3</p>
-            </>
+            </Fragment>
         );
     }
 }
@@ -481,4 +483,57 @@ const News = lazy(() => import('./News'));
         </Switch>
     </Suspense>
 </Router>
+```
+
+## 高阶组件及应用
+
+高阶组件是一个函数，能对接收过来的组件进行加工后再返回！[查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/12)
+
+```javascript
+// 基本操作
+const Logger = (Com) => {
+    return class extends Component {
+        render() {
+            return <Com {...this.props}/>;
+        }
+    }
+}
+
+const Hello = Logger((props) => {
+    return (
+        <p>Hello {props.name}</p>
+    )
+});
+
+<Hello name="Ifer"/>
+```
+
+```javascript
+// 案例
+const withFetch = url => View => {
+    return class extends Component {
+        constructor() {
+            super();
+            this.state = {
+                loading: true,
+                data: null
+            };
+        }
+        async componentDidMount() {
+            const res = await fetch(url);
+            const data = await res.json();
+            this.setState({
+                loading: false,
+                data
+            });
+        }
+        render() {
+            if(this.state.loading) {
+                return <div>loading...</div>
+            } else {
+                return <View data={this.state.data}></View>
+            }
+        }
+    }
+};
 ```
