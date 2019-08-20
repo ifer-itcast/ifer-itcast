@@ -537,3 +537,6 @@ const withFetch = url => View => {
     }
 };
 ```
+
+## Render Props
+
