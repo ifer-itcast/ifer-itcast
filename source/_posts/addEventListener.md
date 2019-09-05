@@ -90,8 +90,8 @@ for(var i = 0; i < aBtn.length; i ++) {
     // aBtn[i].removeEventListener('click', rm); // 这里就没有必要进行先解绑了，因为每次绑定的是同一个 rm，会覆盖掉之前的
     aBtn[i].addEventListener('click', rm);
 }
-// 注意这里巧妙的用到了 e.target 查找当前点击的元素，不要试图通过传参的形式使用 this 查找当前元素！
 function rm(e) {
+    // 这里也可以用 this.parentNode
     oUl.removeChild(e.target.parentNode);
 }
 ```
