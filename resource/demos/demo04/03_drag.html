@@ -35,7 +35,12 @@
             var originPageX = e.pageX - moveX;
             var originPageY = e.pageY - moveY;
             document.onmousemove = function (e) {
-                moveX = e.pageX - originPageX
+                // 当前鼠标位置减去按下时的鼠标位置 + 原来的 moveX，注意是在 mousedown 加的
+                // 因为 mousemove 的时候 moveX 是变化的，每次 mousemove 都加自身再赋值给自身，肯定不行！
+
+                // 还有这里并不能简单数学意义上的换算，把下面的 originPageX 换成 e.pageX - moveX 是不行的
+                // 因为 mousemove 时的 e.pageX 和 mousedown 时的 e.pageX 是不一样的！
+                moveX = e.pageX - originPageX;
                 moveY = e.pageY - originPageY;
 
                 // 注意这里改变的是 transform 不再是 oBox.style.left 了
