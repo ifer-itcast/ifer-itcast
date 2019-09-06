@@ -1,0 +1,62 @@
+---
+layout: false
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拖拽</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            transform: translate(100px, 100px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        var oBox = document.querySelector('#box');
+        oBox.onmousedown = function (e) {
+            var disX = e.clientX - this.offsetLeft;
+            var disY = e.clientY - this.offsetTop;
+            document.onmousemove = function (e) {
+                var x = e.clientX - disX;
+                var y = e.clientY - disY;
+                // 判断时统一减去 translate 的值
+                if(x < -100) {
+                    x = -100;
+                } else if(x > window.innerWidth - oBox.offsetWidth - 100) {
+                    // x 的最大值没有之前大了，减去 100 已经到达右侧了
+                    x = window.innerWidth - oBox.offsetWidth - 100;
+                }
+                if(y < -100) {
+                    y = -100;
+                } else if(y > window.innerHeight - oBox.offsetHeight - 100) {
+                    y = window.innerHeight - oBox.offsetHeight - 100;
+                }
+                oBox.style.left = x + 'px';
+                oBox.style.top = y + 'px';
+            };
+            document.onmouseup = function () {
+                document.onmousemove = document.onmouseup = null;
+            };
+            // 阻止默认行为，例如选中文字！
+            return false;
+        };
+    </script>
+</body>
+
+</html>
