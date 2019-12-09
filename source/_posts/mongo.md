@@ -248,6 +248,85 @@ db.students.find({name:/^i/}) // 以 i 开头
 
 ## 与和或
 
+```javascript
+// 与
+db.students.find({name:'ifer',age:1})
+```
 
+```javascript
+// $or
+db.students.find({$or:[{age:18},{age:19}]})
+```
+
+```javascript
+// 与或连用
+db.students.find({name:'ifer',$or:[{age:18},{age:19}]})
+```
+
+## 分页查询
+
+```javascript
+// limit
+db.students.find().limit(3)
+
+// skip
+db.students.find().skip(1)
+
+// skip + limit，第 3 ~ 4 之间的数据
+db.students.find().skip(2).limit(2)
+
+// sort，1 升序，-1 降序
+db.students.find().sort({age:1})
+```
+
+## 执行脚本
+
+```javascript
+let user = {name: 'elser', age: 15 };
+let db = connect('school'); // 选择 school 数据库，所以当前不必在 school 数据库下
+db.students.insert(user);
+```
+
+```javascript
+let start = Date.now();
+let db = connect('school'); // scholl 数据库
+for (let i = 0; i < 1000; i++) {
+    db.students.insert({ name: 'elser' + i }); // students 集合
+}
+let cost = Date.now() - start;
+print('cost ' + cost + ' ms');
+```
+
+```javascript
+let start = Date.now();
+// mongodb://127.0.0.1:27017/school
+let db = connect('school');
+let users = [];
+for (let i = 0; i < 1000; i++) {
+    users.push({ name: 'ifer' + i });
+}
+db.students.insert(users);
+let cost = Date.now() - start;
+print('cost ' + cost + ' ms');
+```
+
+```javascript
+// 命令行中执行
+mongo test.js
+```
+
+**备份与导出**
+
+```javascript
+mongodump // 会把所有数据备份到当前命令行目录的 dump 目录下
+mongodump -h 127.0.0.1 -d school -o "D:\Mongo\bak"
+```
+
+```javascript
+// school 数据库名字（随意）、备份时候的数据库路径
+mongorestore -d school "D:\Mongo\bak\school"
+```
+
+## 权限
 
 
