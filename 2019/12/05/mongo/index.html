@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="MongoDB,">
 
 
 
@@ -80,13 +80,14 @@
 
 
 <meta name="description" content="操作数据库1234567891011mongod --dbpath=./ // 通过 shell 连接 MongoDB 服务show dbs // 查看有哪些数据库db use school // 使用 school 数据库db.students.insert(&amp;#123;name: &apos;ifer&apos;, age: 18&amp;#125;) // 当前数据库中创建集合并插入文档db // 查看当前在哪个数据库">
+<meta name="keywords" content="MongoDB">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MongoDB 基本操作">
 <meta property="og:url" content="http://yoursite.com/2019/12/05/mongo/index.html">
 <meta property="og:site_name" content="危险">
 <meta property="og:description" content="操作数据库1234567891011mongod --dbpath=./ // 通过 shell 连接 MongoDB 服务show dbs // 查看有哪些数据库db use school // 使用 school 数据库db.students.insert(&amp;#123;name: &apos;ifer&apos;, age: 18&amp;#125;) // 当前数据库中创建集合并插入文档db // 查看当前在哪个数据库">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-16T13:37:52.700Z">
+<meta property="og:updated_time" content="2019-12-16T13:41:26.050Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MongoDB 基本操作">
 <meta name="twitter:description" content="操作数据库1234567891011mongod --dbpath=./ // 通过 shell 连接 MongoDB 服务show dbs // 查看有哪些数据库db use school // 使用 school 数据库db.students.insert(&amp;#123;name: &apos;ifer&apos;, age: 18&amp;#125;) // 当前数据库中创建集合并插入文档db // 查看当前在哪个数据库">
@@ -344,6 +345,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/服务端编程/" itemprop="url" rel="index">
+                    <span itemprop="name">服务端编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -417,7 +440,7 @@
 <a id="more"></a>
 <h2 id="操作集合"><a href="#操作集合" class="headerlink" title="操作集合"></a>操作集合</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查看集合使用帮助</span></span><br><span class="line">db.students.help()</span><br><span class="line">db.students.find().help()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看集合</span></span><br><span class="line">show collections</span><br><span class="line"><span class="comment">// 创建集合，一般使用 db.students.insert(document) 创建集合并插入文档</span></span><br><span class="line">db.createCollection(<span class="string">'teachers'</span>)</span><br></pre></td></tr></table></figure>
 <h2 id="创建文档"><a href="#创建文档" class="headerlink" title="创建文档"></a>创建文档</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// insert 不能插入重复的 _id</span></span><br><span class="line">db.students.insert(&#123;<span class="attr">_id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">'ifer'</span>, <span class="attr">age</span>: <span class="number">18</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// save 当插入有重复 _id 的时候，会当前当前文档</span></span><br><span class="line">db.students.save(&#123;<span class="attr">_id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">'ifer'</span>, <span class="attr">age</span>: <span class="number">18</span>&#125;)</span><br></pre></td></tr></table></figure>
-<h2 id="更新文档"><a href="#更新文档" class="headerlink" title="更新文档"></a>更新文档</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db.collection.update(</span><br><span class="line">    &lt;queryObj&gt;, <span class="comment">// 查询条件</span></span><br><span class="line">    &lt;updateObj&gt;, <span class="comment">// 更新的对象</span></span><br><span class="line">    &#123;</span><br><span class="line">        upsert: &lt;boolean&gt;, // 如果不存在符合条件的记录时，是否插入，默认 false</span><br><span class="line">        multi: &lt;boolean&gt; // 默认只更新符合条件的第一条记录，如果为 true 则更新所有符合条件的</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h2 id="更新文档"><a href="#更新文档" class="headerlink" title="更新文档"></a>更新文档</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db.collection.update(</span><br><span class="line">    &lt;queryObj&gt;, <span class="comment">// 查询条件</span></span><br><span class="line">    &lt;updateObj&gt;, <span class="comment">// 更新的对象</span></span><br><span class="line">    &#123;</span><br><span class="line">        upsert: <span class="xml"><span class="tag">&lt;<span class="name">boolean</span>&gt;</span>, // 如果不存在符合条件的记录时，是否插入，默认 false</span></span><br><span class="line">        multi: &lt;boolean&gt; // 默认只更新符合条件的第一条记录，如果为 true 则更新所有符合条件的</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">db.students.update(&#123;</span><br><span class="line">    name: <span class="string">'ifer'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">    name:<span class="string">'elser'</span> <span class="comment">// 注意这里没有加 $set 会整体把匹配到的文档变成只有 &#123;name: elser&#125;</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">    upsert:<span class="literal">true</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把所有 name 为 elser 的更新为 ifer</span></span><br><span class="line">db.students.update(&#123;</span><br><span class="line">    name: <span class="string">'elser'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">    $<span class="keyword">set</span>: &#123; <span class="comment">// 注意这里要配合 $set 使用</span></span><br><span class="line">        name:<span class="string">'ifer'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;,&#123;</span><br><span class="line">    multi:<span class="literal">true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h2 id="更新符号"><a href="#更新符号" class="headerlink" title="更新符号"></a>更新符号</h2><p><strong>$set</strong>：指定需要更新的字段</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.students.update(&#123;<span class="attr">_id</span>: <span class="number">1</span>&#125;, &#123;<span class="attr">$set</span>: &#123;<span class="attr">name</span>: <span class="string">'test2'</span>&#125;&#125;)</span><br></pre></td></tr></table></figure>
@@ -435,7 +458,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="string">'JS'</span>, <span class="string">'Node'</span>, <span class="string">'HTML'</span>];</span><br><span class="line">db.students.update(&#123;<span class="attr">name</span>:<span class="string">'ifer'</span>&#125;,&#123;<span class="attr">$addToSet</span>:&#123;<span class="attr">hobbies</span>:&#123;<span class="attr">$each</span>:arr&#125;&#125;&#125;);</span><br></pre></td></tr></table></figure>
 <p><strong>$pop</strong>: 删除数组中指定索引对应的元素</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// -1 顺着删，1 倒着删</span></span><br><span class="line">db.students.update(&#123;<span class="attr">name</span>:<span class="string">'ifer'</span>&#125;,&#123;<span class="attr">$pop</span>:&#123;<span class="attr">hobbies</span>:<span class="number">1</span>&#125;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改指定索引元素</span></span><br><span class="line">db.students.update(&#123;<span class="attr">name</span>:<span class="string">'ifer'</span>&#125;,&#123;<span class="attr">$set</span>:&#123;<span class="string">'hobbies.1'</span>: <span class="string">'hello world'</span>&#125;&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="删除文档"><a href="#删除文档" class="headerlink" title="删除文档"></a>删除文档</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">db.collection.remove(</span><br><span class="line">    &lt;query&gt;, <span class="comment">// 查询条件</span></span><br><span class="line">    &#123;</span><br><span class="line">        justOne: &lt;boolean&gt; // 为 true 或 1 则只删除匹配多条中的1个</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h2 id="删除文档"><a href="#删除文档" class="headerlink" title="删除文档"></a>删除文档</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">db.collection.remove(</span><br><span class="line">    &lt;query&gt;, <span class="comment">// 查询条件</span></span><br><span class="line">    &#123;</span><br><span class="line">        justOne: <span class="xml"><span class="tag">&lt;<span class="name">boolean</span>&gt;</span> // 为 true 或 1 则只删除匹配多条中的1个</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml">)</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.students.remove(&#123;<span class="attr">name</span>:<span class="string">'zfpx2'</span>&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="查询文档"><a href="#查询文档" class="headerlink" title="查询文档"></a>查询文档</h2><p><strong>find</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.students.find()</span><br><span class="line"><span class="comment">// 1 显示，0 不显示</span></span><br><span class="line">db.students.find(&#123;&#125;,&#123;<span class="attr">name</span>:<span class="number">1</span>, <span class="attr">_id</span>:<span class="number">0</span>&#125;)</span><br></pre></td></tr></table></figure>
@@ -482,6 +505,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          
+        </div>
       
 
       
@@ -595,7 +624,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -606,7 +635,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
