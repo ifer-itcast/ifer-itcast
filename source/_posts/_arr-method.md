@@ -4,9 +4,19 @@ date: 2019-12-09 19:04:46
 tags:
 ---
 
-## forEach
+依次模拟数组的方法：[连接](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array)
 
-## filter
+## Array.prototype.concat
+
+## Array.prototype.copyWithin
+
+## Array.prototype.entries
+
+## Array.prototype.every
+
+## Array.prototype.fill
+
+## Array.prototype.filter
 
 ```javascript
 const arr = ['apple', 'orange', 'banana'];
@@ -22,7 +32,35 @@ const newArr = arr.filter2(item => item.length > 5);
 console.log(newArr);
 ```
 
-## map
+## Array.prototype.find
+
+## Array.prototype.findIndex
+
+## Array.prototype.flat
+
+## Array.prototype.flatMap
+
+## Array.prototype.forEach
+
+```javascript
+Array.prototype.forEach2 = function(callback, that) {
+    for(let i = 0; i < this.length; i ++) {
+        callback.call(that, this[i], i, this);
+    }
+};
+```
+
+## Array.prototype.includes
+
+## Array.prototype.indexOf
+
+## Array.prototype.join
+
+## Array.prototype.keys
+
+## Array.prototype.lastIndexOf
+
+## Array.prototype.map
 
 ```javascript
 const arr = ['apple', 'orange', 'banana'];
@@ -38,7 +76,11 @@ const newArr = arr.map2(item => `**${item}**`);
 console.log(newArr);
 ```
 
-## reduce
+## Array.prototype.pop
+
+## Array.prototype.push
+
+## Array.prototype.reduce
 
 ```javascript
 // accVal 和 curVal 的取值有两种情况：
@@ -62,3 +104,13 @@ Array.prototype.reduce2 = function (reducer, accVal) {
 const result = arr.reduce2((accVal, curVal, curIdx, arr) => accVal + curVal);
 console.log(result);
 ```
+
+## Array.prototype.reduceRight
+
+## Array.prototype.reverse
+
+## Array.prototype.shift
+
+## Array.prototype.slice
+
+## Array.prototype.some

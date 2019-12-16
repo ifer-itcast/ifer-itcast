@@ -1,5 +1,5 @@
 ---
-title: MongoDB
+title: MongoDB 基本操作
 date: 2019-12-05 20:15:41
 tags:
 ---
@@ -7,46 +7,53 @@ tags:
 ## 操作数据库
 
 ```javascript
-mongod --dbpath=./    // 启动数据库
+mongod --dbpath=./ // 通过 shell 连接 MongoDB 服务
 
-show dbs    // 查看数据库
+show dbs // 查看有哪些数据库
 
-db use school    // 使用数据库
+db use school // 使用 school 数据库
 
-db.students.insert({name: 'ifer', age: 18})    // 当前数据库中创建集合并插入文档
+db.students.insert({name: 'ifer', age: 18}) // 当前数据库中创建集合并插入文档
 
-db    // 查看当前数据库
+db // 查看当前在哪个数据库
 
-db.dropDatabase()    // 删除当前数据库
+db.dropDatabase() // 删除当前数据库
 ```
+
+<!-- more -->
 
 ## 操作集合
 
 ```javascript
-db.students.help()    // 查看集合使用帮助
+// 查看集合使用帮助
+db.students.help()
 db.students.find().help()
 
-show collections    // 查看集合
-db.createCollection('teachers')    // 创建集合，一般使用 db.students.insert(document) 创建集合并插入文档
+// 查看集合
+show collections
+// 创建集合，一般使用 db.students.insert(document) 创建集合并插入文档
+db.createCollection('teachers')
 ```
 
 ## 创建文档
 
 ```javascript
-db.students.insert({_id: 1, name: 'ifer', age: 18})    // insert 不能插入重复的 _id
+// insert 不能插入重复的 _id
+db.students.insert({_id: 1, name: 'ifer', age: 18})
 
-db.students.save({_id: 1, name: 'ifer', age: 18})    // save 当插入有重复 _id 的时候，会当前当前文档
+// save 当插入有重复 _id 的时候，会当前当前文档
+db.students.save({_id: 1, name: 'ifer', age: 18})
 ```
 
 ## 更新文档
 
 ```javascript
 db.collection.update(
-    <queryObj>,    // 查询条件
-    <updateObj>,    // 更新的对象
+    <queryObj>, // 查询条件
+    <updateObj>, // 更新的对象
     {
-        upsert: <boolean>,    // 如果不存在符合条件的记录时，是否插入，默认 false
-        multi: <boolean>    // 默认只更新符合条件的第一条记录，如果为 true 则更新所有符合条件的
+        upsert: <boolean>, // 如果不存在符合条件的记录时，是否插入，默认 false
+        multi: <boolean> // 默认只更新符合条件的第一条记录，如果为 true 则更新所有符合条件的
     }
 )
 ```
@@ -55,7 +62,7 @@ db.collection.update(
 db.students.update({
     name: 'ifer'
 },{
-    name:'elser'    // 注意这里没有加 $set 会整体把匹配到的文档变成只有 {name: elser}
+    name:'elser' // 注意这里没有加 $set 会整体把匹配到的文档变成只有 {name: elser}
 },{
     upsert:true
 })
@@ -64,7 +71,7 @@ db.students.update({
 db.students.update({
     name: 'elser'
 },{
-    $set: {    // 注意这里要配合 $set 使用
+    $set: { // 注意这里要配合 $set 使用
         name:'ifer'
     }
 },{
@@ -133,9 +140,9 @@ db.students.update({name:'ifer'},{$set:{'hobbies.1': 'hello world'}});
 
 ```javascript
 db.collection.remove(
-    <query>,    // 查询条件
+    <query>, // 查询条件
     {
-        justOne: <boolean>   // 为 true 或 1 则只删除匹配多条中的1个
+        justOne: <boolean> // 为 true 或 1 则只删除匹配多条中的1个
     }
 )
 ```
@@ -186,14 +193,19 @@ db.students.find({age:{$not:{$gte:20,$lte:30}}});
 ```javascript
 // 按所有元素匹配
 // db.students.find({hobbies:[ "JS", "hello world", "HTML"]});
+
 // 匹配一项 包含A的就可以
 // db.students.find({hobbies:"JS"});
+
 // $all 必须同时包含A B
 // db.students.find({hobbies:{$all:['JS',"hello world"]}});
+
 // $in 或者关系 ，包含A或者B
 // db.students.find({hobbies:{$in:['JS',"Node"]}});
+
 // $size 按数组的长度去匹配
 // db.students.find({hobbies:{$size:4}});
+
 // $slice 只返回数组中的某一部分
 // db.students.find({hobbies:{$size:3}},{name:1,hobbies:{$slice:2}}); // 前 2 项
 // db.students.find({hobbies:{$size:3}},{name:1,hobbies:{$slice:-2}}); // 后 2 项
@@ -327,6 +339,30 @@ mongodump -h 127.0.0.1 -d school -o "D:\Mongo\bak"
 mongorestore -d school "D:\Mongo\bak\school"
 ```
 
-## 权限
+## 权限管理
+
+```javascript
+// 进入数据库
+mongo
+
+// 创建超级管理员
+use admin
+db.createUser({user: 'root', pwd: 'root', roles: ['root']})
+
+// 创建普通用户
+use blog
+db.createUser({user: 'ifer', pwd: 'ifer', roles: ['readWrite']})
+
+// 斩断之前的服务
+net stop MongoDB
+mongod --remove
+
+// 开启新的服务
+mongod --bind_ip 0.0.0.0 --logpath="D:\Soft\MongoDb\log\mongod.log" --dbpath="D:\Soft\MongoDb\data" --install --auth
+net start MongoDB
+
+// 上面命令行中的所有配置信息，也可以通过配置并加载mongod.cfg文件完成
+mongod --config "D:\Soft\MongoDb\bin\mongod.cfg"
+```
 
 
