@@ -1,7 +1,8 @@
 ---
 title: MongoDB 基本操作
 date: 2019-12-05 20:15:41
-tags:
+tags: MongoDB
+categories: 服务端编程
 ---
 
 ## 操作数据库
