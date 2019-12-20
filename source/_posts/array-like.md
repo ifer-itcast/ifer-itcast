@@ -1,7 +1,8 @@
 ---
 title: 类数组转数组分析
 date: 2019-12-20 10:44:09
-tags:
+tags: 类数组
+categories: JS 高级
 ---
 
 ```javascript
