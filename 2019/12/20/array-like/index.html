@@ -6,10 +6,10 @@
 
 
 <html class="theme-next pisces use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="Document          .bg{         position: fixed;         right: 0;         bottom: 0;         left: 50%;         width: 500px;         height: 384px;         background: url(./ima">
-<meta property="og:type" content="website">
-<meta property="og:title" content="危险">
-<meta property="og:url" content="http://yoursite.com/resource/demos/demo05/index2.html">
+<meta name="description" content="12// 为了方便对类数组进行操作，有时候需要进行转换成数组，下面的操作都会以此类数组举例let arrlike = &amp;#123; 0: &apos;深圳&apos;, 1: &apos;郑州&apos;, 2: &apos;武汉&apos;, length: 3 &amp;#125;;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="类数组转数组分析">
+<meta property="og:url" content="http://yoursite.com/2019/12/20/array-like/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="Document          .bg{         position: fixed;         right: 0;         bottom: 0;         left: 50%;         width: 500px;         height: 384px;         background: url(./ima">
+<meta property="og:description" content="12// 为了方便对类数组进行操作，有时候需要进行转换成数组，下面的操作都会以此类数组举例let arrlike = &amp;#123; 0: &apos;深圳&apos;, 1: &apos;郑州&apos;, 2: &apos;武汉&apos;, length: 3 &amp;#125;;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-05T11:35:58.289Z">
+<meta property="og:updated_time" content="2019-12-20T06:08:45.567Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="危险">
-<meta name="twitter:description" content="Document          .bg{         position: fixed;         right: 0;         bottom: 0;         left: 50%;         width: 500px;         height: 384px;         background: url(./ima">
+<meta name="twitter:title" content="类数组转数组分析">
+<meta name="twitter:description" content="12// 为了方便对类数组进行操作，有时候需要进行转换成数组，下面的操作都会以此类数组举例let arrlike = &amp;#123; 0: &apos;深圳&apos;, 1: &apos;郑州&apos;, 2: &apos;武汉&apos;, length: 3 &amp;#125;;">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/resource/demos/demo05/index2.html"/>
+  <link rel="canonical" href="http://yoursite.com/2019/12/20/array-like/">
 
 
 
 
 
-  <title> | 危险</title>
+  <title>类数组转数组分析 | 危险</title>
   
 
 
@@ -163,7 +163,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">危险</span>
         <span class="logo-line-after"><i></i></span>
@@ -193,7 +193,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -203,7 +203,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -213,7 +213,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -223,7 +223,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -233,7 +233,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -246,7 +246,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -267,9 +267,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -294,67 +292,194 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/20/array-like/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="危险">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/49337922.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline"></h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <!DOCTYPE html>
-<html lang="en">
-<head><meta name="generator" content="Hexo 3.8.0">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <style>
-    .bg{
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        left: 50%;
-        width: 500px;
-        height: 384px;
-        background: url(./images/bg.png) repeat-x;
-        background-size: 100% auto;
-        animation: move 5s linear infinite;
-    }
-    @keyframes move {
-        0%{
-            background-position: 0 0;
-        }
-        100%{
-            background-position: -500px 0;
-        }
-    }
-    </style>
-</head>
-<body>
-    <div class="bg">
+          <h1 class="post-title" itemprop="name headline">类数组转数组分析</h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-20T10:44:09+08:00">
+                2019-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/12/20/array-like/" class="leancloud_visitors" data-flag-title="类数组转数组分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  535
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为了方便对类数组进行操作，有时候需要进行转换成数组，下面的操作都会以此类数组举例</span></span><br><span class="line"><span class="keyword">let</span> arrlike = &#123; <span class="number">0</span>: <span class="string">'深圳'</span>, <span class="number">1</span>: <span class="string">'郑州'</span>, <span class="number">2</span>: <span class="string">'武汉'</span>, <span class="attr">length</span>: <span class="number">3</span> &#125;;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="移花接个木"><a href="#移花接个木" class="headerlink" title="移花接个木"></a>移花接个木</h2><p><strong>利用 Call 或 apply 改变数组方法下的 this 指向，达到“借用”的目的！</strong></p>
+<p><strong>Array.prototype.slice</strong>：slice(begin, end) 方法返回一个新的数组对象（包括 begin，不包括end），原始数组不会被改变。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本使用</span></span><br><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.prototype.slice.call(arrlike);</span><br><span class="line">arr.push(<span class="string">'西安'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["深圳", "郑州", "武汉", "西安"]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为什么改变 slice 方法内部的 this 指向就能实现类数组转数组呢？</span></span><br><span class="line"><span class="comment">// 假设 slice 内部是下面的实现方式你是否可以理解了呢？</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.slice = <span class="function"><span class="keyword">function</span> (<span class="params">start=<span class="number">0</span>, end=this.length</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> newArr = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = start; i &lt; end; i++) &#123;</span><br><span class="line">        newArr[newArr.length] = <span class="keyword">this</span>[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newArr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意细节：slice 是浅拷贝，修改 newArr 会影响原 arrlike</span></span><br><span class="line"><span class="keyword">let</span> arrlike = &#123;</span><br><span class="line">    <span class="number">0</span>: <span class="string">'深圳'</span>,</span><br><span class="line">    <span class="number">1</span>: <span class="string">'郑州'</span>,</span><br><span class="line">    <span class="number">2</span>: &#123;</span><br><span class="line">        age: <span class="number">18</span></span><br><span class="line">    &#125;,</span><br><span class="line">    length: <span class="number">3</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> newArr = <span class="built_in">Array</span>.prototype.slice.call(arrlike);</span><br><span class="line">newArr[<span class="string">'2'</span>].age = <span class="number">19</span>;</span><br><span class="line"><span class="built_in">console</span>.log(arrlike[<span class="string">'2'</span>].age); <span class="comment">// 19</span></span><br></pre></td></tr></table></figure>
+<p><strong>Array.prototype.splice</strong>：splice(start, deleteCount, item1, item2, …) 以数组形式返回被修改的内容，此方法会改变原数组。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// splice 也可以实现类数组转成数组，原理同上（splice内部实现要依赖 this）</span></span><br><span class="line"><span class="comment">// 需要注意的是 splice 会对原类数组产生影响</span></span><br><span class="line"><span class="keyword">let</span> newArr = <span class="built_in">Array</span>.prototype.splice.call(arrlike, <span class="number">0</span>);</span><br><span class="line">newArr.push(<span class="string">'西安'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newArr); <span class="comment">// ["深圳", "郑州", "武汉", "西安"]</span></span><br></pre></td></tr></table></figure>
+<p><strong>Array.prototype.concat</strong>：同理 concat 也可以实现同样的功能</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> newArr = <span class="built_in">Array</span>.prototype.concat.apply([], arrlike);</span><br><span class="line">newArr.push(<span class="string">'西安'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newArr); <span class="comment">// ["深圳", "郑州", "武汉", "西安"]</span></span><br></pre></td></tr></table></figure>
+<h2 id="扩展运算符"><a href="#扩展运算符" class="headerlink" title="扩展运算符"></a>扩展运算符</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log([...arrlike]); <span class="comment">// TypeError: arrlike is not iterable</span></span><br></pre></td></tr></table></figure>
+<p><a href="http://es6.ruanyifeng.com/?search=...&amp;x=0&amp;y=0#docs/iterator#%E9%BB%98%E8%AE%A4-Iterator-%E6%8E%A5%E5%8F%A3" target="_blank" rel="noopener">关于 Iterator 接口</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意扩展运算符只能转换具备 Iterator 接口的数据，可改写如下</span></span><br><span class="line"><span class="keyword">let</span> arrlike = &#123;</span><br><span class="line">    <span class="number">0</span>: <span class="string">'深圳'</span>,</span><br><span class="line">    <span class="number">1</span>: <span class="string">'郑州'</span>,</span><br><span class="line">    length: <span class="number">2</span>,</span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator]: <span class="built_in">Array</span>.prototype[<span class="built_in">Symbol</span>.iterator]</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> arr = [...arrlike]</span><br><span class="line">arr.push(<span class="string">'北京'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["深圳", "郑州", "北京"]</span></span><br></pre></td></tr></table></figure>
+<h2 id="Array-from"><a href="#Array-from" class="headerlink" title="Array.from"></a>Array.from</h2><p>推荐使用 ES6 新增的 Array.from 方法，语法简洁且通用！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arrlike = &#123;</span><br><span class="line">    <span class="number">0</span>: <span class="string">'深圳'</span>,</span><br><span class="line">    <span class="number">1</span>: <span class="string">'郑州'</span>,</span><br><span class="line">    length: <span class="number">2</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.from(arrlike);</span><br><span class="line">arr.push(<span class="string">'北京'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// ["深圳", "郑州", "北京"]</span></span><br></pre></td></tr></table></figure>
+      
     </div>
-</body>
-</html>
-        
-      </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
       
       
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/05/mongo/" rel="next" title="MongoDB 基本操作">
+                <i class="fa fa-chevron-left"></i> MongoDB 基本操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
       
     </div>
-    
-    
-    
   </div>
 
 
@@ -392,14 +517,21 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="/images/49337922.png"
-                alt="危险" />
+              <img class="site-author-image" itemprop="image" src="/images/49337922.png" alt="危险">
             
               <p class="site-author-name" itemprop="name">危险</p>
               <p class="site-description motion-element" itemprop="description">学习路上的查漏补缺✍疑难杂症💊</p>
@@ -457,6 +589,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#移花接个木"><span class="nav-text">移花接个木</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展运算符"><span class="nav-text">扩展运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-from"><span class="nav-text">Array.from</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
