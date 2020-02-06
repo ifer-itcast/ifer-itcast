@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="全选,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,20 +79,17 @@
 
 
 
-<meta name="description" content="需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。">
-<meta name="keywords" content="全选">
+<meta name="description" content="表单处理代码">
 <meta property="og:type" content="article">
-<meta property="og:title" content="触发全选按钮的几种思路">
-<meta property="og:url" content="http://yoursite.com/2019/05/22/select-all/index.html">
+<meta property="og:title" content="表单处理">
+<meta property="og:url" content="http://yoursite.com/2020/02/06/formik/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。">
+<meta property="og:description" content="表单处理代码">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/resource/images/pages/webapi/select-all__0.png">
-<meta property="og:updated_time" content="2019-05-22T10:42:43.007Z">
+<meta property="og:updated_time" content="2020-02-06T15:02:21.809Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="触发全选按钮的几种思路">
-<meta name="twitter:description" content="需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。">
-<meta name="twitter:image" content="http://yoursite.com/resource/images/pages/webapi/select-all__0.png">
+<meta name="twitter:title" content="表单处理">
+<meta name="twitter:description" content="表单处理代码">
 
 
 
@@ -122,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/22/select-all/">
+  <link rel="canonical" href="http://yoursite.com/2020/02/06/formik/">
 
 
 
 
 
-  <title>触发全选按钮的几种思路 | 危险</title>
+  <title>表单处理 | 危险</title>
   
 
 
@@ -307,7 +304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/22/select-all/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/06/formik/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="危险">
@@ -324,7 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">触发全选按钮的几种思路</h1>
+          <h1 class="post-title" itemprop="name headline">表单处理</h1>
         
 
         <div class="post-meta">
@@ -336,8 +333,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-22T15:50:24+08:00">
-                2019-05-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-06T21:07:30+08:00">
+                2020-02-06
               </time>
             
 
@@ -347,28 +344,6 @@
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Web-API/" itemprop="url" rel="index">
-                    <span itemprop="name">Web API</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -376,7 +351,7 @@
 
           
           
-             <span id="/2019/05/22/select-all/" class="leancloud_visitors" data-flag-title="触发全选按钮的几种思路">
+             <span id="/2020/02/06/formik/" class="leancloud_visitors" data-flag-title="表单处理">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -401,7 +376,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  696
+                  1.4k
                 </span>
               
 
@@ -417,7 +392,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  6
                 </span>
               
             </div>
@@ -438,15 +413,21 @@
       
 
       
-        <p><img src="/resource/images/pages/webapi/select-all__0.png" alt></p>
-<p>需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。</p>
+        <p><a href="https://github.com/ifer-itcast/formik-demo" target="_blank" rel="noopener">表单处理代码</a></p>
 <a id="more"></a>
-<h2 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h2><p>点击每个列表选项时，遍历所有列表选项并检查是否有未选中的，如果有则可以确定全选按钮的状态为未选中，否则全选按钮置为选中。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oAllInput = <span class="built_in">document</span>.querySelector(<span class="string">'#all'</span>);</span><br><span class="line"><span class="keyword">var</span> aInput = <span class="built_in">document</span>.querySelectorAll(<span class="string">'ul input'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 点击全选 input 时根据自己的状态来控制其他列表项的 input</span></span><br><span class="line">oAllInput.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i ++) &#123;</span><br><span class="line">        aInput[i].checked = <span class="keyword">this</span>.checked;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每次点击每一个列表项的 input 时，判断全选的 input 是否需要被选中</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i ++) &#123;</span><br><span class="line">    aInput[i].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>.checked) &#123;</span><br><span class="line">            <span class="comment">// 如果当前点击的按钮未选中，那就可以直接确定全选按钮的状态了</span></span><br><span class="line">            oAllInput.checked = <span class="literal">false</span>;</span><br><span class="line">            <span class="comment">// 也就没有必要进行下去了</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> bBar = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i ++) &#123;</span><br><span class="line">            <span class="comment">// 发现有一个没选中的</span></span><br><span class="line">            <span class="keyword">if</span>(!aInput[i].checked) &#123;</span><br><span class="line">                bBar = <span class="literal">false</span>;</span><br><span class="line">                <span class="comment">// 发现有一个没选中的也就可以断定 oAllInput 的状态了，就没有必要再进行下去了</span></span><br><span class="line">                <span class="comment">// 当然你不写 break 逻辑上也是对的，只是存在性能浪费</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        oAllInput.checked = bBar;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="注意细节"><a href="#注意细节" class="headerlink" title="注意细节"></a>注意细节</h2><p>思路和上面一样，下面的写法也是可以的，但有一点需要注意：点击列表中的每一项进行循环时，碰到未选中的一定要跳出循环，不然前面全选按钮的状态都会被最后一个按钮的状态所覆盖。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i++) &#123;</span><br><span class="line">    aInput[i].onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>.checked) &#123;</span><br><span class="line">            <span class="comment">// 如果当前点击的按钮未选中，那就可以直接确定全选按钮的状态了</span></span><br><span class="line">            oAllInput.checked = <span class="literal">false</span>;</span><br><span class="line">            <span class="comment">// 也就没有必要进行下去了</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!aInput[i].checked) &#123;</span><br><span class="line">                oAllInput.checked = <span class="literal">false</span>;</span><br><span class="line">                <span class="comment">// 这里的 break 是必须要加的！不然全选按钮的状态永远是以最后一个的选中状态为准，这并不是我们所希望的</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                oAllInput.checked = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p>每次点击列表中的按钮时，获取所有已选中 input 的长度，并判断已选中 input 的 length 是否等于所有 input 的 length，如果相等，就可以激活全选按钮啦，否则则取消全选。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i++) &#123;</span><br><span class="line">    aInput[i].onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> aInputChecked = <span class="built_in">document</span>.querySelectorAll(<span class="string">'ul input:checked'</span>);</span><br><span class="line">        <span class="comment">// 已选中 length 等于所有 length 就证明全选中了，也就可以激活全选按钮啦</span></span><br><span class="line">        <span class="keyword">if</span> (aInputChecked.length === aInput.length) &#123;</span><br><span class="line">            oAllInput.checked = <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            oAllInput.checked = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="简单登录功能"><a href="#简单登录功能" class="headerlink" title="简单登录功能"></a>简单登录功能</h2><p>React 中简单的表单处理我们一般会如下写法，依靠 React 自身的机制来完成</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Login</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        username: <span class="string">''</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">    handleChange = <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">            [e.target.name]: e.target.value</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">    handleSubmit = <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">        e.preventDefault();</span><br><span class="line">        <span class="comment">// 这里可以进行数据校验后提交...</span></span><br><span class="line">    &#125;;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; username, password &#125; = <span class="keyword">this</span>.state;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;form onSubmit=&#123;<span class="keyword">this</span>.handleSubmit&#125;&gt;</span><br><span class="line">                &lt;div className=&#123;styles.formItem&#125;&gt;</span><br><span class="line">                    &lt;input</span><br><span class="line">                        className=&#123;styles.input&#125;</span><br><span class="line">                        onChange=&#123;<span class="keyword">this</span>.handleChange&#125;</span><br><span class="line">                        name=<span class="string">"username"</span></span><br><span class="line">                        value=&#123;username&#125;</span><br><span class="line">                        placeholder=<span class="string">"请输入账号"</span></span><br><span class="line">                    /&gt;</span><br><span class="line">                &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">                &lt;button className=&#123;styles.submit&#125; type="submit"&gt;登 录&lt;/</span>button&gt;</span><br><span class="line">            &lt;<span class="regexp">/form&gt;</span></span><br><span class="line"><span class="regexp">        );</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="formik-重构"><a href="#formik-重构" class="headerlink" title="formik 重构"></a>formik 重构</h2><p>涉及到复杂表单数据时，可以使用 formik 这个库来解决表单处理的痛点（获取值、表单校验、表单提交等），把上面代码先改写如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #step1: 导入</span></span><br><span class="line"><span class="keyword">import</span> &#123; withFormik &#125; <span class="keyword">from</span> <span class="string">'formik'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Login</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="comment">// #step5: 通过 props 获取高阶组件提供的状态（属性和方法），handleChange 是高阶组件自带的，可以打印 this.props 查看</span></span><br><span class="line">        <span class="keyword">const</span> &#123; values, handleSubmit, handleChange &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="comment">// #step6: 替换 state 中的 username 为 values.username，自身的 this.handleSubmit、this.handleChange 都替换成高阶组件提供的</span></span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;form onSubmit=&#123;handleSubmit&#125;&gt;</span><br><span class="line">                &lt;div className=&#123;styles.formItem&#125;&gt;</span><br><span class="line">                    &lt;input</span><br><span class="line">                        className=&#123;styles.input&#125;</span><br><span class="line">                        onChange=&#123;handleChange&#125;</span><br><span class="line">                        name=<span class="string">"username"</span></span><br><span class="line">                        value=&#123;values.username&#125;</span><br><span class="line">                        placeholder=<span class="string">"请输入账号"</span></span><br><span class="line">                    /&gt;</span><br><span class="line">                &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">                &lt;button className=&#123;styles.submit&#125; type="submit"&gt;登 录&lt;/</span>button&gt;</span><br><span class="line">            &lt;<span class="regexp">/form&gt;</span></span><br><span class="line"><span class="regexp">        );</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #step2: withFormik 调用返回的是一个高阶组件，这种写法方便传值，然后再包装 Login，并为 Login 提供相关状态（属性和方法）</span></span><br><span class="line">Login = withFormik(&#123;</span><br><span class="line">    <span class="comment">// #step3: 为组件提供状态</span></span><br><span class="line">    mapPropsToValues: <span class="function"><span class="params">()</span> =&gt;</span> (&#123; <span class="attr">username</span>: <span class="string">''</span>, <span class="attr">password</span>: <span class="string">''</span> &#125;),</span><br><span class="line">    <span class="comment">// #step4: 监听表单的提交事件</span></span><br><span class="line">    handleSubmit: <span class="function">(<span class="params">values, &#123; props &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 内部已经阻止了默认行为（跳转），props 中可以获取路由相关的信息</span></span><br><span class="line">        <span class="comment">// #step7: 获取表单中的数据</span></span><br><span class="line">        <span class="keyword">const</span> &#123; username, password &#125; = values;</span><br><span class="line">        <span class="built_in">console</span>.log(username, password, props);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(Login);</span><br></pre></td></tr></table></figure>
+<h2 id="validate-校验"><a href="#validate-校验" class="headerlink" title="validate 校验"></a>validate 校验</h2><p>通过 formik 提供的 validate 配置项可以实现表单校验</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> REG_USER = <span class="regexp">/^\w&#123;5,8&#125;$/</span>;</span><br><span class="line"><span class="keyword">const</span> REG_PWD = <span class="regexp">/^\w&#123;5,12&#125;$/</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Login</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="comment">// 注意：必须给 input 框绑定 handleBlur 才能正确的获取 touched</span></span><br><span class="line">        <span class="comment">// #step2: 接受错误信息 errors，获取 touched 用来查看是否已访问过 input，访问过的才进行错误提示，不然一个触发时其他没有访问过的也会触发</span></span><br><span class="line">        <span class="keyword">const</span> &#123; values, handleSubmit, handleChange, errors, touched, handleBlur &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;form onSubmit=&#123;handleSubmit&#125;&gt;</span><br><span class="line">                &lt;div className=&#123;styles.formItem&#125;&gt;</span><br><span class="line">                    &lt;input</span><br><span class="line">                        className=&#123;styles.input&#125;</span><br><span class="line">                        onChange=&#123;handleChange&#125;</span><br><span class="line">                        onBlur=&#123;handleBlur&#125;</span><br><span class="line">                        name=<span class="string">"username"</span></span><br><span class="line">                        value=&#123;values.username&#125;</span><br><span class="line">                        placeholder=<span class="string">"请输入账号"</span></span><br><span class="line">                    /&gt;</span><br><span class="line">                &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">                &#123;/</span>* validate3 展示错误信息 *<span class="regexp">/&#125;</span></span><br><span class="line"><span class="regexp">                &#123;errors.username &amp;&amp; touched.username &amp;&amp; &lt;div className=&#123;styles.error&#125;&gt;&#123;errors.username&#125;&lt;/</span>div&gt;&#125;</span><br><span class="line">                &lt;button className=&#123;styles.submit&#125; type=<span class="string">"submit"</span>&gt;登 录&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>form&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Login = withFormik(&#123;</span><br><span class="line">    mapPropsToValues: <span class="function"><span class="params">()</span> =&gt;</span> (&#123; <span class="attr">username</span>: <span class="string">''</span>, <span class="attr">password</span>: <span class="string">''</span> &#125;),</span><br><span class="line">    <span class="comment">// #step1: 添加 validate 字段进行错误信息的收集</span></span><br><span class="line">    validate: <span class="function"><span class="params">values</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> errors = &#123;&#125;;</span><br><span class="line">        <span class="keyword">if</span> (!values.username) &#123;</span><br><span class="line">            errors.username = <span class="string">'必须填写用户名'</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!REG_USER.test(values.username)) &#123;</span><br><span class="line">            errors.username = <span class="string">'用户名必须为5到8位的数字、字母、下划线'</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!values.password) &#123;</span><br><span class="line">            errors.password = <span class="string">'必须填写密码'</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!REG_PWD.test(values.password)) &#123;</span><br><span class="line">            errors.password = <span class="string">'密码必须为5到12位的数字、字母、下划线'</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> errors;</span><br><span class="line">    &#125;,</span><br><span class="line">    handleSubmit: <span class="function">(<span class="params">values, &#123; props &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; username, password &#125; = values;</span><br><span class="line">        <span class="built_in">console</span>.log(username, password, props);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(Login);</span><br></pre></td></tr></table></figure>
+<h2 id="validationSchema-配合-Yup-校验"><a href="#validationSchema-配合-Yup-校验" class="headerlink" title="validationSchema 配合 Yup 校验"></a>validationSchema 配合 Yup 校验</h2><p>官方推荐使用更加友好的方式来进行校验，即 formik 提供的 validationSchema 配置和第三方库 Yup 来完成</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #step1: 导入</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> Yup <span class="keyword">from</span> <span class="string">'yup'</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Login</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; values, handleSubmit, handleChange &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="comment">// #step3: 接收错误提示信息和是否 touched 信息，touched 用于记录这个框是否被访问过（失去焦点肯定能证明访问过）</span></span><br><span class="line">        <span class="keyword">const</span> &#123; errors, touched, handleBlur &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="comment">// #step4: 想要获取到 touched 需要给表单元素添加 handleBlur 事件</span></span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;form onSubmit=&#123;handleSubmit&#125;&gt;</span><br><span class="line">                &lt;div className=&#123;styles.formItem&#125;&gt;</span><br><span class="line">                    &lt;input</span><br><span class="line">                        className=&#123;styles.input&#125;</span><br><span class="line">                        onChange=&#123;handleChange&#125;</span><br><span class="line">                        onBlur=&#123;handleBlur&#125;</span><br><span class="line">                        name=<span class="string">"username"</span></span><br><span class="line">                        value=&#123;values.username&#125;</span><br><span class="line">                        placeholder=<span class="string">"请输入账号"</span></span><br><span class="line">                    /&gt;</span><br><span class="line">                &lt;<span class="regexp">/div&gt;</span></span><br><span class="line">                &#123;/* #step5: 进行错误信息提示 */&#125;</span><br><span class="line">                &#123;errors.username &amp;&amp; touched.username &amp;&amp; <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;styles.error&#125;</span>&gt;</span>&#123;errors.username&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&#125;</span><br><span class="line">                &lt;button className=&#123;styles.submit&#125; type=<span class="string">"submit"</span>&gt;登 录&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>form&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Login = withFormik(&#123;</span><br><span class="line">    mapPropsToValues: <span class="function"><span class="params">()</span> =&gt;</span> (&#123; <span class="attr">username</span>: <span class="string">''</span>, <span class="attr">password</span>: <span class="string">''</span> &#125;),</span><br><span class="line">    <span class="comment">// #step2: 添加表单校验规则</span></span><br><span class="line">    validationSchema: Yup.object().shape(&#123;</span><br><span class="line">        username: Yup.string().required(<span class="string">'账号为必填项'</span>).matches(REG_UNAME, <span class="string">'长度为5到8位，只能出现数字、字母、下划线'</span>),</span><br><span class="line">        password: Yup.string().required(<span class="string">'密码为必填项'</span>).matches(REG_PWD, <span class="string">'长度为5到12位，只能出现数字、字母、下划线'</span>)</span><br><span class="line">    &#125;),</span><br><span class="line">    handleSubmit: <span class="function">(<span class="params">values, &#123; props &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; username, password &#125; = values;</span><br><span class="line">        <span class="built_in">console</span>.log(username, password, props);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(Login);</span><br></pre></td></tr></table></figure>
+<h2 id="简化表单处理"><a href="#简化表单处理" class="headerlink" title="简化表单处理"></a>简化表单处理</h2><p>formik 还提供了 Form、Field、ErrorMessage 等组件来简化表单的处理</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; withFormik, Form, Field, ErrorMessage &#125; <span class="keyword">from</span> <span class="string">'formik'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Login</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="comment">// #step4: 去掉所有 props</span></span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &#123;<span class="comment">/* #step1: 导入 Form 组件，替换 form 元素，去掉 onSubmit */</span>&#125;</span><br><span class="line">            &lt;Form&gt;</span><br><span class="line">                &lt;div className=&#123;styles.formItem&#125;&gt;</span><br><span class="line">                    &#123;<span class="comment">/* #step2: 导入 Field 组件，替换 input 表单元素，去掉 onChange，onBlur，value */</span>&#125;</span><br><span class="line">                    &lt;Field className=&#123;styles.input&#125; name=<span class="string">"username"</span> placeholder=<span class="string">"请输入账号"</span> /&gt;</span><br><span class="line">                &lt;<span class="regexp">/div&gt;</span></span><br><span class="line">                &#123;/* #step3: 导入 ErrorMessage 组件，替换原来的错误消息逻辑代码 */&#125;</span><br><span class="line">                &lt;ErrorMessage className=&#123;styles.error&#125; name=<span class="string">"username"</span> component=<span class="string">"div"</span> /&gt;</span><br><span class="line">                &lt;button className=&#123;styles.submit&#125; type=<span class="string">"submit"</span>&gt;登 录&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>Form&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -461,12 +442,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/全选/" rel="tag"># 全选</a>
-          
-        </div>
-      
 
       
       
@@ -476,8 +451,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/21/kill-other/" rel="next" title="排他思想">
-                <i class="fa fa-chevron-left"></i> 排他思想
+              <a href="/2020/02/06/react-virtualized/" rel="next" title="react-virtualized">
+                <i class="fa fa-chevron-left"></i> react-virtualized
               </a>
             
           </div>
@@ -485,10 +460,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/24/invisible-transform/" rel="prev" title="JS 中的隐式转换">
-                JS 中的隐式转换 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -627,7 +598,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常规操作"><span class="nav-text">常规操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意细节"><span class="nav-text">注意细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他方法"><span class="nav-text">其他方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单登录功能"><span class="nav-text">简单登录功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#formik-重构"><span class="nav-text">formik 重构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#validate-校验"><span class="nav-text">validate 校验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#validationSchema-配合-Yup-校验"><span class="nav-text">validationSchema 配合 Yup 校验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简化表单处理"><span class="nav-text">简化表单处理</span></a></li></ol></div>
             
 
           </div>
