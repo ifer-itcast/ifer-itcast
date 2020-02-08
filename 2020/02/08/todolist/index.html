@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="全选,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,20 +79,17 @@
 
 
 
-<meta name="description" content="需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。">
-<meta name="keywords" content="全选">
+<meta name="description" content="学习路上的查漏补缺✍疑难杂症💊">
 <meta property="og:type" content="article">
-<meta property="og:title" content="触发全选按钮的几种思路">
-<meta property="og:url" content="http://yoursite.com/2019/05/22/select-all/index.html">
+<meta property="og:title" content="todolist">
+<meta property="og:url" content="http://yoursite.com/2020/02/08/todolist/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。">
+<meta property="og:description" content="学习路上的查漏补缺✍疑难杂症💊">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/resource/images/pages/webapi/select-all__0.png">
-<meta property="og:updated_time" content="2019-05-22T10:42:43.007Z">
+<meta property="og:updated_time" content="2020-02-08T04:20:14.402Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="触发全选按钮的几种思路">
-<meta name="twitter:description" content="需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。">
-<meta name="twitter:image" content="http://yoursite.com/resource/images/pages/webapi/select-all__0.png">
+<meta name="twitter:title" content="todolist">
+<meta name="twitter:description" content="学习路上的查漏补缺✍疑难杂症💊">
 
 
 
@@ -122,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/22/select-all/">
+  <link rel="canonical" href="http://yoursite.com/2020/02/08/todolist/">
 
 
 
 
 
-  <title>触发全选按钮的几种思路 | 危险</title>
+  <title>todolist | 危险</title>
   
 
 
@@ -307,7 +304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/22/select-all/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/todolist/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="危险">
@@ -324,7 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">触发全选按钮的几种思路</h1>
+          <h1 class="post-title" itemprop="name headline">todolist</h1>
         
 
         <div class="post-meta">
@@ -336,8 +333,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-22T15:50:24+08:00">
-                2019-05-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-08T12:19:04+08:00">
+                2020-02-08
               </time>
             
 
@@ -347,28 +344,6 @@
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Web-API/" itemprop="url" rel="index">
-                    <span itemprop="name">Web API</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -376,7 +351,7 @@
 
           
           
-             <span id="/2019/05/22/select-all/" class="leancloud_visitors" data-flag-title="触发全选按钮的几种思路">
+             <span id="/2020/02/08/todolist/" class="leancloud_visitors" data-flag-title="todolist">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -401,7 +376,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  696
+                  0
                 </span>
               
 
@@ -417,7 +392,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  1
                 </span>
               
             </div>
@@ -438,15 +413,7 @@
       
 
       
-        <p><img src="/resource/images/pages/webapi/select-all__0.png" alt></p>
-<p>需求：点击全选，选中上面所有的列表项；点击列表项中的每一个水果，如果有未选中则取消全选按钮，如果都选中了则激活全选按钮。</p>
-<a id="more"></a>
-<h2 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h2><p>点击每个列表选项时，遍历所有列表选项并检查是否有未选中的，如果有则可以确定全选按钮的状态为未选中，否则全选按钮置为选中。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oAllInput = <span class="built_in">document</span>.querySelector(<span class="string">'#all'</span>);</span><br><span class="line"><span class="keyword">var</span> aInput = <span class="built_in">document</span>.querySelectorAll(<span class="string">'ul input'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 点击全选 input 时根据自己的状态来控制其他列表项的 input</span></span><br><span class="line">oAllInput.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i ++) &#123;</span><br><span class="line">        aInput[i].checked = <span class="keyword">this</span>.checked;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每次点击每一个列表项的 input 时，判断全选的 input 是否需要被选中</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i ++) &#123;</span><br><span class="line">    aInput[i].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>.checked) &#123;</span><br><span class="line">            <span class="comment">// 如果当前点击的按钮未选中，那就可以直接确定全选按钮的状态了</span></span><br><span class="line">            oAllInput.checked = <span class="literal">false</span>;</span><br><span class="line">            <span class="comment">// 也就没有必要进行下去了</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> bBar = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i ++) &#123;</span><br><span class="line">            <span class="comment">// 发现有一个没选中的</span></span><br><span class="line">            <span class="keyword">if</span>(!aInput[i].checked) &#123;</span><br><span class="line">                bBar = <span class="literal">false</span>;</span><br><span class="line">                <span class="comment">// 发现有一个没选中的也就可以断定 oAllInput 的状态了，就没有必要再进行下去了</span></span><br><span class="line">                <span class="comment">// 当然你不写 break 逻辑上也是对的，只是存在性能浪费</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        oAllInput.checked = bBar;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="注意细节"><a href="#注意细节" class="headerlink" title="注意细节"></a>注意细节</h2><p>思路和上面一样，下面的写法也是可以的，但有一点需要注意：点击列表中的每一项进行循环时，碰到未选中的一定要跳出循环，不然前面全选按钮的状态都会被最后一个按钮的状态所覆盖。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i++) &#123;</span><br><span class="line">    aInput[i].onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>.checked) &#123;</span><br><span class="line">            <span class="comment">// 如果当前点击的按钮未选中，那就可以直接确定全选按钮的状态了</span></span><br><span class="line">            oAllInput.checked = <span class="literal">false</span>;</span><br><span class="line">            <span class="comment">// 也就没有必要进行下去了</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!aInput[i].checked) &#123;</span><br><span class="line">                oAllInput.checked = <span class="literal">false</span>;</span><br><span class="line">                <span class="comment">// 这里的 break 是必须要加的！不然全选按钮的状态永远是以最后一个的选中状态为准，这并不是我们所希望的</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                oAllInput.checked = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p>每次点击列表中的按钮时，获取所有已选中 input 的长度，并判断已选中 input 的 length 是否等于所有 input 的 length，如果相等，就可以激活全选按钮啦，否则则取消全选。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aInput.length; i++) &#123;</span><br><span class="line">    aInput[i].onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> aInputChecked = <span class="built_in">document</span>.querySelectorAll(<span class="string">'ul input:checked'</span>);</span><br><span class="line">        <span class="comment">// 已选中 length 等于所有 length 就证明全选中了，也就可以激活全选按钮啦</span></span><br><span class="line">        <span class="keyword">if</span> (aInputChecked.length === aInput.length) &#123;</span><br><span class="line">            oAllInput.checked = <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            oAllInput.checked = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
       
     </div>
     
@@ -461,12 +428,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/全选/" rel="tag"># 全选</a>
-          
-        </div>
-      
 
       
       
@@ -476,8 +437,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/21/kill-other/" rel="next" title="排他思想">
-                <i class="fa fa-chevron-left"></i> 排他思想
+              <a href="/2020/02/08/redux/" rel="next" title="Redux">
+                <i class="fa fa-chevron-left"></i> Redux
               </a>
             
           </div>
@@ -485,10 +446,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/24/invisible-transform/" rel="prev" title="JS 中的隐式转换">
-                JS 中的隐式转换 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -545,17 +502,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -617,22 +565,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常规操作"><span class="nav-text">常规操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意细节"><span class="nav-text">注意细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他方法"><span class="nav-text">其他方法</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
