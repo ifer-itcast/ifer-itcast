@@ -61,7 +61,7 @@ store.dispatch({
 console.log(store.getState()); // 0
 ```
 
-## store.subscribe
+## Store.subscribe
 
 上面代码有个小小的问题，每次 dispatch 后，想拿到最新的数据还要手工的调用 store.getState()，通过订阅的方式可以实现每次 dispatch 后就直接拿到最新的数据。
 
@@ -390,3 +390,5 @@ class App extends Component {
 
 export default App;
 ```
+
+[以上代码](https://github.com/ifer-itcast/redux-cource)
