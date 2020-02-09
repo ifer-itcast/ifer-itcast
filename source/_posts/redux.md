@@ -339,7 +339,7 @@ const mapStatetoProps = state => {
     };
 };
 
-// 属性和方法分别给出
+// 属性和方法分别给出，注意这里的第二个参数可以是 mapDispatchToProps
 App = connect(mapStatetoProps, actionCreators)(App);
 export default App;
 ```
