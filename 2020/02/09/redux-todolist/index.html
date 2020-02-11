@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="src/index.js入口文件，用到了 react-redux 提供的 Provider，用于给所有组件提供数据！ 123456789101112131415// src/index.jsimport React from &apos;react&apos;;import ReactDOM from &apos;react-dom&apos;;import &amp;#123; Provider &amp;#125; from &apos;react-redu">
+<meta name="description" content="本地数据，线上数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redux 版 ToDoList">
 <meta property="og:url" content="http://yoursite.com/2020/02/09/redux-todolist/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="src/index.js入口文件，用到了 react-redux 提供的 Provider，用于给所有组件提供数据！ 123456789101112131415// src/index.jsimport React from &apos;react&apos;;import ReactDOM from &apos;react-dom&apos;;import &amp;#123; Provider &amp;#125; from &apos;react-redu">
+<meta property="og:description" content="本地数据，线上数据">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-11T12:35:44.154Z">
+<meta property="og:updated_time" content="2020-02-11T13:50:33.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redux 版 ToDoList">
-<meta name="twitter:description" content="src/index.js入口文件，用到了 react-redux 提供的 Provider，用于给所有组件提供数据！ 123456789101112131415// src/index.jsimport React from &apos;react&apos;;import ReactDOM from &apos;react-dom&apos;;import &amp;#123; Provider &amp;#125; from &apos;react-redu">
+<meta name="twitter:description" content="本地数据，线上数据">
 
 
 
@@ -376,7 +376,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  950
+                  958
                 </span>
               
 
@@ -413,7 +413,9 @@
       
 
       
-        <h2 id="src-index-js"><a href="#src-index-js" class="headerlink" title="src/index.js"></a>src/index.js</h2><p>入口文件，用到了 react-redux 提供的 Provider，用于给所有组件提供数据！</p>
+        <p><a href="https://github.com/ifer-itcast/redux-todolist1" target="_blank" rel="noopener">本地数据</a>，<a href="https://github.com/ifer-itcast/redux-todolist2" target="_blank" rel="noopener">线上数据</a></p>
+<a id="more"></a>
+<h2 id="src-index-js"><a href="#src-index-js" class="headerlink" title="src/index.js"></a>src/index.js</h2><p>入口文件，用到了 react-redux 提供的 Provider，用于给所有组件提供数据！</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/index.js</span></span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'./index.css'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./store'</span>;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">    &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">        &lt;App /&gt;</span><br><span class="line">    &lt;<span class="regexp">/Provider&gt;,</span></span><br><span class="line"><span class="regexp">    document.querySelector('#root')</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
 <h2 id="src-App-js"><a href="#src-App-js" class="headerlink" title="src/App.js"></a>src/App.js</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/App.js</span></span><br><span class="line"><span class="keyword">import</span> React, &#123; Component, Fragment &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> Header <span class="keyword">from</span> <span class="string">'./components/Header'</span>;</span><br><span class="line"><span class="keyword">import</span> Content <span class="keyword">from</span> <span class="string">'./components/Content'</span>;</span><br><span class="line"><span class="keyword">import</span> Footer <span class="keyword">from</span> <span class="string">'./components/Footer'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;Fragment&gt;</span><br><span class="line">                &lt;Header /&gt;</span><br><span class="line">                &lt;Content /&gt;</span><br><span class="line">                &lt;Footer /&gt;</span><br><span class="line">            &lt;<span class="regexp">/Fragment&gt;</span></span><br><span class="line"><span class="regexp">        );</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default App;</span></span><br></pre></td></tr></table></figure>
 <h2 id="src-components-Header-js"><a href="#src-components-Header-js" class="headerlink" title="src/components/Header.js"></a>src/components/Header.js</h2><p>一定要明确什么时候才需要 dispatch action，例如对于 input 框中文本的处理，每次 change 确实都需要同步 store，所以可以直接在当前组件中调用此 action，相当于 dispatch(actionCreator())，业务逻辑也可以都写在此 action 中。</p>
