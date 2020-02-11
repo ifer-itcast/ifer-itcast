@@ -4,6 +4,10 @@ date: 2020-02-09 18:03:38
 tags:
 ---
 
+[本地数据](https://github.com/ifer-itcast/redux-todolist1)，[线上数据](https://github.com/ifer-itcast/redux-todolist2)
+
+<!-- more -->
+
 ## src/index.js
 
 入口文件，用到了 react-redux 提供的 Provider，用于给所有组件提供数据！
