@@ -173,6 +173,44 @@ class App extends Component {
 export default App;
 ```
 
+上面是在入口文件 src/index.js 中完成了订阅，也可以在 src/App.js 组件中订阅，如下：
+
+```javascript
+import React, { Component } from 'react';
+import { add, sub } from './actionCreators';
+import { createStore } from 'redux';
+import { counter } from './reducer';
+// 根据 counter reducer 创建 store 并传递给 App 组件
+const store = createStore(counter);
+class App extends Component {
+    state = {
+        num: store.getState()
+    };
+    componentDidMount() {
+        // 每次 dispatch 都会触发 subscribe，通过 store.getState() 又能拿到最新的数据
+        store.subscribe(() => {
+            this.setState({
+                num: store.getState()
+            });
+        });
+    }
+    render() {
+        const { num } = this.state;
+        return (
+            <div>
+                <h3>
+                    {num}
+                </h3>
+                <button onClick={() => store.dispatch(add())}>add</button>
+                <button onClick={() => store.dispatch(sub())}>sub</button>
+            </div>
+        );
+    }
+}
+
+export default App;
+```
+
 ## Redux 处理异步
 
 这里使用了 redux-thunk 这个第三方中间件，还需要使用 applyMiddleware（Redux自带的）来开启这个中间件，具体使用套路如下。
