@@ -81,6 +81,161 @@ store.dispatch({ type: 'add' }); // 1
 store.dispatch({ type: 'sub' }); // 0
 ```
 
+上面完整的代码如下
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
+
+const reducer = (state = 0, action) => {
+	switch (action.type) {
+		case 'add':
+			return state + 1;
+		case 'sub':
+			return state - 1;
+		default:
+			return state;
+	}
+};
+const store = createStore(reducer);
+
+const listener = () => {
+	console.log(store.getState());
+};
+store.subscribe(listener);
+
+// actionCreator
+const initAction = () => ({ type: '@@INIT' });
+const addAction = () => ({ type: 'add' });
+const subAction = () => ({ type: 'sub' });
+
+store.dispatch(initAction()); // 0
+store.dispatch(addAction()); // 1
+store.dispatch(subAction()); // 0
+
+ReactDOM.render(<div>hello</div>, document.querySelector('#root'));
+```
+
+## bindActionCreators
+
+上面我们拿到最终的状态是这么写的
+
+```javascript
+const initAction = () => ({ type: '@@INIT' });
+// 调用 store.dispatch 并传递一个 actionCreator
+store.dispatch(initAction());
+```
+
+bindActionCreators 也是 Redux 的一个方法，它接收一个 actionCreator 和 dispatch，并返回一系列方法，调用对应的方法能帮我们自动 dispatch 对应的 action，代替上面直接 store.dispatch 的写法，使代码看起来更加简洁，可以把上面代码改造如下：
+
+index.js
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createStore, bindActionCreators } from 'redux';
+import * as actionCreators from './actionCreators';
+
+const reducer = (state = 0, action) => {
+	switch (action.type) {
+		case 'add':
+			return state + 1;
+		case 'sub':
+			return state - 1;
+		default:
+			return state;
+	}
+};
+
+const store = createStore(reducer);
+
+const listener = () => {
+	console.log(store.getState());
+};
+
+store.subscribe(listener);
+
+let { initAction, addAction, subAction } = bindActionCreators(actionCreators, store.dispatch);
+
+// 看，我可以直接这样调用~
+initAction(); // 0
+addAction(); // 1
+subAction(); // 0
+
+ReactDOM.render(<div>hello</div>, document.querySelector('#root'));
+```
+
+actionCreators.js
+
+```javascript
+export const initAction = () => ({ type: '@@INIT' });
+export const addAction = () => ({ type: 'add' });
+export const subAction = () => ({ type: 'sub' });
+```
+
+## combineReducers
+
+实际项目中会有很多很多的组件，我们不可能把所有数据的处理都放到一个 reducer 里，通常我们会把不同组件或者不同类别的数据处理放到不同的（对应的）reducer 里，以方便更加清晰的管理。
+
+Redux 中有个 combineReducers 方法，它接收一组 reducer ，并返回合并后的 reducer。前面我们创建 store 的写法如下：
+
+```javascript
+const store = createStore(reducer);
+```
+
+假如有多个 reducer 时我们可以改写代码如下
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createStore, bindActionCreators, combineReducers } from 'redux';
+import * as actionCreators from './actionCreators';
+
+// Step1: 准备 reducer
+const ageReducer = (state = 0, action) => {
+	switch (action.type) {
+		case 'add':
+			return state + 1;
+		case 'sub':
+			return state - 1;
+		default:
+			return state;
+	}
+};
+const numReducer = (state = 0, action) => {
+	switch (action.type) {
+		case 'add':
+			return state + 1;
+		case 'sub':
+			return state - 1;
+		default:
+			return state;
+	}
+};
+
+// Step2: 合并 reducer
+const reducers = combineReducers({
+	ageData: ageReducer,
+	numData: numReducer
+});
+
+// Step3: 根据合并后的 reducer 创建 store
+const store = createStore(reducers);
+
+const listener = () => { console.log(store.getState()); };
+store.subscribe(listener);
+
+let { initAction, addAction, subAction } = bindActionCreators(actionCreators, store.dispatch);
+
+// Step4: 注意最终输出的数据格式
+initAction(); // {ageData: 0, numData: 0}
+addAction(); // {ageData: 1, numData: 1}
+subAction(); // {ageData: 0, numData: 0}
+
+ReactDOM.render(<div>hello</div>, document.querySelector('#root'));
+```
+
 ## Redux 和 React 配合
 
 上面的例子我们在普通 JS 文件中进行的，那么和 React 配合时 Redux 该怎么使用呢？
@@ -188,11 +343,15 @@ class App extends Component {
     };
     componentDidMount() {
         // 每次 dispatch 都会触发 subscribe，通过 store.getState() 又能拿到最新的数据
-        store.subscribe(() => {
+        this.unsubscribe = store.subscribe(() => {
             this.setState({
                 num: store.getState()
             });
         });
+    }
+    componentWillUnmount() {
+        // 组件卸载时记得取消订阅
+        store.unsubscribe(this.unsubscribe);
     }
     render() {
         const { num } = this.state;
