@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="危险">
 <meta property="og:description" content="Redux 是用来处理复杂数据交互的，例如一个组件需要改变全局状态，或者改变另一个组件的状态。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-13T07:21:22.563Z">
+<meta property="og:updated_time" content="2020-02-13T07:49:24.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redux">
 <meta name="twitter:description" content="Redux 是用来处理复杂数据交互的，例如一个组件需要改变全局状态，或者改变另一个组件的状态。">
@@ -466,6 +466,8 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"babel"</span>: &#123;</span><br><span class="line">    <span class="string">"plugins"</span>: [</span><br><span class="line">        [<span class="string">"@babel/plugin-proposal-decorators"</span>, &#123; <span class="string">"legacy"</span>: <span class="literal">true</span> &#125;]</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>src/pages/moneyCounter/index.js</code></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> actionCreators <span class="keyword">from</span> <span class="string">'./store/actionCreators'</span>;</span><br><span class="line"></span><br><span class="line">@connect(<span class="function"><span class="params">state</span> =&gt;</span> (&#123;<span class="attr">moneyCouter</span>: state.moneyCouter&#125;), actionCreators)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoneyCounter</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; <span class="attr">moneyCouter</span>: &#123; moneyNum &#125;, add, sub, addAsync &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;p&gt;</span><br><span class="line">                    &#123;moneyNum&#125;</span><br><span class="line">                &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">                &lt;button onClick=&#123;add&#125;&gt;add&lt;/</span>button&gt;</span><br><span class="line">                &lt;button onClick=&#123;sub&#125;&gt;sub&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">                &lt;button onClick=&#123;addAsync&#125;&gt;addAsync&lt;/</span>button&gt;</span><br><span class="line">            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        );</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default MoneyCounter;</span></span><br></pre></td></tr></table></figure>
+<h2 id="todolist"><a href="#todolist" class="headerlink" title="todolist"></a>todolist</h2><p><a href="https://github.com/ifer-itcast/redux-todolist1" target="_blank" rel="noopener">本地数据</a>，<a href="https://github.com/ifer-itcast/redux-todolist2" target="_blank" rel="noopener">线上数据</a></p>
+
       
     </div>
     
@@ -495,8 +497,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/02/09/redux-todolist/" rel="next" title="Redux 版 ToDoList">
-                <i class="fa fa-chevron-left"></i> Redux 版 ToDoList
+              <a href="/2020/02/06/formik/" rel="next" title="表单处理">
+                <i class="fa fa-chevron-left"></i> 表单处理
               </a>
             
           </div>
@@ -587,7 +589,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -642,7 +644,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#createStore"><span class="nav-text">createStore</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#store-subscribe"><span class="nav-text">store.subscribe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bindActionCreators"><span class="nav-text">bindActionCreators</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#combineReducers"><span class="nav-text">combineReducers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redux-thunk"><span class="nav-text">redux-thunk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#react-redux"><span class="nav-text">react-redux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#decorator"><span class="nav-text">decorator</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#createStore"><span class="nav-text">createStore</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#store-subscribe"><span class="nav-text">store.subscribe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bindActionCreators"><span class="nav-text">bindActionCreators</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#combineReducers"><span class="nav-text">combineReducers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redux-thunk"><span class="nav-text">redux-thunk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#react-redux"><span class="nav-text">react-redux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#decorator"><span class="nav-text">decorator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#todolist"><span class="nav-text">todolist</span></a></li></ol></div>
             
 
           </div>
