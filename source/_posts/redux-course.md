@@ -4,6 +4,10 @@ date: 2020-02-13 11:05:27
 tags: Redux
 ---
 
+Redux 是用来处理复杂数据交互的，例如一个组件需要改变全局状态，或者改变另一个组件的状态。
+
+<!-- more -->
+
 ## createStore
 
 [代码](https://github.com/ifer-itcast/redux-cource/tree/01_createStore)
