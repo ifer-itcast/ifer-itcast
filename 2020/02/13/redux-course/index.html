@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="createStore代码 创建对应组件的 reducer src/pages/moneyCounter/store/reducer.js 12345678910111213141516171819import * as actionTypes from &apos;./actionTypes&apos;;const defaultState = &amp;#123;    moneyNum: 0&amp;#125;;export">
+<meta name="description" content="Redux 是用来处理复杂数据交互的，例如一个组件需要改变全局状态，或者改变另一个组件的状态。">
 <meta name="keywords" content="Redux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redux">
 <meta property="og:url" content="http://yoursite.com/2020/02/13/redux-course/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="createStore代码 创建对应组件的 reducer src/pages/moneyCounter/store/reducer.js 12345678910111213141516171819import * as actionTypes from &apos;./actionTypes&apos;;const defaultState = &amp;#123;    moneyNum: 0&amp;#125;;export">
+<meta property="og:description" content="Redux 是用来处理复杂数据交互的，例如一个组件需要改变全局状态，或者改变另一个组件的状态。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-13T06:34:42.498Z">
+<meta property="og:updated_time" content="2020-02-13T07:21:22.563Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redux">
-<meta name="twitter:description" content="createStore代码 创建对应组件的 reducer src/pages/moneyCounter/store/reducer.js 12345678910111213141516171819import * as actionTypes from &apos;./actionTypes&apos;;const defaultState = &amp;#123;    moneyNum: 0&amp;#125;;export">
+<meta name="twitter:description" content="Redux 是用来处理复杂数据交互的，例如一个组件需要改变全局状态，或者改变另一个组件的状态。">
 
 
 
@@ -414,7 +414,9 @@
       
 
       
-        <h2 id="createStore"><a href="#createStore" class="headerlink" title="createStore"></a>createStore</h2><p><a href="https://github.com/ifer-itcast/redux-cource/tree/01_createStore" target="_blank" rel="noopener">代码</a></p>
+        <p>Redux 是用来处理复杂数据交互的，例如一个组件需要改变全局状态，或者改变另一个组件的状态。</p>
+<a id="more"></a>
+<h2 id="createStore"><a href="#createStore" class="headerlink" title="createStore"></a>createStore</h2><p><a href="https://github.com/ifer-itcast/redux-cource/tree/01_createStore" target="_blank" rel="noopener">代码</a></p>
 <p>创建对应组件的 reducer</p>
 <p><code>src/pages/moneyCounter/store/reducer.js</code></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> actionTypes <span class="keyword">from</span> <span class="string">'./actionTypes'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> defaultState = &#123;</span><br><span class="line">    moneyNum: <span class="number">0</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> (state = defaultState, action) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> newState = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(state));</span><br><span class="line">    <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">        <span class="keyword">case</span> actionTypes.ADD:</span><br><span class="line">            newState.moneyNum += <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span> newState;</span><br><span class="line">        <span class="keyword">case</span> actionTypes.SUB:</span><br><span class="line">            newState.moneyNum -= <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span> newState;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> newState;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
