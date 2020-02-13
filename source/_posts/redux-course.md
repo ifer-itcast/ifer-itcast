@@ -1,7 +1,7 @@
 ---
-title: redux-course
+title: Redux
 date: 2020-02-13 11:05:27
-tags:
+tags: Redux
 ---
 
 ## createStore
