@@ -5,8 +5,6 @@ tags: [React 技巧, React 必知必会]
 categories: React
 ---
 
-努力更新中...
-
 <!-- more -->
 
 ## 常见绑定事件的操作
@@ -510,6 +508,8 @@ const Hello = Logger((props) => {
 
 ```javascript
 // 案例
+import React, {Component} from 'react';
+
 const withFetch = url => View => {
     return class extends Component {
         constructor() {
@@ -531,12 +531,498 @@ const withFetch = url => View => {
             if(this.state.loading) {
                 return <div>loading...</div>
             } else {
-                return <View data={this.state.data}></View>
+                // 注意这里不要忘记把 this.props 继续往下传递，不然使用高阶组件封装后的组件时无法传递 props
+                return <View data={this.state.data} {...this.props}></View>
             }
         }
     }
 };
+
+export default withFetch;
+```
+
+```javascript
+import React from 'react';
+import withFetch from './WithFetch';
+
+const User = withFetch('https://randomuser.me/api/')(props => {
+    return (
+        <h1>邮箱：{props.data.results[0].email} 年龄：{props.age}</h1>
+    );
+});
+
+export default User;
 ```
 
 ## Render Props
 
+```javascript
+import React from 'react';
+
+export default class Mouse extends React.Component {
+    state = {
+        x: 0,
+        y: 0
+    };
+    handleMousemove = e => {
+        this.setState({
+            x: e.clientX,
+            y: e.clientY
+        });
+    };
+    componentDidMount() {
+        window.addEventListener('mousemove', this.handleMousemove);
+    }
+    render() {
+        return this.props.render(this.state);
+        // return this.props.children(this.state); // 当然对应的使用方式也要改变
+    }
+}
+```
+
+```javascript
+<Fragment>
+    <Mouse
+        render={mouse =>
+            <p>
+                x坐标：{mouse.x}y坐标：{mouse.y}
+            </p>}
+    />
+    <Mouse
+        render={({ x, y }) =>
+            <img
+                src={dog}
+                style={{
+                    width: 100,
+                    position: 'absolute',
+                    top: y,
+                    left: x
+                }}
+            />}
+    />
+</Fragment>
+```
+
+## Hooks
+
+### useState
+
+```javascript
+import React, { Component, useState } from 'react';
+
+export default () => {
+    const [num, setNum] = useState(0);
+    return (
+        <div>
+            <p>
+                {num}
+            </p>
+            <button onClick={() => setNum(num + 1)}>click</button>
+        </div>
+    );
+};
+```
+
+### useEffect
+
+```javascript
+import React, { useState, useEffect } from 'react';
+
+export default () => {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        console.log('useEffect=>' + count);
+    });
+    return (
+        <div>
+            <p>
+                {count}
+            </p>
+            <button onClick={() => setCount(count + 1)}>click</button>
+        </div>
+    );
+};
+```
+
+相当于之前的 `componentDidMount` 和 `componentDidUpdate`
+
+```javascript
+import React from 'react';
+
+export default class Test extends React.Component {
+    state = {
+        count: 0
+    };
+    handleClick = () => {
+        this.setState({
+            count: this.state.count + 1
+        });
+    };
+    componentDidMount() {
+        console.log('useEffect=>' + this.state.count);
+    }
+    componentDidUpdate() {
+        console.log('useEffect=>' + this.state.count);
+    }
+    render() {
+        return (
+            <div>
+                <p>
+                    {this.state.count}
+                </p>
+                <button onClick={this.handleClick}>click</button>
+            </div>
+        );
+    }
+}
+```
+
+useEffect 可以实现 `componentWillUnmount`，若 useEffect 第二个参数为空数组，代表只有组件销毁时才会执行返回的函数，假如传递了一个 count，代表 count 发生变化时就会执行返回的函数。
+
+```javascript
+const Index = () => {
+    useEffect(() => {
+        // console.log('欢迎来到 Index 页面');
+        return () => {
+            console.log('你离开了 Index 页面');
+        };
+    }, []);
+    return <div>Index</div>;
+};
+```
+
+```javascript
+const List = () => {
+    useEffect(() => {
+        // console.log('欢迎来到 List 页面');
+        return () => {
+            console.log('你离开了 List 页面');
+        };
+    }, []);
+    return <div>List</div>;
+};
+```
+
+```javascript
+export default () => {
+    const [count, setCount] = useState(0);
+    useEffect(
+        () => {
+            return () => {
+                console.log('只要 count 变化就会执行这里的函数');
+            };
+        },
+        [count]
+    );
+    return (
+        <div>
+            <p>
+                {count}
+            </p>
+            <button onClick={() => setCount(count + 1)}>click</button>
+            <Router>
+                <ul>
+                    <li>
+                        <Link to="/">首页</Link>
+                    </li>
+                    <li>
+                        <Link to="/list">列表</Link>
+                    </li>
+                </ul>
+                <Route path="/" exact component={Index} />
+                <Route path="/list" component={List} />
+            </Router>
+        </div>
+    );
+};
+```
+
+### useContext
+
+用于父子/孙组件传值
+
+```javascript
+import React, { useState, createContext, useContext } from 'react';
+// step1
+const CountContext = createContext();
+
+export default () => {
+    const [count, setCount] = useState(0);
+    return (
+        <div>
+            <p>
+                {count}
+            </p>
+            <button onClick={() => setCount(count + 1)}>click</button>
+            {/* step2 */}
+            <CountContext.Provider value={count}>
+                <Counter1 />
+            </CountContext.Provider>
+        </div>
+    );
+};
+```
+
+```javascript
+const Counter1 = () => {
+    return <Counter2 />;
+};
+
+const Counter2 = () => {
+    // step3
+    const count = useContext(CountContext);
+    return (
+        <div>
+            {count}
+        </div>
+    );
+};
+```
+
+### userReducer
+
+```javascript
+import React, { useReducer } from 'react';
+
+export default () => {
+    const [count, dispatch] = useReducer((state, action) => {
+        switch (action) {
+            case 'add':
+                return state + 1;
+            case 'sub':
+                return state - 1;
+            default:
+                return state;
+        }
+    }, 0);
+
+    return (
+        <div>
+            <p>
+                {count}
+            </p>
+            <button onClick={() => dispatch('add')}>add</button>
+            <button onClick={() => dispatch('sub')}>sub</button>
+        </div>
+    );
+};
+```
+
+### useReducer 模拟 redux 效果
+
+用到了 createContext、useContext、useReducer
+
+```javascript
+import React from 'react';
+import Color from './Color';
+import Card from './Card';
+import Buttons from './Buttons';
+export default () => {
+    return (
+        <Color>
+            <Card />
+            <Buttons />
+        </Color>
+    );
+};
+```
+
+```javascript
+// Color.js
+import React, { createContext } from 'react';
+import { useReducer } from 'react';
+
+// Step1
+export const ColorContext = createContext({});
+
+export const UPDATE_COLOR = 'UPDATE_COLOR';
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case UPDATE_COLOR:
+            return action.color;
+        default:
+            return state;
+    }
+};
+
+const Color = props => {
+    const [color, dispatch] = useReducer(reducer, 'blue');
+    // Step2
+    return (
+        <ColorContext.Provider value={{ color, dispatch }}>
+            {props.children}
+        </ColorContext.Provider>
+    );
+};
+
+export default Color;
+```
+
+```javascript
+// Card.js
+import React, { useContext } from 'react';
+import { ColorContext } from './Color';
+const Card = () => {
+    // Step3
+    const { color } = useContext(ColorContext);
+    return (
+        <div style={{ color }}>
+            字体颜色为{color}
+        </div>
+    );
+};
+
+export default Card;
+```
+
+```javascript
+// Buttons.js
+import React from 'react';
+import { ColorContext, UPDATE_COLOR } from './Color';
+import { useContext } from 'react';
+
+const Buttons = () => {
+    const { dispatch } = useContext(ColorContext);
+    return (
+        <div>
+            <button
+                onClick={() => {
+                    dispatch({ type: UPDATE_COLOR, color: 'red' });
+                }}
+            >
+                红色
+            </button>
+            <button
+                onClick={() => {
+                    dispatch({ type: UPDATE_COLOR, color: 'blue' });
+                }}
+            >
+                蓝色
+            </button>
+        </div>
+    );
+};
+
+export default Buttons;
+```
+
+### useMemo
+
+使用 function 的形式来声明组件，失去了 shouldCompnentUpdate（在组件更新之前）这个生命周期，也就是说我们没有办法通过组件更新前条件来决定组件是否更新。useMemo 解决此问题，它可以在某些状态变化时才执行某方法。
+
+```javascript
+// 问题：点击 number 按钮，count 的结果没变，但是改变 count 的方法每次都执行，这就是性能损耗
+export default () => {
+    const [count , setCount] = useState(0)
+    const [number , setNumber] = useState(0)
+    return (
+        <>
+            <button onClick={()=>{setCount(count+1)}}>count++</button>
+            <button onClick={()=>{setNumber(number+1)}}>number++</button>
+            <ChildComponent count={count}>{number}</ChildComponent>
+        </>
+    )
+}
+```
+
+```javascript
+import React , {useState,useMemo} from 'react';
+function ChildComponent({count,children}){
+    function changeCount(count){
+        console.log('count 变化的方法执行了')
+        return count;
+    }
+
+    // const actionCount = changeCount(count)
+    // [count] 代表只有 count 变化时才执行此函数
+    const actionCount = useMemo(() => changeCount(count), [count]);
+    return (
+        <>
+            <div>{actionCount}</div>
+            <div>{children}</div>
+        </>
+    )
+}
+```
+
+### useRef
+
+```javascript
+// 获取普通元素
+import React, { useRef } from 'react';
+
+export default () => {
+    const inputEl = useRef(null);
+    const onButtonClick = () => {
+        inputEl.current.value = 'hello world';
+    };
+    return (
+        <div>
+            <input type="text" ref={inputEl} />
+            <button onClick={onButtonClick}>click</button>
+        </div>
+    );
+};
+```
+
+```javascript
+// 保存普通变量
+export default () => {
+    const [text, setText] = useState('xxx');
+    const textRef = useRef();
+
+    useEffect(() => {
+        // 把每次变化的 text 挂载到 textRef.current 上
+        textRef.current = text;
+        console.log(textRef.current);
+    });
+    return (
+        <input
+            value={text}
+            onChange={e => {
+                setText(e.target.value);
+            }}
+        />
+    );
+};
+```
+
+### 自定义 Hooks
+
+```javascript
+import React, { useState, useEffect, useCallback } from 'react';
+
+const useWinSize = () => {
+    // size 初始值是一个对象
+    const [size, setSize] = useState({
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight
+    });
+
+    const onResize = useCallback(() => {
+        setSize({
+            width: document.documentElement.clientWidth,
+            height: document.documentElement.clientHeight
+        });
+    }, []);
+
+    useEffect(() => {
+        window.addEventListener('resize', onResize);
+        return () => {
+            // 组件卸载的时候解绑事件
+            window.removeEventListener('resize', onResize);
+        };
+    }, []);
+    return size;
+};
+
+export default () => {
+    const size = useWinSize();
+    return (
+        <div>
+            页面size: {size.width}x{size.height}
+        </div>
+    );
+};
+```
