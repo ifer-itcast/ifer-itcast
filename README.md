@@ -21,3 +21,4 @@
 - [ ] 关于 perspective 你要知道的
 - [ ] 我常用的 VS Code 快捷键
 - [ ] 浏览器对小数的处理（JS、CSS）
+- [ ] check
