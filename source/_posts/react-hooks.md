@@ -655,3 +655,118 @@ function Leaf() {
     );
 }
 ```
+
+## Custom Hooks
+
+自定义 Hooks 其实就可以理解为对函数的封装！
+
+### 功能型封装
+
+```javascript
+import React, { useEffect, useState, useRef } from 'react';
+
+function useCount(defaultCount) {
+	const [count, setCount] = useState(defaultCount);
+	const it = useRef();
+	useEffect(() => {
+		it.current = setInterval(() => {
+			setCount(count => count + 1);
+		}, 1000);
+	}, []);
+	useEffect(() => {
+		if (count >= 5) {
+			clearInterval(it.current);
+		}
+	});
+	return [count, setCount];
+}
+
+function App() {
+	// 会自动变化的 count
+	const [count, setCount] = useCount(0);
+
+	return (
+		<div>
+			<p>
+				{count}
+			</p>
+			<button
+				onClick={() => {
+					setCount(count + 1);
+				}}
+			>
+				click
+			</button>
+		</div>
+	);
+}
+```
+
+### 组件型封装
+
+```javascript
+import React from 'react';
+
+function useCounter(count) {
+	return (
+		<span>
+			{count}
+		</span>
+	);
+}
+function App() {
+	// Counter 得到的是一个组件
+	const Counter = useCounter(0);
+	return (
+		<div>
+			<p>
+				{Counter}
+			</p>
+		</div>
+	);
+}
+```
+
+### 计算结果型封装
+
+```javascript
+import React, { useEffect, useState, useCallback } from 'react';
+
+function useSize() {
+	const [size, setSize] = useState({
+		width: document.documentElement.clientWidth,
+		height: document.documentElement.clientHeight
+	});
+	const onResize = useCallback(() => {
+		// 主动触发时才会执行
+		setSize({
+			width: document.documentElement.clientWidth,
+			height: document.documentElement.clientHeight
+		});
+	}, []);
+	useEffect(
+		() => {
+			// 初始化和 onResize 变化时执行，不错这里的 onResize 也不会变化，所以也是只执行了一次
+			window.addEventListener('resize', onResize);
+			return () => {
+				window.removeEventListener('resize', onResize);
+			};
+		},
+		[onResize]
+	);
+	return size;
+}
+
+function App() {
+	// size 是一个对象
+	const size = useSize();
+
+	return (
+		<div>
+			<p>
+				width: {size.width} height: {size.height}
+			</p>
+		</div>
+	);
+}
+```
