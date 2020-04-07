@@ -219,6 +219,10 @@ useEffect(() => {
 }, [count]);
 ```
 
+## useLayoutEffect
+
+用法和 useEffect 一致，与 useEffect 的差别是执行时机，useLayoutEffect 是在浏览器绘制节点之前执行（和 componentDidMount 以及 componentDidUpdate 执行时机相同）
+
 ## useCallback
 
 ### 问题重现
@@ -514,6 +518,37 @@ function App() {
 }
 ```
 
+## useImperativeHandle
+
+通过 useImperativeHandle 配合 forwardRef，可以让父组件获取子组件内的 DOM 引用
+
+```javascript
+import React, { useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
+
+function ChildInputComponent(props, ref) {
+    const inputRef = useRef(null);
+    // Step1
+    useImperativeHandle(ref, () => inputRef.current);
+    return <input type="text" name="child input" ref={inputRef} />;
+}
+
+// Step2
+const ChildInput = forwardRef(ChildInputComponent);
+
+function App() {
+    const inputRef = useRef(null);
+    useEffect(() => {
+        // Step3
+        inputRef.current.focus();
+    }, []);
+    return (
+        <div>
+            <ChildInput ref={inputRef} />
+        </div>
+    );
+}
+```
+
 ## useContext
 
 ### 基本使用
@@ -656,6 +691,40 @@ function Leaf() {
 }
 ```
 
+## useReducer
+
+useReducer 在使用上几乎跟 Redux/React-Redux 一模一样，唯一缺少的就是无法使用 redux 提供的中间件
+
+```javascript
+import React, { useReducer } from 'react';
+
+const initialState = {
+    count: 0
+};
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'increment':
+            return { count: state.count + action.payload };
+        case 'decrement':
+            return { count: state.count - action.payload };
+        default:
+            throw new Error();
+    }
+}
+function App() {
+    const [state, dispatch] = useReducer(reducer, initialState);
+    
+    return (
+        <div>
+            Count: {state.count}
+            <button onClick={() => dispatch({ type: 'increment', payload: 5 })}>+</button>
+            <button onClick={() => dispatch({ type: 'decrement', payload: 5 })}>-</button>
+        </div>
+    );
+}
+```
+
 ## Custom Hooks
 
 自定义 Hooks 其实就可以理解为对函数的封装！
@@ -666,39 +735,39 @@ function Leaf() {
 import React, { useEffect, useState, useRef } from 'react';
 
 function useCount(defaultCount) {
-	const [count, setCount] = useState(defaultCount);
-	const it = useRef();
-	useEffect(() => {
-		it.current = setInterval(() => {
-			setCount(count => count + 1);
-		}, 1000);
-	}, []);
-	useEffect(() => {
-		if (count >= 5) {
-			clearInterval(it.current);
-		}
-	});
-	return [count, setCount];
+    const [count, setCount] = useState(defaultCount);
+    const it = useRef();
+    useEffect(() => {
+        it.current = setInterval(() => {
+            setCount(count => count + 1);
+        }, 1000);
+    }, []);
+    useEffect(() => {
+        if (count >= 5) {
+            clearInterval(it.current);
+        }
+    });
+    return [count, setCount];
 }
 
 function App() {
-	// 会自动变化的 count
-	const [count, setCount] = useCount(0);
+    // 会自动变化的 count
+    const [count, setCount] = useCount(0);
 
-	return (
-		<div>
-			<p>
-				{count}
-			</p>
-			<button
-				onClick={() => {
-					setCount(count + 1);
-				}}
-			>
-				click
-			</button>
-		</div>
-	);
+    return (
+        <div>
+            <p>
+                {count}
+            </p>
+            <button
+                onClick={() => {
+                    setCount(count + 1);
+                }}
+            >
+                click
+            </button>
+        </div>
+    );
 }
 ```
 
@@ -708,22 +777,22 @@ function App() {
 import React from 'react';
 
 function useCounter(count) {
-	return (
-		<span>
-			{count}
-		</span>
-	);
+    return (
+        <span>
+            {count}
+        </span>
+    );
 }
 function App() {
-	// Counter 得到的是一个组件
-	const Counter = useCounter(0);
-	return (
-		<div>
-			<p>
-				{Counter}
-			</p>
-		</div>
-	);
+    // Counter 得到的是一个组件
+    const Counter = useCounter(0);
+    return (
+        <div>
+            <p>
+                {Counter}
+            </p>
+        </div>
+    );
 }
 ```
 
@@ -733,40 +802,40 @@ function App() {
 import React, { useEffect, useState, useCallback } from 'react';
 
 function useSize() {
-	const [size, setSize] = useState({
-		width: document.documentElement.clientWidth,
-		height: document.documentElement.clientHeight
-	});
-	const onResize = useCallback(() => {
-		// 主动触发时才会执行
-		setSize({
-			width: document.documentElement.clientWidth,
-			height: document.documentElement.clientHeight
-		});
-	}, []);
-	useEffect(
-		() => {
-			// 初始化和 onResize 变化时执行，不错这里的 onResize 也不会变化，所以也是只执行了一次
-			window.addEventListener('resize', onResize);
-			return () => {
-				window.removeEventListener('resize', onResize);
-			};
-		},
-		[onResize]
-	);
-	return size;
+    const [size, setSize] = useState({
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight
+    });
+    const onResize = useCallback(() => {
+        // 主动触发时才会执行
+        setSize({
+            width: document.documentElement.clientWidth,
+            height: document.documentElement.clientHeight
+        });
+    }, []);
+    useEffect(
+        () => {
+            // 初始化和 onResize 变化时执行，不错这里的 onResize 也不会变化，所以也是只执行了一次
+            window.addEventListener('resize', onResize);
+            return () => {
+                window.removeEventListener('resize', onResize);
+            };
+        },
+        [onResize]
+    );
+    return size;
 }
 
 function App() {
-	// size 是一个对象
-	const size = useSize();
+    // size 是一个对象
+    const size = useSize();
 
-	return (
-		<div>
-			<p>
-				width: {size.width} height: {size.height}
-			</p>
-		</div>
-	);
+    return (
+        <div>
+            <p>
+                width: {size.width} height: {size.height}
+            </p>
+        </div>
+    );
 }
 ```
