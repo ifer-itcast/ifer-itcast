@@ -1,7 +1,8 @@
 ---
 title: React Hooks
 date: 2020-04-01 22:19:44
-tags:
+tags: React Hooks
+categories: React
 ---
 
 相关 API 的使用及注意！
@@ -367,7 +368,10 @@ function Child(props) {
 
 function Parent({ num }) {
     // 只有在第二个参数 num 的值发生变化时，才会触发子组件的更新
-    const child = useMemo(() => <Child num={num} />, [num]);
+    const child = useMemo(() => {
+        console.log(233);
+        return <Child num={num} />;
+    }, [num]);
     return (
         <div>
             {child}
@@ -377,16 +381,14 @@ function Parent({ num }) {
 
 function App() {
     const [count, setCount] = useState(0);
-    // count === 3 整体的状态（true or false）发生变化时才会触发函数的执行
+    // 初始化时执行或 count === 3 整体的状态（true or false）发生变化时才会触发函数的执行
     const num = useMemo(
-        () => {
-            return count * 2;
-        },
+        () => count * 2,
         [count === 3]
     );
     return (
         <div>
-            <button onClick={() => setCount(count + 1)}>click</button>
+            <button onClick={() => setCount(count + 1)}>click me</button>
             <Parent num={num} />
         </div>
     );
@@ -838,4 +840,671 @@ function App() {
         </div>
     );
 }
+```
+
+## TodoList
+
+### 版本 1
+
+```javascript
+import React, { useState, useCallback, useRef, useEffect, memo } from 'react';
+const TODO_KEY = 'TODO';
+
+function App() {
+    const [todos, setTodos] = useState([]);
+    // useCallback 目的是优化
+    const addTodo = useCallback(todo => {
+        // setTodos([...todos, todo]);
+        // 这种写法能避免对 todos 的依赖
+        setTodos(todos => [...todos, todo]);
+    }, []);
+    const removeTodo = useCallback(id => {
+        setTodos(todos => todos.filter(todo => todo.id !== id));
+    }, []);
+    const toggleTodo = useCallback(id => {
+        setTodos(todos =>
+            todos.map(todo => {
+                return todo.id === id
+                    ? {
+                            ...todo,
+                            completed: !todo.completed
+                        }
+                    : todo;
+            })
+        );
+    }, []);
+
+    useEffect(() => {
+        // 只初始化时执行一次
+        const todos = JSON.parse(localStorage.getItem(TODO_KEY) || '[]');
+        setTodos(todos);
+    }, []);
+
+    useEffect(
+        () => {
+            // 初始化时和 todos 发生变化就存储到本地
+            localStorage.setItem(TODO_KEY, JSON.stringify(todos));
+        },
+        [todos]
+    );
+
+    return (
+        <section className="todoapp">
+            {/* 头部 */}
+            <Header addTodo={addTodo} />
+            {/* 主体 */}
+            <Content removeTodo={removeTodo} todos={todos} toggleTodo={toggleTodo} />
+        </section>
+    );
+}
+
+const Header = memo(function Header(props) {
+    const { addTodo } = props;
+    const inputRef = useRef();
+    const handleKeyUp = e => {
+        if (e.keyCode === 13) {
+            const title = inputRef.current.value.trim();
+            if (!title) return;
+            addTodo({
+                id: Date.now() + '',
+                title: title,
+                completed: false
+            });
+            inputRef.current.value = '';
+        }
+    };
+    return (
+        <header className="header">
+            <h1>todos</h1>
+            <input
+                ref={inputRef}
+                className="new-todo"
+                placeholder="What needs to be done?"
+                id="task"
+                onKeyUp={handleKeyUp}
+                autoFocus
+            />
+        </header>
+    );
+});
+
+const Content = memo(function Content(props) {
+    const { todos, toggleTodo, removeTodo } = props;
+    return (
+        <section className="main">
+            <input className="toggle-all" type="checkbox" />
+            <ul className="todo-list" id="todo-list">
+                {todos.map(todo => <Item key={todo.id} todo={todo} toggleTodo={toggleTodo} removeTodo={removeTodo} />)}
+            </ul>
+        </section>
+    );
+});
+
+const Item = memo(function Item(props) {
+    const { todo: { id, title, completed }, toggleTodo, removeTodo } = props;
+    const handleChange = () => {
+        // 每一个 Item 都绑定了自己的事件，可以直接获取到自己的 ID，无需自定义属性
+        toggleTodo(id);
+    };
+    const handleClick = () => {
+        removeTodo(id);
+    };
+    return (
+        <li className={completed ? 'completed' : ''}>
+            <div className="view">
+                <input className="toggle" type="checkbox" checked={completed} onChange={handleChange} />
+                <label>
+                    {title}
+                </label>
+                <button className="destroy" onClick={handleClick} />
+            </div>
+            <input className="edit" placeholder="Rule the web" />
+        </li>
+    );
+});
+
+export default App;
+```
+
+### 版本 2
+
+把 addTodo、removeTodo、toggleTodo 都封装到了 dispatch 中
+
+```javascript
+import React, { useState, useCallback, useRef, useEffect, memo } from 'react';
+import { createSet, createAdd, createRemove, createToggle } from './actions';
+const TODO_KEY = 'TODO';
+
+function App() {
+    const [todos, setTodos] = useState([]);
+    const dispatch = useCallback(action => {
+        const { type, payload } = action;
+        switch (type) {
+            case 'SET':
+                setTodos(payload);
+                break;
+            case 'ADD':
+                setTodos(todos => [...todos, payload]);
+                break;
+            case 'REMOVE':
+                setTodos(todos => todos.filter(todo => todo.id !== payload));
+                break;
+            case 'TOGGLE':
+                setTodos(todos =>
+                    todos.map(todo => {
+                        return todo.id === payload
+                            ? {
+                                    ...todo,
+                                    completed: !todo.completed
+                                }
+                            : todo;
+                    })
+                );
+                break;
+            default:
+        }
+    }, []);
+
+    useEffect(() => {
+        // 只初始化时执行一次
+        const todos = JSON.parse(localStorage.getItem(TODO_KEY) || '[]');
+        // Step2: 每次都需要传递 action，所以封装了 actionCreator
+        dispatch(createSet(todos));
+    }, []);
+
+    useEffect(
+        () => {
+            // 初始化时和 todos 发生变化就存储到本地
+            localStorage.setItem(TODO_KEY, JSON.stringify(todos));
+        },
+        [todos]
+    );
+
+    return (
+        <section className="todoapp">
+            {/* 头部 */}
+            <Header dispatch={dispatch} />
+            {/* 主体 */}
+            <Content dispatch={dispatch} todos={todos} />
+        </section>
+    );
+}
+
+const Header = memo(function Header(props) {
+    const { dispatch } = props;
+    const inputRef = useRef();
+    const handleKeyUp = e => {
+        if (e.keyCode === 13) {
+            const title = inputRef.current.value.trim();
+            if (!title) return;
+            dispatch(
+                createAdd({
+                    id: Date.now() + '',
+                    title: title,
+                    completed: false
+                })
+            );
+            inputRef.current.value = '';
+        }
+    };
+    return (
+        <header className="header">
+            <h1>todos</h1>
+            <input
+                ref={inputRef}
+                className="new-todo"
+                placeholder="What needs to be done?"
+                id="task"
+                onKeyUp={handleKeyUp}
+                autoFocus
+            />
+        </header>
+    );
+});
+
+const Content = memo(function Content(props) {
+    const { todos, dispatch } = props;
+    return (
+        <section className="main">
+            <input className="toggle-all" type="checkbox" />
+            <ul className="todo-list" id="todo-list">
+                {todos.map(todo => <Item key={todo.id} todo={todo} dispatch={dispatch} />)}
+            </ul>
+        </section>
+    );
+});
+
+const Item = memo(function Item(props) {
+    const { todo: { id, title, completed }, dispatch } = props;
+    const handleChange = () => {
+        // 每一个 Item 都绑定了自己的事件，可以直接获取到自己的 ID，无需自定义属性
+        dispatch(createToggle(id));
+    };
+    const handleClick = () => {
+        dispatch(createRemove(id));
+    };
+    return (
+        <li className={completed ? 'completed' : ''}>
+            <div className="view">
+                <input className="toggle" type="checkbox" checked={completed} onChange={handleChange} />
+                <label>
+                    {title}
+                </label>
+                <button className="destroy" onClick={handleClick} />
+            </div>
+            <input className="edit" placeholder="Rule the web" />
+        </li>
+    );
+});
+```
+
+### 版本 3
+
+把 actionCreator 和 dispatch 打包到一起给组件调用
+
+```javascript
+import React, { useState, useCallback, useRef, useEffect, memo } from 'react';
+import { createSet, createAdd, createRemove, createToggle } from './actions';
+const TODO_KEY = 'TODO';
+
+// Step3: actionCreator 都要给 dispatch 用，封装了 bindActionCreators
+// 把 actionCreator 和 dispatch 打包到一起给组件调用
+// bindActionCreators({ addTodo: createAdd, removeTodo: createRemove }, dispatch)
+const bindActionCreators = (actionCreators, dispatch) => {
+    const ret = {};
+    for (let key in actionCreators) {
+        ret[key] = function(...args) {
+            const actionCreator = actionCreators[key];
+            const action = actionCreator(...args);
+            dispatch(action);
+        };
+    }
+    /* {
+        addTodo: function(...args) {
+            dispatch(createAdd(...args))
+        },
+        removeTodo: function(...args){
+            dispatch(createRemove(...args))
+        }
+    } */
+    return ret;
+};
+
+function App() {
+    const [todos, setTodos] = useState([]);
+    // Step1: 把 addTodo、removeTodo、toggleTodo 都封装到了 dispatch 中
+    const dispatch = useCallback(action => {
+        const { type, payload } = action;
+        switch (type) {
+            case 'SET':
+                setTodos(payload);
+                break;
+            case 'ADD':
+                setTodos(todos => [...todos, payload]);
+                break;
+            case 'REMOVE':
+                setTodos(todos => todos.filter(todo => todo.id !== payload));
+                break;
+            case 'TOGGLE':
+                setTodos(todos =>
+                    todos.map(todo => {
+                        return todo.id === payload
+                            ? {
+                                    ...todo,
+                                    completed: !todo.completed
+                                }
+                            : todo;
+                    })
+                );
+                break;
+            default:
+        }
+    }, []);
+
+    useEffect(() => {
+        // 只初始化时执行一次
+        const todos = JSON.parse(localStorage.getItem(TODO_KEY) || '[]');
+        // Step2: 每次都需要传递 action，所以封装了 actionCreator
+        dispatch(createSet(todos));
+    }, []);
+
+    useEffect(
+        () => {
+            // 初始化时和 todos 发生变化就存储到本地
+            localStorage.setItem(TODO_KEY, JSON.stringify(todos));
+        },
+        [todos]
+    );
+
+    return (
+        <section className="todoapp">
+            {/* 头部 */}
+            <Header {...bindActionCreators({ addTodo: createAdd }, dispatch)} />
+            {/* 主体 */}
+            <Content
+                {...bindActionCreators({ removeTodo: createRemove, toggleTodo: createToggle }, dispatch)}
+                todos={todos}
+            />
+        </section>
+    );
+}
+
+const Header = memo(function Header(props) {
+    const { addTodo } = props;
+    const inputRef = useRef();
+    const handleKeyUp = e => {
+        if (e.keyCode === 13) {
+            const title = inputRef.current.value.trim();
+            if (!title) return;
+            // addTodo 已经具备了 dispatch 和 createAdd 的双重功能
+            addTodo({
+                id: Date.now() + '',
+                title: title,
+                completed: false
+            });
+            inputRef.current.value = '';
+        }
+    };
+    return (
+        <header className="header">
+            <h1>todos</h1>
+            <input
+                ref={inputRef}
+                className="new-todo"
+                placeholder="What needs to be done?"
+                id="task"
+                onKeyUp={handleKeyUp}
+                autoFocus
+            />
+        </header>
+    );
+});
+
+const Content = memo(function Content(props) {
+    const { todos, removeTodo, toggleTodo } = props;
+    return (
+        <section className="main">
+            <input className="toggle-all" type="checkbox" />
+            <ul className="todo-list" id="todo-list">
+                {todos.map(todo => <Item key={todo.id} todo={todo} removeTodo={removeTodo} toggleTodo={toggleTodo} />)}
+            </ul>
+        </section>
+    );
+});
+
+const Item = memo(function Item(props) {
+    const { todo: { id, title, completed }, removeTodo, toggleTodo } = props;
+    const handleChange = () => {
+        // 每一个 Item 都绑定了自己的事件，可以直接获取到自己的 ID，无需自定义属性
+        toggleTodo(id);
+    };
+    const handleClick = () => {
+        removeTodo(id);
+    };
+    return (
+        <li className={completed ? 'completed' : ''}>
+            <div className="view">
+                <input className="toggle" type="checkbox" checked={completed} onChange={handleChange} />
+                <label>
+                    {title}
+                </label>
+                <button className="destroy" onClick={handleClick} />
+            </div>
+            <input className="edit" placeholder="Rule the web" />
+        </li>
+    );
+});
+```
+
+### 版本 4
+
+```javascript
+import React, { useState, useCallback, useRef, useEffect, memo } from 'react';
+import { createSet, createAdd, createRemove, createToggle } from './actions';
+import reducer from './reducers';
+const TODO_KEY = 'TODO';
+const bindActionCreators = (actionCreators, dispatch) => {
+    const ret = {};
+    for (let key in actionCreators) {
+        ret[key] = function(...args) {
+            const actionCreator = actionCreators[key];
+            const action = actionCreator(...args);
+            dispatch(action);
+        };
+    }
+    return ret;
+};
+
+function App() {
+    const [todos, setTodos] = useState([]);
+    const [incrementCount, setIncrementCount] = useState(0);
+    /* const reducer = (state, action) => {
+        const { type, payload } = action;
+        const { todos, incrementCount } = state;
+        switch (type) {
+            case 'SET':
+                return {
+                    ...state,
+                    todos: payload,
+                    incrementCount: incrementCount + 1
+                };
+            case 'ADD':
+                return {
+                    ...state,
+                    todos: [...todos, payload],
+                    incrementCount: incrementCount + 1
+                };
+            case 'REMOVE':
+                return {
+                    ...state,
+                    todos: todos.filter(todo => todo.id !== payload)
+                };
+            case 'TOGGLE':
+                return {
+                    ...state,
+                    todos: todos.map(todo => {
+                        return todo.id === payload
+                            ? {
+                                    ...todo,
+                                    completed: !todo.completed
+                                }
+                            : todo;
+                    })
+                };
+            default:
+                return state;
+        }
+    }; */
+
+    const dispatch = useCallback(
+        action => {
+            const state = {
+                todos,
+                incrementCount
+            };
+            const setters = {
+                todos: setTodos,
+                incrementCount: setIncrementCount
+            };
+            const newState = reducer(state, action);
+            for (let key in newState) {
+                setters[key](newState[key]);
+            }
+        },
+        [todos, incrementCount]
+    );
+
+    useEffect(() => {
+        // 只初始化时执行一次
+        const todos = JSON.parse(localStorage.getItem(TODO_KEY) || '[]');
+        // Step2: 每次都需要传递 action，所以封装了 actionCreator
+        dispatch(createSet(todos));
+    }, []); // 这里不要 [dispatch]
+
+    useEffect(
+        () => {
+            // 初始化时和 todos 发生变化就存储到本地
+            localStorage.setItem(TODO_KEY, JSON.stringify(todos));
+        },
+        [todos]
+    );
+
+    return (
+        <section className="todoapp">
+            {/* 头部 */}
+            <Header {...bindActionCreators({ addTodo: createAdd }, dispatch)} />
+            {/* 主体 */}
+            <Content
+                {...bindActionCreators({ removeTodo: createRemove, toggleTodo: createToggle }, dispatch)}
+                todos={todos}
+            />
+        </section>
+    );
+}
+
+const Header = memo(function Header(props) {
+    const { addTodo } = props;
+    const inputRef = useRef();
+    const handleKeyUp = e => {
+        if (e.keyCode === 13) {
+            const title = inputRef.current.value.trim();
+            if (!title) return;
+            addTodo({
+                id: Date.now() + '',
+                title: title,
+                completed: false
+            });
+            inputRef.current.value = '';
+        }
+    };
+    return (
+        <header className="header">
+            <h1>todos</h1>
+            <input
+                ref={inputRef}
+                className="new-todo"
+                placeholder="What needs to be done?"
+                id="task"
+                onKeyUp={handleKeyUp}
+                autoFocus
+            />
+        </header>
+    );
+});
+
+const Content = memo(function Content(props) {
+    const { todos, removeTodo, toggleTodo } = props;
+    return (
+        <section className="main">
+            <input className="toggle-all" type="checkbox" />
+            <ul className="todo-list" id="todo-list">
+                {todos.map(todo => <Item key={todo.id} todo={todo} removeTodo={removeTodo} toggleTodo={toggleTodo} />)}
+            </ul>
+        </section>
+    );
+});
+
+const Item = memo(function Item(props) {
+    const { todo: { id, title, completed }, toggleTodo, removeTodo } = props;
+    const handleChange = () => {
+        // 每一个 Item 都绑定了自己的事件，可以直接获取到自己的 ID，无需自定义属性
+        toggleTodo(id);
+    };
+    const handleClick = () => {
+        removeTodo(id);
+    };
+    return (
+        <li className={completed ? 'completed' : ''}>
+            <div className="view">
+                <input className="toggle" type="checkbox" checked={completed} onChange={handleChange} />
+                <label>
+                    {title}
+                </label>
+                <button className="destroy" onClick={handleClick} />
+            </div>
+            <input className="edit" placeholder="Rule the web" />
+        </li>
+    );
+});
+```
+
+```javascript
+// reducers.js
+function combineReducers(reducers) {
+    return function reducer(state, action) {
+        const changed = {};
+        for (let key in reducers) {
+            changed[key] = reducers[key](state[key], action);
+        }
+        return {
+            ...state,
+            ...changed
+        };
+    };
+
+
+}
+
+const reducers = {
+    todos(state, action) {
+        const {
+            type,
+            payload
+        } = action;
+        switch (type) {
+            case 'SET':
+                return payload;
+            case 'ADD':
+                return [...state, payload];
+            case 'REMOVE':
+                return state.filter(todo => todo.id !== payload);
+            case 'TOGGLE':
+                return state.map(todo => {
+                    return todo.id === payload ? {
+                            ...todo,
+                            completed: !todo.completed
+                        } :
+                        todo;
+                });
+            default:
+                return state;
+        }
+    },
+    incrementCount(state, action) {
+        const {
+            type
+        } = action;
+        switch (type) {
+            case 'SET':
+            case 'ADD':
+                return state + 1;
+            default:
+                return state;
+        }
+    }
+};
+export default combineReducers(reducers);
+```
+
+```javascript
+// actions.js
+export const createSet = (payload) => ({
+    type: 'SET',
+    payload
+});
+
+export const createAdd = (payload) => ({
+    type: 'ADD',
+    payload
+});
+
+export const createRemove = (payload) => ({
+    type: 'REMOVE',
+    payload
+});
+
+export const createToggle = (payload) => ({
+    type: 'TOGGLE',
+    payload
+});
 ```

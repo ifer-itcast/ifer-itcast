@@ -5,13 +5,13 @@ tags: [React 技巧, React 必知必会]
 categories: React
 ---
 
-<!-- more -->
-
 ## 常见绑定事件的操作
 
 [查看代码](https://github.com/ifer-itcast/react-skill/tree/master/src/components/00)
 
 **结论：应尽量避免 render 中使用箭头函数或 bind 绑定！**
+
+<!-- more -->
 
 bind 的形式
 

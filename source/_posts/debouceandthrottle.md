@@ -1,7 +1,8 @@
 ---
 title: 防抖和节流
 date: 2020-02-05 20:20:43
-tags:
+tags: [debounce, throttle]
+categories: 面试
 ---
 
 防抖和节流容易混淆，其实一句话就能说清楚！

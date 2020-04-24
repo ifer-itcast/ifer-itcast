@@ -1,7 +1,8 @@
 ---
 title: react-virtualized
 date: 2020-02-06 10:02:08
-tags:
+tags: react-virtualized
+categories: React
 ---
 
 react-virtualized 是一个优化长列表的插件，下面使用 List 基础组件，配合 AutoSizer、CellMeasurer、InfiniteLoader 等高阶组件，来做一个案例！

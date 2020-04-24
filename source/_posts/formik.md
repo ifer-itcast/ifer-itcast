@@ -1,7 +1,8 @@
 ---
 title: 表单处理
 date: 2020-02-06 21:07:30
-tags:
+tags: Formik
+categories: React
 ---
 
 [表单处理代码](https://github.com/ifer-itcast/formik-demo)
