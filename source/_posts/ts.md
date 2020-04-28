@@ -1568,3 +1568,611 @@ const teacher = new Teacher({
 // info 可以被推断出具体的类型：string
 const info = teacher.getInfo('name');
 ```
+
+## Express 提供接口
+
+### 一个小问题
+
+解决第一次执行 `npm run dev` 可能报错的问题，修改 package.json
+
+```javascript
+{
+    "scripts": {
+        "dev:build": "tsc -w",
+        "dev:start": "nodemon ./build/index.js",
+        "dev": "tsc && concurrently npm:dev:*"
+    }
+}
+```
+
+### 创建服务器及模块化路由
+
+需求：每次输入 `http://localhost:7001/getData` 都是爬取一次数据
+
+index.ts
+
+```javascript
+import express, { Request, Response } from 'express';
+const app = express();
+
+import router from './routes';
+
+app.use(router);
+
+app.listen(7001, () => console.log('Server running on http://localhost:7001'));
+```
+
+routes/index.js
+
+```javascript
+import { Router, Request, Response } from 'express';
+const router = Router();
+
+import Crowller from '../crowller';
+import Analyzer from '../analyzer';
+
+router.get('/getData', (req: Request, res: Response) => {
+    const url = `http://www.dell-lee.com/typescript/demo.html?secret=x3b174jsx`;
+    const analyzer = Analyzer.getInstance();
+    new Crowller(analyzer, url); // 分析对象、要分析的地址
+    res.send('get success');
+});
+
+export default router;
+```
+
+### 输入密码跳转时获取数据
+
+输入正确密码跳转到 `/getData` 爬取数据
+
+routes/index.ts
+
+```javascript
+router.get('/', (req: Request, res: Response) => {
+    res.send(`
+        <html>
+            <body>
+                <form method="post" action="/getData">
+                    <input type="password" name="password"/>
+                    <button>提交</button>
+                </form>
+            </body>
+        </html>
+    `);
+});
+```
+
+```javascript
+router.post('/getData', (req: Request, res: Response) => {
+    if (req.body.password === '123') {
+        // ...
+    } else {
+        res.send('get error');
+    }
+});
+```
+
+### 问题解决
+
+问题1：Express 库的类型定义文件描述不准确，例如 `req.body.password` 的类型定义是 any
+
+route/index.ts
+
+```javascript
+interface RequestWithBody extends Request {
+    body: {
+        [key: string]: string | undefined;
+    }
+}
+router.post('/getData', (req: RequestWithBody, res: Response) => {
+    const { password, xxx } = req.body;
+});
+```
+
+问题2：当使用中间件对 req、res 做了修改之后（会报错），原因是 req、res 对应的类型定义并没有改变，例如
+
+```javascript
+// index.ts
+app.use((req: Request, res: Response, next: NextFunction) => {
+    req.username = 'dell'; // Request 类型定义并没有 username，会报错
+    next()
+});
+```
+
+```javascript
+// custom.d.ts, 自定义的类型定义文件，TS 会自动和原有的进行融合
+declare namespace Express {
+    interface Request {
+        username: string
+    }
+}
+```
+
+### 接口实现
+
+首页、登录、退出、爬取、展示等
+
+```
+npm install cookie-session
+npm install @types/cookie-session -D
+```
+
+首页显示登录框或退出按钮的判断
+
+```javascript
+router.get('/', (req: Request, res: Response) => {
+    const isLogin = req.session ? req.session.login : false;
+    if (isLogin) {
+        res.send(`
+            <html>
+                <body>
+                    <a href="/getData">爬取内容</a>
+                    <a href="/showData">展示内容</a>
+                    <a href="/logout">退出</a>
+                </body>
+            </html>
+        `);
+    } else {
+        res.send(`这里返回的是登录的 HTML 结构`);
+    }
+});
+```
+
+登录接口 `/login`
+
+```javascript
+// routes/index.ts
+router.post('/login', (req: RequestWithBody, res: Response) => {
+    const { password } = req.body;
+    const isLogin = req.session ? req.session.login : false;
+
+    if (isLogin) {
+        res.send('已经登陆过');
+    } else {
+        if (password === '123' && req.session) {
+            // 通过对 req.session 是否存在的判断，来做一个类型保护
+            req.session.login = true;
+            res.send('登录成功');
+        } else { 
+            res.send('密码错误');
+        }
+    }
+});
+```
+
+退出接口 `/logout`
+
+```javascript
+router.get('/logout', (req: RequestWithBody, res: Response) => {
+    // 通过 if 判断来做一个类型保护
+    if (req.session) {
+        req.session.login = false;
+    }
+    res.redirect('/');
+});
+```
+
+爬取内容的接口 `/getData`
+
+```javascript
+router.get('/getData', (req: RequestWithBody, res: Response) => {
+    const isLogin = req.session ? req.session.login : false;
+    // 判断用户的登录状态
+    if (isLogin) {
+        const url = `http://www.dell-lee.com/typescript/demo.html?secret=x3b174jsx`;
+        const analyzer = Analyzer.getInstance();
+        new Crowller(analyzer, url); // 分析对象、要分析的地址
+        res.send('get success');
+    } else {
+        res.send('请登录后爬取内容');
+    }
+});
+```
+
+显示内容 `/showData`
+
+```javascript
+router.get('/showData', (req: Request, res: Response) => {
+    const isLogin = req.session ? req.session.login : false;
+    if (isLogin) {
+        try {
+            const position = path.join(__dirname, '../..', 'data', 'course.json');
+            const result = fs.readFileSync(position, 'utf8');
+            res.json(JSON.parse(result));
+        } catch(e) {
+            res.send('尚未爬取到内容');
+        }
+    } else {
+        res.send('请登录后查看内容');
+    }
+});
+```
+
+### 优化代码
+
+优化 `/getData` 和 `/setData` 接口
+
+```javascript
+const checkLogin = (req: BodyRequest, res: Response, next: NextFunction) => {
+    const isLogin = req.session ? req.session.login : false;
+    if (isLogin) {
+        next();
+    } else {
+        res.send('请先登录');
+    }
+};
+```
+
+统一后端返回的内容
+
+```javascript
+// util.ts
+interface Result {
+    success: boolean;
+    errMsg?: string;
+    data: any
+}
+
+export const getResponseData = (data: any, errMsg: string): Result => {
+    if (errMsg) {
+        return {
+            success: false,
+            errMsg,
+            data
+        }
+    }
+    return {
+        success: true,
+        data
+    }
+};
+```
+
+```javascript
+router.get('/showData', checkLogin, (req: BodyRequest, res: Response) => {
+    try {
+        const position = path.join(__dirname, '../..', 'data', 'course.json');
+        const result = fs.readFileSync(position, 'utf8');
+        // res.json(JSON.parse(result));
+        res.json(getResponseData(JSON.parse(result)));
+    } catch(e) {
+        // res.send('尚未爬取到内容');
+        res.json(getResponseData(null, '尚未爬取到内容'));
+    }
+});
+```
+
+## 类的装饰器
+
+*使用装饰器前要先把 `tsconfig.json` 中的 `experimentalDecorators` 配置项打开*
+
+类装饰器：对类进行装饰(化妆)的工具，例如通过装饰器可以给类多增加一些内容，其本身是一个函数！
+
+通过 @ 符合可以使用装饰器，**装饰器在类定义好的时候就会执行！**，和是否 new 没关系，和 new 了几次更没关系！
+
+```javascript
+// 修饰类的装饰器，收到的参数是类的构造函数
+function testDecorator(constructor: any) {
+    console.log('decorator');
+}
+@testDecorator
+class Test {}
+
+const t1 = new Test();
+const t2 = new Test();
+```
+
+### 修饰类
+
+```javascript
+// 修饰类的装饰器，收到的参数是类的构造函数（类本身）
+function testDecorator(constructor: any) {
+    // 往类的原型上面怼了一个 getName 这样的方法
+    constructor.prototype.getName = () => {
+        console.log('hello ifer');
+    };
+}
+
+@testDecorator
+class Test {}
+const test = new Test();
+(test as any).getName(); // hello ifer
+```
+
+**一个类可以被多个装饰器装饰**
+
+```javascript
+function testDecorator1(constructor: any) {
+    console.log('decorator1');
+}
+function testDecorator2(constructor: any) {
+    console.log('decorator2');
+}
+
+// 装饰器真正执行的时候是从下到上、从右到左的顺序，也就是先收集的装饰器会后面执行
+@testDecorator1
+@testDecorator2
+class Test {}
+```
+
+使用装饰器的时候可以传一些参数，装饰器函数内部可以根据此参数做一些处理，例如：
+
+```javascript
+function testDecorator(flag: boolean) {
+    if (flag) {
+        return function(constructor: any) {
+            constructor.prototype.getName = () => {
+                console.log('ifer');
+            };
+        }
+    } else {
+        return function(constructor: any) {};
+    }
+}
+
+@testDecorator(true)
+class Test {}
+
+const test = new Test();
+(test as any).getName();
+```
+
+上面写法的问题是：使用 test 实例时并没有 getName 方法提示出来，该如何去解决呢？
+
+先来看一个基本操作
+
+```javascript
+// (...args: any[]) => any 返回值为 any 类型的函数
+// 接收了很多的参数，合并到了 args数组上，数组的每一项都是 any 类型
+// new (...args: any[]) => any，代表 new 了一个返回值为 any 类型的构造函数
+// T 可以理解为具备此构造函数实例的一个东西
+function testDecorator<T extends new (...args: any[]) => any>(constructor: T) {
+    return class extends constructor {
+        // testDecorator 对原来的构造函数做一些扩展，把原来的 name 变成 'elser'
+        name = 'elser';
+        getName() {
+            return this.name;
+        }
+    }
+}
+
+@testDecorator
+class Test {
+    constructor(public name: string) {}
+}
+const test = new Test('ifer');
+(test as any).getName(); // elser
+```
+
+解决问题
+
+```javascript
+function testDecorator() {
+    return function<T extends new (...args: any[]) => any>(constructor: T) {
+        return class extends constructor {
+            getName() {
+                return this.name;
+            }
+        }
+    }
+}
+
+const Test = testDecorator()(class {
+    constructor(public name: string) {}
+});
+// 现在的 Test 是装饰器装饰过后的一个类
+const test = new Test('ifer');
+console.log(test.getName()); // 终于他娘的有提示了
+```
+
+### 修饰类的方法
+
+普通方法：第一个参数 target 对应的是类的 prototype，key 是被装饰的方法的名字
+
+```javascript
+function getNameDecorator(target: any, key: string, descriptor: PropertyDescriptor) {
+    // 作用：控制类的方法不能被修改
+    descriptor.writable = false;
+}
+
+class Test {
+    constructor(public name: string) {}
+    @getNameDecorator
+    getName() {
+        return this.name;
+    }
+}
+
+const test = new Test('ifer');
+/* test.getName = function() { // 更改就会报错
+    return '1234';
+}; */
+
+console.log(test.getName());
+```
+
+静态方法：第一个参数 target 对应的就是【类本身】，key 是被装饰的方法的名字
+
+```javascript
+function getNameDecorator(target: any, key: string, descriptor: PropertyDescriptor) {
+    target.prototype.age = 18;
+}
+
+class Test {
+    @getNameDecorator
+    static getName() {
+        return (this.prototype as any).age; // 注意静态方法中的 this 是类本身
+    }
+}
+
+console.log(Test.getName()); // 18
+```
+
+使用装饰器通过 `descriptor.value` 可以直接**修改被装饰的方法**，例如：
+
+```javascript
+function getNameDecorator(target: any, key: string, descriptor: PropertyDescriptor) {
+    // descriptor.value 相当于是被装饰方法的引用
+    descriptor.value = function() {
+        return 'elser';
+    };
+}
+
+class Test {
+    constructor(public name: string) {}
+    @getNameDecorator
+    getName() {
+        return this.name;
+    }
+}
+
+const test = new Test('ifer');
+console.log(test.getName()); // elser
+```
+
+### 访问器的装饰器
+
+```javascript
+// target: 类的 prototype，key: 访问器的名字，这里就是 'name'
+function visitDecorator(target: any, key: string, descriptor: PropertyDescriptor) {
+    // 如果设置了 set 或 get, 就不能设置 descriptor 下 writable 或 value 中的任何一个，否则报错
+    target.age = 'zzz';
+}
+
+class Test {
+    constructor(private _name: string) {
+        this._name = _name;
+    }
+    get name() {
+        return this._name;
+    }
+    @visitDecorator
+    set name(name: string) {
+        this._name = name;
+    }
+}
+
+const test = new Test('ifer');
+console.log((test as any).age); // zzz
+```
+
+### 属性的装饰器
+
+改变属性的 descriptor，规定属性不可写
+
+```javascript
+// target: Test 对应的 prototype，key 装饰的属性的名字
+function nameDecorator(target: any, key: string): any {
+    // 期望 name 是一个 不可写 属性，下面的赋值操作就会报错
+    const descriptor: PropertyDescriptor = {
+        writable: false
+    };
+    // 意思是用这个 descriptor 替换掉 name 属性的 descriptor
+    return descriptor;
+}
+
+class Test {
+    @nameDecorator
+    name = 'ifer'
+}
+
+// 实例化 Test 时才发生“写”的行为，实例化时才会报错
+new Test();
+```
+
+通过装饰器并不能直接修改该属性的值，可以修改原型上的
+
+```javascript
+// target: Test 对应的 prototype
+// key 装饰的属性的名字
+function nameDecorator(target: any, key: string): any {
+    // 这里不能直接拿到 Test，类必须先声明再使用，不好证明 target.constructor === Test
+    // 修改的是原型上的 name
+    target[key] = 'elser';
+}
+
+class Test {
+    @nameDecorator
+    name = 'ifer'
+}
+const test = new Test();
+console.log(test.name);
+console.log((test as any).__proto__.name);
+```
+
+### 参数的装饰器
+
+```javascript
+// 原型、方法的名字（getInfo）、参数处于第几个位置
+function paramDecorator(target: any, methodName: string, paramIndex: number) {
+    console.log(target, methodName, paramIndex);
+}
+
+class Test {
+    getInfo(@paramDecorator name: string, age: number) {
+        console.log(name, age);
+    }
+}
+const test = new Test();
+test.getInfo('ifer', 18);
+```
+
+### 装饰器用于错误捕获
+
+用于捕获错误的 try/catch 存在重复编写的问题
+
+```javascript
+const userInfo: any = undefined;
+class Test {
+    getName() {
+        try {
+            return userInfo.name;
+        } catch(e) {
+            console.log('userInfo.name 不存在');
+        }
+    }
+    getAge() {
+        try {
+            return userInfo.age;
+        } catch(e) {
+            console.log('userInfo.age 不存在');
+        }
+    }
+}
+const t = new Test();
+t.getName();
+```
+
+解决问题，**装饰器可以用来统一处理异常捕获**
+
+```javascript
+const userInfo: any = undefined;
+
+function catchError(msg: string) {
+    return function(target: any, key: string, descriptor: PropertyDescriptor) {
+        // descriptor.value 就是被装饰的那个方法
+        const fn = descriptor.value;
+        descriptor.value = function() {
+            try {
+                fn();
+            } catch(e) {
+                console.log(msg);
+            }
+        };
+    }
+}
+
+class Test {
+    @catchError('userInfo.name 不存在')
+    getName() {
+        return userInfo.name;
+    }
+    @catchError('userInfo.age 不存在')
+    getAge() {
+        return userInfo.age;
+    }
+}
+const t = new Test();
+t.getName();
+t.getAge();
+```
