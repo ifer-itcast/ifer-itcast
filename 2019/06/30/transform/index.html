@@ -442,7 +442,7 @@
 <p>原理2：按下时记录当前光标位置（红线）和盒子原来的位置（蓝线），移动时用盒子原来的位置加上移动的距离（移动距离=当前移动时的光标位置-按下时的光标位置）。</p>
 <p><a href="/resource/demos/demo04/02_drag.html">原理2代码实现</a></p>
 <h2 id="transform-对拖拽的影响"><a href="#transform-对拖拽的影响" class="headerlink" title="transform 对拖拽的影响"></a>transform 对拖拽的影响</h2><p>上面使用<strong>原理1</strong>确实可以实现想要的拖拽效果，但获取到的光标到盒子的距离却是错误的！比实际的大小多了个 translate 值，测试代码如下：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#box</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: pink;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translate</span>(100px, 100px);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#box</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: pink;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translate</span>(<span class="number">100px</span>, <span class="number">100px</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oBox = <span class="built_in">document</span>.querySelector(<span class="string">'#box'</span>);</span><br><span class="line">oBox.onmousemove = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> disX = e.clientX - <span class="keyword">this</span>.offsetLeft;</span><br><span class="line">    <span class="keyword">var</span> disY = e.clientY - <span class="keyword">this</span>.offsetTop;</span><br><span class="line">    <span class="keyword">this</span>.innerHTML = <span class="string">'x: '</span> + disX + <span class="string">', y: '</span> + disY;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><font color="#d58512">当使用了 translate 移动了盒子之后，光标到盒子的计算结果是不对的，那为什么最终还能实现正确的拖拽效果呢？</font>那是因为 offsetLeft 的计算并不会把 translateX 包括在内，移动时操作的是 oDiv.style.left（并没有管 translate 的事情，原来是多少移动时还是多少），所以也就能得到正确的结果！</p>
 <p>上面我们明白了即便使用 translate 改变元素的初始位置，也不会对拖拽本身产生影响，但是！如果拖拽过程中有涉及到范围的判断时，要格外小心了。例如限制元素不能超出窗口的左侧，就不能简单的 <code>if(x &lt; 0) {x = 0}</code>，因为当 x 为负的 translateX 才是真正的到达边界，所以再判断时应该 <code>if(x &lt; -translateX) {x = -translateX}</code>，其他边界的判断同理！</p>
@@ -589,7 +589,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -600,7 +600,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -611,7 +611,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
