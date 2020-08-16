@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DvaJS,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="快速上手，快速入门，案例代码">
+<meta name="keywords" content="DvaJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DvaJS">
+<meta property="og:url" content="http://yoursite.com/2020/08/15/dva/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="快速上手，快速入门，案例代码">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-08-16T16:36:50.091Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DvaJS">
+<meta name="twitter:description" content="快速上手，快速入门，案例代码">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/08/15/dva/">
+
+
+
+
+
+  <title>DvaJS | 危险</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">危险</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">为之则易，不为则难</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/15/dva/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="危险">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/49337922.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DvaJS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-15T19:56:50+08:00">
+                2020-08-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/08/15/dva/" class="leancloud_visitors" data-flag-title="DvaJS">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://dvajs.com/guide/getting-started.html" target="_blank" rel="noopener">快速上手</a>，<a href="https://dvajs.com/guide/introduce-class.html" target="_blank" rel="noopener">快速入门</a>，<a href="https://github.com/ifer-itcast/dva" target="_blank" rel="noopener">案例代码</a></p>
+<a id="more"></a>
+<h2 id="案例初探"><a href="#案例初探" class="headerlink" title="案例初探"></a>案例初探</h2><p><strong>安装 dva</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 安装 dva-cli</span></span><br><span class="line">npm install dva-cli -g</span><br><span class="line">dva -v</span><br></pre></td></tr></table></figure>
+<p><strong>创建项目</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建项目</span></span><br><span class="line">dva <span class="keyword">new</span> dva-quickstart</span><br><span class="line">cd dva-quickstart</span><br><span class="line">npm start</span><br></pre></td></tr></table></figure>
+<p><strong>一个警告</strong></p>
+<font size="2" color="#ccc">index.js:2177 Warning: Please use require(“history”).createHashHistory instead of require(“history/createHashHistory”). Support for the latter will be removed in the next major release.</font>
+
+<p style="margin-top: 20px;">其实不用管，纠结的话可以修改<code>node_moduels/dva/lib/index.js</code></p>
+
+<p><del>var _createHashHistory = _interopRequireDefault(require(“history/createHashHistory”));</del></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _createHashHistory = _interopRequireDefault(<span class="built_in">require</span>(<span class="string">"history"</span>).createHashHistory);</span><br></pre></td></tr></table></figure>
+<p><strong>使用 AntD</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install antd babel-plugin-<span class="keyword">import</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 编辑 .webpackrc，使 babel-plugin-import 插件生效</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"extraBabelPlugins"</span>: [</span><br><span class="line">        [<span class="string">"import"</span>, &#123; <span class="string">"libraryName"</span>: <span class="string">"antd"</span>, <span class="string">"libraryDirectory"</span>: <span class="string">"es"</span>, <span class="string">"style"</span>: <span class="string">"css"</span> &#125;]</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>定义 Products 组件</strong></p>
+<p><code>src/routes/Products.jsx</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">"react"</span>;</span><br><span class="line"><span class="keyword">import</span> PropTypes <span class="keyword">from</span> <span class="string">"prop-types"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Table, Popconfirm, Button &#125; <span class="keyword">from</span> <span class="string">"antd"</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Products</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    columns = [</span><br><span class="line">        &#123;</span><br><span class="line">            title: <span class="string">"Name"</span>,</span><br><span class="line">            dataIndex: <span class="string">"name"</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            title: <span class="string">"Actions"</span>,</span><br><span class="line">            render: <span class="function">(<span class="params">text, record</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> (</span><br><span class="line">                    &lt;Popconfirm</span><br><span class="line">                        title=<span class="string">"Delete?"</span></span><br><span class="line">                        onConfirm=&#123;() =&gt; &#123;&#125;&#125;</span><br><span class="line">                    &gt;</span><br><span class="line">                        &lt;Button&gt;Delete&lt;<span class="regexp">/Button&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;/</span>Popconfirm&gt;</span><br><span class="line">                );</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    ];</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> &lt;Table dataSource=&#123;this.props.products&#125; columns=&#123;this.columns&#125; /&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Products.propTypes = &#123;</span><br><span class="line">    products: PropTypes.array.isRequired,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Products;</span><br></pre></td></tr></table></figure>
+<p><strong>配置路由</strong></p>
+<p><code>src/router.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">"react"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Router, Route, Switch &#125; <span class="keyword">from</span> <span class="string">"dva/router"</span>;</span><br><span class="line"><span class="keyword">import</span> Products <span class="keyword">from</span> <span class="string">"./routes/Products"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">RouterConfig</span>(<span class="params">&#123; history &#125;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;Router history=&#123;history&#125;&gt;</span><br><span class="line">            &lt;Switch&gt;</span><br><span class="line">                &lt;Route path=<span class="string">"/products"</span> exact component=&#123;Products&#125; /&gt;</span><br><span class="line">            &lt;<span class="regexp">/Switch&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>Router&gt;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> RouterConfig;</span><br></pre></td></tr></table></figure>
+<p><strong>定义 Model</strong></p>
+<p><code>src/models/products.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    namespace: <span class="string">'products'</span>,</span><br><span class="line">    state: [</span><br><span class="line">        &#123; <span class="attr">key</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">'手机'</span>, <span class="attr">id</span>: <span class="number">1</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">key</span>: <span class="number">2</span>, <span class="attr">name</span>: <span class="string">'电脑'</span>, <span class="attr">id</span>: <span class="number">2</span> &#125;,</span><br><span class="line">    ],</span><br><span class="line">    reducers: &#123;</span><br><span class="line">        <span class="string">'delete'</span>(state, &#123; <span class="attr">payload</span>: id &#125;) &#123;</span><br><span class="line">            <span class="keyword">return</span> state.filter(<span class="function"><span class="params">item</span> =&gt;</span> item.id !== id);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>别忘了在 <code>src/index.js</code> 中载入 model</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.model(<span class="built_in">require</span>(<span class="string">'./models/products'</span>).default);</span><br></pre></td></tr></table></figure>
+<p><strong>connect</strong></p>
+<p><code>src/routes/Products.jsx</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">"react"</span>;</span><br><span class="line"><span class="keyword">import</span> PropTypes <span class="keyword">from</span> <span class="string">"prop-types"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Table, Popconfirm, Button &#125; <span class="keyword">from</span> <span class="string">"antd"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">"dva"</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Products</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    columns = [</span><br><span class="line">        &#123;</span><br><span class="line">            title: <span class="string">"Name"</span>,</span><br><span class="line">            dataIndex: <span class="string">"name"</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            title: <span class="string">"Actions"</span>,</span><br><span class="line">            render: <span class="function">(<span class="params">text, record</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> (</span><br><span class="line">                    &lt;Popconfirm</span><br><span class="line">                        title=<span class="string">"Delete?"</span></span><br><span class="line">                        onConfirm=&#123;() =&gt; <span class="keyword">this</span>.handleDelete(record.id)&#125;</span><br><span class="line">                    &gt;</span><br><span class="line">                        &lt;Button&gt;Delete&lt;<span class="regexp">/Button&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;/</span>Popconfirm&gt;</span><br><span class="line">                );</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    ];</span><br><span class="line">    <span class="comment">// 注意这里加了删除的功能</span></span><br><span class="line">    handleDelete = <span class="function"><span class="params">id</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.props.dispatch(&#123;</span><br><span class="line">            type: <span class="string">"products/delete"</span>,</span><br><span class="line">            payload: id,</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;Table dataSource=&#123;<span class="keyword">this</span>.props.products&#125; columns=&#123;<span class="keyword">this</span>.columns&#125; /&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Products.propTypes = &#123;</span><br><span class="line">    products: PropTypes.array.isRequired,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// const mapStateToProps = state =&gt; (&#123; products: state.products &#125;);</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(<span class="function">(<span class="params">&#123; products &#125;</span>) =&gt;</span> (&#123; products &#125;))(Products);</span><br></pre></td></tr></table></figure>
+<p><strong>使用 BrowserHistory</strong></p>
+<p><code>src/index.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createBrowserHistory <span class="keyword">as</span> createHistory &#125; <span class="keyword">from</span> <span class="string">'history'</span>;</span><br><span class="line"><span class="keyword">const</span> app = dva(&#123; <span class="attr">history</span>: createHistory() &#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="路由跳转"><a href="#路由跳转" class="headerlink" title="路由跳转"></a>路由跳转</h2><p><strong>标签导航</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Link &#125; <span class="keyword">from</span> <span class="string">'dva/router'</span>;</span><br><span class="line">&lt;Link to=<span class="string">"/"</span>&gt;Home&lt;<span class="regexp">/Link&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>编程式导航</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果不是直接挂在到 Route 下面的组件，需要用到高阶组件 withRouter</span></span><br><span class="line">&lt;Button type=<span class="string">"primary"</span> onClick=&#123;() =&gt; <span class="keyword">this</span>.props.history.push(<span class="string">'/'</span>)&#125;&gt;Home&lt;<span class="regexp">/Button&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; routerRedux &#125; <span class="keyword">from</span> <span class="string">'dva/router'</span>;</span><br><span class="line">&lt;Button type=<span class="string">"primary"</span> onClick=&#123;() =&gt; <span class="keyword">this</span>.props.dispatch(routerRedux.push(<span class="string">'/'</span>))&#125;&gt;Home&lt;<span class="regexp">/Button&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="数据模拟"><a href="#数据模拟" class="headerlink" title="数据模拟"></a>数据模拟</h2><p><code>/mock/products.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> products = [</span><br><span class="line">    &#123; <span class="attr">key</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">'手机'</span>, <span class="attr">id</span>: <span class="number">1</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">key</span>: <span class="number">2</span>, <span class="attr">name</span>: <span class="string">'电脑'</span>, <span class="attr">id</span>: <span class="number">2</span> &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以函数的形式进行，可以做一些更加灵活的处理（也可以直接写一个对象）</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="string">"GET /api/products"</span>: <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">        res.send(products);</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>/mock/users.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="string">"GET /api/users"</span>: [</span><br><span class="line">        &#123; <span class="attr">name</span>: <span class="string">'ifer'</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">name</span>: <span class="string">'elser'</span> &#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>/.roadhogrc.mock.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    ...require(<span class="string">"./mock/products"</span>),</span><br><span class="line">    ...require(<span class="string">"./mock/users"</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 优化</span></span><br><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">"fs"</span>;</span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">"path"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mock = &#123;&#125;;</span><br><span class="line">fs.readdirSync(path.join(__dirname, <span class="string">"/mock"</span>)).forEach(<span class="function"><span class="params">file</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (file.match(<span class="regexp">/\.js$/</span>)) &#123;</span><br><span class="line">        <span class="built_in">Object</span>.assign(mock, <span class="built_in">require</span>(<span class="string">"./mock/"</span> + file));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> mock;</span><br></pre></td></tr></table></figure>
+<p><code>/src/services/products.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">"../utils/request"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getProducts = <span class="function"><span class="params">()</span> =&gt;</span> request(<span class="string">"/api/products"</span>);</span><br></pre></td></tr></table></figure>
+<p><code>/src/services/users.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">"../utils/request"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getUsers = <span class="function"><span class="params">()</span> =&gt;</span> request(<span class="string">"/api/users"</span>);</span><br></pre></td></tr></table></figure>
+<p><code>/src/services/index.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> * <span class="keyword">as</span> users <span class="keyword">from</span> <span class="string">'./users'</span>;</span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">as</span> products <span class="keyword">from</span> <span class="string">'./products'</span>;</span><br></pre></td></tr></table></figure>
+<p><code>/src/routes/Products.jsx</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; users, products &#125; <span class="keyword">from</span> <span class="string">'../services'</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Products</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    componentDidMount() &#123;</span><br><span class="line">        users.getUsers().then(<span class="built_in">console</span>.log);</span><br><span class="line">        products.getProducts().then(<span class="built_in">console</span>.log);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数据交互"><a href="#数据交互" class="headerlink" title="数据交互"></a>数据交互</h2><p>实现数据的获取、删除</p>
+<p><strong>获取数据</strong></p>
+<p><code>src/models/products.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; products &#125; <span class="keyword">from</span> <span class="string">'../services'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    namespace: <span class="string">'products'</span>,</span><br><span class="line">    state: [],</span><br><span class="line">    reducers: &#123;</span><br><span class="line">        <span class="string">'init'</span>(state, &#123; payload &#125;) &#123;</span><br><span class="line">            <span class="keyword">return</span> [...payload];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    effects: &#123;</span><br><span class="line">        *getProducts(action,&#123; call, put &#125;) &#123;</span><br><span class="line">            <span class="keyword">const</span> &#123; data &#125; = <span class="keyword">yield</span> call(products.getProducts);</span><br><span class="line">            <span class="keyword">yield</span> put(&#123; <span class="attr">type</span>: <span class="string">'init'</span>, <span class="attr">payload</span>: data &#125; );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>src/routes/Products.jsx</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Products</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    componentDidMount() &#123;</span><br><span class="line">        <span class="keyword">this</span>.props.dispatch(&#123; <span class="attr">type</span>: <span class="string">'products/getProducts'</span> &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>删除数据</strong></p>
+<p><code>src/routes/Products.jsx</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">handleDelete = <span class="function"><span class="params">id</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.props.dispatch(&#123;</span><br><span class="line">        type: <span class="string">"products/deleteProduct"</span>,</span><br><span class="line">        payload: id,</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>src/models/products.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; products &#125; <span class="keyword">from</span> <span class="string">'../services'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    namespace: <span class="string">'products'</span>,</span><br><span class="line">    state: [],</span><br><span class="line">    reducers: &#123;</span><br><span class="line">        <span class="string">'init'</span>(state, &#123; payload &#125;) &#123;</span><br><span class="line">            <span class="keyword">return</span> [...payload];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    effects: &#123;</span><br><span class="line">        *deleteProduct(&#123; payload &#125;, &#123; call, put &#125;) &#123;</span><br><span class="line">            <span class="keyword">const</span> &#123; data &#125; = <span class="keyword">yield</span> call(products.deleteProduct, payload);</span><br><span class="line">            <span class="keyword">yield</span> put(&#123; <span class="attr">type</span>: <span class="string">'init'</span>, <span class="attr">payload</span>: data &#125; );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>src/services/products.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> deleteProduct = <span class="function"><span class="params">id</span> =&gt;</span> request(<span class="string">`/api/deleteProduct?id=<span class="subst">$&#123;id&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+<p><code>mock/products.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以函数的形式进行，可以做一些更加灵活的处理（也可以直接写一个对象）</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="string">"GET /api/deleteProduct"</span>: <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> idx = products.findIndex(<span class="function"><span class="params">item</span> =&gt;</span> item.id === req.query.id);</span><br><span class="line">        products.splice(idx, <span class="number">1</span>);</span><br><span class="line">        res.send(products);</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="优化引入-models"><a href="#优化引入-models" class="headerlink" title="优化引入 models"></a>优化引入 models</h2><p><code>src/models/index.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> context = <span class="built_in">require</span>.context(<span class="string">'./'</span>, <span class="literal">false</span>, /\.js$/);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> context.keys().filter(<span class="function"><span class="params">item</span> =&gt;</span> item !== <span class="string">'./index.js'</span>).map(<span class="function"><span class="params">key</span> =&gt;</span> context(key));</span><br></pre></td></tr></table></figure>
+<p><code>src/index.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'./models'</span>).default.forEach(<span class="function"><span class="params">key</span> =&gt;</span> app.model(key.default));</span><br></pre></td></tr></table></figure>
+<h2 id="redux-actions"><a href="#redux-actions" class="headerlink" title="redux-actions"></a>redux-actions</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add redux-actions</span><br></pre></td></tr></table></figure>
+<p><code>src/actions/index.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createAction &#125; <span class="keyword">from</span> <span class="string">'redux-actions'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getProducts = createAction(<span class="string">'products/getProducts'</span>);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> deleteProduct = createAction(<span class="string">'products/deleteProduct'</span>);</span><br></pre></td></tr></table></figure>
+<p><code>src/routes/Products.jsx</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; deleteProduct, getProducts &#125; <span class="keyword">from</span> <span class="string">'../actions'</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Products</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    handleDelete = <span class="function"><span class="params">id</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// this.props.dispatch(&#123;</span></span><br><span class="line">        <span class="comment">//     type: "products/deleteProduct",</span></span><br><span class="line">        <span class="comment">//     payload: id,</span></span><br><span class="line">        <span class="comment">// &#125;);</span></span><br><span class="line">        <span class="keyword">this</span>.props.dispatch(deleteProduct(id));</span><br><span class="line">    &#125;;</span><br><span class="line">    componentDidMount() &#123;</span><br><span class="line">        <span class="comment">// this.props.dispatch(&#123; type: 'products/getProducts' &#125;);</span></span><br><span class="line">        <span class="keyword">this</span>.props.dispatch(getProducts());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<!-- ## subscriptions
+
+`src/models/products.js`
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    subscriptions: &#123;</span><br><span class="line">        <span class="comment">// 第一次上来时就会触发此函数</span></span><br><span class="line">        ifer(&#123;dispatch, history&#125;) &#123;</span><br><span class="line">            <span class="built_in">window</span>.onresize = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'window reseize'</span>);</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            history.listen(<span class="function"><span class="params">location</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(location);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="request-函数封装"><a href="#request-函数封装" class="headerlink" title="request 函数封装"></a>request 函数封装</h2><p><code>`</code>javascript<br>import fetch from “dva/fetch”;<br>import qs from “querystring”;</p>
+<p>function parseJSON(response) {<br>    return response.json();<br>}</p>
+<p>function checkStatus(response) {<br>    if (response.status &gt;= 200 &amp;&amp; response.status &lt; 300) {<br>        return response;<br>    }</p>
+<pre><code>const error = new Error(response.statusText);
+error.response = response;
+throw error;
+</code></pre><p>}</p>
+<p>function handleHeaders(options) {<br>    const headers = (options.headers = options.headers ? options.headers : {});<br>    const defaultHeaders = {<br>        “Content-type”: “application/x-www-form-urlencoded; charset=UTF-8”,<br>    };<br>    options.headers = Object.assign({}, defaultHeaders, headers);</p>
+<pre><code>if (options.method === &quot;post&quot;) {
+    var body = options.body ? options.body : {};
+    body = qs.stringify(body);
+    options.body = body;
+}
+</code></pre><p>}</p>
+<p>/**</p>
+<ul>
+<li>Requests a URL, returning a promise.<br>*</li>
+<li>@param  {string} url       The URL we want to request</li>
+<li>@param  {object} [options] The options we want to pass to “fetch”</li>
+<li><p>@return {object}           An object containing either “data” or “err”<br>*/<br>export default function request(url, options = {}) {<br> if (!options.method) {</p>
+<pre><code>url += `?${qs.stringify(options.params)}`;
+</code></pre><p> }<br> handleHeaders(options);</p>
+<p> return fetch(url, options)</p>
+<pre><code>.then(checkStatus)
+.then(parseJSON)
+.then(data =&gt; ({
+    data,
+}))
+.catch(err =&gt; ({
+    err,
+}));
+</code></pre><p>}<br><code>`</code> –&gt;</p>
+</li>
+</ul>
+-->
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DvaJS/" rel="tag"># DvaJS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/12/saga/" rel="next" title="redux-saga">
+                <i class="fa fa-chevron-left"></i> redux-saga
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDI5Ni8yMDgyOA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/49337922.png" alt="危险">
+            
+              <p class="site-author-name" itemprop="name">危险</p>
+              <p class="site-description motion-element" itemprop="description">学习路上的查漏补缺✍疑难杂症💊</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#案例初探"><span class="nav-text">案例初探</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由跳转"><span class="nav-text">路由跳转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据模拟"><span class="nav-text">数据模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据交互"><span class="nav-text">数据交互</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化引入-models"><span class="nav-text">优化引入 models</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redux-actions"><span class="nav-text">redux-actions</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span style="margin-left: 10px; margin-right: 10px;">粤ICP备18082097号-1</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">危险</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Uk81tifVvuWhMogUzGuUpBpt-gzGzoHsz", "eI8GLiX9fCecgLocizEUOHkL");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
