@@ -843,5 +843,351 @@ export default combineReducers({
 
 [代码](https://github.com/ifer-itcast/saga/tree/loading%E5%A4%84%E7%90%86/src)
 
-## 登录案例
+## 登录流程
 
+### redux-saga 配置和登录界面
+
+```
+npx create-react-app saga-login
+```
+
+```
+yarn add redux react-redux redux-saga
+```
+
+`src/index.js`
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import App from './App';
+import store from './store';
+
+ReactDOM.render(<Provider store={store}><App/></Provider>, document.querySelector('#root'));
+```
+
+`src/App.jsx`
+
+```javascript
+import React, { Component } from 'react'
+import Login from './pages/login';
+
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                <Login/>
+            </div>
+        )
+    }
+}
+```
+
+`src/store/index.js`
+
+```javascript
+import { createStore, compose, applyMiddleware } from 'redux';
+import createSagaMiddleware  from 'redux-saga'; // #1
+import rootReducer from './reducers';
+import rootSaga from '../sagas';
+const sagaMiddleware = createSagaMiddleware(); // #2
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+    rootReducer,
+    composeEnhancers(applyMiddleware(sagaMiddleware)) // #3
+);
+sagaMiddleware.run(rootSaga); // #4
+export default store;
+```
+
+`src/store/reducers/index.js`
+
+```javascript
+import { combineReducers } from 'redux';
+import loginReducer from './login';
+
+export default combineReducers({
+    login: loginReducer
+});
+```
+
+`src/store/reducers/login.js`
+
+```javascript
+const initState = {};
+export default function(state=initState, action) {
+    return state;
+}
+```
+
+`src/sagas/index.js`
+
+```javascript
+import { all } from "redux-saga/effects";
+import loginSagas from './login';
+
+export default function* rootSaga() {
+    yield all([
+        ...loginSagas,
+    ]);
+}
+```
+
+`src/sagas/login.js`
+
+```javascript
+export function* login() {
+    yield console.log('hello saga');
+}
+
+export default [
+    login()
+];
+```
+
+`src/pages/login/index.jsx`
+
+```javascript
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
+
+class Login extends Component {
+    renderLogin = () => {
+        return <>
+            <input type="text" placeholder="输入用户名"/>
+            <input type="text" placeholder="输入密码"/>
+            <button>登录</button>
+        </>;
+    }
+    renderLogout = () => {
+        return <button>退出</button>;
+    }
+    render() {
+        const { token } = this.props.loginData;
+        return (
+            <div>
+                {
+                    token
+                    ?
+                    this.renderLogout()
+                    :
+                    this.renderLogin()
+                }
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = state => ({
+    loginData: state.login
+});
+export default connect(mapStateToProps, null)(Login);
+```
+
+### 登录功能
+
+`src/pages/login/index.jsx`
+
+```javascript
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import * as loginAction from '../../store/action/login';
+
+class Login extends Component {
+    state = {
+        userInfo: {
+            username: "",
+            password: ""
+        }
+    }
+    handleChange = e => {
+        this.setState({
+            userInfo: {
+                ...this.state.userInfo,
+                [e.target.name]: e.target.value
+            }
+        });
+    }
+    renderLogin = () => {
+        const { username, password } = this.state.userInfo;
+        return <>
+            <input type="text" name="username" value={username} placeholder="输入用户名" onChange={this.handleChange}/>
+            <input type="text" name="password" value={password} placeholder="输入密码" onChange={this.handleChange}/>
+            <button onClick={() => this.props.login(this.state.userInfo)}>登录</button>
+        </>;
+    }
+    renderLogout = () => {
+        return <button onClick={this.props.logout}>退出</button>;
+    }
+    render() {
+        const { token, isFetching, error } = this.props.loginData;
+        let data = null;
+        if(error) {
+            data = error;
+        } else if(isFetching) {
+            data = 'loading...';
+        } else {
+            data = token;
+        }
+        return (
+            <div>
+                <p>{data}</p>
+                {
+                    token
+                    ?
+                    this.renderLogout()
+                    :
+                    this.renderLogin()
+                }
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = state => ({
+    loginData: state.login
+});
+export default connect(mapStateToProps, loginAction)(Login);
+```
+
+`src/sagas/login.js`
+
+```javascript
+import { takeEvery, call, put } from 'redux-saga/effects';
+import * as loginAT from '../store/constant/login';
+import API from '../utils/api';
+
+// #2 worker saga
+function* login(action) {
+    try {
+        const { username, password } = action.payload;
+        const res = yield call(API.login, username, password);
+        yield put({ type: loginAT.LOGIN_SUCCESS, payload: res});
+    } catch(error) {
+        yield put({ type: loginAT.LOGIN_FAILED, error});
+    }
+}
+
+// #1 watcher saga
+function* watchLogin() {
+    yield takeEvery(loginAT.LOGIN, login);
+}
+
+export default [
+    watchLogin()
+];
+```
+
+`src/store/action/login.js`
+
+```javascript
+import * as loginAT from '../constant/login';
+
+export const login = payload => {
+    return {
+        type: loginAT.LOGIN,
+        payload
+    };
+};
+
+export const logout = () => {
+    return {
+        type: loginAT.LOGOUT
+    }
+};
+```
+
+`src/store/constant/login.js`
+
+```javascript
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILED = 'LOGIN_FAILED';
+```
+
+`src/store/reducers/login.js`
+
+```javascript
+import * as loginAT from '../constant/login';
+const initState = {
+    // isFetching: false,
+    // error: null,
+    // token: null
+};
+export default function(state=initState, action) {
+    switch(action.type) {
+        case loginAT.LOGIN:
+            return {
+                isFetching: true,
+            };
+        case loginAT.LOGIN_SUCCESS:
+            return {
+                token: action.payload,
+                isFetching: false
+            };
+        case loginAT.LOGIN_FAILED:
+            return {
+                error: action.error,
+                isFetching: false
+            };
+        default:
+            return state;
+    }
+}
+```
+
+`src/utils/api.js`
+
+```javascript
+const login = (username, password) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (username === 'ifer' && password === '123') {
+                resolve('login success');
+            } else {
+                reject('login error');
+            }
+        }, 1000);
+    });
+}
+
+export default { login };
+```
+
+### 退出功能
+
+`src/sagas/login.js`
+
+```javascript
+function *logout() {
+    yield put({ type: loginAT.LOGOUT_SUCCESS });
+}
+function* watchLogout() {
+    yield takeEvery(loginAT.LOGOUT, logout);
+}
+export default [
+    watchLogin(),
+    watchLogout()
+];
+```
+
+`src/store/constant/login.js`
+
+```javascript
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+```
+
+`src/store/reducers/login.js`
+
+```javascript
+export default function(state=initState, action) {
+    switch(action.type) {
+        case loginAT.LOGOUT_SUCCESS:
+            return {};
+        default:
+            return state;
+    }
+}
+```
