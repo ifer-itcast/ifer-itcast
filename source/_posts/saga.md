@@ -666,7 +666,9 @@ let con = yield cps(getCon, 'xxx');
 console.log(con)
 ```
 
-## all
+## all 和 race
+
+**all**
 
 ```javascript
 // 可以并行执行任务
@@ -674,6 +676,17 @@ function* incrementAsync() {
     yield all([
         delay(2000),
         put(increment())
+    ]);
+}
+```
+
+一般用于组织多个 Saga，并行执行，作为 rootSaga 统一导出
+
+```javascript
+export default function* rootSaga() {
+    yield all([
+        watchIncrementAsync(),
+        watchFetchUser()
     ]);
 }
 ```
@@ -689,14 +702,16 @@ function* fetchJoke() {
 }
 ```
 
-一般用于组织多个 Saga，并行执行，作为 rootSaga 统一导出
+**race**
 
 ```javascript
-export default function* rootSaga() {
-    yield all([
-        watchIncrementAsync(),
-        watchFetchUser()
-    ]);
+// 期望同时启动多个任务，只希望拿到胜利者：第一个被 resolve（或 reject）的任务
+function* raceTask() {
+    const {a, b} = yield race({
+        a: delay(1000),
+        b: delay(500)
+    });
+    console.log(a, b); // undefined true
 }
 ```
 
