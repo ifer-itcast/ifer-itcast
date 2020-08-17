@@ -1191,3 +1191,95 @@ export default function(state=initState, action) {
     }
 }
 ```
+
+### 如何取消登录
+
+`src/pages/login/index.jsx`
+
+```javascript
+<button onClick={this.props.cancelLogin}>取消登录</button>
+```
+
+`src/sagas/login.js`
+
+```javascript
+import { takeEvery, call, put, cancel, fork } from 'redux-saga/effects';
+import * as loginAT from '../store/constant/login';
+import API from '../utils/api';
+
+// #2 worker saga
+function* login(action) {
+    try {
+        const { username, password } = action.payload;
+        const res = yield call(API.login, username, password);
+        yield put({ type: loginAT.LOGIN_SUCCESS, payload: res});
+    } catch(error) {
+        yield put({ type: loginAT.LOGIN_FAILED, error});
+    } finally {
+        // 解决取消登录时一直显示 loading...
+        yield put({ type: loginAT.FETCH_DONE });
+    }
+}
+
+// #1 watcher saga
+function* watchLogin() {
+    yield takeEvery(loginAT.LOGIN, function*(action) {
+        // fork 也能执行 login，返回一个任务对象
+        const task = yield fork(login, action);
+        yield takeEvery(loginAT.LOGIN_CANCEL, function*() {
+            // LOGIN_CANCEL 时 reducer 不需要执行退出操作，这里只是取消登录
+            yield cancel(task);
+        });
+    });
+}
+
+
+function *logout() {
+    yield put({ type: loginAT.LOGOUT_SUCCESS });
+}
+function* watchLogout() {
+    yield takeEvery(loginAT.LOGOUT, logout);
+}
+
+export default [
+    watchLogin(),
+    watchLogout()
+];
+```
+
+`src/store/action/login.js`
+
+```javascript
+export const cancelLogin = () => ({
+    type: loginAT.LOGIN_CANCEL
+});
+```
+
+`src/store/constant/login.js`
+
+```javascript
+export const LOGIN = 'LOGIN';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILED = 'LOGIN_FAILED';
+export const LOGIN_CANCEL = 'LOGIN_CANCEL';
+
+export const LOGOUT = 'LOGOUT';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+
+export const FETCH_DONE = 'FETCH_DONE';
+```
+
+`src/store/reducers/login.js`
+
+```javascript
+export default function(state=initState, action) {
+    switch(action.type) {
+        case loginAT.FETCH_DONE:
+            // 把之前登录成功的数据收集下
+            return {
+                ...state,
+                isFetching: false
+            };
+    }
+}
+```
