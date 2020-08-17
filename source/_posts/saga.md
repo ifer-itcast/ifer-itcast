@@ -66,6 +66,8 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// 中间件、createStore、reducer
+// const store = composeEnhancers(applyMiddleware(thunk))(createStore)(rootReducer);
 const store = createStore(
     rootReducer,
     composeEnhancers(applyMiddleware(thunk))
@@ -179,7 +181,7 @@ const store = createStore(
     // #3 应用
     composeEnhancers(applyMiddleware(sagaMiddleware))
 );
-// #4 启用
+// #4 启用，相当于执行了 helloSaga 这个 generator 函数，原理 co 库
 sagaMiddleware.run(helloSaga);
 export default store;
 ```
@@ -264,21 +266,106 @@ export function* watchIncrementAsync() {
 
 [代码](https://github.com/ifer-itcast/saga/tree/redux-thunk%E5%BC%82%E6%AD%A5%E8%AE%A1%E6%95%B0%E5%99%A8)
 
+## 单元测试
+
+```
+yarn add @babel/core @babel/node @babel/plugin-transform-modules-commonjs tape
+```
+
+```javascript
+{
+  "scripts": {
+    "test": "babel-node src/sagas/counter.test.js --plugins @babel/plugin-transform-modules-commonjs",
+  },
+}
+```
+
+`src/sagas/counter.js`
+
+```javascript
+// 这里需要导出，用于单元测试
+export function* incrementAsync() {
+    yield delay(2000);
+    yield put(increment());
+}
+```
+
+`src/sagas/sagas/counter.test.js`
+
+```javascript
+import test from 'tape';
+import { delay } from 'redux-saga/effects';
+import { incrementAsync } from './counter';
+
+test('incrementAsync saga test', function(assert) {
+    const it = incrementAsync();
+    // yield 什么，这里的 it.next().value 就是什么
+    assert.deepEqual(
+        it.next().value,
+        delay(2000),
+        "A promise with a delay of 2 s should be returned"
+    );
+    assert.deepEqual(
+        it.next().value,
+        put(increment()),
+        "An increase action should be initiated"
+    );
+    assert.end();
+});
+```
+
+```
+npm test
+```
+
 ## takeEvery 和 takeLatest
 
 ```javascript
 export function* watchIncrementAsync() {
-    // takeEvery  会触发每一次 action
+    // takeEvery  会监听每一次 action
     // takeLatest 会以最后一次 action 为准
     yield takeEvery(INCREMENT_ASYNC, incrementAsync);
 }
 ```
 
-## call
+## call/apply 和 cps
+
+都可以调用方法并传递参数，以及改变方法中的 this 指向
 
 ```javascript
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-yield call(delay, 2000); // 这里的 delay 要是自己封装的，不是 saga 提供的
+export function* incrementAsync() {
+    // delay 函数中的 this 就是 o，注意 delay 不能是一个箭头函数
+    const o = { name: 'ifer' };
+    yield call([o, delay], 2000);
+    // 同样 apply 也可以调用函数，参数分别是this、函数、参数
+    // yield apply(o, delay, [2000]);
+    yield put(increment());
+}
+```
+
+```javascript
+// delay 是自己封装的，不是 saga 提供的，注意用到 this 的话这里的 delay 不能是一个箭头函数
+const delay = function (ms) {
+    return new Promise(resolve => {
+        console.log(this);
+        setTimeout(resolve, ms);
+    });
+}
+```
+
+**cps**
+
+```javascript
+// Node style function的方式调用 fn
+const getCon = function(type, callback) {
+    setTimeout(() => {
+        callback(null, type + ' hello world');
+    }, 1000);
+};
+
+// call 只能用于调用返回 Promise 的方法，cps 可以等待回调的返回结果
+let con = yield cps(getCon, 'xxx');
+console.log(con)
 ```
 
 ## all
@@ -315,11 +402,8 @@ export default function* rootSaga() {
 }
 ```
 
-```javascript
-// 外部只需要
-import rootSaga from '../sagas';
-sagaMiddleware.run(rootSaga);
-```
+到目前为止咱们已经使用了**三种类型的 Saga**，分别是：rootSaga（用来组织和调用监听saga），
+监听 Saga（监听向 reducer 派发的动作，然后通知 worker saga 去执行），worker Saga（真正执行任务的 Saga）
 
 ## 如何组织 saga
 
@@ -454,14 +538,17 @@ import * as counterSagas from './counter';
 import * as userSagas from './user';
 
 export default function* rootSaga() {
+    // #1 需要自己执行每一个 watch saga
     /* yield all([
         counterSagas.watchIncrementAsync(),
         userSagas.watchFetchUser(),
     ]); */
+    // #2 可以利用 fork 帮我们执行 watch saga
     /* yield all([
         fork(counterSagas.watchIncrementAsync),
         fork(userSagas.watchFetchUser),
     ]); */
+    // #3 优化优化
     yield all([
         ...Object.values(userSagas),
         ...Object.values(counterSagas)
