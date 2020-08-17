@@ -5,7 +5,7 @@ tags: redux-saga
 categories: React
 ---
 
-redux-saga 通过监听 action 来执行有副作用的 task，以保持 action 的简洁！
+redux-saga 通过拦截 action 来执行有副作用的 task，以保持 action 的简洁！
 
 <!-- more -->
 
@@ -257,7 +257,6 @@ function* incrementAsync() {
 }
 
 // #3 注意不要忘了在外部 run watchIncrementAsync
-
 export function* watchIncrementAsync() {
     // #1 监听 action，触发 incrementAsync 函数
     yield takeEvery(INCREMENT_ASYNC, incrementAsync);
@@ -265,6 +264,235 @@ export function* watchIncrementAsync() {
 ```
 
 [代码](https://github.com/ifer-itcast/saga/tree/redux-thunk%E5%BC%82%E6%AD%A5%E8%AE%A1%E6%95%B0%E5%99%A8)
+
+## 如何组织 saga
+
+当有多个 Saga 时如何同时运行呢，下面为了演示又增加了 `<User/>` 组件
+
+`src/pages/user/index.jsx`
+
+```javascript
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import { fetchUser } from './store/actionCreators';
+
+class User extends Component {
+    render() {
+        return (
+            <div>
+                <button onClick={this.props.fetchUser}>获取数据</button>
+            </div>
+        )
+    }
+}
+
+export default connect(null, { fetchUser })(User);
+```
+
+`src/App.jsx`
+
+```javascript
+import React, { Component } from "react";
+import Counter from "./pages/counter";
+import User from "./pages/user";
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                <Counter />
+                <User />
+            </div>
+        );
+    }
+}
+```
+
+`src/pages/user/store/actionCreators.js`
+
+```javascript
+import { FETCH_USER } from './actionTypes';
+export const fetchUser = () => {
+    return {
+        type: FETCH_USER
+    };
+}
+```
+
+`src/pages/user/store/actionTypes.js`
+
+```javascript
+export const FETCH_USER = 'FETCH_USER';
+```
+
+`src/sagas/index.js`
+
+```javascript
+import { takeEvery, delay, put, call } from 'redux-saga/effects';
+import axios from 'axios';
+import { increment } from '../pages/counter/store/actionCreators';
+import { INCREMENT_ASYNC } from '../pages/counter/store/actionTypes';
+import { FETCH_USER } from "../pages/user/store/actionTypes";
+
+function* incrementAsync() {
+    yield delay(2000);
+    yield put(increment());
+}
+function* fetchUser() {
+    const user = yield call(axios.get, "https://api.github.com/users");
+    console.log(user);
+}
+
+export default function* rootSaga() {
+    // 你会发现 10s 之内点击按钮或请求数据无效，因为这里是串行的
+    yield delay(10000);
+    yield takeEvery(INCREMENT_ASYNC, incrementAsync);
+    yield takeEvery(FETCH_USER, fetchUser);
+}
+```
+
+### 利用 all
+
+```javascript
+// #1 worker saga
+function* incrementAsync() {
+    yield delay(2000);
+    yield put(increment());
+}
+function* fetchUser() {
+    const user = yield call(axios.get, "https://api.github.com/users");
+    console.log(user);
+}
+
+// #2 watcher saga
+function* watchIncrementAsync() {
+    yield takeEvery(INCREMENT_ASYNC, incrementAsync);
+}
+function* watchFetchUser() {
+    yield takeEvery(FETCH_USER, fetchUser);
+}
+// #3 root saga
+export default function* rootSaga() {
+    yield all([
+        watchIncrementAsync(),
+        watchFetchUser()
+    ]);
+}
+```
+
+### 拆分不同的文件
+
+`src/sagas/counter.js`
+
+```javascript
+import { takeEvery, delay, put } from 'redux-saga/effects';
+import { increment } from '../pages/counter/store/actionCreators';
+import { INCREMENT_ASYNC } from '../pages/counter/store/actionTypes';
+
+function* incrementAsync() {
+    yield delay(2000);
+    yield put(increment());
+}
+export function* watchIncrementAsync() {
+    yield takeEvery(INCREMENT_ASYNC, incrementAsync);
+}
+```
+
+`src/sagas/user.js`
+
+```javascript
+import axios from 'axios';
+import { takeEvery, call } from 'redux-saga/effects';
+import { FETCH_USER } from "../pages/user/store/actionTypes";
+
+function* fetchUser() {
+    const user = yield call(axios.get, "https://autumnfish.cn/api/joke");
+    console.log(user);
+}
+export function* watchFetchUser() {
+    yield takeEvery(FETCH_USER, fetchUser);
+}
+```
+
+`src/sagas/index.js`
+
+```javascript
+import { all, fork } from "redux-saga/effects";
+import * as counterSagas from './counter';
+import * as userSagas from './user';
+
+export default function* rootSaga() {
+    // #1 需要自己执行每一个 watch saga
+    /* yield all([
+        counterSagas.watchIncrementAsync(),
+        userSagas.watchFetchUser(),
+    ]); */
+    // #2 可以利用 fork 帮我们执行 watch saga
+    /* yield all([
+        fork(counterSagas.watchIncrementAsync),
+        fork(userSagas.watchFetchUser),
+    ]); */
+    // #3 优化优化
+    yield all([
+        ...Object.values(userSagas),
+        ...Object.values(counterSagas)
+    ].map(fork));
+}
+```
+
+### 每个文件组织好后再导出
+
+`src/sagas/counter.js`
+
+```javascript
+import { takeEvery, delay, put } from 'redux-saga/effects';
+import { increment } from '../pages/counter/store/actionCreators';
+import { INCREMENT_ASYNC } from '../pages/counter/store/actionTypes';
+
+function* incrementAsync() {
+    yield delay(2000);
+    yield put(increment());
+}
+function* watchIncrementAsync() {
+    yield takeEvery(INCREMENT_ASYNC, incrementAsync);
+}
+
+export const counterSagas = [
+    watchIncrementAsync();
+];
+```
+
+`src/sagas/user.js`
+
+```javascript
+import { takeEvery, call } from 'redux-saga/effects';
+import axios from 'axios';
+import { FETCH_USER } from "../pages/user/store/actionTypes";
+function* fetchUser() {
+    const user = yield call(axios.get, "https://autumnfish.cn/api/joke");
+    console.log(user);
+}
+function* watchFetchUser() {
+    yield takeEvery(FETCH_USER, fetchUser);
+}
+export const userSagas = [
+    watchFetchUser();
+]
+```
+
+`src/sagas/index.js`
+
+```javascript
+import { all } from "redux-saga/effects";
+import { counterSagas } from './counter';
+import { userSagas } from './user';
+
+export default function* rootSaga() {
+    yield all([
+        ...counterSagas,
+        ...userSagas
+    ]);
+}
+```
 
 ## 单元测试
 
@@ -294,8 +522,9 @@ export function* incrementAsync() {
 
 ```javascript
 import test from 'tape';
-import { delay } from 'redux-saga/effects';
+import { delay, put } from 'redux-saga/effects';
 import { incrementAsync } from './counter';
+import { increment } from '../pages/counter/store/actionCreators';
 
 test('incrementAsync saga test', function(assert) {
     const it = incrementAsync();
@@ -318,13 +547,82 @@ test('incrementAsync saga test', function(assert) {
 npm test
 ```
 
-## takeEvery 和 takeLatest
+## take 和 select
+
+**take**
+
+```javascript
+export function* incrementAsync() {
+    yield delay(2000);
+    yield put(increment());
+}
+function* watchIncrementAsync() {
+    // yield takeEvery(INCREMENT_ASYNC, incrementAsync);
+    // 只会箭头触发的第一次 action
+    const action = yield take(INCREMENT_ASYNC);
+    console.log(action); // {type: "INCREMENT_ASYNC"}
+    yield incrementAsync();
+}
+```
+
+```javascript
+// 触发 2 次
+export function* incrementAsync() {
+    yield delay(2000);
+    yield put(increment());
+}
+function* watchIncrementAsync() {
+    // yield take(INCREMENT_ASYNC);
+    // yield incrementAsync();
+    // yield take(INCREMENT_ASYNC);
+    // yield incrementAsync();
+    for(let i = 0; i < 2; i ++) {
+        yield take(INCREMENT_ASYNC);
+        yield incrementAsync();
+    }
+    console.log('会执行 2 次');
+}
+```
+
+```javascript
+// 模拟 takeEvery
+function* watchIncrementAsync() {
+    while(true) {
+        yield take(INCREMENT_ASYNC);
+        yield incrementAsync();
+    }
+}
+```
+
+**takeEvery**
 
 ```javascript
 export function* watchIncrementAsync() {
     // takeEvery  会监听每一次 action
-    // takeLatest 会以最后一次 action 为准
     yield takeEvery(INCREMENT_ASYNC, incrementAsync);
+}
+```
+
+**takeLatest**
+
+```javascript
+export function* watchIncrementAsync() {
+    // takeLatest 会以最后一次 action 为准
+    yield takeLatest(INCREMENT_ASYNC, incrementAsync);
+}
+```
+
+**select**
+
+```javascript
+function* watchAll() {
+    while(true) {
+        // 监听所有的 action，获取最新的状态树
+        console.log(yield take('*'));
+        console.log(yield select());
+        // 也可以传递函数对状态进行过滤
+        // console.log(yield select(state => state.counter));
+    }
 }
 ```
 
@@ -391,222 +689,13 @@ function* fetchJoke() {
 }
 ```
 
-也可以用于组织多个 Saga，例如前面的 helloSaga 和 watchIncrementAsync 并不能同时执行，可以采取如下操作
+一般用于组织多个 Saga，并行执行，作为 rootSaga 统一导出
 
 ```javascript
 export default function* rootSaga() {
     yield all([
         watchIncrementAsync(),
         watchFetchUser()
-    ]);
-}
-```
-
-到目前为止咱们已经使用了**三种类型的 Saga**，分别是：rootSaga（用来组织和调用监听saga），
-监听 Saga（监听向 reducer 派发的动作，然后通知 worker saga 去执行），worker Saga（真正执行任务的 Saga）
-
-## 如何组织 saga
-
-`src/pages/user/index.jsx`
-
-```javascript
-import React, { Component } from 'react'
-import { connect } from 'react-redux';
-import { fetchUser } from './store/actionCreators';
-
-class User extends Component {
-    render() {
-        return (
-            <div>
-                <button onClick={this.props.fetchUser}>获取数据</button>
-            </div>
-        )
-    }
-}
-
-export default connect(null, { fetchUser })(User);
-```
-
-`src/pages/user/store/actionCreators.js`
-
-```javascript
-import { FETCH_USER } from './actionTypes';
-export const fetchUser = () => {
-    return {
-        type: FETCH_USER
-    };
-}
-```
-
-`src/pages/user/store/actionTypes.js`
-
-```javascript
-export const FETCH_USER = 'FETCH_USER';
-```
-
-`src/sagas/index.js`
-
-```javascript
-import { takeEvery, delay, put, call } from 'redux-saga/effects';
-import axios from 'axios';
-import { increment } from '../pages/counter/store/actionCreators';
-import { INCREMENT_ASYNC } from '../pages/counter/store/actionTypes';
-import { FETCH_USER } from "../pages/user/store/actionTypes";
-
-function* incrementAsync() {
-    yield delay(2000);
-    yield put(increment());
-}
-function* fetchUser() {
-    const user = yield call(axios.get, "https://api.github.com/users");
-    console.log(user);
-}
-
-export default function* rootSaga() {
-    // 你会发现 10s 之内点击按钮或请求数据无效，因为这里是串行的
-    yield delay(10000);
-    yield takeEvery(INCREMENT_ASYNC, incrementAsync);
-    yield takeEvery(FETCH_USER, fetchUser);
-}
-```
-
-**优化1，利用 all**
-
-```javascript
-// ...
-function* incrementAsync() {
-    yield delay(2000);
-    yield put(increment());
-}
-function* fetchUser() {
-    const user = yield call(axios.get, "https://api.github.com/users");
-    console.log(user);
-}
-
-function* watchIncrementAsync() {
-    yield takeEvery(INCREMENT_ASYNC, incrementAsync);
-}
-function* watchFetchUser() {
-    yield takeEvery(FETCH_USER, fetchUser);
-}
-export default function* rootSaga() {
-    yield all([
-        watchIncrementAsync(),
-        watchFetchUser()
-    ]);
-}
-```
-
-**优化2，拆分不同的文件**
-
-`src/sagas/counter.js`
-
-```javascript
-import { takeEvery, delay, put } from 'redux-saga/effects';
-import { increment } from '../pages/counter/store/actionCreators';
-import { INCREMENT_ASYNC } from '../pages/counter/store/actionTypes';
-
-function* incrementAsync() {
-    yield delay(2000);
-    yield put(increment());
-}
-export function* watchIncrementAsync() {
-    yield takeEvery(INCREMENT_ASYNC, incrementAsync);
-}
-```
-
-`src/sagas/user.js`
-
-```javascript
-import { takeEvery, call } from 'redux-saga/effects';
-import axios from 'axios';
-import { FETCH_USER } from "../pages/user/store/actionTypes";
-function* fetchUser() {
-    const user = yield call(axios.get, "https://api.github.com/users");
-    console.log(user);
-}
-export function* watchFetchUser() {
-    yield takeEvery(FETCH_USER, fetchUser);
-}
-```
-
-`src/sagas/index.js`
-
-```javascript
-import { all, fork } from "redux-saga/effects";
-import * as counterSagas from './counter';
-import * as userSagas from './user';
-
-export default function* rootSaga() {
-    // #1 需要自己执行每一个 watch saga
-    /* yield all([
-        counterSagas.watchIncrementAsync(),
-        userSagas.watchFetchUser(),
-    ]); */
-    // #2 可以利用 fork 帮我们执行 watch saga
-    /* yield all([
-        fork(counterSagas.watchIncrementAsync),
-        fork(userSagas.watchFetchUser),
-    ]); */
-    // #3 优化优化
-    yield all([
-        ...Object.values(userSagas),
-        ...Object.values(counterSagas)
-    ].map(fork));
-}
-```
-
-**优化3，可以让每个文件组织好后再导出**
-
-`src/sagas/counter.js`
-
-```javascript
-import { takeEvery, delay, put } from 'redux-saga/effects';
-import { increment } from '../pages/counter/store/actionCreators';
-import { INCREMENT_ASYNC } from '../pages/counter/store/actionTypes';
-
-function* incrementAsync() {
-    yield delay(2000);
-    yield put(increment());
-}
-function* watchIncrementAsync() {
-    yield takeEvery(INCREMENT_ASYNC, incrementAsync);
-}
-
-export const counterSagas = [
-    watchIncrementAsync()
-];
-```
-
-`src/sagas/user.js`
-
-```javascript
-import { takeEvery, call } from 'redux-saga/effects';
-import axios from 'axios';
-import { FETCH_USER } from "../pages/user/store/actionTypes";
-function* fetchUser() {
-    const user = yield call(axios.get, "https://api.github.com/users");
-    console.log(user);
-}
-function* watchFetchUser() {
-    yield takeEvery(FETCH_USER, fetchUser);
-}
-export const userSagas = [
-    watchFetchUser()
-];
-```
-
-`src/sagas/index.js`
-
-```javascript
-import { all } from "redux-saga/effects";
-import { counterSagas } from './counter';
-import { userSagas } from './user';
-
-export default function* rootSaga() {
-    yield all([
-        ...counterSagas,
-        ...userSagas
     ]);
 }
 ```
@@ -698,6 +787,7 @@ export default function(state=initialState, action) {
 ```javascript
 export const FETCH_USER = 'FETCH_USER';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
+export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
 ```
 
 `src/sagas/user.js`
@@ -706,6 +796,8 @@ export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 import { takeEvery, call, put } from 'redux-saga/effects';
 import axios from 'axios';
 import { FETCH_USER, FETCH_USER_SUCCESS, FETCH_USER_FAILURE } from "../pages/user/store/actionTypes";
+// #1 失败了，后台返回对应的 HTTP Code，前端针对状态码处理
+// #2 无论成功或失败，后端 HTTP Code 都响应 200，然后提供不同的 status 标识符，前端据此进行判断
 function* fetchUser() {
     try {
         const { data } = yield call(axios.get, "https://autumnfish.cn/api/joke/list?num=3");
@@ -735,3 +827,6 @@ export default combineReducers({
 ```
 
 [代码](https://github.com/ifer-itcast/saga/tree/loading%E5%A4%84%E7%90%86/src)
+
+## 登录案例
+
