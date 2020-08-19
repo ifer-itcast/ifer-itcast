@@ -182,6 +182,23 @@ const store = window.store = new FruitStore();
 export default store;
 ```
 
+**action.bound**
+
+```javascript
+import { observable, action } from 'mobx';
+class Test {
+    @observable num = 0
+    @action.bound
+    increment() {
+        console.log(this.num); // When defining, we determined the direction of this, which is what we expected
+        this.num++;
+    }
+}
+const test = new Test();
+setInterval(test.increment, 1000);
+export default test;
+```
+
 ## computed 获取计算数据
 
 `src/stores/FruitStore.js`
@@ -442,15 +459,15 @@ export default {
 `src/stores/JokeStore.js`
 
 ```javascript
-import {
-    observable,
-    action
-} from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 
 class JokeStore {
     @observable jokes = [];
     fetchJokes = () => {
         fetch('https://autumnfish.cn/api/joke/list?num=3').then(res => res.json()).then(data => {
+            /* runInAction(() => {
+                this.jokes = data.jokes;
+            }); */
             this.saveJokes(data.jokes);
         });
     };
@@ -465,359 +482,125 @@ class JokeStore {
 export default new JokeStore();
 ```
 
-## 发送异步请求的几种写法
-
-`src/stores/TopicStore.js`
+**async/await**
 
 ```javascript
-import {
-    observable,
-    action,
-    runInAction,
-    flow
-} from 'mobx';
-class TopicStore {
-    @observable topics = [];
-
-    loadTopics = () => {
-        fetch("https://cnodejs.org/api/v1/topics")
-            .then(response => response.json())
-            .then(({
-                data
-            }) => {
-                this.saveTopics(data);
-            })
-    }
-
-    loadTopicsInline = () => {
-        fetch("https://cnodejs.org/api/v1/topics")
-            .then(response => response.json())
-            .then(({
-                data
-            }) => {
-                runInAction(() => {
-                    this.topics = data;
-                })
-            })
-    }
-
-    loadTopicsAsync = async () => {
-        const response = await fetch("https://cnodejs.org/api/v1/topics");
+import { observable, runInAction } from 'mobx';
+class JokeStore {
+    @observable jokes = [];
+    fetchJokes = async () => {
+        const response = await fetch('https://autumnfish.cn/api/joke/list?num=3');
         const json = await response.json();
         runInAction(() => {
-            this.topics = json.data;
-        })
-    }
-
-    // 这种外面调用的时候要这样
-    // <button onClick={() => this.props.TopicStore.loadTopicsGenerator()}>Get Topic4</button>
-    loadTopicsGenerator = flow(function* () {
-        const response = yield fetch("https://cnodejs.org/api/v1/topics")
-        const json = yield response.json();
-        // console.log(this, 2333) // TopicStore
-        this.topics = json.data;
-    })
-
-    @action
-    saveTopics(data) {
-        // 修改被观测数据要用 action 修饰
-        this.topics = data;
-    }
+            this.jokes = json.jokes;
+        });
+    };
 }
 
-export default new TopicStore();
+export default new JokeStore();
 ```
 
-## loading 处理
+**Generator**
 
-`src/pages/Topic.jsx`
+```html
+<button onClick={() => this.props.JokeStore.fetchJokes()}>Get a joke</button>
+```
+
+```javascript
+import { observable, flow } from 'mobx';
+class JokeStore {
+    @observable jokes = [];
+    fetchJokes = flow(function* () {
+        const response = yield fetch("https://autumnfish.cn/api/joke/list?num=3")
+        const json = yield response.json();
+        this.jokes = json.jokes;
+    });
+}
+export default new JokeStore();
+```
+
+## loading 和 error 处理
+
+`src/components/Joke.jsx`
 
 ```javascript
 import React, { Component } from "react";
-import { inject, observer } from "mobx-react";
+import { observer, inject } from "mobx-react";
 
-@inject("TopicStore")
+@inject("JokeStore")
 @observer
-class Topic extends Component {
-    componentDidMount() {
-        this.props.TopicStore.loadTopics();
-    }
+class Joke extends Component {
+    renderJokes = () => {
+        const jokes = this.props.JokeStore.jokes;
+        if (!jokes.length) return null;
+        return (
+            <ul>
+                {jokes.map((item, index) =>
+                    <li key={index}>
+                        {item}
+                    </li>
+                )}
+            </ul>
+        );
+    };
     render() {
-        const store = this.props.TopicStore;
-        let data;
-        if (store.loading) {
-            data = "loading...";
+        const JokeStore = this.props.JokeStore;
+
+        let data = null;
+        if (JokeStore.error) {
+            data = (<div>{JokeStore.error}</div>);
+        } else if (JokeStore.loading) {
+            data = <div>loading...</div>;
         } else {
-            data = store.topics[0] && store.topics[0].title;
+            data = this.renderJokes();
         }
         return (
             <div>
-                {data}
-                <button onClick={this.props.TopicStore.loadTopics}>
-                    Get Topic1
+                <button onClick={() => JokeStore.fetchJokes()}>
+                    Get a joke
                 </button>
+                {data}
             </div>
         );
     }
 }
 
-export default Topic;
+export default Joke;
 ```
 
-`src/stores/TopicStore.js`
+`src/stores/JokeStore.js`
 
 ```javascript
 import {
     observable,
-    action,
-    runInAction,
     flow
 } from 'mobx';
-class TopicStore {
-    @observable topics = [];
-    @observable loading = true;
+class JokeStore {
+    @observable jokes = [];
+    @observable loading = false; // #1
+    @observable error = null;
 
-    loadTopics = () => {
-        runInAction(() => {
-            this.loading = true;
-        });
-
-        fetch("https://cnodejs.org/api/v1/topics")
-            .then(response => response.json())
-            .then(({
-                data
-            }) => {
-                this.saveTopics(data);
-            })
-    }
-
-    loadTopicsInline = () => {
-        fetch("https://cnodejs.org/api/v1/topics")
-            .then(response => response.json())
-            .then(({
-                data
-            }) => {
-                runInAction(() => {
-                    this.topics = data;
-                })
-            })
-    }
-
-    loadTopicsAsync = async () => {
-        const response = await fetch("https://cnodejs.org/api/v1/topics");
-        const json = await response.json();
-        runInAction(() => {
-            this.topics = json.data;
-        })
-    }
-
-    loadTopicsGenerator = flow(function* () {
-        const response = yield fetch("https://cnodejs.org/api/v1/topics")
-        const json = yield response.json();
-        // console.log(this, 2333) // TopicStore
-        this.topics = json.data;
-    })
-
-    @action
-    saveTopics(data) {
-        // 修改被观测数据要用 action 修饰
-        this.topics = data;
-        this.loading = false;
-    }
-}
-
-export default new TopicStore();
-```
-
-## 错误处理
-
-`src/pages/Topic.jsx`
-
-```javascript
-import React, { Component } from "react";
-import { inject, observer } from "mobx-react";
-
-@inject("TopicStore")
-@observer
-class Topic extends Component {
-    componentDidMount() {
-        this.props.TopicStore.loadTopics();
-    }
-    render() {
-        const store = this.props.TopicStore;
-        let data;
-        if(store.error) {
-            data = store.error;
-        } else if (store.loading) {
-            data = "loading...";
-        } else {
-            data = store.topics[0] && store.topics[0].title;
-        }
-        return (
-            <div>
-                {data}
-                <button onClick={this.props.TopicStore.loadTopics}>
-                    Get Topic1
-                </button>
-            </div>
-        );
-    }
-}
-
-export default Topic;
-```
-
-`src/stores/TopicStore.js`
-
-```javascript
-import {
-    observable,
-    action,
-    runInAction,
-    flow
-} from 'mobx';
-class TopicStore {
-    @observable topics = [];
-    @observable loading = true;
-    @observable error;
-
-    loadTopics = () => {
-        runInAction(() => {
-            this.loading = true;
-            this.error = null; // mark
-        });
-
-        fetch("https://cnodejxs.org/api/v1/topics")
-            .then(response => response.json())
-            .then(({
-                data
-            }) => {
-                this.saveTopics(data);
-            }).catch(error => {
-                // console.log(error.message, 333);
-                runInAction(() => {
-                    this.error = error.message;
-                });
-            });
-    }
-
-    loadTopicsInline = () => {
-        fetch("https://cnodejs.org/api/v1/topics")
-            .then(response => response.json())
-            .then(({
-                data
-            }) => {
-                runInAction(() => {
-                    this.topics = data;
-                })
-            })
-    }
-
-    loadTopicsAsync = async () => {
+    fetchJokes = flow(function* () {
+        this.loading = true; // #2
+        this.error = null;
         try {
-            const response = await fetch("https://cnodejs.org/api/v1/topics");
-            const json = await response.json();
-            runInAction(() => {
-                this.topics = json.data;
-            })
-        } catch(e) {
-            
+            const response = yield fetch("https://autumnfish.cn/api/joke/list?num=3")
+            const json = yield response.json();
+            this.jokes = json.jokes;
+        } catch (error) {
+            this.error = error.message;
         }
-    }
-
-    loadTopicsGenerator = flow(function* () {
-        const response = yield fetch("https://cnodejs.org/api/v1/topics")
-        const json = yield response.json();
-        // console.log(this, 2333) // TopicStore
-        this.topics = json.data;
-    })
-
-    @action
-    saveTopics(data) {
-        // 修改被观测数据要用 action 修饰
-        this.topics = data;
-        this.loading = false;
-    }
+        this.loading = false; // #3
+    });
 }
-
-export default new TopicStore();
+export default new JokeStore();
 ```
 
-## action.bound
+## TodoList
 
-```javascript
-class Ticker {
-    @observable tick = 0
-    @action.bound
-    increment() {
-        console.log(1);
-        this.tick++; // 定义的时候就绑定 this，this 永远是对的
-    }
-}
-
-const ticker = window.ticker = new Ticker();
-setInterval(ticker.increment, 1000);
 ```
-
-## reaction
-
-```javascript
-class AuthStore {
-  constructor(){
-    reaction(
-      () => this.userAuth,
-      userAuth => this.getUserData(userAuth.id)
-    )
-  }
-
-  @observable userAuth//Here we can use cookies (= but...
-  @observable userData
-  @observable error
-
-  @action
-  tryLogin = async (email, password) => {
-    const body = {
-      email, password
-    }
-    const resp = await fetcher.post('/api/auth/', body)
-    const json = await resp.json()
-
-    if(json.error){
-      this.error = json.message
-    } else {
-      this.userAuth = json.data
-    }
-  }
-
-  @action
-  getUserData = async (id) => {
-    const resp = await fetcher.get(`/api/users/${id}`)
-    const json = await resp.json()
-
-    if(json.error){
-      this.error = json.message
-    } else {
-      this.userData = json.data
-    }
-  }
-
-  @computed get token(){
-    return this.userAuth?.token || false
-  }
-
-  @computed get user(){
-    return toJS(this.userData)
-  }
-
-  @computed get ownerId(){
-    return this.userAuth?.id?.toString()
-  }
-}
-
-export const authStore = new AuthStore()
+yarn add mobx-react-lite shortid
 ```
-
-## 项目实战
 
 `public/index.html`
 
@@ -828,8 +611,7 @@ export const authStore = new AuthStore()
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div id="root"></div>
@@ -837,198 +619,242 @@ export const authStore = new AuthStore()
 </html>
 ```
 
-`src/App.css`
-
-```javascript
-.App {
-  text-align: center;
-}
-
-.formSection {
-  margin-top: 30px;
-}
-
-.formSection p {
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-```
-
 `src/App.jsx`
 
 ```javascript
-import React, { Component } from "react";
-import { observer, inject } from "mobx-react";
-import Test from './pages/test';
-import TodoList from './pages/TodoList';
-import Topic from './pages/Topic';
-import ReviewApp from './pages/ReviewApp'
-import "./App.css";
+import React, { Component } from 'react';
+import TodoList from './components/TodoList';
+
 class App extends Component {
-    fruit = React.createRef();
-    get FruitStore() {
-        return this.props.FruitStore;
-    }
-    handleSubmit = e => {
-        const fruit = this.fruit.current.value;
-        this.FruitStore.addFruit(fruit);
-        e.preventDefault();
-    };
     render() {
         return (
-            <div className="container">
-                {/* <Test/> */}
-                {/* <TodoList/> */}
-                {/* <Topic/> */}
-                {/* <form onSubmit={this.handleSubmit}>
-                    <input type="text" placeholder="fruit" ref={this.fruit} />
-                    <button>添加</button>
-                </form>
-                <div>
-                    {this.FruitStore.getFruits}
-                </div> */}
-                <ReviewApp/>
+            <div>
+                <TodoList/>
             </div>
         );
     }
 }
 
-export default inject('FruitStore')(observer(App));
+export default App;
 ```
 
-`src/pages/Dashboard.jsx`
+`src/index.js`
 
 ```javascript
-import React, { Component } from 'react';
+import 'mobx-react-lite/batchingForReactDom'
+```
 
-class Dashboard extends Component {
-  render() {
+`src/components/Todo.jsx`
+
+```javascript
+import React from "react";
+import { action } from "mobx";
+import { observer } from "mobx-react";
+
+const Todo = observer(({ item }) => {
     return (
-      <div>
-      </div>
+        <li className="list-group-item">
+            {item.todo}
+            <input
+                className="float-right mt-2"
+                type="checkbox"
+                checked={item.completed}
+                onChange={action(() => (item.completed = !item.completed))}
+            />
+        </li>
     );
-  }
-}
+});
 
-export default Dashboard;
+export default Todo;
 ```
 
-`src/pages/Form.jsx`
+`src/components/TodoList.jsx`
 
 ```javascript
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { observer, inject } from "mobx-react";
+import { observable, action } from "mobx";
+import Todo from "./Todo";
 
-class Form extends Component {
-  render() {
-    return (
-      <div className="formSection">
-        <div className="form-group">
-          <p>Submit a Review</p>
-        </div>
-        <form>
-          <div className="row">
-            <div className="col-md-4">
-              <div className="form-group">
-                <input type="text" placeholder="Write a review" className="form-control" />
-              </div>
+@inject("TodoListStore")
+@observer
+class TodoList extends Component {
+    // #1
+    @observable todo = "";
+    // #2
+    // Modify observation data
+    @action
+    handleChagne = e => {
+        this.todo = e.target.value;
+    };
+
+    @action
+    handleKeyUp = e => {
+        if (e.keyCode === 13) {
+            this.props.TodoListStore.addTodo(this.todo);
+            this.todo = "";
+        }
+    };
+
+    render() {
+        const { todos, getUnCompletedCount } = this.props.TodoListStore;
+        return (
+            <div className="container">
+                <input
+                    type="text"
+                    className="form-control mt-3"
+                    placeholder="todo"
+                    value={this.todo}
+                    onChange={this.handleChagne}
+                    onKeyUp={this.handleKeyUp}
+                />
+                <ul className="list-group mt-3">
+                    {todos.map(item => <Todo key={item.id} item={item} />)}
+                </ul>
+                <div>
+                    <span className="badge badge-primary">
+                        {getUnCompletedCount}
+                    </span>
+                </div>
             </div>
-
-            <div className="col-md-4">
-              <div className="from-group">
-                <select id="start" name="stars" className="form-control">
-                  <option value="1">1 Star</option>
-                  <option value="2">2 Star</option>
-                  <option value="3">3 Star</option>
-                  <option value="4">4 Star</option>
-                  <option value="5">5 Star</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="form-group">
-                <button className="btn btn-success" type="submit">SUBMIT REVIEW</button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    );
-  }
+        );
+    }
 }
-
-export default Form;
+export default TodoList;
 ```
 
-`src/pages/ReviewApp.jsx`
+上面 #1、#2 处的代码可以改写如下
 
 ```javascript
-import React, { Component } from 'react';
-import Form from './Form';
-import Dashboard from './Dashboard';
-import Reviews from './Reviews';
-
-class ReviewApp extends Component {
-  render() {
-    return (
-      <div>
-        <Form />
-        <Dashboard />
-        <Reviews />
-      </div>
-    );
-  }
+constructor(props) {
+    super(props);
+    extendObservable(this, {
+        todo: "",
+        handleChagne: action(e => {
+            this.todo = e.target.value;
+        }),
+    });
 }
-
-export default ReviewApp;
 ```
 
-`src/pages/Reviews.jsx`
+`src/stores/index.js`
 
 ```javascript
-import React, { Component } from 'react';
-
-class Reviews extends Component {
-  render() {
-    return (
-      <div>
-      </div>
-    );
-  }
-}
-
-export default Reviews;
+import TodoListStore from './TodoListStore';
+export default { TodoListStore };
 ```
 
-https://github.com/hfpp2012/hello-mobx
+`src/stores/TodoListStore.js`
+
+```javascript
+import { observable, action, computed } from 'mobx';
+import shortid from 'shortid';
+
+class Todo {
+    id = shortid.generate();
+    @observable todo;
+    @observable completed = false;
+    constructor(todo) {
+        this.todo = todo;
+    }
+}
+
+class TodoListStore {
+    @observable todos = [new Todo('吃饭')];
+    @action addTodo = todo => {
+        this.todos.unshift(new Todo(todo));
+    };
+    @computed get getUnCompletedCount() {
+        return this.todos.filter(item => !item.completed).length;
+    }
+}
+const store = new TodoListStore();
+export default store;
+```
+
+其实上面 `TodoList.jsx` 中可观测数据以及相关操作都可以提取到 `TodoListStore.js` 中比较好，可改写代码如下：
+
+`src/components/TodoList.jsx`
+
+```javascript
+import React, { Component } from "react";
+import { observer, inject } from "mobx-react";
+import Todo from "./Todo";
+
+@inject("TodoListStore")
+@observer
+class TodoList extends Component {
+    render() {
+        const {
+            todos,
+            getUnCompletedCount,
+            todo,
+            handleChange,
+            handleKeyUp,
+        } = this.props.TodoListStore;
+        return (
+            <div className="container">
+                <input
+                    type="text"
+                    className="form-control mt-3"
+                    placeholder="todo"
+                    value={todo}
+                    onChange={handleChange}
+                    onKeyUp={handleKeyUp}
+                />
+                <ul className="list-group mt-3">
+                    {todos.map(item => <Todo key={item.id} item={item} />)}
+                </ul>
+                <div>
+                    <span className="badge badge-primary">
+                        {getUnCompletedCount}
+                    </span>
+                </div>
+            </div>
+        );
+    }
+}
+export default TodoList;
+```
+
+`src/stores/TodoListStore.js`
+
+```javascript
+import {
+    observable,
+    action,
+    computed
+} from 'mobx';
+import shortid from 'shortid';
+
+class Todo {
+    id = shortid.generate();
+    @observable todo;
+    @observable completed = false;
+    constructor(todo) {
+        this.todo = todo;
+    }
+}
+class TodoListStore {
+    @observable todos = [new Todo('吃饭')];
+    @observable todo = "";
+
+    @action handleChange = e => {
+        this.todo = e.target.value;
+    }
+    @action handleKeyUp = e => {
+        if (e.keyCode === 13) {
+            this.todos.unshift(new Todo(this.todo));
+            this.todo = "";
+        }
+    }
+    @action addTodo = todo => {
+        this.todos.unshift(new Todo(todo));
+    };
+    @computed get getUnCompletedCount() {
+        return this.todos.filter(item => !item.completed).length;
+    }
+}
+const store = new TodoListStore();
+export default store;
+```
