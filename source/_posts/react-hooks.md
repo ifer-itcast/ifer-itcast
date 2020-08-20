@@ -17,7 +17,7 @@ categories: React
 import React, { useState } from 'react';
 
 function Example() {
-    // 声明一个叫 "count" 的 state 变量
+    // 声明一个叫 count 的 state 变量
     const [count, setCount] = useState(0);
     return (
         <div>
@@ -28,12 +28,6 @@ function Example() {
         </div>
     );
 }
-
-function App() {
-    return <Example />;
-}
-
-export default App;
 ```
 
 和下面的 class 写法等价！
@@ -56,6 +50,35 @@ class Example extends React.Component {
             </div>
         );
     }
+}
+```
+
+setCount 也可以接收一个函数
+
+```javascript
+import React, { useState } from 'react';
+
+export default function Test() {
+    // 声明一个叫 count 的 state 变量
+    const [count, setCount] = useState(0);
+
+    function handleClick() {
+        // setCount(count + 1);
+        // setCount(count + 1);
+        // setCount(count + 1);
+
+        setCount(prevState => prevState + 1);
+        setCount(prevState => prevState + 1);
+        setCount(prevState => prevState + 1);
+    }
+    return (
+        <div>
+            <p>
+                You clicked {count} times
+            </p>
+            <button onClick={handleClick}>Click me</button>
+        </div>
+    );
 }
 ```
 
@@ -107,6 +130,45 @@ function Example(props) {
 }
 ```
 
+### 复杂数据状态的修改
+
+```javascript
+import React, { useState } from 'react';
+
+export default function Test() {
+    const [fruits, setFruits] = useState([
+        {
+            name: 'apple',
+            count: 1,
+        },
+        {
+            name: 'banana',
+            count: 2,
+        },
+    ]);
+
+    function handleClick(index) {
+        const newFruits = [...fruits];
+        newFruits[index].count++;
+        setFruits(newFruits);
+    }
+
+    return (
+        <div>
+            <ul>
+                {fruits.map((item, index) =>
+                    <li key={index}>
+                        {item.name}
+                        {item.count}
+                        <button onClick={e => handleClick(index)}>add</button>
+                    </li>
+                )}
+            </ul>
+        </div>
+    );
+}
+```
+
 ## useEffect
 
 可以在函数组件中执行副作用操作
@@ -133,6 +195,60 @@ function Example() {
         </div>
     );
 }
+```
+
+相当于 class 的如下写法
+
+```javascript
+import React, { Component } from 'react';
+
+export default class Test extends Component {
+    state = {
+        count: 0,
+    };
+    componentDidMount() {
+        document.title = this.state.count;
+    }
+    componentDidUpdate() {
+        document.title = this.state.count;
+    }
+    render() {
+        return (
+            <div>
+                <button
+                    onClick={() =>
+                        this.setState({ count: this.state.count + 1 })}
+                >
+                    add
+                </button>
+            </div>
+        );
+    }
+}
+```
+
+useEffect 是可以写多个的
+
+```javascript
+import React, { useEffect, useState } from 'react';
+
+const Test = () => {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        // 修改 DOM，只期望 count 状态变化时执行
+        document.title = count;
+    }, [count]);
+    useEffect(() => {
+        // 订阅事件，期望只执行一次
+    }, []);
+    useEffect(() => {
+        // 网络请求，也并不期望状态变化每次都执行
+    }, []);
+    return <div>
+        <p>{count}</p>
+        <button onClick={() => setCount(count+1)}>add</button>
+    </div>;
+};
 ```
 
 ### 清除 Effect
@@ -218,337 +334,6 @@ useEffect(() => {
         document.querySelector('#size').removeEventListener('click', onClick);
     };
 }, [count]);
-```
-
-## useLayoutEffect
-
-用法和 useEffect 一致，与 useEffect 的差别是执行时机，useLayoutEffect 是在浏览器绘制节点之前执行（和 componentDidMount 以及 componentDidUpdate 执行时机相同）
-
-## useCallback
-
-### 问题重现
-
-App 组件的 props 或者状态发生变化就会触发重渲染，即使跟 Foo 组件不相关，倘若 Foo 组件是一个大型的组件树，Virtual DOM Diff 的浪费是巨大的！
-
-```javascript
-import React, { Component, PureComponent } from 'react';
-
-class Foo extends PureComponent {
-    render() {
-        console.log('Foo render');
-        return <div>hello world</div>;
-    }
-}
-
-class App extends Component {
-    state = {
-        count: 0
-    };
-    handleClick = () => {
-        this.setState({
-            count: this.state.count + 1
-        });
-    };
-    render() {
-        const { count } = this.state;
-        return (
-            <div>
-                {count}
-                <button onClick={this.handleClick}>add</button>
-                <Foo
-                    doSomething={() => {
-                        console.log('do something');
-                    }}
-                />
-            </div>
-        );
-    }
-}
-```
-
-### 常规解决
-
-**可以把 doSomething 抽离出去**
-
-```javascript
-import React, { Component, PureComponent } from 'react';
-
-class Foo extends PureComponent {
-    render() {
-        console.log('Foo render');
-        return <div>hello world</div>;
-    }
-}
-
-class App extends Component {
-    state = {
-        count: 0
-    };
-    handleClick = () => {
-        this.setState({
-            count: this.state.count + 1
-        });
-    };
-    doSomething = () => {
-        console.log('do something');
-    };
-    render() {
-        const { count } = this.state;
-        return (
-            <div>
-                {count}
-                <button onClick={this.handleClick}>add</button>
-                <Foo doSomething={this.doSomething} />
-            </div>
-        );
-    }
-}
-```
-
-### Hooks 实现
-
-类组件可以通过 this 挂载函数，但函数组件就没有这么轻松了！
-
-```javascript
-import React, { useState, memo, useCallback } from 'react';
-
-const Foo = memo(function Foo() {
-    console.log('Foo render');
-    return <div>hello world</div>;
-});
-
-function App() {
-    const [count, setCount] = useState(0);
-    // 第二个参数为空数组代表无论什么情况下该函数都不会发生改变
-    // 非空数组，数组中的任一项一旦值或者引用发生改变，useCallback 就会重新返回一个新的记忆函数提供给后面进行渲染
-    const doSomething = useCallback(() => {
-        console.log('do something');
-    }, []);
-    return (
-        <div>
-            {count}
-            <button onClick={() => setCount(count + 1)}>add</button>
-            <Foo doSomething={doSomething} />
-        </div>
-    );
-}
-```
-
-## useMemo
-
-useCallback 的功能完全可以由 useMemo 所取代，如果你想通过使用 useMemo 返回一个记忆函数也是完全可以的。
-
-```javascript
-useCallback(fn, inputs) is equivalent to useMemo(() => fn, inputs)
-```
-
-上面的例子可以用 useMemo 改写如下
-
-```javascript
-const doSomething = useMemo(() => {
-    console.log('初始化的时候会执行一次！');
-    return () => {
-        console.log('do something');
-    };
-}, []);
-```
-
-区别：useCallback 不会执行第一个参数函数，而是将它返回给你；useMemo 会执行第一个函数并且将函数执行结果返回给你。所以 useCallback 常用记忆函数，生成记忆后的函数并传递给子组件使用，而 useMemo 更适合经过函数计算得到一个确定的值，比如记忆组件。
-
-```javascript
-import React, { useState, useMemo } from 'react';
-
-function Child(props) {
-    return (
-        <div>
-            child: {props.num}
-        </div>
-    );
-}
-
-function Parent({ num }) {
-    // 只有在第二个参数 num 的值发生变化时，才会触发子组件的更新
-    const child = useMemo(() => {
-        console.log(233);
-        return <Child num={num} />;
-    }, [num]);
-    return (
-        <div>
-            {child}
-        </div>
-    );
-}
-
-function App() {
-    const [count, setCount] = useState(0);
-    // 初始化时执行或 count === 3 整体的状态（true or false）发生变化时才会触发函数的执行
-    const num = useMemo(
-        () => count * 2,
-        [count === 3]
-    );
-    return (
-        <div>
-            <button onClick={() => setCount(count + 1)}>click me</button>
-            <Parent num={num} />
-        </div>
-    );
-}
-```
-
-## useRef
-
-useRef 跟 createRef 类似，都可以用来生成对 DOM 或组件的引用
-
-### 对 DOM 元素的引用
-
-```javascript
-import React, { useState, useRef } from 'react';
-
-function App() {
-    let [name, setName] = useState('Ifer');
-
-    let nameRef = useRef();
-
-    const handleClick = () => {
-        // nameRef 是 input dom 元素的引用
-        setName(nameRef.current.value);
-    };
-    return (
-        <div className="App">
-            <p>
-                {name}
-            </p>
-            <div>
-                <input ref={nameRef} type="text" defaultValue={name} />
-                <button type="button" onClick={handleClick}>
-                    Submit
-                </button>
-            </div>
-        </div>
-    );
-}
-```
-
-### 对类组件的引用
-
-```javascript
-import React, { useCallback, useRef, Component } from 'react';
-
-// 函数组件不能被 Ref 获取，所以函数组件有时候并不能完全替代类组件
-class Counter extends Component {
-    speak() {
-        console.log('牛逼');
-    }
-    render() {
-        return <h1 onClick={this.props.onClick}>点我输出</h1>;
-    }
-}
-
-function App() {
-    const counterRef = useRef();
-    const onClick = useCallback(
-        () => {
-            // counterRef 是 Counter 组件的引用
-            counterRef.current.speak();
-        },
-        [counterRef]
-    );
-    return <Counter ref={counterRef} onClick={onClick} />;
-}
-```
-
-### 问题重现
-
-```javascript
-import React, { useEffect, useState } from 'react';
-
-function App() {
-    const [count, setCount] = useState(0);
-
-    let it;
-
-    useEffect(() => {
-        it = setInterval(() => {
-            setCount(count => count + 1);
-        }, 1000);
-    }, []);
-    useEffect(() => {
-        if (count >= 5) {
-            // 这样并不能停止定时器，每次 setCount 都会重新渲染整个 App
-            // 后续的 it 句柄已经不是第一次的 setInterval 的返回值了
-            clearInterval(it);
-        }
-    });
-    return (
-        <div>
-            {count}
-        </div>
-    );
-}
-```
-
-### 解决方案
-
-当然可以把 `let it;` 的声明提取到函数外面，也可以利用 useRef 绕过 Capture Value 的特性，可以认为 ref 在所有 Render 过程中保持着唯一引用！
-
-```javascript
-import React, { useEffect, useState, useRef } from 'react';
-
-function App() {
-    const [count, setCount] = useState(0);
-
-    let it = useRef();
-
-    useEffect(() => {
-        // 这一这里挂载到的是 it.current
-        it.current = setInterval(() => {
-            setCount(count => count + 1);
-        }, 1000);
-    }, []);
-
-    useEffect(() => {
-        if (count >= 5) {
-            // 清除的也是 it.current
-            clearInterval(it.current);
-        }
-    });
-    return (
-        <div>
-            {count}
-        </div>
-    );
-}
-```
-
-## useImperativeHandle
-
-通过 useImperativeHandle 配合 forwardRef，可以让父组件获取子组件内的 DOM 引用
-
-```javascript
-import React, { useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
-
-function ChildInputComponent(props, ref) {
-    const inputRef = useRef(null);
-    // Step1
-    useImperativeHandle(ref, () => inputRef.current);
-    return <input type="text" name="child input" ref={inputRef} />;
-}
-
-// Step2
-const ChildInput = forwardRef(ChildInputComponent);
-
-function App() {
-    const inputRef = useRef(null);
-    useEffect(() => {
-        // Step3
-        inputRef.current.focus();
-    }, []);
-    return (
-        <div>
-            <ChildInput ref={inputRef} />
-        </div>
-    );
-}
 ```
 
 ## useContext
@@ -695,37 +480,488 @@ function Leaf() {
 
 ## useReducer
 
-useReducer 在使用上几乎跟 Redux/React-Redux 一模一样，唯一缺少的就是无法使用 redux 提供的中间件
+useReducer 是 useState 的替代方案！在使用上几乎跟 Redux 中 reducer 的差不多，最大的差异是无法使用 redux 提供的中间件，还有一点需要注意，如果 reducer 函数被不同的组件使用的话，共享的只是函数本身，状态不会共享（不会相互影响）
 
 ```javascript
 import React, { useReducer } from 'react';
 
 const initialState = {
-    count: 0
+    name: 'ifer',
+    count: 0,
 };
 
 function reducer(state, action) {
     switch (action.type) {
         case 'increment':
-            return { count: state.count + action.payload };
+            return { ...state, count: state.count + action.payload };
         case 'decrement':
-            return { count: state.count - action.payload };
+            return { ...state, count: state.count - action.payload };
         default:
             throw new Error();
     }
 }
-function App() {
+export default function App() {
     const [state, dispatch] = useReducer(reducer, initialState);
-    
+
     return (
         <div>
             Count: {state.count}
-            <button onClick={() => dispatch({ type: 'increment', payload: 5 })}>+</button>
-            <button onClick={() => dispatch({ type: 'decrement', payload: 5 })}>-</button>
+            <button onClick={() => dispatch({ type: 'increment', payload: 5 })}>
+                +
+            </button>
+            <button onClick={() => dispatch({ type: 'decrement', payload: 5 })}>
+                -
+            </button>
         </div>
     );
 }
 ```
+
+## useCallback
+
+useCallback 会返回一个函数的 memoized（记忆的）值，在依赖不变的情况下，即便多次定义的时候返回的值也是相同的。
+
+### 问题重现
+
+App 组件的 props 或者状态发生变化就会触发重渲染，即使跟 Foo 组件不相关，倘若 Foo 组件是一个大型的组件树，Virtual DOM Diff 的浪费是巨大的！
+
+```javascript
+import React, { Component, PureComponent } from 'react';
+
+class Foo extends PureComponent {
+    render() {
+        console.log('Foo render');
+        return <div>hello world</div>;
+    }
+}
+
+class App extends Component {
+    state = {
+        count: 0
+    };
+    handleClick = () => {
+        this.setState({
+            count: this.state.count + 1
+        });
+    };
+    render() {
+        const { count } = this.state;
+        return (
+            <div>
+                {count}
+                <button onClick={this.handleClick}>add</button>
+                <Foo
+                    doSomething={() => {
+                        console.log('do something');
+                    }}
+                />
+            </div>
+        );
+    }
+}
+```
+
+### 常规解决
+
+**可以把 doSomething 抽离出去**
+
+```javascript
+import React, { Component, PureComponent } from 'react';
+
+class Foo extends PureComponent {
+    render() {
+        console.log('Foo render');
+        return <div>hello world</div>;
+    }
+}
+
+class App extends Component {
+    state = {
+        count: 0
+    };
+    handleClick = () => {
+        this.setState({
+            count: this.state.count + 1
+        });
+    };
+    doSomething = () => {
+        console.log('do something');
+    };
+    render() {
+        const { count } = this.state;
+        return (
+            <div>
+                {count}
+                <button onClick={this.handleClick}>add</button>
+                <Foo doSomething={this.doSomething} />
+            </div>
+        );
+    }
+}
+```
+
+### Hooks 实现
+
+类组件可以通过 this 挂载函数，但函数组件就没有这么轻松了！
+
+```javascript
+import React, { useState, memo, useCallback } from 'react';
+
+const Foo = memo(function Foo() {
+    console.log('Foo render');
+    return <div>hello world</div>;
+});
+
+function App() {
+    const [count, setCount] = useState(0);
+    // 第二个参数为空数组代表无论什么情况下该函数的句柄都不会发生改变
+    // 非空数组，数组中的任一项一旦值或者引用发生改变，useCallback 就会重新返回一个新的记忆函数提供给后面进行渲染
+    const doSomething = useCallback(() => {
+        console.log('do something');
+    }, []);
+    return (
+        <div>
+            {count}
+            <button onClick={() => setCount(count + 1)}>add</button>
+            <Foo doSomething={doSomething} />
+        </div>
+    );
+}
+```
+
+其实下面这种写法并不会带来大的性能提升，没必要如此！
+
+```javascript
+import React, { useState, useCallback } from 'react';
+
+const Test = () => {
+    const [count, setCount] = useState(0);
+    const increment = useCallback(
+        () => {
+            setCount(count + 1);
+        },
+        [count]
+    );
+    return (
+        <div>
+            <h2>
+                {count}
+            </h2>
+            <button onClick={increment}>+1</button>
+        </div>
+    );
+};
+```
+
+## useMemo
+
+useCallback 的功能完全可以由 useMemo 所取代，如果你想通过使用 useMemo 返回一个记忆函数也是完全可以的
+
+```javascript
+useCallback(fn, inputs) is equivalent to useMemo(() => fn, inputs)
+```
+
+上面的例子可以用 useMemo 改写如下
+
+```javascript
+const doSomething = useMemo(() => {
+    console.log('初始化的时候会执行一次！');
+    return () => {
+        console.log('do something');
+    };
+}, []);
+```
+
+区别：useCallback 不会执行第一个参数函数，而是将它返回给你；useMemo 会执行第一个函数并且将函数执行结果返回给你。所以 useCallback 常用记忆函数，生成记忆后的函数并传递给子组件使用，而 useMemo 更适合经过函数计算得到一个确定的值，比如记忆组件。
+
+```javascript
+import React, { useState, useMemo } from 'react';
+
+function Child(props) {
+    return (
+        <div>
+            child: {props.num}
+        </div>
+    );
+}
+
+function Parent({ num }) {
+    // 只有在第二个参数 num 的值发生变化时，才会触发子组件的更新
+    const child = useMemo(() => {
+        console.log(233);
+        return <Child num={num} />;
+    }, [num]);
+    return (
+        <div>
+            {child}
+        </div>
+    );
+}
+
+function App() {
+    const [count, setCount] = useState(0);
+    // 初始化时执行或 count === 3 整体的状态（true or false）发生变化时才会触发函数的执行
+    const num = useMemo(
+        () => count * 2,
+        [count === 3]
+    );
+    return (
+        <div>
+            <button onClick={() => setCount(count + 1)}>click me</button>
+            <Parent num={num} />
+        </div>
+    );
+}
+```
+
+减少函数不必要的执行
+
+```javascript
+import React, { useState, useMemo } from 'react';
+
+function getSum(count) {
+    let sum = 0;
+    for (let i = 1; i <= count; i++) {
+        sum += i;
+    }
+    console.log('触发了吗');
+    return sum;
+}
+
+const Test = () => {
+    const [count, setCount] = useState(10);
+    const [show, setShow] = useState(true);
+
+    // 每次点的是 show 按钮也会触发 getSum 的重新计算，并不期望！
+    // const total = getSum(count);
+    const total = useMemo(() => getSum(count), [count]);
+    return (
+        <div>
+            <h2>
+                {total}
+            </h2>
+            <button onClick={() => setCount(count + 1)}>+1</button>
+            <button onClick={() => setShow(!show)}>show</button>
+        </div>
+    );
+};
+```
+
+## useRef
+
+useRef 跟 createRef 类似，都可以用来生成对 DOM 或组件的引用
+
+### 对 DOM 元素的引用
+
+```javascript
+import React, { useState, useRef } from 'react';
+
+function App() {
+    let [name, setName] = useState('Ifer');
+
+    // 这种方式也是 ok 的
+    // let nameRef = React.createRef();
+    let nameRef = useRef();
+
+    const handleClick = () => {
+        // nameRef 是 input dom 元素的引用
+        setName(nameRef.current.value);
+    };
+    return (
+        <div className="App">
+            <p>
+                {name}
+            </p>
+            <div>
+                <input ref={nameRef} type="text" defaultValue={name} />
+                <button type="button" onClick={handleClick}>
+                    Submit
+                </button>
+            </div>
+        </div>
+    );
+}
+```
+
+### 对类组件的引用
+
+```javascript
+import React, { useCallback, useRef, Component } from 'react';
+
+// 函数组件不能被 Ref 获取，所以函数组件有时候并不能完全替代类组件
+class Counter extends Component {
+    speak() {
+        console.log('牛逼');
+    }
+    render() {
+        return <h1 onClick={this.props.onClick}>点我输出</h1>;
+    }
+}
+
+function App() {
+    const counterRef = useRef();
+    const onClick = useCallback(
+        () => {
+            // counterRef.current 是 Counter 组件的实例
+            counterRef.current.speak();
+        },
+        [counterRef]
+    );
+    return <Counter ref={counterRef} onClick={onClick} />;
+}
+```
+
+### 问题重现
+
+```javascript
+import React, { useEffect, useState } from 'react';
+
+function App() {
+    const [count, setCount] = useState(0);
+
+    let it;
+
+    useEffect(() => {
+        it = setInterval(() => {
+            setCount(count => count + 1);
+        }, 1000);
+    }, []);
+    useEffect(() => {
+        if (count >= 5) {
+            // 这样并不能停止定时器，每次 setCount 都会重新渲染整个 App
+            // 后续的 it 句柄已经不是第一次的 setInterval 的返回值了
+            clearInterval(it);
+        }
+    });
+    return (
+        <div>
+            {count}
+        </div>
+    );
+}
+```
+
+### 解决方案
+
+当然可以把 `let it;` 的声明提取到函数外面，也可以利用 useRef 绕过 Capture Value 的特性，可以认为 ref 在所有 Render 过程中保持着唯一引用！
+
+```javascript
+import React, { useEffect, useState, useRef } from 'react';
+
+function App() {
+    const [count, setCount] = useState(0);
+
+    // 里面可以传递一些数值，可以通过 it.current 拿到这个数据
+    // let it = useRef(10);
+    let it = useRef();
+
+    useEffect(() => {
+        // 这里挂载到的是 it.current
+        it.current = setInterval(() => {
+            setCount(count => count + 1);
+        }, 1000);
+    }, []);
+
+    useEffect(() => {
+        if (count >= 5) {
+            // 清除的也是 it.current
+            clearInterval(it.current);
+        }
+    });
+    return (
+        <div>
+            {count}
+        </div>
+    );
+}
+```
+
+显示上一次的数据
+
+```javascript
+import React, { useState, useRef, useEffect } from 'react';
+
+export default function Test() {
+    const [count, setCount] = useState(5);
+    let numRef = useRef(count);
+    useEffect(
+        () => {
+            numRef.current = count;
+        },
+        [count]
+    );
+    return (
+        <div className="App">
+            <p>
+                上一次的值：{numRef.current}
+            </p>
+            <p>
+                这一次的值：{count}
+            </p>
+            <div>
+                <button type="button" onClick={() => setCount(count + 5)}>
+                    click
+                </button>
+            </div>
+        </div>
+    );
+}
+```
+
+## useImperativeHandle
+
+回顾，父获取子函数组件中的 DOM，需要通过 forwardRef 转发
+
+```javascript
+import React, { useState, useRef, useEffect, forwardRef } from 'react';
+
+const MyInput = forwardRef((props, ref) => {
+    return <input ref={ref} type="text" />;
+});
+
+export default function Test() {
+    const inputRef = useRef();
+    return (
+        <div>
+            <MyInput ref={inputRef} />
+            <button onClick={() => inputRef.current.focus()}>聚焦</button>
+        </div>
+    );
+}
+```
+
+上面的问题在哪里呢？父组件的自由度太高了！
+
+```javascript
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
+
+const MyInput = forwardRef((props, ref) => {
+    useImperativeHandle(ref, () => ({
+        focus: () => {
+            // 拦截 focus
+            console.log(233);
+        }
+    }));
+    return <input ref={ref} type="text" />;
+});
+```
+
+```javascript
+const MyInput = forwardRef((props, ref) => {
+    useImperativeHandle(ref, () => ({
+        focus: () => {
+            // 拦截 focus
+            inputRef.current.focus();
+        }
+    }));
+    const inputRef = useRef(); // 属于子组件自己的 ref
+    return <input ref={inputRef} type="text" />;
+});
+```
+
+## useLayoutEffect
+
+用法和 useEffect 一致，与 useEffect 的差别是执行时机，useLayoutEffect 是在浏览器绘制节点之前执行（和 componentDidMount 以及 componentDidUpdate 执行时机相同）
 
 ## Custom Hooks
 

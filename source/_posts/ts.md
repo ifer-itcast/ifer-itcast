@@ -30,20 +30,33 @@ count.toString();
 ### 代码初体验
 
 ```javascript
-// Parameter 'data' implicitly has an 'any' type
+function jsDemo(data) {
+    return Math.sqrt(data.x ** 2 + data.y ** 2);
+}
+// There is no error prompt when writing code
+jsDemo();
+```
+
+```javascript
 function tsDemo(data) {
     return Math.sqrt(data.x ** 2 + data.y ** 2);
 }
+// Expected 1 arguments, but got 0.
+tsDemo();
 ```
 
 ```javascript
 function tsDemo(data: { x: number, y: number }) {
+    // 这里输入 data. 的时候，会有很好的提示
     return Math.sqrt(data.x ** 2 + data.y ** 2);
 }
+tsDemo({x: 2, y: 3});
 ```
 
+**类型别名和接口**
+
 ```javascript
-// type Point = { x: number, y: number }; // 类型别名
+// type Point = { x: number, y: number }; // 类型别名，type 也可以用于描述基础类型，例如 type MyName = string;
 interface Point { x: number; y: number }; // 接口
 
 function tsDemo(data: Point) {
@@ -54,7 +67,7 @@ tsDemo({ x: 1, y: 2 });
 
 ## 基础环境搭建
 
-VS Code 设置 quote 和 tab，安装插件 prettier，通过在配置里面搜索 save，可以设置 Format on Save
+VS Code 设置搜索 quote 和 tab 可以进行单双引号、空格的配置，安装插件 prettier，通过在配置里面搜索 save，可以设置 Format on Save
 
 ```
 npm i typescript -g
@@ -78,19 +91,32 @@ ts-node demo.ts
 const num: number = 18;
 ```
 
-对象类型
+对象类型，**冒号后面是类型定义，等号后面是类型实现**
 
 ```javascript
-// 注意这里不要 const teacher: object = { xxx }，这样使用 teacher 的时候不具有提示
+// 注意这里不要 const teacher: object = { name: 'ifer' }，这样使用 teacher 的时候不具有提示
 const teacher: { name: string; age: number; } = {
     name: 'xxx',
     age: 18
 };
 ```
 
+可以使用 interface 或 type 优化上面的操作
+
 ```javascript
+// type Teacher = { name: string; age: number };
+// const teacher: Teacher = { name: 'xxx', age: 18 };
+
+interface Teacher { name: string; age: number; }
+const teacher: Teacher = { name: 'xxx', age: 18, };
+```
+
+```javascript
+// numbers 是一个数组，数组里面的每一项是 number 类型
 const numbers: number[] = [1, 2, 3];
 ```
+
+定义实例对象类型
 
 ```javascript
 class Person {}
@@ -98,8 +124,9 @@ class Person {}
 const xxx: Person = new Person();
 ```
 
+定义函数类型
+
 ```javascript
-// 冒号后面是类型定义，等号后面是函数实现
 const getTotal: () => number = () => 888;
 // 当然直接下面的写法 getTotal 也会进行类型推断
 const getTotal = () => 888;
@@ -115,15 +142,13 @@ let count1 = 123;
 ```
 
 ```javascript
-// 声明和赋值不一起时就要进行类型注解了
+// 声明和赋值不一起时就要进行类型注解了，不然后面输入 count1. 的时候则不会有相关属性和方法的提示
 let count1: number;
 count1 = 123;
 ```
 
 ```javascript
-interface Person {
-    name: string;
-}
+interface Person { name: string; }
 const rawData = '{ "name": "xxx" }';
 // 使用 JSON.parse 时也需要进行类型注解，不然 newData 会是 any 类型，再使用 newData 时也就没有了相关属性的提示
 const newData:Person = JSON.parse(rawData);
@@ -142,7 +167,7 @@ const res = firstNumber + secondNumber;
 function getTotal(firstNumber: number, secondNumber: number) {
     return firstNumber + secondNumber;
 }
-// total 这里会自动进行类型推荐，无需注解
+// total 这里会自动进行类型推荐，则无需注解
 const total = getTotal(1, 2);
 ```
 
@@ -229,9 +254,9 @@ const objectArr: User[] = [
 
 ```javascript
 // 下面依然是数组
-const info1: (string|number)[] = ['xxx', 18];
+const info1: (string|number)[] = ['xxx', 18, 'ifer'];
 
-// 元组，和上面的差异是：数组长度和每一项的类型都是固定的
+// 元组，和上面的差异是：元组的长度和每一项的类型都是固定的
 // 例如：第 1 项必须是 string、第 2 项必须是 number，且必须只有 2 项
 const info2: [string, number] = ['xxx', 18];
 ```
@@ -244,7 +269,7 @@ const info1:(string|number)[][] = [
     ['zzz', 'male', 28],
 ];
 
-// 元组处理 csv 文件
+// 元组处理 csv 文件，数组里面的每一项是一个元组
 const info2:[string, string, number][] = [
     ['xxx', 'male', 18],
     ['yyy', 'female', 19],
@@ -271,7 +296,7 @@ const person = { name: 'xxx', sex: 'male' };
 getPersonName(person);
 ```
 
-字面量的形式传递，在参数较多的时候如何保证不报错呢？
+如果就要使用字面量的形式传递，在参数较多的时候如何保证不报错呢？
 
 ```javascript
 interface Person {
@@ -287,7 +312,7 @@ const getPersonName = (person: Person): void => {
 getPersonName({ name: 'xxx', sex: 'male' });
 ```
 
-**参数是类的实例时，可以比接口定义的属性多，例如：**
+参数是类的实例时，实例的属性也可以比接口定义的属性多，例如：
 
 ```javascript
 interface Person {
@@ -345,7 +370,7 @@ class User implements Teacher {
 }
 ```
 
-**接口也可以用来表示一个函数类型**
+**接口也可以用来表示一个函数类型声明**
 
 ```javascript
 interface SayHi {
@@ -372,7 +397,7 @@ class Teacher extends Person {
     getTeacherName() {
         return 'yyy';
     }
-    // 可以重写父类的方法
+    // 通过 super 可以很好的重写父类的方法
     getName() {
         return super.getName() + '~~~';
     }
@@ -386,6 +411,16 @@ console.log(person.getTeacherName()); // yyy
 **给类的实例属性赋值的两种写法**
 
 ```javascript
+// 不需传参
+class Person {
+    name: string = 'ifer'; // 后续实例对象会有提示 name，实例也可以再对 name 进行修改
+}
+const p = new Person();
+console.log(p.name);
+```
+
+```javascript
+// 需要传参
 class Person {
     public name: string;
     constructor(name: string) {
@@ -409,9 +444,11 @@ console.log(p.name); // xxx
 class Person {
     constructor(private _name: string) {}
     get name() {
+        // 这里可以加工
         return this._name;
     }
     set name(val) {
+        // 这里可以加工
         this._name = '~~' + val + '~~';
     }
 }
@@ -427,6 +464,7 @@ console.log(person.name); // ~~yyy~~
 ```javascript
 class Demo {
     // 只能内部访问 instance 这个私有的静态属性，instance 规定为 Demo 的一个实例
+    // instance 是一个 Demo 类型的实例
     private static instance: Demo;
     // 限制外部进行 new Demo 的操作
     private constructor(public name: string) {}
@@ -454,7 +492,7 @@ abstract class Geom {
     }
     abstract getArea(): number; // 也可以有抽象的方法
 }
-// 继承抽象类
+// 继承抽象类，继承抽象类的时候，抽象方法必须要被实现
 class Circle extends Geom{
     getArea() {
         return 123;
@@ -472,6 +510,7 @@ class Square extends Geom {
 ```javascript
 interface Person { name: string; }
 
+// 接口之间的继承
 interface Teacher extends Person { money: number; }
 interface Student extends Person { age: number; }
 
@@ -491,9 +530,8 @@ console.log(getUserInfo(student));
 ```
 npm init -y
 tsc --init
-npm i ts-node typescript -D
-npm i superagent -S
-npm i @types/superagent -D
+npm i superagent
+npm i ts-node typescript @types/superagent -D
 ```
 
 ```javascript
@@ -530,11 +568,20 @@ const crowller = new Crowller();
 ### 解析数据
 
 ```
-npm i cheerio -S
+npm i cheerio
 npm i @types/cheerio -D
 ```
 
+解析出 title 和 count，拼成对象收集到数组中，再把此数组作为了对象的 data
+
 ```javascript
+import cheerio from 'cheerio';
+
+interface CourseInfo {
+    title: string;
+    count: number;
+}
+
 class Crowller {
     // ...
     getCourseData(str: string) {
@@ -554,6 +601,13 @@ class Crowller {
         });
 
         const result = { time: new Date().getTime(), data: courseInfo };
+        /* {
+            time: 1597914491239,
+            data: [
+                { title: 'Vue2.5开发去哪儿网App', count: 5 },
+                { title: 'React 16.4 开发简书项目', count: 49 },
+            ]
+        } */
     }
     
     async getRawHtml() {
@@ -579,9 +633,17 @@ interface CourseResult {
     data: CourseInfo[]
 }
 
+// 最终存储的数据格式
 interface Content {
     [propName: number]: CourseInfo[];
 }
+
+/* {
+    1597914491239: data: [
+        { title: 'Vue2.5开发去哪儿网App', count: 5 },
+        { title: 'React 16.4 开发简书项目', count: 49 },
+    ]
+} */
 ```
 
 ```javascript
@@ -592,6 +654,7 @@ class Crowller {
     saveData(course: CourseResult) {
         let obj:Content = {};
         if (fs.existsSync(this.realPath)) {
+            // 先把之前的数据弄出来
             obj = JSON.parse(fs.readFileSync(this.realPath, 'utf8'));
         }
         obj[course.time] = course.data;
