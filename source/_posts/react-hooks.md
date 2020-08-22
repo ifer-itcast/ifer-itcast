@@ -961,11 +961,104 @@ const MyInput = forwardRef((props, ref) => {
 
 ## useLayoutEffect
 
-用法和 useEffect 一致，与 useEffect 的差别是执行时机，useLayoutEffect 是在浏览器绘制节点之前执行（和 componentDidMount 以及 componentDidUpdate 执行时机相同）
+用法和 useEffect 一致，与 useEffect 的差别是执行时机，useLayoutEffect 是在浏览器绘制节点之前执行（和 componentDidMount 以及 componentDidUpdate 执行时机相同），会阻塞 DOM 的更新！
 
 ## Custom Hooks
 
 自定义 Hooks 其实就可以理解为对函数的封装！
+
+### 函数创建/销毁时进行打印
+
+```javascript
+import React, {
+    useState,
+    forwardRef,
+    useImperativeHandle,
+    useLayoutEffect,
+    useEffect,
+} from 'react';
+
+// 需要以 use 开始，或者首字母大写，不能在普通函数里面直接使用 hooks api
+function useLog(name) {
+    useEffect(() => {
+        console.log(`${name}创建了`);
+        return () => {
+            console.log(`${name}销毁了`);
+        };
+    }, []);
+}
+
+function A() {
+    useLog('A');
+    return <div>hello</div>;
+}
+
+function Test() {
+    const [count, setCount] = useState(0);
+    return (
+        <div>
+            {count % 2 && <A />}
+            <button onClick={() => setCount(count + 1)}>加</button>
+        </div>
+    );
+}
+```
+
+### Context 共享
+
+`src/App.jsx`
+
+```javascript
+import React, { createContext } from 'react';
+import Test from './Test';
+
+export const UserContext = createContext();
+export const TokenContext = createContext();
+
+export default function App() {
+    return (
+        <UserContext.Provider value={{ username: 'ifer', age: 18 }}>
+            <TokenContext.Provider value="xxx">
+                <Test />
+            </TokenContext.Provider>
+        </UserContext.Provider>
+    );
+}
+```
+
+`src/useInfoContext.js`
+
+```javascript
+import { useContext } from 'react';
+import { UserContext, TokenContext } from './App';
+
+function useInfoContext() {
+    const user = useContext(UserContext);
+    const token = useContext(TokenContext);
+    return [user, token];
+}
+
+export default useInfoContext;
+```
+
+`src/Test.jsx`
+
+```javascript
+import React from 'react';
+import useInfoContext from './useInfoContext';
+
+const Test = () => {
+    const [user, token] = useInfoContext();
+    console.log(user, token);
+    return (
+        <div>
+            test
+        </div>
+    );
+}
+
+export default Test;
+```
 
 ### 功能型封装
 
@@ -1076,6 +1169,63 @@ function App() {
         </div>
     );
 }
+```
+
+上面的 useSize 也可以改写如下
+
+```javascript
+function useSize() {
+    const [size, setSize] = useState({
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight,
+    });
+    useEffect(() => {
+        // 这里只是初始化时执行了一次
+        const onResize = () => {
+            setSize({
+                width: document.documentElement.clientWidth,
+                height: document.documentElement.clientHeight,
+            });
+        };
+        window.addEventListener('resize', onResize);
+        return () => {
+            window.removeEventListener('resize', onResize);
+        };
+    }, []);
+    return size;
+}
+```
+
+### 操作本地存储
+
+```javascript
+import React, { useState, useEffect } from 'react';
+
+function useStorage(key) {
+    // 只是初始化时走了一次
+    const [myName, setMyName] = useState(() => {
+        const myName = JSON.parse(localStorage.getItem(key));
+        return myName;
+    });
+    useEffect(
+        () => {
+            localStorage.setItem(key, JSON.stringify(myName));
+        },
+        [myName]
+    );
+    return [myName, setMyName];
+}
+
+const Test = () => {
+    const [myName, setMyName] = useStorage('myName');
+    return (
+        <div>
+            {myName}
+            {/* 点击的时候 useStorage 中的 myName 就会变化，myName 变化就会走 useEffect，把 myName 数组存到本地 */}
+            <button onClick={() => setMyName('iferxxx')}>click</button>
+        </div>
+    );
+};
 ```
 
 ## TodoList

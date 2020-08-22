@@ -545,6 +545,8 @@ npm i ts-node typescript @types/superagent -D
 
 ### 爬取数据
 
+`src/crowller.ts`
+
 ```javascript
 import superagent from 'superagent';
 
@@ -552,17 +554,24 @@ class Crowller {
     private secret = 'x3b174jsx';
     private url = `http://www.dell-lee.com/typescript/demo.html?secret=${this.secret}`;
 
-    async getRawHtml() {
-        const result = await superagent.get(this.url);
-        console.log(result.text);
+    constructor() {
+        this.init();
+    }
+    async init() {
+        // 1. 爬取数据
+        const rawData = await this.getRawData();
+        console.log(rawData);
+        // 2. 解析数据
+        // 3. 存储数据
     }
 
-    constructor() {
-        this.getRawHtml();
+    async getRawData() {
+        const { text } = await superagent.get(this.url);
+        return text;
     }
 }
 
-const crowller = new Crowller();
+new Crowller();
 ```
 
 ### 解析数据
@@ -572,107 +581,142 @@ npm i cheerio
 npm i @types/cheerio -D
 ```
 
-解析出 title 和 count，拼成对象收集到数组中，再把此数组作为了对象的 data
+解析出 title 和 count，拼成对象收集到数组中，再把此数组作为了对象的 data，此格式也是存储到文件中的格式
 
 ```javascript
+{
+    time: 1597914491239,
+    data: [
+        { title: 'Vue2.5开发去哪儿网App', count: 5 },
+        { title: 'React 16.4 开发简书项目', count: 49 },
+    ]
+}
+```
+
+```javascript
+import superagent from 'superagent';
 import cheerio from 'cheerio';
 
-interface CourseInfo {
+interface CourseItem {
     title: string;
     count: number;
 }
 
 class Crowller {
-    // ...
-    getCourseData(str: string) {
-        // 先 load 得到一个 $ 对象，然后就可以按照 jQuery 的语法进行操作了
-        const $ = cheerio.load(str);
-        const items = $('.course-item');
+    private secret = 'x3b174jsx';
+    private url = `http://www.dell-lee.com/typescript/demo.html?secret=${this.secret}`;
 
-        const courseInfo: CourseInfo[] = []; // 定义数组类型的正确姿势！
+    constructor() {
+        this.init();
+    }
+    async init() {
+        // 1. 爬取数据
+        const rawData = await this.getRawData();
+        // 2. 解析数据
+        const courseResult = this.analyzeData(rawData);
+        console.log(courseResult);
+        // 3. 存储数据
+    }
 
-        items.map(function(index, domEle) {
+    async getRawData() {
+        const { text } = await superagent.get(this.url);
+        return text;
+    }
+    analyzeData(data: string) {
+        const $ = cheerio.load(data);
+        const courseItems = $('.course-item');
+        // 空数组可以，里面可以没有 CourseItem，但 const courses: CourseItem = []; 则不 ok
+        const courses: CourseItem[] = [];
+        courseItems.map(function (i, domEle) {
             const descs = $(domEle).find('.course-desc');
             const title = descs.eq(0).text();
-            const count = parseInt(descs.eq(1).text().split('：')[1], 10);
-            courseInfo.push({
-                title, count
-            });
+            const count = Number(descs.eq(1).text().split('：')[1]);
+            courses.push({ title, count, }); // 都怼到了数组里面
         });
-
-        const result = { time: new Date().getTime(), data: courseInfo };
-        /* {
-            time: 1597914491239,
-            data: [
-                { title: 'Vue2.5开发去哪儿网App', count: 5 },
-                { title: 'React 16.4 开发简书项目', count: 49 },
-            ]
-        } */
+        return {
+            time: new Date().getTime(),
+            courses: courses,
+        };
     }
-    
-    async getRawHtml() {
-        const result = await superagent.get(this.url);
-        this.getCourseData(result.text);
-    }
-    // ...
 }
+
+new Crowller();
 ```
 
 ### 存储数据
 
-优化设计：解决 `getRawHtml` 和 `getCourseData` 的耦合，每一个函数的职责尽量单一、明确！
-
 ```javascript
-interface CourseInfo {
-    title: string;
-    count: number
-}
+import fs from 'fs';
+import path from 'path';
+import superagent from 'superagent';
+import cheerio from 'cheerio';
 
+interface CourseItem {
+    title: string;
+    count: number;
+}
 interface CourseResult {
     time: number;
-    data: CourseInfo[]
+    courses: CourseItem[]
 }
 
-// 最终存储的数据格式
-interface Content {
-    [propName: number]: CourseInfo[];
+interface CourseData {
+    [propName: number]: CourseItem[]
 }
 
-/* {
-    1597914491239: data: [
-        { title: 'Vue2.5开发去哪儿网App', count: 5 },
-        { title: 'React 16.4 开发简书项目', count: 49 },
-    ]
-} */
-```
-
-```javascript
 class Crowller {
-    // ...
-    private realPath = path.join(__dirname, '..', 'data', 'course.json');
-    // ...
-    saveData(course: CourseResult) {
-        let obj:Content = {};
-        if (fs.existsSync(this.realPath)) {
-            // 先把之前的数据弄出来
-            obj = JSON.parse(fs.readFileSync(this.realPath, 'utf8'));
-        }
-        obj[course.time] = course.data;
-        return obj;
-    }
-    writeFile(str: string) {
-        fs.writeFileSync(this.realPath, str);
+    private secret = 'x3b174jsx';
+    private url = `http://www.dell-lee.com/typescript/demo.html?secret=${this.secret}`;
+    private realPath = path.join(__dirname, '..', 'data');
+    private realFile = path.join(__dirname, '..', 'data', 'courses.json');
+
+    constructor() {
+        this.init();
     }
     async init() {
-        // 获取数据
-        const text = await this.getRawHtml();
-        // 解析数据
-        const result = this.getCourseData(text);
-        // 存储数据
-        this.writeFile(JSON.stringify(this.saveData(result)));
+        // 1. 爬取数据
+        const rawData = await this.getRawData();
+        // 2. 解析数据
+        const courseResult = this.analyzeData(rawData);
+        // 3. 存储数据
+        this.saveData(courseResult);
     }
-    // ...
+
+    async getRawData() {
+        const { text } = await superagent.get(this.url);
+        return text;
+    }
+    analyzeData(data: string) {
+        const $ = cheerio.load(data);
+        const courseItems = $('.course-item');
+        // 空数组可以，里面可以没有 CourseItem，但 const courses: CourseItem = []; 则不 ok
+        const courses: CourseItem[] = [];
+        courseItems.map(function (i, domEle) {
+            const descs = $(domEle).find('.course-desc');
+            const title = descs.eq(0).text();
+            const count = Number(descs.eq(1).text().split('：')[1]);
+            courses.push({ title, count, }); // 都怼到了数组里面
+        });
+        return {
+            time: new Date().getTime(),
+            courses: courses,
+        };
+    }
+    saveData(data: CourseResult) {
+        // 创建 data，防止 writeFileSync 出错
+        if(!fs.existsSync(this.realPath)) fs.mkdirSync(this.realPath);
+        let obj:CourseData = {};
+        if(fs.existsSync(this.realFile)) {
+            // 取
+            obj = JSON.parse(fs.readFileSync(this.realFile, 'utf8'));
+        };
+        obj[data.time] = data.courses;
+        // 存
+        fs.writeFileSync(this.realFile, JSON.stringify(obj));
+    }
 }
+
+new Crowller();
 ```
 
 ### 组合模式
@@ -683,105 +727,98 @@ crowller.ts
 import fs from 'fs';
 import path from 'path';
 import superagent from 'superagent';
+import Analyze from './analyze';
 
-import Analyzer from './analyzer';
-
-export interface IAnalyzer {
-    resolve: (str: string, url: string) => string;
+export interface IAnalyze {
+    resolve: (data: string, realPath: string, realFile: string) => string;
 }
-
 class Crowller {
-    private realPath = path.join(__dirname, '..', 'data', 'course.json');
-    
-    private async getRawHtml() {
-        const result = await superagent.get(this.url);
-        return result.text;
-    }
-    
-    private writeFile(str: string) {
-        fs.writeFileSync(this.realPath, str);
-    }
-    private async init() {
-        // 获取数据
-        const text = await this.getRawHtml();
-        
-        // 传过去【原始数据】和【存储路径】
-        // 【解析数据】，并把存储路径的数据和当前解析数据拼接后返回
-        const str = this.analyzer.resolve(text, this.realPath);
-        this.writeFile(str);
-    }
-    // 如果传递过来的是一个类的实例，此实例只需要覆盖接口的定义即可，属性可以比接口多
-    constructor(private analyzer: IAnalyzer, private url: string) {
+    private realPath = path.join(__dirname, '..', 'data');
+    private realFile = path.join(__dirname, '..', 'data', 'courses.json');
+    // 实例只需覆盖接口的定义即可
+    constructor(private analyze: IAnalyze, private url: string) {
         this.init();
     }
+    private async init() {
+        // 1. 爬取数据
+        const rawData = await this.getRawData();
+        // 2. 解析数据
+        const courseResult = this.analyze.resolve(rawData, this.realPath, this.realFile)
+        // 3. 存储数据
+        this.saveData(courseResult);
+    }
+
+    private async getRawData() {
+        const { text } = await superagent.get(this.url);
+        return text;
+    }
+    private saveData(str: string) {
+        fs.writeFileSync(this.realFile, str);
+    }
 }
 
-const secret = 'x3b174jsx';
-const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
-
-const analyzer = new Analyzer();
-
-// 分析对象、要分析的地址
-new Crowller(analyzer, url);
+const url = `http://www.dell-lee.com/typescript/demo.html?secret=x3b174jsx`;
+const analyze = new Analyze();
+// 分析对象、分析地址（给当前类获取数据时用了）
+new Crowller(analyze, url);
 ```
 
 analyzer.ts
 
 ```javascript
-import fs = require('fs');
+import fs from 'fs';
 import cheerio from 'cheerio';
-import { IAnalyzer } from './crowller';
-
-interface CourseInfo {
+import { IAnalyze } from './crowller';
+interface CourseItem {
     title: string;
-    count: number
+    count: number;
 }
 interface CourseResult {
     time: number;
-    data: CourseInfo[]
+    courses: CourseItem[]
 }
 
-interface Content {
-    [propName: number]: CourseInfo[];
+interface CourseData {
+    [propName: number]: CourseItem[]
 }
-
-export default class Anylyzer implements IAnalyzer {
-    private getCourseData(str: string) {
-        // 先 load 得到一个 $ 对象，然后就可以按照 jQuery 的语法进行操作了
-        const $ = cheerio.load(str);
-        const items = $('.course-item');
-
-        const courseInfo: CourseInfo[] = []; // 定义数组类型的正确姿势！
-
-        items.map(function(index, domEle) {
+export default class Analyze implements IAnalyze {
+    private analyzeData(data: string) {
+        const $ = cheerio.load(data);
+        const courseItems = $('.course-item');
+        // 空数组可以，里面可以没有 CourseItem，但 const courses: CourseItem = []; 则不 ok
+        const courses: CourseItem[] = [];
+        courseItems.map(function (i, domEle) {
             const descs = $(domEle).find('.course-desc');
             const title = descs.eq(0).text();
-            const count = parseInt(descs.eq(1).text().split('：')[1], 10);
-            courseInfo.push({
-                title, count
-            });
+            const count = Number(descs.eq(1).text().split('：')[1]);
+            courses.push({ title, count, }); // 都怼到了数组里面
         });
-
-        const result = {
+        return {
             time: new Date().getTime(),
-            data: courseInfo
+            courses: courses,
         };
-        return result;
     }
-    private concatData(course: CourseResult, url: string) {
-        let obj:Content = {};
-        if (fs.existsSync(url)) {
-            obj = JSON.parse(fs.readFileSync(url, 'utf8'));
-        }
-        obj[course.time] = course.data;
+    private concatData(data: CourseResult, realPath: string, realFile: string) {
+        // 创建 data，防止 writeFileSync 出错
+        if(!fs.existsSync(realPath)) fs.mkdirSync(realPath);
+        let obj:CourseData = {};
+        if(fs.existsSync(realFile)) {
+            // 取
+            obj = JSON.parse(fs.readFileSync(realFile, 'utf8'));
+        };
+        obj[data.time] = data.courses;
+        // 存
         return obj;
     }
-    public resolve(str: string, url: string) {
-        let obj = this.getCourseData(str);
-        return JSON.stringify(this.concatData(obj, url));
+    public resolve(data: string, realPath: string, realFile: string) {
+        // this.analyzeData(data)，返回当前次解析好的数据
+        // 返回本地和当前次解析好的数据拼接的结果
+        return JSON.stringify(this.concatData(this.analyzeData(data), realPath, realFile));
     }
 }
 ```
+
+尝试爬取 https://www.lexin.com/
 
 ### 单例模式
 
@@ -811,7 +848,13 @@ export default class Anylyzer implements IAnalyzer {
 
 ### 代码编译
 
-`package.json` 配置，注意 `concurrently` 是并行的，不能保证 build 下生成 crowller.js 后再执行 `dev:start`，当 build 目录下没有 `crowller.js` 生成时，执行 `dev:start` 就会出错，所以先执行 `npm run dev:build`，再 `npm run dev`
+`package.json` 配置，注意 `concurrently` 是并行的，不能保证 build 下生成 crowller.js 后再执行 `dev:start`，当 build 目录下没有 `crowller.js` 生成时，执行 `dev:start` 就会出错
+
+所以先执行 `npm run dev:build`，再 `npm run dev`
+
+ignore 是忽略 data 下生成的数据文件
+
+可以尝试使用 npm-run-all 并行执行任务试试
 
 ```javascript
 {
