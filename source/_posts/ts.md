@@ -883,11 +883,17 @@ tsconfig.json
 
 ## 配置文件
 
-include: 指定需要编译的文件，例如 `{"include": ["./demo.ts"]}`
-files: 指定需要编译的文件，和 include 类似
-exclude: 指定排除编译的文件，例如 `{"exclude": ["./demo.ts"]}`
-removeComments: 编译后的 JS 是否保留注释，注意 `tsc demo.ts` 并不会用到根目录下的配置文件，直接执行 `tsc` 会用到配置
-noImplicitAny: 是否要求显式设置 any，false 代表不必！例如：
+注意：直接 `tsc xxx.ts` 某个具体的文件时，tsconfig.json 中的配置并不会生效，执行 `tsc` 才 ok，但 `ts-node xxx.ts` 是会应用 tsconfig.json 配置的！
+
+【include】 指定需要编译的文件，例如 `{"include": ["./demo.ts"]}`，则执行 tsc 命令时只会编译这个文件
+
+【exclude】 指定排除编译的文件，例如 `{"exclude": ["./demo.ts"]}`
+
+【files】 也可以限制只编译某些文件，和 include 类似
+
+【removeComments】 编译后的 JS 是否保留注释
+
+【noImplicitAny】 是否要求显式设置 any，默认 true，false 代表不必！例如下面写法会报错，指定 noImplicitAny 为 false 能解决
 
 ```javascript
 // Parameter 'name' implicitly has an 'any' type.
@@ -896,17 +902,34 @@ function abc(name) {
 }
 ```
 
-strictNullChecks: 是否强制检查 null 类型，false 代表不，例如下面这样写也是 ok 的，例如：
+或者明确指定 any 或其他类型
+
+```javascript
+// 即便是 any 也不能省略
+function abc(name: any) {
+    return name;
+}
+```
+
+【strictNullChecks】 是否强制检查 null 类型，false 代表不，例如下面这样写也是 ok 的，例如：
 
 ```javascript
 const teacher: string = null;
 ```
 
-incremental: 是否增量编译，只编译本次发生变化的内容
-allowJs: 是否编译 JS 文件
-checkJs: 是否对 JS 文件也进行静态检查
+【rootDir】 指定输入文件的路径
 
-noUnusedLocals: 设置为 true 代表有数据导出时，要对没有用的的本地变量进行检查，例如：
+【outDir】 指定输出文件的路径
+
+【incremental】 是否增量编译，只编译本次发生变化的内容
+
+【allowJs】 是否编译 JS 文件
+
+【checkJs】 是否对 JS 文件也进行静态检查
+
+【sourceMap】 是否生成 sourceMap 文件
+
+【noUnusedLocals】 设置为 true 代表有数据导出时，要对没有用的的本地变量进行检查，例如：
 
 ```javascript
 // 'teacher' is declared but its value is never read.
@@ -914,7 +937,7 @@ const teacher: string = 'xxx';
 export const age = 18;
 ```
 
-noUnusedParameters: 设置为 true 代表对没有用到的参数进行校验
+【noUnusedParameters】 设置为 true 代表对没有用到的参数进行校验
 
 ```javascript
 // 'name' is declared but its value is never read.
@@ -941,7 +964,7 @@ interface Dog {
 function trainAnimal(animal: Bird | Dog) {
     // 联合类型 animal 只能使用 Bird 和 Dog 共有的属性和方法 fly
     // 输入 animal. 只能看到 fly 属性提示，直接使用 animal.sing or animal.bark 会报错（需要进行类型保护）
-    if (animal.fly) {
+    if (animal.fly) { // 为 true 时
         (animal as Bird).sing();
     } else {
         (animal as Dog).bark();
@@ -1054,15 +1077,41 @@ const result = getResult(Status.OFFLINE);
 console.log(result); // offline
 ```
 
+可以指定枚举的初始值
+
+```javascript
+enum Status {
+    OFFLINE,
+    ONLINE = 3,
+    DELETED
+};
+console.log(Status.OFFLINE); // 0
+console.log(Status.ONLINE); // 3
+console.log(Status.DELETED); // 4
+```
+
+枚举也可以进行反查
+
+```javascript
+enum Status {
+    OFFLINE,
+    ONLINE = 3,
+    DELETED
+};
+console.log(Status[0]); // "OFFLINE"
+console.log(Status[3]); // "ONLINE"
+console.log(Status[4]); // "DELETED"
+```
+
 ## 函数泛型
 
-泛型：泛指的类型，例如定义了一个 T 这样一个泛指的类型，但实际它具体是什么类型还不知道呢，可以是任意的类型，只有使用的时候才知道
+泛型：泛指的类型，例如定义了一个 T 这样一个泛指的类型，但实际它具体是什么类型还不知道呢，**可以是任意的类型，只有使用（例如函数调用）的时候才知道！**
 
 举个例子
 
 ```javascript
 // 定义了一个 ABC 这样一个泛指的类型，但实际它是什么类型还不知道呢，可以是任意的类型，只有使用的时候才知道
-// join 接收了一个 ABC 这样的泛型，那么 first 和 second 都应该是这个类型
+// 需求：两个参数的类型保持一致，join 接收了一个 ABC 这样的泛型，那么 first 和 second 都应该是这个类型
 function join<ABC>(first: ABC, second: ABC) {
     return `${first}${second}`;
 }
@@ -1086,7 +1135,8 @@ console.log(map<number>([1, 1]));
 function join<T, P>(first: T, second: P) {
     return `${first}${second}`;
 }
-let res = join<number,string>(1, '1');
+// let res = join<number,string>(1, '1');
+let res = join(1, '1'); // 会自动推断
 console.log(res);
 ```
 
@@ -1135,6 +1185,8 @@ class DataManager<T> {
 
 // const data = new DataManager<string>(['1', '3']);
 // const data = new DataManager<number>([1, 3]);
+
+// 把上面所有 T 换成 (string|number) 就比较好理解了
 const data = new DataManager<string|number>(['1', '3', 4]);
 console.log(data.getItem(2));
 ```
@@ -1175,6 +1227,20 @@ class DataManager<T extends number | string> {
     }
 }
 const data = new DataManager<number>([]);
+```
+
+泛型作为类型注解
+
+```javascript
+function hello<T>(params: T[]): T {
+    return params[0]; // 数组中的某一个肯定就是此泛型了
+}
+
+// 冒号后面是注解（声明），等号后面是实现
+const func: <T>(params: T[]) => T = hello;
+
+// 意思是参数是泛型类型的数组，返回的是此泛型
+func<string>(['hello']);
 ```
 
 ## 命名空间对应的模块化
