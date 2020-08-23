@@ -811,3 +811,292 @@ export const HeaderRight = styled.div `
     }
 `
 ```
+
+## 路由优化
+
+`src/common/local-data.js`
+
+```javascript
+export const headerLinks = [{
+        title: "发现音乐",
+        link: "/discover"
+    },
+]
+```
+
+`src/components/app-header/index.jsx`
+
+```javascript
+import React, { memo } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Input } from 'antd';
+import { SearchOutlined } from '@ant-design/icons'
+import { headerLinks } from '@/common/local-data';
+
+import { HeaderWrapper, HeaderLeft, HeaderRight } from './style';
+
+export default memo(function YKAppHeader() {
+    // 业务代码
+    const showSelectItem = (item, index) => {
+        if (index < 3) {
+            // 这里去掉了 exact
+            return (
+                <NavLink to={item.link}>
+                    {item.title}
+                    <i className="sprite_01 icon" />
+                </NavLink>
+            );
+        } else {
+            return (
+                <a href={item.link}>
+                    {item.title}
+                </a>
+            );
+        }
+    };
+});
+```
+
+`src/router/index.js`
+
+```javascript
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+const routes = [{
+    path: '/',
+    exact: true,
+    render: () => (<Redirect to="/discover"/>)
+}, {
+    path: '/discover',
+    component: YKDiscover
+}];
+```
+
+## discover 二级路由配置
+
+`src/common/local-data.js`
+
+准备 discoverMenu，二级路由数据
+
+`src/pages/discover/index.jsx`
+
+```javascript
+import React, { memo } from 'react';
+import { NavLink } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import { discoverMenu } from '@/common/local-data';
+import { DiscoverWrapper, TopMenu } from './style';
+
+export default memo(function YKDiscover(props) {
+    const { route } = props;
+    return (
+        <DiscoverWrapper>
+            <div className="top">
+                <TopMenu className="wrap-v1">
+                    {discoverMenu.map((item, index) => {
+                        return (
+                            <div className="item" key={item.title}>
+                                <NavLink to={item.link}>
+                                    {item.title}
+                                </NavLink>
+                            </div>
+                        );
+                    })}
+                </TopMenu>
+            </div>
+            {renderRoutes(route.routes)}
+        </DiscoverWrapper>
+    );
+});
+```
+
+`src/pages/discover/style.js`
+
+```javascript
+import styled from 'styled-components';
+
+export const DiscoverWrapper = styled.div`
+    .top {
+        height: 30px;
+        background-color: #C20C0C;
+    }
+`
+
+export const TopMenu = styled.div`
+    display: flex;
+    padding-left: 180px;
+    position: relative;
+    top: -4px;
+
+    .item {
+        a {
+            display: inline-block;
+            height: 20px;
+            line-height: 20px;
+            padding: 0 13px;
+            margin: 7px 17px 0;
+            color: #fff;
+
+            &:hover, &.active {
+                text-decoration: none;
+                background-color: #9B0909;
+                border-radius: 20px;
+            }
+        }
+    }
+`
+```
+
+`src/pages/discover/c-pages/album/index.jsx`
+
+```javascript
+import React, { memo } from 'react'
+
+export default memo(function YKAlbum() {
+    return (
+        <div>
+            YKAlbum
+        </div>
+    )
+})
+```
+
+`src/pages/discover/c-pages/artist/index.jsx`
+
+```javascript
+import React, { memo } from 'react'
+
+export default memo(function YKArtist() {
+    return (
+        <div>
+            YKArtist
+        </div>
+    )
+})
+```
+
+`src/pages/discover/c-pages/djradio/index.jsx`
+
+```javascript
+import React, { memo } from 'react'
+
+export default memo(function YKDjradio() {
+    return (
+        <div>
+            YKDjradio
+        </div>
+    )
+})
+```
+
+`src/pages/discover/c-pages/ranking/index.jsx`
+
+```javascript
+import React, { memo } from 'react'
+
+export default memo(function YKRanking() {
+    return (
+        <div>
+            YKRanking
+        </div>
+    )
+})
+```
+
+`src/pages/discover/c-pages/recommend/index.jsx`
+
+```javascript
+import React, { memo } from 'react'
+
+export default memo(function YKRecommend() {
+    return (
+        <div>
+            YKRecommend
+        </div>
+    )
+})
+```
+
+`src/pages/discover/c-pages/songs/index.jsx`
+
+```javascript
+import React, { memo } from 'react'
+
+export default memo(function YKSongs() {
+    return (
+        <div>
+            YKSongs
+        </div>
+    )
+})
+```
+
+`src/router/index.js`
+
+```javascript
+import React from 'react';
+import {
+    Redirect
+} from 'react-router-dom';
+// 发现及其子路由
+import YKDiscover from '@/pages/discover';
+import YKRecommend from "../pages/discover/c-pages/recommend";
+import YKRanking from "../pages/discover/c-pages/ranking";
+import YKSongs from "../pages/discover/c-pages/songs";
+import YKDjradio from "../pages/discover/c-pages/djradio";
+import YKArtist from "../pages/discover/c-pages/artist";
+import YKAlbum from "../pages/discover/c-pages/album";
+
+import YKFriend from '@/pages/friend';
+import YKMine from '@/pages/mine';
+
+const routes = [{
+    path: '/',
+    exact: true,
+    render: () => ( < Redirect to = "/discover" / > )
+}, {
+    path: '/discover',
+    component: YKDiscover,
+    routes: [
+        {
+            path: "/discover",
+            exact: true,
+            render: () => (
+              <Redirect to="/discover/recommend"/>
+            )
+        },{
+            path: "/discover/recommend",
+            component: YKRecommend
+        },
+        {
+            path: "/discover/ranking",
+            component: YKRanking
+        },
+        {
+            path: "/discover/songs",
+            component: YKSongs
+        },
+        {
+            path: "/discover/djradio",
+            exact: true,
+            component: YKDjradio
+        },
+        {
+            path: "/discover/artist",
+            component: YKArtist
+        },
+        {
+            path: "/discover/album",
+            component: YKAlbum
+        },
+    ]
+}, {
+    path: '/mine',
+    component: YKMine
+}, {
+    path: '/friend',
+    component: YKFriend
+}];
+
+export default routes;
+```
