@@ -1,0 +1,111 @@
+---
+layout: false
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .i35-wrap {
+            margin: 50px auto 0;
+            width: 360px;
+            vertical-align: top;
+            border: 1px solid rgb(219, 219, 219);
+            box-shadow: rgb(164, 160, 157) 1px 1px 9px -3px;
+            background-color: #F5F5F5;
+        }
+
+        .i35-title {
+            display: flex;
+            border-bottom: 2px solid rgb(99, 65, 165);
+            height: 60px;
+            line-height: 40px;
+        }
+
+        .i35-title li {
+            text-align: center;
+            flex: 1 1 1px;
+            cursor: pointer;
+            padding: 10px 30px;
+            color: rgb(51, 51, 51);
+        }
+
+        .i35-title li.active {
+            color: #fff;
+            background-color: rgb(99, 65, 165);
+        }
+
+        .i35-con {
+            padding: 20px;
+        }
+
+        .i35-con .content {
+            display: none;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .i35-con .content li {
+            font-size: 12px;
+            height: 30px;
+            line-height: 30px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="i35-wrap">
+        <ul class="i35-title">
+            <li class="active">布丽吉塔</li>
+            <li>秩序之光</li>
+        </ul>
+        <div class="i35-con">
+            <div class="content" style="display: block;">
+                <ul class="scroll">
+                    <li>先帝创业未半而中道崩殂，今天下三分，益州疲弊</li>
+                    <li>此诚危急存亡之秋也，然侍卫之臣不懈于内</li>
+                    <li>忠志之士忘身于外者，盖追先帝之殊遇</li>
+                    <li>欲报之于陛下也~</li>
+                </ul>
+            </div>
+            <div class="content">
+                <ul class="scroll">
+                    <li>诚宜开张圣听，以光先帝遗德</li>
+                    <li>恢弘志士之气，不宜妄自菲薄</li>
+                    <li>引喻失义，以塞忠谏之路也</li>
+                    <li>宫中府中，俱为一体，陟罚臧否，不宜异同</li>
+                    <li>若有作奸犯科及为忠善者，宜付有司论其刑赏，以昭陛下平明之理，不宜偏私，使内外异法也。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        "use strict";function _instanceof(b,a){if(a!=null&&typeof Symbol!=="undefined"&&a[Symbol.hasInstance]){return !!a[Symbol.hasInstance](b)}else{return b instanceof a}}function _classCallCheck(a,b){if(!_instanceof(a,b)){throw new TypeError("Cannot call a class as a function")}}function _defineProperties(d,b){for(var a=0;a<b.length;a++){var c=b[a];c.enumerable=c.enumerable||false;c.configurable=true;if("value" in c){c.writable=true}Object.defineProperty(d,c.key,c)}}function _createClass(c,a,b){if(a){_defineProperties(c.prototype,a)}if(b){_defineProperties(c,b)}return c}~function(c,b,a,d){var e=function(){function f(o,p){_classCallCheck(this,f);this.$eles=o;p=p||{};this.defaults={speed:"normal"};this.options=c.extend(true,{},this.defaults,p);this.options.speed=this.handleSpeed(this.options.speed);this.init()}_createClass(f,[{key:"init",value:function m(){this.handleEve()}},{key:"handleSpeed",value:function k(o){switch(o){case"slow":return 50;case"normal":return 30;case"fast":return 15}}},{key:"handleEve",value:function l(){var o=this;this.$eles.each(function(q,p){o.cloneNode(p);o.initValue(p);o.wrapDiv(p);o.move(p);o.handleHover(p)})}},{key:"cloneNode",value:function h(o){c(o).children().clone().appendTo(c(o))}},{key:"initValue",value:function j(q){q.num=0;var r=c(q).parents(":hidden").eq(c(q).parents(":hidden").length-1);r.css({display:"block"});var p=0;c(q).children().each(function(o,s){p+=c(s).outerHeight(true)});q.h=p/2;r.css({display:"none"})}},{key:"wrapDiv",value:function n(o){c(o).wrap(c('<div style="height: '.concat(o.h,'px; overflow: hidden;">')))}},{key:"move",value:function i(o){clearInterval(o.timer);o.timer=setInterval(function(){if(Math.abs(o.num)===o.h){o.num=0}else{c(o).css("transform","translateY("+o.num+"px)")}o.num--},this.options.speed)}},{key:"handleHover",value:function g(o){var p=this;c(o).hover(function(){clearInterval(o.timer)},function(){p.move(o)})}}]);return f}();c.fn.i5Scroll=function(f){new e(this,f)}}(jQuery,window,document);
+    </script>
+    <script>
+        $('.i35-title li').click(function () {
+            $(this).addClass('active').siblings().removeClass('active');
+            $('.content').eq($(this).index()).show().siblings('.content').hide();
+        });
+
+        $(".scroll").i5Scroll();
+    </script>
+</body>
+
+</html>
