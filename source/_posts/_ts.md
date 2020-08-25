@@ -763,7 +763,7 @@ const analyze = new Analyze();
 new Crowller(analyze, url);
 ```
 
-analyzer.ts
+analyze.ts
 
 ```javascript
 import fs from 'fs';
@@ -826,14 +826,14 @@ crowller.ts
 
 ```javascript
 const url = `http://www.dell-lee.com/typescript/demo.html?secret=x3b174jsx`;
-const analyzer = Analyzer.getInstance();
-new Crowller(analyzer, url);
+const analyze = Analyze.getInstance();
+new Crowller(analyze, url);
 ```
 
-analyzer.ts
+analyze.ts
 
 ```javascript
-export default class Anylyzer implements IAnalyzer {
+export default class Anylyzer implements IAnalyze {
     // ...
     private static instance: Anylyzer;
     static getInstance() {
@@ -1245,9 +1245,28 @@ func<string>(['hello']);
 
 ## 命名空间对应的模块化
 
-把一组东西封装进去 `namespace`，通过 `export` 对外提供统一的接口，想暴露哪个才暴露哪个
+可以把一组东西封装进去 `namespace`，通过 `export` 对外提供统一的接口，想暴露哪个才暴露哪个
+
+```
+tsc -init 或 tsc --init 生成配置文件
+```
+
+修改 tsconfig.json
+
+```javascript
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src",
+    }
+}
+```
 
 ### 问题
+
+过多全局变量，其实只需要暴露一个 Page 就好了
+
+`src/page.ts`
 
 ```javascript
 class Header {
@@ -1281,9 +1300,13 @@ class Page {
         new Footer();
     }
 }
+
+new Page();
 ```
 
 ### 解决
+
+`src/page.ts`
 
 ```javascript
 // change1
@@ -1327,7 +1350,7 @@ new Home.Page();
 
 ### 拆分
 
-components.ts
+`src/components.ts`
 
 ```javascript
 namespace Components {
@@ -1357,7 +1380,7 @@ namespace Components {
 }
 ```
 
-page.ts
+`src/page.ts`
 
 ```javascript
 // change1
@@ -1376,7 +1399,7 @@ namespace Home {
 index.html
 
 ```html
-<!-- 注意这里也引入的 components.js 文件 -->
+<!-- 注意这里也要引入的 components.js 文件 -->
 <script src="./dist/components.js"></script>
 <script src="./dist/page.js"></script>
 <script>
@@ -1392,6 +1415,7 @@ new Home.Page();
 tsconfig.json
 
 ```javascript
+// 注意，合并需要开始 amd，但这里打包后的代码并不是 amd 的形式
 {
     "module": "amd",
     "outFile": "./dist/page.js"
@@ -1404,9 +1428,7 @@ page.ts
 // 最好明确的表示命名空间的相互引用的关系，其实即便不写的话 Components 也能找到，因为 namespace Components 是全局的
 ///<reference path="./components.ts"/>
 
-// change1
 namespace Home {
-    // change2
     export class Page {
         constructor() {
             new Components.Header();
@@ -1415,6 +1437,7 @@ namespace Home {
         }
     }
 }
+new Home.Page();
 ```
 
 index.html
@@ -1423,9 +1446,45 @@ index.html
 <!-- 只需要引入一个 page.js 即可 -->
 <script src="./dist/page.js"></script>
 <script>
-new Home.Page();
 // new Components.Header(); // 同样也能使用 Components 下的内容
 </script>
+```
+
+命名空间也可以导出一个接口定义
+
+```javascript
+namespace Info {
+    // namespace 中也可以直接暴露一个接口定义
+    export interface User {
+        name: string;
+    }
+}
+
+namespace Home {
+    export class page {
+        // 用到了另一个命名空间的接口定义
+        user: Info.User = {
+            name: 'ifer'
+        }
+    }
+}
+```
+
+或者导出的是另一个命名空间也是 ok 的
+
+```javascript
+namespace Info {
+    // 命名空间中也可以直接再导出一个子命名空间
+    export namespace Sub {
+        export class Test {
+            constructor() {
+                console.log('hello world');
+            }
+        }
+    }
+}
+
+new Info.Sub.Test(); // hello world
 ```
 
 ## import 对应的模块化
@@ -1435,6 +1494,7 @@ new Home.Page();
 tsconfig.json
 
 ```javascript
+// 注意这里打包后的代码也是 amd 的形式
 {
     "module": "amd",
     "outFile": "./dist/page.js"
@@ -1508,7 +1568,7 @@ index.html
 </html>
 ```
 
-上面使用的 `require.js` 能帮助我们识别编译后的下面端语法
+上面使用的 `require.js` 能帮助我们识别编译后的下面的语法
 
 ```javascript
 define("page", ["require", "exports"], function (require, exports) {
@@ -1571,12 +1631,12 @@ jquery.d.ts
 ```javascript
 // 定义 $，冒号后面是类型定义！注意这里并不是函数实现
 // 类型定义文件也不需要实现，等号后面才是实现
-declare var $: (params: () => void) => void;
+declare var $: (params: () => void) => void; // 注意 var 声明函数，返回值用的是 =>
 ```
 
 ```javascript
 // 上面是导出一个变量 $，$ 装的是一个函数，其实也可以这样直接导出一个函数
-declare function $(params: () => void): void;
+declare function $(params: () => void): void; // function 声明函数，返回值用的是 :
 
 // 多次定义一个函数也是 ok 的，即函数重载
 declare function $(params: string): {
@@ -1606,9 +1666,11 @@ interface jQuery {
 declare var $: jQuery;
 ```
 
-上面接口的方式，当 $ `既是函数又是对象`的时候就不好弄了，还是需要配合 `namespace` 的形式
+上面接口的方式，当 $ `既是函数又是对象`的时候就不好弄了，还是需要配合 `namespace` 的形式，写法如下
 
 jquery.d.ts
+
+注意写到 `.d.ts` 中的代码只是类型定义，不是实现！
 
 ```javascript
 interface JqueryInstance {
@@ -1619,13 +1681,27 @@ interface JqueryInstance {
 declare function $(readyFunc: () => void): void;
 declare function $(selector: string): JqueryInstance;
 
-// 如何对对象进行类型的定义，对类该如何定义，命名空间的嵌套
-// new $.fn.init()
+// new $.fn.init()，类型定义文件命名空间中嵌套的其他内容，无需进行 export
 declare namespace $ {
     namespace fn {
         class init {}
     }
 }
+```
+
+下面才是实现，才会执行，命名空间中嵌套的其他内容，需要手动 export 才能被使用，注意和类型定义文件中的写法进行区分
+
+```javascript
+namespace $ {
+    export namespace fn {
+        export class init {
+            constructor() {
+                console.log(1);
+            }
+        }
+    }
+}
+new $.fn.init();
 ```
 
 page.ts
@@ -1638,6 +1714,10 @@ $(function() {
 ```
 
 ## ES6 方式类型定义
+
+```
+npm i jquery
+```
 
 jquery.d.ts
 
@@ -1757,11 +1837,28 @@ const info = teacher.getInfo('name');
 }
 ```
 
+`tsconfig.json`
+
+细化编译入口和出口
+
+```javascript
+{
+    "compilerOptions": {
+        "outDir": "./build", // 出口
+        "rootDir": "./src", // 入口
+    }
+}
+```
+
 ### 创建服务器及模块化路由
 
 需求：每次输入 `http://localhost:7001/getData` 都是爬取一次数据
 
-index.ts
+```
+yarn add express @types/express
+```
+
+`src/index.ts`
 
 ```javascript
 import express, { Request, Response } from 'express';
@@ -1774,19 +1871,19 @@ app.use(router);
 app.listen(7001, () => console.log('Server running on http://localhost:7001'));
 ```
 
-routes/index.js
+`src/routes/index.ts`
 
 ```javascript
 import { Router, Request, Response } from 'express';
 const router = Router();
 
 import Crowller from '../crowller';
-import Analyzer from '../analyzer';
+import Analyze from '../analyze';
 
 router.get('/getData', (req: Request, res: Response) => {
     const url = `http://www.dell-lee.com/typescript/demo.html?secret=x3b174jsx`;
-    const analyzer = Analyzer.getInstance();
-    new Crowller(analyzer, url); // 分析对象、要分析的地址
+    const analyze = Analyze.getInstance();
+    new Crowller(analyze, url); // 分析对象、要分析的地址
     res.send('get success');
 });
 
@@ -1795,9 +1892,27 @@ export default router;
 
 ### 输入密码跳转时获取数据
 
-输入正确密码跳转到 `/getData` 爬取数据
+```
+yarn add body-parser
+```
 
-routes/index.ts
+`src/index.ts`
+
+```javascript
+import express from 'express';
+import bodyParser from 'body-parser';
+import router from './routes';
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use(router);
+
+app.listen(7001, () => console.log('Server running on http://localhost:7001'));
+```
+
+输入正确密码跳转到 `/getData` 爬取数据，`src/routes/index.ts`
 
 ```javascript
 router.get('/', (req: Request, res: Response) => {
@@ -1817,7 +1932,11 @@ router.get('/', (req: Request, res: Response) => {
 ```javascript
 router.post('/getData', (req: Request, res: Response) => {
     if (req.body.password === '123') {
-        // ...
+        // 爬！
+        const url = `http://www.dell-lee.com/typescript/demo.html?secret=x3b174jsx`;
+        const analyze = Analyze.getInstance();
+        new Crowller(analyze, url); // 分析对象、要分析的地址
+        res.send('get success');
     } else {
         res.send('get error');
     }
@@ -1826,9 +1945,9 @@ router.post('/getData', (req: Request, res: Response) => {
 
 ### 问题解决
 
-问题1：Express 库的类型定义文件描述不准确，例如 `req.body.password` 的类型定义是 any
+问题1：Express 库的类型定义文件描述不准确，例如 `req.body.password` 推断出的类型是 any，因为接口 Request 的 body 中并没有关于 password 的任何定义
 
-route/index.ts
+`src/route/index.ts`
 
 ```javascript
 interface RequestWithBody extends Request {
@@ -1851,12 +1970,24 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 ```
 
+自定义的类型定义文件 `custom.d.ts`（名字叫什么无所谓），TS 会自动和原有的进行融合
+
 ```javascript
-// custom.d.ts, 自定义的类型定义文件，TS 会自动和原有的进行融合
 declare namespace Express {
     interface Request {
         username: string
     }
+}
+```
+
+或者直接在 `src/index.ts` 中定义
+
+```javascript
+/* interface RequestWithBody extends Request {
+    [propName: string]: any
+} */
+interface RequestWithBody extends Request {
+    username?: string; // 这里要加 ?，因为当给 req 指定 RequestWithBody 类型时，此时还不具备 username 属性呢
 }
 ```
 
@@ -1869,7 +2000,22 @@ npm install cookie-session
 npm install @types/cookie-session -D
 ```
 
+`src/index.ts`
+
+```javascript
+import cookieSession from 'cookie-session';
+app.use(
+    cookieSession({
+        name: 'session',
+        keys: [],
+        maxAge: 24 * 60 * 60 * 1000, // 24h
+    })
+);
+```
+
 首页显示登录框或退出按钮的判断
+
+`src/routes/index.ts`
 
 ```javascript
 router.get('/', (req: Request, res: Response) => {
@@ -1885,34 +2031,39 @@ router.get('/', (req: Request, res: Response) => {
             </html>
         `);
     } else {
-        res.send(`这里返回的是登录的 HTML 结构`);
+        res.send(`
+            <html>
+                <body>
+                    <form method="post" action="/getData">
+                        <input type="password" name="password"/>
+                        <button>提交</button>
+                    </form>
+                </body>
+            </html>
+        `);
     }
 });
 ```
 
-登录接口 `/login`
+登录接口
 
 ```javascript
-// routes/index.ts
-router.post('/login', (req: RequestWithBody, res: Response) => {
-    const { password } = req.body;
-    const isLogin = req.session ? req.session.login : false;
-
+router.post('/getData', (req: RequestWithBody, res: Response) => {
+    const isLogin = req.session ? req.session.login : undefined;
     if (isLogin) {
-        res.send('已经登陆过');
+        res.send('已经登录');
     } else {
-        if (password === '123' && req.session) {
-            // 通过对 req.session 是否存在的判断，来做一个类型保护
+        if (req.body.password === '123' && req.session) {
             req.session.login = true;
             res.send('登录成功');
-        } else { 
-            res.send('密码错误');
+        } else {
+            res.send('登录失败');
         }
     }
 });
 ```
 
-退出接口 `/logout`
+退出接口
 
 ```javascript
 router.get('/logout', (req: RequestWithBody, res: Response) => {
@@ -1924,7 +2075,7 @@ router.get('/logout', (req: RequestWithBody, res: Response) => {
 });
 ```
 
-爬取内容的接口 `/getData`
+爬取内容的接口
 
 ```javascript
 router.get('/getData', (req: RequestWithBody, res: Response) => {
@@ -1932,8 +2083,8 @@ router.get('/getData', (req: RequestWithBody, res: Response) => {
     // 判断用户的登录状态
     if (isLogin) {
         const url = `http://www.dell-lee.com/typescript/demo.html?secret=x3b174jsx`;
-        const analyzer = Analyzer.getInstance();
-        new Crowller(analyzer, url); // 分析对象、要分析的地址
+        const analyze = Analyze.getInstance();
+        new Crowller(analyze, url); // 分析对象、要分析的地址
         res.send('get success');
     } else {
         res.send('请登录后爬取内容');
@@ -1941,14 +2092,14 @@ router.get('/getData', (req: RequestWithBody, res: Response) => {
 });
 ```
 
-显示内容 `/showData`
+显示内容
 
 ```javascript
 router.get('/showData', (req: Request, res: Response) => {
     const isLogin = req.session ? req.session.login : false;
     if (isLogin) {
         try {
-            const position = path.join(__dirname, '../..', 'data', 'course.json');
+            const position = path.join(__dirname, '../..', 'data', 'courses.json');
             const result = fs.readFileSync(position, 'utf8');
             res.json(JSON.parse(result));
         } catch(e) {
@@ -1962,7 +2113,9 @@ router.get('/showData', (req: Request, res: Response) => {
 
 ### 优化代码
 
-优化 `/getData` 和 `/setData` 接口
+`src/routes/index.ts`
+
+统一登录拦截
 
 ```javascript
 const checkLogin = (req: BodyRequest, res: Response, next: NextFunction) => {
@@ -1975,17 +2128,25 @@ const checkLogin = (req: BodyRequest, res: Response, next: NextFunction) => {
 };
 ```
 
-统一后端返回的内容
+```javascript
+// 获取数据
+router.get('/getData', checkLogin, (req: BodyRequest, res: Response) => {});
+// 展示数据
+router.get('/showData', checkLogin, (req: Request, res: Response) => {});
+```
+
+统一后端返回内容格式
+
+`src/utils/index.ts`
 
 ```javascript
-// util.ts
 interface Result {
     success: boolean;
     errMsg?: string;
     data: any
 }
 
-export const getResponseData = (data: any, errMsg: string): Result => {
+export const getResponseData = (data: any, errMsg?: string): Result => {
     if (errMsg) {
         return {
             success: false,
@@ -2000,23 +2161,71 @@ export const getResponseData = (data: any, errMsg: string): Result => {
 };
 ```
 
+获取数据
+
 ```javascript
-router.get('/showData', checkLogin, (req: BodyRequest, res: Response) => {
+router.get('/getData', checkLogin, (req: Request, res: Response) => {
+    const url = `http://www.dell-lee.com/typescript/demo.html?secret=x3b174jsx`;
+    const analyze = Analyze.getInstance();
+    new Crowller(analyze, url); // 分析对象、要分析的地址
+    res.send(getResponseData(true));
+});
+```
+
+展示数据
+
+```javascript
+router.get('/showData', checkLogin, (req: Request, res: Response) => {
     try {
-        const position = path.join(__dirname, '../..', 'data', 'course.json');
+        const position = path.join(__dirname, '../..', 'data', 'courses.json');
         const result = fs.readFileSync(position, 'utf8');
         // res.json(JSON.parse(result));
-        res.json(getResponseData(JSON.parse(result)));
+        res.send(getResponseData(JSON.parse(result)));
     } catch(e) {
-        // res.send('尚未爬取到内容');
-        res.json(getResponseData(null, '尚未爬取到内容'));
+        res.send(getResponseData(false, '数据不存在'));
     }
 });
 ```
 
+登录
+
+```javascript
+router.post('/getData', (req: BodyRequest, res: Response) => {
+    const isLogin = req.session ? req.session.login : undefined;
+    if (isLogin) {
+        res.send(getResponseData(false, '已经登录过'));
+    } else {
+        if (req.body.password === '123' && req.session) {
+            req.session.login = true;
+            res.send(getResponseData(true));
+        } else {
+            res.send(getResponseData(false, '登录失败'));
+        }
+    }
+});
+```
+
+退出
+
+```javascript
+router.get('/logout', (req: BodyRequest, res: Response) => {
+    if (req.session) {
+        req.session.login = false;
+    }
+    res.send(getResponseData(true));
+});
+```
+
+
 ## 类的装饰器
 
-*使用装饰器前要先把 `tsconfig.json` 中的 `experimentalDecorators` 配置项打开*
+```
+npm init -y
+tsc --init
+npm i typescript ts-node -D
+```
+
+**使用装饰器前要先把 `tsconfig.json` 中的 `experimentalDecorators` 配置项打开**
 
 类装饰器：对类进行装饰(化妆)的工具，例如通过装饰器可以给类多增加一些内容，其本身是一个函数！
 
@@ -2071,8 +2280,10 @@ class Test {}
 
 ```javascript
 function testDecorator(flag: boolean) {
+    console.log('一上来这里会执行');
     if (flag) {
         return function(constructor: any) {
+            console.log('一上来这里也会执行');
             constructor.prototype.getName = () => {
                 console.log('ifer');
             };
@@ -2082,6 +2293,7 @@ function testDecorator(flag: boolean) {
     }
 }
 
+// 注意这里加括号了代表是一个调用！
 @testDecorator(true)
 class Test {}
 
@@ -2139,7 +2351,7 @@ console.log(test.getName()); // 终于他娘的有提示了
 
 ### 修饰类的方法
 
-普通方法：第一个参数 target 对应的是类的 prototype，key 是被装饰的方法的名字
+普通方法：第一个参数 target 对应的是【类的 prototype】，key 是被装饰的方法的名字
 
 ```javascript
 function getNameDecorator(target: any, key: string, descriptor: PropertyDescriptor) {
@@ -2163,23 +2375,6 @@ const test = new Test('ifer');
 console.log(test.getName());
 ```
 
-静态方法：第一个参数 target 对应的就是【类本身】，key 是被装饰的方法的名字
-
-```javascript
-function getNameDecorator(target: any, key: string, descriptor: PropertyDescriptor) {
-    target.prototype.age = 18;
-}
-
-class Test {
-    @getNameDecorator
-    static getName() {
-        return (this.prototype as any).age; // 注意静态方法中的 this 是类本身
-    }
-}
-
-console.log(Test.getName()); // 18
-```
-
 使用装饰器通过 `descriptor.value` 可以直接**修改被装饰的方法**，例如：
 
 ```javascript
@@ -2200,6 +2395,23 @@ class Test {
 
 const test = new Test('ifer');
 console.log(test.getName()); // elser
+```
+
+静态方法：第一个参数 target 对应的就是【类本身】，key 是被装饰的方法的名字
+
+```javascript
+function getNameDecorator(target: any, key: string, descriptor: PropertyDescriptor) {
+    target.prototype.age = 18;
+}
+
+class Test {
+    @getNameDecorator
+    static getName() {
+        return (this.prototype as any).age; // 注意静态方法中的 this 是类本身
+    }
+}
+
+console.log(Test.getName()); // 18
 ```
 
 ### 访问器的装饰器
@@ -2252,19 +2464,20 @@ class Test {
 new Test();
 ```
 
-通过装饰器并不能直接修改该属性的值，可以修改原型上的
+通过装饰器并不能直接修改实例属性的值，可以修改原型上的
 
 ```javascript
 // target: Test 对应的 prototype
 // key 装饰的属性的名字
 function nameDecorator(target: any, key: string): any {
-    // 这里不能直接拿到 Test，类必须先声明再使用，不好证明 target.constructor === Test
+    // console.log(target === Test.prototype); // true
     // 修改的是原型上的 name
     target[key] = 'elser';
 }
 
 class Test {
     @nameDecorator
+    // 注意这里是实例属性上的 name，类似于 constructor 中 this.name = 'ifer'
     name = 'ifer'
 }
 const test = new Test();
@@ -2559,7 +2772,7 @@ import { Request, Response, NextFunction } from 'express';
 import { controller, get, use } from './decorator';
 import { getResponseData } from '../utils/util';
 import Crowller from '../utils/crowller';
-import Analyzer from '../utils/analyzer';
+import Analyze from '../utils/analyze';
 interface BodyRequest extends Request {
     body: {
         [key: string]: string | undefined;
@@ -2582,8 +2795,8 @@ class CrowllerController {
     @use(checkLogin)
     getData(req: BodyRequest, res: Response) {
         const url = `http://www.dell-lee.com/typescript/demo.html?secret=x3b174jsx`;
-        const analyzer = Analyzer.getInstance();
-        new Crowller(analyzer, url); // 分析对象、要分析的地址
+        const analyze = Analyze.getInstance();
+        new Crowller(analyze, url); // 分析对象、要分析的地址
         // res.send('get success');
         res.send(getResponseData(true));
     }
