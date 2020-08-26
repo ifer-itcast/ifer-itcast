@@ -3139,3 +3139,79 @@ export function controller(root: string) {
     }
 }
 ```
+
+### 支持多个中间件
+
+`src/decorator/use.ts`
+
+```javascript
+import 'reflect-metadata';
+import { RequestHandler } from 'express';
+import { CrowllerController, LoginController } from '../controller';
+
+export function use(middleware: RequestHandler) {
+    return function(target: CrowllerController | LoginController, key: string) {
+        const originMiddlewares = Reflect.getMetadata('middlewares', target, key) || [];
+        originMiddlewares.push(middleware);
+        // 把中间件变成了【方法的元数据】
+        Reflect.defineMetadata('middlewares', originMiddlewares, target, key);
+    };
+}
+```
+
+`src/decorator/controller.ts`
+
+```javascript
+import { RequestHandler } from 'express';
+import router from '../routes';
+import { Methods } from './request';
+
+export function controller(root: string) {
+    return function (target: new (...args: any[]) => any) {
+        for (let key in target.prototype) {
+            // 从类的原型的方法上获取 path
+            const path: string = Reflect.getMetadata('path', target.prototype, key);
+            const method: Methods = Reflect.getMetadata('method', target.prototype,key);
+            const middlewares: RequestHandler[] = Reflect.getMetadata('middlewares', target.prototype, key);
+            const handler = target.prototype[key];
+            if (path && method) {
+                const foolPath = root === '/' ? path : `${root}${path}`;
+                if (middlewares && middlewares.length) {
+                    router[method](foolPath, ...middlewares, handler);
+                } else {
+                    router[method](foolPath, handler);
+                }
+            }
+        }
+    }
+}
+```
+
+测试
+
+`src/controller/CrowllerController.ts`
+
+```javascript
+const checkLogin = (req: BodyRequest, res: Response, next: NextFunction): void => {
+    console.log('checkLogin~~~~~~~~~~~~~~');
+    next();
+};
+
+const test = (req: BodyRequest, res: Response, next: NextFunction): void => {
+    console.log('test~~~~~~~~~~~~~~');
+    next();
+};
+
+@controller('/')
+export class CrowllerController {
+    @get('/getData')
+    @use(checkLogin)
+    @use(test)
+    getData(req: BodyRequest, res: Response): void {
+        const url = `http://www.dell-lee.com/typescript/demo.html?secret=x3b174jsx`;
+        const analyze = Analyze.getInstance();
+        new Crowller(analyze, url); // 分析对象、要分析的地址
+        res.send(getResponseData(true));
+    }
+}
+```
