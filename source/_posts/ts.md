@@ -1919,7 +1919,7 @@ router.get('/', (req: Request, res: Response) => {
     res.send(`
         <html>
             <body>
-                <form method="post" action="/getData">
+                <form method="post" action="/login">
                     <input type="password" name="password"/>
                     <button>提交</button>
                 </form>
@@ -2034,7 +2034,7 @@ router.get('/', (req: Request, res: Response) => {
         res.send(`
             <html>
                 <body>
-                    <form method="post" action="/getData">
+                    <form method="post" action="/login">
                         <input type="password" name="password"/>
                         <button>提交</button>
                     </form>
@@ -2303,11 +2303,12 @@ const test = new Test();
 
 上面写法的问题是：使用 test 实例时并没有 getName 方法提示出来，该如何去解决呢？
 
-先来看一个基本操作
+先来看一个基本操作，不同的类的 constructor 类型应该是不同的
 
 ```javascript
 // (...args: any[]) => any 返回值为 any 类型的函数
-// 接收了很多的参数，合并到了 args数组上，数组的每一项都是 any 类型
+// 接收了很多的参数，合并到了 args 数组上，数组的每一项都是 any 类型
+// 接收了很多的参数，参数的每一项都是 any 类型
 // new (...args: any[]) => any，代表 new 了一个返回值为 any 类型的构造函数
 // T 可以理解为具备此构造函数实例的一个东西
 function testDecorator<T extends new (...args: any[]) => any>(constructor: T) {
@@ -2564,6 +2565,10 @@ t.getAge();
 
 ## Express 代码改造
 
+```
+npm i reflect-metadata
+```
+
 ```javascript
 // tsconfig.json
 {
@@ -2581,49 +2586,62 @@ t.getAge();
 }
 ```
 
-### 迁移 GET 路由
+### 方法上元数据的定义和获取
 
-#### routes/index.ts
+`src/controller/decorator.ts`
 
 ```javascript
-router.get('/', (req: BodyRequest, res: Response) => {
-    const isLogin = req.session ? req.session.login : false;
-    if (isLogin) {
-        res.send(`
-            <html>
-                <body>
-                    <a href="/getData">爬取内容</a>
-                    <a href="/showData">展示内容</a>
-                    <a href="/logout">退出</a>
-                </body>
-            </html>
-        `);
-    } else {
-        res.send(`
-            <html>
-                <body>
-                    <form method="post" action="/login">
-                        <input type="password" name="password"/>
-                        <button>登录</button>
-                    </form>
-                </body>
-            </html>
-        `);
+export function controller(target: any) {
+    for(let key in target.prototype) {
+        // 从类的原型的方法上获取 path
+        console.log(Reflect.getMetadata('path', target.prototype, key));
     }
-});
+}
+
+export function get(path: string) {
+    return function(target: any, key: string) {
+        // 'path', /login(定义的数据), 类的原型, login(方法名字)
+        // 往类的原型的方法上定义数据 path
+        Reflect.defineMetadata('path', path, target, key);
+    }
+}
 ```
 
-#### controller/LoginController.ts
+`src/controller/LoginController.ts`
 
 ```javascript
 import 'reflect-metadata';
-import { Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import { controller, get } from './decorator';
-import { getResponseData } from '../utils/util';
+
+@controller
+class LoginController {
+    @get('/login')
+    login() {
+        // ...
+    }
+
+    @get('/')
+    home(req: Request, res: Response) {
+        // ...
+    }
+}
+```
+
+### 迁移登录和退出GET路由
+
+`src/controller/LoginController.ts`
+
+```javascript
+import 'reflect-metadata';
+import { Router, Request, Response, NextFunction } from 'express';
+import { controller, get } from './decorator';
+import { getResponseData } from '../utils';
+
 interface BodyRequest extends Request {
     body: {
         [key: string]: string | undefined;
-    }
+    };
 }
 
 @controller
@@ -2639,7 +2657,7 @@ class LoginController {
     }
 
     @get('/')
-    home(req: BodyRequest, res: Response) {
+    home(req: Request, res: Response) {
         const isLogin = req.session ? req.session.login : false;
         if (isLogin) {
             res.send(`
@@ -2657,7 +2675,7 @@ class LoginController {
                     <body>
                         <form method="post" action="/login">
                             <input type="password" name="password"/>
-                            <button>登录</button>
+                            <button>提交</button>
                         </form>
                     </body>
                 </html>
@@ -2667,116 +2685,131 @@ class LoginController {
 }
 ```
 
-#### controller/decorator.ts
-
-```javascript
-import { Router } from 'express';
-export const router = Router();
-
-export function controller(target: any) {
-    for(let key in target.prototype) {
-        // Step2: 想使用的时候通过 'path' 去获取，'path' 只是个名字而已
-        const path = Reflect.getMetadata('path', target.prototype, key);
-        const handler = target.prototype[key];
-        if (path) {
-            router.get(path, handler);
-        }
-    }
-}
-
-export function get(path: string) {
-    return function(target: any, key: string) {
-        // Step1: key, value, 存储到 target 对应的 key 上面去
-        Reflect.defineMetadata('path', path, target, key);
-    }
-}
-```
-
-#### src/index.ts
+`src/index.ts`
 
 ```javascript
 import './controller/LoginController';
 import { router } from './controller/decorator';
 ```
 
-### 迁移 POST 路由
+`src/routes/index.ts` 可以全部注释了
+
+### 迁移登录 POST 路由
+
+`src/controller/decorator.ts`
 
 ```javascript
-// controller/LoginController.ts
-class LoginController {
-    @post('/login')
-    login(req: BodyRequest, res: Response) {
-    }
-}
-```
+import { Router } from 'express';
+export const router = Router();
 
-```javascript
-// controller/decorator.ts
 enum Method {
     get = 'get',
-    post = 'post'
-};
+    post = 'post',
+}
 
-// target => 类
 export function controller(target: any) {
-    for(let key in target.prototype) {
+    for (let key in target.prototype) {
+        // 从类的原型的方法上获取 path
         const path = Reflect.getMetadata('path', target.prototype, key);
-        const method: Method = Reflect.getMetadata('method', target.prototype, key);
+        const method: Method = Reflect.getMetadata(
+            'method',
+            target.prototype,
+            key
+        );
         const handler = target.prototype[key];
         if (path && method && handler) {
+            // 生成路由
             router[method](path, handler);
         }
     }
 }
 
 export function get(path: string) {
-    return function(target: any, key: string) {
+    return function (target: any, key: string) {
+        // 'path', /login(定义的数据), 类的原型, login(方法名字)
+        // 往类的原型的方法上定义数据 path
         Reflect.defineMetadata('path', path, target, key);
         Reflect.defineMetadata('method', 'get', target, key);
-    }
+    };
 }
 
 export function post(path: string) {
-    return function(target: any, key: string) {
+    return function (target: any, key: string) {
         Reflect.defineMetadata('path', path, target, key);
         Reflect.defineMetadata('method', 'post', target, key);
-    }
+    };
 }
 ```
 
-优化上面的操作
+优化上面 decorator 代码
+
+`src/controller/decorator.ts`
 
 ```javascript
+// Factory
 function getRequestDecorator(type: string) {
-    return function(path: string) {
-        return function(target: any, key: string) {
+    return function post(path: string) {
+        return function (target: any, key: string) {
             Reflect.defineMetadata('path', path, target, key);
             Reflect.defineMetadata('method', type, target, key);
-        }
-    }
+        };
+    }   
 }
-
 export const get = getRequestDecorator('get');
 export const post = getRequestDecorator('post');
 ```
 
-### 爬取数据相关
+`src/controller/LoginController.ts`
 
-新建 `controller/CrowllerController.ts`
+```javascript
+import 'reflect-metadata';
+import { Router, Request, Response, NextFunction } from 'express';
+import { controller, get, post } from './decorator';
+import { getResponseData } from '../utils';
+
+interface BodyRequest extends Request {
+    body: {
+        [key: string]: string | undefined;
+    };
+}
+
+@controller
+class LoginController {
+    @post('/login')
+    login(req: BodyRequest, res: Response) {
+        const isLogin = req.session ? req.session.login : undefined;
+        if (isLogin) {
+            res.send(getResponseData(false, '已经登录过'));
+        } else {
+            if (req.body.password === '123' && req.session) {
+                req.session.login = true;
+                res.send(getResponseData(true));
+            } else {
+                res.send(getResponseData(false, '登录失败'));
+            }
+        }
+    }
+}
+```
+
+### 迁移 getData 和 showData 路由
+
+`src/controller/CrowllerController.ts`
 
 ```javascript
 import fs from 'fs';
 import path from 'path';
 import 'reflect-metadata';
-import { Request, Response, NextFunction } from 'express';
-import { controller, get, use } from './decorator';
-import { getResponseData } from '../utils/util';
-import Crowller from '../utils/crowller';
-import Analyze from '../utils/analyze';
+import { Router, Request, Response, NextFunction } from 'express';
+import { controller, get, post, use } from './decorator';
+import { getResponseData } from '../utils';
+import Crowller from '../crowller';
+import Analyze from '../analyze';
+
 interface BodyRequest extends Request {
     body: {
         [key: string]: string | undefined;
-    }
+    };
 }
 
 const checkLogin = (req: BodyRequest, res: Response, next: NextFunction) => {
@@ -2784,7 +2817,6 @@ const checkLogin = (req: BodyRequest, res: Response, next: NextFunction) => {
     if (isLogin) {
         next();
     } else {
-        // res.send('请先登录');
         res.send(getResponseData(null, '请先登录'));
     }
 };
@@ -2797,33 +2829,36 @@ class CrowllerController {
         const url = `http://www.dell-lee.com/typescript/demo.html?secret=x3b174jsx`;
         const analyze = Analyze.getInstance();
         new Crowller(analyze, url); // 分析对象、要分析的地址
-        // res.send('get success');
         res.send(getResponseData(true));
     }
 
     @get('/showData')
     @use(checkLogin)
-    showData(req: BodyRequest, res: Response){
+    showData(req: BodyRequest, res: Response) {
         try {
-            const position = path.join(__dirname, '../..', 'data', 'course.json');
+            const position = path.join(__dirname, '../..', 'data', 'courses.json');
             const result = fs.readFileSync(position, 'utf8');
             res.send(getResponseData(JSON.parse(result)));
         } catch(e) {
-            res.send(getResponseData(null, '尚未爬取到内容'));
+            res.send(getResponseData(false, '数据不存在'));
         }
     }
 }
 ```
 
-修改 `controller/decorator.ts`
+`src/controller/decorator.ts`
 
 ```javascript
+import { Router, RequestHandler } from 'express';
+export const router = Router();
+
 export function controller(target: any) {
-    for(let key in target.prototype) {
+    for (let key in target.prototype) {
+        // 从类的原型的方法上获取 path
         const path = Reflect.getMetadata('path', target.prototype, key);
         const method: Method = Reflect.getMetadata('method', target.prototype, key);
-        const handler = target.prototype[key];
         const middleware = Reflect.getMetadata('middleware', target.prototype, key);
+        const handler = target.prototype[key];
         if (path && method && handler) {
             if (middleware) {
                 router[method](path, middleware, handler);
@@ -2834,71 +2869,84 @@ export function controller(target: any) {
     }
 }
 
-// 中间件的类型：RequestHandle
 export function use(middleware: RequestHandler) {
     return function(target: any, key: string) {
+        // 把中间件变成了【方法的元数据】
         Reflect.defineMetadata('middleware', middleware, target, key);
-    }
+    };
 }
 ```
 
-在 `src/index.ts` 中执行 `CrowllerController.ts`
+最后不要忘了在 `src/index.ts` 中执行下装饰器 `import './controller/CrowllerController';`
 
-```javascript
-import './controller/CrowllerController';
-```
+### 代码结构优化
 
-### 代码优化
+统一路由引用
 
-创建路由的代码应该独立出来，新建 src/router.ts
+`src/routes/index.ts`
 
 ```javascript
 import { Router } from 'express';
 export default Router();
 ```
 
-src/controller/decorator.ts 和 src/index.ts
+`src/index.ts`
 
 ```javascript
-import router from '../router';
+import router from './routes';
 ```
 
-限制传入请求的类型：src/controller/decorator.ts
+`src/controller/decorator.ts`
+
+```javascript
+import router from '../routes';
+```
+
+枚举类型优化
+
+`src/controller/decorator.ts`
 
 ```javascript
 enum Methods {
     get = 'get',
-    post = 'post'
-};
-function getRequestDecorator(type: Methods) {}
+    post = 'post',
+}
+function getRequestDecorator(type: Methods) {
+    return function post(path: string) {
+        return function (target: any, key: string) {
+            Reflect.defineMetadata('path', path, target, key);
+            Reflect.defineMetadata('method', type, target, key);
+        };
+    }   
+}
 
 export const get = getRequestDecorator(Methods.get);
 export const post = getRequestDecorator(Methods.post);
 ```
 
-提取 decorator.ts 中的代码，src/decorator/index.ts
+独立 controller 装饰器为单独文件
+
+`src/decorator/controller.ts`
 
 ```javascript
-export * from './controller';
-```
-
-src/decorator/controller.ts
-
-```javascript
-import router from '../router';
+import router from '../routes';
 
 enum Methods {
     get = 'get',
-    post = 'post'
-};
+    post = 'post',
+}
 
-// target => 类
 export function controller(target: any) {
-    for(let key in target.prototype) {
+    for (let key in target.prototype) {
+        // 从类的原型的方法上获取 path
         const path = Reflect.getMetadata('path', target.prototype, key);
-        const method: Methods = Reflect.getMetadata('method', target.prototype, key);
-        const handler = target.prototype[key];
+        const method: Methods = Reflect.getMetadata(
+            'method',
+            target.prototype,
+            key
+        );
         const middleware = Reflect.getMetadata('middleware', target.prototype, key);
+        const handler = target.prototype[key];
         if (path && method && handler) {
             if (middleware) {
                 router[method](path, middleware, handler);
@@ -2910,33 +2958,124 @@ export function controller(target: any) {
 }
 ```
 
-controller/CrowllerController.ts 和 controller/LoginController.ts 中引入 controller 的代码修改如下：
+`src/decorator/use.ts`
 
 ```javascript
-import { controller } from '../decorator'
+import 'reflect-metadata';
+import { RequestHandler } from 'express';
+
+export function use(middleware: RequestHandler) {
+    return function(target: any, key: string) {
+        // 把中间件变成了【方法的元数据】
+        Reflect.defineMetadata('middleware', middleware, target, key);
+    };
+}
 ```
 
-其他 use 和 getRequestDecorator 等装饰器也是如上操作
-
-其他优化
+`src/decorator/request.ts`
 
 ```javascript
-// isLogin 的推断是 boolean 类型
-const isLogin = !!(req.session ? req.session.login : false);
+enum Methods {
+    get = 'get',
+    post = 'post',
+}
+
+// Factory
+function getRequestDecorator(type: Methods) {
+    return function post(path: string) {
+        return function (target: any, key: string) {
+            Reflect.defineMetadata('path', path, target, key);
+            Reflect.defineMetadata('method', type, target, key);
+        };
+    }   
+}
+
+export const get = getRequestDecorator(Methods.get);
+export const post = getRequestDecorator(Methods.post);
+```
+
+`src/decorator/index.ts`
+
+```javascript
+export * from './controller';
+export * from './use';
+export * from './request';
+```
+
+`src/controller/CrowllerController.ts` 和 `src/controller/LoginController.ts`
+
+```javascript
+import { controller, get, post } from '../decorator';
+```
+
+### 其他优化
+
+明确指定返回类型为空的情况
+
+`src/controller/CrowllerController.ts`，`src/controller/LoginController.ts` 同理
+
+```javascript
+const checkLogin = (req: BodyRequest, res: Response, next: NextFunction): void => {};
+
+@controller
+class CrowllerController {
+    @get('/getData')
+    @use(checkLogin)
+    getData(req: BodyRequest, res: Response): void {
+    }
+
+    @get('/showData')
+    @use(checkLogin)
+    showData(req: BodyRequest, res: Response): void {
+    }
+}
+```
+
+isLogin 应该为 布尔 类型
+
+```javascript
+const isLogin = !!(req.session ? req.session.login : undefined);
 ```
 
 ```javascript
-export function controller(target: new (...arg: any[]) => any) {}
+@controller
+class LoginController {
+    static isLogin(req: BodyRequest) {
+        return !!(req.session ? req.session.login : undefined);
+    }
+    @post('/login')
+    login(req: BodyRequest, res: Response): void {
+        // 类并没有被实例化，不能用 this.isLogin，即便上面定义 isLogin 作为原型方法存在也不行
+        const isLogin = LoginController.isLogin(req);
+    }
+
+    @get('/')
+    home(req: Request, res: Response): void {
+        const isLogin = LoginController.isLogin(req);
+    }
+}
 ```
 
+类型注解
+
+`src/decorator/controller.ts`
+
 ```javascript
-// 类型优化
-export function controller(target: new (...arg: any[]) => any) {
-    for(let key in target.prototype) {
+import { RequestHandler } from 'express';
+import router from '../routes';
+
+enum Methods {
+    get = 'get',
+    post = 'post',
+}
+
+export function controller(target: new (...args: any[]) => any) {
+    for (let key in target.prototype) {
+        // 从类的原型的方法上获取 path
         const path: string = Reflect.getMetadata('path', target.prototype, key);
-        const method: Methods = Reflect.getMetadata('method', target.prototype, key);
+        const method: Methods = Reflect.getMetadata('method', target.prototype,key);
         const middleware: RequestHandler = Reflect.getMetadata('middleware', target.prototype, key);
-        const handler = target.prototype[key]; // handler 一定存在
+        const handler = target.prototype[key];
         if (path && method) {
             if (middleware) {
                 router[method](path, middleware, handler);
@@ -2948,83 +3087,52 @@ export function controller(target: new (...arg: any[]) => any) {
 }
 ```
 
-优化 decorator/request.ts 的类型，意义不大，了解即可！
+`src/decorator/request.ts` 和 `src/decorator/use.ts`  target 类型优化
 
 ```javascript
+
 import { CrowllerController, LoginController } from '../controller';
+
 function getRequestDecorator(type: Methods) {
-    return function(path: string) {
-        return function(target: CrowllerController | LoginController, key: string) {
-            // ...
-        }
-    }
+    return function post(path: string) {
+        return function (target: CrowllerController | LoginController, key: string) {
+            Reflect.defineMetadata('path', path, target, key);
+            Reflect.defineMetadata('method', type, target, key);
+        };
+    }   
 }
 ```
 
-增强 controller 功能
+`src/controller/index.ts`，注意 controller 中记得导出上面才能使用
 
 ```javascript
+export * from './CrowllerController';
+export * from './LoginController';
+```
+
+**扩展 controller 功能**
+
+`src/decorator/controller.ts`
+
+```javascript
+import { RequestHandler } from 'express';
+import router from '../routes';
+import { Methods } from './request';
+
 export function controller(root: string) {
-    return function(target: new (...arg: any[]) => any) {
-        for(let key in target.prototype) {
+    return function (target: new (...args: any[]) => any) {
+        for (let key in target.prototype) {
+            // 从类的原型的方法上获取 path
             const path: string = Reflect.getMetadata('path', target.prototype, key);
-            const method: Methods = Reflect.getMetadata('method', target.prototype, key);
+            const method: Methods = Reflect.getMetadata('method', target.prototype,key);
             const middleware: RequestHandler = Reflect.getMetadata('middleware', target.prototype, key);
-            const handler = target.prototype[key]; // handler 一定存在
+            const handler = target.prototype[key];
             if (path && method) {
-                const fullPath = root === '/' ? path : `${root}${path}`;
+                const foolPath = root === '/' ? path : `${root}${path}`;
                 if (middleware) {
-                    router[method](fullPath, middleware, handler);
+                    router[method](foolPath, middleware, handler);
                 } else {
-                    router[method](fullPath, handler);
-                }
-            }
-        }
-    }
-}
-```
-
-### 支持多个中间件
-
-```javascript
-// 定义多个中间件的话，上面定义的会覆盖下面定义的，只会走一个 console
-const checkLogin = (req: BodyRequest, res: Response, next: NextFunction): void => {
-    console.log('hello world222222');
-};
-const test = (req: BodyRequest, res: Response, next: NextFunction): void => {
-    console.log('hello world111111111');
-};
-```
-
-use.ts
-
-```javascript
-export function use(middleware: RequestHandler) {
-    return function(target: CrowllerController|LoginController, key: string) {
-        // 从 target 的 key 上面先取数据
-        const originMiddlewares = Reflect.getMetadata('middlewares', target, key) || [];
-        originMiddlewares.push(middleware);
-        Reflect.defineMetadata('middlewares', originMiddlewares, target, key);
-    }
-}
-```
-
-controller.ts
-
-```javascript
-export function controller(root: string) {
-    return function(target: new (...arg: any[]) => any) {
-        for(let key in target.prototype) {
-            const path: string = Reflect.getMetadata('path', target.prototype, key);
-            const method: Methods = Reflect.getMetadata('method', target.prototype, key);
-            const middlewares: RequestHandler[] = Reflect.getMetadata('middlewares', target.prototype, key);
-            const handler = target.prototype[key]; // handler 一定存在
-            if (path && method) {
-                const fullPath = root === '/' ? path : `${root}${path}`;
-                if (middlewares && middlewares.length) {
-                    router[method](fullPath, ...middlewares, handler);
-                } else {
-                    router[method](fullPath, handler);
+                    router[method](foolPath, handler);
                 }
             }
         }
