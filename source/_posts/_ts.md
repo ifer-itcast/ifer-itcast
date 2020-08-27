@@ -3215,3 +3215,71 @@ export class CrowllerController {
     }
 }
 ```
+
+## 前端使用 TS
+
+```
+npx create-react-app my-app --typescript
+```
+
+```
+yarn add antd react-router-dom @types/react-router-dom
+```
+
+`src/pages/Login/index.tsx`
+
+```javascript
+import React, { memo } from 'react';
+import { Form, Input, Button } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import './login.css';
+
+export default memo(function Login() {
+    const onFinish = (values: any) => {
+        console.log(values);
+    };
+    const onFinishFailed = (errorInfo: any) => {
+        console.log(errorInfo);
+    };
+    return (
+        <div className="login-page">
+            <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Form.Item
+                    name="password"
+                    rules={[{ required: true, message: '请输入密码' }]}
+                >
+                    <Input.Password
+                        prefix={<UserOutlined style={{ color: '#D9D9D9' }} />}
+                        placeholder="请输入密码"
+                    />
+                </Form.Item>
+                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                    <Button type="primary" htmlType="submit">
+                        Submit
+                    </Button>
+                </Form.Item>
+            </Form>
+        </div>
+    );
+});
+```
+
+`src/App.tsx`
+
+```javascript
+import React from 'react';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import Login from './pages/Login';
+
+const App: React.FC = () => {
+    return (
+        <Router>
+            <Switch>
+                <Route path="/login" exact component={Login} />
+            </Switch>
+        </Router>
+    );
+};
+
+export default App;
+```
