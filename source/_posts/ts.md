@@ -3223,8 +3223,10 @@ npx create-react-app my-app --typescript
 ```
 
 ```
-yarn add antd react-router-dom @types/react-router-dom
+yarn add antd react-router-dom @types/react-router-dom axios
 ```
+
+### 登录页面
 
 `src/pages/Login/index.tsx`
 
@@ -3282,4 +3284,605 @@ const App: React.FC = () => {
 };
 
 export default App;
+```
+
+### Home 页面
+
+`src/App.tsx`
+
+```javascript
+import React from 'react';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './pages/Home';
+
+const App: React.FC = () => {
+    return (
+        <Router>
+            <Switch>
+                <Route path="/" exact component={Home} />
+            </Switch>
+        </Router>
+    );
+};
+
+export default App;
+```
+
+`src/pages/Home/index.tsx`
+
+```javascript
+import React, { memo } from 'react'
+import { Button } from 'antd';
+import './style.css';
+
+export default memo(function index() {
+    return (
+        <div className="home-page">
+            <Button type="primary">爬取</Button>
+            <Button type="primary">展示</Button>
+            <Button type="primary">退出</Button>
+        </div>
+    )
+})
+```
+
+`src/pages/Home/style.css`
+
+```javascript
+.home-page {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 4px;
+}
+.home-page button {
+    margin: 0 30px;
+}
+```
+
+### 登录检测
+
+`package.json`
+
+```javascript
+{
+    "proxy": "http://localhost:7001"
+}
+```
+
+后端代码补充
+
+`src/controller/LoginController.ts`
+
+```javascript
+@controller('/')
+export class LoginController {
+    static isLogin(req: BodyRequest) {
+        return !!(req.session ? req.session.login : undefined);
+    }
+    @get('/api/isLogin')
+    isLogin(req: BodyRequest, res: Response): void {
+        const isLogin = LoginController.isLogin(req);
+        res.json(getResponseData(isLogin));
+    }
+}
+```
+
+`src/pages/Home/index.tsx`
+
+```javascript
+import React, { Component } from 'react';
+import { Button } from 'antd';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import './style.css';
+
+export default class Home extends Component {
+    state = {
+        isLogin: true,
+        loaded: false,
+    };
+    componentDidMount() {
+        axios.get('/api/isLogin').then(res => {
+            if (!res.data.data) {
+                this.setState({
+                    isLogin: false,
+                    loaded: true,
+                });
+            }
+        });
+    }
+    render() {
+        const { isLogin, loaded } = this.state;
+        if (isLogin) {
+            if (loaded) {
+                return (
+                    <div className="home-page">
+                        <Button type="primary">爬取</Button>
+                        <Button type="primary">展示</Button>
+                        <Button type="primary">退出</Button>
+                    </div>
+                );
+            }
+            return null;
+        }
+        return <Redirect to="/login" />;
+    }
+}
+```
+
+### 登录和退出
+
+`src/pages/Login/index.tsx`
+
+```javascript
+import React from 'react';
+import { Form, Input, Button, message } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import qs from 'qs';
+import './index.css';
+
+export default class extends React.Component {
+    state = {
+        isLogin: false,
+    };
+    onFinish = async (values: any) => {
+        const { data } = await axios.post('/api/login', qs.stringify(values), {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+        if (data.data) {
+            this.setState({ isLogin:true });
+        } else {
+            message.error(data.errMsg);
+        }
+    };
+    onFinishFailed = (errorInfo: any) => {
+        console.log(errorInfo);
+    };
+    render() {
+        const { isLogin } = this.state;
+        return isLogin
+            ? <Redirect to="/" />
+            : <div className="login-page">
+                  <Form
+                      onFinish={this.onFinish}
+                      onFinishFailed={this.onFinishFailed}
+                  >
+                      <Form.Item
+                          name="password"
+                          rules={[{ required: true, message: '请输入密码' }]}
+                      >
+                          <Input.Password
+                              prefix={
+                                  <UserOutlined style={{ color: '#D9D9D9' }} />
+                              }
+                              placeholder="请输入密码"
+                          />
+                      </Form.Item>
+                      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                          <Button type="primary" htmlType="submit">
+                              Submit
+                          </Button>
+                      </Form.Item>
+                  </Form>
+              </div>;
+    }
+}
+```
+
+`src/pages/Home/index.tsx`
+
+```javascript
+import React, { Component } from 'react';
+import { Button, message } from 'antd';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import './style.css';
+
+export default class Home extends Component {
+    state = {
+        isLogin: true,
+        loaded: false,
+    };
+    componentDidMount() {
+        // Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.in Home (created by Context.Consumer)
+        axios.get('/api/isLogin').then(res => {
+            if (!res.data.data) {
+                this.setState({
+                    isLogin: false,
+                    loaded: true,
+                });
+            } else {
+                this.setState({
+                    loaded: true,
+                });
+            }
+        });
+    }
+    handleLogoutClick = () => {
+        axios.get('/api/logout').then(res => {
+            if (res.data.data) {
+                this.setState({
+                    isLogin: false,
+                });
+            } else {
+                message.error('退出失败');
+            }
+        });
+    };
+    render() {
+        const { isLogin, loaded } = this.state;
+        if (isLogin) {
+            if (loaded) {
+                return (
+                    <div className="home-page">
+                        <Button type="primary">爬取</Button>
+                        <Button type="primary">展示</Button>
+                        <Button type="primary" onClick={this.handleLogoutClick}>
+                            退出
+                        </Button>
+                    </div>
+                );
+            }
+            return null;
+        }
+        return <Redirect to="/login" />;
+    }
+}
+```
+
+### 爬取数据
+
+`src/pages/Home/index.tsx`
+
+```javascript
+export default class Home extends Component {
+    handleCrowllerClick = () => {
+        axios.get('/api/getData').then(res => {
+            if (res.data.data) {
+                message.success('爬取成功');
+            } else {
+                message.error('爬取失败');
+            }
+        });
+    };
+}
+```
+
+### 数据展示
+
+```
+npm install --save echarts-for-react
+npm install --save echarts @types/echarts
+```
+
+```javascript
+import React, { Component } from 'react';
+import { Button, message } from 'antd';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import ReactEcharts from 'echarts-for-react';
+import './style.css';
+
+export default class Home extends Component {
+    state = {
+        isLogin: true,
+        loaded: false,
+    };
+    componentDidMount() {
+        // Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.in Home (created by Context.Consumer)
+        axios.get('/api/isLogin').then(res => {
+            if (!res.data.data) {
+                this.setState({
+                    isLogin: false,
+                    loaded: true,
+                });
+            } else {
+                this.setState({
+                    loaded: true,
+                });
+            }
+        });
+    }
+    handleLogoutClick = () => {
+        axios.get('/api/logout').then(res => {
+            if (res.data.data) {
+                this.setState({
+                    isLogin: false,
+                });
+            } else {
+                message.error('退出失败');
+            }
+        });
+    };
+    handleCrowllerClick = () => {
+        axios.get('/api/getData').then(res => {
+            if (res.data.data) {
+                message.success('爬取成功');
+            } else {
+                message.error('爬取失败');
+            }
+        });
+    };
+    getOptions : () => echarts.EChartOption = () => {
+        return {
+            title: {
+                text: '折线图堆叠',
+            },
+            tooltip: {
+                trigger: 'axis',
+            },
+            legend: {
+                data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'],
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true,
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {},
+                },
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            },
+            yAxis: {
+                type: 'value',
+            },
+            series: [
+                {
+                    name: '邮件营销',
+                    type: 'line',
+                    stack: '总量',
+                    data: [120, 132, 101, 134, 90, 230, 210],
+                },
+                {
+                    name: '联盟广告',
+                    type: 'line',
+                    stack: '总量',
+                    data: [220, 182, 191, 234, 290, 330, 310],
+                },
+                {
+                    name: '视频广告',
+                    type: 'line',
+                    stack: '总量',
+                    data: [150, 232, 201, 154, 190, 330, 410],
+                },
+                {
+                    name: '直接访问',
+                    type: 'line',
+                    stack: '总量',
+                    data: [320, 332, 301, 334, 390, 330, 320],
+                },
+                {
+                    name: '搜索引擎',
+                    type: 'line',
+                    stack: '总量',
+                    data: [820, 932, 901, 934, 1290, 1330, 1320],
+                },
+            ],
+        };
+    }
+    render() {
+        const { isLogin, loaded } = this.state;
+        if (isLogin) {
+            if (loaded) {
+                return (
+                    <div className="home-page">
+                        <div className="btns">
+                            <Button
+                                type="primary"
+                                onClick={this.handleCrowllerClick}
+                            >
+                                爬取
+                            </Button>
+                            <Button type="primary">展示</Button>
+                            <Button
+                                type="primary"
+                                onClick={this.handleLogoutClick}
+                            >
+                                退出
+                            </Button>
+                        </div>
+                        <ReactEcharts option={this.getOptions()} />
+                    </div>
+                );
+            }
+            return null;
+        }
+        return <Redirect to="/login" />;
+    }
+}
+```
+
+### 真实数据
+
+```javascript
+import React, { Component } from 'react';
+import { Button, message } from 'antd';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import ReactEcharts from 'echarts-for-react';
+import moment from 'moment';
+import './style.css';
+
+interface CourseItem {
+    title: string;
+    count: number;
+}
+interface State {
+    loaded: boolean;
+    isLogin: boolean;
+    data: {
+        [key: string]: CourseItem[]
+    }
+}
+
+interface LineData {
+    name: string;
+    type: string;
+    data: number[]
+}
+
+export default class Home extends Component {
+    state: State = {
+        isLogin: true,
+        loaded: false,
+        data: {}
+    };
+    componentDidMount() {
+        // Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.in Home (created by Context.Consumer)
+        axios.get('/api/isLogin').then(res => {
+            if (!res.data.data) {
+                this.setState({
+                    isLogin: false,
+                    loaded: true,
+                });
+            } else {
+                this.setState({
+                    loaded: true,
+                });
+            }
+        });
+        axios.get('/api/showData').then(res => {
+           if(res.data.data) {
+               this.setState({
+                   data: res.data.data
+               });
+           }
+        });
+    }
+    handleLogoutClick = () => {
+        axios.get('/api/logout').then(res => {
+            if (res.data.data) {
+                this.setState({
+                    isLogin: false,
+                });
+            } else {
+                message.error('退出失败');
+            }
+        });
+    };
+    handleCrowllerClick = () => {
+        axios.get('/api/getData').then(res => {
+            if (res.data.data) {
+                message.success('爬取成功');
+            } else {
+                message.error('爬取失败');
+            }
+        });
+    };
+    getOptions : () => echarts.EChartOption = () => {
+        const { data } = this.state;
+        const courseNames: string[] = [];
+        const times:string[] = [];
+        const tempData: {
+            [key: string]: number[]
+        } = {};
+        for(let i in data) {
+            const item = data[i];
+            times.push(moment(Number(i)).format('MM-DD HH:mm'));
+            item.forEach(innerItem => {
+                const { title, count } = innerItem;
+                if(courseNames.indexOf(title) === -1) {
+                    courseNames.push(title);
+                }
+                tempData[title] ? tempData[title].push(count) : (tempData[title] = [count]);
+            })
+        }
+        const result: LineData[] = [];
+        for(let i in tempData) {
+            result.push({
+                name: i,
+                type: 'line',
+                data: tempData[i]
+            });
+        }
+        return {
+            title: {
+                text: '课程在线学习人数',
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: courseNames,
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true,
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: times,
+            },
+            yAxis: {
+                type: 'value',
+            },
+            series: result,
+        };
+    }
+    render() {
+        const { isLogin, loaded } = this.state;
+        if (isLogin) {
+            if (loaded) {
+                return (
+                    <div className="home-page">
+                        <div className="btns">
+                            <Button
+                                type="primary"
+                                onClick={this.handleCrowllerClick}
+                            >
+                                爬取
+                            </Button>
+                            <Button type="primary">展示</Button>
+                            <Button
+                                type="primary"
+                                onClick={this.handleLogoutClick}
+                            >
+                                退出
+                            </Button>
+                        </div>
+                        <ReactEcharts option={this.getOptions()} />
+                    </div>
+                );
+            }
+            return null;
+        }
+        return <Redirect to="/login" />;
+    }
+}
+```
+
+### 前后端共用类型定义文件
+
+`responseResult.d.ts`
+
+```javascript
+declare namespace responseResult {
+    interface CourseItem {
+        title: string;
+        count: number;
+    }
+    interface DataStructure {
+        [key: string]: CourseItem[]
+    }
+    type isLogin = boolean;
+}
 ```
