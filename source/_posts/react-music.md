@@ -1104,3 +1104,262 @@ const routes = [{
 
 export default routes;
 ```
+
+## axios 请求数据
+
+`src/services/config.js`
+
+```javascript
+const devBaseURL = "http://123.207.32.32:9001";
+const proBaseURL = "http://123.207.32.32:9001";
+export const BASE_URL = process.env.NODE_ENV === 'development' ? devBaseURL : proBaseURL;
+export const TIMEOUT = 5000;
+```
+
+`src/services/request.js`
+
+```javascript
+import axios from 'axios';
+
+import {
+    BASE_URL,
+    TIMEOUT
+} from "./config";
+
+const instance = axios.create({
+    baseURL: BASE_URL,
+    timeout: TIMEOUT
+});
+
+instance.interceptors.request.use(config => {
+    // 1.发送网络请求时, 在界面的中间位置显示Loading的组件
+
+    // 2.某一些请求要求用户必须携带token, 如果没有携带, 那么直接跳转到登录页面
+
+    // 3.params/data序列化的操作
+
+    return config;
+}, err => {
+
+});
+
+instance.interceptors.response.use(res => {
+    return res.data;
+}, err => {
+    if (err && err.response) {
+        switch (err.response.status) {
+            case 400:
+                console.log("请求错误");
+                break;
+            case 401:
+                console.log("未授权访问");
+                break;
+            default:
+                console.log("其他错误信息");
+        }
+    }
+    return err;
+});
+
+export default instance;
+```
+
+`src/pages/discover/index.jsx`
+
+```javascript
+import request from '@/services/request';
+
+export default memo(function YKDiscover(props) {
+    const { route } = props;
+    useEffect(() => {
+        request({
+            url: '/banner',
+        }).then(res => {
+            console.log(res);
+        });
+    }, []);
+    return (
+        
+    );
+});
+```
+
+## 配置 Redux
+
+```
+yarn add redux react-redux redux-thunk
+```
+
+`src/App.jsx`
+
+```javascript
+import React, { memo } from 'react';
+import { renderRoutes } from 'react-router-config';
+import { HashRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import routes from './router';
+import store from './store';
+
+import YKAppHeader from '@/components/app-header';
+import YKAppFooter from '@/components/app-footer';
+
+export default memo(function App() {
+    return (
+        <Provider store={store}>
+            <Router>
+                <YKAppHeader />
+                {renderRoutes(routes)}
+                <YKAppFooter />
+            </Router>
+        </Provider>
+    );
+});
+```
+
+`src/pages/discover/c-pages/recommend/store/actionTypes.js`
+
+```javascript
+export const CHANGE_TOP_BANNERS = "recommend/CHANGE_TOP_BANNERS";
+```
+
+`src/pages/discover/c-pages/recommend/store/index.js`
+
+```javascript
+import reducer from './reducer';
+export { reducer };
+```
+
+`src/pages/discover/c-pages/recommend/store/reducer.js`
+
+```javascript
+import * as actionTypes from './actionTypes';
+const defaultState = {
+    topBanners: []
+};
+
+export default function (state = defaultState, action) {
+    switch (action.type) {
+        case actionTypes.CHANGE_TOP_BANNERS:
+            return {
+                ...state,
+                topBanners: []
+            };
+        default:
+            return state;
+    }
+}
+```
+
+`src/store/index.js`
+
+```javascript
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import reducer from './reducer';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
+
+export default store;
+```
+
+`src/store/reducer.js`
+
+```javascript
+import { combineReducers } from 'redux';
+import { reducer as recommendReducer } from '../pages/discover/c-pages/recommend/store';
+
+export default combineReducers({
+    recommend: recommendReducer
+});
+```
+
+## 推荐数据的获取流程并存储到 Redux
+
+`src/pages/discover/c-pages/recommend/index.jsx`
+
+```javascript
+import React, { memo, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getTopBannerAction } from './store/actionCreators';
+
+function YKRecommend(props) {
+    const { getBanners, topBanners } = props;
+    useEffect(
+        () => {
+            getBanners();
+        },
+        [getBanners]
+    );
+    return (
+        <div>
+            YKRecommend: {topBanners.length}
+        </div>
+    );
+}
+
+const mapStateToState = state => ({
+    topBanners: state.recommend.topBanners,
+});
+const mapDispatchToProps = dispatch => ({
+    getBanners: () => {
+        dispatch(getTopBannerAction());
+    },
+});
+
+export default connect(mapStateToState, mapDispatchToProps)(memo(YKRecommend));
+```
+
+`src/pages/discover/c-pages/recommend/store/actionCreators.js`
+
+```javascript
+import * as actionTypes from './actionTypes';
+import { getTopBanners } from '@/services/recommend';
+
+const changeTopBannerAction = res => ({
+    type: actionTypes.CHANGE_TOP_BANNERS,
+    topBanners: res.banners   
+});
+
+export const getTopBannerAction = () => {
+    return dispatch => {
+        getTopBanners().then(res => {
+            dispatch(changeTopBannerAction(res));
+        });
+    };
+};
+```
+
+`src/pages/discover/c-pages/recommend/store/reducer.js`
+
+```javascript
+import * as actionTypes from './actionTypes';
+const defaultState = {
+    topBanners: []
+};
+
+export default function (state = defaultState, action) {
+    switch (action.type) {
+        case actionTypes.CHANGE_TOP_BANNERS:
+            return {
+                ...state,
+                topBanners: action.topBanners
+            };
+        default:
+            return state;
+    }
+}
+```
+
+`src/services/recommend.js`
+
+```javascript
+import request from './request';
+
+export function getTopBanners() {
+    return request({
+        url: '/banner'
+    });
+}
+```
