@@ -1363,3 +1363,779 @@ export function getTopBanners() {
     });
 }
 ```
+
+## useDispatch 和 useSelector 优化上面代码
+
+`src/pages/discover/c-pages/recommend/index.jsx`
+
+```javascript
+import React, { memo, useEffect } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { getTopBannerAction } from './store/actionCreators';
+
+function YKRecommend() {
+    const { topBanners } = useSelector(
+        state => ({
+            topBanners: state.recommend.topBanners,
+        }),
+        shallowEqual
+    );
+    const dispatch = useDispatch();
+    useEffect(
+        () => {
+            dispatch(getTopBannerAction());
+        },
+        [dispatch]
+    );
+    return (
+        <div>
+            YKRecommend: {topBanners.length}
+        </div>
+    );
+}
+
+export default memo(YKRecommend);
+```
+
+## 项目中集成 immutable
+
+```
+yarn add immutable redux-immutable
+```
+
+`src/pages/discover/c-pages/recommend/store/reducer.js`
+
+```javascript
+import { Map } from 'immutable';
+import * as actionTypes from './actionTypes';
+const defaultState = Map({
+    topBanners: []
+});
+
+export default function (state = defaultState, action) {
+    switch (action.type) {
+        case actionTypes.CHANGE_TOP_BANNERS:
+            return state.set('topBanners', action.topBanners);
+        default:
+            return state;
+    }
+}
+```
+
+`src/store/reducer.js`
+
+```javascript
+import { combineReducers } from 'redux-immutable';
+import { reducer as recommendReducer } from '../pages/discover/c-pages/recommend/store';
+
+export default combineReducers({
+    recommend: recommendReducer
+});
+```
+
+`src/pages/discover/c-pages/recommend/index.jsx`
+
+```javascript
+import React, { memo, useEffect } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { getTopBannerAction } from './store/actionCreators';
+
+function YKRecommend() {
+    const { topBanners } = useSelector(
+        state => ({
+            // topBanners: state.get('recommend').get('topBanners'),
+            topBanners: state.getIn(['recommend', 'topBanners']),
+        }),
+        shallowEqual
+    );
+    const dispatch = useDispatch();
+    useEffect(
+        () => {
+            dispatch(getTopBannerAction());
+        },
+        [dispatch]
+    );
+    return (
+        <div>
+            YKRecommend: {topBanners.length}
+        </div>
+    );
+}
+
+export default memo(YKRecommend);
+```
+
+## 轮播图
+
+`src/pages/discover/c-pages/recommend/index.jsx`
+
+```javascript
+import React, { memo } from 'react';
+import TopBanner from './c-cpns/top-banner';
+import { RecommendWrapper } from './style';
+
+function YKRecommend() {
+    return (
+        <RecommendWrapper>
+            <TopBanner/>
+        </RecommendWrapper>
+    );
+}
+
+export default memo(YKRecommend);
+```
+
+`src/pages/discover/c-pages/recommend/style.js`
+
+```javascript
+import styled from 'styled-components';
+
+export const RecommendWrapper = styled.div``;
+```
+
+`src/pages/discover/c-pages/recommend/c-cpns/top-banner/index.jsx`
+
+```javascript
+// 第三方的
+import React, { memo, useEffect, useRef, useState, useCallback } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+
+// 功能性的
+import { getTopBannerAction } from '../../store/actionCreators';
+
+// 组件的
+import { Carousel } from 'antd';
+import { BannerWrapper, BannerLeft, BannerRight, BannerControl } from './style';
+
+export default memo(function YKTopBanner() {
+    // state
+    const [currentIndex, setCurrentIndex] = useState(0);
+    // 组件和 redux 关联，获取/操作数据
+    const { topBanners } = useSelector(
+        state => ({
+            // topBanners: state.get('recommend').get('topBanners'),
+            topBanners: state.getIn(['recommend', 'topBanners']),
+        }),
+        shallowEqual
+    );
+    const dispatch = useDispatch();
+    const bannerRef = useRef();
+    // 其他 hooks
+    useEffect(
+        () => {
+            dispatch(getTopBannerAction());
+        },
+        [dispatch]
+    );
+    const beforeChange = useCallback((from, to) => {
+        setCurrentIndex(to);
+    }, []);
+    // 其他逻辑
+    const bgImage =
+        topBanners[currentIndex] &&
+        topBanners[currentIndex].imageUrl + '?imageView&blur=40x20';
+    return (
+        <BannerWrapper bgImage={bgImage}>
+            <div className="banner wrap-v2">
+                <BannerLeft>
+                    <Carousel
+                        effect="fade"
+                        autoplay
+                        ref={bannerRef}
+                        beforeChange={beforeChange}
+                    >
+                        {topBanners.map((item, index) => {
+                            return (
+                                <div
+                                    className="banner-item"
+                                    key={item.imageUrl}
+                                >
+                                    <img
+                                        className="image"
+                                        src={item.imageUrl}
+                                        alt={item.typeTitle}
+                                    />
+                                </div>
+                            );
+                        })}
+                    </Carousel>
+                </BannerLeft>
+                <BannerRight />
+                <BannerControl>
+                    <button
+                        className="btn left"
+                        onClick={e => bannerRef.current.prev()}
+                    />
+                    <button
+                        className="btn right"
+                        onClick={e => bannerRef.current.next()}
+                    />
+                </BannerControl>
+            </div>
+        </BannerWrapper>
+    );
+});
+```
+
+`src/pages/discover/c-pages/recommend/c-cpns/top-banner/style.js`
+
+```javascript
+import styled from 'styled-components';
+
+export const BannerWrapper = styled.div `
+    background: url(${props => props.bgImage}) center center/6000px;
+
+    .banner {
+        height: 270px;
+        background-color: red;
+
+        display: flex;
+        position: relative;
+    }
+`
+
+export const BannerLeft = styled.div `
+    width: 730px;
+
+    .banner-item {
+        overflow: hidden;
+        height: 270px;
+        .image {
+            width: 100%;
+        }
+    }
+`
+
+export const BannerRight = styled.a.attrs({
+    href: "https://music.163.com/#/download",
+    target: "_blank"
+})
+`
+    width: 254px;
+    height: 270px;
+    background: url(${require("@/assets/img/download.png")});
+`
+
+export const BannerControl = styled.div `
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    .btn {
+        position: absolute;
+        width: 37px;
+        height: 63px;
+        background-image: url(${require("@/assets/img/banner_sprite.png")});
+        background-color: transparent;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, .1);
+        }
+    }
+
+    .left {
+        left: -68px;
+        background-position: 0 -360px;
+    }
+
+    .right {
+        right: -68px;
+        background-position: 0 -508px;
+    }
+`
+```
+
+## 标题组件
+
+`src/components/theme-header-rcm/index.jsx`
+
+```javascript
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+
+import { HeaderWrapper } from './style';
+
+const YKThemeHeaderRCM = memo(function(props) {
+    const { title, keywords } = props;
+
+    return (
+        <HeaderWrapper className="sprite_02">
+            <div className="left">
+                <h3 className="title">
+                    {title}
+                </h3>
+                <div className="keyword">
+                    {keywords.map((item, index) => {
+                        return (
+                            <div className="item" key={item}>
+                                <a href="todo">
+                                    {item}
+                                </a>
+                                <span className="divider">|</span>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+            <div className="right">
+                <a href="todo">更多</a>
+                <i className="icon sprite_02" />
+            </div>
+        </HeaderWrapper>
+    );
+});
+
+YKThemeHeaderRCM.propTypes = {
+    title: PropTypes.string.isRequired,
+    keywords: PropTypes.array,
+};
+
+YKThemeHeaderRCM.defaultProps = {
+    keywords: [],
+};
+
+export default YKThemeHeaderRCM;
+```
+
+`src/components/theme-header-rcm/style.js`
+
+```javascript
+import styled from 'styled-components';
+
+export const HeaderWrapper = styled.div `
+    height: 33px;
+    border-bottom: 2px solid #C10D0C;
+    padding: 0 10px 4px 34px;
+    background-position: -225px -156px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .left {
+        display: flex;
+        align-items: center;
+
+        .title {
+            font-size: 20px;
+            font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
+            margin-right: 20px;
+        }
+
+        .keyword {
+            display: flex;
+
+        .item {
+                .divider {
+                    margin: 0 15px;
+                    color: #ccc;
+                }
+            }
+        }
+    }
+
+    .right {
+        display: flex;
+        align-items: center;
+        .icon {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 4px;
+            background-position: 0 -240px;
+        }
+    }
+`
+```
+
+`src/pages/discover/c-pages/recommend/c-cpns/hot-recommend/index.jsx`
+
+```javascript
+import React, { memo } from 'react';
+import YKThemeHeaderRCM from '@/components/theme-header-rcm';
+import { HotRecommendWrapper } from './style';
+
+export default memo(function YKHotRecommend() {
+    return (
+        <HotRecommendWrapper>
+            <YKThemeHeaderRCM
+                title="热门推荐"
+                keywords={['华语', '流行', '民谣', '摇滚', '电子']}
+            />
+        </HotRecommendWrapper>
+    );
+});
+```
+
+`src/pages/discover/c-pages/recommend/c-cpns/hot-recommend/style.js`
+
+```javascript
+import styled from "styled-components";
+
+export const HotRecommendWrapper = styled.div`
+    .recommend-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+`
+```
+
+`src/pages/discover/c-pages/recommend/index.jsx`
+
+```javascript
+import React, { memo } from 'react';
+import TopBanner from './c-cpns/top-banner';
+import YKHotRecommend from './c-cpns/hot-recommend';
+import { RecommendWrapper, Content, RecommendLeft, RecommendRight } from './style';
+
+function YKRecommend() {
+    return (
+        <RecommendWrapper>
+            <TopBanner/>
+            <Content className="wrap-v2">
+                <RecommendLeft>
+                    <YKHotRecommend/>
+                </RecommendLeft>
+                <RecommendRight></RecommendRight>
+            </Content>
+        </RecommendWrapper>
+    );
+}
+
+export default memo(YKRecommend);
+```
+
+`src/pages/discover/c-pages/recommend/style.js`
+
+```javascript
+import styled from 'styled-components';
+
+export const RecommendWrapper = styled.div`
+
+`
+
+export const Content = styled.div`
+    background-color: #fff;
+    display: flex;
+`
+
+export const RecommendLeft = styled.div`
+    padding: 20px;
+    width: 729px;
+`
+
+export const RecommendRight = styled.div`
+    width: 250px;
+    border: 1px solid #d3d3d3;
+    border-width: 0 1px;
+`
+```
+
+## 获取推荐数据
+
+`src/common/constants.js`
+
+```javascript
+export const HOT_RECOMMEND_LIMIT = 8;
+```
+
+`src/pages/discover/c-pages/recommend/c-cpns/hot-recommend/index.jsx`
+
+```javascript
+import React, { memo, useEffect } from 'react';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+// 组件
+import YKThemeHeaderRCM from '@/components/theme-header-rcm';
+// 功能
+import { getHotRecommendAction } from '../../store/actionCreators';
+import { HOT_RECOMMEND_LIMIT } from '@/common/constants';
+// 样式
+import { HotRecommendWrapper } from './style';
+
+export default memo(function YKHotRecommend() {
+    // redux hooks
+    const { hotRecommends } = useSelector(
+        state => ({
+            hotRecommends: state.getIn(['recommend', 'hotRecommends']),
+        }),
+        shallowEqual
+    );
+    const dispatch = useDispatch();
+
+    // other hooks
+    useEffect(
+        () => {
+            dispatch(getHotRecommendAction(HOT_RECOMMEND_LIMIT));
+        },
+        [dispatch]
+    );
+    console.log(hotRecommends);
+    return (
+        <HotRecommendWrapper>
+            <YKThemeHeaderRCM
+                title="热门推荐"
+                keywords={['华语', '流行', '民谣', '摇滚', '电子']}
+            />
+        </HotRecommendWrapper>
+    );
+});
+```
+
+`src/pages/discover/c-pages/recommend/store/actionCreators.js`
+
+```javascript
+import * as actionTypes from './actionTypes';
+import { getTopBanners, getHotRecommends } from '@/services/recommend';
+
+const changeTopBannerAction = res => ({
+    type: actionTypes.CHANGE_TOP_BANNERS,
+    topBanners: res.banners   
+});
+
+export const getTopBannerAction = () => {
+    return dispatch => {
+        getTopBanners().then(res => {
+            dispatch(changeTopBannerAction(res));
+        });
+    };
+};
+
+const changeHotRecommendAction = (res) => ({
+    type: actionTypes.CHANGE_HOT_RECOMMEND,
+    hotRecommends: res.result
+})
+
+export const getHotRecommendAction = (limit) => {
+    return dispatch => {
+        getHotRecommends(limit).then(res => {
+            dispatch(changeHotRecommendAction(res));
+        });
+    }
+}
+```
+
+`src/pages/discover/c-pages/recommend/store/actionTypes.js`
+
+```javascript
+export const CHANGE_TOP_BANNERS = "recommend/CHANGE_TOP_BANNERS";
+export const CHANGE_HOT_RECOMMEND = "recommend/CHANGE_HOT_RECOMMEND";
+```
+
+`src/pages/discover/c-pages/recommend/store/reducer.js`
+
+```javascript
+import { Map } from 'immutable';
+import * as actionTypes from './actionTypes';
+const defaultState = Map({
+    topBanners: [],
+    hotRecommends: []
+});
+
+export default function (state = defaultState, action) {
+    switch (action.type) {
+        case actionTypes.CHANGE_TOP_BANNERS:
+            return state.set('topBanners', action.topBanners);
+        case actionTypes.CHANGE_HOT_RECOMMEND:
+            return state.set("hotRecommends", action.hotRecommends);
+        default:
+            return state;
+    }
+}
+```
+
+`src/services/recommend.js`
+
+```javascript
+import request from './request';
+
+export function getTopBanners() {
+    return request({
+        url: '/banner'
+    });
+}
+export function getHotRecommends(limit) {
+    return request({
+        url: "/personalized",
+        params: {
+            limit
+        }
+    })
+}
+```
+
+## 渲染推荐内容
+
+`src/components/songs-cover/index.jsx`
+
+```javascript
+import React, { memo } from 'react';
+
+import { getCount, getSizeImage } from '@/utils/format-utils';
+
+import { SongsCoverWrapper } from './style';
+
+export default memo(function HYSongsCover(props) {
+    const { info } = props;
+
+    return (
+        <SongsCoverWrapper>
+            <div className="cover-top">
+                <img src={getSizeImage(info.picUrl, 140)} alt="" />
+                <div className="cover sprite_covor">
+                    <div className="info sprite_covor">
+                        <span>
+                            <i className="sprite_icon erji" />
+                            {getCount(info.playCount)}
+                        </span>
+                        <i className="sprite_icon play" />
+                    </div>
+                </div>
+            </div>
+            <div className="cover-bottom text-nowrap">
+                {info.name}
+            </div>
+            <div className="cover-source text-nowrap">
+                by {info.copywriter || info.creator.nickname}
+            </div>
+        </SongsCoverWrapper>
+    );
+});
+```
+
+`src/components/songs-cover/style.js`
+
+```javascript
+import styled from "styled-components";
+
+export const SongsCoverWrapper = styled.div`
+    width: 140px;
+    margin: 20px ${props => (props.right || 0)} 20px 0;
+
+    .cover-top {
+        position: relative;
+
+        &>img {
+            width: 140px;
+            height: 140px;
+        }
+        
+        .cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-position: 0 0;
+
+            .info {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 10px;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-position: 0 -537px;
+                color: #ccc;
+                height: 27px;
+
+                .erji {
+                    margin-right: 5px;
+                    display: inline-block;
+                    width: 14px;
+                    height: 11px;
+                    background-position: 0 -24px;
+                }
+
+                .play {
+                    display: inline-block;
+                    width: 16px;
+                    height: 17px;
+                    background-position: 0 0;
+                }
+            }
+        }
+    }
+
+    .cover-bottom {
+        font-size: 14px;
+        color: #000;
+        margin-top: 5px;
+    }
+
+    .cover-source {
+        color: #666;
+    }
+`
+```
+
+`src/pages/discover/c-pages/recommend/c-cpns/hot-recommend/index.jsx`
+
+```javascript
+import React, { memo, useEffect } from 'react';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+// 组件
+import YKThemeHeaderRCM from '@/components/theme-header-rcm';
+import YKSongsCover from '@/components/songs-cover';
+// 功能
+import { getHotRecommendAction } from '../../store/actionCreators';
+import { HOT_RECOMMEND_LIMIT } from '@/common/constants';
+// 样式
+import { HotRecommendWrapper } from './style';
+
+export default memo(function YKHotRecommend() {
+    // redux hooks
+    const { hotRecommends } = useSelector(
+        state => ({
+            hotRecommends: state.getIn(['recommend', 'hotRecommends']),
+        }),
+        shallowEqual
+    );
+    const dispatch = useDispatch();
+
+    // other hooks
+    useEffect(
+        () => {
+            dispatch(getHotRecommendAction(HOT_RECOMMEND_LIMIT));
+        },
+        [dispatch]
+    );
+    return (
+        <HotRecommendWrapper>
+            <YKThemeHeaderRCM
+                title="热门推荐"
+                keywords={['华语', '流行', '民谣', '摇滚', '电子']}
+            />
+            <div className="recommend-list">
+                {hotRecommends.map(item => {
+                    return <YKSongsCover key={item.id} info={item} />;
+                })}
+            </div>
+        </HotRecommendWrapper>
+    );
+});
+```
+
+`/src/utils/format-utils.js`
+
+```javascript
+export function getCount(count) {
+    if (count < 0) return;
+    if (count < 10000) {
+        return count;
+    } else if (Math.floor(count / 10000) < 10000) {
+        return Math.floor(count / 1000) / 10 + "万";
+    } else {
+        return Math.floor(count / 10000000) / 10 + "亿";
+    }
+}
+
+export function getSizeImage(imgUrl, size) {
+    return `${imgUrl}?param=${size}x${size}`;
+}
+```
