@@ -12,7 +12,7 @@ categories: 面试
 **防抖：持续触发（事件）不执行，不触发的一段时间之后再执行**
 
 ```javascript
-const debouce = (fn, time) => {
+const debounce = (fn, time) => {
     let timer = null;
     return function () {
         clearTimeout(timer);
@@ -25,7 +25,7 @@ const debouce = (fn, time) => {
 };
 
 const box = document.getElementById('box');
-box.onmousemove = debouce(function (e) {
+box.onmousemove = debounce(function (e) {
     console.log(this, e);
 }, 1000);
 ```
@@ -36,6 +36,7 @@ box.onmousemove = debouce(function (e) {
 const throttle = (fn, time) => {
     let bBar = true;
     return function () {
+        // if (!bBar) return; // true 才走，也就是保证 false 的时候不会走
         if (bBar) {
             // 持续触发的话，bBar 一直是 false，这里就不会再次进来
             bBar = false;
