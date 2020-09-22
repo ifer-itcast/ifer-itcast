@@ -17,81 +17,47 @@ flex-basis 受限于 [max-width](/resource/demos/demo07/02_flex-basis.html)/[min
 
 ## flex-grow
 
-### 基本操作
+规定子元素该如何分配父元素的剩余空间，默认值 0，表示不分配父元素的剩余空间，值越大，分配的越多。不支持负值！
 
-默认值 0，表示不分配父元素的剩余空间，值越大，分配的越多。不支持负值
+```
+分配多少和【剩余宽度】以及【当前 flex-grow】 有关！
+```
 
-规定当父元素的宽度大于子元素的宽度之和时，**子元素该如何分配父元素的剩余空间**，[基本演示](/resource/demos/demo07/04_flex-grow.html)
+**如果 flex 元素的 flex-grow 之和大于等于 1**
 
-容器宽度 500px，里面 4 个 item 分别设置了 flex: 1，其中一个 .spe 也添加了 width: 50px，[理解并计算 .spe 的宽度应该是多少](/resource/demos/demo07/05_flex-grow.html)
+有剩余宽度 `w`，三个 flex 元素的 flex-grow 分别是 x，y，z，假设 sum = x + y + z，则每个元素的分配空间分别是 w \* x / sum、w \* y / sum、w \* z / sum
 
-### 其他举例
+**如果 flex 元素的 flex-grow 之和小于 1**
 
-父元素 500px，A 元素 100px，B 元素 200px，如果 A、B 都不索取剩余空间，则会有 200px 的剩余空间，[代码演示](/resource/demos/demo07/06_flex-grow.html)
-
-如果 A 设置了 `flex-grow: 1;`，B 不索取，则 A 的最终宽度是 自身宽度（100px） + 剩余宽度（200px） = 300px，[代码演示](/resource/demos/demo07/07_flex-grow.html)
-
-如果 A、B 都索取了剩余空间（即都设置 flex-grow），若 A 设置 `flex-grow: 1;`，B 设置 `flex-grow: 2;`，则 A 的最终宽度为：【自身宽度 + A 获得的剩余空间的宽度】，A 获得的剩余空间的宽度 = 剩余宽度（200px） * 自己的 flex-grow（1） / 总的 flex-grow（1 + 2）
-
-B 的最终宽度为：【自身宽度 + B 获得的剩余空间的宽度】，B 获得的剩余空间的宽度 = 剩余宽度（200px） * 自己的 flex-grow（2） / 总的 flex-grow（1 + 2）
-
-[代码演示](/resource/demos/demo07/08_flex-grow.html)
-
-### 规律总结
-
-**仅一个 flex 元素设置了 flex-grow**
-
-如果 flex-grow 值小于 1，则分配给它的是总的剩余空间和这个比例的计算值，例如 flex-grow: 0.5; 则能分配剩余空间的一半，[举例](/resource/demos/demo07/14_flex-grow.html)
-
-如果 flex-grow 值大于等于 1，则独享所有剩余空间
-
-**多个 flex 元素设置了 flex-grow**
-
-如果 flex-grow 值总和小于 1，则分配空间 = 剩余空间 \* 当前元素的 flex-grow，例如剩余空间 200px，A 元素设置 flex: 0.1; 则 A 分配的大小为 200 \* 0.1，[举例](/resource/demos/demo07/15_flex-grow.html)
-
-如果 flex-grow 值总和大于等于1，则所有剩余空间被利用，分配空间 = 剩余空间 * (当前 flex-grow / 所有 flex-grow)
+分配空间 = 剩余空间 \* 当前 flex-grow
 
 ## flex-shrink
 
 [文档](https://www.w3.org/TR/css-flexbox-1/#valdef-flex-flex-shrink)
 
-### 基本操作
+规定当父元素的宽度小于子元素的宽度之和时（即子元素超出了父元素），子元素该如何缩小自己的宽度。默认值 1，表示父元素装不下弹性盒子时，弹性盒子就会减小，值越大，减小的越厉害，设置为 0 则代表不会减小！
 
-默认值 1，表示父元素装不下弹性盒子时，弹性盒子就会减小，值越大，减小的越厉害，设置为 0 则代表不会减小
+```
+收缩多少和【超出宽度】、【自身宽度】以及【当前 flex-shrink】 有关
+```
 
-规定当父元素的宽度小于子元素的宽度之和时（即子元素超出了父元素），子元素该如何缩小自己的宽度的，[代码演示](/resource/demos/demo07/09_flex-shrink.html)
+**如果 flex 元素的 flex-shrink 之和大于等于 1**
 
-A 的最终大小为：【自身宽度 - A 减小的宽度】
+元素最终大小为：【自身宽度 - 收缩宽度】
 
-A 减小的宽度 = 超出的宽度 \* （A 的宽度 \* A 的 flex-shrink / A 的宽度 \* A 的 flex-shrink + B 的宽度 \* B 的 flex-shrink）
+假设超出宽度为 w，两个元素的宽度分别为 x，y，flex-shrink 分别为 a，b，则：
 
-`100 * (200 * 1 / 200 * 1 + 400 * 1)`
+收缩宽度 = 超出的宽度 \* （当前宽度 \* 当前 flex-shrink / 当前宽度 \* 当前 flex-shrink + 其他宽度 \* 其他 flex-shrink）
 
-B 的最终大小为：【自身宽度 - B 减小的宽度】
+即一个元素的收缩宽度 = w \* (x \* a / x \* a + y \* b)
 
-### 其他举例
+**如果 flex 元素的 flex-shrink 之和小于 1**
 
-若 A 设置 flex-shrink: 3;，B 设置 flex-shrink: 2;，则最终的宽度为多少？
+则收缩宽度 = w * flex 元素的 flex-shrink 之和，其他计算同上，例如容器宽度为 400，A 元素宽 100，flex-shrink 为 0.6，B 元素宽 300，flex-shrink 为 0.3，则：
 
-A 减小的宽度 = `100 * (200 * 3 / 200 * 3 + 400 * 2)`
-
-B 减小的宽度 = `100 * (400 * 2 / 200 * 3 + 400 * 2)`
-
-[代码展示](/resource/demos/demo07/10_flex-shrink.html)
-
-### 规律总结
-
-**仅一个 flex 元素设置了 flex-shrink**
-
-flex-shrink 值小于 1，则收缩的尺寸不完全，会有一部分内容溢出 flex 容器，`收缩值 = 溢出值 \* flex-shrink`，[举例](/resource/demos/demo07/11_flex-shrink.html)
-
-flex-shrink 值大于等于 1，则收缩完全，正好填满 flex 容器
-
-**多个 flex 元素设置了 flex-shrink**
-
-flex-shrink 值的总和小于1，则收缩的尺寸不完全，收缩值 = 超出值 \* flex-shrink 值的总和，[举例](/resource/demos/demo07/12_flex-shrink.html)
-
-flex-shrink 值的总和大于等于1，则收缩完全，每个元素收缩尺寸和当前 flex 元素大小以及 当前 flex-shrink 有关，[举例](/resource/demos/demo07/13_flex-shrink.html)
+```javascript
+收缩宽度 = 100 * (0.6 + 0.3) * (100* 0.6 / 100 * 0.6 + 300 * 0.3) 3/4
+```
 
 ## flex
 
