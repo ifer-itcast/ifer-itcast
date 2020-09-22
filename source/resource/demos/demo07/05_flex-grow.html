@@ -1,0 +1,48 @@
+---
+layout: false
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .wrap {
+            margin: 100px auto 0;
+            width: 500px;
+            height: 100px;
+            border: 2px solid green;
+            display: flex;
+        }
+
+        .inner {
+            flex-grow: 1;
+            background-color: pink;
+        }
+
+        /* 剩余空间 500 - 50 = 450 */
+        /* 每一个都是 flex-grow: 1; 每一个的分配大小是 450 / 4 = 112.5 */
+        /* 最终宽度 = 分配大小(112.5) + 自身大小(50) */
+        .spe {
+            width: 50px;
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="inner"></div>
+        <div class="inner spe"></div>
+        <div class="inner"></div>
+        <div class="inner"></div>
+    </div>
+</body>
+
+</html>

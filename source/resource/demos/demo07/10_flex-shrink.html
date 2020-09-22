@@ -1,0 +1,42 @@
+---
+layout: false
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrap {
+            margin: 100px auto 0;
+            display: flex;
+            flex-direction: row;
+            width: 500px;
+            height: 200px;
+            border: 1px solid red;
+        }
+        .inner1 {
+            flex-basis: 200px;
+            height: 100px;
+            background: black;
+            flex-shrink: 3;
+        }
+        .inner2 {
+            flex-basis: 400px;
+            height: 100px;
+            background: blue;
+            flex-shrink: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="inner1"></div>
+        <div class="inner2"></div>
+    </div>
+</body>
+
+</html>

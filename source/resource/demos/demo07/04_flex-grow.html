@@ -1,0 +1,42 @@
+---
+layout: false
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .wrap {
+            margin: 100px auto 0;
+            width: 500px;
+            height: 100px;
+            border: 2px solid green;
+            display: flex;
+        }
+
+        .inner {
+            /* 多个弹性盒子都设置了 flex-grow 并且总和大于 1，每一份占 剩余空间 * (1 / 总和) */
+            /* 注意这里减去每一个的实际内容的大小才是我们说的剩余空间 */
+            flex-grow: 1;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="inner">1</div>
+        <div class="inner">2</div>
+        <div class="inner">3</div>
+        <div class="inner">4</div>
+    </div>
+</body>
+
+</html>
