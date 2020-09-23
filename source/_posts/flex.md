@@ -107,7 +107,7 @@ div {
 }
 ```
 
-当 flex 取值为两个非负数字，则分别视为 flex-grow 和 flex-shrink 的值，flex-basis 去 0%
+当 flex 取值为两个非负数字，则分别视为 flex-grow 和 flex-shrink 的值，flex-basis 取 0%
 
 ```css
 div {
