@@ -25,7 +25,7 @@ flex-basis 受限于 [max-width](/resource/demos/demo07/02_flex-basis.html)/[min
 
 **如果 flex 元素的 flex-grow 之和大于等于 1**
 
-有剩余宽度 `w`，三个 flex 元素的 flex-grow 分别是 x，y，z，假设 sum = x + y + z，则每个元素的分配空间分别是 w \* x / sum、w \* y / sum、w \* z / sum
+有剩余宽度 `w`，三个 flex 元素的 flex-grow 分别是 g1，g2，g3，假设 sum = g1 + g2 + g3，则每个元素的分配空间分别是 w \* g1 / sum、w \* g2 / sum、w \* g3 / sum
 
 <img src="/resource/images/pages/h5css3/flex-grow1.png" alt="">
 
@@ -51,16 +51,16 @@ flex-basis 受限于 [max-width](/resource/demos/demo07/02_flex-basis.html)/[min
 
 收缩宽度 = 超出的宽度 \* （当前宽度 \* 当前 flex-shrink / 当前宽度 \* 当前 flex-shrink + 其他宽度 \* 其他 flex-shrink）
 
-即一个元素的收缩宽度 = w \* (w1 \* s1 / w1 \* a + w2 \* s2)
+即一个元素的收缩宽度 = w \* (w1 \* s1 / w1 \* s1 + w2 \* s2)
 
 <img src="/resource/images/pages/h5css3/flex-shrink.png" alt="">
 
 **如果 flex 元素的 flex-shrink 之和小于 1**
 
-则收缩宽度 = w * flex 元素的 flex-shrink 之和，其他计算同上，例如容器宽度为 400，A 元素宽 100，flex-shrink 为 0.6，B 元素宽 300，flex-shrink 为 0.3，则：
+则收缩宽度 = w * flex 元素的 flex-shrink 之和，其他计算同上，例如容器宽度为 500，元素 1 宽 100，flex-shrink 为 0.1，元素 2 宽 200，flex-shrink 为 0.2，元素 3 宽 300px，flex-shrink 为 0.3，则元素 1 的收缩宽度为：
 
 ```javascript
-收缩宽度 = 100 * (0.6 + 0.3) * (100* 0.6 / 100 * 0.6 + 300 * 0.3)
+100 * (0.1 + 0.2 + 0.3) * (100* 0.1 / 100* 0.1 + 200 * 0.2 + 300 * 0.3)
 ```
 
 <img src="/resource/images/pages/h5css3/flex-shrink2.png" alt="">
