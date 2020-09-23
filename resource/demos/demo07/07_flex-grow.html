@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrap {
+            display: flex;
+            flex-direction: row;
+            margin: 100px auto 0;
+            width: 500px;
+            height: 200px;
+            border: 1px solid red;
+        }
+
+        /* flex-grow的默认值为0，意思是该元素不索取父元素的剩余空间，如果值大于0，表示索取。值越大，索取的越厉害。 */
+        .a {
+            flex-basis: 100px;
+            height: 100px;
+            background: pink;
+            /* 索取剩余空间，则最终A的大小为自身宽度（100px）+ 剩余空间的宽度（200px）= 300px */
+            flex-grow: 1;
+        }
+
+        .b {
+            flex-basis: 200px;
+            height: 100px;
+            background: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="a">我是 A，宽度 100px，我设置了 flex-grow: 1; 索取了父的剩余空间</div>
+        <div class="b">我是 B，宽度 200px</div>
+    </div>
+</body>
+
+</html>

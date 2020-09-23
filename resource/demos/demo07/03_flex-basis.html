@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrap {
+            margin: 100px auto 0;
+            display: flex;
+            width: 500px;
+            height: 100px;
+            border: 2px solid red;
+        }
+
+        .inner {
+            background-color: green;
+            /* 填不满 */
+            flex-basis: 100px;
+            /* min-width 来帮忙 */
+            /* 注意当 width 之和大于容器时，会使用 flex-shrink 进行收缩 */
+            /* 但当 min-width 之和大于容器时，flex-shrink 并不会对 min-width 产生作用 */
+            min-width: 125px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="inner"></div>
+        <div class="inner"></div>
+        <div class="inner"></div>
+        <div class="inner"></div>
+    </div>
+</body>
+
+</html>
