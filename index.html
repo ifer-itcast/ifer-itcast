@@ -390,7 +390,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  799
+                  818
                 </span>
               
 
@@ -436,7 +436,7 @@
 <h2 id="flex-grow"><a href="#flex-grow" class="headerlink" title="flex-grow"></a>flex-grow</h2><p>规定子元素该如何分配父元素的剩余空间，默认值 0，表示不分配父元素的剩余空间，值越大，分配的越多。不支持负值！</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">分配多少和【剩余宽度】以及【当前 flex-grow】 有关！</span><br></pre></td></tr></table></figure>
 <p><strong>如果 flex 元素的 flex-grow 之和大于等于 1</strong></p>
-<p>有剩余宽度 <code>w</code>，三个 flex 元素的 flex-grow 分别是 x，y，z，假设 sum = x + y + z，则每个元素的分配空间分别是 w * x / sum、w * y / sum、w * z / sum</p>
+<p>有剩余宽度 <code>w</code>，三个 flex 元素的 flex-grow 分别是 g1，g2，g3，假设 sum = g1 + g2 + g3，则每个元素的分配空间分别是 w * g1 / sum、w * g2 / sum、w * g3 / sum</p>
 <p><img src="/resource/images/pages/h5css3/flex-grow1.png" alt></p>
 <p><strong>如果 flex 元素的 flex-grow 之和小于 1</strong></p>
 <p>分配空间 = 剩余空间 * 当前 flex-grow</p>
@@ -447,11 +447,11 @@
 <p>元素最终大小为：【自身宽度 - 收缩宽度】</p>
 <p>假设超出宽度为 w，两个元素的宽度分别为 w1，w2，flex-shrink 分别为 s1，s2，则：</p>
 <p>收缩宽度 = 超出的宽度 * （当前宽度 * 当前 flex-shrink / 当前宽度 * 当前 flex-shrink + 其他宽度 * 其他 flex-shrink）</p>
-<p>即一个元素的收缩宽度 = w * (w1 * s1 / w1 * a + w2 * s2)</p>
+<p>即一个元素的收缩宽度 = w * (w1 * s1 / w1 * s1 + w2 * s2)</p>
 <p><img src="/resource/images/pages/h5css3/flex-shrink.png" alt></p>
 <p><strong>如果 flex 元素的 flex-shrink 之和小于 1</strong></p>
-<p>则收缩宽度 = w * flex 元素的 flex-shrink 之和，其他计算同上，例如容器宽度为 400，A 元素宽 100，flex-shrink 为 0.6，B 元素宽 300，flex-shrink 为 0.3，则：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">收缩宽度 = <span class="number">100</span> * (<span class="number">0.6</span> + <span class="number">0.3</span>) * (<span class="number">100</span>* <span class="number">0.6</span> / <span class="number">100</span> * <span class="number">0.6</span> + <span class="number">300</span> * <span class="number">0.3</span>)</span><br></pre></td></tr></table></figure>
+<p>则收缩宽度 = w * flex 元素的 flex-shrink 之和，其他计算同上，例如容器宽度为 500，元素 1 宽 100，flex-shrink 为 0.1，元素 2 宽 200，flex-shrink 为 0.2，元素 3 宽 300px，flex-shrink 为 0.3，则元素 1 的收缩宽度为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">100</span> * (<span class="number">0.1</span> + <span class="number">0.2</span> + <span class="number">0.3</span>) * (<span class="number">100</span>* <span class="number">0.1</span> / <span class="number">100</span>* <span class="number">0.1</span> + <span class="number">200</span> * <span class="number">0.2</span> + <span class="number">300</span> * <span class="number">0.3</span>)</span><br></pre></td></tr></table></figure>
 <p><img src="/resource/images/pages/h5css3/flex-shrink2.png" alt></p>
 <h2 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h2><p>flex 是 flex-grow、flex-shrink、flex-basis 的复合写法，默认 0、1、auto</p>
 <p>flex: none; 则表示 flex: 0 0 auto;</p>
