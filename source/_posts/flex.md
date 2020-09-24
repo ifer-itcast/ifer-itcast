@@ -5,6 +5,10 @@ tags: Flex
 categories: HTML5/CSS3
 ---
 
+关于 flex-grow、flex-shrink 的计算方式！
+
+<!-- more -->
+
 ## flex-basis
 
 默认值 auto
