@@ -5,7 +5,7 @@
 # Site
 title: 危险
 subtitle: 为之则易，不为则难
-description: React 全家桶 <span style="position:relative;top:-2px;">✍</span>
+description: React 全家桶 <span style='position:relative;top:-2px;'>✍</span>
 keywords: React,Redux,Mobx,Saga,Dva,Umi,AntD,TS
 author: Ifer
 language: zh-CN
