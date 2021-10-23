@@ -5,7 +5,7 @@
 # Site
 title: 危险
 subtitle: 为之则易，不为则难
-description: React 全家桶
+description: React 全家桶 <span style="position:relative;top:-2px;">✍</span>
 keywords: React,Redux,Mobx,Saga,Dva,Umi,AntD,TS
 author: Ifer
 language: zh-CN
@@ -18,8 +18,8 @@ root: /ifer
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
-  trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
-  trailing_html: true # Set to false to remove trailing '.html' from permalinks
+    trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
+    trailing_html: true # Set to false to remove trailing '.html' from permalinks
 
 # Directory
 source_dir: source
@@ -36,35 +36,35 @@ new_post_name: :title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link:
-  enable: true # Open external links in new tab
-  field: site # Apply to the whole site
-  exclude: ''
+    enable: true # Open external links in new tab
+    field: site # Apply to the whole site
+    exclude: ''
 filename_case: 0
 render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-  enable: true
-  line_number: true
-  auto_detect: false
-  tab_replace: ''
-  wrap: true
-  hljs: false
+    enable: true
+    line_number: true
+    auto_detect: false
+    tab_replace: ''
+    wrap: true
+    hljs: false
 prismjs:
-  enable: false
-  preprocess: true
-  line_number: true
-  tab_replace: ''
+    enable: false
+    preprocess: true
+    line_number: true
+    tab_replace: ''
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
 # per_page: Posts displayed per page. (0 = disable pagination)
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
-  path: ''
-  per_page: 10
-  order_by: -date
+    path: ''
+    per_page: 10
+    order_by: -date
 
 # Category & Tag
 default_category: uncategorized
@@ -102,13 +102,13 @@ ignore:
 theme: next
 
 search:
-  path: search.xml
-  field: post
-  content: true
+    path: search.xml
+    field: post
+    content: true
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: git
-  repository: https://gitee.com/ifercarly/ifer.git
-  branch: master
+    type: git
+    repository: https://gitee.com/ifercarly/ifer.git
+    branch: master
