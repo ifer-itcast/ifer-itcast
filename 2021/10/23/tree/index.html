@@ -20,31 +20,33 @@
     var CONFIG = {"hostname":"example.com","root":"/ifer/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="React 全家桶">
-<meta property="og:type" content="website">
-<meta property="og:title" content="危险">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="封装函数1234567const arr &#x3D; [    &amp;#123; id: &amp;#x27;a&amp;#x27;, pid: &amp;#x27;&amp;#x27;, name: &amp;#x27;总裁办&amp;#x27; &amp;#125;,    &amp;#123; id: &amp;#x27;b&amp;#x27;, pid: &amp;#x27;&amp;#x27;, name: &amp;#x27;行政部&amp;#x27; &amp;#125;,    &amp;#123; id: &amp;#x27">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tree">
+<meta property="og:url" content="http://example.com/2021/10/23/tree/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="React 全家桶">
+<meta property="og:description" content="封装函数1234567const arr &#x3D; [    &amp;#123; id: &amp;#x27;a&amp;#x27;, pid: &amp;#x27;&amp;#x27;, name: &amp;#x27;总裁办&amp;#x27; &amp;#125;,    &amp;#123; id: &amp;#x27;b&amp;#x27;, pid: &amp;#x27;&amp;#x27;, name: &amp;#x27;行政部&amp;#x27; &amp;#125;,    &amp;#123; id: &amp;#x27">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-23T07:01:28.000Z">
+<meta property="article:modified_time" content="2021-10-23T09:06:21.609Z">
 <meta property="article:author" content="Ifer">
 <meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2021/10/23/tree/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>危险</title>
+  <title>Tree | 危险</title>
   
 
 
@@ -171,9 +173,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -189,10 +192,9 @@
       <meta itemprop="name" content="危险">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/ifer/2021/10/23/tree/" class="post-title-link" itemprop="url">Tree</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          Tree
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -216,7 +218,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="封装函数"><a href="#封装函数" class="headerlink" title="封装函数"></a>封装函数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;a&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;总裁办&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;b&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;行政部&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;财务部&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;d&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;财务核算部&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;e&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;税务管理部&#x27;</span> &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+        <h2 id="封装函数"><a href="#封装函数" class="headerlink" title="封装函数"></a>封装函数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;a&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;总裁办&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;b&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;行政部&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;财务部&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;d&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;财务核算部&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;e&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;税务管理部&#x27;</span> &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <p>需求：把上面的数据转成下面的结果</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;a&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;总裁办&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;b&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;行政部&#x27;</span> &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;财务部&#x27;</span>,</span><br><span class="line">        <span class="attr">children</span>: [</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">&#x27;d&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;财务核算部&#x27;</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">&#x27;e&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;税务管理部&#x27;</span> &#125;,</span><br><span class="line">        ],</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
@@ -242,91 +244,30 @@
 <p><code>src/components/ElTree.vue</code></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;el-list&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;el-item&quot;</span> <span class="attr">v-for</span>=<span class="string">&quot;item in arr&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item.id&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;el-title&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span></span></span><br><span class="line"><span class="tag">                    @<span class="attr">click</span>=<span class="string">&quot;toggle(item)&quot;</span></span></span><br><span class="line"><span class="tag">                    <span class="attr">class</span>=<span class="string">&quot;el-btn&quot;</span></span></span><br><span class="line"><span class="tag">                    <span class="attr">v-if</span>=<span class="string">&quot;isHasChild(item)&quot;</span></span></span><br><span class="line"><span class="tag">                    &gt;</span>&#123;&#123; item.show ? &#x27;+&#x27; : &#x27;-&#x27; &#125;&#125;&lt;/span</span><br><span class="line">                &gt;<span class="symbol">&amp;nbsp;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;el-txt&quot;</span>&gt;</span>&#123;&#123; item.name &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-tree</span></span></span><br><span class="line"><span class="tag">                <span class="attr">v-show</span>=<span class="string">&quot;!item.show&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">v-if</span>=<span class="string">&quot;isHasChild(item)&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">:arr</span>=<span class="string">&quot;item.children&quot;</span></span></span><br><span class="line"><span class="tag">            /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;ElTree&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="attr">props</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="attr">arr</span>: &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">type</span>: <span class="built_in">Array</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">isRequired</span>: <span class="literal">true</span>,</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">toggle</span>(<span class="params">item</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.$set(item, <span class="string">&#x27;show&#x27;</span>, !item.show)</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">isHasChild</span>(<span class="params">item</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">return</span> item.children &amp;&amp; item.children.length &gt; <span class="number">0</span></span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/23/hello-world/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/ifer/images/avatar.gif">
-      <meta itemprop="name" content="Ifer">
-      <meta itemprop="description" content="React 全家桶">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="危险">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/ifer/2021/10/23/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-23 08:42:26" itemprop="dateCreated datePublished" datetime="2021-10-23T08:42:26+08:00">2021-10-23</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/ifer/2021/10/23/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -379,6 +320,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">封装函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">第三方包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E6%9F%A5%E6%89%BE"><span class="nav-number">3.</span> <span class="nav-text">递归查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%E5%BD%A2%E8%8F%9C%E5%8D%95"><span class="nav-number">4.</span> <span class="nav-text">树形菜单</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
