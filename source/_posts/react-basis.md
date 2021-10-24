@@ -605,3 +605,217 @@ export default class App extends Component {
     }
 }
 ```
+
+## 表单处理
+
+[官方文档](https://zh-hans.reactjs.org/docs/forms.html#gatsby-focus-wrapper)
+
+-   <font color=#e32d40>受控组件</font>
+
+<font size=4>1. 概念</font>
+
+受控不受控一般是针对表单来说的，所谓受控组件，**即对视图的操作会影响状态（数据），状态的变化又会反映到视图上**；非受控组件则是通过操作 DOM 的方式来获取数据。
+
+<font size=4>2. 使用步骤</font>
+
+a，在 state 中添加一个状态，作为表单元素的 value 值（数据影响视图）
+
+b，给表单元素绑定 onChange 事件，将表单元素的值设置为 state 的值（视图影响数据）
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        username: '',
+    }
+    inputChange = (e) => {
+        this.setState({
+            username: e.target.value,
+        })
+    }
+    render() {
+        return (
+            <div>
+                <input type='text' value={this.state.username} onChange={this.inputChange} />
+            </div>
+        )
+    }
+}
+```
+
+<font size=4>3. 其他文本框演示</font>
+
+富文本框（和文本框一样）
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        content: '',
+    }
+    handleChange = (e) => {
+        this.setState({
+            content: e.target.value,
+        })
+    }
+    render() {
+        return (
+            <div>
+                <textarea value={this.state.content} onChange={this.handleChange}></textarea>
+            </div>
+        )
+    }
+}
+```
+
+选择下拉框
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        frame: 'react',
+    }
+    handleChange = (e) => {
+        this.setState({
+            frame: e.target.value,
+        })
+    }
+    render() {
+        return (
+            <div>
+                <select value={this.state.frame} onChange={this.handleChange}>
+                    <option value='vue'>Vue</option>
+                    <option value='react'>React</option>
+                    <option value='angular'>Angular</option>
+                </select>
+            </div>
+        )
+    }
+}
+```
+
+<font color=E6A23C>**操作单选按钮和复选框时：注意区分 `e.target.checked` 和 `e.target.value` 的差异！**</font>
+
+两个单选按钮，状态可以是布尔值，用布尔值的状态可以表示清楚其中一个数据
+
+多个单选按钮，布尔值搞不定了，需要借助字符串来进行处理
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    state = {
+        isCheckedRadio: 'male',
+    }
+    handleChange = (e) => {
+        this.setState({
+            isCheckedRadio: e.target.value,
+        })
+    }
+    render() {
+        return (
+            <div>
+                <input id='male' type='radio' value='male' checked={this.state.isCheckedRadio === 'male'} onChange={this.handleChange} />
+                <label htmlFor='male'>男</label>
+                <input id='female' type='radio' value='female' checked={this.state.isCheckedRadio === 'female'} onChange={this.handleChange} />
+                <label htmlFor='female'>女</label>
+                <input id='unknow' type='radio' value='unknow' checked={this.state.isCheckedRadio === 'unknow'} onChange={this.handleChange} />
+                <label htmlFor='unknow'>未知</label>
+            </div>
+        )
+    }
+}
+```
+
+一个复选按钮：用布尔值可以表示清楚，注意绑定的是 `checked` 属性，通过 `e.target.checked` 获取变化后的数据
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        isCheckedApple: false,
+    }
+    handleChange = (e) => {
+        this.setState({
+            isCheckedApple: e.target.checked,
+        })
+    }
+    render() {
+        return (
+            <div>
+                <input id='apple' type='checkbox' checked={this.state.isCheckedApple} onChange={this.handleChange} />
+                <label htmlFor='apple'>Apple</label>
+            </div>
+        )
+    }
+}
+```
+
+多个复选按钮，需要用到数组
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        isCheckedCheckbox: ['apple', 'orange'],
+    }
+    handleChange = (e) => {
+        const isCheckedCheckbox = [...this.state.isCheckedCheckbox]
+        if (e.target.checked) {
+            isCheckedCheckbox.push(e.target.value)
+        } else {
+            const idx = isCheckedCheckbox.indexOf(e.target.value)
+            isCheckedCheckbox.splice(idx, 1)
+        }
+        this.setState({
+            isCheckedCheckbox,
+        })
+    }
+    render() {
+        return (
+            <div>
+                <input id='apple' type='checkbox' value='apple' checked={this.state.isCheckedCheckbox.includes('apple')} onChange={this.handleChange} />
+                <label htmlFor='apple'>Apple</label>
+                <input id='orange' type='checkbox' value='orange' checked={this.state.isCheckedCheckbox.includes('orange')} onChange={this.handleChange} />
+                <label htmlFor='orange'>Orange</label>
+            </div>
+        )
+    }
+}
+```
+
+<font size=4>4. 多表单元素优化</font>
+
+问题：每个表单元素都有一个单独的事件处理函数，这样太繁琐，期望使用一个事件处理程序同时处理多个表单元素
+
+a，给表单元素添加 name 属性
+
+b，根据表单类型来获取对应值
+
+c，在 onChange 事件处理程序中通过 `[e.target.name]` 来修改对应的 state
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    handleChange = (e) => {
+        let value
+        if (e.target.type === 'radio') {
+            value = !this.state.isCheckedMale
+        } else if (e.target.type === 'checkbox') {
+            value = e.target.checked
+        } else {
+            value = e.target.value
+        }
+        this.setState({
+            [e.target.name]: value,
+        })
+    }
+}
+```
