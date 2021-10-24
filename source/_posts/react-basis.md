@@ -33,6 +33,8 @@ const jsx = (
 
 使用 React 除了可以开发 Web 应用，还可以使用 React Native 开发原生移动应用，甚至可以开发 VR（虚拟现实）应用（React 360）。
 
+-   <font color=#e32d40>相比较于 Vue，React 尽可能的利用 JS 语言自身的能力来编写 UI，而不是通过造轮子增强 HTML 的功能</font>
+
 ## 基本使用
 
 1. 下载 `react` 和 `react-dom`
@@ -240,16 +242,366 @@ ReactDOM.render(title, document.querySelector('#root'))
 
 1. 定义虚拟 DOM 时，不要写引号。
 
-2. 样式类名使用 `className`。
+2. 部分属性需要改成小驼峰的形式，例如 label 的 for 属性改为 `htmlFor`，colspan 改为 `colSpan`。
 
-3. 写行内样式，`<div style={{ color: 'red' }}>Hello</div>`。
+3. 元素若没有子节点，可以使用单标签闭合，例如 `<span/>`。
 
-4. 元素若没有子节点，可以使用单标签闭合，例如 `<span/>`。
+4. 推荐使用小括号包裹 JSX，从而避免 JS 中[自动插入分号陷阱](https://stackoverflow.com/questions/2846283/what-are-the-rules-for-javascripts-automatic-semicolon-insertion-asi)。
 
-5. 推荐使用小括号包裹 JSX，从而避免 JS 中[自动插入分号陷阱](https://stackoverflow.com/questions/2846283/what-are-the-rules-for-javascripts-automatic-semicolon-insertion-asi)。
+5. 只能有 1 个根节点，或者根节点是 `<></>`。
 
-6. 标签首字母，小写开头会被当做 HTML 中的同名标签，大写开头会被当做组件解析。
-
-7. 只能有 1 个根节点，或者根节点是 `<></>`。
+6. JSX 中不能直接使用对象，除非是行内样式（后续讲）。
 
 -   <font color=#e32d40>在 JSX 中使用表达式</font>
+
+1. **单大括号**中可以使用任意的 JSX 表达式，但 JS 对象是一个例外，一般只会出现在 style 属性中。
+
+2. JSX 自身也是表达式。
+
+3. 注意表达式和语句的区别。
+
+[表达式和语句](https://zh.wikipedia.org/wiki/%E9%99%B3%E8%BF%B0%E5%BC%8F)，简单来说，表达式就是可以**产生结果**的式子，一般由变量或运算符组成，例如 `a`、`a + b`、`fn(1)`、`arr.map()` 等；语句是使用特定命令告诉计算机执行特定操作的句子，通常没有返回结果，例如 `if {}`、`for() {}`、`switch() {}` 等。
+
+-   <font color=#e32d40>JSX 中的条件渲染</font>
+
+可以根据不同的条件显示特定的 HTML 结构，需求：loading
+
+```jsx
+import ReactDOM from 'react-dom'
+
+const isLoading = true
+
+const loadData = () => {
+    if (isLoading) {
+        return <h2>数据加载中，请稍后...</h2>
+    }
+    return <h2>数据加载完成，此处显示了加载后的数据</h2>
+}
+
+ReactDOM.render(loadData(), document.querySelector('#root'))
+```
+
+三元表达式
+
+```jsx
+const loadData = () => {
+    return <h2>{isLoading ? '数据加载中，请稍后...' : '数据加载完成，此处显示了加载后的数据'}</h2>
+}
+```
+
+-   <font color=#e32d40>JSX 中的列表渲染</font>
+
+1. 可以使用 `map()` 方法渲染一组数据。
+
+2. 渲染列表的时候应该加 key，key 值要保证唯一，尽量避免使用索引号当做 key。
+
+3. `map()` 遍历谁，就把 key 加在谁上。
+
+```jsx
+import ReactDOM from 'react-dom'
+
+const list = [
+    { id: 1, name: 'Vue' },
+    { id: 2, name: 'React' },
+    { id: 3, name: 'Angular' },
+]
+
+const loadData = () => {
+    return (
+        <ul>
+            {list.map((item) => (
+                <li key={item.id}>{item.name}</li>
+            ))}
+        </ul>
+    )
+}
+
+ReactDOM.render(loadData(), document.querySelector('#root'))
+```
+
+-   <font color=#e32d40>JSX 中的样式处理</font>
+
+1. 类名使用 `className`，<font color=#e32d40>**推荐**</font>。
+
+2. 行内样式，`<div style={{ color: 'red' }}>Hello</div>`。
+
+## 关于组件
+
+组件就是页面中的一部分，是 React 的一等公民，使用 React 就是在用组件；组件的特点：可复用、独立、可组合；所谓组件化采用的就是分而治之的思想。
+
+<font color=#909090>🧐 了解模块：JS 模块一般是向外提供特定功能的代码片段，通常来说是一个文件。</font>
+
+-   <font color=#e32d40>创建组件的 2 种方式</font>
+
+<font size=4>1. 函数式组件</font>
+
+a，函数组件，又称简单组件或无状态组件（Hooks 之前没有自己的状态），使用 JS 的函数创建组件。
+
+b，函数名称<font color=#e32d40>**必须以大写字母开头**</font>，函数组件<font color=#e32d40>**必须有返回值**</font>，表示该组件的结构，返回 null，则表示不渲染任何内容。
+
+c，函数式组件中的 this 是 undefined，因为 babel 编译后的代码开启了严格模式，[Babel 试一试](https://www.babeljs.cn/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.6&spec=false&loose=false&code_lz=GYVwdgxgLglg9mABAWQJ4GEC2AHAFASkQG8AoASACcBTKECpAHgAsBGAPkF_FQB1NB4fUBG_QG9yDAPSs2JAL5A&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Ces2015%2Creact%2Cstage-0&prettier=false&targets=&version=7.15.8&externalPlugins=)。
+
+```jsx
+import ReactDOM from 'react-dom'
+
+function Hello() {
+    return <div>这是第一个函数组件</div>
+}
+// const Hello = () => <h1>这是一个函数组件！</h1>;
+
+// 把函数的名字作为标签名进行渲染
+ReactDOM.render(<Hello />, document.getElementById('root'))
+```
+
+<font color=#909090>🧐 了解 `ReactDOM.render()` 解析函数式组件的过程：React 解析 `<Hello/>` 组件，发现是函数定义的，随后调用此函数，将返回的虚拟 DOM 转为真实 DOM，并渲染到页面中。</font>
+
+<font size=4>2. 类式组件</font>
+
+a，使用 ES6 语法的 class 创建的组件，又称复杂组件或有状态组件。
+
+b，类名称也必须要大写字母开头。
+
+c，类组件应该继承 `React.Component` 父类，从而可以使用父类中提供的方法或者属性。
+
+d，类组件必须提供 `render()` 方法，此方法中的 this 指向此组件的实例对象，此方法中必须要有 return 返回值。
+
+```jsx
+class Hello extends React.Component {
+    render() {
+        return <div>这是第一个类组件</div>
+    }
+}
+ReactDOM.render(<Hello />, document.getElementById('root'))
+```
+
+<font color=#909090>🧐 了解 `ReactDOM.render()` 解析类式组件的过程：React 解析 `<Hello/>` 组件，发现是类组件，会自动的 new 出来该类的实例，并通过实例调用原型上的 `render()` 方法，将 `render()` 方法返回的虚拟 DOM 转为真实 DOM，并渲染到页面中。</font>
+
+## 事件绑定
+
+语法：`on + 事件名称 = 事件处理函数`，比如 `onClick = function(){}`
+
+a，React 中使用的是合成事件，而不是原生的 DOM 事件（为了兼容性）
+
+b，React 中的事件是通过事件委托的方式处理的（委托给组件内最外层元素，为了高效，v17 之后做了改动）
+
+c，通过 `e` 可以拿到事件对象，例如 `e.target` 就是触发事件的那个 DOM 元素
+
+类
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    handleClick() {
+        console.log('Hello World')
+    }
+    render() {
+        return (
+            <div>
+                <button onClick={this.handleClick}>click</button>
+            </div>
+        )
+    }
+}
+```
+
+函数
+
+```jsx
+import React from 'react'
+
+export default function App() {
+    const handleClick = () => {
+        console.log('Hello World')
+    }
+    return (
+        <div>
+            <button onClick={handleClick}>click</button>
+        </div>
+    )
+}
+```
+
+## 组件 State
+
+组件被称为状态机，意思是通过更新组件的状态（state）就能达到更新对应界面的目的！状态（state）即数据，是组件内部的私有属性，<font color=#e32d40>**state 对应的值必须是一个对象**</font>。
+
+> 需求：计数器（点击按钮加 1）
+
+1. 定义 state
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    constructor() {
+        super()
+        this.state = {
+            count: 0,
+        }
+    }
+    render() {
+        return (
+            <div>
+                <h2>计数器：{this.state.count}</h2>
+            </div>
+        )
+    }
+}
+```
+
+state 的简写形式
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    // 直接使用赋值语句
+    state = {
+        count: 0,
+    }
+    render() {
+        return (
+            <div>
+                <h2>计数器：{this.state.count}</h2>
+            </div>
+        )
+    }
+}
+```
+
+<font color=#909090>🧐 思考 2 种定义形式的差异？</font>
+
+2. 修改 state 中的数据（count）
+
+<font color=#e32d40>错误写法：`this.state.count += 1`</font>，数据确实也会变，但不是响应式的！
+
+<font color=#e32d40>正确写法：`this.setState({ count: this.state.count + 1 })`</font>
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    state = {
+        count: 0,
+    }
+    handleClick() {
+        // 如果 handleClick 是被 App 的实例调用的，这里的 this 应该是组件实例
+        // 但！这个方法并不是 App 的实例调用的，而是点击按钮的时候，被 React 内部直接调用的，而【直接调用】 class 中的方法，this 指向就是 undefined
+        console.log(this)
+    }
+    render() {
+        return (
+            <div>
+                <h2>计数器：{this.state.count}</h2>
+                <button onClick={this.handleClick}>+1</button>
+            </div>
+        )
+    }
+}
+```
+
+<font color=#909090>🧐 了解什么叫【直接调用】？</font>
+
+```js
+class Person {
+    say() {
+        console.log(this) // undefined
+    }
+}
+const p = new Person()
+const temp = p.say
+temp()
+```
+
+<font color=#909090>🧐 如何把 `say()` 中的 this 指向实例？</font>
+
+```js
+class Person {
+    say = () => {
+        console.log(this) // undefined
+    }
+}
+const p = new Person()
+const temp = p.say
+temp()
+```
+
+<font color=#909090>🧐 类中赋值语句定义函数（箭头/普通）和直接定义函数的区别？</font>
+
+```js
+class Person {
+    // 挂载到实例本身上的
+    say1 = () => {
+        console.log(this)
+    }
+    // 挂载到原型上的
+    say2() {}
+}
+const p1 = new Person()
+const p2 = new Person()
+console.log(p1.say1 === p2.say1) // false
+console.log(p1.say2 === p2.say2) // true
+```
+
+3. 修复 this 指向的问题
+
+思路 1：通过赋值语句往实例上面添加一个箭头函数。
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    state = {
+        count: 0,
+    }
+    handleClick = () => {
+        this.setState({
+            count: this.state.count + 1,
+        })
+    }
+    render() {
+        return (
+            <div>
+                <h2>计数器：{this.state.count}</h2>
+                <button onClick={this.handleClick}>+1</button>
+            </div>
+        )
+    }
+}
+```
+
+思路 2：`<button onClick={this.handleClick.bind(this)}>+1</button>`
+
+思路 3：在 `constructor()` 构造函数中进行一次绑定
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    constructor() {
+        super()
+        // 1. 往实例自身上又挂载了一个 handleClick 函数
+        // 2. 此函数是通过原型上 handleClick 函数生成的新函数
+        // 3. 并把原型上 handleClick 函数中的 this 通过 bind 绑定为了 this，而这里构造函数中的 this 正是实例对象
+        // 4. 其实点击的时候调用的是这个构造函数 handleClick，而这个构造函数中的 handleClick 又会去调用原型上的 handleClick
+        this.handleClick = this.handleClick.bind(this)
+    }
+    state = {
+        count: 0,
+    }
+    handleClick() {
+        this.setState({
+            count: this.state.count + 1,
+        })
+    }
+    render() {
+        return (
+            <div>
+                <h2>计数器：{this.state.count}</h2>
+                <button onClick={this.handleClick}>+1</button>
+            </div>
+        )
+    }
+}
+```
