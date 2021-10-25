@@ -810,7 +810,6 @@ export default class App extends React.Component {
         } else {
             v = e.target.value
         }
-        console.log(v, 55555555)
         this.setState({
             [e.target.name]: v,
         })
@@ -1050,6 +1049,1105 @@ export default class App extends PureComponent {
                 {/* #2: 交给函数式组件的包裹 forWardRef() 函数进行处理 */}
                 <Test ref={this.testFnCmpDomRef}>Hello World</Test>
                 <button onClick={this.handleClick}>按钮</button>
+            </div>
+        )
+    }
+}
+```
+
+## 留言本
+
+需求分析
+
+a，渲染评论列表（列表渲染）。
+
+b，没有评论数据时渲染：暂无评论（条件渲染）。
+
+c，获取评论信息，包括评论人和评论内容（受控组件）。
+
+d，发表评论，更新评论列表（setState()）。
+
+### 界面准备
+
+入口文件：`index.js`
+
+```jsx
+import ReactDOM from 'react-dom'
+import App from './App'
+import './index.css'
+
+ReactDOM.render(<App />, document.getElementById('root'))
+```
+
+根组件：`App.jsx`
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    render() {
+        return (
+            <div className='app'>
+                <div>
+                    <input type='text' className='user' placeholder='请输入评论人' />
+                    <br />
+                    <textarea name='' id='' cols='30' rows='10' placeholder='请输入评论内容' />
+                    <br />
+                    <button>发表评论</button>
+                </div>
+                <div className='no-comment'>暂无评论，快去评论吧~</div>
+                <ul>
+                    <li>
+                        <h3>评论人：jack</h3>
+                        <p>评论内容：沙发！！！</p>
+                    </li>
+                </ul>
+            </div>
+        )
+    }
+}
+```
+
+全局样式：`index.css`
+
+```css
+.app {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #999;
+}
+
+.user {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.content {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.no-comment {
+    text-align: center;
+    margin-top: 30px;
+}
+```
+
+### 渲染列表
+
+1. 在 state 中初始化评论列表数据。
+
+2. 使用数组的 map 方法遍历 state 中的列表数据。
+
+3. 给每一个被遍历的 li 元素添加 key 属性。
+
+4. 在 render 方法里的 ul 节点下嵌入表达式。
+
+根组件：`App.jsx`
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        comments: [
+            { id: 1, name: 'jack', content: '沙发！！！' },
+            { id: 2, name: 'rose', content: '板凳~' },
+            { id: 3, name: 'tom', content: '楼主好人' },
+        ],
+    }
+    render() {
+        const { comments } = this.state
+        return (
+            <div className='app'>
+                <div>
+                    <input type='text' className='user' placeholder='请输入评论人' />
+                    <br />
+                    <textarea placeholder='请输入评论内容' />
+                    <br />
+                    <button>发表评论</button>
+                </div>
+                <div className='no-comment'>暂无评论，快去评论吧~</div>
+                <ul>
+                    {comments.map((item) => (
+                        <li key={item.id}>
+                            <h3>评论人：{item.name}</h3>
+                            <p>评论内容：{item.content}</p>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )
+    }
+}
+```
+
+### 暂无评论
+
+1. 判断列表数据的长度是否为 0。
+
+2. 如果为 0，则渲染暂无评论。
+
+3. 如果不为 0，那么渲染列表数据。
+
+4. 在 JSX 中大量写逻辑会导致很臃肿，所以我们可以把条件渲染的逻辑抽取成一个函数。
+
+5. 在 render 的 return 方法里面调用这个函数即可。
+
+根组件：`App.jsx`
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        comments: [
+            { id: 1, name: 'jack', content: '沙发！！！' },
+            { id: 2, name: 'rose', content: '板凳~' },
+            { id: 3, name: 'tom', content: '楼主好人' },
+        ],
+    }
+    renderList() {
+        if (this.state.comments.length === 0) {
+            return <div className='no-comment'>暂无评论，快去评论吧~</div>
+        }
+        return (
+            <ul>
+                {this.state.comments.map((item) => (
+                    <li key={item.id}>
+                        <h3>评论人：{item.name}</h3>
+                        <p>评论内容：{item.content}</p>
+                    </li>
+                ))}
+            </ul>
+        )
+    }
+    render() {
+        return (
+            <div className='app'>
+                <div>
+                    <input type='text' className='user' placeholder='请输入评论人' />
+                    <br />
+                    <textarea placeholder='请输入评论内容' />
+                    <br />
+                    <button>发表评论</button>
+                </div>
+                {this.renderList()}
+            </div>
+        )
+    }
+}
+```
+
+### 获取评论
+
+1. 通过受控组件来获取内容。
+
+2. 初始化用户名和用户内容的 state。
+
+3. 在结构中，把表单元素的 value 与 state 进行绑定，还需要绑定 name 属性和 onChange 属性。
+
+4. 在 handleChange 函数中利用 setState 来让数据保持一致。
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        comments: [
+            { id: 1, name: 'jack', content: '沙发！！！' },
+            { id: 2, name: 'rose', content: '板凳~' },
+            { id: 3, name: 'tom', content: '楼主好人' },
+        ],
+        name: '',
+        content: '',
+    }
+    renderList() {
+        const { comments } = this.state
+        if (comments.length === 0) {
+            return <div className='no-comment'>暂无评论，快去评论吧~</div>
+        }
+        return (
+            <ul>
+                {comments.map((item) => (
+                    <li key={item.id}>
+                        <h3>评论人：{item.name}</h3>
+                        <p>评论内容：{item.content}</p>
+                    </li>
+                ))}
+            </ul>
+        )
+    }
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value,
+        })
+    }
+    render() {
+        const { name, content } = this.state
+        return (
+            <div className='app'>
+                <div>
+                    <input type='text' name='name' className='user' placeholder='请输入评论人' value={name} onChange={this.handleChange} />
+                    <br />
+                    <textarea placeholder='请输入评论内容' name='content' value={content} onChange={this.handleChange} />
+                    <br />
+                    <button>发表评论</button>
+                </div>
+                {this.renderList()}
+            </div>
+        )
+    }
+}
+```
+
+### 发表评论
+
+1. 给按钮绑定点击事件。
+
+2. 在事件处理程序中，通过 state 获取评论信息。
+
+3. 将评论信息添加到 state 中，利用 setState 来更新页面。
+
+4. 添加评论前需要判断用户是否输入内容。
+
+5. 添加评论后，需要清空文本框用户输入的值。
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        comments: [
+            { id: 1, name: 'jack', content: '沙发！！！' },
+            { id: 2, name: 'rose', content: '板凳~' },
+            { id: 3, name: 'tom', content: '楼主好人' },
+        ],
+        name: '',
+        content: '',
+    }
+    renderList() {
+        const { comments } = this.state
+        if (comments.length === 0) {
+            return <div className='no-comment'>暂无评论，快去评论吧~</div>
+        }
+        return (
+            <ul>
+                {comments.map((item) => (
+                    <li key={item.id}>
+                        <h3>评论人：{item.name}</h3>
+                        <p>评论内容：{item.content}</p>
+                    </li>
+                ))}
+            </ul>
+        )
+    }
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value,
+        })
+    }
+    handleSubmit = (e) => {
+        const { name, content } = this.state
+        if (name.trim() === '' || content.trim() === '') {
+            alert('请输入内容')
+            return
+        }
+        // 利用数组拓展运算符来进行数据的拼接，把用户输入的存放在数组的第一个位置
+        const newComments = [
+            {
+                id: this.state.comments.length + 1,
+                name,
+                content,
+            },
+            ...this.state.comments,
+        ]
+        this.setState({
+            comments: newComments,
+            name: '',
+            content: '',
+        })
+    }
+    render() {
+        const { name, content } = this.state
+        return (
+            <div className='app'>
+                <div>
+                    <input type='text' name='name' className='user' placeholder='请输入评论人' value={name} onChange={this.handleChange} />
+                    <br />
+                    <textarea placeholder='请输入评论内容' name='content' value={content} onChange={this.handleChange} />
+                    <br />
+                    <button onClick={this.handleSubmit}>发表评论</button>
+                </div>
+                {this.renderList()}
+            </div>
+        )
+    }
+}
+```
+
+### 删除功能
+
+a，利用 `findIndex` 并 `splice`
+
+```js
+handleDel = (id) => {
+    // 不建议在原 state 的基础上直接进行操作，后续做性能优化时会有影响
+    const comments = [...this.state.comments]
+    const idx = comments.findIndex((item) => item.id === id)
+    comments.splice(idx, 1)
+    this.setState({
+        comments,
+    })
+}
+```
+
+b，利用 `findIndex` 并 `slice`
+
+```js
+handleDel = (id) => {
+    const idx = this.state.comments.findIndex((item) => item.id === id)
+    this.setState({
+        comments: [...this.state.comments.slice(0, idx), ...this.state.comments.slice(idx + 1)],
+    })
+}
+```
+
+c，利用 `filter`
+
+```js
+handleDel = (id) => {
+    this.setState({
+        comments: this.state.comments.filter((item) => item.id !== id),
+    })
+}
+```
+
+## 组件通信
+
+组件是独立且封闭的单元，默认情况下，只能使用组件自己的数据。在组件化过程中，我们将一个完整的功能拆分成多个组件，以更好的完成整个应用的功能。而在这个过程中，多个组件之间不可避免的要共享某些数据。为了实现这些功能，就需要打破组件的独立封闭性，让其与外界沟通，这个过程就是组件通讯。
+
+### 父传子
+
+-   <font color=#e32d40>基本使用</font>
+
+1. 父组件提供要传递的 state 数据。
+
+2. 给子组件标签添加属性，值为 state 中的数据。
+
+3. 子组件中通过 props 接收父组件中传递的数据。
+
+函数式组件
+
+```jsx
+export default function App(props) {
+    return <div>接收到的数据：{props.name}</div>
+}
+```
+
+类式组件
+
+```jsx
+import React from 'react'
+export default class App extends React.Component {
+    render() {
+        return <div>接收到的数据：{this.props.name}</div>
+    }
+}
+```
+
+-   <font color=#e32d40>Props 的特点</font>
+
+a，可以给组件传递任意类型的数据。
+
+b，props 是只读的，不能修改。
+
+c，使用类组件时，如果写了构造函数，应该在 constructor 中接收 props，并将 props 传递给 super，否则无法在构造函数中使用 this.props
+
+```jsx
+import React from 'react'
+export default class App extends React.Component {
+    constructor(props) {
+        super(props)
+        console.log(this.props === props)
+    }
+    render() {
+        return <div>接收到的数据：{this.props.age}</div>
+    }
+}
+```
+
+### 子传父
+
+1. 父组件提供回调，子组件调用，将要传递的数据作为回调函数的参数。
+
+2. 父组件提供一个回调函数，用来接收数据，谁需要数据谁提供回调函数。
+
+3. 将该函数作为属性的值，传递给子组件。
+
+`App.jsx`
+
+```jsx
+import React from 'react'
+
+class Hello extends React.Component {
+    state = {
+        childMsg: 'Hello World',
+    }
+    handleClick = () => {
+        this.props.getMsg(this.state.childMsg)
+    }
+    render() {
+        return (
+            <div>
+                <button onClick={this.handleClick}>点我，给父组件传递数据</button>
+            </div>
+        )
+    }
+}
+
+export default class App extends React.Component {
+    getChildMsg = (msg) => {
+        console.log('接收到的子组件的数据：' + msg)
+    }
+    render() {
+        return (
+            <div>
+                父组件
+                <hr />
+                <Hello getMsg={this.getChildMsg} />
+            </div>
+        )
+    }
+}
+```
+
+### 兄弟间
+
+a，将共享状态提升到最近的公共父组件中，这个称为状态提升。
+
+b，公共父组件职责：1. 提供共享状态 2.提供操作共享状态的方法。
+
+c，要通讯的子组件只需要通过 props 接收操作状态的方法或状态。
+
+需求：点击 Button 组件中的按钮，让 Count 组件中的数字 +1
+
+```jsx
+import React from 'react'
+
+class Count extends React.Component {
+    state = {
+        count: 0,
+    }
+    render() {
+        return (
+            <div>
+                <h2>{this.state.count}</h2>
+            </div>
+        )
+    }
+}
+
+class Button extends React.Component {
+    render() {
+        return (
+            <div>
+                <button>+1</button>
+            </div>
+        )
+    }
+}
+
+export default class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <Count />
+                <hr />
+                <Button />
+            </div>
+        )
+    }
+}
+```
+
+实现
+
+```jsx
+import React from 'react'
+
+class Count extends React.Component {
+    render() {
+        return (
+            <div>
+                <h2>{this.props.count}</h2>
+            </div>
+        )
+    }
+}
+
+class Button extends React.Component {
+    render() {
+        return (
+            <div>
+                {/* #5 */}
+                <button onClick={this.props.addCount}>+1</button>
+            </div>
+        )
+    }
+}
+
+export default class App extends React.Component {
+    // #1
+    state = {
+        count: 0,
+    }
+    // #2
+    addCount = () => {
+        this.setState({
+            count: this.state.count + 1,
+        })
+    }
+    render() {
+        return (
+            <div>
+                {/* #4 */}
+                <Count count={this.state.count} />
+                <hr />
+                {/* #3 */}
+                <Button addCount={this.addCount} />
+            </div>
+        )
+    }
+}
+```
+
+### 跨层级
+
+如果出现层级比较多的情况下（例如：爷爷传递数据给孙子），我们会使用 Context 来进行传递。
+
+1. 调用 `React.createContext()` 创建 `Provider（提供数据）` 和 Consumer（消费数据） 两个组件。
+
+2. 使用 `Provider` 组件作为父节点。
+
+3. 设置 value 属性给 Provider，表示要传递的数据。
+
+4. 哪一层想要接收数据，就用 `Consumer` 进行包裹，在内部通过回调函数中的参数就能拿到传递过来的数据。
+
+```jsx
+import React from 'react'
+// 可以写默认值，当父级没有被 Provider 包裹时，子孙组件会使用此默认值
+const styleContext = React.createContext({
+    bgColor: 'pink',
+})
+
+class Child1 extends React.Component {
+    render() {
+        return (
+            <div>
+                <p>Child1</p>
+                <Child2 />
+            </div>
+        )
+    }
+}
+
+class Child2 extends React.Component {
+    render() {
+        return (
+            <div>
+                <p>Child2</p>
+                <Child3 />
+            </div>
+        )
+    }
+}
+class Child3 extends React.Component {
+    render() {
+        return (
+            <styleContext.Consumer>
+                {(data) => (
+                    <div style={{ border: '1px solid #333' }}>
+                        <p>Child3</p>
+                        <p>拿到的是根组件的数据：{data.bgColor}</p>
+                    </div>
+                )}
+            </styleContext.Consumer>
+        )
+    }
+}
+
+export default class App extends React.Component {
+    state = {
+        obj: {
+            bgColor: 'green',
+        },
+    }
+    render() {
+        return (
+            <styleContext.Provider value={this.state.obj}>
+                <Child1 />
+            </styleContext.Provider>
+        )
+    }
+}
+```
+
+**类组件**中获取数据的另一种使用方式：`static contextType = styleContext`
+
+```jsx
+class Child3 extends React.Component {
+    static contextType = styleContext
+    render() {
+        return (
+            <div style={{ border: '1px solid #333' }}>
+                <p>Child3</p>
+                <p>拿到的是根组件的数据：{this.context.bgColor}</p>
+            </div>
+        )
+    }
+}
+```
+
+函数式组件中获取数据的两种方式
+
+```jsx
+function Child3() {
+    return (
+        <styleContext.Consumer>
+            {(value) => (
+                <div style={{ border: '1px solid #333' }}>
+                    <p>Child3</p>
+                    <p>拿到的是根组件的数据：{value.bgColor}</p>
+                </div>
+            )}
+        </styleContext.Consumer>
+    )
+}
+```
+
+```jsx
+import React, { useContext } from 'react'
+const styleContext = React.createContext({
+    bgColor: 'pink',
+})
+function Child3() {
+    const value = useContext(styleContext)
+    return (
+        <div style={{ border: '1px solid #333' }}>
+            <p>Child3</p>
+            <p>拿到的是根组件的数据：{value.bgColor}</p>
+        </div>
+    )
+}
+```
+
+### 任意间
+
+1. 安装
+
+```bash
+yarn add events
+```
+
+2. 创建 EventEmitter 实例
+
+```js
+import { EventEmitter } from 'events'
+const eventBus = new EventEmitter()
+export default eventBus
+```
+
+3. 监听和卸载
+
+```bash
+# componentDidMount 监听
+# componentWillUnmount 卸载
+```
+
+4. 发射
+
+```js
+eventBus.emit('changeNum', 3)
+```
+
+案例演示
+
+```jsx
+import React, { PureComponent } from 'react'
+import { EventEmitter } from 'events'
+
+// #0: 创建
+const eventBus = new EventEmitter()
+
+class Home extends PureComponent {
+    componentDidMount() {
+        // #1: 监听
+        eventBus.addListener('hello', (...args) => {
+            console.log(args)
+        })
+    }
+    componentWillUnmount() {
+        // #2: 卸载
+        eventBus.removeListener('hello')
+    }
+    render() {
+        return 'Home'
+    }
+}
+
+class Profile extends PureComponent {
+    render() {
+        return (
+            <div>
+                {/* #3: 发射 */}
+                <button onClick={() => eventBus.emit('hello', 'ifer', 18)}>Profile</button>
+            </div>
+        )
+    }
+}
+
+export default class App extends PureComponent {
+    render() {
+        return (
+            <div>
+                <Home />
+                <Profile />
+            </div>
+        )
+    }
+}
+```
+
+### Props.children
+
+-   <font color=#e32d40>Children 属性</font>
+
+children 表示组件标签的子节点，当组件标签有子节点时，可以通过 `props.children` 获取到子节点。子节点的值可以使任意值（文本、react 元素、组件、甚至是函数）。
+
+```jsx
+import React from 'react'
+
+class Child extends React.Component {
+    render() {
+        return <div>{this.props.children}</div>
+    }
+}
+
+export default class App extends React.Component {
+    render() {
+        return (
+            <div>
+                {/* <Child>Hello World</Child> */}
+                <Child children='Hello World'>Hello World</Child>
+            </div>
+        )
+    }
+}
+```
+
+-   <font color=#e32d40>Children 里面的节点可以是函数</font>
+
+```jsx
+import React from 'react'
+
+class Child extends React.Component {
+    render() {
+        return <h2>{this.props.children()}</h2>
+    }
+}
+
+export default class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <Child>{() => '武汉加油'}</Child>
+            </div>
+        )
+    }
+}
+```
+
+-   <font color=#e32d40>导航栏/模拟插槽</font>
+
+<img src="/resource/images/ifer_header.jpg"/>
+
+<font size=4>1. 基本操作</font>
+
+`index.js`
+
+```js
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+import App from './App'
+import './index.css'
+
+ReactDOM.render(<App />, document.querySelector('#root'))
+```
+
+`App.jsx`
+
+```jsx
+import React, { Component } from 'react'
+import NavBar from './NavBar'
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                <NavBar>
+                    <span>a</span>
+                    <span>b</span>
+                    <span>c</span>
+                </NavBar>
+            </div>
+        )
+    }
+}
+```
+
+`NavBar.jsx`
+
+```jsx
+import React, { Component } from 'react'
+
+export default class NavBar extends Component {
+    render() {
+        const { children } = this.props
+        return (
+            <div className='nav'>
+                <div className='nav-left'>{children[0]}</div>
+                <div className='nav-center'>{children[1]}</div>
+                <div className='nav-right'>{children[2]}</div>
+            </div>
+        )
+    }
+}
+```
+
+`index.css`
+
+```css
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.nav {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    display: flex;
+}
+
+.nav .nav-left {
+    width: 40px;
+    background-color: red;
+}
+
+.nav .nav-center {
+    flex: 1;
+    background-color: pink;
+}
+
+.nav .nav-right {
+    width: 40px;
+    background-color: green;
+}
+```
+
+<font color=#e32d40>缺点是传递过去的顺序不能乱，假如只想传递后两个呢？</font>
+
+<font size=4>2. 优化优化</font>
+
+`App.jsx`
+
+```jsx
+import React, { Component } from 'react'
+import NavBar from './NavBar'
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                <NavBar leftSlot={<span>a</span>} centerSlot={<span>b</span>} rightSlot={<span>c</span>} />
+            </div>
+        )
+    }
+}
+```
+
+`NavBar.jsx`
+
+```jsx
+import React, { Component } from 'react'
+
+export default class NavBar extends Component {
+    render() {
+        const { leftSlot, centerSlot, rightSlot } = this.props
+        return (
+            <div className='nav'>
+                <div className='nav-left'>{leftSlot}</div>
+                <div className='nav-center'>{centerSlot}</div>
+                <div className='nav-right'>{rightSlot}</div>
+            </div>
+        )
+    }
+}
+```
+
+### Props validate
+
+对于组件来说，props 是外来的，无法保证组件使用者传入什么格式的数据，简单来说就是组件调用者可能不知道组件封装着需要什么样的数据。如果传入的数据不对，可能会导致报错。关键问题是组件的使用者不知道需要传递什么样的数据，而通过 props 校验，则可以在创建组件的时候，指定 props 的类型、格式等。<font color=#e32d40>**通过 Props 校验可以捕获使用组件时因为 props 导致的错误，给出明确的错误提示，增加组件的健壮性。**</font>
+
+-   <font color=#e32d40>使用步骤</font>
+
+1. 安装包 prop-types。
+
+2. 导入 prop-types 包，就可以得到全局校验对象 `PropTypes`。
+
+3. 使用 `组件名.propTypes={}` 来给组件的 props 添加校验规则。
+
+4. 校验规则通过 PropTypes 对象来指定。
+
+```jsx
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+class Person extends React.Component {
+    render() {
+        const { name, age, sex } = this.props
+        return (
+            <ul>
+                <li>姓名：{name}</li>
+                <li>年龄：{age}</li>
+                <li>性别：{sex}</li>
+            </ul>
+        )
+    }
+}
+Person.propTypes = {
+    // name: React.PropTypes.string // #0 这种写法在 React15.5 之后被弃用
+    sex: PropTypes.string,
+    age: PropTypes.number,
+    say: PropTypes.func, // #1 没有指定 isRequired 不传没关系
+    name: PropTypes.string.isRequired, // #2 指定了 isRequired 在有默认值的情况下不传也没关系
+}
+
+Person.defaultProps = {
+    name: 'ifer',
+}
+
+const obj = {
+    age: 18,
+    sex: '男',
+}
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                <Person {...obj} />
+            </div>
+        )
+    }
+}
+```
+
+通过 `static` 关键字精简上面的写法
+
+```jsx
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+class Person extends React.Component {
+    static propTypes = {
+        // name: React.PropTypes.string // #0 这种写法在 React15.5 之后被弃用
+        sex: PropTypes.string,
+        age: PropTypes.number,
+        say: PropTypes.func, // #1 没有指定 isRequired 不传没关系
+        name: PropTypes.string.isRequired, // #2 指定了 isRequired 在有默认值的情况下不传也没关系
+    }
+    static defaultProps = {
+        name: 'ifer',
+    }
+    render() {
+        const { name, age, sex } = this.props
+        return (
+            <ul>
+                <li>姓名：{name}</li>
+                <li>年龄：{age}</li>
+                <li>性别：{sex}</li>
+            </ul>
+        )
+    }
+}
+
+const obj = {
+    age: 18,
+    sex: '男',
+}
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                <Person {...obj} />
+            </div>
+        )
+    }
+}
+```
+
+函数式组件可以像类组件一样通过<font color=#e32d40>**点**</font>的形式进行校验和并指定默认值。
+
+-   <font color=#e32d40>常见约束规则</font>
+
+a，创建的类型： array、bool、func、number、object、string
+
+b，React 元素类型：element
+
+c，必填项：isRequired
+
+d，特定结构的对象： shape({age: PropTypes.number})
+
+e，更多的[约束规则](https://zh-hans.reactjs.org/docs/typechecking-with-proptypes.html#proptypes)
+
+-   <font color=#e32d40>如何校验 `[{ name: 'ifer' }]`</font>
+
+```jsx
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+class Test extends Component {
+    static propTypes = {
+        arr: PropTypes.arrayOf(
+            PropTypes.shape({
+                username: PropTypes.string,
+                age: PropTypes.number,
+            })
+        ),
+    }
+    render() {
+        return (
+            <ul>
+                {this.props.arr.map((item) => (
+                    <li key={item.username}>{item.username}</li>
+                ))}
+            </ul>
+        )
+    }
+}
+export default class App extends Component {
+    state = {
+        arr: [
+            { username: 'ifer', age: 18 },
+            { username: 'elser', age: 22 },
+        ],
+    }
+    render() {
+        return (
+            <div>
+                <Test arr={this.state.arr} />
             </div>
         )
     }
