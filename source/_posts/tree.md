@@ -34,6 +34,8 @@ const arr = [
 ]
 ```
 
+<!-- more -->
+
 代码实现
 
 ```js
@@ -245,19 +247,10 @@ findOById(arr, 'c', console.log)
     <ul class="el-list">
         <li class="el-item" v-for="item in arr" :key="item.id">
             <div class="el-title">
-                <span
-                    @click="toggle(item)"
-                    class="el-btn"
-                    v-if="isHasChild(item)"
-                    >{{ item.show ? '+' : '-' }}</span
-                >&nbsp;
+                <span @click="toggle(item)" class="el-btn" v-if="isHasChild(item)">{{ item.show ? '+' : '-' }}</span>&nbsp;
                 <span class="el-txt">{{ item.name }}</span>
             </div>
-            <el-tree
-                v-show="!item.show"
-                v-if="isHasChild(item)"
-                :arr="item.children"
-            />
+            <el-tree v-show="!item.show" v-if="isHasChild(item)" :arr="item.children" />
         </li>
     </ul>
 </template>

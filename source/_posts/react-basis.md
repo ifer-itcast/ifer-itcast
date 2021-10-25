@@ -10,6 +10,8 @@ tags:
 
 [React](https://react.docschina.org/) 起源于 Facebook 的内部项目，后又用来架设 Instagram 网站，并用 2013 年 5 月开源。
 
+<!-- more -->
+
 ## React 特点
 
 -   <font color=#e32d40>声明式</font>
@@ -2151,5 +2153,130 @@ export default class App extends Component {
             </div>
         )
     }
+}
+```
+
+## 书籍案例
+
+a，以表格的形式显示一些书籍。
+
+b，在底部显示书籍的总价。
+
+c，点击 + 或者 - 可以增加或减少书籍的数量（如果为 1，就不能继续）。
+
+d，点击删除按钮可以将书籍删除（当所有书籍移除完毕后，购物车为空~）。
+
+<img src="/resource/images/ifer_book.png" width="500"/>
+
+-   <font color=e32d40>界面布局</font>
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    state = {
+        books: [
+            { id: 1, name: 'JS 高级程序设计', time: '2020', price: '20', num: 9 },
+            { id: 2, name: 'DOM 编程艺术', time: '2011', price: '13', num: 1 },
+            { id: 3, name: 'jQuery 忍者秘籍', time: '1990', price: '10', num: 7 },
+            { id: 4, name: 'Angular Baby', time: '1888', price: '7', num: 5 },
+        ],
+    }
+    rdBooks = () => {
+        return (
+            <div>
+                <table border='1' cellPadding='10'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>名称</th>
+                            <th>初版日期</th>
+                            <th>价格</th>
+                            <th>购买数量</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.books.map((item) => (
+                            <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.name}</td>
+                                <td>{item.time}</td>
+                                <td>{item.price}</td>
+                                <td>
+                                    <button disabled={item.num === 1 ? true : false}>-</button>
+                                    <span>{item.num}</span>
+                                    <button>+</button>
+                                </td>
+                                <td>
+                                    <button>删除</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <p>总价：888</p>
+            </div>
+        )
+    }
+    render() {
+        return <>{this.rdBooks()}</>
+    }
+}
+```
+
+-   <font color=e32d40>价格格式化</font>
+
+```js
+formatPrice(price) {
+    if (typeof price !== 'number') price = Number(price) || 0
+    return '¥' + price.toFixed(2)
+}
+```
+
+-   <font color=e32d40>显示总价</font>
+
+```js
+totalPrice() {
+    /* let total = 0;
+    for(let item of this.state.books) {
+        total += item.price * item.num;
+    }
+    return this.formatPrice(total); */
+    return this.formatPrice(
+        this.state.books.reduce((acc, cur) => {
+        return acc + cur.price * cur.num
+        }, 0)
+    )
+}
+```
+
+-   <font color=e32d40>删除书籍</font>
+
+```jsx
+handleRemove = (id) => {
+    this.setState({
+        books: this.state.books.filter((item) => item.id !== id),
+    })
+}
+```
+
+-   <font color=e32d40>购物车为空处理</font>
+
+```jsx
+{
+    this.state.books.length ? this.rdBooks() : this.rdEmpty()
+}
+```
+
+-   <font color=e32d40>数量的增减</font>
+
+```jsx
+handleChange = (id, num) => {
+    // state 中数据的不可变性
+    const books = JSON.parse(JSON.stringify(this.state.books))
+    const item = books.find((item) => item.id === id)
+    if (item) item.num += num
+    this.setState({ books })
 }
 ```
