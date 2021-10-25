@@ -629,7 +629,7 @@ export default class App extends React.Component {
     state = {
         username: '',
     }
-    inputChange = (e) => {
+    handleChange = (e) => {
         this.setState({
             username: e.target.value,
         })
@@ -637,7 +637,7 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-                <input type='text' value={this.state.username} onChange={this.inputChange} />
+                <input type='text' value={this.state.username} onChange={this.handleChange} />
             </div>
         )
     }
@@ -700,9 +700,7 @@ export default class App extends React.Component {
 
 <font color=E6A23C>**操作单选按钮和复选框时：注意区分 `e.target.checked` 和 `e.target.value` 的差异！**</font>
 
-两个单选按钮，状态可以是布尔值，用布尔值的状态可以表示清楚其中一个数据
-
-多个单选按钮，布尔值搞不定了，需要借助字符串来进行处理
+多个单选按钮，绑定的值可以是一个字符串。
 
 ```jsx
 import React, { Component } from 'react'
@@ -731,32 +729,7 @@ export default class App extends Component {
 }
 ```
 
-一个复选按钮：用布尔值可以表示清楚，注意绑定的是 `checked` 属性，通过 `e.target.checked` 获取变化后的数据
-
-```jsx
-import React from 'react'
-
-export default class App extends React.Component {
-    state = {
-        isCheckedApple: false,
-    }
-    handleChange = (e) => {
-        this.setState({
-            isCheckedApple: e.target.checked,
-        })
-    }
-    render() {
-        return (
-            <div>
-                <input id='apple' type='checkbox' checked={this.state.isCheckedApple} onChange={this.handleChange} />
-                <label htmlFor='apple'>Apple</label>
-            </div>
-        )
-    }
-}
-```
-
-多个复选按钮，需要用到数组
+多个复选框，绑定的值可以是一个数组。
 
 ```jsx
 import React from 'react'
@@ -767,10 +740,20 @@ export default class App extends React.Component {
     }
     handleChange = (e) => {
         const isCheckedCheckbox = [...this.state.isCheckedCheckbox]
-        if (e.target.checked) {
+        /* if (e.target.checked) {
+            // 选中状态，就把数据添加到数据
             isCheckedCheckbox.push(e.target.value)
         } else {
+            // 非选中状态，就把数据从数组中删除
             const idx = isCheckedCheckbox.indexOf(e.target.value)
+            isCheckedCheckbox.splice(idx, 1)
+        } */
+        const idx = isCheckedCheckbox.indexOf(e.target.value)
+        if (idx === -1) {
+            // 数组中没有找到，说明没有被选中，那就把数据添加到数组，进行选中的操作
+            isCheckedCheckbox.push(e.target.value)
+        } else {
+            // 找到了，说明已被选中，通过删除数组中的数据取消选中
             isCheckedCheckbox.splice(idx, 1)
         }
         this.setState({
@@ -804,18 +787,271 @@ c，在 onChange 事件处理程序中通过 `[e.target.name]` 来修改对应�
 import React from 'react'
 
 export default class App extends React.Component {
+    state = {
+        username: '',
+        content: '',
+        frame: 'react',
+        isCheckedRadio: 'male',
+        isCheckedCheckbox: ['apple', 'orange'],
+    }
     handleChange = (e) => {
-        let value
-        if (e.target.type === 'radio') {
-            value = !this.state.isCheckedMale
-        } else if (e.target.type === 'checkbox') {
-            value = e.target.checked
+        let v
+        if (e.target.type === 'checkbox') {
+            const isCheckedCheckbox = [...this.state.isCheckedCheckbox]
+            const idx = isCheckedCheckbox.indexOf(e.target.value)
+            if (idx === -1) {
+                // 数组中没有找到，说明没有被选中，那就把数据添加到数组，进行选中的操作
+                isCheckedCheckbox.push(e.target.value)
+            } else {
+                // 找到了，说明已被选中，通过删除数组中的数据取消选中
+                isCheckedCheckbox.splice(idx, 1)
+            }
+            v = isCheckedCheckbox
         } else {
-            value = e.target.value
+            v = e.target.value
         }
+        console.log(v, 55555555)
         this.setState({
-            [e.target.name]: value,
+            [e.target.name]: v,
         })
+    }
+    render() {
+        const { username, content, frame, isCheckedRadio, isCheckedCheckbox } = this.state
+        console.log(isCheckedCheckbox, 8888)
+        return (
+            <ul>
+                {/* 输入框 */}
+                <li>
+                    <input name='username' type='text' value={username} onChange={this.handleChange} />
+                </li>
+                {/* 富文本框 */}
+                <li>
+                    <textarea name='content' value={content} onChange={this.handleChange}></textarea>
+                </li>
+                {/* 下拉选择框 */}
+                <li>
+                    <select name='frame' value={frame} onChange={this.handleChange}>
+                        <option value='vue'>Vue</option>
+                        <option value='react'>React</option>
+                        <option value='angular'>Angular</option>
+                    </select>
+                </li>
+                {/* 单选按钮 */}
+                <li>
+                    <input name='isCheckedRadio' id='male' type='radio' value='male' checked={isCheckedRadio === 'male'} onChange={this.handleChange} />
+                    <label htmlFor='male'>男</label>
+                    <input name='isCheckedRadio' id='female' type='radio' value='female' checked={isCheckedRadio === 'female'} onChange={this.handleChange} />
+                    <label htmlFor='female'>女</label>
+                    <input name='isCheckedRadio' id='unknow' type='radio' value='unknow' checked={isCheckedRadio === 'unknow'} onChange={this.handleChange} />
+                    <label htmlFor='unknow'>未知</label>
+                </li>
+                {/* 复选框 */}
+                <li>
+                    <input name='isCheckedCheckbox' id='apple' type='checkbox' value='apple' checked={isCheckedCheckbox.includes('apple')} onChange={this.handleChange} />
+                    <label htmlFor='apple'>Apple</label>
+                    <input name='isCheckedCheckbox' id='orange' type='checkbox' value='orange' checked={isCheckedCheckbox.includes('orange')} onChange={this.handleChange} />
+                    <label htmlFor='orange'>Orange</label>
+                </li>
+            </ul>
+        )
+    }
+}
+```
+
+-   <font color=#e32d40>非受控组件</font>
+
+通过 Refs 获取到 DOM，然后拿到 DOM 里面的 value
+
+**1. 字符串形式的 Ref，[性能不高](https://github.com/facebook/react/pull/8333#issuecomment-271648615)**
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    handleChange = () => {
+        /* const input = document.getElementById('input')
+        console.log(input.value) */
+        console.log(this.refs.input.value)
+    }
+    render() {
+        return (
+            <div>
+                <input id='input' ref='input' type='text' placeholder='输入内容' onChange={this.handleChange} />
+            </div>
+        )
+    }
+}
+```
+
+**2. 函数形式的 Ref**
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    handleChange = () => {
+        console.log(this.input.value)
+    }
+    render() {
+        return (
+            <div>
+                <input ref={(dom) => (this.input = dom)} type='text' placeholder='输入内容' onChange={this.handleChange} />
+            </div>
+        )
+    }
+}
+```
+
+[问题演示](https://react.docschina.org/docs/refs-and-the-dom.html)：新的时候会执行 2 次，第一次 dom 是 null，第 2 次才是 dom
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    state = {
+        isHappy: true,
+    }
+    handleChange = () => {
+        console.log(this.input.value)
+    }
+    render() {
+        return (
+            <div>
+                <h2 onClick={() => this.setState({ isHappy: !this.state.isHappy })}>{this.state.isHappy ? '出去玩' : '睡觉'}</h2>
+                <input
+                    ref={(dom) => {
+                        console.log(dom)
+                        this.input = dom
+                    }}
+                    type='text'
+                    placeholder='输入内容'
+                    onChange={this.handleChange}
+                />
+            </div>
+        )
+    }
+}
+```
+
+解决：将获取 ref 的回调提取到类的原型方法中
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    state = {
+        isHappy: true,
+    }
+    getInputDom = (dom) => {
+        // 只会在初始化的时候触发一次
+        this.input = dom
+    }
+    handleChange = () => {
+        console.log(this.input.value)
+    }
+    render() {
+        return (
+            <div>
+                <h2 onClick={() => this.setState({ isHappy: !this.state.isHappy })}>{this.state.isHappy ? '出去玩' : '睡觉'}</h2>
+                <input ref={this.getInputDom} type='text' placeholder='输入内容' onChange={this.handleChange} />
+            </div>
+        )
+    }
+}
+```
+
+**3. `React.createRef()`**
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    // Step1
+    input = React.createRef()
+    handleChange = () => {
+        // Step3
+        console.log(this.input.current.value)
+    }
+    render() {
+        return (
+            <div>
+                {/* Step2 */}
+                <input ref={this.input} type='text' placeholder='输入内容' onChange={this.handleChange} />
+            </div>
+        )
+    }
+}
+```
+
+**4. Ref 扩展**
+
+获取**类**组件
+
+```jsx
+import React, { PureComponent, createRef } from 'react'
+
+class Test extends PureComponent {
+    state = {
+        count: 0,
+    }
+    sayHello = () => {
+        this.setState({ count: this.state.count + 1 })
+    }
+    render() {
+        return <div>{this.state.count}</div>
+    }
+}
+
+export default class App extends PureComponent {
+    testCmpRef = createRef()
+    render() {
+        return (
+            <div>
+                <Test ref={this.testCmpRef} />
+                {/* {console.log(this.testCmpRef)} */}
+                {/* {setTimeout(() => {
+                    // 通过 createRef() 获取 DOM/组件 是异步的，不能马上使用
+                    console.log(this.testCmpRef)
+                }, 1000)} */}
+                {/* 所以不能直接 */}
+                {/* <button onClick={this.testCmpRef.current.sayHello}>按钮</button> */}
+                <button onClick={() => this.testCmpRef.current.sayHello()}>按钮</button>
+            </div>
+        )
+    }
+}
+```
+
+通过 `forwardRef()` 包裹子函数组件，可以在父组件中获取子函数组件中的 DOM/组件
+
+```jsx
+import React, { PureComponent, createRef, forwardRef } from 'react'
+
+// #3: 用 forwardRef() 函数包裹函数式组件
+const Test = forwardRef((props, ref) => {
+    return (
+        // #4: ref 给谁绑定，父组件的 this.testFnCmpDomRef 就是谁，次时代 ref.current 就代表当前的 div
+        <div ref={ref} {...props}>
+            {props.children}
+        </div>
+    )
+})
+
+export default class App extends PureComponent {
+    // #1: 创建 ref（期望表示的是函数式组件内部的 DOM ref）
+    testFnCmpDomRef = createRef()
+    handleClick = () => {
+        // #5: 父组件中使用 this.testFnCmpDomRef
+        console.log(this.testFnCmpDomRef.current)
+    }
+    render() {
+        return (
+            <div>
+                {/* #2: 交给函数式组件的包裹 forWardRef() 函数进行处理 */}
+                <Test ref={this.testFnCmpDomRef}>Hello World</Test>
+                <button onClick={this.handleClick}>按钮</button>
+            </div>
+        )
     }
 }
 ```
