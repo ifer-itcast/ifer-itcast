@@ -4,7 +4,9 @@ date: 2021-10-26 15:43:25
 tags:
 ---
 
-a，明确好界面中的导航区、展示区。
+<img src="/resource/images/ifer_react_router.png"/>
+
+a，明确界面中的导航区、展示区。
 
 b，导航区的 a 标签改为 Link 标签，`<Link to="/xxx">Demo</Link>`。
 
@@ -546,3 +548,162 @@ export default class ReactDetail extends Component {
     }
 }
 ```
+
+## State 传参
+
+`components/ReactCmp.jsx`
+
+```jsx
+import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
+import MyNavLink from './MyNavLink'
+import ReactDetail from './ReactDetail'
+
+export default class ReactCmp extends Component {
+    render() {
+        return (
+            <div>
+                <ul className='nav'>
+                    <li className='nav-item'>
+                        <MyNavLink
+                            to={{
+                                pathname: '/home/react',
+                                state: {
+                                    container: 'redux',
+                                },
+                            }}
+                        >
+                            Redux
+                        </MyNavLink>
+                    </li>
+                    <li className='nav-item'>
+                        <MyNavLink
+                            to={{
+                                pathname: '/home/react',
+                                state: {
+                                    container: 'saga',
+                                },
+                            }}
+                        >
+                            Saga
+                        </MyNavLink>
+                    </li>
+                    <li className='nav-item'>
+                        <MyNavLink
+                            to={{
+                                pathname: '/home/react',
+                                state: {
+                                    container: 'mobx',
+                                },
+                            }}
+                        >
+                            Mobx
+                        </MyNavLink>
+                    </li>
+                </ul>
+                <div className='p-2'>
+                    <Route path='/home/react' component={ReactDetail} />
+                </div>
+            </div>
+        )
+    }
+}
+```
+
+`components/ReactDetail.jsx`
+
+```jsx
+import React, { Component } from 'react'
+
+export default class ReactDetail extends Component {
+    render() {
+        const { container } = this.props.location.state || {}
+        return <div className='container'>{container}~~~~~~~</div>
+    }
+}
+```
+
+## replace 和 redirect
+
+replace 跳转时会把当前路由替换掉
+
+```jsx
+<MyNavLink to='/home/vue' replace>
+    Vue
+</MyNavLink>
+```
+
+## 编程式导航
+
+`components/VueCmp.jsx`
+
+```jsx
+import React, { Component } from 'react'
+
+class Vuecmp extends Component {
+    handleClick = () => {
+        this.props.history.replace('/home/angular')
+    }
+    render() {
+        return (
+            <div>
+                <h2>Vue</h2>
+                <button onClick={this.handleClick}>去学 React</button>
+            </div>
+        )
+    }
+}
+export default Vuecmp
+```
+
+## withRouter
+
+只有路由组件的 props 中才有 history 等路由信息，withRouter 可以加工普通组件，使普通组件也具有路由组件的相关 API
+
+`components/Header.jsx`
+
+```jsx
+import React, { Component } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import MyNavLink from './MyNavLink'
+
+class Header extends Component {
+    handleClick = () => {
+        this.props.history.push('/home/angular')
+    }
+    render() {
+        return (
+            <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+                <div className='container-fluid'>
+                    <Link className='navbar-brand' to='/'>
+                        React Router
+                    </Link>
+                    <div className='collapse navbar-collapse' id='navbarSupportedContent'>
+                        <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
+                            <li className='nav-item'>
+                                <MyNavLink to='/home'>Home</MyNavLink>
+                            </li>
+                            <li className='nav-item'>
+                                <MyNavLink to='/about'>About</MyNavLink>
+                            </li>
+                            <li className='nav-item'>
+                                <span className='nav-link' href='##' style={{ cursor: 'pointer' }} onClick={this.handleClick}>
+                                    Angular
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        )
+    }
+}
+
+export default withRouter(Header)
+```
+
+## Hash 和 History
+
+## 路由模式的区别
+
+通过 state 参数，刷新后，BrowserRouter 不会造成参数丢失，因为 state 保存在 history 对象中，HashRouter 会造成 state 参数的丢失。
