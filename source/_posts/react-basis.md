@@ -2280,3 +2280,243 @@ handleChange = (id, num) => {
     this.setState({ books })
 }
 ```
+
+## Tab 选项卡
+
+<img src="/resource/images/ifer_tab.png"/>
+
+<font size=4>1. 页面布局</font>
+
+`index.js`
+
+```js
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+import App from './App'
+import './index.css'
+
+ReactDOM.render(<App />, document.querySelector('#root'))
+```
+
+`App.jsx`
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                <div className='tab'>
+                    <div className='tab-item active'>新款</div>
+                    <div className='tab-item'>精选</div>
+                    <div className='tab-item'>流行</div>
+                </div>
+                <h3>新款</h3>
+            </div>
+        )
+    }
+}
+```
+
+`index.css`
+
+```css
+.tab {
+    display: flex;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+}
+
+.tab .tab-item {
+    flex: 1;
+    border-bottom: 2px solid transparent;
+}
+
+.tab .active {
+    color: red;
+    border-color: red;
+}
+```
+
+<font size=4>2. 动态渲染数据</font>
+
+`App.jsx`
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    state = {
+        currentIndex: 0,
+    }
+    // 不经常变化的数据没有必要放到 state 中
+    titles = ['新款', '精选', '流行']
+    render() {
+        const { currentIndex } = this.state
+        return (
+            <div>
+                <div className='tab'>
+                    {this.titles.map((item, index) => (
+                        <div key={index} className={`tab-item ${currentIndex === index ? 'active' : ''}`}>
+                            {item}
+                        </div>
+                    ))}
+                </div>
+                <h3>{this.titles[currentIndex]}</h3>
+            </div>
+        )
+    }
+}
+```
+
+<font size=4>3. 点击切换数据</font>
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    state = {
+        currentIndex: 0,
+    }
+    // 不经常变化的数据没有必要放到 state 中
+    titles = ['新款', '精选', '流行']
+    handleClick = (currentIndex) => {
+        this.setState({ currentIndex })
+    }
+    render() {
+        const { currentIndex } = this.state
+        return (
+            <div>
+                <div className='tab'>
+                    {this.titles.map((item, index) => (
+                        <div key={index} className={`tab-item ${currentIndex === index ? 'active' : ''}`} onClick={() => this.handleClick(index)}>
+                            {item}
+                        </div>
+                    ))}
+                </div>
+                <h3>{this.titles[currentIndex]}</h3>
+            </div>
+        )
+    }
+}
+```
+
+<font size=4>4. 抽离组件</font>
+
+`App.jsx`
+
+```jsx
+import React, { Component } from 'react'
+import Tab from './Tab'
+
+export default class App extends Component {
+    state = {
+        currentIndex: 0,
+    }
+    // 不经常变化的数据没有必要放到 state 中
+    titles = ['新款', '精选', '流行']
+    handleClick = (currentIndex) => {
+        this.setState({ currentIndex })
+    }
+    render() {
+        const { currentIndex } = this.state
+        return (
+            <div>
+                <Tab titles={this.titles} currentIndex={currentIndex} handleClick={this.handleClick} />
+            </div>
+        )
+    }
+}
+```
+
+`Tab.jsx`
+
+```jsx
+import React, { Component } from 'react'
+
+class Tab extends Component {
+    state = {
+        currentIndex: this.props.currentIndex,
+    }
+    render() {
+        const { titles, currentIndex, handleClick } = this.props
+        return (
+            <>
+                <div className='tab'>
+                    {titles.map((item, index) => (
+                        <div key={index} className={`tab-item ${currentIndex === index ? 'active' : ''}`} onClick={() => handleClick(index)}>
+                            {item}
+                        </div>
+                    ))}
+                </div>
+                <h3>{titles[currentIndex]}</h3>
+            </>
+        )
+    }
+}
+
+export default Tab
+```
+
+<font size=4>5. 优化代码</font>
+
+内聚：封装的是一个 Tab 选项卡组件，基础必备的切换功能实际上并没有必要让外界来控制。
+
+`App.jsx`
+
+```jsx
+import React, { Component } from 'react'
+import Tab from './Tab'
+
+export default class App extends Component {
+    state = {
+        defaultIndex: 0,
+    }
+    // 不经常变化的数据没有必要放到 state 中
+    titles = ['新款', '精选', '流行']
+    render() {
+        const { defaultIndex } = this.state
+        return (
+            <div>
+                <Tab titles={this.titles} defaultIndex={defaultIndex} />
+            </div>
+        )
+    }
+}
+```
+
+`Tab.jsx`
+
+```jsx
+import React, { Component } from 'react'
+
+class Tab extends Component {
+    state = {
+        currentIndex: this.props.defaultIndex,
+    }
+    handleClick = (currentIndex) => {
+        this.setState({ currentIndex })
+    }
+    render() {
+        const { titles } = this.props
+        const { currentIndex } = this.state
+        return (
+            <>
+                <div className='tab'>
+                    {titles.map((item, index) => (
+                        <div key={index} className={`tab-item ${currentIndex === index ? 'active' : ''}`} onClick={() => this.handleClick(index)}>
+                            {item}
+                        </div>
+                    ))}
+                </div>
+                <h3>{titles[currentIndex]}</h3>
+            </>
+        )
+    }
+}
+
+export default Tab
+```
