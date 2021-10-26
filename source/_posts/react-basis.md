@@ -428,7 +428,7 @@ export default function App() {
 
 组件被称为状态机，意思是通过更新组件的状态（state）就能达到更新对应界面的目的！状态（state）即数据，是组件内部的私有属性，<font color=#e32d40>**state 对应的值必须是一个对象**</font>。
 
-> 需求：计数器（点击按钮加 1）
+📝 需求：计数器（点击按钮加 1）
 
 1. 定义 state
 
@@ -1059,7 +1059,7 @@ export default class App extends PureComponent {
 
 ## 留言本
 
-需求分析
+📝 需求分析
 
 a，渲染评论列表（列表渲染）。
 
@@ -1534,7 +1534,7 @@ b，公共父组件职责：1. 提供共享状态 2.提供操作共享状态的�
 
 c，要通讯的子组件只需要通过 props 接收操作状态的方法或状态。
 
-需求：点击 Button 组件中的按钮，让 Count 组件中的数字 +1
+📝 需求：点击 Button 组件中的按钮，让 Count 组件中的数字 +1
 
 ```jsx
 import React from 'react'
@@ -2520,3 +2520,476 @@ class Tab extends Component {
 
 export default Tab
 ```
+
+## 生命周期（旧）
+
+https://react.docschina.org/docs/state-and-lifecycle.html
+
+https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+
+组件的生命周期：组件从被创建到挂载到页面，再到卸载的过程，生命周期的每个阶段总是伴随着一些方法调用，这些方法又称为生命周期钩子函数，特定的钩子函数中可以做一些对应的操作。
+
+<img src="/resource/images/ifer_life_old.png" width="500"/>
+
+📝 需求：打开页面倒计时，点击按钮进行销毁组件。
+
+<img src="/resource/images/ifer_life.png"/>
+
+```jsx
+import React from 'react'
+import ReactDOM from 'react-dom'
+export default class App extends React.Component {
+    state = {
+        count: 10,
+    }
+    destroy = () => {
+        // 确实也可以在这儿清除定时器
+        // clearInterval(this.timer)
+        ReactDOM.unmountComponentAtNode(document.getElementById('root'))
+    }
+    // 组件挂载完毕调用
+    componentDidMount() {
+        // 往原型对象上加了一个属性 timer
+        this.timer = setInterval(() => {
+            this.setState({ count: this.state.count - 1 })
+        }, 1000)
+    }
+    // 将卸载
+    componentWillUnmount() {
+        clearInterval(this.timer)
+    }
+    render() {
+        return (
+            <div style={{ textAlign: 'center' }}>
+                <h2>{this.state.count}</h2>
+                <button onClick={this.destroy}>销毁组件</button>
+            </div>
+        )
+    }
+}
+```
+
+### 挂载时
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    constructor(props) {
+        super(props)
+        console.log('#1 constructor')
+        this.state = {
+            count: 0,
+        }
+    }
+    addCount = () => {
+        this.setState({
+            count: this.state.count + 1,
+        })
+    }
+    componentWillMount() {
+        console.log('#2 componentWillMount')
+    }
+    render() {
+        console.log('#3 render')
+        const { count } = this.state
+        return (
+            <div>
+                <h2>{count}</h2>
+                <button onClick={this.addCount}>+1</button>
+            </div>
+        )
+    }
+    componentDidMount() {
+        console.log('#4 componentDidMount')
+    }
+}
+```
+
+### 更新
+
+通过 `setState()` 触发更新。
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            count: 0,
+        }
+    }
+    addCount = () => {
+        this.setState({
+            count: this.state.count + 1,
+        })
+    }
+    shouldComponentUpdate() {
+        // 组件是否应该被更新，阀门
+        console.log('#1 shouldComponentUpdate')
+        return true
+    }
+    componentWillUpdate() {
+        console.log('#2 componentWillUpdate')
+    }
+    render() {
+        console.log('#3 render')
+        const { count } = this.state
+        return (
+            <div>
+                <h2>{count}</h2>
+                <button onClick={this.addCount}>+1</button>
+            </div>
+        )
+    }
+    componentDidUpdate() {
+        console.log('#4 componentDidUpdate')
+    }
+}
+```
+
+通过 `forceUpdate()` 触发更新。
+
+```jsx
+import React from 'react'
+export default class App extends React.Component {
+    updateCmp = () => {
+        // 不更改数据强制更新，会绕过阀门
+        this.forceUpdate()
+    }
+    componentWillUpdate() {
+        console.log('#1 componentWillUpdate')
+    }
+    render() {
+        console.log('#2 render')
+        return (
+            <div>
+                <button onClick={this.updateCmp}>forceUpdate</button>
+            </div>
+        )
+    }
+    componentDidUpdate() {
+        console.log('#3 componentDidUpdate')
+    }
+}
+```
+
+`父组件 setState 触发 render` 进行更新。
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        name: 'xxx',
+    }
+    changeCar = () => {
+        this.setState({
+            name: 'ifer',
+        })
+    }
+    render() {
+        return (
+            <div>
+                <p>A</p>
+                <button onClick={this.changeCar}>改名</button>
+                <hr />
+                <Test name={this.state.name} />
+            </div>
+        )
+    }
+}
+class Test extends React.Component {
+    componentWillReceiveProps(props) {
+        // 注意第一次传递的数据不会调用
+        console.log('componentWillReceiveProps')
+    }
+    render() {
+        return (
+            <div>
+                <p>Test</p>
+                接收到的数据：{this.props.name}
+            </div>
+        )
+    }
+}
+```
+
+### 卸载
+
+通过 `ReactDOM.unmountComponentAtNode(document.getElementById('root'))` 卸载，卸载之后会触发的钩子是 `componentWillUnmount`
+
+### 总结
+
+-   初始化阶段：由 `ReactDOM.render()` 触发。
+
+1. constructor()
+
+2. componentWillMount()
+
+3. render()
+
+4. <font color=#e32d40>**componentDidMount()**</font>
+
+-   更新阶段：由组件内部 `setState()`、`forceUpdate()` 或父组件 `render()` 触发。
+
+1. shouldComponentUpdate()
+
+2. componentWillUpdate()
+
+3. <font color=#e32d40>**render()**</font>
+
+4. componentDidUpdate()
+
+-   卸载阶段：由 `ReactDOM.unmountComponentAtNode()` 触发。
+
+<font color=#e32d40>**componentWillUnmount()**</font>
+
+## 生命周期（新）
+
+-   **废弃了 3 个**
+
+废弃了带 will 的除了 `componentWillUnmount`，加 UNSAFE 可以去除警告，未来版本中可能会有 Bug，尤其启用异步渲染之后！
+
+废弃 `componentWillMount`、`componentWillUpdate`、`componentWillReceiveProps`。
+
+-   **新增了 2 个**
+
+挂载和更新时，render 之前增加 `getDerivedStateFromProps`，render 和 componentDidUpdate 之间增加 `getSnapShotBeforeUpdate`。
+
+<img src="/resource/images/ifer_life_new.png" width="500"/>
+
+### getDerivedStateFromProps
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    constructor(props) {
+        super(props)
+        console.log('#1 constructor')
+        this.state = {
+            count: 0,
+        }
+    }
+    addCount = () => {
+        this.setState({
+            count: this.state.count + 1,
+        })
+    }
+    static getDerivedStateFromProps(props, state) {
+        console.log('#2 getDerivedStateFromProps')
+        console.log(props, state) // 点击按钮思考这里的输出
+        // 返回状态对象，【注意此状态不能进行更新了】
+        /* return {
+            count: 888
+        } */
+        // 根据 props 得到一个派生的状态
+        // 应用场景：state 在任何时候都取决于 props 可以使用此钩子
+        return props
+    }
+    render() {
+        console.log('#3 render')
+        const { count } = this.state
+        return (
+            <div>
+                <h2>{count}</h2>
+                <button onClick={this.addCount}>+1</button>
+            </div>
+        )
+    }
+    componentDidMount() {
+        console.log('#4 componentDidMount')
+    }
+}
+```
+
+```jsx
+<App count={888} />
+```
+
+### getSnapshotBeforeUpdate
+
+基本操作
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    constructor(props) {
+        super(props)
+        console.log('#1 constructor')
+        this.state = {
+            count: 0,
+        }
+    }
+    addCount = () => {
+        this.setState({
+            count: this.state.count + 1,
+        })
+    }
+    static getDerivedStateFromProps(props, state) {
+        console.log('#2 getDerivedStateFromProps')
+        return null
+    }
+    render() {
+        console.log('#3 render')
+        const { count } = this.state
+        return (
+            <div>
+                <h2>{count}</h2>
+                <button onClick={this.addCount}>+1</button>
+            </div>
+        )
+    }
+    // 在最近一次渲染（提交到 DOM 节点）之前调用，能在组件更改之前从 DOM 中捕获一些原始信息（例如滚动位置）
+    // 此生命周期的任何返回值将作为参数传递给 componentDidUpdate 的第 3 个参数
+    getSnapshotBeforeUpdate() {
+        console.log('#4 getSnapshotBeforeUpdate')
+        // 任何值都可以作为 Snapshot（快照）
+        // return null
+        return document.querySelector('h2').innerHTML // 返回渲染之前的数据
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log(prevProps, prevState, snapshot)
+        console.log('#5 componentDidUpdate')
+    }
+}
+```
+
+插入广播
+
+```jsx
+import React from 'react'
+import './App.css'
+
+export default class App extends React.Component {
+    state = {
+        newsArr: [],
+    }
+    componentDidMount() {
+        // 插入内容并不会影响 scrollTop 的变化
+        setInterval(() => {
+            // 原数据
+            const { newsArr } = this.state
+            // 一条新闻
+            const news = '新闻' + (newsArr.length + 1)
+            // 更新数据
+            this.setState({ newsArr: [news, ...newsArr] })
+        }, 1000)
+    }
+    render() {
+        return (
+            <div className='list' ref='list'>
+                {this.state.newsArr.map((item, index) => (
+                    <div className='news' key={index}>
+                        {item}
+                    </div>
+                ))}
+            </div>
+        )
+    }
+}
+```
+
+`App.css`
+
+```css
+.list {
+    width: 200px;
+    height: 200px;
+    background-color: lightblue;
+    overflow-y: auto;
+}
+
+.news {
+    height: 40px;
+    line-height: 40px;
+}
+```
+
+期望滚动到想看的那条新闻的时候，驻留！
+
+```jsx
+import React from 'react'
+import './App.css'
+
+export default class App extends React.Component {
+    state = {
+        newsArr: [],
+    }
+    componentDidMount() {
+        setInterval(() => {
+            // 原数据
+            const { newsArr } = this.state
+            // 一条新闻
+            const news = '新闻' + (newsArr.length + 1)
+            // 更新数据
+            this.setState({ newsArr: [news, ...newsArr] })
+        }, 1000)
+    }
+    render() {
+        return (
+            <div className='list' ref='list'>
+                {this.state.newsArr.map((item, index) => (
+                    <div className='news' key={index}>
+                        {item}
+                    </div>
+                ))}
+            </div>
+        )
+    }
+    // 插入前的高度
+    getSnapshotBeforeUpdate() {
+        return this.refs.list.scrollHeight
+    }
+    // 插入后的高度
+    componentDidUpdate(prevProps, prevState, snapshotHeight) {
+        // 核心原理：现 scrollTop = 原 scrollTop + 窜多少(插入后的高度 - 插入前的高度)
+        this.refs.list.scrollTop += this.refs.list.scrollHeight - snapshotHeight
+    }
+}
+```
+
+### 总结
+
+-   初始化阶段：由 ReactDOM.render() 触发。
+
+1. constructor()
+
+2. getDerivedStateFromProps()
+
+3. render()
+
+4. <font color=#e32d40>**componentDidMount()**</font>
+
+-   更新阶段：由组件内部 `setState()`、`forceUpdate()` 或父组件 `render()` 触发。
+
+1. getDerivedStateFromProps()
+
+2. shouldComponentUpdate()
+
+3. <font color=#e32d40>**render()**</font>
+
+4. getSnapshotBeforeUpdate()
+
+5. componentDidUpdate()
+
+-   卸载阶段：由 `ReactDOM.unmountComponentAtNode()` 触发。
+
+<font color=#e32d40>**componentWillUnmount()**</font>
+
+## 组件复用
+
+复用什么？复用 state 和操作 state 的方法（组件状态逻辑）
+
+### render props 模式
+
+把函数作为 prop 进行传递，并且在函数中告诉组件要渲染什么内容的技术叫做 render props 模式。
+
+### HOC
+
+目的：实现状态逻辑复用
+
+## 详解 setState
