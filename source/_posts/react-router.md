@@ -6,6 +6,8 @@ tags:
 
 <img src="/resource/images/ifer_react_router.png"/>
 
+<!-- more -->
+
 a，明确界面中的导航区、展示区。
 
 b，导航区的 a 标签改为 Link 标签，`<Link to="/xxx">Demo</Link>`。
