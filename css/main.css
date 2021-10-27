@@ -379,6 +379,51 @@ td {
   top: -5px;
   transform: rotate(45deg);
 }
+.highlight-container {
+  position: relative;
+}
+.highlight-container:hover .copy-btn,
+.highlight-container .copy-btn:focus {
+  opacity: 1;
+}
+.copy-btn {
+  color: #333;
+  cursor: pointer;
+  line-height: 1.6;
+  opacity: 0;
+  padding: 2px 6px;
+  position: absolute;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  color: #fff;
+  font-size: 14px;
+  right: 0;
+  top: 2px;
+}
+.highlight-container {
+  background: #21252b;
+  border-radius: 5px;
+  box-shadow: 0 10px 30px 0 rgba(0,0,0,0.4);
+  padding-top: 30px;
+}
+.highlight-container::before {
+  background: #fc625d;
+  border-radius: 50%;
+  box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+  content: ' ';
+  height: 12px;
+  left: 12px;
+  margin-top: -20px;
+  position: absolute;
+  width: 12px;
+}
+.highlight-container .highlight {
+  border-radius: 0 0 5px 5px;
+}
+.highlight-container .highlight .table-container {
+  border-radius: 0 0 5px 5px;
+}
 .highlight,
 pre {
   background: #2d2d2d;
@@ -1165,7 +1210,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #8abe42;
+  background: #ff9df9;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
