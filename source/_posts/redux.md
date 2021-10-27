@@ -49,24 +49,14 @@ export default class App extends Component {
     state = {
         count: 0,
     }
-<<<<<<< HEAD
-    add = (n = 1) => {
-=======
     increment = (n = 1) => {
->>>>>>> source
         this.setState({
             count: this.state.count + n,
         })
     }
-<<<<<<< HEAD
-    addAsync = (n = 1) => {
-        this.timer = setTimeout(() => {
-            this.add(n)
-=======
     incrementAsync = (n = 1) => {
         this.timer = setTimeout(() => {
             this.increment(n)
->>>>>>> source
         }, 1000)
     }
     componentWillUnmount() {
@@ -79,15 +69,6 @@ export default class App extends Component {
                     <div className='card-body'>
                         <h5 className='card-title text-center'>{this.state.count}</h5>
                         <div className='mt-2 d-flex justify-content-center'>
-<<<<<<< HEAD
-                            <button type='button' className='btn btn-primary me-2' onClick={() => this.add()}>
-                                +1
-                            </button>
-                            <button type='button' className='btn btn-dark me-2' onClick={() => this.addAsync()}>
-                                Async +1
-                            </button>
-                            <button type='button' className='btn btn-success' onClick={() => this.add(3)}>
-=======
                             <button type='button' className='btn btn-primary me-2' onClick={() => this.increment()}>
                                 +1
                             </button>
@@ -95,7 +76,6 @@ export default class App extends Component {
                                 Async +1
                             </button>
                             <button type='button' className='btn btn-success' onClick={() => this.increment(3)}>
->>>>>>> source
                                 +n
                             </button>
                         </div>
@@ -117,11 +97,7 @@ export default class App extends Component {
 |   |       `-- index.jsx
 |   |-- index.js
 |   `-- store
-<<<<<<< HEAD
-|       |-- count_reducer.js
-=======
 |       |-- countReducer.js
->>>>>>> source
 |       `-- index.js
 ```
 
@@ -137,8 +113,6 @@ export default class App extends Component {
 }
 ```
 
-<<<<<<< HEAD
-=======
 `components/Count/index.jsx`
 
 ```jsx
@@ -195,24 +169,16 @@ export default class Count extends Component {
 }
 ```
 
->>>>>>> source
 `store/index.js`
 
 ```js
 import { createStore } from 'redux'
-<<<<<<< HEAD
-import countReducer from './count_reducer'
-=======
 import countReducer from './countReducer'
->>>>>>> source
 
 // 根据 reducer 创建 store
 export default createStore(countReducer)
 ```
 
-<<<<<<< HEAD
-`store/count_reducer.js`
-=======
 `store/constants.js`
 
 ```js
@@ -220,7 +186,6 @@ export const INCREMENT = 'increment'
 ```
 
 `store/countReducer.js`
->>>>>>> source
 
 ```js
 const initState = 0
@@ -228,11 +193,7 @@ const initState = 0
 export default function count(prevState = initState, action) {
     const { type, payload } = action
     switch (type) {
-<<<<<<< HEAD
-        case 'add':
-=======
         case 'increment':
->>>>>>> source
             return prevState + payload
         default:
             return prevState
@@ -240,8 +201,6 @@ export default function count(prevState = initState, action) {
 }
 ```
 
-<<<<<<< HEAD
-=======
 ## 优化 `store.subscribe`
 
 `src/index.js`
@@ -293,39 +252,23 @@ export const createIncrementAction = (payload) => ({
 export const INCREMENT = 'increment'
 ```
 
->>>>>>> source
 `components/Count/index.jsx`
 
 ```jsx
 import React, { Component } from 'react'
 import store from '../../store'
-<<<<<<< HEAD
-=======
 import { createIncrementAction } from '../../store/countActionCreator'
->>>>>>> source
 
 export default class Count extends Component {
     state = {
         count: 0,
     }
-<<<<<<< HEAD
-    add = (n = 1) => {
-        store.dispatch({
-            type: 'add',
-            payload: this.state.count + n,
-        })
-    }
-    addAsync = (n = 1) => {
-        this.timer = setTimeout(() => {
-            this.add(n)
-=======
     increment = (n = 1) => {
         store.dispatch(createIncrementAction(this.state.count + n))
     }
     incrementAsync = (n = 1) => {
         this.timer = setTimeout(() => {
             this.increment(n)
->>>>>>> source
         }, 1000)
     }
     componentWillUnmount() {
@@ -333,8 +276,6 @@ export default class Count extends Component {
     }
     render() {
         return (
-<<<<<<< HEAD
-=======
             <div className='container pt-3 d-flex justify-content-center'>
                 <div className='card' style={{ width: '18rem' }}>
                     <div className='card-body'>
@@ -410,21 +351,11 @@ export default class Count extends Component {
     }
     render() {
         return (
->>>>>>> source
             <div className='container d-flex justify-content-center pt-3'>
                 <div className='card' style={{ width: '18rem' }}>
                     <div className='card-body'>
                         <h5 className='card-title text-center'>{store.getState()}</h5>
                         <div className='mt-2 d-flex justify-content-center'>
-<<<<<<< HEAD
-                            <button type='button' className='btn btn-primary me-2' onClick={() => this.add()}>
-                                +1
-                            </button>
-                            <button type='button' className='btn btn-dark me-2' onClick={() => this.addAsync()}>
-                                Async +1
-                            </button>
-                            <button type='button' className='btn btn-success' onClick={() => this.add(3)}>
-=======
                             <button type='button' className='btn btn-primary me-2' onClick={() => this.increment()}>
                                 +1
                             </button>
@@ -432,7 +363,6 @@ export default class Count extends Component {
                                 Async +1
                             </button>
                             <button type='button' className='btn btn-success' onClick={() => this.increment(3)}>
->>>>>>> source
                                 +n
                             </button>
                         </div>
@@ -441,14 +371,6 @@ export default class Count extends Component {
             </div>
         )
     }
-<<<<<<< HEAD
-    componentDidMount() {
-        // 监测 redux 状态的变化，只要变化，就调用 render
-        store.subscribe(() => {
-            // this.render() // 自己调，但不会更新视图
-            this.setState({})
-        })
-=======
 }
 ```
 
@@ -560,26 +482,10 @@ import Count from './containers/Count'
 export default class App extends Component {
     render() {
         return <Count />
->>>>>>> source
     }
 }
 ```
 
-<<<<<<< HEAD
-优化 `store.subscribe`，`src/index.js`
-
-```js
-import ReactDOM from 'react-dom'
-import App from './App'
-import store from './store'
-
-ReactDOM.render(<App />, document.getElementById('root'))
-
-store.subscribe(() => {
-    ReactDOM.render(<App />, document.getElementById('root'))
-})
-```
-=======
 `index.js`
 
 ```js
@@ -895,4 +801,26 @@ import reducers from './reducers'
 // 根据 reducer 创建 store
 export default createStore(reducers, composeWithDevTools(applyMiddleware(thunk)))
 ```
->>>>>>> source
+
+终目录 src
+
+```bash
+src
+|-- App.jsx
+|-- containers
+|   |-- Count
+|   |   `-- index.jsx
+|   `-- Person
+|       `-- index.jsx
+|-- index.js
+`-- store
+    |-- actionCreator
+    |   |-- count.js
+    |   `-- person.js
+    |-- constants.js
+    |-- index.js
+    `-- reducers
+        |-- count.js
+        |-- index.js
+        `-- person.js
+```
