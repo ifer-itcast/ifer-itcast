@@ -322,6 +322,78 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/24/hooks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/24/hooks/" class="post-title-link" itemprop="url">Hooks</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-24 11:11:45" itemprop="dateCreated datePublished" datetime="2021-10-24T11:11:45+08:00">2021-10-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-30 15:55:28" itemprop="dateModified" datetime="2021-10-30T15:55:28+08:00">2021-10-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>React Hooks 是 React 16.8 引入的新特性，允许我们在不使用 Class 的前提下使用 state 和其他特性。React Hooks 要解决的问题是状态共享，是继 render-props 和 higher-order components 之后的第三种状态逻辑复用方案，不会产生 JSX 嵌套地狱问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/24/hooks/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/23/react-basis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -353,7 +425,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-26 22:56:57" itemprop="dateModified" datetime="2021-10-26T22:56:57+08:00">2021-10-26</time>
+                <time title="修改时间：2021-11-01 11:38:15" itemprop="dateModified" datetime="2021-11-01T11:38:15+08:00">2021-11-01</time>
               </span>
 
           
@@ -426,7 +498,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-26 22:56:57" itemprop="dateModified" datetime="2021-10-26T22:56:57+08:00">2021-10-26</time>
+                <time title="修改时间：2021-10-31 18:51:55" itemprop="dateModified" datetime="2021-10-31T18:51:55+08:00">2021-10-31</time>
               </span>
 
           
@@ -440,7 +512,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="封装函数"><a href="#封装函数" class="headerlink" title="封装函数"></a>封装函数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;a&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;总裁办&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;b&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;行政部&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;财务部&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;d&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;财务核算部&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;e&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;税务管理部&#x27;</span> &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+          <h2 id="ArrayToTree"><a href="#ArrayToTree" class="headerlink" title="ArrayToTree"></a>ArrayToTree</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;a&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;总裁办&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;b&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;行政部&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;财务部&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;d&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;财务核算部&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;e&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;税务管理部&#x27;</span> &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <p>需求：把上面的数据转成下面的结果</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;a&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;总裁办&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;b&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;行政部&#x27;</span> &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;财务部&#x27;</span>,</span><br><span class="line">        <span class="attr">children</span>: [</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">&#x27;d&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;财务核算部&#x27;</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">&#x27;e&#x27;</span>, <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;税务管理部&#x27;</span> &#125;,</span><br><span class="line">        ],</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
@@ -452,76 +524,6 @@
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/23/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/49337922.png">
-      <meta itemprop="name" content="Ifer">
-      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="危险">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/23/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-23 08:42:26" itemprop="dateCreated datePublished" datetime="2021-10-23T08:42:26+08:00">2021-10-23</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
       
     </div>
 
