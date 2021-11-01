@@ -4,7 +4,7 @@ date: 2021-10-23 15:01:28
 tags:
 ---
 
-## 封装函数
+## ArrayToTree
 
 ```js
 const arr = [
@@ -51,6 +51,25 @@ const fn = (list, rootId) => {
         }
     })
     return arr
+}
+```
+
+## TreeToArray
+
+```js
+const treeToArray = (list, newArr = []) => {
+    list.forEach((item) => {
+        const { children } = item
+        if (children) {
+            delete item.children
+            if (children.length) {
+                newArr.push(item)
+                return treeToArray(children, newArr)
+            }
+        }
+        newArr.push(item)
+    })
+    return newArr
 }
 ```
 

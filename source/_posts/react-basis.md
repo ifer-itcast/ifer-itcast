@@ -35,7 +35,7 @@ const jsx = (
 
 使用 React 除了可以开发 Web 应用，还可以使用 React Native 开发原生移动应用，甚至可以开发 VR（虚拟现实）应用（React 360）。
 
--   <font color=#e32d40>相比较于 Vue，React 尽可能的利用 JS 语言自身的能力来编写 UI，而不是通过造轮子增强 HTML 的功能</font>
+-   <font color=#e32d40>相比较于 Vue，React 强调尽可能的利用 JS 语言自身的能力来编写 UI，而不是通过造轮子增强 HTML 的功能。</font>
 
 ## 基本使用
 
@@ -190,7 +190,7 @@ ReactDOM.render(title, document.querySelector('#root'))
 
 -   <font color=#e32d40>为什么要有 JSX</font>
 
-React.createElement() 的问题：繁琐/不简洁；不直观，无法一眼看出所描述的结构；不优雅，用户体验不爽！
+`React.createElement()` 的问题：繁琐/不简洁；不直观，无法一眼看出所描述的结构；不优雅，用户体验不爽！
 
 ```jsx
 React.createElement(
@@ -329,7 +329,7 @@ ReactDOM.render(loadData(), document.querySelector('#root'))
 
 ## 关于组件
 
-组件就是页面中的一部分，是 React 的一等公民，使用 React 就是在用组件；组件的特点：可复用、独立、可组合；所谓组件化采用的就是分而治之的思想。
+组件就是页面中的一部分，是 React 的一等公民，使用 React 就是在用组件；组件的特点：可复用、独立、可组合；所谓组件化采用的就是分而治之的思想来管理繁杂的页面开发。
 
 <font color=#909090>🧐 了解模块：JS 模块一般是向外提供特定功能的代码片段，通常来说是一个文件。</font>
 
@@ -380,7 +380,7 @@ ReactDOM.render(<Hello />, document.getElementById('root'))
 
 ## 事件绑定
 
-语法：`on + 事件名称 = 事件处理函数`，比如 `onClick = function(){}`
+> 语法：`on + 事件名称 = 事件处理函数`，比如 `onClick = function(){}`
 
 a，React 中使用的是合成事件，而不是原生的 DOM 事件（为了兼容性）
 
@@ -388,7 +388,7 @@ b，React 中的事件是通过事件委托的方式处理的（委托给组件�
 
 c，通过 `e` 可以拿到事件对象，例如 `e.target` 就是触发事件的那个 DOM 元素
 
-类
+-   <font color=#e32d40>类中的事件绑定</font>
 
 ```jsx
 import React, { Component } from 'react'
@@ -407,7 +407,7 @@ export default class App extends Component {
 }
 ```
 
-函数
+-   <font color=#e32d40>函数中的事件绑定</font>
 
 ```jsx
 import React from 'react'
@@ -430,7 +430,7 @@ export default function App() {
 
 📝 需求：计数器（点击按钮加 1）
 
-1. 定义 state
+<font color=#e32d40>1. 定义 state</font>
 
 ```jsx
 import React, { Component } from 'react'
@@ -474,11 +474,9 @@ export default class App extends Component {
 
 <font color=#909090>🧐 思考 2 种定义形式的差异？</font>
 
-2. 修改 state 中的数据（count）
+<font color=#e32d40>2. 修改 state 中的数据（count）</font>
 
-<font color=#e32d40>错误写法：`this.state.count += 1`</font>，数据确实也会变，但不是响应式的！
-
-<font color=#e32d40>正确写法：`this.setState({ count: this.state.count + 1 })`</font>
+> <font color=#e32d40>错误写法：`this.state.count += 1`</font>，数据确实也会变，但不是响应式的！<font color=#e32d40>正确写法：`this.setState({ count: this.state.count + 1 })`</font>
 
 ```jsx
 import React, { Component } from 'react'
@@ -546,7 +544,7 @@ console.log(p1.say1 === p2.say1) // false
 console.log(p1.say2 === p2.say2) // true
 ```
 
-3. 修复 this 指向的问题
+<font color=#e32d40>3. 修复 this 指向的问题</font>
 
 思路 1：通过赋值语句往实例上面添加一个箭头函数。
 
@@ -612,13 +610,13 @@ export default class App extends Component {
 
 [官方文档](https://zh-hans.reactjs.org/docs/forms.html#gatsby-focus-wrapper)
 
--   <font color=#e32d40>受控组件</font>
+### 受控组件
 
-<font size=4>1. 概念</font>
+-   <font color=#e32d40>概念</font>
 
 受控不受控一般是针对表单来说的，所谓受控组件，**即对视图的操作会影响状态（数据），状态的变化又会反映到视图上**；非受控组件则是通过操作 DOM 的方式来获取数据。
 
-<font size=4>2. 使用步骤</font>
+-   <font color=#e32d40>使用步骤</font>
 
 a，在 state 中添加一个状态，作为表单元素的 value 值（数据影响视图）
 
@@ -646,7 +644,7 @@ export default class App extends React.Component {
 }
 ```
 
-<font size=4>3. 其他文本框演示</font>
+-   <font color=#e32d40>其他文本框演示</font>
 
 富文本框（和文本框一样）
 
@@ -775,7 +773,7 @@ export default class App extends React.Component {
 }
 ```
 
-<font size=4>4. 多表单元素优化</font>
+-   <font color=#e32d40>多表单元素优化</font>
 
 问题：每个表单元素都有一个单独的事件处理函数，这样太繁琐，期望使用一个事件处理程序同时处理多个表单元素
 
@@ -859,9 +857,9 @@ export default class App extends React.Component {
 }
 ```
 
--   <font color=#e32d40>非受控组件</font>
+### 非受控组件
 
-通过 Refs 获取到 DOM，然后拿到 DOM 里面的 value
+通过 Refs 获取到 DOM，然后拿到 DOM 里面的 value。
 
 **1. 字符串形式的 Ref，[性能不高](https://github.com/facebook/react/pull/8333#issuecomment-271648615)**
 
@@ -2569,7 +2567,7 @@ export default class App extends React.Component {
 }
 ```
 
-### 挂载时
+### 挂载时（Mounting）
 
 ```jsx
 import React from 'react'
@@ -2625,7 +2623,7 @@ export default class App extends React.Component {
             count: this.state.count + 1,
         })
     }
-    shouldComponentUpdate() {
+    shouldComponentUpdate(nextProps, nextState) {
         // 组件是否应该被更新，阀门
         console.log('#1 shouldComponentUpdate')
         return true
@@ -2701,7 +2699,7 @@ export default class App extends React.Component {
     }
 }
 class Test extends React.Component {
-    componentWillReceiveProps(props) {
+    componentWillReceiveProps(nextProps) {
         // 注意第一次传递的数据不会调用
         console.log('componentWillReceiveProps')
     }
@@ -2716,9 +2714,54 @@ class Test extends React.Component {
 }
 ```
 
+如果父组件导致组件重新渲染，即使 props 没有更改，也会调用此方法（componentWillReceiveProps）。所以注意：componentWillReceiveProps 并不是由 props 的变化触发的，而是由父组件的更新触发的。
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        name: 'xxx',
+    }
+    changeCar = () => {
+        this.setState({
+            name: 'ifer',
+        })
+    }
+    render() {
+        return (
+            <div>
+                <p>A</p>
+                <button onClick={this.changeCar}>改名</button>
+                <hr />
+                <Test />
+            </div>
+        )
+    }
+}
+class Test extends React.Component {
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps, this.props)
+        // 确实也调用了
+        console.log('componentWillReceiveProps')
+    }
+    render() {
+        return (
+            <div>
+                <p>Test</p>
+            </div>
+        )
+    }
+}
+```
+
 ### 卸载
 
-通过 `ReactDOM.unmountComponentAtNode(document.getElementById('root'))` 卸载，卸载之后会触发的钩子是 `componentWillUnmount`
+-   通过 `ReactDOM.unmountComponentAtNode(document.getElementById('root'))` 卸载，卸载之后会触发的钩子是 `componentWillUnmount`。
+
+-   组件在父组件中被移除了也可以触发 `componentWillUnmount`。
+
+-   组件设置了 key 属性，并且父组件在 render 的过程中，发现 key 值和上一次不一致也会触发卸载钩子的调用。所以先明确：key 改变后组件会被干掉/重新创建。
 
 ### 总结
 
@@ -2752,7 +2795,7 @@ class Test extends React.Component {
 
 废弃了带 will 的除了 `componentWillUnmount`，加 UNSAFE 可以去除警告，未来版本中可能会有 Bug，尤其启用异步渲染之后！
 
-废弃 `componentWillMount`、`componentWillUpdate`、`componentWillReceiveProps`。
+废弃 `componentWillMount`、`componentWillReceiveProps`、`componentWillUpdate`。
 
 -   **新增了 2 个**
 
@@ -2761,6 +2804,10 @@ class Test extends React.Component {
 <img src="/resource/images/ifer_life_new.png" width="500"/>
 
 ### getDerivedStateFromProps
+
+-   有且仅有一个用途：使用 props 来派生/更新 state
+
+-   它是一个静态方法，静态方法不依赖组件实例而存在，所以此方法中访问不到 this
 
 ```jsx
 import React from 'react'
@@ -2787,6 +2834,7 @@ export default class App extends React.Component {
         } */
         // 根据 props 得到一个派生的状态
         // 应用场景：state 在任何时候都取决于 props 可以使用此钩子
+        // 并非覆盖式更新，而是针对特定属性的定向更新
         return props
     }
     render() {
@@ -2809,9 +2857,15 @@ export default class App extends React.Component {
 <App count={888} />
 ```
 
+<font color=#909090>🧐 为什么要用 `getDerivedStateFromProps` 代替 `componentWillReceiveProps`？</font>
+
+> <font color=#909090>用 `getDerivedStateFromProps` 代替 `componentWillReceiveProps` 后，只能用来实现基于 props 来派生 state 这一操作，不能进行 this.fetch，this.setState 等副作用的操作，其实是 React 特意做了合理的减法，此 API 直接被定义为 static 方法这件事上就可见一斑，意在确保生命周期函数的行为更加可控，可预测，根源上帮助开发者避免不合理的变更方式，避免生命周期的滥用，同时在为新的 Fiber 架构铺路！</font>
+
 ### getSnapshotBeforeUpdate
 
-基本操作
+用来替换 `componentWillUpdate`（为 Fiber 架构做铺垫），一般要和 `componentDidUpdate` 配合使用。
+
+-   <font color=#e32d40>基本操作</font>
 
 ```jsx
 import React from 'react'
@@ -2858,7 +2912,7 @@ export default class App extends React.Component {
 }
 ```
 
-插入广播
+-   <font color=#e32d40>插入评论案例</font>
 
 ```jsx
 import React from 'react'
@@ -2984,12 +3038,266 @@ export default class App extends React.Component {
 
 复用什么？复用 state 和操作 state 的方法（组件状态逻辑）
 
-### render props 模式
+### render props
 
-把函数作为 prop 进行传递，并且在函数中告诉组件要渲染什么内容的技术叫做 render props 模式。
+是什么：把函数作为 prop 进行传递，并且在函数中通过返回值告诉组件要渲染什么内容的技术叫做 render props 模式。
+
+需求：有 2 个组件，一个展示鼠标位置到文档，一个使图片跟着鼠标位置移动。
+
+```jsx
+import React from 'react'
+import img from './dva.png'
+
+class Mouse1 extends React.Component {
+    state = {
+        x: 0,
+        y: 0,
+    }
+    handleMousemove = (e) => {
+        this.setState({
+            x: e.clientX,
+            y: e.clientY,
+        })
+    }
+    componentDidMount() {
+        window.addEventListener('mousemove', this.handleMousemove)
+    }
+    render() {
+        return (
+            <p>
+                x坐标：{this.state.x}，y坐标：{this.state.y}
+            </p>
+        )
+    }
+}
+class Mouse2 extends React.Component {
+    state = {
+        x: 0,
+        y: 0,
+    }
+    handleMousemove = (e) => {
+        this.setState({
+            x: e.clientX,
+            y: e.clientY,
+        })
+    }
+    componentDidMount() {
+        window.addEventListener('mousemove', this.handleMousemove)
+    }
+    render() {
+        return (
+            <img
+                src={img}
+                alt='猫'
+                style={{
+                    position: 'absolute',
+                    top: this.state.y,
+                    left: this.state.x,
+                }}
+            />
+        )
+    }
+}
+
+export default class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <Mouse1 />
+                <Mouse2 />
+            </div>
+        )
+    }
+}
+```
+
+优化
+
+```jsx
+import React from 'react'
+import img from './dva.png'
+
+class Mouse extends React.Component {
+    state = {
+        x: 0,
+        y: 0,
+    }
+    handleMousemove = (e) => {
+        this.setState({
+            x: e.clientX,
+            y: e.clientY,
+        })
+    }
+    componentDidMount() {
+        window.addEventListener('mousemove', this.handleMousemove)
+    }
+    render() {
+        return this.props.render(this.state)
+    }
+}
+
+export default class App extends React.Component {
+    render() {
+        return (
+            <div>
+                {/* 传递函数，给子组件调用，子组件调用时再把信息传递过来 */}
+                <Mouse
+                    render={(mouse) => (
+                        <p>
+                            x坐标：{mouse.x}，y坐标：{mouse.y}
+                        </p>
+                    )}
+                />
+                <Mouse
+                    render={(mouse) => (
+                        <img
+                            src={img}
+                            alt='猫'
+                            style={{
+                                position: 'absolute',
+                                top: mouse.y,
+                                left: mouse.x,
+                            }}
+                        />
+                    )}
+                />
+            </div>
+        )
+    }
+}
+```
+
+优化：卸载、校验、也可以把 props 的内容作为 children 进行传递
+
+```jsx
+import React from 'react'
+import img from './dva.png'
+import PropTypes from 'prop-types'
+
+class Mouse extends React.Component {
+    state = {
+        x: 0,
+        y: 0,
+    }
+    static propTypes = {
+        children: PropTypes.func.isRequired,
+    }
+    handleMousemove = (e) => {
+        this.setState({
+            x: e.clientX,
+            y: e.clientY,
+        })
+    }
+    componentDidMount() {
+        window.addEventListener('mousemove', this.handleMousemove)
+    }
+    componentWillUnmount() {
+        window.removeEventListener('mousemove', this.handleMousemove)
+    }
+    render() {
+        return this.props.children(this.state)
+    }
+}
+
+export default class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <Mouse>
+                    {(mouse) => (
+                        <p>
+                            x坐标：{mouse.x}，y坐标：{mouse.y}
+                        </p>
+                    )}
+                </Mouse>
+                <Mouse>
+                    {(mouse) => (
+                        <img
+                            src={img}
+                            alt='猫'
+                            style={{
+                                position: 'absolute',
+                                top: mouse.y,
+                                left: mouse.x,
+                            }}
+                        />
+                    )}
+                </Mouse>
+            </div>
+        )
+    }
+}
+```
 
 ### HOC
 
 目的：实现状态逻辑复用
 
-## 详解 setState
+```jsx
+import React from 'react'
+import img from './dva.png'
+
+function getDisplayName(WrappedComponent) {
+    // WrappedComponent.name 就是组件的名字
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component'
+}
+
+// #1 高阶组件
+function withMouse(WrappedComponent) {
+    class Mouse extends React.Component {
+        state = {
+            x: 0,
+            y: 0,
+        }
+        handleMousemove = (e) => {
+            this.setState({
+                x: e.clientX,
+                y: e.clientY,
+            })
+        }
+        render() {
+            return <WrappedComponent {...this.state} {...this.props} />
+        }
+        componentDidMount() {
+            window.addEventListener('mousemove', this.handleMousemove)
+        }
+        componentWillUnmount() {
+            window.removeEventListener('mousemove', this.handleMousemove)
+        }
+    }
+    Mouse.displayName = `WithMouse${getDisplayName(WrappedComponent)}`
+    return Mouse
+}
+
+// #2 普通组件
+const Position = (props) => (
+    <p>
+        鼠标X：{props.x}鼠标Y：{props.y}
+    </p>
+)
+
+const Cat = (props) => (
+    <img
+        src={img}
+        style={{
+            position: 'absolute',
+            top: props.y,
+            left: props.x,
+        }}
+        alt='猫'
+    />
+)
+
+// #3 增强组件
+const MousePosition = withMouse(Position)
+const CatPosition = withMouse(Cat)
+
+export default function App() {
+    return (
+        <div>
+            <MousePosition />
+            <CatPosition />
+        </div>
+    )
+}
+```
