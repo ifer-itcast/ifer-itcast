@@ -12,6 +12,8 @@ tags:
 
 -   掌握表单处理。
 
+<!-- more -->
+
 ## React 组件介绍
 
 ### 目标
@@ -664,3 +666,402 @@ export default class App extends Component {
 ```
 
 ## 综合案例 📝
+
+### 整合数据和视图
+
+改造成 class 组件
+
+```jsx
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import avatar from './images/avatar.png'
+
+class App extends React.Component {
+    state = {
+        // hot: 热度排序  time: 时间排序
+        tabs: [
+            {
+                id: 1,
+                name: '热度',
+                type: 'hot',
+            },
+            {
+                id: 2,
+                name: '时间',
+                type: 'time',
+            },
+        ],
+        active: 'time',
+        list: [
+            {
+                id: 1,
+                author: '刘德华',
+                comment: '给我一杯忘情水',
+                time: '2021-10-10 09:09:00',
+                img: 'https://y.qq.com/music/photo_new/T001R300x300M000003aQYLo2x8izP.jpg?max_age=2592000',
+                // 1: 点赞 0：无态度 -1:踩
+                attitude: 1,
+            },
+            {
+                id: 2,
+                author: '周杰伦',
+                comment: '听妈妈的话',
+                time: '2021-10-11 09:09:00',
+                img: 'https://y.qq.com/music/photo_new/T001R500x500M0000025NhlN2yWrP4.jpg?max_age=2592000',
+                // 1: 点赞 0：无态度 -1:踩
+                attitude: 0,
+            },
+            {
+                id: 3,
+                author: '陈奕迅',
+                comment: '十年',
+                time: '2021-10-11 10:09:00',
+                img: 'https://y.qq.com/music/photo_new/T001R500x500M000003Nz2So3XXYek.jpg?max_age=2592000',
+                // 1: 点赞 0：无态度 -1:踩
+                attitude: -1,
+            },
+        ],
+    }
+    render() {
+        const { state } = this
+        return (
+            <div className='App'>
+                <div className='comment-container'>
+                    <div className='comment-head'>
+                        <span>{state.list.length} 评论</span>
+                    </div>
+                    <div className='tabs-order'>
+                        <ul className='sort-container'>
+                            {state.tabs.map((item) => (
+                                <li className={item.type === state.active ? 'on' : ''} key={item.id}>
+                                    按{item.name}排序
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className='comment-send'>
+                        <div className='user-face'>
+                            <img className='user-head' src={avatar} alt='' />
+                        </div>
+                        <div className='textarea-container'>
+                            <textarea cols='80' rows='5' placeholder='发条友善的评论' className='ipt-txt'></textarea>
+                            <button className='comment-submit'>发表评论</button>
+                        </div>
+                        <div className='comment-emoji'>
+                            <i className='face'></i>
+                            <span className='text'>表情</span>
+                        </div>
+                    </div>
+                    <div className='comment-list'>
+                        {state.list.map((item) => (
+                            <div className='list-item' key={item.id}>
+                                <div className='user-face'>
+                                    <img className='user-head' src={item.img} alt='' />
+                                </div>
+                                <div className='comment'>
+                                    <div className='user'>{item.author}</div>
+                                    <p className='text'>{item.comment}</p>
+                                    <div className='info'>
+                                        <span className='time'>{item.time}</span>
+                                        <span className={item.attitude === 1 ? 'like liked' : 'like'}>
+                                            <i className='icon'></i>
+                                        </span>
+                                        <span className={item.attitude === -1 ? 'hate hated' : 'hate'}>
+                                            <i className='icon'></i>
+                                        </span>
+                                        <span className='reply btn-hover'>删除</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(<App />, document.querySelector('#root'))
+```
+
+### Tab 栏切换功能
+
+1. 给 Tab 栏注册点击事件。
+
+```jsx
+<ul className='sort-container'>
+    {state.tabs.map((item) => (
+        <li className={item.type === state.active ? 'on' : ''} key={item.id} onClick={() => this.changeTab(item.type)}>
+            按{item.name}排序
+        </li>
+    ))}
+</ul>
+```
+
+2. 修改 active 进行切换。
+
+```jsx
+changeTab(type) {
+    this.setState({
+        active: type,
+    })
+}
+```
+
+### 删除评论
+
+1. 给删除按钮注册点击事件。
+
+```jsx
+<span className='reply btn-hover' onClick={() => this.delItem(item.id)}>
+    删除
+</span>
+```
+
+2. 通过 setState 删除对应的数据。
+
+```jsx
+delItem(id) {
+    this.setState({
+        list: this.state.list.filter((item) => item.id !== id),
+    })
+}
+```
+
+### 添加评论
+
+1. 通过受控组件的方式获取到评论内容。
+
+```js
+state = {
+    content: '',
+}
+```
+
+```jsx
+<textarea value={this.state.content} onChange={this.handleChange}></textarea>
+```
+
+```jsx
+handleChange = (e) => {
+    this.setState({
+        content: e.target.value,
+    })
+}
+```
+
+2. 通过 setState 添加评论并重置输入的内容。
+
+```js
+addItem = () => {
+    const newComment = {
+        id: Date.now(),
+        author: '作者',
+        comment: this.state.content,
+        time: new Date().toDateString(),
+        attitude: 0,
+    }
+    this.setState({
+        list: [newComment, ...this.state.list],
+        content: '',
+    })
+}
+```
+
+### 点赞与踩
+
+1. 注册点击事件
+
+```jsx
+<div className='info'>
+    <span className='time'>{item.time}</span>
+    <span className={item.attitude === 1 ? 'like liked' : 'like'} onClick={() => this.changeAttitude(item.id, item.attitude === 1 ? 0 : 1)}>
+        <i className='icon'></i>
+    </span>
+    <span className={item.attitude === -1 ? 'hate hated' : 'hate'} onClick={() => this.changeAttitude(item.id, item.attitude === -1 ? 0 : -1)}>
+        <i className='icon'></i>
+    </span>
+</div>
+```
+
+2. 修改点赞状态
+
+```jsx
+changeAttitude = (id, attitude) => {
+    this.setState({
+        list: this.state.list.map((item) => {
+            if (item.id === id) {
+                return {
+                    ...item,
+                    attitude,
+                }
+            } else {
+                return item
+            }
+        }),
+    })
+}
+```
+
+### 完整代码
+
+```jsx
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import avatar from './images/avatar.png'
+
+class App extends React.Component {
+    state = {
+        content: '',
+        tabs: [
+            {
+                id: 1,
+                name: '热度',
+                type: 'hot',
+            },
+            {
+                id: 2,
+                name: '时间',
+                type: 'time',
+            },
+        ],
+        active: 'time',
+        list: [
+            {
+                id: 1,
+                author: '刘德华',
+                comment: '给我一杯忘情水',
+                time: '2021-10-10 09:09:00',
+                img: 'https://y.qq.com/music/photo_new/T001R300x300M000003aQYLo2x8izP.jpg?max_age=2592000',
+                // 1: 点赞 0：无态度 -1:踩
+                attitude: 1,
+            },
+            {
+                id: 2,
+                author: '周杰伦',
+                comment: '听妈妈的话',
+                time: '2021-10-11 09:09:00',
+                img: 'https://y.qq.com/music/photo_new/T001R500x500M0000025NhlN2yWrP4.jpg?max_age=2592000',
+                // 1: 点赞 0：无态度 -1:踩
+                attitude: 0,
+            },
+            {
+                id: 3,
+                author: '陈奕迅',
+                comment: '十年',
+                time: '2021-10-11 10:09:00',
+                img: 'https://y.qq.com/music/photo_new/T001R500x500M000003Nz2So3XXYek.jpg?max_age=2592000',
+                // 1: 点赞 0：无态度 -1:踩
+                attitude: -1,
+            },
+        ],
+    }
+    changeTab(type) {
+        this.setState({
+            active: type,
+        })
+    }
+    delItem(id) {
+        this.setState({
+            list: this.state.list.filter((item) => item.id !== id),
+        })
+    }
+    handleChange = (e) => {
+        this.setState({
+            content: e.target.value,
+        })
+    }
+    addItem = () => {
+        const newComment = {
+            id: Date.now(),
+            author: '作者',
+            comment: this.state.content,
+            time: new Date().toDateString(),
+            attitude: 0,
+        }
+        this.setState({
+            list: [newComment, ...this.state.list],
+            content: '',
+        })
+    }
+    changeAttitude = (id, attitude) => {
+        this.setState({
+            list: this.state.list.map((item) => {
+                if (item.id === id) {
+                    return {
+                        ...item,
+                        attitude,
+                    }
+                } else {
+                    return item
+                }
+            }),
+        })
+    }
+    render() {
+        const { state } = this
+        return (
+            <div className='App'>
+                <div className='comment-container'>
+                    <div className='comment-head'>
+                        <span>{state.list.length} 评论</span>
+                    </div>
+                    <div className='tabs-order'>
+                        <ul className='sort-container'>
+                            {state.tabs.map((item) => (
+                                <li className={item.type === state.active ? 'on' : ''} key={item.id} onClick={() => this.changeTab(item.type)}>
+                                    按{item.name}排序
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className='comment-send'>
+                        <div className='user-face'>
+                            <img className='user-head' src={avatar} alt='' />
+                        </div>
+                        <div className='textarea-container'>
+                            <textarea cols='80' rows='5' placeholder='发条友善的评论' className='ipt-txt' value={this.state.content} onChange={this.handleChange}></textarea>
+                            <button className='comment-submit' onClick={this.addItem}>
+                                发表评论
+                            </button>
+                        </div>
+                        <div className='comment-emoji'>
+                            <i className='face'></i>
+                            <span className='text'>表情</span>
+                        </div>
+                    </div>
+                    <div className='comment-list'>
+                        {state.list.map((item) => (
+                            <div className='list-item' key={item.id}>
+                                <div className='user-face'>
+                                    <img className='user-head' src={item.img} alt='' />
+                                </div>
+                                <div className='comment'>
+                                    <div className='user'>{item.author}</div>
+                                    <p className='text'>{item.comment}</p>
+                                    <div className='info'>
+                                        <span className='time'>{item.time}</span>
+                                        <span className={item.attitude === 1 ? 'like liked' : 'like'} onClick={() => this.changeAttitude(item.id, item.attitude === 1 ? 0 : 1)}>
+                                            <i className='icon'></i>
+                                        </span>
+                                        <span className={item.attitude === -1 ? 'hate hated' : 'hate'} onClick={() => this.changeAttitude(item.id, item.attitude === -1 ? 0 : -1)}>
+                                            <i className='icon'></i>
+                                        </span>
+                                        <span className='reply btn-hover' onClick={() => this.delItem(item.id)}>
+                                            删除
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(<App />, document.querySelector('#root'))
+```
