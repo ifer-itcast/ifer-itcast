@@ -6,9 +6,9 @@ tags:
 
 ## 今日目标
 
--   了解 React 特点。
+-   了解 React 的特点。
 
--   能使用脚手架创建项目。
+-   掌握使用脚手架创建项目。
 
 -   掌握 JSX 的基本使用。
 
@@ -20,7 +20,7 @@ tags:
 
 了解 React 的基本概念。
 
-### 是什么
+### 内容
 
 [React](https://react.docschina.org/) 是一个用于<font color=#e32d40>**构建用户界面**</font>的 JavaScript 库。
 
@@ -30,21 +30,13 @@ tags:
 
 a，[React](https://react.docschina.org/) 起源于 Facebook(Meta) 的内部项目，后又用来架设 Instagram 网站，并用 2013 年 5 月开源。
 
-b，Vue 主要是尤雨溪个人开源的渐进式 JavaScript 框架。
+b，[Vue](https://cn.vuejs.org/) 主要是尤雨溪个人开源的渐进式 JS 框架。
 
-c，Angular 是 Google 公司的产品。
+c，[Angular](https://angular.cn/) 是 Google 公司的产品。
 
 -   趋势
 
-a，React 全球第一。
-
-b，Vue 在国内较多，React 也慢慢多了。
-
-c，Angular 在跨国公司使用较多。
-
-[NPM 下载量](https://www.npmtrends.com/angular-vs-react-vs-vue)
-
-### 小结
+从 [NPM 下载量](https://www.npmtrends.com/angular-vs-react-vs-vue) 来看，React > Vue > Angular。
 
 ## React 特点
 
@@ -52,7 +44,7 @@ c，Angular 在跨国公司使用较多。
 
 了解 React 的特点。
 
-### 介绍
+### 内容
 
 -   <font color=#e32d40>声明式</font>
 
@@ -69,21 +61,23 @@ const jsx = (
 
 -   <font color=#e32d40>组件化</font>
 
-把复杂的页面拆分成一个一个的单元，这些组成页面的基本单元就是组件，通过组合、复用组件，可以编写复杂的界面系统。
+把复杂的页面拆分成一个一个的单元，这些组成页面的基本单元就是组件，通过组合、复用组件来编写复杂界面的方式，就是组件化。
 
 -   <font color=#e32d40>一次学习，随处使用</font>
 
 使用 React 除了可以开发 Web 应用，还可以使用 React Native 开发原生移动应用，甚至可以开发 VR（虚拟现实）应用（React 360）。
 
--   <font color=#e32d40>相比较于 Vue，React 强调尽可能的利用 JS 语言自身的能力来编写 UI，而不是通过造轮子增强 HTML 的功能。</font>
+-   相比较于 Vue，React 强调尽可能的利用 JS 语言自身的能力来编写 UI，而不是通过造轮子增强 HTML 的功能。
 
 ### 小结
+
+React 的特点有哪几个？
 
 ## 基本使用
 
 ### 目标
 
-了解 React 在 HTML 页面中的使用。
+了解 React 在 HTML 页面中的基本使用。
 
 ### 步骤
 
@@ -128,6 +122,8 @@ const title = React.createElement('h1', null, 'Hello World')
 
 ### 小结
 
+-   使用 React 一般需要哪 2 个包？
+
 ## 脚手架创建项目
 
 ### 目标
@@ -136,22 +132,25 @@ const title = React.createElement('h1', null, 'Hello World')
 
 ### 意义
 
-现代的 Web 应用要考虑的问题很多，除了编写业务代码之外，还要考虑代码规范、预编译、压缩合并、打包上线等工作，需要有一套完整的解决方案来辅助我们快速开发，这就是 [React 脚手架](https://create-react-app.dev/)。React 脚手架零配置，开箱即用，让我们从繁杂的 Webpack 配置当中解脱出来，更关注于业务本身。
+现代的 Web 应用要考虑的问题很多，除了编写业务代码之外，还要考虑代码规范、预编译、压缩合并、打包上线等工作，需要有一套完整的解决方案来辅助我们快速开发，而 [React 脚手架](https://create-react-app.dev/) 就是这么一套完整的解决方案，它零配置，开箱即用，让我们从繁杂的 Webpack 配置当中解脱出来，更关注于业务本身。
 
 ### 使用
 
 ```bash
 npx create-react-app my-app # 创建项目
+cd my-app
 yarn start # 启动项目
 ```
 
 <font color=#909090>🧐 了解 npx 和 Yarn</font>
 
-npx 是 `npm@5.2.0` 引入的一条命令，目的是提升命令行工具的使用体验，原来需要先安装全局的脚手架工具，再使用这个工具中提供的命令，现在无需安装全局的脚手架工具包，就可以直接使用这个包提供的命令，香。
+npx 是 `npm@5.2.0` 引入的一条命令，目的是提升命令行工具的使用体验。原来使用脚手架，需要先安装全局的命令行工具，再使用这个工具中提供的命令，现在无需全局安装，就可以直接使用这个包提供的命令，香。
 
 Yarn 是 Facebook 发布的包管理工具，具有安全、快速可靠的特点，可以看做是 NPM 的替代品。
 
 ### 小结
+
+使用脚手架创建项目的命令是什么？
 
 ## 目录文件说明
 
@@ -242,9 +241,9 @@ ReactDOM.render(
 reportWebVitals()
 ```
 
-### 启动原理
+### 启动流程
 
-内部会使用 Webpack 通过解析入口文件中的代码，把把最终的结果打包到 `public/index.html` 文件中。
+通过 Webpack 解析入口文件中的代码和依赖，并把最终的结果打包到 `public/index.html` 文件中。
 
 ### 小结
 
@@ -260,9 +259,31 @@ reportWebVitals()
 
 ### 步骤
 
-1. 删除 src 目录中的所有内容，新建 `index.js` 文件
+1. 删除 src 和 public 目录中的所有内容
+
+b，新建 `public/index.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+
+    <body>
+        <div id="root"></div>
+    </body>
+</html>
+```
+
+a，新建 `src/index.js` 文件
 
 2. 引入 React 核心库和涉及 DOM 操作的包
+
+`src/index.js`
 
 ```js
 import React from 'react'
@@ -285,7 +306,7 @@ ReactDOM.render(title, document.querySelector('#root'))
 
 使用 React 和 ReactDOM 渲染页面的步骤是？
 
-## 练习案例 📝
+## React.createElement() 📝
 
 ### 目标
 
@@ -293,8 +314,8 @@ ReactDOM.render(title, document.querySelector('#root'))
 
 ```html
 <div>
-    <h1>第一个react程序</h1>
-    <p>react是用来构建用户界面的js库</p>
+    <h1>第一个 React 程序</h1>
+    <p>React 是用来构建用户界面的 JS 库</p>
 </div>
 ```
 
@@ -336,7 +357,9 @@ React.createElement(
 
 ### JSX 是什么
 
-JSX 是 JavaScript XML 的简写，表示在 JavaScript 代码中写 XML（HTML） 格式的代码，优势：声明式语法更加直观，与 HTML 结构相同，降低了学习成本，提高了开发效率，JSX 是 React 的核心之一。
+JSX 是 JavaScript XML 的简写，表示可以在 JavaScript 代码中写 XML（HTML） 格式的代码。
+
+优势：声明式语法更加直观，与 HTML 结构相同，降低了学习成本，提高了开发效率，JSX 是 React 的核心之一。
 
 ### JSX 基本使用
 
@@ -354,29 +377,23 @@ ReactDOM.render(title, document.querySelector('#root'))
 
 ### JSX 是如何工作的
 
-🤔 换句话说，为什么 React 脚手架中可以直接使用 JSX？
+🤔 换句话说，JSX 并不是标准的 ECMAScript 语法，为什么 React 脚手架中可以直接使用 JSX 呢？
 
-1. JSX 并不是标准的 ECMAScript 语法，它是 ECMAScript 的语法扩展。
+-   JSX 需要使用 Babel 编译处理后，才能在浏览器中使用，`create-react-app` 脚手架中已经内置了该配置，无需手动再配。
 
-2. JSX 需要使用 Babel 编译处理后，才能在浏览器中使用。
+-   编译 JSX 语法的包为：[@babel/preset-react](https://www.npmjs.com/package/@babel/preset-react)。
 
-3. `create-react-app` 脚手架中已经内置了该配置，无需手动再配。
-
-4. 编译 JSX 语法的包为：[@babel/preset-react](https://www.npmjs.com/package/@babel/preset-react)。
-
-[在线体验地址](https://www.babeljs.cn/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.6&spec=false&loose=false&code_lz=DwCwjAfAEgpgNnA9gAgFIGUAawD04JA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Creact%2Cstage-2&prettier=false&targets=&version=7.16.2&externalPlugins=&assumptions=%7B%7D)
+-   [在线体验](https://www.babeljs.cn/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.6&spec=false&loose=false&code_lz=DwCwjAfAEgpgNnA9gAgFIGUAawD04JA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Creact%2Cstage-2&prettier=false&targets=&version=7.16.2&externalPlugins=&assumptions=%7B%7D)
 
 ### 小结
 
 1\. JSX 是什么的简写？
 
-2\. JSX 相比较 React.createElement 的优势是什么？
+2\. JSX 相比较 `React.createElement()` 的优势是什么？
 
 3\. 为什么 React 脚手架中可以直接使用 JSX？
 
 ## JSX 注意点
-
-TODO: 一个一个举例说明
 
 ### 目标
 
@@ -386,17 +403,15 @@ TODO: 一个一个举例说明
 
 1. 必须有 1 个根节点，或者虚拟根节点 `<></>`、`React.Fragment()`。
 
-2. 属性名一般是驼峰的写法且不能是 JS 中的关键字
+2. 属性名一般是驼峰的写法且不能是 JS 中的关键字，例如 class 改成 className，label 的 for 属性改为 `htmlFor`，colspan 改为 `colSpan`。
 
-例如 class 改成 className，例如 label 的 for 属性改为 `htmlFor`，colspan 改为 `colSpan`。
-
-3. 元素若没有子节点，使用单标签时需要闭合，例如 `<span/>`。
+3. 元素若没有子节点，可以使用单标签，但一定要闭合，例如 `<span/>`。
 
 4. JSX 中不能直接使用对象，除非是行内样式（后续讲）。
 
-5. React17.0 之前先引入 React 才能使用 JSX
+5. React17.0 之前需要先引入 React 才能使用 JSX（这个也好理解，因为 JSX 最后还是要被转成 React.createElement() 的形式）。
 
-6. 换行建议使用 `()` 进行包裹
+6. 换行建议使用 `()` 进行包裹。
 
 ```jsx
 const r = (
@@ -409,9 +424,13 @@ const r = (
 
 ### 总结
 
+至少说出 JSX 的三个注意点？
+
 ## 在 JSX 中使用表达式
 
 ### 目标
+
+掌握在 JSX 中使用表达式。
 
 ### 内容
 
@@ -419,19 +438,17 @@ const r = (
 
 2. JSX 自身也是表达式。
 
-3. 注意表达式和语句的区别。
-
-[表达式和语句](https://zh.wikipedia.org/wiki/%E9%99%B3%E8%BF%B0%E5%BC%8F)，简单来说，表达式就是可以**产生结果**的式子，一般由变量或运算符组成，例如 `a`、`a + b`、`fn(1)`、`arr.map()` 等；语句是使用特定命令告诉计算机执行特定操作的句子，通常没有返回结果，例如 `if {}`、`for() {}`、`switch() {}` 等。
-
-### 总结
+<font>🧐 [表达式和语句](https://zh.wikipedia.org/wiki/%E9%99%B3%E8%BF%B0%E5%BC%8F)，简单来说，表达式就是可以**产生结果**的式子，一般由变量或运算符组成，例如 `a`、`a + b`、`fn(1)`、`arr.map()` 等；语句是使用特定命令告诉计算机执行特定操作的句子，通常没有返回结果，例如 `if {}`、`for() {}`、`switch() {}` 等。</font>
 
 ## JSX 中的条件渲染
 
 ### 目标
 
+掌握条件渲染的两种写法。
+
 ### 内容
 
-可以根据不同的条件显示特定的 HTML 结构，需求：loading
+可以根据不同的条件不同的 HTML 结构，需求：loading
 
 ```jsx
 import ReactDOM from 'react-dom'
@@ -457,6 +474,8 @@ const loadData = () => {
 ```
 
 ### 小结
+
+简单条件渲染使用\_\_ 和 \_\_？
 
 ## JSX 中的列表渲染
 
@@ -516,7 +535,7 @@ ReactDOM.render(loadData(), document.querySelector('#root'))
 
 2. `map()` 遍历谁，就把 key 加在谁上。
 
-3. 作用：React 内部用来进行**性能优化**时使用的，在最终的 HTML 结构中看不见。
+3. 作用：React 内部用来进行**性能优化**时使用的，key 在最终的 HTML 结构中是看不见的。
 
 ### 小结
 
@@ -526,7 +545,7 @@ ReactDOM.render(loadData(), document.querySelector('#root'))
 
 -   key 的作用是什么？
 
-## 练习案例 📝
+## 渲染数据 📝
 
 ```js
 const list = [
@@ -554,7 +573,7 @@ const list = [
 
 ### 目标
 
-掌握使用样式的两种方式。
+掌握 React 中使用样式的两种方式。
 
 ### 行内样式
 
@@ -572,17 +591,17 @@ const list = [
 
 注意点
 
--   为啥有两个`{{ }}`，外层的 `{}` 表示 要开始写 JS 了，内层的 `{}` 表示是一个对象。
+-   为啥有两个`{{ }}`，外层的 `{}` 表示要开始写 JS 了，内层的 `{}` 表示是一个对象。
 
 -   属性名是小驼峰格式，例如 `background-color` 需要写成 `backgroundColor`。
 
--   属性值是字符串, 如果单位是 px，可以简写数值。
+-   属性值是字符串, 如果单位是 px，可以简写成数值。
 
 ### className
 
--   用 className 定义类名
+-   用 className 定义类名。
 
--   把样式写在外部的 `*.css` 文件中，然后引入 `*.css` 文件
+-   把样式写在外部的 `*.css` 文件中，然后引入 `*.css` 文件。
 
 `index.css`
 
@@ -605,11 +624,11 @@ import './index.css'
 
 -   行内样式，`<div style={{ color: 'red' }}>Hello</div>`。
 
-## 案例练习 📝
+## 渲染 B 站评论列表 📝
 
 ### 目标
 
-综合使用 jsx 的知识，结合数据、结构和样式渲染成如下效果。
+综合使用 JSX 的知识，结合数据、结构和样式渲染成如下效果。
 
 <img src="/resource/images/ifer_list3.png"/>
 

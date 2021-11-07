@@ -199,6 +199,26 @@ ReactDOM.render(<Hello />, document.getElementById('root'))
 
 ### 定义
 
+<font color=#e32d40>**state 对应的值必须是一个对象**</font>。
+
+第一种方式
+
+```jsx
+class App extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            list: [
+                { id: 1, name: '明天会更好' },
+                { id: 2, name: '今天' },
+            ],
+        }
+    }
+}
+```
+
+第二种方式
+
 ```jsx
 class App extends React.Component {
     state = {
@@ -210,6 +230,8 @@ class App extends React.Component {
     // ...
 }
 ```
+
+<font color=909090>🧐 思考两种方式的差异？</font>
 
 ### 使用
 
@@ -233,11 +255,15 @@ class App extends React.Component {
 
 ### 小结
 
+-   如何使用组件中的状态？
+
+-   this.state 对应的值必须是一个什么类型？
+
 ## 事件绑定
 
 ### 目标
 
--   掌握 React 中如何进行事件绑定
+-   掌握 React 中如何进行事件绑定。
 
 -   掌握 React 中如何获取事件对象。
 
@@ -297,11 +323,15 @@ const App = () => {
 
 ### 小结
 
+-   事件命名的规则是什么？
+
+-   如何拿到事件对象？
+
 ## 点击计数
 
 ### 目标
 
-了解事件处理程序中 this 指向异常并能知道原因
+了解事件处理程序中 this 指向问题。
 
 ### 实现
 
@@ -349,13 +379,30 @@ class App extends Component {
 }
 ```
 
+<font color=909090>🧐 注意：this.handleClick 不要加括号，加括号表示立即调用，期望的是点击按钮的时候才调用。</font>
+
 3. 分析原因
 
 -   render 函数是被组件实例调用的，因此 render 函数中的 this 指向当前组件实例，所以在 render 函数中通过 this 实例访问 state 和 handleClick 没有问题。
 
--   但！this.handleClick 这个方法是点击按钮的时候，由 React 内部直接调用的，而【直接调用】 class 中的方法，this 指向就是 undefined（class 的内部，开启了局部严格模式 `use strict`，所以 this 不会指向 window ）
+-   但！`this.handleClick` 这个方法是点击按钮的时候，由 React 内部直接调用的，而【直接调用】 class 中的方法，this 指向就是 undefined（class 的内部，开启了局部严格模式 `use strict`，所以 this 不会指向 window ）。
+
+-   什么是【直接调用】，代码模拟。
+
+```js
+class Test {
+    fn() {
+        console.log(this)
+    }
+}
+const t = new Test()
+const temp = t.fn
+temp()
+```
 
 ### 小结
+
+render 函数中的 this 指向是什么？
 
 ## 解决 this 指向问题
 
@@ -365,7 +412,35 @@ class App extends Component {
 
 ### 方法 1
 
-包裹一层箭头函数
+高阶函数：通过 this 来**调用** handleClick 并返回箭头函数。
+
+```jsx
+class App extends React.Component {
+    state = {
+        count: 0,
+    }
+    handleClick() {
+        // 这里的 this 指向是什么？那就看是谁调用的！
+        return () => {
+            console.log(this.state.count)
+        }
+    }
+    render() {
+        return (
+            <div>
+                <h2>计数器：{this.state.count}</h2>
+                <button onClick={this.handleClick()}>+1</button>
+            </div>
+        )
+    }
+}
+```
+
+### 方法 2
+
+<font color=e32d40>包裹一层箭头函数。</font>
+
+箭头函数中的 this 指向“外部”，即 render 函数，而 render 函数中的 this 正是组件实例。
 
 ```jsx
 class App extends Component {
@@ -386,9 +461,9 @@ class App extends Component {
 }
 ```
 
-### 方法 2
+### 方法 3
 
-使用 bind
+<font color=e32d40>使用 bind。</font>
 
 ```jsx
 class App extends Component {
@@ -409,9 +484,9 @@ class App extends Component {
 }
 ```
 
-### 方法 3
+### 方法 4
 
-通过赋值语句往实例上面添加一个箭头函数。
+<font color=e32d40>通过赋值语句往**实例**上面添加一个箭头函数。</font>
 
 ```jsx
 class App extends Component {
@@ -419,6 +494,86 @@ class App extends Component {
         count: 0,
     }
     handleClick = () => {
+        console.log(this.state.count)
+    }
+    render() {
+        return (
+            <div>
+                <h2>计数器：{this.state.count}</h2>
+                <button onClick={this.handleClick}>+1</button>
+            </div>
+        )
+    }
+}
+```
+
+证明“外层” this 确实是组件实例
+
+```jsx
+class App {
+    temp = this
+}
+
+const app = new App()
+console.log(app === app.temp)
+```
+
+### 扩展
+
+🤔 什么是实例方法和原型方法？
+
+原型方法演示
+
+```js
+class App {
+    handleClick() {}
+}
+
+const app1 = new App()
+const app2 = new App()
+// 通过打印也能发现 handleClick 确实是挂载到原型上的
+console.log(app1)
+// 每一个实例访问到的都是挂载到原型上的方法，所以等价
+console.log(app1.handleClick === app2.handleClick)
+```
+
+实例方法演示
+
+```js
+class App {
+    handleClick = () => {}
+}
+
+const app1 = new App()
+const app2 = new App()
+// 通过打印也能发现 handleClick 确实是挂载到实例上的
+console.log(app1)
+// 每一个实例访问到的都是挂载到自己上的方法，所以不等价
+console.log(app1.handleClick === app2.handleClick)
+```
+
+所以，要明白在 class 中直接写的方法和通过赋值语句构建的方法本质上不一样。
+
+<font color=e32d40>**注意：在 constructor 中挂载的方法也是实例方法。**</font>
+
+### 方法 5
+
+<font color=d32e40>在构造函数中再创建一个实例方法，和原型方法公用一个函数体。</font>
+
+```jsx
+class App extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            count: 0,
+        }
+        // 1. 往实例自身上又挂载了一个 handleClick 函数
+        // 2. 此函数的函数体是通过原型上 handleClick 函数生成的新函数
+        // 3. 并把原型上 handleClick 函数中的 this 通过 bind 绑定为了 this，而这里构造函数中的 this 正是实例对象
+        // 4. 其实点击的时候调用的是这个构造函数 handleClick（就近原则），而这个构造函数中的 handleClick 执行的是原型上的 handleClick 的函数体
+        this.handleClick = this.handleClick.bind(this)
+    }
+    handleClick() {
         console.log(this.state.count)
     }
     render() {
@@ -454,13 +609,15 @@ this.state.count += 1 // 数据确实也会变，但不是响应式的！
 
 -   作用：修改 state 并更新视图。
 
--   来源：setState 是通过继承而来的。
+-   来源：`setState()` 函数是通过继承而来的。
 
 ```jsx
 this.setState({ count: this.state.count + 1 })
 ```
 
 ### 小结
+
+通过那个方法来修改 state 中的数据？
 
 ## 状态的不可变性
 
@@ -470,9 +627,9 @@ this.setState({ count: this.state.count + 1 })
 
 ### 原因
 
-TODO: xxx
+为了 SCU（shouldComponentUpdate），为了性能优化。
 
-### 错误写法
+### 不建议写法
 
 ```jsx
 import React, { Component } from 'react'
@@ -534,7 +691,7 @@ class App extends Component {
 ReactDOM.render(<App />, document.querySelector('#root'))
 ```
 
-### 正确写法
+### 建议写法
 
 ```jsx
 import React, { Component } from 'react'
@@ -1058,6 +1215,478 @@ class App extends React.Component {
                         ))}
                     </div>
                 </div>
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(<App />, document.querySelector('#root'))
+```
+
+## 留言案例 📝
+
+### 需求分析
+
+a，渲染评论列表（列表渲染）。
+
+b，没有评论数据时渲染：暂无评论（条件渲染）。
+
+c，获取评论信息，包括评论人和评论内容（受控组件）。
+
+d，发表评论，更新评论列表（setState()）。
+
+<img src="/resource/images/ifer_msg.png"/>
+
+### 界面准备
+
+入口文件：`index.js`
+
+```jsx
+import ReactDOM from 'react-dom'
+import App from './App'
+import './index.css'
+
+ReactDOM.render(<App />, document.getElementById('root'))
+```
+
+样式文件：`index.css`
+
+```css
+.app-top input {
+    height: 29px;
+}
+.app-top textarea::-webkit-input-placeholder {
+    line-height: 29px;
+}
+.app-top button {
+    height: 35px;
+}
+
+.app-top input,
+.app-top textarea,
+.app-top button {
+    vertical-align: top;
+}
+```
+
+根组件：`App.jsx`
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    render() {
+        return (
+            <div className='app'>
+                <div class='app-top'>
+                    <input type='text' className='user' placeholder='请输入评论人' />
+                    <textarea name='' id='' cols='30' rows='10' placeholder='请输入评论内容' />
+                    <button>发表评论</button>
+                </div>
+                <div className='no-comment'>暂无评论，快去评论吧~</div>
+                <ul>
+                    <li>
+                        <h3>评论人：jack</h3>
+                        <p>评论内容：沙发！！！</p>
+                    </li>
+                </ul>
+            </div>
+        )
+    }
+}
+```
+
+全局样式：`index.css`
+
+```css
+.app {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #999;
+}
+
+.user {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.content {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.no-comment {
+    text-align: center;
+    margin-top: 30px;
+}
+```
+
+### 渲染列表
+
+1. 在 state 中初始化评论列表数据。
+
+2. 使用数组的 map 方法遍历 state 中的列表数据。
+
+3. 给每一个被遍历的 li 元素添加 key 属性。
+
+4. 在 render 方法里的 ul 节点下嵌入表达式。
+
+根组件：`App.jsx`
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        comments: [
+            { id: 1, name: 'jack', content: '沙发！！！' },
+            { id: 2, name: 'rose', content: '板凳~' },
+            { id: 3, name: 'tom', content: '楼主好人' },
+        ],
+    }
+    render() {
+        const { comments } = this.state
+        return (
+            <div className='app'>
+                <div>
+                    <input type='text' className='user' placeholder='请输入评论人' />
+                    <br />
+                    <textarea placeholder='请输入评论内容' />
+                    <br />
+                    <button>发表评论</button>
+                </div>
+                <div className='no-comment'>暂无评论，快去评论吧~</div>
+                <ul>
+                    {comments.map((item) => (
+                        <li key={item.id}>
+                            <h3>评论人：{item.name}</h3>
+                            <p>评论内容：{item.content}</p>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )
+    }
+}
+```
+
+### 暂无评论
+
+1. 判断列表数据的长度是否为 0。
+
+2. 如果为 0，则渲染暂无评论。
+
+3. 如果不为 0，那么渲染列表数据。
+
+4. 在 JSX 中大量写逻辑会导致很臃肿，所以我们可以把条件渲染的逻辑抽取成一个函数。
+
+5. 在 render 的 return 方法里面调用这个函数即可。
+
+根组件：`App.jsx`
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        comments: [
+            { id: 1, name: 'jack', content: '沙发！！！' },
+            { id: 2, name: 'rose', content: '板凳~' },
+            { id: 3, name: 'tom', content: '楼主好人' },
+        ],
+    }
+    renderList() {
+        if (this.state.comments.length === 0) {
+            return <div className='no-comment'>暂无评论，快去评论吧~</div>
+        }
+        return (
+            <ul>
+                {this.state.comments.map((item) => (
+                    <li key={item.id}>
+                        <h3>评论人：{item.name}</h3>
+                        <p>评论内容：{item.content}</p>
+                    </li>
+                ))}
+            </ul>
+        )
+    }
+    render() {
+        return (
+            <div className='app'>
+                <div>
+                    <input type='text' className='user' placeholder='请输入评论人' />
+                    <br />
+                    <textarea placeholder='请输入评论内容' />
+                    <br />
+                    <button>发表评论</button>
+                </div>
+                {this.renderList()}
+            </div>
+        )
+    }
+}
+```
+
+### 获取评论
+
+1. 通过受控组件来获取内容。
+
+2. 初始化用户名和用户内容的 state。
+
+3. 在结构中，把表单元素的 value 与 state 进行绑定，还需要绑定 name 属性和 onChange 属性。
+
+4. 在 handleChange 函数中利用 setState 来让数据保持一致。
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        comments: [
+            { id: 1, name: 'jack', content: '沙发！！！' },
+            { id: 2, name: 'rose', content: '板凳~' },
+            { id: 3, name: 'tom', content: '楼主好人' },
+        ],
+        name: '',
+        content: '',
+    }
+    renderList() {
+        const { comments } = this.state
+        if (comments.length === 0) {
+            return <div className='no-comment'>暂无评论，快去评论吧~</div>
+        }
+        return (
+            <ul>
+                {comments.map((item) => (
+                    <li key={item.id}>
+                        <h3>评论人：{item.name}</h3>
+                        <p>评论内容：{item.content}</p>
+                    </li>
+                ))}
+            </ul>
+        )
+    }
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value,
+        })
+    }
+    render() {
+        const { name, content } = this.state
+        return (
+            <div className='app'>
+                <div>
+                    <input type='text' name='name' className='user' placeholder='请输入评论人' value={name} onChange={this.handleChange} />
+                    <br />
+                    <textarea placeholder='请输入评论内容' name='content' value={content} onChange={this.handleChange} />
+                    <br />
+                    <button>发表评论</button>
+                </div>
+                {this.renderList()}
+            </div>
+        )
+    }
+}
+```
+
+### 发表评论
+
+1. 给按钮绑定点击事件。
+
+2. 在事件处理程序中，通过 state 获取评论信息。
+
+3. 将评论信息添加到 state 中，利用 setState 来更新页面。
+
+4. 添加评论前需要判断用户是否输入内容。
+
+5. 添加评论后，需要清空文本框用户输入的值。
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        comments: [
+            { id: 1, name: 'jack', content: '沙发！！！' },
+            { id: 2, name: 'rose', content: '板凳~' },
+            { id: 3, name: 'tom', content: '楼主好人' },
+        ],
+        name: '',
+        content: '',
+    }
+    renderList() {
+        const { comments } = this.state
+        if (comments.length === 0) {
+            return <div className='no-comment'>暂无评论，快去评论吧~</div>
+        }
+        return (
+            <ul>
+                {comments.map((item) => (
+                    <li key={item.id}>
+                        <h3>评论人：{item.name}</h3>
+                        <p>评论内容：{item.content}</p>
+                    </li>
+                ))}
+            </ul>
+        )
+    }
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value,
+        })
+    }
+    handleSubmit = (e) => {
+        const { name, content } = this.state
+        if (name.trim() === '' || content.trim() === '') {
+            alert('请输入内容')
+            return
+        }
+        // 利用数组拓展运算符来进行数据的拼接，把用户输入的存放在数组的第一个位置
+        const newComments = [
+            {
+                id: this.state.comments.length + 1,
+                name,
+                content,
+            },
+            ...this.state.comments,
+        ]
+        this.setState({
+            comments: newComments,
+            name: '',
+            content: '',
+        })
+    }
+    render() {
+        const { name, content } = this.state
+        return (
+            <div className='app'>
+                <div>
+                    <input type='text' name='name' className='user' placeholder='请输入评论人' value={name} onChange={this.handleChange} />
+                    <br />
+                    <textarea placeholder='请输入评论内容' name='content' value={content} onChange={this.handleChange} />
+                    <br />
+                    <button onClick={this.handleSubmit}>发表评论</button>
+                </div>
+                {this.renderList()}
+            </div>
+        )
+    }
+}
+```
+
+### 删除功能
+
+a，利用 `findIndex` 并 `splice`
+
+```js
+handleDel = (id) => {
+    // 不建议在原 state 的基础上直接进行操作，后续做性能优化时会有影响
+    const comments = [...this.state.comments]
+    const idx = comments.findIndex((item) => item.id === id)
+    comments.splice(idx, 1)
+    this.setState({
+        comments,
+    })
+}
+```
+
+b，利用 `findIndex` 并 `slice`
+
+```js
+handleDel = (id) => {
+    const idx = this.state.comments.findIndex((item) => item.id === id)
+    this.setState({
+        comments: [...this.state.comments.slice(0, idx), ...this.state.comments.slice(idx + 1)],
+    })
+}
+```
+
+c，利用 `filter`
+
+```js
+handleDel = (id) => {
+    this.setState({
+        comments: this.state.comments.filter((item) => item.id !== id),
+    })
+}
+```
+
+### 完整代码
+
+```jsx
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+
+export default class App extends React.Component {
+    state = {
+        comments: [
+            { id: 1, name: 'jack', content: '沙发！！！' },
+            { id: 2, name: 'tom', content: '楼主好人' },
+        ],
+        name: '',
+        content: '',
+    }
+    renderList() {
+        const { comments } = this.state
+        if (comments.length === 0) {
+            return <div className='no-comment'>暂无评论，快去评论吧~</div>
+        }
+        return (
+            <ul>
+                {comments.map((item) => (
+                    <li key={item.id}>
+                        <h3>评论人：{item.name}</h3>
+                        <p>评论内容：{item.content}</p>
+                        <button onClick={() => this.handleDel(item.id)}>删除</button>
+                    </li>
+                ))}
+            </ul>
+        )
+    }
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value,
+        })
+    }
+    handleSubmit = (e) => {
+        const { name, content } = this.state
+        if (name.trim() === '' || content.trim() === '') {
+            alert('请输入内容')
+            return
+        }
+        // 利用数组拓展运算符来进行数据的拼接，把用户输入的存放在数组的第一个位置
+        const newComments = [
+            {
+                id: this.state.comments.length + 1,
+                name,
+                content,
+            },
+            ...this.state.comments,
+        ]
+        this.setState({
+            comments: newComments,
+            name: '',
+            content: '',
+        })
+    }
+    handleDel = (id) => {
+        this.setState({
+            comments: this.state.comments.filter((item) => item.id !== id),
+        })
+    }
+    render() {
+        const { name, content } = this.state
+        return (
+            <div className='app'>
+                <div className='app-top'>
+                    <input type='text' name='name' className='user' placeholder='请输入评论人' value={name} onChange={this.handleChange} />
+                    <textarea placeholder='请输入评论内容' name='content' value={content} onChange={this.handleChange} />
+                    <button onClick={this.handleSubmit}>发表评论</button>
+                </div>
+                {this.renderList()}
             </div>
         )
     }
