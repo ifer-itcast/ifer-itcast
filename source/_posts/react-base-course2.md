@@ -1,16 +1,16 @@
 ---
-title: React 组件
+title: React 组件基础
 date: 2021-11-06 13:55:00
 tags:
 ---
 
 ## 今日目标
 
--   掌握组件创建的两种方式。
+✔ 掌握组件创建的两种方式。
 
--   掌握事件绑定以及 this 指向的问题。
+✔ 掌握事件绑定以及 this 指向的问题。
 
--   掌握表单处理。
+✔ 掌握表单处理。
 
 <!-- more -->
 
@@ -28,7 +28,7 @@ tags:
 
 ### 特点
 
-可复用、独立、可组合。
+独立、可复用、可组合。
 
 ### 分类
 
@@ -40,7 +40,7 @@ tags:
 
 ### 目标
 
-了解创建组件的 2 种方式：函数式组件和 class 组件。
+掌握创建组件的 2 种方式：函数式组件和 class 组件。
 
 ### 示例
 
@@ -74,10 +74,6 @@ const content = (
 ReactDOM.render(content, document.getElementById('root'))
 ```
 
-### 简单对比
-
-类组件比较繁琐，函数式组件比较简便，目前两者都有都有在用。
-
 ## 函数式组件
 
 ### 目标
@@ -109,8 +105,6 @@ ReactDOM.render(<Hello />, document.getElementById('root'))
 ### 小结
 
 -   函数式组件本质是一个\_\_\_?
-
--   函数式组件可以使用箭头函数吗？
 
 -   函数式组件的要求：函数名？返回值？
 
@@ -149,7 +143,60 @@ ReactDOM.render(<Hello />, document.getElementById('root'))
 
 3. 类组件的内部必须提供 `____` 方法？
 
-## 有状态组件和无状态组件
+## 提取组件
+
+### 目标
+
+能够将 React 组件提取到独立的 JS 文件中。
+
+### 内容
+
+思考：项目中的组件多了之后，该如何组织这些组件呢？
+
+-   选择 1：将所有组件放在同一个 JS 文件中。
+
+-   选择 2：将每个组件放到单独的 JS 文件中。
+
+-   组件作为一个独立的个体，一般都会放到一个单独的 JS 文件中。
+
+### 实现
+
+1. 创建 App.js，创建组件（函数 或 类）。
+
+2. 在 App.js 中导出该组件。
+
+3. 在 index.js 中导入 App 组件。
+
+4. 渲染组件。
+
+### 代码
+
+`index.js`
+
+```js
+import ReactDOM from 'react-dom'
+import App from './App'
+
+ReactDOM.render(<App />, document.querySelector('#root'))
+```
+
+`App.jsx`
+
+```jsx
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    render() {
+        return <div>Hello World</div>
+    }
+}
+```
+
+## 开发者工具
+
+[极简插件](https://chrome.zzzmh.cn/)
+
+## 组件的状态
 
 ### 目标
 
@@ -179,9 +226,9 @@ ReactDOM.render(<Hello />, document.getElementById('root'))
 
 ### 无状态组件的应用场景
 
--   组件本身就不需要有状态，例如渲染一段固定的内容。
+-   组件本身就不需要有状态，例如渲染一段静态的内容。
 
--   组件本身就没有状态，可以从外部传入。
+-   组件本身就没有状态，有可能只需要从外部传入的状态就够了。
 
 ### 小结
 
@@ -189,7 +236,7 @@ ReactDOM.render(<Hello />, document.getElementById('root'))
 
 -   状态的特点: 能被修改，改了之后对应的视图也能更新。
 
--   函数组件是\_**\_组件，类组件是\_\_**组件
+-   函数组件是\_\_组件，类组件是\_\_组件。
 
 ## 类组件的状态
 
@@ -199,7 +246,7 @@ ReactDOM.render(<Hello />, document.getElementById('root'))
 
 ### 定义
 
-<font color=#e32d40>**state 对应的值必须是一个对象**</font>。
+通过 state 来定义状态，<font color=#e32d40>**state 对应的值必须是一个对象**</font>。
 
 第一种方式
 
@@ -383,22 +430,9 @@ class App extends Component {
 
 3. 分析原因
 
--   render 函数是被组件实例调用的，因此 render 函数中的 this 指向当前组件实例，所以在 render 函数中通过 this 实例访问 state 和 handleClick 没有问题。
+-   render 函数是被组件实例调用的（可以通过修改 render 函数的名字来观察到），因此 render 函数中的 this 指向当前组件实例，所以在 render 函数中通过 this 实例访问 state 和 handleClick 没有问题。
 
--   但！`this.handleClick` 这个方法是点击按钮的时候，由 React 内部直接调用的，而【直接调用】 class 中的方法，this 指向就是 undefined（class 的内部，开启了局部严格模式 `use strict`，所以 this 不会指向 window ）。
-
--   什么是【直接调用】，代码模拟。
-
-```js
-class Test {
-    fn() {
-        console.log(this)
-    }
-}
-const t = new Test()
-const temp = t.fn
-temp()
-```
+-   但！`<button onClick={this.handleClick}>+1</button>`，这样写，本质上是把 `this.handleClick` 这个方法赋值给了 onClick 这个属性，当点击按钮的时候，由 React 内部直接调用 onClick，那么 this 指向就是 undefined（class 的内部，开启了局部严格模式，所以 this 不会指向 window ）。
 
 ### 小结
 
@@ -412,7 +446,7 @@ render 函数中的 this 指向是什么？
 
 ### 方法 1
 
-高阶函数：通过 this 来**调用** handleClick 并返回箭头函数。
+高阶函数：通过 this 来直接**调用** handleClick 并返回箭头函数。
 
 ```jsx
 class App extends React.Component {
@@ -552,7 +586,7 @@ console.log(app1)
 console.log(app1.handleClick === app2.handleClick)
 ```
 
-所以，要明白在 class 中直接写的方法和通过赋值语句构建的方法本质上不一样。
+所以，要明白在 class 中直接写的方法和通过赋值语句添加的方法本质上不一样。
 
 <font color=e32d40>**注意：在 constructor 中挂载的方法也是实例方法。**</font>
 
@@ -617,7 +651,7 @@ this.setState({ count: this.state.count + 1 })
 
 ### 小结
 
-通过那个方法来修改 state 中的数据？
+通过哪个方法来修改 state 中的数据？
 
 ## 状态的不可变性
 
@@ -625,9 +659,9 @@ this.setState({ count: this.state.count + 1 })
 
 了解 React 的核心理念，状态的不可变性。
 
-### 原因
+### 解释
 
-为了 SCU（shouldComponentUpdate），为了性能优化。
+也就是说不要**直接修改**原数据，而是要**产生一份新数据**，然后通过 setState 进行覆盖原数据。为了 SCU（shouldComponentUpdate），为了性能优化。
 
 ### 不建议写法
 
@@ -646,6 +680,7 @@ class App extends Component {
     }
     changeCount = () => {
         this.state.count++
+        // 不要上面的写法，即便通过下面的操作也能做到更新视图
         this.setState({
             count: this.state.count,
         })
@@ -757,13 +792,15 @@ ReactDOM.render(<App />, document.querySelector('#root'))
 
 ### 目标
 
-能够使用受控组件的方式获取文本框的值。
+能够使用受控组件的方式收集到表单中的数据。
+
+<img src="/resource/images/ifer_form.png"/>
 
 ### 概念
 
-受控不受控一般是针对表单来说的，所谓受控组件，即对视图的操作会影响状态（数据），状态的变化又会反映到视图上。
+受控不受控一般是针对表单来说的，所谓受控表单组件，即表单元素的 value 值收到了 React 中 state 的控制（对视图的操作会影响状态（数据），状态的变化又会反映到视图上）。
 
-### 使用步骤
+### input
 
 1. 在 state 中添加一个状态，作为表单元素的 value 值（数据影响视图）。
 
@@ -776,16 +813,370 @@ export default class App extends React.Component {
     state = {
         username: '',
     }
-    handleChange = (e) => {
+    changeText = (e) => {
         this.setState({
             username: e.target.value,
         })
     }
     render() {
+        const { username } = this.state
         return (
-            <div>
-                <input type='text' value={this.state.username} onChange={this.handleChange} />
-            </div>
+            <ul>
+                <li>
+                    <label htmlFor='username'>用户名</label>
+                    <input id='username' type='text' value={username} onChange={this.changeText} />
+                </li>
+            </ul>
+        )
+    }
+}
+```
+
+### textarea
+
+操作方式和 input 框一样。
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        content: '',
+    }
+    changeTextArea = (e) => {
+        this.setState({
+            content: e.target.value,
+        })
+    }
+    render() {
+        const { content } = this.state
+        return (
+            <ul>
+                {/* ... */}
+                <li>
+                    <label htmlFor='content'>其他信息</label>
+                    <textarea id='content' cols='30' rows='10' value={content} onChange={this.changeTextArea}></textarea>
+                </li>
+            </ul>
+        )
+    }
+}
+```
+
+### select
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        frame: 'react',
+    }
+    changeOption = (e) => {
+        this.setState({
+            frame: e.target.value,
+        })
+    }
+    render() {
+        const { frame } = this.state
+        return (
+            <ul>
+                {/* ... */}
+                <li>
+                    <label htmlFor='frame'>框架</label>
+                    <select id='frame' value={frame} onChange={this.changeOption}>
+                        <option value='vue'>Vue</option>
+                        <option value='react'>React</option>
+                        <option value='angular'>Angular</option>
+                    </select>
+                </li>
+            </ul>
+        )
+    }
+}
+```
+
+### radio
+
+多个单选按钮，绑定的值可以是一个字符串。
+
+```jsx
+export default class App extends React.Component {
+    state = {
+        checkedRadio: 'male',
+    }
+    changeRadio = (e) => {
+        this.setState({
+            checkedRadio: e.target.value,
+        })
+    }
+    render() {
+        const { checkedRadio } = this.state
+        return (
+            <ul>
+                {/* ... */}
+                <li>
+                    <input id='male' type='radio' value='male' checked={checkedRadio === 'male'} onChange={this.changeRadio} />
+                    <label htmlFor='male'>男</label>
+                    <input id='female' type='radio' value='female' checked={checkedRadio === 'female'} onChange={this.changeRadio} />
+                    <label htmlFor='female'>女</label>
+                    <input id='unknow' type='radio' value='unknow' checked={checkedRadio === 'unknow'} onChange={this.changeRadio} />
+                    <label htmlFor='unknow'>未知</label>
+                </li>
+            </ul>
+        )
+    }
+}
+```
+
+### checkbox
+
+绑定的值可以是一个数组。
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        username: '',
+        content: '',
+        frame: 'react',
+        checkedRadio: 'male',
+        checkedFruit: ['apple'],
+    }
+    changeText = (e) => {
+        this.setState({
+            username: e.target.value,
+        })
+    }
+    changeTextArea = (e) => {
+        this.setState({
+            content: e.target.value,
+        })
+    }
+    changeOption = (e) => {
+        this.setState({
+            frame: e.target.value,
+        })
+    }
+    changeRadio = (e) => {
+        this.setState({
+            checkedRadio: e.target.value,
+        })
+    }
+    changeCheckBox = (e) => {
+        const checkedFruit = [...this.state.checkedFruit]
+        const idx = checkedFruit.indexOf(e.target.value)
+        if (idx === -1) {
+            // 数组中没有找到，说明没有被选中，那就把数据添加到数组，进行选中的操作
+            checkedFruit.push(e.target.value)
+        } else {
+            // 找到了，说明已被选中，通过删除数组中的数据取消选中
+            checkedFruit.splice(idx, 1)
+        }
+        this.setState({
+            checkedFruit,
+        })
+    }
+    render() {
+        const { username, content, frame, checkedRadio, checkedFruit } = this.state
+        return (
+            <ul>
+                <li>
+                    <label htmlFor='username'>用户名</label>
+                    <input id='username' type='text' value={username} onChange={this.changeText} />
+                </li>
+                <li>
+                    <label htmlFor='content'>其他信息</label>
+                    <textarea id='content' cols='30' rows='10' value={content} onChange={this.changeTextArea}></textarea>
+                </li>
+                <li>
+                    <label htmlFor='frame'>框架</label>
+                    <select id='frame' value={frame} onChange={this.changeOption}>
+                        <option value='vue'>Vue</option>
+                        <option value='react'>React</option>
+                        <option value='angular'>Angular</option>
+                    </select>
+                </li>
+                <li>
+                    <input id='male' type='radio' value='male' checked={checkedRadio === 'male'} onChange={this.changeRadio} />
+                    <label htmlFor='male'>男</label>
+                    <input id='female' type='radio' value='female' checked={checkedRadio === 'female'} onChange={this.changeRadio} />
+                    <label htmlFor='female'>女</label>
+                    <input id='unknow' type='radio' value='unknow' checked={checkedRadio === 'unknow'} onChange={this.changeRadio} />
+                    <label htmlFor='unknow'>未知</label>
+                </li>
+                <li>
+                    <input id='apple' type='checkbox' value='apple' checked={checkedFruit.includes('apple')} onChange={this.changeCheckBox} />
+                    <label htmlFor='apple'>Apple</label>
+                    <input id='orange' type='checkbox' value='orange' checked={checkedFruit.includes('orange')} onChange={this.changeCheckBox} />
+                    <label htmlFor='orange'>Orange</label>
+                </li>
+            </ul>
+        )
+    }
+}
+```
+
+### 完整代码
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        username: '',
+        content: '',
+        frame: 'react',
+        checkedRadio: 'male',
+        checkedFruit: ['apple'],
+    }
+    changeText = (e) => {
+        this.setState({
+            username: e.target.value,
+        })
+    }
+    changeTextArea = (e) => {
+        this.setState({
+            content: e.target.value,
+        })
+    }
+    changeOption = (e) => {
+        this.setState({
+            frame: e.target.value,
+        })
+    }
+    changeRadio = (e) => {
+        this.setState({
+            checkedRadio: e.target.value,
+        })
+    }
+    changeCheckBox = (e) => {
+        const checkedFruit = [...this.state.checkedFruit]
+        const idx = checkedFruit.indexOf(e.target.value)
+        if (idx === -1) {
+            // 数组中没有找到，说明没有被选中，那就把数据添加到数组，进行选中的操作
+            checkedFruit.push(e.target.value)
+        } else {
+            // 找到了，说明已被选中，通过删除数组中的数据取消选中
+            checkedFruit.splice(idx, 1)
+        }
+        this.setState({
+            checkedFruit,
+        })
+    }
+    render() {
+        const { username, content, frame, checkedRadio, checkedFruit } = this.state
+        return (
+            <ul>
+                <li>
+                    <label htmlFor='username'>用户名</label>
+                    <input id='username' type='text' value={username} onChange={this.changeText} />
+                </li>
+                <li>
+                    <label htmlFor='content'>其他信息</label>
+                    <textarea id='content' cols='30' rows='10' value={content} onChange={this.changeTextArea}></textarea>
+                </li>
+                <li>
+                    <label htmlFor='frame'>框架</label>
+                    <select id='frame' value={frame} onChange={this.changeOption}>
+                        <option value='vue'>Vue</option>
+                        <option value='react'>React</option>
+                        <option value='angular'>Angular</option>
+                    </select>
+                </li>
+                <li>
+                    <input id='male' type='radio' value='male' checked={checkedRadio === 'male'} onChange={this.changeRadio} />
+                    <label htmlFor='male'>男</label>
+                    <input id='female' type='radio' value='female' checked={checkedRadio === 'female'} onChange={this.changeRadio} />
+                    <label htmlFor='female'>女</label>
+                    <input id='unknow' type='radio' value='unknow' checked={checkedRadio === 'unknow'} onChange={this.changeRadio} />
+                    <label htmlFor='unknow'>未知</label>
+                </li>
+                <li>
+                    <input id='apple' type='checkbox' value='apple' checked={checkedFruit.includes('apple')} onChange={this.changeCheckBox} />
+                    <label htmlFor='apple'>Apple</label>
+                    <input id='orange' type='checkbox' value='orange' checked={checkedFruit.includes('orange')} onChange={this.changeCheckBox} />
+                    <label htmlFor='orange'>Orange</label>
+                </li>
+            </ul>
+        )
+    }
+}
+```
+
+### 简化代码
+
+1. 添加 name。
+
+2. 都 key 都替换成 `e.target.name`。
+
+3. 观察规律，提取成一个 handleChange 函数。
+
+4. 根据 `e.target.type` 做出判断。
+
+5. 继续精简。
+
+```jsx
+import React from 'react'
+
+export default class App extends React.Component {
+    state = {
+        username: '',
+        content: '',
+        frame: 'react',
+        checkedRadio: 'male',
+        checkedFruit: ['apple'],
+    }
+    handleChange = (e) => {
+        let v
+        if (e.target.type === 'checkbox') {
+            const checkedFruit = [...this.state.checkedFruit]
+            const idx = checkedFruit.indexOf(e.target.value)
+            idx === -1 ? checkedFruit.push(e.target.value) : checkedFruit.splice(idx, 1)
+            v = checkedFruit
+        } else {
+            v = e.target.value
+        }
+        this.setState({
+            [e.target.name]: v,
+        })
+    }
+    render() {
+        const { username, content, frame, checkedRadio, checkedFruit } = this.state
+        return (
+            <ul>
+                <li>
+                    <label htmlFor='username'>用户名</label>
+                    <input id='username' name='username' type='text' value={username} onChange={this.handleChange} />
+                </li>
+                <li>
+                    <label htmlFor='content'>其他信息</label>
+                    <textarea id='content' name='content' cols='30' rows='10' value={content} onChange={this.handleChange}></textarea>
+                </li>
+                <li>
+                    <label htmlFor='frame'>框架</label>
+                    <select id='frame' name='frame' value={frame} onChange={this.handleChange}>
+                        <option value='vue'>Vue</option>
+                        <option value='react'>React</option>
+                        <option value='angular'>Angular</option>
+                    </select>
+                </li>
+                <li>
+                    <input id='male' name='checkedRadio' type='radio' value='male' checked={checkedRadio === 'male'} onChange={this.handleChange} />
+                    <label htmlFor='male'>男</label>
+                    <input id='female' name='checkedRadio' type='radio' value='female' checked={checkedRadio === 'female'} onChange={this.handleChange} />
+                    <label htmlFor='female'>女</label>
+                    <input id='unknow' name='checkedRadio' type='radio' value='unknow' checked={checkedRadio === 'unknow'} onChange={this.handleChange} />
+                    <label htmlFor='unknow'>未知</label>
+                </li>
+                <li>
+                    <input id='apple' name='checkedFruit' type='checkbox' value='apple' checked={checkedFruit.includes('apple')} onChange={this.handleChange} />
+                    <label htmlFor='apple'>Apple</label>
+                    <input id='orange' name='checkedFruit' type='checkbox' value='orange' checked={checkedFruit.includes('orange')} onChange={this.handleChange} />
+                    <label htmlFor='orange'>Orange</label>
+                </li>
+            </ul>
         )
     }
 }

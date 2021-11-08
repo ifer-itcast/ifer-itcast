@@ -22,21 +22,31 @@ tags:
 
 ### 内容
 
-[React](https://react.docschina.org/) 是一个用于<font color=#e32d40>**构建用户界面**</font>的 JavaScript 库。
+[React](https://react.docschina.org/) 是一个用于构建<font color=#e32d40>**用户界面**</font>的 JavaScript 库。
+
+-   用户界面：HTML 界面。
+
+-   Library 和 Framework：库的特点是**小而巧**，针对特定问题的单一解决方案。框架的特点是**大而全**，提供了一整套的解决方案。
 
 ### 扩展
 
 -   框架背景
 
-a，[React](https://react.docschina.org/) 起源于 Facebook(Meta) 的内部项目，后又用来架设 Instagram 网站，并用 2013 年 5 月开源。
+a，[React](https://react.docschina.org/) 起源于 Facebook(Meta) 的内部项目，后又用来架设 Instagram（照片交友）网站，并用 2013 年 5 月开源。
 
 b，[Vue](https://cn.vuejs.org/) 主要是尤雨溪个人开源的渐进式 JS 框架。
 
-c，[Angular](https://angular.cn/) 是 Google 公司的产品。
+c，[Angular](https://angular.cn/) 是 Google 公司的产品，诞生于 2009 年，但学习曲线比较陡峭（尤其 NG1），NG2 开始进行了一系列的改革。
 
 -   趋势
 
 从 [NPM 下载量](https://www.npmtrends.com/angular-vs-react-vs-vue) 来看，React > Vue > Angular。
+
+### 小结
+
+-   React 是什么？
+
+-   React 是哪个公司开发的？
 
 ## React 特点
 
@@ -48,7 +58,7 @@ c，[Angular](https://angular.cn/) 是 Google 公司的产品。
 
 -   <font color=#e32d40>声明式</font>
 
-你只需要描述 UI（HTML）看起来是什么样子，就像写 HTML 一样简单，React 内部负责渲染 UI，并在数据变化时更新 UI。
+只需要描述 UI（HTML）看起来是什么样子，就像写 HTML 一样简单，React 内部负责渲染 UI，并在数据变化时更新 UI。
 
 ```jsx
 const jsx = (
@@ -71,13 +81,15 @@ const jsx = (
 
 ### 小结
 
-React 的特点有哪几个？
+-   React 的特点有哪几个？
+
+-   从个人角度看 React 特点，大厂必备（阿里、字节、美团...）
 
 ## 基本使用
 
 ### 目标
 
-了解 React 在 HTML 页面中的基本使用。
+掌握 React 在 HTML 页面中的基本使用。
 
 ### 步骤
 
@@ -94,7 +106,7 @@ yarn init -y
 yarn add react react-dom
 ```
 
-3. 引入下面 2 个 JS 文件
+3. 创建 `index.html` 并引入上面 2 个 JS 文件
 
 ```html
 <!-- React 核心依赖包 -->
@@ -136,17 +148,27 @@ const title = React.createElement('h1', null, 'Hello World')
 
 ### 使用
 
-```bash
-npx create-react-app my-app # 创建项目
-cd my-app
-yarn start # 启动项目
-```
+使用 [create-react-app](https://create-react-app.dev/) 这个命令行工具，它是 React 官方团队出的一个构建 React 应用的脚手架工具。
 
-<font color=#909090>🧐 了解 npx 和 Yarn</font>
+<font color=d23e40>**方法一**</font>
 
-npx 是 `npm@5.2.0` 引入的一条命令，目的是提升命令行工具的使用体验。原来使用脚手架，需要先安装全局的命令行工具，再使用这个工具中提供的命令，现在无需全局安装，就可以直接使用这个包提供的命令，香。
+1. 全局安装`npm i -g create-react-app`或者`yarn global add create-react-app`。
 
-Yarn 是 Facebook 发布的包管理工具，具有安全、快速可靠的特点，可以看做是 NPM 的替代品。
+2. 初始化项目`create-react-app my-app`，my-app 表示项目名称，可以修改。
+
+3. 启动项目：`yarn start`or `npm start`。
+
+缺点：全局安装命令无法保证命令一直是最新版本。
+
+<font color=d23e40>**方法二**</font>
+
+1. 命令：`npx create-react-app react-basic`。
+
+2. 启动项目：`yarn start`or `npm start`。
+
+3. npx 是 `npm@v5.2` 版本新添加的命令，用来简化 npm 工具包的使用流程。
+
+优点：npx 会调用最新的 create-react-app 直接创建 React 项目。
 
 ### 小结
 
@@ -255,13 +277,13 @@ reportWebVitals()
 
 ### 目标
 
-掌握通过 React 渲染页面的基本步骤。
+掌握通过 React 脚手架渲染页面的基本步骤。
 
 ### 步骤
 
-1. 删除 src 和 public 目录中的所有内容
+1. 删除 src 和 public 目录中的所有内容。
 
-b，新建 `public/index.html`
+2. 新建 `public/index.html`。
 
 ```html
 <!DOCTYPE html>
@@ -279,24 +301,26 @@ b，新建 `public/index.html`
 </html>
 ```
 
-a，新建 `src/index.js` 文件
+3. 新建 `src/index.js` 文件。
 
-2. 引入 React 核心库和涉及 DOM 操作的包
+4. 引入 React 核心库和涉及 DOM 操作的包。
 
 `src/index.js`
 
 ```js
+// create-react-app 脚手架生成的项目中已经下载好了 react 和 react-dom，无需重复下载，直接使用即可
 import React from 'react'
 import ReactDOM from 'react-dom'
 ```
 
-3. 调用 `React.createElement()` 方法创建 React 元素
+5. 调用 `React.createElement()` 方法创建 React 元素。
 
 ```js
+// 标签名、标签属性、标签内容，返回的是一个 React 元素（虚拟 DOM）
 const title = React.createElement('h1', null, 'Hello World')
 ```
 
-4. 调用 `ReactDOM.render()` 方法渲染 React 元素到页面
+6. 调用 `ReactDOM.render()` 方法渲染 React 元素到页面。
 
 ```js
 ReactDOM.render(title, document.querySelector('#root'))
@@ -304,7 +328,7 @@ ReactDOM.render(title, document.querySelector('#root'))
 
 ### 小结
 
-使用 React 和 ReactDOM 渲染页面的步骤是？
+在脚手架中，使用 React 和 ReactDOM 渲染页面的步骤是？
 
 ## React.createElement() 📝
 
@@ -313,9 +337,12 @@ ReactDOM.render(title, document.querySelector('#root'))
 如何用 `React.createElement()` 创建出如下结构？
 
 ```html
-<div>
-    <h1>第一个 React 程序</h1>
-    <p>React 是用来构建用户界面的 JS 库</p>
+<div className="wrap">
+    <ul>
+        <li>React</li>
+        <li>Vue</li>
+        <li>Angular</li>
+    </ul>
 </div>
 ```
 
@@ -325,7 +352,11 @@ ReactDOM.render(title, document.querySelector('#root'))
 React.createElement('标签名', { 标签上的属性1：值1 }, 子元素1, 子元素2)
 ```
 
-## JSX 基础语法
+### 小结
+
+假如有更加复杂的页面结构怎么办呢？
+
+## JSX 基本介绍
 
 ### 目标
 
@@ -333,7 +364,7 @@ React.createElement('标签名', { 标签上的属性1：值1 }, 子元素1, 子
 
 ### 为什么要有 JSX
 
-`React.createElement()` 的问题：繁琐/不简洁；不直观，无法一眼看出所描述的结构；代码不容易维护！
+`React.createElement()` 创建 React 元素的问题：繁琐/不简洁；不直观，无法一眼看出所描述的结构；代码不容易维护！
 
 ```jsx
 React.createElement(
@@ -381,9 +412,7 @@ ReactDOM.render(title, document.querySelector('#root'))
 
 -   JSX 需要使用 Babel 编译处理后，才能在浏览器中使用，`create-react-app` 脚手架中已经内置了该配置，无需手动再配。
 
--   编译 JSX 语法的包为：[@babel/preset-react](https://www.npmjs.com/package/@babel/preset-react)。
-
--   [在线体验](https://www.babeljs.cn/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.6&spec=false&loose=false&code_lz=DwCwjAfAEgpgNnA9gAgFIGUAawD04JA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Creact%2Cstage-2&prettier=false&targets=&version=7.16.2&externalPlugins=&assumptions=%7B%7D)
+-   编译 JSX 语法的包为：[@babel/preset-react](https://www.npmjs.com/package/@babel/preset-react)，[在线体验](https://www.babeljs.cn/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.6&spec=false&loose=false&code_lz=DwCwjAfAEgpgNnA9gAgFIGUAawD04JA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Creact%2Cstage-2&prettier=false&targets=&version=7.16.2&externalPlugins=&assumptions=%7B%7D)。
 
 ### 小结
 
@@ -401,18 +430,6 @@ ReactDOM.render(title, document.querySelector('#root'))
 
 ### 内容
 
-1. 必须有 1 个根节点，或者虚拟根节点 `<></>`、`React.Fragment()`。
-
-2. 属性名一般是驼峰的写法且不能是 JS 中的关键字，例如 class 改成 className，label 的 for 属性改为 `htmlFor`，colspan 改为 `colSpan`。
-
-3. 元素若没有子节点，可以使用单标签，但一定要闭合，例如 `<span/>`。
-
-4. JSX 中不能直接使用对象，除非是行内样式（后续讲）。
-
-5. React17.0 之前需要先引入 React 才能使用 JSX（这个也好理解，因为 JSX 最后还是要被转成 React.createElement() 的形式）。
-
-6. 换行建议使用 `()` 进行包裹。
-
 ```jsx
 const r = (
     <div className='wrap'>
@@ -422,11 +439,23 @@ const r = (
 )
 ```
 
+1. 必须有 1 个根节点，或者虚拟根节点 `<></>`、`<React.Fragment></React.Fragment>`。
+
+2. 属性名一般是驼峰的写法且不能是 JS 中的关键字，例如 class 改成 className，label 的 for 属性改为 `htmlFor`，colspan 改为 `colSpan`。
+
+3. 元素若没有子节点，可以使用单标签，但一定要闭合，例如 `<span/>`。
+
+4. `React@16.14 之前`需要先引入 React 才能使用 JSX（这个也好理解，因为 JSX 最后还是要被转成 React.createElement() 的形式）。
+
+5. 换行建议使用 `()` 进行包裹，防止换行的时候[自动插入分号](https://stackoverflow.com/questions/2846283/what-are-the-rules-for-javascripts-automatic-semicolon-insertion-asi)的 Bug。
+
+<img src="/resource/images/ifer_bug.png" style="box-shadow: 0 10px 30px 0 rgb(0 0 0 / 40%); border-radius: 5px;"/>
+
 ### 总结
 
 至少说出 JSX 的三个注意点？
 
-## 在 JSX 中使用表达式
+## 使用表达式
 
 ### 目标
 
@@ -434,17 +463,65 @@ const r = (
 
 ### 内容
 
-1. **单大括号**中可以使用任意的 JSX 表达式，但 JS 对象是一个例外，一般只会出现在 style 属性中。
+1. **单大括号**中可以使用任意的 JSX 表达式（可以产生结果的式子），但 JS 对象是一个例外，一般只会出现在 style 属性中。
 
 2. JSX 自身也是表达式。
 
-<font>🧐 [表达式和语句](https://zh.wikipedia.org/wiki/%E9%99%B3%E8%BF%B0%E5%BC%8F)，简单来说，表达式就是可以**产生结果**的式子，一般由变量或运算符组成，例如 `a`、`a + b`、`fn(1)`、`arr.map()` 等；语句是使用特定命令告诉计算机执行特定操作的句子，通常没有返回结果，例如 `if {}`、`for() {}`、`switch() {}` 等。</font>
+普通的简单数据类型
 
-## JSX 中的条件渲染
+```jsx
+const name = 'zs'
+const age = 18
+const title = (
+    <h1>
+        姓名：{name}, 年龄：{age}
+    </h1>
+)
+```
+
+对象中的属性
+
+```jsx
+const car = {
+    brand: '玛莎拉蒂',
+}
+const title = <h1>汽车：{car.brand}</h1>
+```
+
+可以使用整个数组
+
+```jsx
+const friends = ['张三', '李四']
+const title = <h1>汽车：{friends}</h1>
+```
+
+可以调用方法
+
+```jsx
+function sayHi() {
+    return '你好'
+}
+const title = <h1>姓名：{sayHi()}</h1>
+```
+
+JSX 本身
+
+```jsx
+const span = <span>我是一个span</span>
+const title = <h1>盒子{span}</h1>
+```
+
+### 小结
+
+-   JSX 中可以包含任意的表达式。
+
+-   JSX 中不能放语句，例如 `if`、`switch`、`for`、`while` 等
+
+## 条件渲染
 
 ### 目标
 
-掌握条件渲染的两种写法。
+掌握条件渲染的写法。
 
 ### 内容
 
@@ -477,7 +554,7 @@ const loadData = () => {
 
 简单条件渲染使用\_\_ 和 \_\_？
 
-## JSX 中的列表渲染
+## 列表渲染
 
 ### 目标
 
@@ -550,7 +627,8 @@ ReactDOM.render(loadData(), document.querySelector('#root'))
 ```js
 const list = [
     { id: 1, name: '武汉黑马前端64期', salary: 11000 },
-    { id: 2, name: '武汉黑马前端66期', salary: 15000 },
+    { id: 2, name: '武汉黑马前端66期', salary: 13000 },
+    { id: 3, name: '武汉黑马前端68期', salary: 15000 },
 ]
 ```
 
@@ -569,7 +647,7 @@ const list = [
 </ul>
 ```
 
-## JSX 中的样式处理
+## 样式处理
 
 ### 目标
 
@@ -626,7 +704,7 @@ import './index.css'
 
 ## 渲染 B 站评论列表 📝
 
-### 目标
+### 案例目标
 
 综合使用 JSX 的知识，结合数据、结构和样式渲染成如下效果。
 
@@ -996,7 +1074,7 @@ import './index.css'
 
 ### 实现步骤
 
-1. 导入样式和图片
+1. 导入样式和图片。
 
 ```js
 import ReactDOM from 'react-dom'
@@ -1004,7 +1082,7 @@ import './index.css'
 import avatar from './images/avatar.png'
 ```
 
-2. 准备数据和基本结构并渲染
+2. 准备数据和基本结构并渲染。
 
 ```js
 const state = {
@@ -1148,7 +1226,7 @@ const content = (
 ReactDOM.render(content, document.querySelector('#root'))
 ```
 
-### 处理 className 和 avatar
+3. 处理 className 和 avatar。
 
 ```jsx
 const content = (
@@ -1240,7 +1318,7 @@ const content = (
 )
 ```
 
-### 处理评论数和排序
+4. 处理评论数和排序。
 
 ```jsx
 const content = (
@@ -1264,7 +1342,7 @@ const content = (
 )
 ```
 
-### 评论列表
+5. 循环评论列表。
 
 ```jsx
 const content = (
@@ -1297,6 +1375,14 @@ const content = (
         </div>
     </div>
 )
+```
+
+class 的另外一种处理方式。
+
+```jsx
+<span className={['like', item.attitude === 1 ? 'liked' : ''].join(' ')}>
+    <i className='icon'></i>
+</span>
 ```
 
 ### 最终代码
@@ -1409,3 +1495,5 @@ const content = (
 
 ReactDOM.render(content, document.querySelector('#root'))
 ```
+
+## 今日总结
