@@ -1347,6 +1347,18 @@ ReactDOM.render(<App />, document.querySelector('#root'))
 </ul>
 ```
 
+另外一种传递参数的写法（changeTab 的最后一个形参就是事件对象），[官方文档](https://react.docschina.org/docs/handling-events.html)。
+
+```jsx
+<ul className='sort-container'>
+    {state.tabs.map((item) => (
+        <li className={item.type === state.active ? 'on' : ''} key={item.id} onClick={this.changeTab.bind(this, item.type)}>
+            按{item.name}排序
+        </li>
+    ))}
+</ul>
+```
+
 2. 修改 active 进行切换。
 
 ```jsx
@@ -1376,6 +1388,23 @@ delItem(id) {
     })
 }
 ```
+
+3. 暂无评论。
+
+```jsx
+class App extends React.Component {
+    render() {
+        const { state } = this
+        return (
+            <div className='App'>
+                <div className='comment-container'>{state.list.length > 0 ? <div className='comment-list'>{/* ... */}</div> : <div>暂无更多评论~</div>}</div>
+            </div>
+        )
+    }
+}
+```
+
+4. 把三元判断抽离为 `renderList` 函数。
 
 ### 添加评论
 
@@ -1407,13 +1436,34 @@ addItem = () => {
         id: Date.now(),
         author: '作者',
         comment: this.state.content,
-        time: new Date().toDateString(),
+        time: new Date(),
         attitude: 0,
     }
     this.setState({
         list: [newComment, ...this.state.list],
         content: '',
     })
+}
+```
+
+3. 时间处理。
+
+```bash
+yarn add moment
+```
+
+```jsx
+import moment from 'moment'
+
+class App extends React.Component {
+    formatTime(time) {
+        return moment(time).format('YYYY-MM-DD HH:mm:ss')
+    }
+    addItem = () => {
+        const newComment = {
+            time: this.formatTime(new Date()),
+        }
+    }
 }
 ```
 
@@ -1457,6 +1507,7 @@ changeAttitude = (id, attitude) => {
 ```jsx
 import React from 'react'
 import ReactDOM from 'react-dom'
+import moment from 'moment'
 import './index.css'
 import avatar from './images/avatar.png'
 
@@ -1521,12 +1572,15 @@ class App extends React.Component {
             content: e.target.value,
         })
     }
+    formatTime(time) {
+        return moment(time).format('YYYY-MM-DD HH:mm:ss')
+    }
     addItem = () => {
         const newComment = {
             id: Date.now(),
             author: '作者',
             comment: this.state.content,
-            time: new Date().toDateString(),
+            time: this.formatTime(new Date()),
             attitude: 0,
         }
         this.setState({
@@ -1547,6 +1601,37 @@ class App extends React.Component {
                 }
             }),
         })
+    }
+    renderList() {
+        return this.state.list.length > 0 ? (
+            <div className='comment-list'>
+                {this.state.list.map((item) => (
+                    <div className='list-item' key={item.id}>
+                        <div className='user-face'>
+                            <img className='user-head' src={item.img} alt='' />
+                        </div>
+                        <div className='comment'>
+                            <div className='user'>{item.author}</div>
+                            <p className='text'>{item.comment}</p>
+                            <div className='info'>
+                                <span className='time'>{item.time}</span>
+                                <span className={item.attitude === 1 ? 'like liked' : 'like'} onClick={() => this.changeAttitude(item.id, item.attitude === 1 ? 0 : 1)}>
+                                    <i className='icon'></i>
+                                </span>
+                                <span className={item.attitude === -1 ? 'hate hated' : 'hate'} onClick={() => this.changeAttitude(item.id, item.attitude === -1 ? 0 : -1)}>
+                                    <i className='icon'></i>
+                                </span>
+                                <span className='reply btn-hover' onClick={() => this.delItem(item.id)}>
+                                    删除
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        ) : (
+            <div>暂无更多评论~</div>
+        )
     }
     render() {
         const { state } = this
@@ -1580,31 +1665,7 @@ class App extends React.Component {
                             <span className='text'>表情</span>
                         </div>
                     </div>
-                    <div className='comment-list'>
-                        {state.list.map((item) => (
-                            <div className='list-item' key={item.id}>
-                                <div className='user-face'>
-                                    <img className='user-head' src={item.img} alt='' />
-                                </div>
-                                <div className='comment'>
-                                    <div className='user'>{item.author}</div>
-                                    <p className='text'>{item.comment}</p>
-                                    <div className='info'>
-                                        <span className='time'>{item.time}</span>
-                                        <span className={item.attitude === 1 ? 'like liked' : 'like'} onClick={() => this.changeAttitude(item.id, item.attitude === 1 ? 0 : 1)}>
-                                            <i className='icon'></i>
-                                        </span>
-                                        <span className={item.attitude === -1 ? 'hate hated' : 'hate'} onClick={() => this.changeAttitude(item.id, item.attitude === -1 ? 0 : -1)}>
-                                            <i className='icon'></i>
-                                        </span>
-                                        <span className='reply btn-hover' onClick={() => this.delItem(item.id)}>
-                                            删除
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                    {this.renderList()}
                 </div>
             </div>
         )
