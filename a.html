@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 有一个由不重复整数组成的数组，请找出两两相加等于10的数对，并返回。
+    // 举例：fn([1,4,6,2,5,9,-2,8,19,22,10,12])  
+    // 返回值：[[1,9] [4,6] [2,8] [-2,12]]
+
+    // function fn(xxx) {
+    //   const arr = []
+    //   for (let i = 0; i < xxx.length; i++) {
+    //     const temp = [];
+    //     for (let j = i + 1; j < xxx.length; j++) {
+    //       if (xxx[i] + xxx[j] === 10) {
+    //         temp.push(xxx[i], xxx[j])
+    //       }
+    //     }
+    //     if (temp.length) {
+    //       arr.push(temp)
+    //     }
+    //   }
+    //   return arr
+    // }
+
+    // console.log(fn([1, 4, 6, 2, 9, -2, 8, 19, 22, 10, 12]))
+
+
+    // const arr = [1, 2, 3, [4, 5, [6]]]
+    // const temp = []
+    // function fn(arr) {
+    //   return arr.reduce((acc, cur) => {
+    //     const a = [].concat(cur instanceof Array ? fn(cur) : cur);
+    //     temp.push(...a)
+    //     return a
+    //   }, [])
+    // }
+    // console.log(fn(arr))
+    // console.log([...new Set(temp)])
+
+    const arr = [1, 2, 3, [4, 5, [6]]]
+    function fn(arr) {
+      return arr.reduce((acc, cur) => {
+        return acc.concat(cur instanceof Array ? fn(cur) : cur);
+      }, [])
+    }
+    console.log(fn(arr))
+
+  </script>
+</body>
+
+</html>
