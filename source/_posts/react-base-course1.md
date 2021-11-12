@@ -18,35 +18,33 @@ tags:
 
 ### 目标
 
-了解 React 的基本概念。
+了解 React 的背景和基本概念。
+
+### 背景
+
+[React](https://react.docschina.org/) 起源于 Facebook(Meta) 的内部项目（2011，News Feed），之后又被用来开发网站（2012，Instagram），并于 2013 年 5 月开源。
 
 ### 内容
 
-[React](https://react.docschina.org/) 是一个用于构建<font color=#e32d40>**用户界面**</font>的 JavaScript 库。
+[React](https://react.docschina.org/) 是一个用于构建<font color=#e32d40>**用户界面**</font>的 JavaScript <font color=#e32d40>**库**</font>。
 
 -   用户界面：HTML 界面。
 
--   Library 和 Framework：库的特点是**小而巧**，针对特定问题的单一解决方案。框架的特点是**大而全**，提供了一整套的解决方案。
+-   Library（库）和 Framework（框架）：库的特点是**小而巧**，针对特定问题的单一解决方案。框架的特点是**大而全**，提供了一整套的解决方案。
 
-### 扩展
-
--   框架背景
-
-a，[React](https://react.docschina.org/) 起源于 Facebook(Meta) 的内部项目，后又用来架设 Instagram（照片交友）网站，并用 2013 年 5 月开源。
-
-b，[Vue](https://cn.vuejs.org/) 主要是尤雨溪个人开源的渐进式 JS 框架。
-
-c，[Angular](https://angular.cn/) 是 Google 公司的产品，诞生于 2009 年，但学习曲线比较陡峭（尤其 NG1），NG2 开始进行了一系列的改革。
-
--   趋势
+### 趋势
 
 从 [NPM 下载量](https://www.npmtrends.com/angular-vs-react-vs-vue) 来看，React > Vue > Angular。
 
 ### 小结
 
--   React 是什么？
-
 -   React 是哪个公司开发的？
+
+-   React 是用来干什么？
+
+-   React 的定位是库还是框架？
+
+-   从 NPM 下载量来看，哪个框架/库使用量最多？
 
 ## React 特点
 
@@ -463,9 +461,7 @@ const r = (
 
 ### 内容
 
-1. **单大括号**中可以使用任意的 JSX 表达式（可以产生结果的式子），但 JS 对象是一个例外，一般只会出现在 style 属性中。
-
-2. JSX 自身也是表达式。
+**单大括号**中可以使用任意的表达式（可以产生结果的式子）。
 
 普通的简单数据类型
 
@@ -488,7 +484,7 @@ const car = {
 const title = <h1>汽车：{car.brand}</h1>
 ```
 
-可以使用整个数组
+数组中的某一项甚至整个数组
 
 ```jsx
 const friends = ['张三', '李四']
@@ -504,7 +500,11 @@ function sayHi() {
 const title = <h1>姓名：{sayHi()}</h1>
 ```
 
-JSX 本身
+### 注意
+
+-   JS 对象虽然也是表达式，但是不能直接嵌套在 `{}` 中，一般只会出现在 style 属性中。
+
+-   JSX 本身也是表达式。
 
 ```jsx
 const span = <span>我是一个span</span>
@@ -513,7 +513,7 @@ const title = <h1>盒子{span}</h1>
 
 ### 小结
 
--   JSX 中可以包含任意的表达式。
+-   JSX 中可以包含任意的表达式（除了对象）。
 
 -   JSX 中不能放语句，例如 `if`、`switch`、`for`、`while` 等
 
@@ -525,7 +525,7 @@ const title = <h1>盒子{span}</h1>
 
 ### 内容
 
-可以根据不同的条件不同的 HTML 结构，需求：loading
+可以根据不同的条件渲染不同的 HTML 结构，需求：isLoading 是 true，显示“加载中...”，否则显示“加载完毕！”。
 
 ```jsx
 import ReactDOM from 'react-dom'
@@ -552,7 +552,7 @@ const loadData = () => {
 
 ### 小结
 
-简单条件渲染使用\_\_ 和 \_\_？
+条件渲染使用\_\_ 和 \_\_？
 
 ## 列表渲染
 
@@ -586,7 +586,17 @@ const loadData = () => {
 
 ### 代码实现
 
-可以使用 `map()` 方法渲染一组数据。
+手动拼接
+
+```jsx
+<ul>
+    <li>{list[0].name}</li>
+    <li>{list[1].name}</li>
+    <li>{list[2].name}</li>
+</ul>
+```
+
+简化上面的代码：可以使用 `map()` 方法渲染一组数据。
 
 ```jsx
 import ReactDOM from 'react-dom'
@@ -608,9 +618,9 @@ ReactDOM.render(loadData(), document.querySelector('#root'))
 
 ### 关于 key
 
-1. key 值要保证唯一，尽量避免使用索引号当做 key。
+1. 特点：key 值要保证唯一，尽量避免使用索引号当做 key。
 
-2. `map()` 遍历谁，就把 key 加在谁上。
+2. 加在哪里：`map()` 遍历谁，就把 key 加在谁上。
 
 3. 作用：React 内部用来进行**性能优化**时使用的，key 在最终的 HTML 结构中是看不见的。
 
@@ -623,6 +633,12 @@ ReactDOM.render(loadData(), document.querySelector('#root'))
 -   key 的作用是什么？
 
 ## 渲染数据 📝
+
+### 目标
+
+掌握使用 map 方法来进行列表渲染。
+
+### 内容
 
 ```js
 const list = [
@@ -658,42 +674,43 @@ const list = [
 语法
 
 ```jsx
-<dom元素 style={ {css属性1：值1,css属性2：值2} }></dom元素>
+<元素 style={ {css属性1：值1,css属性2：值2} }></元素>
 ```
 
 示例
 
 ```jsx
-<h1 style={{ color: 'red', width: 200, backgroundColor: 'black' }}>我是黑底红字的 H1</h1>
+<div style={{ width: 200, height: 200, backgroundColor: 'black', color: 'white' }}>Hello React</div>
 ```
 
 注意点
 
--   为啥有两个`{{ }}`，外层的 `{}` 表示要开始写 JS 了，内层的 `{}` 表示是一个对象。
+-   为啥有两个`{{ }}`，外层的 `{}` 表示要开始写 JS 表达式了，内层的 `{}` 表示是一个对象。
 
 -   属性名是小驼峰格式，例如 `background-color` 需要写成 `backgroundColor`。
 
--   属性值是字符串, 如果单位是 px，可以简写成数值。
+-   属性值是字符串，如果单位是 px，可以简写成数值。
 
 ### className
 
 -   用 className 定义类名。
 
--   把样式写在外部的 `*.css` 文件中，然后引入 `*.css` 文件。
+-   在外部准备 `*.css` 文件，然后通过 `import` 引入 `*.css` 文件。
 
 `index.css`
 
 ```css
 .title {
-    color: red;
     width: 200px;
+    height: 200px;
+    color: white;
     background-color: black;
 }
 ```
 
 ```jsx
 import './index.css'
-;<h1 className='title'>我是黑底红字的h1</h1>
+;<div className='title'>Hello React</div>
 ```
 
 ### 小结
@@ -712,7 +729,7 @@ import './index.css'
 
 ### 资源准备
 
-`index.html`
+#### `index.html`
 
 ```html
 <!DOCTYPE html>
@@ -781,7 +798,7 @@ import './index.css'
 </html>
 ```
 
-`index.css`
+#### `index.css`
 
 ```css
 * {
@@ -1074,7 +1091,7 @@ import './index.css'
 
 ### 实现步骤
 
-1. 导入样式和图片。
+#### 导入样式和图片
 
 ```js
 import ReactDOM from 'react-dom'
@@ -1082,7 +1099,7 @@ import './index.css'
 import avatar from './images/avatar.png'
 ```
 
-2. 准备数据和基本结构并渲染。
+#### 渲染数据和结构
 
 ```js
 const state = {
@@ -1226,7 +1243,7 @@ const content = (
 ReactDOM.render(content, document.querySelector('#root'))
 ```
 
-3. 处理 className 和 avatar。
+#### 处理 class 和 avatar
 
 ```jsx
 const content = (
@@ -1318,7 +1335,7 @@ const content = (
 )
 ```
 
-4. 处理评论数和排序。
+#### 处理评论数和排序
 
 ```jsx
 const content = (
@@ -1384,8 +1401,6 @@ class 的另外一种处理方式。
     <i className='icon'></i>
 </span>
 ```
-
-6. 时间处理
 
 ### 最终代码
 

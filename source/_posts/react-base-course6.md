@@ -432,7 +432,7 @@ export default class Test extends Component {
 }
 ```
 
-## createContext 基础
+## createContext
 
 ### 目标
 
@@ -525,25 +525,30 @@ export default function Child() {
 
 ### 内容
 
-作用：在函数组件中，获取 Context 中的值。要配合 Context 一起使用。
+-   作用：在函数组件中，获取 Context.Provider 提供的数据。
 
-`useContext Hook` 与` <Context.Consumer>` 的区别：获取数据的位置不同，
-
--   `<Context.Consumer>`：在 JSX 中获取 Context 共享的数据。
-
--   useContext：在 JS 代码中获取 Context 的数据。
-
-![image-20210901215634469](images/image-20210901215634469-16347403601514-16362080009765.png)
-
-解释：
-
--   useContext 的参数：Context 对象，即：通过 createContext 函数创建的对象。
+-   useContext 的参数：Context 对象，即通过 createContext 函数创建的对象。
 
 -   useContext 的返回值：Context 中提供的 value 数据。
 
+```js
+import { useContext } from 'react'
+import { context } from './countContext'
+
+export default function Child() {
+    const value = useContext(context)
+    return (
+        <div>
+            Child
+            <h3>{value.count}</h3>
+        </div>
+    )
+}
+```
+
 ## 购物车案例
 
-### 发送请求-获取列表数据
+### 获取列表数据
 
 #### 目标
 
@@ -557,15 +562,9 @@ export default function Child() {
 
 3. 使用 useEffect 发送请求获取数据。
 
-代码
+需求：本地有，就用本地的，本地没有，从远端获取。
 
--   安装 axios
-
-```bash
-yarn add axios
-```
-
--   发送请求，获取数据
+`App.js`
 
 ```jsx
 useEffect(() => {
@@ -622,16 +621,91 @@ export default function MyCount() {
 
 ```jsx
 import MyCount from '../MyCount'
-;<MyCount></MyCount>
+;<div className='right'>
+    <div className='top'>{goods_name}</div>
+    <div className='bottom'>
+        <span className='price'>¥ {goods_price}</span>
+        <MyCount />
+    </div>
+</div>
+```
+
+### 数量控制-层层传递
+
+`components/MyCount/index.js`
+
+```js
+export default function MyCount({ count, changeCount }) {
+    const plus = () => {
+        changeCount(count + 1)
+    }
+    const minus = () => {
+        if (count <= 1) return
+        changeCount(count - 1)
+    }
+    return (
+        <div className='my-counter'>
+            <button type='button' className='btn btn-light' onClick={minus}>
+                -
+            </button>
+            <input type='number' className='form-control inp' value={count} />
+            <button type='button' className='btn btn-light' onClick={plus}>
+                +
+            </button>
+        </div>
+    )
+}
+```
+
+`components/GoodsItem/index.js`
+
+```js
+export default function GoodsItem({ goods_count, goods_img, goods_name, goods_price, goods_state, id, changeState, changeCount }) {
+    return (
+        <div className='my-goods-item'>
+            <div className='right'>
+                <div className='top'>{goods_name}</div>
+                <div className='bottom'>
+                    <span className='price'>¥ {goods_price}</span>
+                    <MyCount count={goods_count} changeCount={(count) => changeCount(id, count)} />
+                </div>
+            </div>
+        </div>
+    )
+}
+```
+
+`App.js`
+
+```js
+export default function App() {
+    const changeCount = (id, count) => {
+        setList(
+            list.map((item) => {
+                if (item.id === id) {
+                    return {
+                        ...item,
+                        goods_count: count,
+                    }
+                } else {
+                    return item
+                }
+            })
+        )
+    }
+
+    return (
+        <div className='app'>
+            <MyHeader>购物车</MyHeader>
+            {list.map((item) => (
+                <GoodsItem key={item.id} {...item} changeState={changeState} changeCount={changeCount}></GoodsItem>
+            ))}
+        </div>
+    )
+}
 ```
 
 ### 数量控制-useContext
-
-#### 目标
-
-使用 useContext 优化组件的通讯。
-
-步骤
 
 1. 在 App.js 中创建 Context 对象，并且导出
 
@@ -647,7 +721,7 @@ export const Context = createContext()
         <MyHeader>购物车</MyHeader>
 
         {list.map((item) => (
-            <GoodsItem key={item.id} {...item} changeState={changeState} changeCount={changeCount}></GoodsItem>
+            <GoodsItem key={item.id} {...item} changeState={changeState}></GoodsItem>
         ))}
 
         <MyFooter list={list} changeAll={changeAll}></MyFooter>
@@ -655,12 +729,81 @@ export const Context = createContext()
 </Context.Provider>
 ```
 
-3. 在 myCount 组件中，使用 useContext 获取数据
+3. 在 `components/GoodsItem/index.js` 中把 id 传递过去
 
 ```jsx
-import { Context } from '../../App'
-
-const { changeCount } = useContext(Context)
+<div className='right'>
+    <div className='top'>{goods_name}</div>
+    <div className='bottom'>
+        <span className='price'>¥ {goods_price}</span>
+        <MyCount count={goods_count} id={id} />
+    </div>
+</div>
 ```
 
-### 数量的控制
+4. 在 myCount 组件中，使用 useContext 获取数据
+
+```jsx
+import React, { useContext } from 'react'
+import { Context } from '../../App'
+import './index.scss'
+
+export default function MyCount({ count, id }) {
+    const { changeCount } = useContext(Context)
+    const plus = () => {
+        changeCount(id, count + 1)
+    }
+    const minus = () => {
+        if (count <= 1) return
+        changeCount(id, count - 1)
+    }
+    return (
+        <div className='my-counter'>
+            <button type='button' className='btn btn-light' onClick={minus}>
+                -
+            </button>
+            <input type='number' className='form-control inp' value={count} />
+            <button type='button' className='btn btn-light' onClick={plus}>
+                +
+            </button>
+        </div>
+    )
+}
+```
+
+输入处理，`components/MyCount/index.js`
+
+```js
+import React, { useContext } from 'react'
+import { Context } from '../../App'
+import './index.scss'
+
+export default function MyCount({ count, id }) {
+    const { changeCount } = useContext(Context)
+    const plus = () => {
+        changeCount(id, count + 1)
+    }
+    const minus = () => {
+        if (count <= 1) return
+        changeCount(id, count - 1)
+    }
+    const handleChange = (e) => {
+        let num = +e.target.value
+        if (e.target.value < 0) {
+            num = 0
+        }
+        changeCount(id, num)
+    }
+    return (
+        <div className='my-counter'>
+            <button type='button' className='btn btn-light' onClick={minus}>
+                -
+            </button>
+            <input type='number' className='form-control inp' value={count} min='0' onChange={handleChange} />
+            <button type='button' className='btn btn-light' onClick={plus}>
+                +
+            </button>
+        </div>
+    )
+}
+```
