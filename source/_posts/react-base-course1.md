@@ -1099,7 +1099,7 @@ import './index.css'
 import avatar from './images/avatar.png'
 ```
 
-#### 渲染数据和结构
+#### 准备数据和结构
 
 ```js
 const state = {
@@ -1359,7 +1359,7 @@ const content = (
 )
 ```
 
-5. 循环评论列表。
+#### 循环评论列表
 
 ```jsx
 const content = (

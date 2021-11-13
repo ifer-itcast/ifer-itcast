@@ -8,6 +8,8 @@ tags:
 
 ✔ 掌握组件创建的两种方式。
 
+✔ 掌握定义和操作状态的方法。
+
 ✔ 掌握事件绑定以及 this 指向的问题。
 
 ✔ 掌握表单处理。
@@ -18,11 +20,13 @@ tags:
 
 ### 目标
 
-了解 React 组件的意义。
+了解 React 组件的概念、特点、分类。
 
 ### 概念
 
-组件就是页面中的一部分，是 React 的一等公民，使用 React 就是在用组件。所谓组件化采用的就是分而治之的思想来管理繁杂的页面开发。
+<img src="/resource/images/components.png" class="highlight2"/>
+
+组件就是页面中的一部分，是 React 的一等公民，使用 React 就是在用组件，而所谓的组件化开发就是采用分而治之的思想来管理繁杂的页面逻辑。
 
 <font color=#909090>🧐 了解模块：JS 模块一般是向外提供特定功能的代码片段，通常来说是一个文件。</font>
 
@@ -32,9 +36,17 @@ tags:
 
 ### 分类
 
--   UI 组件（AntD）和业务组件（留言板）
+-   功能：UI 组件（AntD）和业务组件（留言板）
 
--   普通组件（在一个组件中直接使用的组件）和路由组件（通过路由跳转访问到的组件）
+-   使用：普通组件（在一个组件中直接使用的组件）和路由组件（通过路由跳转访问到的组件）
+
+### 小结
+
+-   组件是什么？
+
+-   组件的特点是什么？
+
+-   组件的分类是什么？
 
 ## 创建组件的 2 种方式
 
@@ -74,13 +86,19 @@ const content = (
 ReactDOM.render(content, document.getElementById('root'))
 ```
 
+### 小结
+
+创建组件有几种方式，分别是什么？
+
 ## 函数式组件
 
 ### 目标
 
-掌握函数式组件的创建及注意点。
+-   掌握函数式组件的创建及注意点。
 
-### 使用
+-   了解 ReactDOM.render 渲染函数式组件的过程。
+
+### 内容
 
 a，函数组件，又称简单组件或无状态组件（Hooks 之前没有自己的状态），使用 JS 的函数创建组件。
 
@@ -100,19 +118,25 @@ function Hello() {
 ReactDOM.render(<Hello />, document.getElementById('root'))
 ```
 
-<font color=#909090>🧐 了解 `ReactDOM.render()` 解析函数式组件的过程：React 解析 `<Hello/>` 组件，发现是函数定义的，随后调用此函数，将返回的虚拟 DOM 转为真实 DOM，并渲染到页面中。</font>
+<font color=#909090>🧐 了解 `ReactDOM.render()` 解析函数式组件的过程：React 解析 `<Hello/>` 标签，发现是大写开头的会被当做组件进行解析，解析的时候又发现其是一个函数式组件，随后调用此函数，将返回的虚拟 DOM 转为真实 DOM，并渲染到页面中。</font>
 
 ### 小结
 
 -   函数式组件本质是一个\_\_\_?
 
--   函数式组件的要求：函数名？返回值？
+-   函数式组件的要求：函数名？
+
+-   如果不需要有返回值，用什么表示？
+
+-   `ReactDOM.render()` 解析函数式组件的过程是什么？
 
 ## 类组件
 
 ### 目标
 
-掌握类组件的基本使用。
+-   掌握类组件的基本使用。
+
+-   了解 ReactDOM.render 渲染类组件的过程。
 
 ### 内容
 
@@ -133,15 +157,17 @@ class Hello extends React.Component {
 ReactDOM.render(<Hello />, document.getElementById('root'))
 ```
 
-<font color=#909090>🧐 了解 `ReactDOM.render()` 解析类式组件的过程：React 解析 `<Hello/>` 组件，发现是类组件，会自动的 new 出来该类的实例，并通过实例调用原型上的 `render()` 方法，将 `render()` 方法返回的虚拟 DOM 转为真实 DOM，并渲染到页面中。</font>
+<font color=#909090>🧐 了解 `ReactDOM.render()` 解析类式组件的过程：React 解析 `<Hello/>` 标签，发现是大写开头的会被当做组件进行解析，解析的时候又发现其是一个类组件，会自动的 new 出来该类的实例，并通过实例调用原型上的 `render()` 方法，将 `render()` 方法返回的虚拟 DOM 转为真实 DOM，并渲染到页面中。</font>
 
 ### 小结
 
 1. class 组件的格式是：`class 类名 ___ from ____`?
 
-2. 对类组件的名称要求是?
+2. 类组件的名称有什么要求?
 
 3. 类组件的内部必须提供 `____` 方法？
+
+4. `ReactDOM.render()` 解析类组件的过程是什么？
 
 ## 提取组件
 
@@ -156,8 +182,6 @@ ReactDOM.render(<Hello />, document.getElementById('root'))
 -   选择 1：将所有组件放在同一个 JS 文件中。
 
 -   选择 2：将每个组件放到单独的 JS 文件中。
-
--   组件作为一个独立的个体，一般都会放到一个单独的 JS 文件中。
 
 ### 实现
 
@@ -192,6 +216,12 @@ export default class App extends Component {
 }
 ```
 
+### 小结
+
+-   如何默认导出一个组件？
+
+-   如何默认导入一个组件？
+
 ## 开发者工具
 
 [极简插件](https://chrome.zzzmh.cn/)
@@ -200,7 +230,9 @@ export default class App extends Component {
 
 ### 目标
 
-理解状态的概念，理解有状态组件和无状态组件的概念。
+-   了解 React 中状态的概念、特点和作用。
+
+-   了解什么是有状态组件和无状态组件。
 
 ### 关于状态
 
@@ -220,9 +252,11 @@ export default class App extends Component {
 
 ### 有状态/无状态组件
 
-有状态组件：能定义 state 的组件，类组件就是有状态组件。无状态组件：不能定义 state 的组件，函数组件一般叫做`无状态组件`。
+-   有状态组件：能定义 state 的组件，类组件就是**有状态组件**。
 
-<font color=909090>🧐 2019 年 02 月 06 日，rect 16.8 中引入了 React Hooks，从而函数式组件也能定义自己的状态了。</font>
+-   无状态组件：不能定义 state 的组件，函数组件一般叫做**无状态组件**。
+
+<font color=909090>🧐 2019 年 02 月 06 日，React v16.8 中引入了 React Hooks，从而函数式组件也能定义自己的状态了。</font>
 
 ### 无状态组件的应用场景
 
@@ -234,7 +268,7 @@ export default class App extends Component {
 
 -   状态就是用来描述事物在某一时刻的的数据。
 
--   状态的特点: 能被修改，改了之后对应的视图也能更新。
+-   React 中状态的特点: 能被修改，改了之后对应的视图也能更新。
 
 -   函数组件是\_\_组件，类组件是\_\_组件。
 
@@ -242,7 +276,7 @@ export default class App extends Component {
 
 ### 目标
 
-掌握 React 类组件中如何定义和渲染状态。
+掌握 React 类组件中如何定义和使用状态。
 
 ### 定义
 
@@ -302,7 +336,7 @@ class App extends React.Component {
 
 ### 小结
 
--   如何使用组件中的状态？
+-   定义组件的状态有哪两种方式？
 
 -   this.state 对应的值必须是一个什么类型？
 
@@ -320,9 +354,11 @@ class App extends React.Component {
 <元素 事件名1={事件处理函数1} 事件名2={事件处理函数2}></元素>
 ```
 
-注意：React 事件名采用驼峰命名法，比如 onClick、onMouseEnter 等
+注意：React 事件名采用驼峰命名法，比如 onClick、onMouseEnter 等。
 
 ### 类组件中事件绑定
+
+需求：点击按钮控制台打印 'Hello World'。
 
 ```jsx
 class App extends React.Component {
@@ -340,7 +376,7 @@ class App extends React.Component {
 }
 ```
 
-也可以把事件处理函数进行提取
+也可以把事件处理函数进行提取。
 
 ```jsx
 class App extends React.Component {
@@ -368,6 +404,8 @@ const App = () => {
 
 通过形参 `e` 可以拿到事件对象，例如 `e.target` 就是触发事件的那个 DOM 元素。
 
+需求：点击元素，把元素中的内容打印出来。
+
 ### 小结
 
 -   事件命名的规则是什么？
@@ -375,6 +413,8 @@ const App = () => {
 -   如何拿到事件对象？
 
 ## 点击计数
+
+<img src="/resource/images/ifer_calc.png" class="highlight2"/>
 
 ### 目标
 
@@ -1214,6 +1254,10 @@ export default class App extends Component {
 ```
 
 ## 综合案例 📝
+
+### 目标
+
+<img src="/resource/images/ifer_list3.png"/>
 
 ### 整合数据和视图
 
