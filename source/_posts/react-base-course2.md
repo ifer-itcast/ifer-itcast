@@ -418,7 +418,7 @@ const App = () => {
 
 ### 目标
 
-了解事件处理程序中 this 指向问题。
+了解事件处理函数中的 this 指向问题。
 
 ### 实现
 
@@ -487,6 +487,8 @@ render 函数中的 this 指向是什么？
 ### 方法 1
 
 高阶函数：通过 this 来直接**调用** handleClick 并返回箭头函数。
+
+<font color=909090>🧐 柯里化：通过函数调用继续返回函数的形式，实现多次接收参数最后统一处理的函数编码形式。</font>
 
 ```jsx
 class App extends React.Component {
@@ -558,43 +560,9 @@ class App extends Component {
 }
 ```
 
-### 方法 4
-
-<font color=e32d40>通过赋值语句往**实例**上面添加一个箭头函数。</font>
-
-```jsx
-class App extends Component {
-    state = {
-        count: 0,
-    }
-    handleClick = () => {
-        console.log(this.state.count)
-    }
-    render() {
-        return (
-            <div>
-                <h2>计数器：{this.state.count}</h2>
-                <button onClick={this.handleClick}>+1</button>
-            </div>
-        )
-    }
-}
-```
-
-证明“外层” this 确实是组件实例
-
-```jsx
-class App {
-    temp = this
-}
-
-const app = new App()
-console.log(app === app.temp)
-```
-
 ### 扩展
 
-🤔 什么是实例方法和原型方法？
+🤔 关于 class 中的实例方法和原型方法？
 
 原型方法演示
 
@@ -629,6 +597,40 @@ console.log(app1.handleClick === app2.handleClick)
 所以，要明白在 class 中直接写的方法和通过赋值语句添加的方法本质上不一样。
 
 <font color=e32d40>**注意：在 constructor 中挂载的方法也是实例方法。**</font>
+
+### 方法 4
+
+<font color=e32d40>通过赋值语句往**实例**上面添加一个箭头函数。</font>
+
+```jsx
+class App extends Component {
+    state = {
+        count: 0,
+    }
+    handleClick = () => {
+        console.log(this.state.count)
+    }
+    render() {
+        return (
+            <div>
+                <h2>计数器：{this.state.count}</h2>
+                <button onClick={this.handleClick}>+1</button>
+            </div>
+        )
+    }
+}
+```
+
+证明“外层” this 确实是组件实例
+
+```jsx
+class App {
+    temp = this
+}
+
+const app = new App()
+console.log(app === app.temp)
+```
 
 ### 方法 5
 
@@ -669,7 +671,7 @@ class App extends React.Component {
 
 ### 目标
 
-掌握 setState 修改状态的写法。
+掌握通过 setState 修改状态的写法。
 
 ### 错误写法
 
@@ -677,13 +679,15 @@ class App extends React.Component {
 this.state.count += 1 // 数据确实也会变，但不是响应式的！
 ```
 
-### 正确写法
+### 内容
 
 -   语法：`this.setState({ 要修改的部分数据 })`。
 
 -   作用：修改 state 并更新视图。
 
 -   来源：`setState()` 函数是通过继承而来的。
+
+-   注意：`setState()` 的操作是合并，不会影响没有操作到的数据。
 
 ```jsx
 this.setState({ count: this.state.count + 1 })
@@ -701,7 +705,7 @@ this.setState({ count: this.state.count + 1 })
 
 ### 解释
 
-也就是说不要**直接修改**原数据，而是要**产生一份新数据**，然后通过 setState 进行覆盖原数据。为了 SCU（shouldComponentUpdate），为了性能优化。
+也就是说不要**直接修改**原数据，而是要**产生一份新数据**，然后通过 setState 来操作原数据。为了 SCU（shouldComponentUpdate），为了性能优化。
 
 ### 不建议写法
 
@@ -834,11 +838,11 @@ ReactDOM.render(<App />, document.querySelector('#root'))
 
 能够使用受控组件的方式收集到表单中的数据。
 
-<img src="/resource/images/ifer_form.png"/>
+<img src="/resource/images/ifer_form.png" class="highlight2"/>
 
 ### 概念
 
-受控不受控一般是针对表单来说的，所谓受控表单组件，即表单元素的 value 值收到了 React 中 state 的控制（对视图的操作会影响状态（数据），状态的变化又会反映到视图上）。
+受控不受控一般是针对表单来说的，所谓受控表单组件，即表单元素的 value 值受到了 React 中 state 的控制（对 state 的操作会影响视图，视图的变化又会反映到 state 上）。
 
 ### input
 
@@ -1149,7 +1153,7 @@ export default class App extends React.Component {
 
 1. 添加 name。
 
-2. 都 key 都替换成 `e.target.name`。
+2. 把 key 都替换成 `e.target.name`。
 
 3. 观察规律，提取成一个 handleChange 函数。
 
