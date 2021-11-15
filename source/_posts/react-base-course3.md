@@ -123,8 +123,6 @@ export default App
 
 -   使用类组件时，如果写了构造函数，应该在 constructor 中接收 props，并将 props 传递给 super，否则无法在构造函数中使用 this.props。
 
--   Props 的特殊属性：children。
-
 ### 举例
 
 修改会报错
@@ -366,11 +364,13 @@ export default class Child extends Component {
 
 ### 内容
 
+<img src="/resource/images/ifer_at.png"/>
+
 a，父组件通过属性传递一个回调函数。
 
 b，子组件调用传递过来的回调函数，并将要传递的数据作为回调函数的实参。
 
-c，父组件在回调函数中通过形参接收传递过来的数据。
+c，父组件在回调函数中通过形参接收传递过来的数据并做相应操作。
 
 `App.jsx`
 
@@ -424,13 +424,25 @@ class Hello extends React.Component {
 
 ## 子传父 📝
 
+### 目标
+
+<img src="/resource/images/ifer_kyd.png" width="400"/>
+
+### 思路
+
+a，父组件通过属性传递一个回调函数。
+
+b，子组件调用传递过来的回调函数，并将要传递的数据作为回调函数的实参。
+
+c，父组件在回调函数中通过形参接收传递过来的数据并做相应操作。
+
 ### 砍价
 
-`Child.jsx`
+`components/Child/index.js`
 
 ```jsx
 import React, { Component } from 'react'
-import './child.css'
+import './index.css'
 
 export default class Child extends Component {
     handlePrice = () => {
@@ -456,7 +468,7 @@ export default class Child extends Component {
 
 ```jsx
 import React, { Component } from 'react'
-import Child from './Child'
+import Child from '../Child'
 import './index.css'
 
 class Parent extends Component {
@@ -514,7 +526,7 @@ export default Parent
 
 保留 2 位小数，加个为负的处理。
 
-`Parent.jsx`
+`components/Parent/index.js`
 
 ```jsx
 class Parent extends Component {
@@ -524,8 +536,7 @@ class Parent extends Component {
             list: this.state.list.map((item) => {
                 if (item.id === id) {
                     // 注意 toFixed 方法的返回值是一个字符串，为了防止后续进行相加的操作出现问题
-                    // 所以通过 + 号进行了转换
-                    // 而 +'0.20' 进行转换的时候，会把后面没有意义的 0 去掉
+                    // 建议通过 + 号进行转换，而 +'0.20' 进行转换的时候，会把后面没有意义的 0 去掉，正常
                     let newPrice = (item.price - price).toFixed(2)
                     if (newPrice < 0) {
                         newPrice = 0
@@ -581,8 +592,7 @@ class Parent extends Component {
             list: this.state.list.map((item) => {
                 if (item.id === id) {
                     // 注意 toFixed 方法的返回值是一个字符串，为了防止后续进行相加的操作出现问题
-                    // 所以通过 + 号进行了转换
-                    // 而 +'0.20' 进行转换的时候，会把后面没有意义的 0 去掉
+                    // 建议通过 + 号进行转换，而 +'0.20' 进行转换的时候，会把后面没有意义的 0 去掉，正常
                     let newPrice = (item.price - price).toFixed(2)
                     if (newPrice < 0) {
                         newPrice = 0
@@ -611,11 +621,11 @@ class Parent extends Component {
 export default Parent
 ```
 
-`Child.jsx`
+`components/Child/index.js`
 
 ```jsx
 import React, { Component } from 'react'
-import './child.css'
+import './index.css'
 
 export default class Child extends Component {
     handlePrice = () => {
@@ -645,9 +655,11 @@ export default class Child extends Component {
 
 ### 内容
 
--   需求：点击 A 中的按钮，修改 B 中的数据 count。
+需求：点击 A 中的按钮，修改 B 中的数据 count。
 
--   步骤：
+<img src="/resource/images/ifer_brother.png"/>
+
+### 步骤
 
 1. 把需要操作的 B 组件中的数据 count 提升到公共的父组件里面。
 
@@ -713,6 +725,8 @@ export default class B extends Component {
 
 ### 总结
 
+什么是状态提升？
+
 ## Context
 
 ### 目标
@@ -725,7 +739,17 @@ export default class B extends Component {
 
 -   远房亲戚关系（也就是两个组件之间间隔较远），可以使用 Context。
 
-### 核心代码
+### 步骤
+
+<img src="/resource/images/ifer_context.png"/>
+
+1. 通过 `React.crateContext()` 创建 Context。
+
+2. 祖先组件通过 `<Context.Provider>` 配合 value 属性提供数据。
+
+3. 后代组件通过 `<Context.Consumer>` 配合函数获取数据。
+
+### 代码
 
 `App.jsx`
 
@@ -804,9 +828,13 @@ export default class B extends Component {
 }
 ```
 
+### 总结
+
+跨层级组件通信的步骤是什么？
+
 ## B 站评论列表 📝
 
-### 目标
+### 案例目标
 
 基于第一天的结构进行<font color=e32d40>**组件化**</font>开发。
 
@@ -1353,7 +1381,56 @@ export default class List extends Component {
 }
 ```
 
+### 渲染 Tabs
+
+需求：渲染 tabs 数据和默认高亮状态的处理。
+
+1. 把父组件的 tabs 数据传递给 Tabs 组件。
+
+2. Tabs 组件循环数据。
+
+3. 把父组件的 active 传递给 Tabs 组件。
+
+4. Tabs 组件内根据传递过来的 active 和循环时候的 item.type 进行比较，如果一致就使用 on class。
+
+```js
+export default class App extends Component {
+    state = {
+        tabs: [
+            {
+                id: 1,
+                name: '热度',
+                type: 'hot',
+            },
+            {
+                id: 2,
+                name: '时间',
+                type: 'time',
+            },
+        ],
+        active: 'time',
+    }
+    render() {
+        const { tabs, active } = this.state
+        return (
+            <div className='App'>
+                <div className='comment-container'>
+                    {/* tabs */}
+                    <Tabs tabs={tabs} active={active} />
+                </div>
+            </div>
+        )
+    }
+}
+```
+
 ### Tabs 切换
+
+1. 父组件准备一个操作数据的方法（修改 active），并传递给 Tabs 组件。
+
+2. 点击 Tabs 调用传递过来的的方法，并传递当前点击项的 type。
+
+3. 在父组件的方法内根据传递过来的 type 修改 active。
 
 `App.jsx`
 
@@ -1462,30 +1539,15 @@ export default class Tabs extends Component {
 
 ### 列表展示
 
+1. 把父组件的数据传递到 List 组件。
+
+2. List 组件接收数据并通过 map 进行遍历。
+
 `App.jsx`
 
 ```jsx
-import React, { Component } from 'react'
-import Tabs from './components/Tabs'
-import Form from './components/Form'
-import List from './components/List'
-
 export default class App extends Component {
     state = {
-        // hot: 热度排序  time: 时间排序
-        tabs: [
-            {
-                id: 1,
-                name: '热度',
-                type: 'hot',
-            },
-            {
-                id: 2,
-                name: '时间',
-                type: 'time',
-            },
-        ],
-        active: 'time',
         list: [
             {
                 id: 1,
@@ -1516,23 +1578,11 @@ export default class App extends Component {
             },
         ],
     }
-    changeTab = (active) => {
-        this.setState({
-            active,
-        })
-    }
     render() {
-        const { tabs, active, list } = this.state
+        const { list } = this.state
         return (
             <div className='App'>
                 <div className='comment-container'>
-                    <div className='comment-head'>
-                        <span>1 评论</span>
-                    </div>
-                    {/* tabs */}
-                    <Tabs tabs={tabs} active={active} changeTab={this.changeTab} />
-                    {/* form */}
-                    <Form />
                     {/* list */}
                     <List list={list} />
                 </div>
@@ -1582,6 +1632,14 @@ export default class List extends Component {
         )
     }
 }
+```
+
+时间的处理。
+
+```js
+import dayjs from 'dayjs'
+// item.time 是一个日期对象
+dayjs(item.time).format('YYYY-MM-DD HH:mm:ss')
 ```
 
 ### classnames
@@ -1641,6 +1699,12 @@ export default class List extends Component {
 
 ### 排序功能
 
+1. 把父组件的 active 变量传递到 List 组件。
+
+2. List 组件根据 active 是 hot 或 time 进行对应的排序。
+
+3. 渲染排序完之后的数据。
+
 `components/List.jsx`
 
 ```jsx
@@ -1697,6 +1761,14 @@ export default class List extends Component {
 ```
 
 ### 添加评论
+
+1. 父组件准备一个操作数据的方法（修改 list 数组），并传递给 Form 组件。
+
+2. Form 组件调用传递过来的方法，并传递过去收集到的数据（通过受控表单组件收集数据）。
+
+3. 父组件的方法通过形参接收传递过来的数据，并加工成一个评论对象。
+
+4. 把评论对象添加到 list 数组的前面。
 
 `App.jsx`
 
@@ -1833,6 +1905,12 @@ export default class Form extends Component {
 ```
 
 ### 删除评论
+
+1. 父组件准备一个操作数据的方法（删除评论），并把这个方法传递给 List 组件。
+
+2. 点击 List 组件中的删除按钮的时候调用传递过来的方法，并传递过去评论 id。
+
+3. 父组件根据 id 来删除 list 数组中的数据。
 
 `App.jsx`
 
@@ -1989,6 +2067,12 @@ export default class List extends Component {
 ```
 
 ### 点赞评论
+
+1. 父组件准备一个操作数据的方法，并把这个方法传递给 List 组件。
+
+2. 点击 List 组件中的点赞/踩按钮的时候调用传递过来的方法，并传递过去评论 id 和点赞的状态。
+
+3. 父组件根据 id 和传递过来的点赞状态来修改数据。
 
 `App.jsx`
 
