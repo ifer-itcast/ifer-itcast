@@ -6,13 +6,17 @@ tags:
 
 ## 今日目标
 
-✔ children 属性。
+✔ 掌握特殊的 props.children 属性。
 
-✔ props 校验。
+✔ 掌握对 props 进行校验。
 
-✔ props 默认值。
+✔ 掌握对 props 设置默认值。
 
-✔ 生命周期与钩子函数。
+✔ 掌握生命周期概念与钩子函数。
+
+✔ 了解 setState 更新数据的特点。
+
+✔ 掌握 TODOLIST 案例的编写。
 
 <!-- more -->
 
@@ -24,9 +28,9 @@ tags:
 
 ### 内容
 
--   children 属性：表示该组件的子节点，只要组件有子节点，props 就有该属性。
+-   组件的子节点会被当做是 children 属性传递到子组件内部。
 
--   children 属性与普通的 props 一样，值可以是任意值（文本、React 元素、组件，甚至是函数）。
+-   在传递数据的时候 children 属性与普通的 prop 一样，值可以是任意类型例如数字、字符串、数组、JSX、函数等。
 
 ### 代码
 
@@ -37,22 +41,40 @@ function Hello(props) {
 ```
 
 ```jsx
-;<Hello>我是子节点</Hello>
-// children 是一个特殊的 prop，和上面等价，建议上面写法更加直观
 ;<Hello children='我是子节点' />
+// children 是一个特殊的 prop，上面的写法和下面等价，当内容比较多的时候，下面的写法更加直观
+;<Hello>我是子节点</Hello>
 ```
 
 ## props 校验
 
 ### 目标
 
-校验接收的 props 的数据类型，增加组件的健壮性。
+-   了解为什么需要对 props 进行校验。
 
-### 内容
+-   掌握如何对传递过来的 prop 进行校验。
 
-对于组件来说，props 是外来的，无法保证组件使用者传入什么格式的数据，如果传入的数据格式不对，可能会导致组件内部报错，**而组件的使用者不能很明确的知道错误的原因**。
+### 为什么需要对 props 进行校验
+
+对于组件来说，props 是外来的，无法保证组件使用者传入数据的格式正确，如果传入的数据格式不对，可能会导致组件内部报错，**而组件的使用者不能很明确的知道错误的原因**。
 
 ### 演示 props 校验的意义
+
+-   校验前
+
+<img src="/resource/images/ifer_props.png"/>
+
+-   校验后
+
+<img src="/resource/images/ifer_error.png"/>
+
+### 如何对 props 进行校验
+
+1.  安装并导入 `prop-types` 包。
+
+2.  使用 `组件名.propTypes = {}` 来给组件的 props 添加校验规则。
+
+3.  校验规则通过 `PropTypes` 对象来指定。
 
 `App.jsx`
 
@@ -95,29 +117,21 @@ Test.propTypes = {
 export default Test
 ```
 
-<img src="/resource/images/ifer_error.png"/>
-
-### props 的使用步骤
-
-1.  安装 `prop-types` 包。
-
-2.  使用 `组件名.propTypes = {}` 来给组件的 props 添加校验规则。
-
-3.  校验规则通过 `PropTypes` 对象来指定。
-
 ### 总结
 
-通过 props 校验的目的，能够增强组件的健壮性。
+-   为什么要对 props 进行校验？
 
-## 常见规则
+-   如何对 props 进行校验？
+
+## 常见校验规则
 
 ### 目标
 
-了解 React 组件常见的 props 校验规则。
+了解常见的 props 校验规则。
 
 ### 内容
 
-1. 常见类型：array、bool、func、number、object、string。
+1. 常见类型：number、string、bool、array、func、object。
 
 2. React 元素类型（JSX）：element。
 
@@ -125,7 +139,7 @@ export default Test
 
 4. 特定结构的对象：shape({})。
 
-```jsx
+```js
 {
     // 常见类型
     fn1: PropTypes.func,
@@ -143,7 +157,9 @@ export default Test
 
 ### 目标
 
-掌握给组件的 props 提供默认值。
+-   了解指定默认值的好处。
+
+-   掌握给组件的 props 提供默认值的 2 种方式。
 
 ### 内容
 
@@ -180,25 +196,31 @@ class Test extends Component {
 export default Test
 ```
 
+### 小结
+
+-   好处：即便外部不传递也不至于程序报错；简化代码（有可能就是有一些数据是很常用的，这样的话指定默认值外界不需要每次都传递啦）。
+
+-   指定默认值的 2 种方式是什么？推荐哪一种？
+
 ## 类的静态属性
 
 ### 目标
 
-能够通过类的 static 语法简化 props 校验和默认值。
+能够通过类的 static 语法简化 props 校验和默认值的写法。
 
 ### 内容
 
--   实例成员: 通过实例调用的属性或者方法，叫做实例成员（属性或者方法）。
+-   实例成员：通过实例才能访问的成员（属性或者方法），叫做实例成员。
 
--   静态成员：通过类或者构造函数本身才能访问的属性或者方法。
+-   静态成员：通过类或者构造函数本身才能访问的成员（一般是直接挂载到类上的或者通过 static 关键字定义的）。
 
 ```jsx
 class Person {
-    // 实例
+    // 实例成员（通过实例能访问的成员，挂载到实例自身上的）
     name = 'zs',
-    // 静态
+    // 静态（通过构造函数或类才能访问到的成员）
     static age = 18
-    // 原型
+    // 实例成员（通过实例能访问的成员，挂载到原型上的）
     sayHi() {
         console.log('哈哈')
     }
@@ -223,17 +245,17 @@ export default Test
 
 ## 生命周期概述
 
-### 目的
+### 目标
 
-能够理解什么是组件的生命周期以及为什么需要研究组件的生命周期。
+-   能够理解什么是生命周期和生命周期函数。
+
+-   能够说出 React 中组件的生命周期总共有几个大的阶段。
 
 ### 内容
 
--   生命周期：一个事物从创建到最后消亡经历的整个过程。
+-   生命周期：一个事物从创建到最后消亡的整个过程，而组件的生命周期说的就是组件从被创建到挂载到页面中运行，再到组件卸载的过程。
 
--   组件的生命周期：组件从被创建到挂载到页面中运行，再到组件不用时卸载的过程。
-
--   意义：组件的生命周期有助于理解组件的运行方式、完成更复杂的组件功能、分析组件错误原因等。
+-   意义：学习组件的生命周期有助于理解组件的运行方式、完成更复杂的组件功能、分析组件中问题产生的原因等。
 
 -   生命周期钩子函数的作用：为开发人员在不同阶段操作组件提供了时机。
 
@@ -241,27 +263,29 @@ export default Test
 
 <img src="/resource/images/ifer_life2.png"/>
 
-## 生命周期说明
-
-### 目的
-
-能够说出组件生命周期总共有几个阶段。
-
-### 内容
+### React 生命周期
 
 [生命周期](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+
+<img src="/resource/images/react_life.png"/>
+
+### 小结
+
+-   什么是生命周期？
+
+-   React 中生命周期有几个阶段？常用的有几个钩子函数？
 
 ## 挂载阶段
 
 ### 目标
 
-能够说出组件的挂载阶段的钩子函数以及执行时机。
+-   能够说出挂载阶段的钩子函数有哪几个。
+
+-   掌握执行时机和作用分别是什么。
 
 ### 内容
 
--   执行时机：组件创建时（页面加载时）。
-
--   执行顺序，constructor => render => componentDidMount。
+挂载阶段常用的生命周期函数有 3 个，执行顺序是 constructor => render => componentDidMount。
 
 | 钩子函数          | 触发时机                    | 作用                                       |
 | ----------------- | --------------------------- | ------------------------------------------ |
@@ -273,46 +297,54 @@ export default Test
 
 ### 小结
 
--   挂载阶段有几个钩子？
+-   挂载阶段常用的有几个生命周期函数？
 
--   每一个阶段一般做什么事情？
+-   分别是什么，一般用来干什么？
 
 ## 更新阶段
 
 ### 目标
 
-能够说出组件的更新阶段的钩子函数以及执行时机。
+-   能够说出更新阶段的钩子函数有哪几个。
+
+-   掌握执行时机和作用分别是什么。
 
 ### 内容
 
--   执行时机：`setState()`、`forceUpdate()`、`New props`（父组件进行了 render）。
+-   更新阶段常用的生命周期函数有 2 个，执行顺序是 render => componentDidUpdate。
 
--   说明：以上三者任意一种变化，组件就会重新渲染。
-
--   执行顺序。
+-   触发更新：`setState()`、`forceUpdate()`、`New props`（父组件进行了 render）。
 
 | 钩子函数           | 触发时机                    | 作用                                                     |
 | ------------------ | --------------------------- | -------------------------------------------------------- |
-| render             | 每次组件渲染都会触发        | 渲染 UI（与 挂载阶段 是同一个 render）                   |
+| render             | 每次组件渲染都会触发        | 渲染 UI（与挂载阶段是同一个 render）                     |
 | componentDidUpdate | 组件更新（完成 DOM 渲染）后 | DOM 操作，可以获取到更新后的 DOM 内容，不要调用 setState |
 
 ### 演示
 
 ### 小结
 
+-   更新阶段常用的有几个钩子函数，分别用来做什么，注意点是什么？
+
+-   哪 3 个操作会触发组件的更新？
+
 ## 卸载阶段
 
 ### 目标
 
-能够说出组件的销毁阶段的钩子函数以及执行时机。
+-   能够说出组件卸载阶段的钩子函数是什么。
+
+-   明白在卸载阶段的钩子函数里面干什么。
 
 ### 内容
 
-执行时机：组件从页面中消失。
+-   触发时机：组件从页面中消失。
 
-| 钩子函数             | 触发时机                 | 作用                               |
-| -------------------- | ------------------------ | ---------------------------------- |
-| componentWillUnmount | 组件卸载（从页面中消失） | 执行清理工作（比如：清理定时器等） |
+-   `ReactDOM.unmountComponentAtNode(document.getElementById('root'))`
+
+| 钩子函数             | 触发时机                 | 作用                                           |
+| -------------------- | ------------------------ | ---------------------------------------------- |
+| componentWillUnmount | 组件卸载（从页面中消失） | 执行清理工作（比如：清理定时器等、解绑事件等） |
 
 ### 演示
 
@@ -320,21 +352,25 @@ export default Test
 
 ### 小结
 
+-   卸载阶段的生命周期函数是什么？
+
+-   一般用来干什么？
+
 ## setState 更新数据的特点
 
-### 目的
+### 目标
 
-能够理解 setState 是"异步"的。
+能够了解 setState 的"异步"。
 
 ### 内容
 
--   setState 方法是异步的【这句话有毛病，暂且这么理解】。
+-   一般情况下，通过 `setState()` 方法来更新数据，表现是异步的。
 
--   当调用 setState 的时候，React 并不会马上修改 state （为什么，性能，如果是同步的则更新期间执行不了任何操作）。
+-   也就是说当执行到 setState 这一行的时候，React 出于性能考虑，并不会马上进行调用来修改 state。
 
--   而是把这个对象放到一个更新队列里面，稍后才会从队列当中把新的状态提取出来**合并**到 state 当中，然后再触发组件更新。
+-   而是把这个以及后续的对象放到一个更新队列里面进行合并的操作，稍后才会从队列当中把和并后的数据取出来进行 setState 的操作。
 
--   可以多次调用 setState() ，只会触发一次重新渲染。
+-   也就是其实多次调用 setState() ，只会触发一次重新渲染。
 
 ```js
 // 初始
@@ -353,23 +389,23 @@ console.log(this.state.count) // 1
 
 ```js
 this.setState({
-    count: 1,
+    count: this.state.count + 1,
 })
 this.setState({
-    count: 2,
+    count: this.state.count + 2,
 })
 this.setState({
-    count: 1,
+    count: this.state.count + 1,
 })
 ```
 
-先排队，再把排队中的数据进行合并，最后执行 1 次 setState，所以并不需要担心多次进行 `setState` 会带来性能问题。
+执行过程：先排队，再把排队中的数据进行合并，最后执行 1 次 setState，所以并不需要担心多次进行 `setState` 会带来性能问题。
 
 ### 总结
 
 -   好处：性能。
 
--   问题/现象：不能拿到立即拿到更新后的数据；多次进行 setState 会进行合并而不是累计。
+-   问题/现象：不能立即拿到更新后的数据；多次进行 setState 会进行合并的操作。
 
 ## setState 推荐语法
 
@@ -379,30 +415,25 @@ this.setState({
 
 -   能够掌握 setState 箭头函数的语法。
 
--   掌握 setState 第二个参数的使用。
-
 ### 第一个问题
 
 通过 setState 第二个参数可以立即拿到更新后的数据。
 
--   场景：在状态更新（页面完成重新渲染）后立即执行某个操作。
+-   场景：在状态更新后，依靠更新后的状态立即执行某个操作。
 
 -   语法：`setState(updater[, callback])`。
 
 ```jsx
-this.setState(
-    (state) => ({}),
-    () => {
-        console.log('这个回调函数会在状态更新后立即执行')
-    }
-)
+this.setState({}, () => {
+    console.log('这个回调函数会在状态更新后立即执行')
+})
 ```
 
 ### 第二个问题
 
 -   推荐：使用 `setState((preState) => {})` 语法。
 
--   参数 preState: React 会把上一个 `setState` 的结果传入这个函数。
+-   参数 preState: 上一个 `setState` 的结果。
 
 ```jsx
 // 初始
@@ -425,9 +456,25 @@ this.setState((preState) => {
 console.log(this.state.count) // 依然是 1
 ```
 
-**这种语法依旧是异步的，但是通过 preState 可以获取到最新的状态，适用于需要调用多次 setState 的情况。**
+**这种语法依旧是异步的，不同的是通过 preState 可以获取到最新的状态。**
 
 ## 案例练习
+
+### 需求
+
+<img src="/resource/images/ifer_setState.png"/>
+
+### 步骤
+
+1. 搭建基本结构。
+
+1. 准备一个变量来控制 `<input/>` 框的显示隐藏。
+
+1. 给按钮绑定点击事件，在事件回调里面修改这个变量的状态。
+
+1. 在事件回调里面，获取 `<input/>` 框 DOM 对象并调用其聚焦的方法。
+
+### 代码
 
 ```jsx
 import React, { Component, createRef } from 'react'
@@ -454,6 +501,8 @@ export default class App extends Component {
 }
 ```
 
+### 小结
+
 ## setState 同步/异步
 
 ### 目标
@@ -462,16 +511,14 @@ export default class App extends Component {
 
 ### 内容
 
--   setState 本身并不是一个异步方法，其之所以会表现出一种异步的形式，是因为 React 框架本身的一个性能优化机制。
+-   其实 setState 本身并不是一个异步方法，其之所以会表现出一种异步的形式，是因为 React 出于性能优化的考虑进行了延迟调用，
 
--   React 会将 setState 放到队列里面，并将多个 setState 中的数据合并为一个，也就是说，当执行 setState 的时候，并没有马上调用。
+-   也就是说，当代码执行到 setState 的时候，React 会将 setState 放到队列里面进行合并，并没有马上调用（一旦进行了调用它其实就是同步的）。
 
--   setState 如果是在 react 的生命周期中或者是合成事件处理函数中，表现出来是*异步的*。
-
--   setState 如果是在 setTimeout/setInterval 或者原生事件中，表现出来是*同步的*。
+-   表现上的同步和异步：如果是在 React 的生命周期或者是合成事件处理函数中，表现出来是异步的，如果是在 setTimeout/setInterval 或者原生事件中，表现出来是同步的。
 
 ```jsx
-// 另一种解决方式
+// 另一种解决方式，了解即可！
 handleClick = async () => {
     await this.setState({
         showInput: !this.state.showInput,
@@ -482,66 +529,26 @@ handleClick = async () => {
 
 ### 总结
 
--   setState 是同步的方法，但是 react 为了性能优化，所以 setState 在 react 的事件中表现得像异步。
+-   setState 是同步的方法，只不过 React 出于性能优化的考虑进行了延迟调用，就表现形式来说，生命周期和合成事件中是异步，定时器和元素事件中是同步。
 
 -   参考链接：https://zhuanlan.zhihu.com/p/158725289。
 
 ## B 站评论列表
 
-持久化到本地
+### 目标
+
+对留言数据进行持久化。
+
+### 步骤
+
+1. 每次数据更新完毕存储到本地。
+
+2. 组件挂载完成从本地获取数据，通过 setState 进行更新。
+
+### 代码
 
 ```jsx
-import React, { Component } from 'react'
-import Tabs from './components/Tabs'
-import Form from './components/Form'
-import List from './components/List'
-
 export default class App extends Component {
-    state = {
-        // hot: 热度排序  time: 时间排序
-        tabs: [
-            {
-                id: 1,
-                name: '热度',
-                type: 'hot',
-            },
-            {
-                id: 2,
-                name: '时间',
-                type: 'time',
-            },
-        ],
-        active: 'time',
-        list: [
-            {
-                id: 1,
-                author: '刘德华',
-                comment: '给我一杯忘情水',
-                time: new Date('2021-11-10 09:09:00').toLocaleString(),
-                img: 'https://y.qq.com/music/photo_new/T001R300x300M000003aQYLo2x8izP.jpg?max_age=2592000',
-                // 1: 点赞 0：无态度 -1:踩
-                attitude: 1,
-            },
-            {
-                id: 2,
-                author: '周杰伦',
-                comment: '听妈妈的话',
-                time: new Date('2021-12-11 09:09:00').toLocaleString(),
-                img: 'https://y.qq.com/music/photo_new/T001R500x500M0000025NhlN2yWrP4.jpg?max_age=2592000',
-                // 1: 点赞 0：无态度 -1:踩
-                attitude: 0,
-            },
-            {
-                id: 3,
-                author: '陈奕迅',
-                comment: '十年',
-                time: new Date('2021-10-11 10:09:00').toLocaleString(),
-                img: 'https://y.qq.com/music/photo_new/T001R500x500M000003Nz2So3XXYek.jpg?max_age=2592000',
-                // 1: 点赞 0：无态度 -1:踩
-                attitude: -1,
-            },
-        ],
-    }
     // 更新的时候存储到本地
     componentDidUpdate() {
         localStorage.setItem('list', JSON.stringify(this.state.list))
@@ -550,43 +557,6 @@ export default class App extends Component {
     componentDidMount() {
         const list = JSON.parse(localStorage.getItem('list')) || []
         this.setState({ list })
-    }
-    // 把 toLocaleString() 的操作放在了这里提前进行处理
-    changeTab = (active) => {
-        this.setState({
-            active,
-        })
-    }
-    addComment = (c) => {
-        const comment = {
-            id: Date.now(),
-            author: 'ifer',
-            comment: c,
-            time: new Date().toLocaleString(),
-            attitude: 0,
-        }
-        this.setState({
-            list: [...this.state.list, comment],
-        })
-    }
-    delComment = (id) => {
-        this.setState({
-            list: this.state.list.filter((item) => item.id !== id),
-        })
-    }
-    changeAttitude = (id, attitude) => {
-        this.setState({
-            list: this.state.list.map((item) => {
-                if (item.id === id) {
-                    return {
-                        ...item,
-                        attitude,
-                    }
-                } else {
-                    return item
-                }
-            }),
-        })
     }
     render() {
         const { tabs, active, list } = this.state
@@ -610,6 +580,10 @@ export default class App extends Component {
 ```
 
 ## TODOLIST
+
+### 目标
+
+<img src="/resource/images/todolist.png" width="400" class="highlight2" />
 
 ### 模拟接口
 

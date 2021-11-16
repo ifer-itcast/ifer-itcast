@@ -16,6 +16,10 @@ tags:
 
 ## React 介绍
 
+<div style="background-color: #282C34">
+    <img src="/resource/images/react.png" width="160"/>
+</div>
+
 ### 目标
 
 了解 React 的背景和基本概念。
@@ -43,8 +47,6 @@ tags:
 -   React 是用来干什么？
 
 -   React 的定位是库还是框架？
-
--   从 NPM 下载量来看，哪个框架/库使用量最多？
 
 ## React 特点
 
