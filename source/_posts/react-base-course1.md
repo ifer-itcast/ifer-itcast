@@ -20,15 +20,15 @@ tags:
     <img src="/resource/images/react.png" width="160"/>
 </div>
 
-### 目标
+### 学习目标
 
 了解 React 的背景和基本概念。
 
-### 背景
+### React 背景
 
 [React](https://react.docschina.org/) 起源于 Facebook(Meta) 的内部项目（2011，News Feed），之后又被用来开发网站（2012，Instagram），并于 2013 年 5 月开源。
 
-### 内容
+### React 是什么
 
 [React](https://react.docschina.org/) 是一个用于构建<font color=#e32d40>**用户界面**</font>的 JavaScript <font color=#e32d40>**库**</font>。
 
@@ -36,11 +36,11 @@ tags:
 
 -   Library（库）和 Framework（框架）：库的特点是**小而巧**，针对特定问题的单一解决方案。框架的特点是**大而全**，提供了一整套的解决方案。
 
-### 趋势
+### React 趋势
 
 从 [NPM 下载量](https://www.npmtrends.com/angular-vs-react-vs-vue) 来看，React > Vue > Angular。
 
-### 小结
+### 做个小结
 
 -   React 是哪个公司开发的？
 

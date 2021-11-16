@@ -581,13 +581,23 @@ export default class App extends Component {
 
 ## TODOLIST
 
-### 目标
+### 案例目标
+
+[效果](https://todomvc.com/examples/react/#/)
 
 <img src="/resource/images/todolist.png" width="400" class="highlight2" />
 
 ### 模拟接口
 
-`data.json`
+[json-server](https://github.com/typicode/json-server)
+
+1. 安装。
+
+```bash
+npm i -g json-server
+```
+
+2. 准备数据 `data.json`。
 
 ```json
 {
@@ -606,19 +616,30 @@ export default class App extends Component {
 }
 ```
 
+3. 启动服务。
+
 ```bash
 json-server data.json --port 8888
 ```
 
-PUT 是全量修改，要把之前的那些数据带过去，不然会干掉
+4. 使用
 
-PATCH 是补丁，传什么修改什么
+```bash
+GET    /todos
+GET    /todos/1
+POST   /todos
+PUT    /todos/1
+PATCH  /todos/1
+DELETE /todos/1
+```
+
+PUT 是全量修改，修改数据中的某一项也要把之前的那些数据带过去，不然之前的数据会被干掉，PATCH 是补丁，传递什么只会修改什么。
 
 ### 静态结构
 
 [地址](https://github.com/tastejs/todomvc-app-template)
 
-`App.jsx`
+#### `App.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -678,7 +699,7 @@ export default class App extends Component {
 }
 ```
 
-`styles/base.css`
+#### `styles/base.css`
 
 ```css
 hr {
@@ -824,7 +845,7 @@ hr {
 }
 ```
 
-`styles/index.css`
+#### `styles/index.css`
 
 ```css
 html,
@@ -1243,7 +1264,17 @@ export default class App extends Component {
 
 ### 请求数据并渲染
 
-`App.jsx`
+#### 步骤
+
+1. `App.js` 中请求数据并存储到 state 的 list 数组中。
+
+2. 把 list 数组传递到 `<TodoMain/>` 组件。
+
+3. 通过 propTypes 对传递过来的 list 数组进行校验。
+
+4. 循环渲染 list 数组。
+
+#### `App.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -1277,7 +1308,7 @@ export default class App extends Component {
 }
 ```
 
-`components/TodoMain.jsx`
+#### `components/TodoMain.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -1313,7 +1344,17 @@ export default class TodoMain extends Component {
 
 ### 添加功能
 
-`App.jsx`
+#### 步骤
+
+1. `<TodoHeader/>` 组件收集输入的数据。
+
+2. 给 input 框绑定键盘事件，如果敲了回车，并且输入的内容不为空，则调用添加接口把数据传递过去。
+
+3. 清空输入的内容。
+
+4. 调用父组件重新获取数据并渲染的方法。
+
+#### `App.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -1350,7 +1391,7 @@ export default class App extends Component {
 }
 ```
 
-`components/TodoHeader.jsx`
+#### `components/TodoHeader.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -1395,7 +1436,15 @@ export default class TodoHeader extends Component {
 
 ### 删除功能
 
-`App.jsx`
+1. 给删除按钮绑定点击事件，并把当前项 ID 传过去。
+
+2. 根据接收到的 ID 调用删除接口。
+
+3. 调用父组件获取数据并渲染的方法。
+
+#### 步骤
+
+#### `App.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -1432,7 +1481,7 @@ export default class App extends Component {
 }
 ```
 
-`components/TodoMain.jsx`
+#### `components/TodoMain.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -1472,6 +1521,12 @@ export default class TodoMain extends Component {
 ```
 
 ### 选中功能
+
+1. 给 checkbox 框绑定 onChange 事件，并传递过去当前项。
+
+2. 根据当前项的 id 和 done（记得取反）调用修改的接口。
+
+3. 调用父组件获取数据并渲染的方法。
 
 `components/TodoMain.jsx`
 
@@ -1521,7 +1576,7 @@ export default class TodoMain extends Component {
 
 ### 完整代码
 
-`App.jsx`
+#### `App.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -1558,7 +1613,7 @@ export default class App extends Component {
 }
 ```
 
-`components/TodoHeader.jsx`
+#### `components/TodoHeader.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -1601,7 +1656,7 @@ export default class TodoHeader extends Component {
 }
 ```
 
-`components/TodoMain.jsx`
+#### `components/TodoMain.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -1647,7 +1702,7 @@ export default class TodoMain extends Component {
 }
 ```
 
-`components/TodoFooter.jsx`
+#### `components/TodoFooter.jsx`
 
 ```jsx
 import React, { Component } from 'react'
