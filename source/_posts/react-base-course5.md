@@ -274,28 +274,27 @@ useState 只能写在函数的内部。
 
 ## useState 另一种写法
 
-参数也可以是函数，函数的返回值就是初始值，这个函数只会在第一次的时候执行。
+需求：把通过大量计算得到的结果当做初始值。
 
-```jsx
+```js
 import React, { useState } from 'react'
 
-const App = () => {
-    const [count, setCount] = useState(() => 0)
-    const handleClick = () => {
-        setCount(count + 1)
+export default function App() {
+    let defaultCount = 0
+    for (let i = 0; i < 100; i++) {
+        defaultCount += i
     }
+    const [count, setCount] = useState(defaultCount)
     return (
         <div>
-            <p>{count}</p>
-            <button onClick={handleClick}>click</button>
+            <p>You clicked {count} times</p>
+            <button onClick={() => setCount(count + 1)}>Click me</button>
         </div>
     )
 }
-
-export default App
 ```
 
-好处：函数里面可以写一些复杂的业务逻辑代码！
+参数也可以是函数，函数的返回值就是初始值，这个函数只会在第一次的时候执行，函数里面也可以写一些复杂的业务逻辑代码！
 
 ## useState 使用规则
 
@@ -307,19 +306,43 @@ export default App
 
 -   如何为函数组件提供多个状态？
 
-    -   多次调用 useState Hook 即可，每调用一次 useState Hook 可以提供一个状态。
-
-    -   `useState Hook` 多次调用返回的 [state, setState] 相互之间，互不影响。
+    多次调用 useState 即可，每一次调用返回的 [state, setState] 之间，互不影响。
 
 -   useState 的使用规则
 
-    -   **React Hooks 只能直接出现在函数组件中**。
+    a，React Hooks 只能直接出现在函数组件中。
 
-    -   **React Hooks 不能嵌套在 if/for/其他函数 中！**（if 的条件判断、for 循环的次数、函数的调用与否都可能会影响 hook 的顺序）。
+    b，**React Hooks 不能嵌套在 if/for/其他函数 中！**（if 的条件判断、for 循环的次数、函数的调用与否都可能会影响 hook 的顺序）。
 
-    -   React 是按照 Hooks 的调用顺序来识别每一个 Hook，如果每次调用的顺序不同，导致 React 无法知道是哪一个状态和修改状态的方法。
+    c，React 是按照 Hooks 的调用顺序来识别每一个 Hook，如果每次调用的顺序不同，导致 React 无法知道是哪一个状态和修改状态的方法。
 
-    -   可以通过开发者工具进行查看。
+    d，可以通过开发者工具进行查看。
+
+```js
+import React, { useState } from 'react'
+
+export default function App() {
+    const [num1, setNum1] = useState(0)
+    const [num2, setNum2] = useState(3)
+    const [num3, setNum3] = useState(6)
+    return (
+        <div>
+            <div>
+                num1: {num1}
+                <button onClick={() => setNum1(num1 + 1)}>修改 num1</button>
+            </div>
+            <div>
+                num2: {num2}
+                <button onClick={() => setNum2(num2 + 1)}>修改 num1</button>
+            </div>
+            <div>
+                num3: {num3}
+                <button onClick={() => setNum3(num3 + 1)}>修改 num1</button>
+            </div>
+        </div>
+    )
+}
+```
 
 ## useEffect 副作用介绍
 
@@ -329,23 +352,21 @@ export default App
 
 ### 内容
 
--   类比，对于 999 感冒灵感冒药来说
+-   类比，对于 999 感冒灵来说
 
-    -   主作用：用于感冒引起的头痛，发热，鼻塞，流涕，咽痛等。
+    a，主作用：用于治疗感冒引起的头痛，发热，鼻塞，流涕，咽痛等。
 
-    -   副作用：可见困倦、嗜睡、口渴、虚弱感。
+    b，副作用：可见困倦、嗜睡、口渴、虚弱感。
 
--   理解组件或一般函数的副作用
+-   那组件或一般函数的副作用是什么呢
 
-    -   组件的副作用：对于 React 组件来说，**主作用就是根据数据（state/props）渲染 UI**，除此之外都是副作用，比如手动修改 DOM、数据（Ajax）请求、localStorage 操作等。
+    a，组件的副作用：对于 React 组件来说，主作用就是根据数据（state/props）<font color=e32d40>**渲染 UI**</font>，除此之外都是副作用，比如手动修改 DOM、数据（Ajax）请求、localStorage 操作等。
 
-    -   函数的副作用：如果一个函数或其他操作修改了其局部环境之外的状态变量值，那么它就被称为有副作用。
+    b，函数的副作用：如果一个函数修改了其局部环境之外的数据，那么它就被称为有副作用。
 
 -   关于 useEffect
 
-    -   使用场景：当你想要在函数组件中处理副作用（side effect），就要使用 useEffect Hook 了。
-
-    -   作用：处理函数组件中的副作用（side effect）。
+    作用：当你想要在函数组件中处理副作用（side effect），就要使用 useEffect 了。
 
 ### 总结
 
@@ -359,9 +380,9 @@ export default App
 
 ### 内容
 
-注意：在实际开发中，副作用是不可避免的。因此，React 专门提供了 useEffect Hook 来处理函数组件组件中的副作用。
+<img src="/resource/images/ifer_useEffect.gif" class="highlight2"/>
 
-需求：把变化后的数字展示在网页标题上。
+在实际开发中，副作用是不可避免的，需求：点击按钮，让数字加 1，并把变化后的数字展示在网页标题上。
 
 ```jsx
 import React, { useState, useEffect } from 'react'
@@ -396,11 +417,13 @@ export default App
 
 ### 内容
 
--   问题：如果组件中还有另外一个状态，另一个状态更新时，刚刚的 effect 回调，也会执行。
+-   问题：如果组件中还有其他状态，其他状态更新时，刚刚的 effect 回调（修改标题的操作）也会执行。
 
--   默认情况：函数中的任何状态发生更新，useEffect 的回调函数都会执行。
+-   默认：函数中的任何状态发生更新，useEffect 的回调函数都会执行。
 
--   性能优化：**跳过不必要的执行，只在 count 变化时，才执行相应的 effect**。
+-   优化：**跳过不必要的执行，只在 count 变化时，才执行相应的 effect**。
+
+-   操作：第二个参数可以传一个数组，表示只有当数组中的选项/依赖项改变时，才会重新执行该 effect。
 
 问题展示
 
@@ -436,23 +459,15 @@ useEffect(() => {
 }, [count])
 ```
 
-代码解释
-
--   第二个参数：可选的，可省略；也可以传一个数组，数组中的元素可以成为依赖项（deps）。
-
--   该示例中表示：只有当 count 改变时，才会重新执行该 effect。
-
 ## useEffect 依赖是一个空数组
 
 ### 目标
 
-能够设置 useEffect 的依赖，让组件只有在第一次渲染后会执行。
+通过 useEffect 如何让组件只有在第一次渲染后会执行。
 
 ### 内容
 
--   useEffect 的第二个参数，还可以是一个空数组（[]），表示只在组件第一次渲染后执行 effect。
-
--   使用场景：事件绑定、发送请求获取数据等。
+useEffect 的第二个参数，还可以是一个空数组（[]），表示只有在组件第一次渲染后执行，一般会进行**事件绑定**、**发送请求**等。
 
 ### 代码
 
@@ -465,11 +480,9 @@ useEffect(() => {
 
 ### 解释
 
--   该 effect 只会在组件第一次渲染后执行，因此，可以执行像事件绑定等只需要执行一次的操作。
+-   仅相当于 class 组件的 componentDidMount 钩子函数的作用。
 
--   此时，仅相当于 class 组件的 componentDidMount 钩子函数的作用。
-
--   跟 useState Hook 一样，一个组件中也可以调用 useEffect 多次。
+-   和 useState 一样，一个组件中也可以调用多次 useEffect。
 
 -   推荐：一个 useEffect 只处理一个功能，有多个功能时，使用多次 useEffect。
 
@@ -477,7 +490,7 @@ useEffect(() => {
 
 ### 目标
 
-能够理解如果不正确使用依赖项的后果。
+能够理解如果不正确使用依赖项的可能会带来的问题。
 
 ### 内容
 
@@ -511,7 +524,7 @@ useEffect 完全指南：https://overreacted.io/zh-hans/a-complete-guide-to-usee
 
 ### 小结
 
-能够说出 useEffect 的三种使用语法
+能够说出对 useEffect 第 2 个参数的几种处理方式。
 
 ### 代码
 
@@ -528,6 +541,10 @@ useEffect(() => {}, [count])
 
 ## 购物车
 
+### 目标
+
+<img src="/resource/images/ifer_cart.png" width="300" class="highlight2"/>
+
 ### 基本步骤
 
 1. 初始化项目基本结构。
@@ -536,25 +553,53 @@ useEffect(() => {}, [count])
 
 3. 封装 MyFooter 组件。
 
-4. 商品列表数据展示。
+4. 封装 GoodsItem 组件。
 
-5. 封装 MyGoods 组件。
+5. 商品列表数据展示。
 
-6. 封装 MyCounter 组件。
+6. 切换选中状态。
+
+7. 底部合计和结算。
+
+8. 商品全选。
+
+9. 数据持久化。
 
 ### 项目初始化
 
--   清理目录。
+-   初始化项目并清理无关目录
 
--   安装 bootstrap `yarn add bootstrap@4.5.0`。
+```bash
+npx create-react-app cart
+```
 
--   入口文件中引入 bootstrap 样式文件。
+-   安装 bootstrap
+
+```bash
+yarn add bootstrap@4.5.0
+```
+
+-   入口文件中引入 bootstrap
 
 ```js
 import 'bootstrap/dist/css/bootstrap.css'
 ```
 
 ### 封装 MyHeader 组件
+
+#### 目标
+
+能够封装 MyHeader 组件的基本结构。
+
+#### 步骤
+
+1. 创建 MyHeader 组件。
+
+2. 提供 MyHeader 样式。
+
+3. 在 App.js 中渲染。
+
+#### 代码
 
 `App.jsx`
 
@@ -576,7 +621,7 @@ export default function App() {
 ```js
 import './index.scss'
 
-export default function index() {
+export default function MyHeader() {
     return <div className='my-header'>标题</div>
 }
 ```
@@ -600,7 +645,13 @@ export default function index() {
 
 <font color=e32d40>**注意：脚手架内置了 scss 的支持，但是需要安装 scss 依赖包。**</font>
 
-需求：让标题组件的内容由外部来决定。
+```bash
+yarn add sass sass-loader -D
+```
+
+#### 需求
+
+让标题组件的内容由外部来决定。
 
 `components/MyHeader/index.js`
 
@@ -631,13 +682,17 @@ export default function App() {
 
 #### 目标
 
+能够封装 MyFooter 组件的基本结构。
+
 #### 步骤
 
-1. 创建 Footer 组件。
+1. 创建 MyFooter 组件。
 
-2. 提供 Footer 样式。
+2. 提供 MyFooter 样式。
 
-3. 在 App.js 中渲染
+3. 在 App.js 中渲染。
+
+#### 代码
 
 `components/MyFooter/index.js`
 
@@ -717,9 +772,17 @@ export default function App() {
 
 #### 目标
 
-能够封装 GoodsItem 组件。
+能够封装 GoodsItem 组件的基本结构。
 
 #### 步骤
+
+1. 创建 GoodsItem 组件。
+
+2. 提供 GoodsItem 样式。
+
+3. 在 App.js 中渲染。
+
+#### 代码
 
 `components/GoodsItem/index.js`
 
@@ -846,10 +909,12 @@ export default function App() {
 
 2. GoodsItem 接收数据进行渲染。
 
--   提供数据
+#### 代码
+
+`App.js` 中提供数据。
 
 ```js
-// 放到函数外面即可
+// 建议放到函数外面即可
 const arr = [
     {
         id: 1,
@@ -932,6 +997,9 @@ const arr = [
         goods_state: false,
     },
 ]
+```
+
+```js
 // 放到函数内部
 const [list, setList] = useState(arr)
 ```
@@ -976,19 +1044,17 @@ export default function GoodsItem({ goods_count, goods_img, goods_name, goods_pr
 
 #### 目标
 
-完成商品的选中切换功能。
+完成商品的选中状态切换功能。
 
 #### 步骤
 
-1. 注册 onChange 事件。
+1. 父组件准备修改状态的方法并传递给子组件。
 
-2. 子传父修改状态。
+2. 子组件点击 checkBox 的时候调用父组件传递过来的方法，并传递过去 id。
 
-`GoodsItem/index.js`
+3. 父组件根据传递过来的 id 进行对应数据的修改。
 
-```js
-<input type='checkbox' className='custom-control-input' checked={goods_state} id={id} onChange={() => changeState(id)} />
-```
+#### 代码
 
 `App.js`
 
@@ -1021,7 +1087,27 @@ export default function App() {
 }
 ```
 
+`GoodsItem/index.js`
+
+```js
+<input type='checkbox' className='custom-control-input' checked={goods_state} id={id} onChange={() => changeState(id)} />
+```
+
 ### 底部合计和结算
+
+#### 步骤
+
+1. 父组件传递过去 list 到 MyFooter 组件。
+
+2. MyFooter 组件通过 props 拿到数据，统计<font color=e32d40>**已选中**</font>的数量和总价。
+
+#### 代码
+
+`App.js`
+
+```js
+<MyFooter list={list} />
+```
 
 `components/MyFooter/index.js`
 
@@ -1060,17 +1146,17 @@ export default function MyFooter({ list }) {
 }
 ```
 
-`App.js`
-
-```js
-<MyFooter list={list} />
-```
-
 ### 商品全选功能
 
 #### 目标
 
 完成商品全选切换功能。
+
+#### 步骤
+
+1. 初始状态计算（单选控制全选，直接根据 list 数据进行计算）。
+
+2. 全选控制单选（子传父）。
 
 #### 代码
 
@@ -1185,11 +1271,11 @@ export default function App() {
 
 ```js
 export default function App() {
-    // #2
+    // #1
     const [list, setList] = useState(() => {
         return JSON.parse(localStorage.getItem('list')) || arr
     })
-    // #1
+    // #2
     useEffect(() => {
         localStorage.setItem('list', JSON.stringify(list))
     }, [list])

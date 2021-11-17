@@ -17,7 +17,7 @@ tags:
 ## React 介绍
 
 <div style="background-color: #282C34">
-    <img src="/resource/images/react.png" width="160"/>
+    <img src="/resource/images/react.png" width="160" title="原子"/>
 </div>
 
 ### 学习目标
