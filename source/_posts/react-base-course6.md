@@ -6,8 +6,6 @@ tags:
 
 ## 今日目标
 
-✔ 掌握 useState 回调函数形式的参数。
-
 ✔ 掌握 useEffect 清理副作用。
 
 ✔ 掌握 useRef 操作 DOM。
@@ -16,72 +14,27 @@ tags:
 
 <!-- more -->
 
-## useState 回调函数参数
-
-### 目标
-
-能够通过回调函数的形式给 useState 提供初始参数。
-
-### 内容
-
-useState 的参数可以有两种形式。
-
--   `useState(普通的数据)`
-
-```js
-useState(0)
-useState('abc')
-```
-
--   `useState(回调函数)`，回调函数的返回值就是状态的初始值，该回调函数只会触发一次。
-
-```js
-useState(() => {
-    return 初始值
-})
-```
-
--   该使用哪种形式？
-
-    a，如果状态就是一个普通的数据（比如，字符串、数字、数组等）可以直接使用 `useState(普通的数据)`。
-
-    b，如果状态是经过一些计算得到的，此时，推荐使用 `useState(回调函数)`。
-
-```js
-// 这种情况下，只要组件更新，此处的 localStorage 等操作就会执行
-// const initList = JSON.parse(localStorage.getItem('list')) || comments
-// const [list, setList] = useState(initList)
-
-// 优化：适用于复杂逻辑处理
-// 这种方式，因为回调函数只会执行一次，所以，此处的 localStorage 等操作代码只会执行一次
-const [list, setList] = useState(() => {
-    return JSON.parse(localStorage.getItem('comments')) || comments
-})
-```
-
-### 小结
-
--   useState 的参数有几种使用方式，什么情况下使用回调函数的形式？
-
 ## useEffect 清理副作用
 
 ### 目标
 
-能够在组件卸载的时候，清理注册的事件。
+掌握 useEffect 清理副作用的写法。
 
 ### 内容
 
--   effect 的返回值是可选的，一般可以返回一个清理函数，在清理函数内部用来执行事件解绑、清除定时器等清理操作。
+-   useEffect 可以返回一个函数
 
--   清理函数的执行时机：
+    这个函数称为清理函数，在此函数内用来执行清理相关的操作（例如事件解绑、清除定时器等）。
 
-    a，useEffect 的第二个参数不写，清理函数会在<font color=e32d40>**下一次副作用回调函数调用时**</font>以及<font color=e32d40>**组件卸载时**</font>执行，用于清除上一次或卸载前的副作用。
+-   清理函数的执行时机
 
-    b，useEffect 的第二个参数为空数组，那么会在组件卸载时会执行。相当于组件的 `componetWillUnmount`。
+    a，useEffect 的第 2 个参数不写，清理函数会在<font color=e32d40>**下一次副作用回调函数调用时**</font>以及<font color=e32d40>**组件卸载时**</font>执行，用于清除上一次或卸载前的副作用。
 
--   推荐：一个 useEffect 只处理一个功能，有多个功能时，使用多次 useEffect。
+    b，useEffect 的第 2 个参数为空数组，那么会在组件卸载时会执行，相当于组件的 `componetWillUnmount`。
 
-执行时机演示
+-   一般一个 useEffect 只用来处理一个功能，有多个功能时，建议使用多个 useEffect。
+
+### 执行时机演示
 
 `App.js`
 
@@ -127,7 +80,9 @@ export default function Test() {
 }
 ```
 
-清理定时器演示：`Test.js`
+### 清理定时器演示
+
+`Test.js`
 
 ```jsx
 import React, { useEffect, useState } from 'react'
@@ -155,21 +110,31 @@ export default function Test() {
 }
 ```
 
-## 获取当前鼠标位置 📝
+### 小结
+
+useEffect 清理函数的执行时机是什么？
+
+## 跟随鼠标的天使 📝
 
 ### 目标
 
-能够实现案例，让图片跟随鼠标移动。
+能够完成让图片跟随鼠标移动的效果。
 
-### 内容
+### 步骤
 
--   通过 useState 提供状态。
+1. 通过 useState 提供状态。
 
--   通过 useEffect 给 document 注册鼠标移动事件。
+2. 通过 useEffect 给 document 注册鼠标移动事件
 
--   在组件销毁的时候清理副作用。
+3. 在事件回调里面修改状态为鼠标的坐标。
 
-```jsx
+4. 组件销毁的时候记得清理副作用（解绑事件）。
+
+### 代码
+
+`App.js`
+
+```js
 import React, { useState, useEffect } from 'react'
 import avatar from './images/avatar.png'
 
