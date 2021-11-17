@@ -4,11 +4,11 @@ date: 2021-11-10 09:36:20
 tags:
 ---
 
--   React Hooks 介绍。
+✔ 了解 React Hooks。
 
--   useState hook。
+✔ 掌握 useState hook。
 
--   useEffect hook。
+✔ 掌握 useEffect hook。
 
 <!-- more -->
 
@@ -20,15 +20,11 @@ tags:
 
 ### 内容
 
--   `Hooks`：钩子、钩住，是 **React v16.8** 中的新增功能。
+-   `Hooks`：钩子、钩住，是 React v16.8 提供的新功能，作用：为函数组件提供状态、生命周期等原本 class 组件中才有的功能，可以理解为通过 Hooks 为函数式组件钩入了 class 组件的特性。
 
--   作用：为**函数组件**提供状态、生命周期等原本 class 组件中提供的功能，可以理解为通过 Hooks 为函数组件钩入 class 组件的特性。
+-   React v16.8 以前：class 组件（提供状态和生命周期） + 函数组件（展示内容）。
 
--   注意：**Hooks 只能在函数组件中使用**，自此，函数组件成为 React 的新宠儿。
-
--   React v16.8 以前： class 组件（提供状态和生命周期） + 函数组件（展示内容）。
-
--   React v16.8 及其以后：
+-   React v16.8 以后：
 
     1. class 组件（提供状态和生命周期） + 函数组件（展示内容）。
 
@@ -36,35 +32,37 @@ tags:
 
     3. 混用以上两种方式：部分功能用 class 组件，部分功能用 Hooks + 函数组件。
 
+-   注意：**Hooks 只能在函数组件中使用**，虽然有了 Hooks，但 React 官方并没有计划从 React 库中移除 class。
+
 ### 总结
 
--   虽然有了 Hooks，但 React 官方并没有计划从 React 库中移除 class。
+-   Hooks 是什么？
 
--   有了 Hooks 以后，不能再把**函数组件**称为无状态组件了，因为 Hooks 为函数组件提供了状态。
+-   有了 Hooks 以后，不能再把函数式组件称为无状态组件了，因为通过 Hooks 可以为函数式组件提供状态啦。
 
 ## 为什么要有 Hooks
 
 ### 目标
 
-能够说出为什么要有 hooks，hooks 能解决什么问题？
+能够说出为什么要有 Hooks，Hooks 解决什么问题？
 
 ### 内容
 
-**1. 组件的状态逻辑复用问题**
+-   组件的状态逻辑复用问题
 
--   在 Hooks 之前，组件的状态逻辑复用经历了：mixins（混入）、HOC（高阶组件）、render props 等模式。
+    a，在 Hooks 之前，组件的状态逻辑复用经历了：mixins（混入）、HOC（高阶组件）、render props 等模式。
 
--   （早已废弃）mixins 的问题：1 数据来源不清晰 2 命名冲突。
+    b，（早已废弃）mixins 的问题：数据来源不清晰；命名冲突。
 
--   HOC、render props 的问题：重构组件结构，导致组件形成 JSX 嵌套地狱问题。
+    c，HOC、render props 的问题：重构组件结构，导致组件形成 JSX 嵌套地狱问题。
 
-**2. class 组件自身的问题**
+-   class 组件自身的问题
 
--   选择：函数组件和 class 组件之间的区别以及使用哪种组件更合适。
+    a，选择：函数组件和 class 组件之间的区别以及使用哪种组件更合适。
 
--   需要理解 class 中的 this 是如何工作的。
+    b，需要理解 class 中的 this 是如何工作的。
 
--   同一业务的状态或业务逻辑被拆分到不同位置。
+    c，同一业务的状态或业务逻辑被拆分到不同位置。
 
 ```js
 {
@@ -83,79 +81,73 @@ tags:
 }
 ```
 
+<img src="/resource/images/hook.gif"/>
+
 -   相比于函数组件来说，不利于代码压缩和优化，也不利于 TS 的类型推导。
 
 ```bash
 # 例如不能把 componentDidMount 压缩成 c
-# Webpack 打包的时候会自动把没有用到的代码进行 tree shaking，但是对于类组件来说，例如即便没有用到 componentDidMount，其实相关代码也会打包，因为它属于类的一部分
+# Webpack 打包的时候会自动把没有用到的代码进行 tree shaking，但是对于类组件来说，例如即便没有用到 componentDidMount，其实相关代码也会打包，因为它属于源代码的一部分
 # 例如写 this 的时候没有提示，因为 this 只有在调用的时候才能确定指向，编写代码期间 TS 是不知道的
 ```
 
 ### 总结
 
-正是由于 React 原来存在的这些问题，才有了 Hooks 来解决这些问题。
+Hooks 解决了什么问题？
 
-## hooks 渐进策略
+## Hooks 渐进策略
 
 ### 目标
 
-能够理解在 React 中什么场景应该使用 hooks。
+能够了解 Hooks 和之前 class 的写法是可以共存的。
 
 ### 内容
 
--   React 没有计划从 React 中移除 class [文档](https://zh-hans.reactjs.org/docs/hooks-intro.html)。
+-   官方没有计划从 React 中移除 class [文档](https://zh-hans.reactjs.org/docs/hooks-intro.html)。
 
--   Hook 和现有代码可以同时工作，你可以渐进式地使用他们。
+-   Hooks 和现有代码可以同时工作，你可以渐进式地使用他们。
 
-    -   不推荐：大规模使用 Hooks 直接重构现有组件。
+    a，不推荐：大规模使用 Hooks 直接重构现有组件。
 
-    -   推荐：新功能用 Hooks，复杂功能 Hooks 实现不了的，也可以继续用 class。
+    b，推荐：新功能用 Hooks，Hooks 实现不了的复杂功能，也可以继续用 class。
 
-    -   找一个功能简单、非核心功能的组件开始使用 hooks。
+    c，具体操作，从一些功能简单、非核心功能的组件开始使用 Hooks。
 
--   class 组件相关的 API 在 hooks 中可以不用。
+-   不能在 Hooks 组件中，使用 class 组件相关的 API。
 
-    -   state 与 setState。
+    a，state 与 setState。
 
-    -   钩子函数，`componentDidMount`、`componentDidUpdate`、`componentWillUnmount`。
+    b，钩子函数，`componentDidMount`、`componentDidUpdate`、`componentWillUnmount`。
 
-    -   `this` 相关的用法。
+    c，`this` 相关的用法。
 
--   原来学习的内容还是要用的。
+-   原来学习的绝大部分知识点还是要用的。
 
-    -   JSX：`{}`、`onClick={handleClick}`、条件渲染、列表渲染、样式处理等。
+    a，JSX：`{}`、`onClick={handleClick}`、条件渲染、列表渲染、样式处理等。
 
-    -   组件：函数组件、组件通讯。
+    b，组件：函数组件、组件通讯。
 
-    -   React 开发理念：`单向数据流`、`状态提升` 等。
+    c，React 开发理念：`单向数据流`、`状态提升` 等。
 
-    -   解决问题的思路、技巧、常见错误的分析等。
+    d，解决问题的思路、技巧、常见错误的分析等。
 
-### 总结
+### 小结
 
--   React 没有计划从 React 中移除 class。
-
--   React 将继续为 class 组件提供支持。
-
--   可以在项目中同时使用 hooks 和 class。
+项目当中 class 组件和 函数配合 Hooks 的写法可以共存吗？
 
 ## useState 基本使用
 
 ### 目标
 
-能够使用 `useState` 为函数组件提供状态。
+能够掌握 `useState` 的基本使用。
 
 ### 内容
 
--   一个 Hook 就是一个特殊的函数，可以函数组件中获取或操作状态等。
+<font color=e32d40>**作用：为函数组件提供状态和修改状态的方法。**</font>
 
--   从名称上看，Hook 都以 use 开头`useXxx`。
+### 需求
 
--   `useState`使用场景：当你想要在**函数组件中，使用组件状态时**，就要使用 **useState** Hook 了。
-
--   `useState`作用：为函数组件提供状态（state）和修改状态的方法。
-
-### 使用
+<img src="/resource/images/ifer_calc.png"/>
 
 1. 导入 `useState` 函数。
 
@@ -163,29 +155,19 @@ tags:
 
 3. 从 `useState` 函数的返回值中，拿到状态和修改状态的函数。
 
-4. 在 JSX 中展示状态。
-
-5. 在按钮的点击事件中调用修改状态的函数，来更新状态。
-
 核心代码
 
 ```jsx
-// #1 导入 useState
 import React, { useState } from 'react'
 
 const App = () => {
-    // #2 在函数中调用，返回一个数组
-    const countArray = useState(0)
-    // #3 数组第 0 项是初始值，第 1 项是修改初始值的方法
-    const count = countArray[0]
-    const setCount = countArray[1]
-    const handleClick = () => {
-        setCount(count + 1)
-    }
+    const [count, setCount] = useState(0)
     return (
-        <div>
-            <p>{count}</p>
-            <button onClick={handleClick}>click</button>
+        <div style={{ textAlign: 'center' }}>
+            <h3>计数器：{count}</h3>
+            <div>
+                <button onClick={() => setCount(count + 1)}>+1</button>
+            </div>
         </div>
     )
 }
@@ -193,19 +175,21 @@ const App = () => {
 export default App
 ```
 
-注意 setState 的细节。
+### 细节
 
--   参数：**状态初始值**。比如，传入 0 表示该状态的初始值为 0。
+-   参数：初始状态，比如传入 0 就表示该状态的初始值为 0。
 
--   注意：此处的状态可以是任意值（比如，数值、字符串等），而 class 组件中的 state 必须是对象。
+-   注意：此处的状态可以是任意值（比如，数值、字符串等），对比 class 组件中的 state 必须是对象。
 
--   返回值：数组，包含两个值：状态值（state）和修改该状态的函数（setState）。
+-   返回值：数组，包含两个值，状态和修改该状态的方法。
 
--   约定：修改状态的函数名称以 set 开头，后面跟上状态的名称。
+-   约定：修改状态的方法以 set 开头，后面跟上状态的名称。
 
-<font>如何简化上面的代码？</font>
+### 小结
 
-## useState-状态的读取和修改
+-   useState 的作用和返回值是什么？
+
+## useState 状态的读取和修改
 
 ### 目标
 
@@ -213,19 +197,21 @@ export default App
 
 ### 内容
 
-读取状态：该方式提供的状态，是函数内部的局部变量，可以在函数内的任意位置使用
+-   读取状态
 
-修改状态：
+    useState 只能在函数内部调用，返回的状态也是函数内部的局部变量，只可以在函数的内部使用。
 
--   `setCount(newValue)` 是一个函数，参数表示：**新的状态值**。
+-   修改状态
 
--   调用该函数后，将**使用新的状态值`替换`旧值**。
+    a，`setCount(newValue)` 是一个函数调用，参数表示新的状态值。
 
--   修改状态后，组件自动会重新渲染。
+    b，调用该函数后，将使用新的状态值直接替换旧状态。
+
+    c，修改状态后，组件会自动重新渲染。
 
 ### 注意
 
-修改状态的时候，要使用新的状态替换旧的状态，不要直接修改原状态（状态的不可变）。
+修改状态的时候，要使用新的状态替换掉旧的状态，而不要直接修改原状态（状态的不可变性）。
 
 ```jsx
 import React, { useState } from 'react'
@@ -240,8 +226,8 @@ const App = () => {
         setObj(obj)
         // Right
         /* setObj({
-      count: obj.count + 1,
-    }) */
+            count: obj.count + 1,
+        }) */
     }
     return (
         <div>
@@ -254,7 +240,11 @@ const App = () => {
 export default App
 ```
 
-## useState-组件的更新过程
+### 小结
+
+useState 只能写在函数的内部。
+
+## useState 组件的更新过程
 
 ### 目标
 
@@ -262,29 +252,27 @@ export default App
 
 ### 内容
 
-函数组件使用 useState hook 后的执行过程，以及状态值的变化。
+-   组件第 1 次渲染
 
--   组件第一次渲染：
+    1.  调用函数式组件，从头开始执行组件中的代码逻辑。
 
-    1.  从头开始执行该组件中的代码逻辑（调用函数）。
+    2.  调用 `useState(0)` 将传入的参数作为初始状态值，即：0。
 
-    2.  调用 `useState(0)` 将传入的参数作为状态初始值，即：0。
+    3.  开始渲染组件，此时得到的状态 count 值为：0。
 
-    3.  渲染组件，此时，获取到的状态 count 值为：0。
+-   组件第 2 次渲染
 
--   组件第二次渲染：
-
-    1. 点击按钮，调用 `setCount(count + 1)` 修改状态，因为状态发生改变，所以，该组件会重新渲染。
+    1. 点击按钮，调用 `setCount(count + 1)` 来修改状态，因为状态发生改变，所以，该组件会重新渲染。
 
     2. 组件重新渲染时，会再次执行该组件中的代码逻辑。
 
-    3. 再次调用 `useState(0)`，此时 **React 内部会拿到最新的状态值而非初始值**，比如，该案例中最新的状态值为 1。
+    3. 再次调用 `useState(0)`，此时 <font color=d32e40>**React 内部会拿到最新的状态值而非初始值**</font>，比如该案例中的最新状态值为 1。
 
     4. 再次渲染组件，此时，获取到的状态 count 值为：1。
 
-<font color=e32d40>**注意：useState 的初始值(参数)只会在组件第一次渲染时生效**。</font>也就是说，以后的每次渲染，useState 获取到都是最新的状态值。React 组件会记住每次最新的状态值!
+-   <font color=e32d40>**注意：useState 的初始值(参数)只会在组件第一次渲染时生效**。</font>也就是说，以后的每次渲染，useState 获取到都是最新的状态值。React 组件会记住每次更新后的最新状态值!
 
-## useState-另一种写法
+## useState 另一种写法
 
 参数也可以是函数，函数的返回值就是初始值，这个函数只会在第一次的时候执行。
 
@@ -309,7 +297,7 @@ export default App
 
 好处：函数里面可以写一些复杂的业务逻辑代码！
 
-## useState-使用规则
+## useState 使用规则
 
 ### 目标
 
@@ -333,7 +321,7 @@ export default App
 
     -   可以通过开发者工具进行查看。
 
-## useEffect-副作用介绍
+## useEffect 副作用介绍
 
 ### 目标
 
@@ -363,7 +351,7 @@ export default App
 
 对于 React 组件来说，除了渲染 UI 之外的其他操作，都可以称之为副作用。
 
-## useEffect-基本使用
+## useEffect 基本使用
 
 ### 目标
 
@@ -400,7 +388,7 @@ export default App
 
 -   相当于 class 中的 componentDidMount + componentDidUpdate。
 
-## useEffect-依赖
+## useEffect 依赖
 
 ### 目标
 
@@ -454,7 +442,7 @@ useEffect(() => {
 
 -   该示例中表示：只有当 count 改变时，才会重新执行该 effect。
 
-## useEffect-依赖是一个空数组
+## useEffect 依赖是一个空数组
 
 ### 目标
 
@@ -485,7 +473,7 @@ useEffect(() => {
 
 -   推荐：一个 useEffect 只处理一个功能，有多个功能时，使用多次 useEffect。
 
-## useEffect-不要对依赖项撒谎
+## useEffect 不要对依赖项撒谎
 
 ### 目标
 
