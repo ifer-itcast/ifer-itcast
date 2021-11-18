@@ -163,29 +163,23 @@ export default function App() {
 }
 ```
 
-## 自定义 Hooks
+## 自定义 Hook
 
 ### 目标
 
-能够使用自定义 Hooks 实现状态的逻辑复用。
+能够使用自定义的 Hook 实现状态逻辑的复用。
 
 ### 内容
 
--   除了使用内置的 Hooks 之外，还可以创建自己的 Hooks（自定义 Hooks）。
+-   作用：将组件的状态逻辑提取到自定义 Hook 中，实现复用。
 
--   使用场景：将组件状态逻辑提取到可重用的函数（自定义 Hooks）中，实现状态逻辑复用。
+-   自定义 Hook 是一个函数，规定函数名称必须以 use 开头，React 内部会据此来区分是否是一个 Hook。
 
--   内置 Hooks 为函数组件赋予了 class 组件的功能；在此之上，自定义 Hooks 针对不同组件可以实现不同状态逻辑复用。
+-   自定义 Hook 只能在函数组件或其他自定义 Hook 中使用，否则，会报错！
 
-    -   自定义 Hooks 是一个函数，规定函数名称必须以 use 开头，React 就是通过函数名称是否以 use 开头来判断是不是 Hook。
+### 案例
 
-    -   Hook 只能在函数组件中或其他自定义 Hook 中使用，否则，会报错！
-
-    -   自定义 Hook 用来提取组件的状态逻辑，根据不同功能可以有不同的参数和返回值（就像使用普通函数一样）。
-
-核心代码
-
-hooks.js
+封装一个获取鼠标位置的 Hook，`hooks.js`
 
 ```jsx
 import { useState, useEffect } from 'react'
@@ -226,7 +220,7 @@ export default function App() {
 }
 ```
 
-尝试封装记录滚动位置的 Hook
+### 封装记录滚动位置的 Hook
 
 ```js
 export const useScroll = () => {
@@ -250,29 +244,33 @@ export const useScroll = () => {
 }
 ```
 
+### 小结
+
+自定义 Hook 的作用/目的是什么？
+
 ## useEffect 发送请求
 
 ### 目标
 
-能够在函数组件中通过 useEffect 发送 ajax 请求。
+能够在函数组件中通过 useEffect 发送 AJAX 请求。
 
 ### 内容
 
--   在组件中，使用 useEffect 发送请求获取数据（side effect）。
+-   在函数组件中，可以使用 useEffect 发送请求获取数据。
 
 -   注意：effect 只能是一个同步函数，不能使用 async。
 
--   如果 effect 是 async 的，此时返回值是 Promise 对象，这样的话，就无法保证清理函数被立即调用。
+-   原因：如果 effect 是 async 的，此时返回值是 Promise 对象，这样的话，就无法保证清理函数被立即调用。
 
--   为了使用 async/await 语法，可以在 effect 内部创建 async 函数，并调用。
+-   为了使用 async/await 语法，可以在 effect 内部再次创建 async 函数并调用。
 
 错误演示
 
 ```jsx
-// 发请求是没问题，但清理副作用的操作就出事了
+// 发请求是没问题，但涉及清理副作用的操作就出事了
 useEffect(async () => {
-    const res = awiat xxx()
-    return ()=> {}
+    const res = await xxx()
+    return () => {}
 }, [])
 ```
 
@@ -282,7 +280,6 @@ useEffect(async () => {
 useEffect(() => {
     async function fetchMyAPI() {
         let url = 'http://something/' + productId
-        let config = {}
         const response = await myFetch(url)
     }
 
@@ -290,7 +287,7 @@ useEffect(() => {
 }, [productId])
 ```
 
-演示发请求
+### 演示发请求
 
 ```jsx
 import React, { useState, useEffect } from 'react'
@@ -323,9 +320,9 @@ export default function App() {
 
 ### 内容
 
--   使用场景：在 React 中进行 DOM 操作时，用来获取 DOM
+-   使用场景：在 React 中进行 DOM 操作时，用来获取 DOM。
 
--   作用：返回一个带有 current 属性的可变对象，通过该对象就可以进行 DOM 操作了。
+-   作用：返回一个带有 current 属性的对象，通过该对象就可以进行 DOM 操作了。
 
 ### 使用
 
@@ -333,11 +330,11 @@ export default function App() {
 
 -   返回值：包含 current 属性的对象。
 
--   注意：只要在 React 中进行 DOM 操作，都可以通过 useRef 来获取 DOM（比如，获取 DOM 的宽高等）。
+-   注意：只要在 React 中进行 DOM 操作，都可以通过 useRef 来获取 DOM。
 
--   注意：useRef 不仅仅可以用于操作 DOM，还可以操作类组件。
+-   注意：useRef 不仅仅可以用于获取 DOM，还可以获取类组件实例。
 
-代码展示，useRef 获取 DOM
+### useRef 获取 DOM
 
 ```jsx
 /*
@@ -367,7 +364,7 @@ const App = () => {
 export default App
 ```
 
-代码展示，useRef 获取类组件
+### useRef 获取类组件
 
 `App.js`
 
@@ -410,7 +407,7 @@ export default class Test extends Component {
 
 ### 目标
 
-回顾 context 跨级组件通讯的使用。
+回顾 Context 跨级组件通讯的使用。
 
 ### 内容
 
@@ -424,9 +421,9 @@ export default class Test extends Component {
 
 -   <Context.Consumer>：通过 render props 模式，在 JSX 中获取 Context 中提供的数据。
 
--   如果提供了 Provider 组件，Consumer 获取到的是 Provider 中 value 属性的值。
+-   使用 Provider 组件，如果传递了 value，Consumer 获取到的是 Provider 中的 value 属性值。
 
--   如果没有提供 Provider 组件，Consumer 获取到的是 createContext(defaultValue) 的 defaultValue 值。
+-   如果没有传递 value，Consumer 获取到的是 createContext(defaultValue) 的 defaultValue 值。
 
 代码演示
 
