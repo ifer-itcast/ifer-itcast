@@ -20,9 +20,13 @@ tags:
 
 能够说出为什么需要使用 Redux。
 
+TODO: 点击计数
+
 ### 内容
 
 [Redux 中文文档](http://cn.redux.js.org/)
+
+TODO: 删减
 
 -   概念
 
@@ -68,6 +72,8 @@ Flux 是最早的状态管理 工具，它提供了状态管理的思想，也�
 
 ### 内容
 
+TODO: 点击按钮 +1，之前的方法不利于数据共享。
+
 使用 React CLI 来创建项目，并安装 Redux 包即可。
 
 1. 创建 React 项目：`npx create-react-app redux-basic`
@@ -75,6 +81,8 @@ Flux 是最早的状态管理 工具，它提供了状态管理的思想，也�
 2. 启动项目：`yarn start`
 
 3. 安装 Redux 包：`yarn add redux`
+
+TODO: 搭建结构
 
 ## Redux 核心概念-概述
 
@@ -112,6 +120,8 @@ Flux 是最早的状态管理 工具，它提供了状态管理的思想，也�
 
 ### 内容
 
+TODO: 如何用代码来表示
+
 -   action：描述要做的事情，项目中的每一个功能都是一个 action，比如
 
     -   计数器案例：计数器加 1、减 1
@@ -130,12 +140,36 @@ Flux 是最早的状态管理 工具，它提供了状态管理的思想，也�
 
 ```js
 { type： 'increment' }
+
+// payload: 参数
 { type： 'decrement', payload： 2 }
 
 { type: 'addTodo', payload: '吃饭' }
 { type: 'addTodo', payload: '睡觉' }
 
 { type: 'removeTodo', payload: 3 }
+```
+
+`store/action.js`
+
+```js
+export const addOne = {
+    type: 'addOne',
+}
+
+export const addMore = {
+    type: 'addMore',
+    payload: 5,
+}
+
+export const subOne = {
+    type: 'subOne',
+}
+
+export const subMore = {
+    type: 'subMore',
+    payload: 5,
+}
 ```
 
 ## Redux 核心概念-action creator
@@ -174,6 +208,30 @@ addTodo('吃饭')
 addTodo('睡觉')
 ```
 
+`store/action.js`
+
+```js
+export const addOne = () => {
+    return {
+        type: 'addOne',
+    }
+}
+
+export const addMore = (payload) => ({
+    type: 'addMore',
+    payload,
+})
+
+export const subOne = () => ({
+    type: 'subOne',
+})
+
+export const subMore = (payload) => ({
+    type: 'subMore',
+    payload,
+})
+```
+
 ## Redux 核心概念-reducer
 
 ### 目标
@@ -194,7 +252,7 @@ addTodo('睡觉')
 
     -   原则：不要在 reducer 函数内部直接修改 state
 
-核心代码
+核心代码 store/reducer.js
 
 ```jsx
 export default function reducer(state = 100, action) {
@@ -259,6 +317,8 @@ arr.splice(1, 2)
 
 -   没有副作用，副作用指的是例如函数中一些异步调用或者会影响函数作用域之外的变量一类的操作
 
+好处：方便测试，性能优化 ，对于 reducer 来说主要就是不要改原来的数据
+
 ## Redux 核心概念-store
 
 ### 目标
@@ -268,6 +328,8 @@ arr.splice(1, 2)
 ### 内容
 
 -   store：仓库，Redux 的核心，整合 action 和 reducer
+
+store/index.js
 
 ```jsx
 // store: 整个数据的仓库，复杂关联reducer和action
@@ -296,6 +358,97 @@ export default store
 
     b，取消订阅状态变化：`unSubscribe()`
 
+App.js
+
+```js
+import React, { Component } from 'react'
+import store from './store'
+
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                <p>count: {store.getState()}</p>
+                <div>
+                    <button>+1</button>
+                    <button>-1</button>
+                    <button>+5</button>
+                    <button>-5</button>
+                </div>
+            </div>
+        )
+    }
+}
+```
+
+更改数据，问题：组件没更新
+
+```js
+import React, { Component } from 'react'
+import store from './store'
+import { addOne } from './store/action'
+
+export default class App extends Component {
+    handleClick() {
+        store.dispatch(addOne())
+        console.log(store.getState())
+    }
+    render() {
+        return (
+            <div>
+                <p>count: {store.getState()}</p>
+                <div>
+                    <button onClick={this.handleClick}>+1</button>
+                    <button>-1</button>
+                    <button>+5</button>
+                    <button>-5</button>
+                </div>
+            </div>
+        )
+    }
+}
+```
+
+```js
+import React, { Component } from 'react'
+import store from './store'
+import { addMore, addOne, subMore, subOne } from './store/action'
+
+export default class App extends Component {
+    handleClick() {
+        store.dispatch(addOne())
+        console.log(store.getState())
+    }
+    render() {
+        return (
+            <div>
+                <p>count: {store.getState()}</p>
+                <div>
+                    <button onClick={this.handleClick}>+1</button>
+                    <button onClick={() => store.dispatch(subOne())}>-1</button>
+                    <button onClick={() => store.dispatch(addMore(5))}>+5</button>
+                    <button onClick={() => store.dispatch(subMore(5))}>-5</button>
+                </div>
+            </div>
+        )
+    }
+}
+```
+
+解决
+
+```js
+import ReactDOM from 'react-dom'
+import App from './App'
+import store from './store'
+
+ReactDOM.render(<App />, document.querySelector('#root'))
+
+store.subscribe(() => {
+    ReactDOM.render(<App />, document.querySelector('#root'))
+})
+```
+
 核心代码
 
 ```js
@@ -322,6 +475,8 @@ unSubscribe()
 
 ## Redux 获取默认值的执行过程
 
+reducer 一上来就会执行一次，打印试一下 console.log(action.type)
+
 -   我们发现：只要创建 store，那么，Redux 就会调用一次 reducer
 
 -   这一次调用 reducer 的目的：**获取状态的默认值**
@@ -339,6 +494,18 @@ unSubscribe()
 -   Redux 内部拿到状态值（比如，此处的 10）以后，就用这个状态值，来作为了 store 中状态的最新值
 
 -   因此，将来当我们调用 `store.getState()` 方法来获取 Redux 状态值的时候，拿到的就是 10 了
+
+```js
+import { createStore } from 'redux'
+import reducer from './reducer'
+// 只要创建了 store，需要传递 reducer，store 就会自动的 dispatch 一次 action
+// 目的：就是为了 store 能够有初始值，store.dispatch(type: @@xx)
+const store = createStore(reducer)
+
+store.getState() // 所以可以拿到初始值
+
+export default store
+```
 
 ```js
 // 1 导入 createStore
@@ -441,6 +608,29 @@ ReactDOM.render(
 )
 ```
 
+```js
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { addMore, addOne, subMore, subOne } from './store/action'
+
+const App = () => {
+    const money = useSelector((state) => state)
+    return (
+        <div>
+            <p>count: {money}</p>
+            <div>
+                <button>+1</button>
+                <button>-1</button>
+                <button>+5</button>
+                <button>-5</button>
+            </div>
+        </div>
+    )
+}
+
+export default App
+```
+
 ## react-redux-useSelector
 
 ### 目标
@@ -489,6 +679,8 @@ export default function App() {
 
 ## react-redux-useDispatch
 
+好处是组件会自动更新。
+
 ### 目标
 
 结合 hooks 使用 react-redux，修改数据
@@ -526,6 +718,44 @@ export default function App() {
             </div>
         </div>
     )
+}
+```
+
+new
+
+```js
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { addMore, addOne, subMore, subOne } from './store/action'
+
+const App = () => {
+    const money = useSelector((state) => state)
+    const dispatch = useDispatch()
+    return (
+        <div>
+            <p>count: {money}</p>
+            <div>
+                <button onClick={() => dispatch(addOne())}>+1</button>
+                <button onClick={() => dispatch(subOne())}>-1</button>
+                <button onClick={() => dispatch(addMore(5))}>+5</button>
+                <button onClick={() => dispatch(subMore(5))}>-5</button>
+            </div>
+        </div>
+    )
+}
+
+export default App
+```
+
+如果 Test 组件想用，看看有多方便，无需传值
+
+```js
+import React from 'react'
+import { useSelector } from 'react-redux'
+
+export default function Test() {
+    const money = useSelector((state) => state)
+    return <div>{money}</div>
 }
 ```
 
@@ -601,6 +831,95 @@ const rootReducer = combineReducers({
 export default rootReducer
 ```
 
+`App.js`
+
+```js
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { addMore, addOne, subMore, subOne } from './store/action'
+import Test from './Test'
+
+const App = () => {
+    const money = useSelector((state) => state.money)
+    const dispatch = useDispatch()
+    return (
+        <div>
+            <p>count: {money}</p>
+            <Test />
+            <div>
+                <button onClick={() => dispatch(addOne())}>+1</button>
+                <button onClick={() => dispatch(subOne())}>-1</button>
+                <button onClick={() => dispatch(addMore(5))}>+5</button>
+                <button onClick={() => dispatch(subMore(5))}>-5</button>
+            </div>
+            <div>
+                <p>用户名：</p>
+                <p>密码：</p>
+            </div>
+        </div>
+    )
+}
+
+export default App
+```
+
+`Test.js`
+
+```js
+import React from 'react'
+import { useSelector } from 'react-redux'
+
+export default function Test() {
+    const money = useSelector((state) => state.money)
+    return <div>{money}</div>
+}
+```
+
+修改用户名
+
+`App.js`
+
+```js
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { addMore, addOne, subMore, subOne } from './store/action'
+import Test from './Test'
+import { setName } from './store/action'
+
+const App = () => {
+    const money = useSelector((state) => state.money)
+    const user = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+    return (
+        <div>
+            <p>count: {money}</p>
+            <Test />
+            <div>
+                <button onClick={() => dispatch(addOne())}>+1</button>
+                <button onClick={() => dispatch(subOne())}>-1</button>
+                <button onClick={() => dispatch(addMore(5))}>+5</button>
+                <button onClick={() => dispatch(subMore(5))}>-5</button>
+            </div>
+            <div>
+                <p>用户名：{user.name}</p>
+                <button onClick={() => dispatch(setName('xxx'))}>修改用户名</button>
+            </div>
+        </div>
+    )
+}
+
+export default App
+```
+
+`action.js`
+
+```js
+export const setName = (payload) => ({
+    type: 'setName',
+    payload,
+})
+```
+
 ## Action Type 的使用
 
 -   Action Type 指的是：action 对象中 type 属性的值
@@ -630,4 +949,1129 @@ export default rootReducer
 ```js
 export const SET_NAME = 'user/setName'
 export const SUB_MORE = 'money/subMore'
+```
+
+## TODOLIST
+
+拆分，`components/TodoHeader.js`、`components/TodoMain.js`、`components/TodoFooter.js`
+
+`App.js`
+
+```js
+import React from 'react'
+import TodoFooter from './components/TodoFooter'
+import TodoHeader from './components/TodoHeader'
+import TodoMain from './components/TodoMain'
+
+export default function App() {
+    return (
+        <section className='todoapp'>
+            {/* TodoHeader */}
+            <TodoHeader />
+            {/* TodoMain */}
+            <TodoMain />
+            {/* TodoFooter */}
+            <TodoFooter />
+        </section>
+    )
+}
+```
+
+基本的 store 跑通
+
+index.js
+
+```js
+import ReactDOM from 'react-dom'
+import './styles/base.css'
+import './styles/index.css'
+import App from './App'
+import store from './store'
+import { Provider } from 'react-redux'
+
+console.log(store.getState()) // 打印试一下
+
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.querySelector('#root')
+)
+```
+
+`store/index.js`
+
+```js
+import { createStore } from 'redux'
+import reducer from './reducers'
+const store = createStore(reducer)
+export default store
+```
+
+`store/reducers/index.js`
+
+```js
+import { combineReducers } from 'redux'
+import todos from './todos'
+const rootReducer = combineReducers({
+    todos,
+})
+
+export default rootReducer
+```
+
+`store/reducers/todos.js`
+
+```js
+export default function todos(state = [], action) {
+    return state
+}
+```
+
+### 列表渲染
+
+准备初始数据，store/reducers/todos.js
+
+```js
+const initState = [
+    {
+        id: 1,
+        name: '吃饭',
+        done: true,
+    },
+    {
+        id: 2,
+        name: '睡觉',
+        done: false,
+    },
+]
+
+export default function todos(state = initState, action) {
+    return state
+}
+```
+
+`components/TodoMain.js`
+
+```js
+import React from 'react'
+import { useSelector } from 'react-redux'
+
+export default function TodoMain() {
+    const list = useSelector((state) => state.todos)
+    return (
+        <section className='main'>
+            <input id='toggle-all' className='toggle-all' type='checkbox' />
+            <label htmlFor='toggle-all'>Mark all as complete</label>
+            <ul className='todo-list'>
+                {list.map((item) => (
+                    <li key={item.id} className={item.done ? 'completed' : ''}>
+                        <div className='view'>
+                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => {}} />
+                            <label>{item.name}</label>
+                            <button className='destroy'></button>
+                        </div>
+                        <input className='edit' value='Create a TodoMVC template' />
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )
+}
+```
+
+### 删除
+
+actions/todos.js
+
+```js
+import { DEL_TODO } from '../constants/todos'
+
+/**
+ * 删除 todo 的 action
+ * @param {Number} id
+ * @returns
+ */
+export const delTodo = (id) => ({
+    type: DEL_TODO,
+    id,
+})
+```
+
+`constants/todos.js`
+
+```js
+export const DEL_TODO = 'DEL_TODO'
+```
+
+`reducers/todos.js`
+
+```js
+export default function todos(state = initState, action) {
+    if (action.type === DEL_TODO) {
+        return state.filter((item) => item.id !== action.id)
+    }
+    return state
+}
+```
+
+components/TodoMain.js
+
+```js
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { delTodo } from '../store/actions/todos'
+
+export default function TodoMain() {
+    const list = useSelector((state) => state.todos)
+    const dispatch = useDispatch()
+    return (
+        <section className='main'>
+            <input id='toggle-all' className='toggle-all' type='checkbox' />
+            <label htmlFor='toggle-all'>Mark all as complete</label>
+            <ul className='todo-list'>
+                {list.map((item) => (
+                    <li key={item.id} className={item.done ? 'completed' : ''}>
+                        <div className='view'>
+                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => {}} />
+                            <label>{item.name}</label>
+                            <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
+                        </div>
+                        <input className='edit' value='Create a TodoMVC template' />
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )
+}
+```
+
+### 修改任务状态
+
+`actions/todos.js`
+
+```js
+export const changeDone = (id) => ({
+    type: CHANGE_DONE,
+    id,
+})
+```
+
+`constants/todos.js`
+
+```js
+export const DEL_TODO = 'DEL_TODO'
+export const CHANGE_DONE = 'CHANGE_DONE'
+```
+
+`reducers/todos.js`
+
+```js
+export default function todos(state = initState, action) {
+    if (action.type === DEL_TODO) {
+        return state.filter((item) => item.id !== action.id)
+    }
+    if (action.type === CHANGE_DONE) {
+        return state.map((item) => {
+            if (item.id === action.id) {
+                return {
+                    ...item,
+                    done: !item.done,
+                }
+            } else {
+                return item
+            }
+        })
+    }
+    return state
+}
+```
+
+components/TodoMain.js
+
+```js
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeDone, delTodo } from '../store/actions/todos'
+
+export default function TodoMain() {
+    const list = useSelector((state) => state.todos)
+    const dispatch = useDispatch()
+    return (
+        <section className='main'>
+            <input id='toggle-all' className='toggle-all' type='checkbox' />
+            <label htmlFor='toggle-all'>Mark all as complete</label>
+            <ul className='todo-list'>
+                {list.map((item) => (
+                    <li key={item.id} className={item.done ? 'completed' : ''}>
+                        <div className='view'>
+                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
+                            <label>{item.name}</label>
+                            <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
+                        </div>
+                        <input className='edit' value='Create a TodoMVC template' />
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )
+}
+```
+
+### 添加任务
+
+constants/todos.js
+
+```js
+export const DEL_TODO = 'DEL_TODO'
+export const CHANGE_DONE = 'CHANGE_DONE'
+export const ADD_TODO = 'ADD_TODO'
+```
+
+actions/todos.js
+
+```js
+import { DEL_TODO, CHANGE_DONE, ADD_TODO } from '../constants/todos'
+
+/**
+ * 删除 todo 的 action
+ * @param {Number} id
+ * @returns
+ */
+export const delTodo = (id) => ({
+    type: DEL_TODO,
+    id,
+})
+
+export const changeDone = (id) => ({
+    type: CHANGE_DONE,
+    id,
+})
+
+export const addTodo = (name) => ({
+    type: ADD_TODO,
+    name,
+    id: Date.now(),
+})
+```
+
+`reducers/todos.js`
+
+```js
+import { ADD_TODO, CHANGE_DONE, DEL_TODO } from '../constants/todos'
+let lastid = 2
+const initState = [
+    {
+        id: 1,
+        name: '吃饭',
+        done: true,
+    },
+    {
+        id: 2,
+        name: '睡觉',
+        done: false,
+    },
+]
+
+export default function todos(state = initState, action) {
+    if (action.type === DEL_TODO) {
+        return state.filter((item) => item.id !== action.id)
+    }
+    if (action.type === CHANGE_DONE) {
+        return state.map((item) => {
+            if (item.id === action.id) {
+                return {
+                    ...item,
+                    done: !item.done,
+                }
+            } else {
+                return item
+            }
+        })
+    }
+    if (action.type === ADD_TODO) {
+        // const todo = {
+        //   // id: Date.now(), // 不存了
+        //   id: ++lastid, // 不存了
+        //   name: action.name,
+        //   done: false,
+        // }
+        const todo = {
+            id: action.id,
+            name: action.name,
+            done: false,
+        }
+        return [todo, ...state]
+    }
+    return state
+}
+```
+
+`components/TodoHeader.js`
+
+```js
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { addTodo } from '../store/actions/todos'
+
+export default function TodoHeader() {
+    const [name, setName] = useState('')
+    const dispatch = useDispatch()
+    const add = (e) => {
+        if (e.code === 'Enter') {
+            if (!name) return alert('内容不能为空')
+            dispatch(addTodo(name))
+            setName('')
+        }
+    }
+    return (
+        <header className='header'>
+            <h1>todos</h1>
+            <input className='new-todo' placeholder='What needs to be done?' autoFocus value={name} onChange={(e) => setName(e.target.value)} onKeyUp={add} />
+        </header>
+    )
+}
+```
+
+### 全选
+
+constants/todos.js
+
+```js
+export const DEL_TODO = 'DEL_TODO'
+export const CHANGE_DONE = 'CHANGE_DONE'
+export const ADD_TODO = 'ADD_TODO'
+export const CHANGE_ALL_DONE = 'CHANGE_ALL_DONE'
+```
+
+actions/todos.js
+
+```js
+export const changeAllDone = (done) => ({
+    type: CHANGE_ALL_DONE,
+    done,
+})
+```
+
+reducers/todos.js
+
+```js
+import { ADD_TODO, CHANGE_DONE, DEL_TODO, CHANGE_ALL_DONE } from '../constants/todos'
+let lastid = 2
+const initState = [
+    {
+        id: 1,
+        name: '吃饭',
+        done: true,
+    },
+    {
+        id: 2,
+        name: '睡觉',
+        done: false,
+    },
+]
+
+export default function todos(state = initState, action) {
+    if (action.type === DEL_TODO) {
+        return state.filter((item) => item.id !== action.id)
+    }
+    if (action.type === CHANGE_DONE) {
+        return state.map((item) => {
+            if (item.id === action.id) {
+                return {
+                    ...item,
+                    done: !item.done,
+                }
+            } else {
+                return item
+            }
+        })
+    }
+    if (action.type === ADD_TODO) {
+        // const todo = {
+        //   // id: Date.now(), // 不存了
+        //   id: ++lastid, // 不存了
+        //   name: action.name,
+        //   done: false,
+        // }
+        const todo = {
+            id: action.id,
+            name: action.name,
+            done: false,
+        }
+        return [todo, ...state]
+    }
+    if (action.type === CHANGE_ALL_DONE) {
+        return state.map((item) => {
+            return {
+                ...item,
+                done: action.done,
+            }
+        })
+    }
+
+    return state
+}
+```
+
+components/TodoMain.js
+
+```js
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeAllDone, changeDone, delTodo } from '../store/actions/todos'
+
+export default function TodoMain() {
+    const list = useSelector((state) => state.todos)
+    const dispatch = useDispatch()
+    const isCheckAll = list.every((item) => item.done)
+    return (
+        <section className='main'>
+            <input id='toggle-all' className='toggle-all' type='checkbox' checked={isCheckAll} onChange={() => dispatch(changeAllDone(!isCheckAll))} />
+            <label htmlFor='toggle-all'>Mark all as complete</label>
+            <ul className='todo-list'>
+                {list.map((item) => (
+                    <li key={item.id} className={item.done ? 'completed' : ''}>
+                        <div className='view'>
+                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
+                            <label>{item.name}</label>
+                            <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
+                        </div>
+                        <input className='edit' value='Create a TodoMVC template' onChange={() => {}} />
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )
+}
+```
+
+### 双击显示弹框
+
+```js
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import classNames from 'classnames'
+import { changeAllDone, changeDone, delTodo } from '../store/actions/todos'
+
+export default function TodoMain() {
+    const list = useSelector((state) => state.todos)
+    const dispatch = useDispatch()
+    const isCheckAll = list.every((item) => item.done)
+
+    const [currentId, setCurrentId] = useState('')
+    return (
+        <section className='main'>
+            <input id='toggle-all' className='toggle-all' type='checkbox' checked={isCheckAll} onChange={() => dispatch(changeAllDone(!isCheckAll))} />
+            <label htmlFor='toggle-all'>Mark all as complete</label>
+            <ul className='todo-list'>
+                {list.map((item) => (
+                    <li
+                        key={item.id}
+                        className={classNames({
+                            completed: item.done,
+                            editing: item.id === currentId,
+                        })}
+                    >
+                        <div className='view'>
+                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
+                            <label onDoubleClick={() => setCurrentId(item.id)}>{item.name}</label>
+                            <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
+                        </div>
+                        <input className='edit' value='Create a TodoMVC template' onChange={() => {}} />
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )
+}
+```
+
+### 自动获取焦点并回填
+
+焦点
+
+```js
+import React, { useState, useRef, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import classNames from 'classnames'
+import { changeDone, delTodo } from '../store/actions/todos'
+
+export default function TodoItem({ item }) {
+    const [currentId, setCurrentId] = useState('')
+    const ref = useRef(null)
+    const dispatch = useDispatch()
+    const showEdit = (id) => {
+        setCurrentId(id)
+        // ref.current.focus()
+    }
+    useEffect(() => {
+        ref.current.focus()
+    }, [currentId])
+    return (
+        <li
+            className={classNames({
+                completed: item.done,
+                editing: item.id === currentId,
+            })}
+        >
+            <div className='view'>
+                <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
+                <label onDoubleClick={() => showEdit(item.id)}>{item.name}</label>
+                <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
+            </div>
+            <input className='edit' value='Create a TodoMVC template' onChange={() => {}} ref={ref} />
+        </li>
+    )
+}
+```
+
+原来 currentId 放哪里？只会有一个，现在呢？
+
+拆分是为了都有自己的 ref
+
+TodoMain.js
+
+```js
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import classNames from 'classnames'
+import { changeAllDone, changeDone, delTodo } from '../store/actions/todos'
+import TodoItem from './TodoItem'
+
+export default function TodoMain() {
+    const list = useSelector((state) => state.todos)
+    const dispatch = useDispatch()
+    const isCheckAll = list.every((item) => item.done)
+    return (
+        <section className='main'>
+            <input id='toggle-all' className='toggle-all' type='checkbox' checked={isCheckAll} onChange={() => dispatch(changeAllDone(!isCheckAll))} />
+            <label htmlFor='toggle-all'>Mark all as complete</label>
+            <ul className='todo-list'>
+                {list.map((item) => (
+                    <TodoItem key={item.id} item={item} />
+                ))}
+            </ul>
+        </section>
+    )
+}
+```
+
+TodoItem.js
+
+```js
+import React, { useState, useRef, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import classNames from 'classnames'
+import { changeDone, delTodo } from '../store/actions/todos'
+
+export default function TodoItem({ item }) {
+    const [currentId, setCurrentId] = useState('')
+    const ref = useRef(null)
+    const dispatch = useDispatch()
+    const showEdit = (id) => {
+        setCurrentId(id)
+        // ref.current.focus()
+    }
+    useEffect(() => {
+        ref.current.focus()
+    }, [currentId])
+    return (
+        <li
+            className={classNames({
+                completed: item.done,
+                editing: item.id === currentId,
+            })}
+        >
+            <div className='view'>
+                <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
+                <label onDoubleClick={() => showEdit(item.id)}>{item.name}</label>
+                <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
+            </div>
+            <input className='edit' value='Create a TodoMVC template' onChange={() => {}} ref={ref} onBlur={() => setCurrentId('')} />
+        </li>
+    )
+}
+```
+
+### 完成
+
+记住输入的内容
+
+```js
+import React, { useState, useRef, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import classNames from 'classnames'
+import { changeDone, delTodo } from '../store/actions/todos'
+
+export default function TodoItem({ item }) {
+    const [currentId, setCurrentId] = useState('')
+    // #1
+    const [currentName, setCurrentName] = useState('')
+    const ref = useRef(null)
+    const dispatch = useDispatch()
+    const showEdit = (id, name) => {
+        setCurrentId(id)
+        // #2
+        setCurrentName(name)
+        // ref.current.focus()
+    }
+    useEffect(() => {
+        ref.current.focus()
+    }, [currentId])
+    return (
+        <li
+            className={classNames({
+                completed: item.done,
+                editing: item.id === currentId,
+            })}
+        >
+            <div className='view'>
+                <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
+                {/* #3 */}
+                <label onDoubleClick={() => showEdit(item.id, item.name)}>{item.name}</label>
+                <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
+            </div>
+            {/* #4、#5 */}
+            <input className='edit' value={currentName} onChange={(e) => setCurrentName(e.target.value)} ref={ref} onBlur={() => setCurrentId('')} />
+        </li>
+    )
+}
+```
+
+### 完成修改
+
+components/TodoItem.js
+
+```js
+import React, { useState, useRef, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import classNames from 'classnames'
+import { changeDone, changeName, delTodo } from '../store/actions/todos'
+
+export default function TodoItem({ item }) {
+    const [currentId, setCurrentId] = useState('')
+    // #1
+    const [currentName, setCurrentName] = useState('')
+    const ref = useRef(null)
+    const dispatch = useDispatch()
+    const showEdit = (id, name) => {
+        setCurrentId(id)
+        // #2
+        setCurrentName(name)
+        // ref.current.focus()
+    }
+    const edit = (e) => {
+        if (e.keyCode === 27) {
+            setCurrentId('')
+        }
+        if (e.keyCode === 13) {
+            dispatch(changeName(currentId, currentName))
+            setCurrentId('')
+        }
+    }
+    useEffect(() => {
+        ref.current.focus()
+    }, [currentId])
+    return (
+        <li
+            className={classNames({
+                completed: item.done,
+                editing: item.id === currentId,
+            })}
+        >
+            <div className='view'>
+                <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
+                {/* #3 */}
+                <label onDoubleClick={() => showEdit(item.id, item.name)}>{item.name}</label>
+                <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
+            </div>
+            {/* #4、#5 */}
+            <input className='edit' value={currentName} onChange={(e) => setCurrentName(e.target.value)} ref={ref} onBlur={() => setCurrentId('')} onKeyUp={edit} />
+        </li>
+    )
+}
+```
+
+constants/todos.js
+
+```js
+export const DEL_TODO = 'DEL_TODO'
+export const CHANGE_DONE = 'CHANGE_DONE'
+export const ADD_TODO = 'ADD_TODO'
+export const CHANGE_ALL_DONE = 'CHANGE_ALL_DONE'
+export const CHANGE_NAME = 'CHANGE_NAME'
+```
+
+actions/todos.js
+
+```js
+export const changeName = (id, name) => ({
+    type: CHANGE_NAME,
+    id,
+    name,
+})
+```
+
+`reducers/todos.js`
+
+```js
+import { ADD_TODO, CHANGE_DONE, DEL_TODO, CHANGE_ALL_DONE, CHANGE_NAME } from '../constants/todos'
+let lastid = 2
+const initState = [
+    {
+        id: 1,
+        name: '吃饭',
+        done: true,
+    },
+    {
+        id: 2,
+        name: '睡觉',
+        done: false,
+    },
+]
+
+export default function todos(state = initState, action) {
+    if (action.type === DEL_TODO) {
+        return state.filter((item) => item.id !== action.id)
+    }
+    if (action.type === CHANGE_DONE) {
+        return state.map((item) => {
+            if (item.id === action.id) {
+                return {
+                    ...item,
+                    done: !item.done,
+                }
+            } else {
+                return item
+            }
+        })
+    }
+    if (action.type === ADD_TODO) {
+        // const todo = {
+        //   // id: Date.now(), // 不存了
+        //   id: ++lastid, // 不存了
+        //   name: action.name,
+        //   done: false,
+        // }
+        const todo = {
+            id: action.id,
+            name: action.name,
+            done: false,
+        }
+        return [todo, ...state]
+    }
+    if (action.type === CHANGE_ALL_DONE) {
+        return state.map((item) => {
+            return {
+                ...item,
+                done: action.done,
+            }
+        })
+    }
+    if (action.type === CHANGE_NAME) {
+        return state.map((item) => {
+            if (item.id === action.id) {
+                return {
+                    ...item,
+                    name: action.name,
+                }
+            } else {
+                return item
+            }
+        })
+    }
+
+    return state
+}
+```
+
+### 清空任务
+
+剩余
+
+```js
+import React from 'react'
+import { useSelector } from 'react-redux'
+
+export default function TodoFooter() {
+    const list = useSelector((state) => state.todos)
+    const leftCount = list.filter((item) => !item.done).length
+    return (
+        <footer className='footer'>
+            <span className='todo-count'>
+                <strong>{leftCount}</strong> item left
+            </span>
+            <ul className='filters'>
+                <li>
+                    <a className='selected' href='#/'>
+                        All
+                    </a>
+                </li>
+                <li>
+                    <a href='#/active'>Active</a>
+                </li>
+                <li>
+                    <a href='#/completed'>Completed</a>
+                </li>
+            </ul>
+            <button className='clear-completed'>Clear completed</button>
+        </footer>
+    )
+}
+```
+
+清空
+
+constants/todos.js
+
+```js
+export const DEL_TODO = 'DEL_TODO'
+export const CHANGE_DONE = 'CHANGE_DONE'
+export const ADD_TODO = 'ADD_TODO'
+export const CHANGE_ALL_DONE = 'CHANGE_ALL_DONE'
+export const CHANGE_NAME = 'CHANGE_NAME'
+export const CLEAR_TODO = 'CLEAR_TODO'
+```
+
+actions/todos.js
+
+```js
+export const clearTodo = () => ({
+    type: CLEAR_TODO,
+})
+```
+
+reducers/todos.js
+
+```js
+import { ADD_TODO, CHANGE_DONE, DEL_TODO, CHANGE_ALL_DONE, CHANGE_NAME, CLEAR_TODO } from '../constants/todos'
+let lastid = 2
+const initState = [
+    {
+        id: 1,
+        name: '吃饭',
+        done: true,
+    },
+    {
+        id: 2,
+        name: '睡觉',
+        done: false,
+    },
+]
+
+export default function todos(state = initState, action) {
+    if (action.type === DEL_TODO) {
+        return state.filter((item) => item.id !== action.id)
+    }
+    if (action.type === CHANGE_DONE) {
+        return state.map((item) => {
+            if (item.id === action.id) {
+                return {
+                    ...item,
+                    done: !item.done,
+                }
+            } else {
+                return item
+            }
+        })
+    }
+    if (action.type === ADD_TODO) {
+        // const todo = {
+        //   // id: Date.now(), // 不存了
+        //   id: ++lastid, // 不存了
+        //   name: action.name,
+        //   done: false,
+        // }
+        const todo = {
+            id: action.id,
+            name: action.name,
+            done: false,
+        }
+        return [todo, ...state]
+    }
+    if (action.type === CHANGE_ALL_DONE) {
+        return state.map((item) => {
+            return {
+                ...item,
+                done: action.done,
+            }
+        })
+    }
+    if (action.type === CHANGE_NAME) {
+        return state.map((item) => {
+            if (item.id === action.id) {
+                return {
+                    ...item,
+                    name: action.name,
+                }
+            } else {
+                return item
+            }
+        })
+    }
+
+    if (action.type === CLEAR_TODO) {
+        // 保留没完成，清空已完成
+        return state.filter((item) => !item.done)
+    }
+
+    return state
+}
+```
+
+components/TodoFooter.js
+
+```js
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { clearTodo } from '../store/actions/todos'
+
+export default function TodoFooter() {
+    const list = useSelector((state) => state.todos)
+    const leftCount = list.filter((item) => !item.done).length
+    const dispatch = useDispatch()
+    return (
+        <footer className='footer'>
+            <span className='todo-count'>
+                <strong>{leftCount}</strong> item left
+            </span>
+            <ul className='filters'>
+                <li>
+                    <a className='selected' href='#/'>
+                        All
+                    </a>
+                </li>
+                <li>
+                    <a href='#/active'>Active</a>
+                </li>
+                <li>
+                    <a href='#/completed'>Completed</a>
+                </li>
+            </ul>
+            <button className='clear-completed' onClick={() => dispatch(clearTodo())}>
+                Clear completed
+            </button>
+        </footer>
+    )
+}
+```
+
+### 点击高亮
+
+constants/filter.js
+
+```js
+export const CHANGE_FILTER = 'CHANGE_FILTER'
+```
+
+actions/filter.js
+
+```js
+import { CHANGE_FILTER } from '../constants/filter'
+
+export const changeFilter = (filter) => ({
+    type: CHANGE_FILTER,
+    filter,
+})
+```
+
+`reducers/filter.js`
+
+```js
+import { CHANGE_FILTER } from '../constants/filter'
+
+export default function filter(state = 'all', action) {
+    if (action.type === CHANGE_FILTER) {
+        return action.filter
+    }
+    return state
+}
+```
+
+`reducers/index.js`
+
+```js
+import { combineReducers } from 'redux'
+import todos from './todos'
+import filter from './filter'
+const rootReducer = combineReducers({
+    todos,
+    filter,
+})
+
+export default rootReducer
+```
+
+`components/TodoFooter.js`
+
+```js
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeFilter } from '../store/actions/filter'
+import { clearTodo } from '../store/actions/todos'
+
+export default function TodoFooter() {
+    const list = useSelector((state) => state.todos)
+    const leftCount = list.filter((item) => !item.done).length
+    const dispatch = useDispatch()
+    const filter = useSelector((state) => state.filter)
+    const arr = ['all', 'active', 'completed']
+    return (
+        <footer className='footer'>
+            <span className='todo-count'>
+                <strong>{leftCount}</strong> item left
+            </span>
+            <ul className='filters'>
+                {arr.map((item) => (
+                    <li key={item}>
+                        <a className={item === filter ? 'selected' : ''} href='#/' onClick={() => dispatch(changeFilter(item))}>
+                            {item}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+            <button className='clear-completed' onClick={() => dispatch(clearTodo())}>
+                Clear completed
+            </button>
+        </footer>
+    )
+}
+```
+
+### 切换数据
+
+components/TodoMain.js
+
+```js
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import classNames from 'classnames'
+import { changeAllDone, changeDone, delTodo } from '../store/actions/todos'
+import TodoItem from './TodoItem'
+
+export default function TodoMain() {
+    const list = useSelector((state) => {
+        if (state.filter === 'active') {
+            return state.todos.filter((item) => !item.done)
+        } else if (state.filter === 'completed') {
+            return state.todos.filter((item) => item.done)
+        } else {
+            return state.todos
+        }
+    })
+    const dispatch = useDispatch()
+    const isCheckAll = list.every((item) => item.done)
+    return (
+        <section className='main'>
+            <input id='toggle-all' className='toggle-all' type='checkbox' checked={isCheckAll} onChange={() => dispatch(changeAllDone(!isCheckAll))} />
+            <label htmlFor='toggle-all'>Mark all as complete</label>
+            <ul className='todo-list'>
+                {list.map((item) => (
+                    <TodoItem key={item.id} item={item} />
+                ))}
+            </ul>
+        </section>
+    )
+}
 ```
