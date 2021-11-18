@@ -171,9 +171,9 @@ export default function App() {
 
 ### 内容
 
--   作用：将组件的状态逻辑提取到自定义 Hook 中，实现复用。
+-   作用：复用状态逻辑。
 
--   自定义 Hook 是一个函数，规定函数名称必须以 use 开头，React 内部会据此来区分是否是一个 Hook。
+-   自定义 Hook 是一个函数，规定函数名称必须以 use 开头，格式是 `useXxx`，React 内部会据此来区分是否是一个 Hook。
 
 -   自定义 Hook 只能在函数组件或其他自定义 Hook 中使用，否则，会报错！
 
@@ -256,7 +256,7 @@ export const useScroll = () => {
 
 ### 内容
 
--   在函数组件中，可以使用 useEffect 发送请求获取数据。
+-   useEffect 是专门用来处理副作用的，所以可以在 useEffect 内发送请求获取数据。
 
 -   注意：effect 只能是一个同步函数，不能使用 async。
 
@@ -289,6 +289,18 @@ useEffect(() => {
 
 ### 演示发请求
 
+<img src="/resource/images/ifer_ajax.png"/>
+
+1. 准备初始状态 list 和修改状态的方法 setList。
+
+2. 在 useEffect 内部定义自己的请求函数。
+
+3. 函数内部通过 axios 发送请求并把返回的数据通过 setList 设置到 list 中。
+
+4. 调用请求函数。
+
+5. 渲染 list。
+
 ```jsx
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
@@ -311,6 +323,10 @@ export default function App() {
     )
 }
 ```
+
+### 小结
+
+怎么在 useEffect 内部使用 async/await 语法。
 
 ## useRef 操作 DOM
 
