@@ -336,32 +336,31 @@ export default function App() {
 
 ### 内容
 
--   使用场景：在 React 中进行 DOM 操作时，用来获取 DOM。
-
--   作用：返回一个带有 current 属性的对象，通过该对象就可以进行 DOM 操作了。
+使用场景：DOM 操作或获取类组件的实例。
 
 ### 使用
 
 -   参数：在获取 DOM 时，一般都设置为 null。
 
--   返回值：包含 current 属性的对象。
-
--   注意：只要在 React 中进行 DOM 操作，都可以通过 useRef 来获取 DOM。
-
--   注意：useRef 不仅仅可以用于获取 DOM，还可以获取类组件实例。
+-   返回值：返回一个带有 current 属性的对象，通过该对象就可以得到 DOM 对象或类组件实例。
 
 ### useRef 获取 DOM
 
+1. 使用 useRef 创建一个有 current 属性的 ref 对象，`{ current: null }`。
+
+```js
+const xxxRef = useRef(null)
+```
+
+2. 通过 DOM 的 ref 属性和上面创建的对象进行关联。
+
 ```jsx
-/*
-  1. 使用 useRef 能够创建一个 ref 对象，有 current 属性，{ current: null }
-    const xxxRef = useRef(null)
+<div ref={xxxRef}></div>
+```
 
-  2. 通过 ref 属性关联到某个 DOM 对象上后，{ current: DOM }
-    <div ref={xxxRef}></div>
+3. 通过 xxxRef.current 就可以访问到对应的 DOM 啦。
 
-  3. 可以通过 xxxRef.current 访问到对应的 DOM
-*/
+```jsx
 import React, { useRef } from 'react'
 
 const App = () => {
@@ -429,41 +428,51 @@ export default class Test extends Component {
 
 -   使用场景：跨组件共享数据。
 
--   Context 作用：实现跨组件传递数据，而不必在每个级别手动传递 props，简化组件之间的数据传递过程。
+-   Context 作用：实现跨组件传递数据，而不必在每一个组件传递 props，简化组件之间数据传递的过程。
 
 ![image-20210901215518365](/resource/images/image-20210901215518365-16347403277492-16362080009754.png)
 
--   <Context.Provider value>：通过 value 属性提供数据。
+-   `<Context.Provider value>`：通过 value 属性提供数据。
 
--   <Context.Consumer>：通过 render props 模式，在 JSX 中获取 Context 中提供的数据。
+-   `<Context.Consumer>`：在 JSX 中获取 Context 中提供的数据。
 
 -   使用 Provider 组件，如果传递了 value，Consumer 获取到的是 Provider 中的 value 属性值。
 
--   如果没有传递 value，Consumer 获取到的是 createContext(defaultValue) 的 defaultValue 值。
+-   如果祖先组件没有使用 Provider，那么 Consumer 获取到的是 createContext(defaultValue) 的 defaultValue 值。
 
-代码演示
+### 步骤
+
+需求：App 根组件经过 Parent 组件把数据传递到 Child 组件。
+
+1. 新建 `countContext.js`，通过 createContext 方法创建 Context 对象。
+
+2. `App.js` 根组件通过 `Context.Provider` 提供数据。
+
+3. `Child.js` 孙组件通过 `Context.Consumer` 消费数据。
+
+### 代码
 
 `countContext.js`
 
 ```js
 import { createContext } from 'react'
-export const context = createContext()
+export const Context = createContext()
 ```
 
 `App.js`
 
 ```js
 import React from 'react'
-import { context } from './countContext'
+import { Context } from './countContext'
 import Parent from './Parent'
 
 export default function App() {
     return (
-        <context.Provider value={{ count: 0 }}>
+        <Context.Provider value={{ count: 0 }}>
             App
             <hr />
             <Parent />
-        </context.Provider>
+        </Context.Provider>
     )
 }
 ```
@@ -490,7 +499,7 @@ import { context } from './countContext'
 
 export default function Child() {
     return (
-        <context.Consumer>
+        <Context.Consumer>
             {(value) => {
                 return (
                     <div>
@@ -499,10 +508,14 @@ export default function Child() {
                     </div>
                 )
             }}
-        </context.Consumer>
+        </Context.Consumer>
     )
 }
 ```
+
+### 小结
+
+useRef 的使用步骤是什么？
 
 ## useContext 使用
 
@@ -514,16 +527,16 @@ export default function Child() {
 
 -   作用：在函数组件中，获取 Context.Provider 提供的数据。
 
--   useContext 的参数：Context 对象，即通过 createContext 函数创建的对象。
+-   参数：Context 对象，即通过 createContext 函数创建的对象。
 
--   useContext 的返回值：Context 中提供的 value 数据。
+-   返回值：Context.Provider 提供的 value 数据。
 
 ```js
 import { useContext } from 'react'
-import { context } from './countContext'
+import { Context } from './countContext'
 
 export default function Child() {
-    const value = useContext(context)
+    const value = useContext(Context)
     return (
         <div>
             Child
@@ -541,19 +554,26 @@ export default function Child() {
 
 发送请求，获取到购物车数据。
 
-#### 步骤
-
-1. 安装 axios。
-
-2. 使用 useState 提供状态。
-
-3. 使用 useEffect 发送请求获取数据。
+#### 内容
 
 需求：本地有，就用本地的，本地没有，从远端获取。
+
+1. 在新的 useEffect 中，获取本地数据。
+
+2. 如果本地有，就把获取到的数据设置到 list 数组。
+
+3. 如果本地没有，发送请求获取远端数据，并把结果设置到 list 数组。
 
 `App.js`
 
 ```jsx
+// 初始的 state 也就没有必要这样写了
+/* const [list, setList] = useState(() => {
+    return JSON.parse(localStorage.getItem('list')) || arr
+}) */
+// 建议
+const [list, setList] = useState([])
+
 useEffect(() => {
     // 判断本地是否有数据
     const arr = JSON.parse(localStorage.getItem('list')) || []
@@ -571,7 +591,7 @@ useEffect(() => {
 
 ### MyCount 组件的封装
 
--   基本结构
+`components/MyCount/index.js`
 
 ```jsx
 import React from 'react'
@@ -591,7 +611,7 @@ export default function MyCount() {
 }
 ```
 
--   样式
+`components/MyCount/index.scss`
 
 ```scss
 .my-counter {
@@ -604,7 +624,7 @@ export default function MyCount() {
 }
 ```
 
--   在 GoodsItem 组件中渲染
+`components/GoodItem/index.js`
 
 ```jsx
 import MyCount from '../MyCount'
@@ -617,50 +637,21 @@ import MyCount from '../MyCount'
 </div>
 ```
 
-### 数量控制 层层传递
+### 数量控制 props
 
-`components/MyCount/index.js`
+-   设置初始值
 
-```js
-export default function MyCount({ count, changeCount }) {
-    const plus = () => {
-        changeCount(count + 1)
-    }
-    const minus = () => {
-        if (count <= 1) return
-        changeCount(count - 1)
-    }
-    return (
-        <div className='my-counter'>
-            <button type='button' className='btn btn-light' onClick={minus}>
-                -
-            </button>
-            <input type='number' className='form-control inp' value={count} />
-            <button type='button' className='btn btn-light' onClick={plus}>
-                +
-            </button>
-        </div>
-    )
-}
-```
+1. GoodsItem 中传递 `count={goods_count}` 给 MyCount 组件。
 
-`components/GoodsItem/index.js`
+2. MyCount 组件接收并绑定给 input 的 value。
 
-```js
-export default function GoodsItem({ goods_count, goods_img, goods_name, goods_price, goods_state, id, changeState, changeCount }) {
-    return (
-        <div className='my-goods-item'>
-            <div className='right'>
-                <div className='top'>{goods_name}</div>
-                <div className='bottom'>
-                    <span className='price'>¥ {goods_price}</span>
-                    <MyCount count={goods_count} changeCount={(count) => changeCount(id, count)} />
-                </div>
-            </div>
-        </div>
-    )
-}
-```
+-   点击按钮修改数据
+
+1. `App.js` 中准备 changeCount（修改数据的方法），并传递给 GoodsItem。
+
+2. GoodsItem 中进行接收，并继续传递 `changeCount={(count) => changeCount(id, count)}` 到 MyCount。
+
+3. 给 MyCount 中的加减按钮绑定点击事件，调用传递过来的 changeCount 并传递期望的 count。
 
 `App.js`
 
@@ -687,6 +678,49 @@ export default function App() {
             {list.map((item) => (
                 <GoodsItem key={item.id} {...item} changeState={changeState} changeCount={changeCount}></GoodsItem>
             ))}
+        </div>
+    )
+}
+```
+
+`components/GoodsItem/index.js`
+
+```js
+export default function GoodsItem({ goods_count, goods_img, goods_name, goods_price, goods_state, id, changeState, changeCount }) {
+    return (
+        <div className='my-goods-item'>
+            <div className='right'>
+                <div className='top'>{goods_name}</div>
+                <div className='bottom'>
+                    <span className='price'>¥ {goods_price}</span>
+                    <MyCount count={goods_count} changeCount={(count) => changeCount(id, count)} />
+                </div>
+            </div>
+        </div>
+    )
+}
+```
+
+`components/MyCount/index.js`
+
+```js
+export default function MyCount({ count, changeCount }) {
+    const plus = () => {
+        changeCount(count + 1)
+    }
+    const minus = () => {
+        if (count <= 1) return
+        changeCount(count - 1)
+    }
+    return (
+        <div className='my-counter'>
+            <button type='button' className='btn btn-light' onClick={minus}>
+                -
+            </button>
+            <input type='number' className='form-control inp' value={count} />
+            <button type='button' className='btn btn-light' onClick={plus}>
+                +
+            </button>
         </div>
     )
 }
@@ -758,7 +792,9 @@ export default function MyCount({ count, id }) {
 }
 ```
 
-输入处理，`components/MyCount/index.js`
+<!-- ### 输入处理
+
+`components/MyCount/index.js`
 
 ```js
 import React, { useContext } from 'react'
@@ -793,4 +829,4 @@ export default function MyCount({ count, id }) {
         </div>
     )
 }
-```
+``` -->
