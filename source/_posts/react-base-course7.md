@@ -6,11 +6,9 @@ tags:
 
 ## 今日目标
 
-✔ redux 基本介绍。
+✔ 掌握 Redux 核心概念。
 
-✔ redux 核心概念。
-
-✔ react-redux 的使用。
+✔ 掌握 react-redux 的使用。
 
 <!-- more -->
 
@@ -20,49 +18,39 @@ tags:
 
 能够说出为什么需要使用 Redux。
 
-TODO: 点击计数
-
 ### 内容
 
 [Redux 中文文档](http://cn.redux.js.org/)
 
-TODO: 删减
-
 -   概念
 
-Redux 是 react 中最流行的状态管理工具之一 。
+Redux 是 React 中最流行的状态管理工具之一 。
 
 -   起源
 
-React 只是 DOM 的一个抽象层（UI 库），并不是 Web 应用的完整解决方案。因此 react 在涉及到数据的处理以及组件之间的通信时会比较复杂，对于大型的复杂应用来说，这两方面恰恰是最关键的，因此只用 React，写大型应用比较吃力。
+React 的定位只是一个用来构建用户界面的库，并不是 Web 应用的完整解决方案。因此 React 在涉及到复杂组件之间的通信时会比较棘手，而对于大型项目来说，这方面恰恰是最关键的，因此只用 React 写大型项目会比较吃力。
 
 2014 年 Facebook 提出了 Flux 架构的概念，引发了很多的实现。
 
-2015 年，Redux 出现，将 Flux 与函数式编程（reducer）结合一起，很短时间内就成为了最热门的前端架构。
+2015 年，Redux 出现，将 Flux 与函数式编程（Reducer）结合一起，很短时间内就成为了最热门的前端架构。
 
-Flux 是最早的状态管理 工具，它提供了状态管理的思想，也提供对应的实现，除了 Flux、Redux 之外，还有：Mobx 等状态管理工具。
+Flux 是最早的状态管理工具，它提供了状态管理的思想，也提供对应的实现，除了 Flux、Redux 之外，还有：Mobx 等状态管理工具。
 
 -   为什么要用 Redux
 
-![with redux](/resource/images/with_redux.png)
+<img src="/resource/images/with_redux.png" class="highlight2" width="400"/>
 
--   不使用 Redux (图左边)
+-   不使用 Redux（图左边）
 
-    -   只能使用父子组件通讯、状态提升等 React 自带机制
+    a，只能使用父子组件通讯、状态提升等 React 自带机制，理远房亲戚（非父子）关系的组件通讯时乏力。
 
-    -   处理远房亲戚(非父子)关系的组件通讯时乏力
+    b，组件之间的数据流混乱，出现 Bug 时难定位。
 
-    -   组件之间的数据流混乱，出现 Bug 时难定位
+-   使用 Redux（图右边）
 
--   使用 Redux (图右边)
+    a，**集中式存储和管理应用的状态**，处理组件通讯问题时，无视组件之间的层级关系。
 
-    -   **集中式存储和管理应用的状态**
-
-    -   处理组件通讯问题时，**无视组件之间的层级关系**
-
-    -   简化大型复杂应用中组件之间的通讯问题
-
-    -   数据流清晰，易于定位 Bug
+    b，简化大型复杂应用中组件之间的通讯问题，数据流清晰，易于定位 Bug。
 
 ## Redux 开发环境准备
 
@@ -72,27 +60,37 @@ Flux 是最早的状态管理 工具，它提供了状态管理的思想，也�
 
 ### 内容
 
-TODO: 点击按钮 +1，之前的方法不利于数据共享。
-
 使用 React CLI 来创建项目，并安装 Redux 包即可。
 
-1. 创建 React 项目：`npx create-react-app redux-basic`
+1. 创建 React 项目
 
-2. 启动项目：`yarn start`
+```bash
+npx create-react-app redux-basic
+```
 
-3. 安装 Redux 包：`yarn add redux`
+2. 启动项目
 
-TODO: 搭建结构
+```bash
+yarn start
+```
 
-## Redux 核心概念-概述
+3. 安装 Redux 包
+
+```bash
+yarn add redux
+```
+
+## Redux 核心概念
 
 ### 目标
 
-能够理解 Redux 三个核心概念的职责。
+能够了解 Redux 三个核心概念的职责。
 
 ### 内容
 
-为了让**代码各部分职责清晰、明确**，Redux 代码被分为三个核心概念：action / reducer / store。
+[阮一峰](https://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html)
+
+为了让**代码各部分职责清晰、明确**，Redux 提出三个核心概念，需要我们写代码的时候遵守：action / reducer / store。
 
 -   action -> reducer -> store
 
@@ -110,9 +108,11 @@ TODO: 搭建结构
 
 -   store：相当于公司的老板
 
--   流程：老板（store）分配（dispatch）要做的事情（action）给员工（reducer），员工干完活把结果交给老板
+-   流程：老板（store）分配（dispatch）要做的事情（action）给员工（reducer），员工干完活把结果交给老板。
 
-## Redux 核心概念-action
+<img src="/resource/images/redux.png"/>
+
+## Redux 核心概念 action
 
 ### 目标
 
@@ -120,15 +120,13 @@ TODO: 搭建结构
 
 ### 内容
 
-TODO: 如何用代码来表示
-
 -   action：描述要做的事情，项目中的每一个功能都是一个 action，比如
 
-    -   计数器案例：计数器加 1、减 1
+    a，计数器案例：计数器加 1、减 1
 
-    -   todomvc 案例：添加任务、删除任务等
+    b，todomvc 案例：添加任务、删除任务等
 
-    -   项目：登录，退出等
+    c，项目：登录，退出等
 
 -   特点
 
@@ -153,26 +151,26 @@ TODO: 如何用代码来表示
 `store/action.js`
 
 ```js
-export const addOne = {
-    type: 'addOne',
+export const increment = {
+    type: 'INCREMENT',
 }
 
-export const addMore = {
-    type: 'addMore',
+export const incrementMore = {
+    type: 'INCREMENT_MORE',
     payload: 5,
 }
 
-export const subOne = {
-    type: 'subOne',
+export const decrement = {
+    type: 'DECREMENT',
 }
 
-export const subMore = {
-    type: 'subMore',
+export const decrementMore = {
+    type: 'DECREMENT_MORE',
     payload: 5,
 }
 ```
 
-## Redux 核心概念-action creator
+## Redux 核心概念 action creator
 
 ### 目标
 
@@ -190,81 +188,79 @@ export const subMore = {
 
 ```js
 // 直接创建 action
-const addTodo = {
-    type: 'ADD_TODO',
-    text: '吃饭',
+const incrementMore = {
+    type: 'INCREMENT_MORE',
+    payload: 5,
 }
-const addTodo = {
-    type: 'ADD_TODO',
-    text: '睡觉',
+const incrementMore = {
+    type: 'INCREMENT_MORE',
+    payload: 7,
 }
 
 // 通过 actionCreator 创建 action
-const addTodo = (text) => ({
-    type: 'ADD_TODO',
-    text,
+const incrementMore = (payload) => ({
+    type: 'INCREMENT_MORE',
+    payload,
 })
-addTodo('吃饭')
-addTodo('睡觉')
+incrementMore(5)
+addTincrementMoreodo(7)
 ```
 
 `store/action.js`
 
 ```js
-export const addOne = () => {
+export const increment = () => {
     return {
-        type: 'addOne',
+        type: 'INCREMENT',
     }
 }
 
-export const addMore = (payload) => ({
-    type: 'addMore',
+export const incrementMore = (payload) => ({
+    type: 'INCREMENT_MORE',
     payload,
 })
 
-export const subOne = () => ({
-    type: 'subOne',
+export const decrement = () => ({
+    type: 'DECREMENT',
 })
 
-export const subMore = (payload) => ({
-    type: 'subMore',
+export const decrementMore = (payload) => ({
+    type: 'DECREMENT_MORE',
     payload,
 })
 ```
 
-## Redux 核心概念-reducer
+## Redux 核心概念 reducer
 
 ### 目标
 
-能够掌握 reducer 的基本写法
+能够掌握 reducer 的基本写法。
 
 ### 内容
 
--   这个名字是参考了 JS 数组中的 `reduce` 这个方法，数组中的 `reduce` 方法，可以来实现累积（比如累加或者累减）
+reducer：本质上是一个函数函数，作用是**用来根据 action 来更新状态**，特点如下
 
--   reducer：函数，**用来根据 action 来更新状态**，特点如下
+-   函数签名为：`(prevState, action) => newState`
 
-    -   函数签名为：`(prevState, action) => newState`
+-   接收上一次的状态和 action 作为参数，根据 action 的类型，执行不同操作，最终返回新的状态
 
-    -   接收上一次的状态和 action 作为参数，根据 action 的类型，执行不同操作，最终返回新的状态
+-   reducer 就是一个`纯函数`，接收旧的 state 和 action，返回新的 state
 
-    -   reducer 就是一个`纯函数`，接收旧的 state 和 action，返回新的 state
+-   原则：不要在 reducer 函数内部直接修改 state
 
-    -   原则：不要在 reducer 函数内部直接修改 state
-
-核心代码 store/reducer.js
+store/reducer.js
 
 ```jsx
 export default function reducer(state = 100, action) {
     // 处理各种各样的action
     switch (action.type) {
-        case 'addOne':
+        case 'INCREMENT':
             return state + 1
-        case 'subOne':
+        case 'DECREMENT':
             return state - 1
-        case 'addMore':
+        case 'INCREMENT_MORE':
             return state + action.payload
-        case 'subMore':
+        case 'DECREMENT_MORE':
             return state - action.payload
         default:
             // 很重要
@@ -273,7 +269,7 @@ export default function reducer(state = 100, action) {
 }
 ```
 
-## Redux 核心概念-纯函数
+## Redux 核心概念 纯函数
 
 ### 目标
 
@@ -281,7 +277,7 @@ export default function reducer(state = 100, action) {
 
 ### 内容
 
--   纯函数是*函数式编程*中的概念，对于纯函数来说，**相同的输入总是得到相同的输出**
+-   纯函数是函数式编程中的概念，对于纯函数来说，**相同的输入总是得到相同的输出**
 
 ```jsx
 function add(a, b) {
@@ -309,17 +305,17 @@ arr.splice(1, 2)
 
     -   不得改写参数
 
-    -   不能调用 Date.now()或者 Math.random()等不纯的方法，因为每次会得到不一样的结果
+    -   不能调用 Date.now() 或者 Math.random() 等不纯的方法，因为每次会得到不一样的结果
 
     -   不能使用全局变量
 
--   reducer 必须是一个纯函数，主要的含义就是不要修改原参数
+-   reducer 必须是一个纯函数，最主要的就是不要修改原参数
 
 -   没有副作用，副作用指的是例如函数中一些异步调用或者会影响函数作用域之外的变量一类的操作
 
 好处：方便测试，性能优化 ，对于 reducer 来说主要就是不要改原来的数据
 
-## Redux 核心概念-store
+## Redux 核心概念 store
 
 ### 目标
 
@@ -332,8 +328,8 @@ arr.splice(1, 2)
 store/index.js
 
 ```jsx
-// store: 整个数据的仓库，复杂关联reducer和action
-// store可以给reducer分配action
+// store: 整个数据的仓库，负责关联reducer和action
+// 通过 store 对象可以给reducer分配action
 import { createStore } from 'redux'
 import reducer from './reducer'
 
@@ -386,32 +382,6 @@ export default class App extends Component {
 ```js
 import React, { Component } from 'react'
 import store from './store'
-import { addOne } from './store/action'
-
-export default class App extends Component {
-    handleClick() {
-        store.dispatch(addOne())
-        console.log(store.getState())
-    }
-    render() {
-        return (
-            <div>
-                <p>count: {store.getState()}</p>
-                <div>
-                    <button onClick={this.handleClick}>+1</button>
-                    <button>-1</button>
-                    <button>+5</button>
-                    <button>-5</button>
-                </div>
-            </div>
-        )
-    }
-}
-```
-
-```js
-import React, { Component } from 'react'
-import store from './store'
 import { addMore, addOne, subMore, subOne } from './store/action'
 
 export default class App extends Component {
@@ -453,31 +423,25 @@ store.subscribe(() => {
 
 ```js
 import { createStore } from 'redux'
-
 // 创建 store
 const store = createStore(reducer)
-
 // 更新状态
 // dispatch 派遣，派出。表示：分发一个 action，也就是发起状态更新
 store.dispatch(action)
 
-// ---
 // 其他 API
-
 // 监听状态变化
 const unSubscribe = store.subscribe(() => {
     // 状态改变时，执行相应操作
 })
 
 // 取消监听状态变化
-unSubscribe()
+// unSubscribe()
 ```
 
 ## Redux 获取默认值的执行过程
 
-reducer 一上来就会执行一次，打印试一下 console.log(action.type)
-
--   我们发现：只要创建 store，那么，Redux 就会调用一次 reducer
+-   我们发现：只要创建 store，那么，Redux 就会调用一次 reducer，打印试一下 `console.log(action.type)`
 
 -   这一次调用 reducer 的目的：**获取状态的默认值**
 
@@ -569,9 +533,9 @@ console.log('更新后：', store.getState()) // 11
 
 ### 内容
 
--   问题:为什么要使用 React-Redux 绑定库?
+-   问题：为什么要使用 React-Redux 绑定库?
 
--   回答:React 和 Redux 是两个独立的库，两者之间职责独立。因此，为了实现在 React 中使用 Redux 进行状态管理 ，就需要一种机制，将这两个独立的库关联在一起。这时候就用到 React-Redux 这个绑定库了。
+-   回答：React 和 Redux 是两个独立的库，两者之间职责独立。因此，为了实现在 React 中使用 Redux 进行状态管理 ，就需要一种机制，将这两个独立的库关联在一起。这时候就用到 React-Redux 这个绑定库了。
 
 -   作用:为 React 接入 Redux，实现在 React 中使用 Redux 进行状态管理。
 
@@ -585,9 +549,13 @@ console.log('更新后：', store.getState()) // 11
 
 ### 内容
 
-1. 介绍 react-redux => `yarn add react-redux`
+1. 安装 react-redux
 
-2. 安装并且配置 react-redux => 参考文档
+```bash
+yarn add react-redux
+```
+
+2. 安装并且配置 react-redux
 
 3. 优化刚才的代码
 
@@ -606,29 +574,6 @@ ReactDOM.render(
     </Provider>,
     document.querySelector('#root')
 )
-```
-
-```js
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { addMore, addOne, subMore, subOne } from './store/action'
-
-const App = () => {
-    const money = useSelector((state) => state)
-    return (
-        <div>
-            <p>count: {money}</p>
-            <div>
-                <button>+1</button>
-                <button>-1</button>
-                <button>+5</button>
-                <button>-5</button>
-            </div>
-        </div>
-    )
-}
-
-export default App
 ```
 
 ## react-redux-useSelector
@@ -679,8 +624,6 @@ export default function App() {
 
 ## react-redux-useDispatch
 
-好处是组件会自动更新。
-
 ### 目标
 
 结合 hooks 使用 react-redux，修改数据
@@ -703,6 +646,7 @@ export default function App() {
     // 通过redux实现金钱管理
     // 通过store.getState() 就可以获取到store的状态
     const money = useSelector((state) => state)
+    // 好处是组件会自动更新
     const dispatch = useDispatch()
     return (
         <div>
@@ -719,32 +663,6 @@ export default function App() {
         </div>
     )
 }
-```
-
-new
-
-```js
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { addMore, addOne, subMore, subOne } from './store/action'
-
-const App = () => {
-    const money = useSelector((state) => state)
-    const dispatch = useDispatch()
-    return (
-        <div>
-            <p>count: {money}</p>
-            <div>
-                <button onClick={() => dispatch(addOne())}>+1</button>
-                <button onClick={() => dispatch(subOne())}>-1</button>
-                <button onClick={() => dispatch(addMore(5))}>+5</button>
-                <button onClick={() => dispatch(subMore(5))}>-5</button>
-            </div>
-        </div>
-    )
-}
-
-export default App
 ```
 
 如果 Test 组件想用，看看有多方便，无需传值
