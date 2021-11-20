@@ -10,6 +10,8 @@ tags:
 
 ✔ 掌握 react-router-dom 的使用。
 
+<!-- more -->
+
 ## 了解 SPA
 
 -   [网易云音乐](https://music.163.com/)。
@@ -29,8 +31,6 @@ tags:
 -   因为爬虫只爬取 HTML 页面中的文本内容，不会执行 JS 代码。
 
 -   可以通过 SSR（服务端渲染 Server Side Rendering）来解决 SEO 问题，即先在服务器端把内容渲染出来，返回给浏览器的就是纯 HTML 内容了。
-
-<!-- more -->
 
 ## 前端路由
 
@@ -251,7 +251,7 @@ export default function App() {
 </NavLink>
 ```
 
-## Route
+## Route 匹配规则
 
 ```jsx
 {
@@ -379,7 +379,7 @@ export default function Search(props) {
 }
 ```
 
-## 动态路由与路由参数获取
+## 动态路由传参
 
 1. 入口传参。
 
