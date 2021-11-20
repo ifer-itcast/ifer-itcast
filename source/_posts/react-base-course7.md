@@ -582,201 +582,260 @@ export default function Test() {
 
 ## Reducer 的分离与合并
 
--   随着项目功能变得越来越复杂，需要 Redux 管理的状态也会越来越多
+### 概述
 
--   此时，有两种方式来处理状态的更新：
+-   随着项目功能变得越来越复杂，需要 Redux 管理的状态也会越来越多，此时，有两种方式来处理状态的更新。
 
-    1. 使用一个 reducer：处理项目中所有状态的更新
+    a，使用一个 reducer，处理项目中所有状态。
 
-    2. 使用多个 reducer：按照项目功能划分，每个功能使用一个 reducer 来处理该功能的状态更新
+    b，使用多个 reducer，按照项目功能划分，每一个 reducer 处理该功能的状态。
 
--   推荐：**使用第二种方案(多个 reducer)**，每个 reducer 处理的状态更单一，职责更明确
+-   推荐：使用第二种方案，每个 reducer 处理单一功能的状态，职责更明确。
 
--   此时，项目中会有多个 reducer，但是 **store 只能接收一个 reducer**，因此，需要将多个 reducer 合并为一根 reducer，才能传递给 store
+-   问题：此时项目中会有多个 reducer，但是 **store 只能接收一个 reducer**，因此需要将多个 reducer 合并为一个 reducer，才能传递给 store 使用。
 
--   合并方式：使用 Redux 中的 `combineReducers` 函数
+-   解决：使用 Redux 中的 `combineReducers({ counter： counterReducer, user： userReducer })` 函数。
 
--   注意：**合并后，Redux 的状态会变为一个对象，对象的结构与 combineReducers 函数的参数结构相同**
+-   注意：组件中再想只使用 counter 的状态，需要 `const count = useSelector((state) => state.counter)`
 
-    -   比如，此时 Redux 状态为：`{ a： aReducer 处理的状态, b： bReducer 处理的状态 }`
+-   每个 reducer 应该只关注自己的数据，例如：
 
--   注意：虽然在使用 `combineReducers` 以后，整个 Redux 应用的状态变为了`对象`，但是，对于每个 reducer 来说，每个 reducer 只负责整个状态中的某一个值。也就是每个 reducer 各司其职，最终，由多个 reducer 合作完成整个应用状态的更新。
+    a，登录功能：`loginReducer` 处理的只应该是跟登录相关的状态。
 
-    -   也就是：**每个 reducer 只负责整个应用状态中的某一部分**，每个 reducer 都很自私只关注自己的数据
+    b，个人资料：`profileReducer` 处理的只应该是跟个人资料相关的状态。
 
-    -   举个例子：
+    c，文章列表、文章详情、文章评论等。
 
-        -   登录功能：`loginReducer` 处理的状态只应该是跟登录相关的状态
+### 步骤
 
-        -   个人资料：`profileReducer` 处理的状态只应该是跟个人资料相关的状态
+1. `reducers.js` 中新建 userReducer。
 
-        -   文章列表、文章详情、文章评论 等
+2. 通过 combineReducers 合并 counter 和 user 并导出。
 
-```jsx
+3. 修改 `App.js` 和 `Test.js` 获取数据的方式。
+
+4. 新建 `User.js` 测试 userReducer 的使用。
+
+### 代码
+
+#### `reducers.js`
+
+```js
 import { combineReducers } from 'redux'
-function money(state = 1000, action) {
-    console.log('reducer执行', action)
-    // 处理各种各样的action
+
+function counter(state = 10, action) {
     switch (action.type) {
-        case 'addOne':
-            return state + 1
-        case 'subOne':
-            return state - 1
-        case 'addMore':
+        case 'INCREMENT':
             return state + action.payload
-        case 'subMore':
+        case 'DECREMENT':
             return state - action.payload
         default:
-            // 很重要
             return state
     }
 }
 
-function user(state = { name: 'zs', password: '123456' }, action) {
-    if (action.type === 'setName') {
-        return {
-            ...state,
-            name: action.payload,
-        }
+function user(state = { name: 'ifer', age: 18 }, action) {
+    switch (action.type) {
+        case 'UPDATENAME':
+            return {
+                ...state,
+                name: action.payload,
+            }
+        default:
+            return state
     }
-    return state
 }
 
-// 合并多个reducer
-const rootReducer = combineReducers({
-    // a 和 b指的就是模块的名字
-    money,
+export default combineReducers({
+    counter,
     user,
 })
-
-export default rootReducer
 ```
 
-`App.js`
+#### `App.js`
 
 ```js
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addMore, addOne, subMore, subOne } from './store/actions'
+import { increment, decrement } from './store/actions'
 import Test from './Test'
-
+import User from './User'
 const App = () => {
-    const money = useSelector((state) => state.money)
+    const count = useSelector((state) => state.counter)
     const dispatch = useDispatch()
     return (
         <div>
-            <p>count: {money}</p>
+            <h3>{count}</h3>
+            <div>
+                <button onClick={() => dispatch(increment(1))}>+1</button>
+                <button onClick={() => dispatch(increment(5))}>+5</button>
+                <button onClick={() => dispatch(decrement(1))}>-1</button>
+                <button onClick={() => dispatch(decrement(5))}>-5</button>
+            </div>
             <Test />
-            <div>
-                <button onClick={() => dispatch(addOne())}>+1</button>
-                <button onClick={() => dispatch(subOne())}>-1</button>
-                <button onClick={() => dispatch(addMore(5))}>+5</button>
-                <button onClick={() => dispatch(subMore(5))}>-5</button>
-            </div>
-            <div>
-                <p>用户名：</p>
-                <p>密码：</p>
-            </div>
+            <User />
         </div>
     )
 }
-
 export default App
 ```
 
-`Test.js`
+#### `Test.js`
 
 ```js
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { increment } from './store/actions'
 
 export default function Test() {
-    const money = useSelector((state) => state.money)
-    return <div>{money}</div>
-}
-```
-
-修改用户名
-
-`App.js`
-
-```js
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { addMore, addOne, subMore, subOne } from './store/actions'
-import Test from './Test'
-import { setName } from './store/actions'
-
-const App = () => {
-    const money = useSelector((state) => state.money)
-    const user = useSelector((state) => state.user)
+    const count = useSelector((state) => state.counter)
     const dispatch = useDispatch()
     return (
         <div>
-            <p>count: {money}</p>
-            <Test />
+            <p>Test {count}</p>
             <div>
-                <button onClick={() => dispatch(addOne())}>+1</button>
-                <button onClick={() => dispatch(subOne())}>-1</button>
-                <button onClick={() => dispatch(addMore(5))}>+5</button>
-                <button onClick={() => dispatch(subMore(5))}>-5</button>
-            </div>
-            <div>
-                <p>用户名：{user.name}</p>
-                <button onClick={() => dispatch(setName('xxx'))}>修改用户名</button>
+                <button onClick={() => dispatch(increment(5))}>click</button>
             </div>
         </div>
     )
 }
-
-export default App
 ```
 
-`action.js`
+#### `User.js`
 
 ```js
-export const setName = (payload) => ({
-    type: 'setName',
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateName } from './store/actions'
+
+export default function User() {
+    const user = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+    const handleClick = () => {
+        dispatch(updateName('xxx'))
+    }
+    return (
+        <div>
+            <h3>{user.name}</h3>
+            <button onClick={handleClick}>update name</button>
+        </div>
+    )
+}
+```
+
+#### `actions.js`
+
+```js
+export const updateName = (payload) => ({
+    type: 'UPDATENAME',
     payload,
 })
 ```
 
-## Action Type 的使用
+## ActionTypes
 
--   Action Type 指的是：action 对象中 type 属性的值
+### 概述
 
--   Redux 项目中会多次使用 action type，比如，action 对象、reducer 函数、dispatch(action) 等
+-   是什么：action 对象中的 type 属性。
 
--   目标：**集中处理 action type，保持项目中 action type 的一致性**
+-   Redux 项目中，同一个 type 会在不同文件中多次被用到，比如 actions.js、reducers.js 等。
 
-处理方式：
+-   目标：集中处理 action type，保持一致性，容易维护！
 
-1. 在 store 目录中创建 `actionTypes` 目录或者 `constants` 目录，集中处理
+### 操作
 
-2. 使用**常量**来存储 action type
+1. 在 store 目录中创建 `actionTypes.js` 或 `constants.js` 文件。
 
-3. action type 的值采用：`'domain/action'(功能/动作)形式`，进行分类处理，比如，
+2. 使用常量创建 ActionType 并导出。
 
-    - 计数器：`'counter/increment'` 表示 Counter 功能中的 increment 动作
+3. 命名推荐：`模块_动作`，比如：
 
-    - TodoMVC：`'todos/add'` 表示 TodoMVC 案例中 add 动作等
+    - 计数器：`COUNTER_INCREMENT` 表示计数器模块中的 INCREMENT 动作。
 
-    - 登录：`login/getCode` 表示登录获取验证码的动作；`login/submit` 表示登录功能
+    - TodoList：`TODOLIST_ADD` 表示 TodoList 案例中 ADD 动作。
 
-    - 个人信息：`profile/get` 表示获取个人资料；`profile/updateName` 表示修改昵称
+    - 登录：`LOGIN_GETCODE` 表示登录模块中获取验证码的动作，`LOGIN_SUBMIT` 表示登录模块中的提交功能。
 
-4. 将项目中用到 action type 的地方替换为这些常量，从而保持项目中 action type 的一致性
+    - 个人信息：`PROFILE_GETINFO` 表示个人资料模块中的获取信息动作；`PROFILE_UPDATEINFO` 等。
+
+4. 哪里需要用到就按需导入。
+
+### 代码
+
+`actionTypes.js`
 
 ```js
-export const SET_NAME = 'user/setName'
-export const SUB_MORE = 'money/subMore'
+export const COUNTER_INCREMENT = 'COUNTER_INCREMENT'
+export const COUNTER_DECREMENT = 'COUNTER_DECREMENT'
+export const USER_UPDATENAME = 'USER_UPDATENAME'
+```
+
+`actions.js`
+
+```js
+import { COUNTER_INCREMENT, COUNTER_DECREMENT, USER_UPDATENAME } from './actionTypes'
+export const increment = (payload) => ({
+    type: COUNTER_INCREMENT,
+    payload,
+})
+
+export const decrement = (payload) => ({
+    type: COUNTER_DECREMENT,
+    payload,
+})
+
+export const updateName = (payload) => ({
+    type: USER_UPDATENAME,
+    payload,
+})
+```
+
+`reducers.js`
+
+```js
+import { combineReducers } from 'redux'
+import { COUNTER_INCREMENT, COUNTER_DECREMENT, USER_UPDATENAME } from './actionTypes'
+
+function counter(state = 10, action) {
+    switch (action.type) {
+        case COUNTER_INCREMENT:
+            return state + action.payload
+        case COUNTER_DECREMENT:
+            return state - action.payload
+        default:
+            return state
+    }
+}
+
+function user(state = { name: 'ifer', age: 18 }, action) {
+    switch (action.type) {
+        case USER_UPDATENAME:
+            return {
+                ...state,
+                name: action.payload,
+            }
+        default:
+            return state
+    }
+}
+
+export default combineReducers({
+    counter,
+    user,
+})
 ```
 
 ## TODOLIST
 
-拆分，`components/TodoHeader.js`、`components/TodoMain.js`、`components/TodoFooter.js`
+### 目标
 
-`App.js`
+<img src="/resource/images/todolist.png" width="400" class="highlight2"/>
+
+### 拆分组件
+
+<a target="_blank" href="/2021/11/09/react-base-course4/#more">静态结构</a>
+
+`App.js`，引入拆分后的组件
 
 ```js
 import React from 'react'
@@ -798,9 +857,65 @@ export default function App() {
 }
 ```
 
-基本的 store 跑通
+`index.js`，引入相关的样式
 
-index.js
+```js
+import ReactDOM from 'react-dom'
+import './styles/base.css'
+import './styles/index.css'
+import App from './App'
+
+ReactDOM.render(<App />, document.querySelector('#root'))
+```
+
+### Redux 基本结构
+
+#### 目标
+
+跑通 Redux 和配置 react-redux。
+
+#### 步骤
+
+1. 在 `store/reducers/todo.js` 文件中创建 todo reducer 并导出。
+
+2. 在 `store/reducers/index.js` 文件中导入 todo reducer，并导出通过 combineReducers 合并后的 reducer。
+
+3. 在 `store/index.js` 文件通过 createStore 创建 store。
+
+4. 入口文件配置 react-redux。
+
+#### 代码
+
+1. `store/reducers/todo.js`
+
+```js
+export default function todo(state = [], action) {
+    return state
+}
+```
+
+2. `store/reducers/index.js`
+
+```js
+import { combineReducers } from 'redux'
+import todo from './todo'
+const rootReducer = combineReducers({
+    todo,
+})
+
+export default rootReducer
+```
+
+3. `store/index.js`
+
+```js
+import { createStore } from 'redux'
+import reducer from './reducers'
+const store = createStore(reducer)
+export default store
+```
+
+4. 入口文件，`index.js`
 
 ```js
 import ReactDOM from 'react-dom'
@@ -820,38 +935,17 @@ ReactDOM.render(
 )
 ```
 
-`store/index.js`
-
-```js
-import { createStore } from 'redux'
-import reducer from './reducers'
-const store = createStore(reducer)
-export default store
-```
-
-`store/reducers/index.js`
-
-```js
-import { combineReducers } from 'redux'
-import todos from './todos'
-const rootReducer = combineReducers({
-    todos,
-})
-
-export default rootReducer
-```
-
-`store/reducers/todos.js`
-
-```js
-export default function todos(state = [], action) {
-    return state
-}
-```
-
 ### 列表渲染
 
-准备初始数据，store/reducers/todos.js
+#### 步骤
+
+1. 在 `store/reducers/todo.js` 文件中准备初始数据。
+
+2. 在 `components/TodoMain.js` 文件中通过 useSelector 获取数据并渲染。
+
+#### 代码
+
+1. `store/reducers/todo.js`
 
 ```js
 const initState = [
@@ -867,19 +961,19 @@ const initState = [
     },
 ]
 
-export default function todos(state = initState, action) {
+export default function todo(state = initState, action) {
     return state
 }
 ```
 
-`components/TodoMain.js`
+2. `components/TodoMain.js`
 
 ```js
 import React from 'react'
 import { useSelector } from 'react-redux'
 
 export default function TodoMain() {
-    const list = useSelector((state) => state.todos)
+    const list = useSelector((state) => state.todo)
     return (
         <section className='main'>
             <input id='toggle-all' className='toggle-all' type='checkbox' />
@@ -901,50 +995,89 @@ export default function TodoMain() {
 }
 ```
 
-### 删除
+### 删除功能
 
-actions/todos.js
+#### 步骤
+
+1. 在 `store/constants/todo.js` 文件中新建删除的 ActionType。
+
+2. 在 `store/actions/todo.js` 文件中创建删除的 actionCreator。
+
+3. 在 `store/reducers/todo.js` 文件中编写删除的 reducer。
+
+4. 在 `components/TodoMain.js` 组件中通过 dispatch action 进行删除的操作。
+
+#### 代码
+
+1. `store/constants/todo.js`
 
 ```js
-import { DEL_TODO } from '../constants/todos'
+export const TODO_DEL = 'TODO_DEL'
+export const TODO_CHANGESTATUS = 'TODO_CHANGESTATUS'
+```
 
-/**
- * 删除 todo 的 action
- * @param {Number} id
- * @returns
- */
+2. `store/actions/todo.js`
+
+```js
+import { TODO_CHANGESTATUS, TODO_DEL } from '../constants/todo'
+
 export const delTodo = (id) => ({
-    type: DEL_TODO,
+    type: TODO_DEL,
+    id,
+})
+export const changeStatus = (id) => ({
+    type: TODO_CHANGESTATUS,
     id,
 })
 ```
 
-`constants/todos.js`
+3. `store/reducers/todo.js`
 
 ```js
-export const DEL_TODO = 'DEL_TODO'
-```
+import { TODO_CHANGESTATUS, TODO_DEL } from '../constants/todo'
 
-`reducers/todos.js`
+const initState = [
+    {
+        id: 1,
+        name: '吃饭',
+        done: true,
+    },
+    {
+        id: 2,
+        name: '睡觉',
+        done: false,
+    },
+]
 
-```js
-export default function todos(state = initState, action) {
-    if (action.type === DEL_TODO) {
+export default function todo(state = initState, action) {
+    if (action.type === TODO_DEL) {
         return state.filter((item) => item.id !== action.id)
+    }
+    if (action.type === TODO_CHANGESTATUS) {
+        return state.map((item) => {
+            if (item.id === action.id) {
+                return {
+                    ...item,
+                    done: !item.done,
+                }
+            } else {
+                return item
+            }
+        })
     }
     return state
 }
 ```
 
-components/TodoMain.js
+4. `components/TodoMain.js`
 
 ```js
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { delTodo } from '../store/actions/todos'
+import { changeStatus, delTodo } from '../store/actions/todo'
 
 export default function TodoMain() {
-    const list = useSelector((state) => state.todos)
+    const list = useSelector((state) => state.todo)
     const dispatch = useDispatch()
     return (
         <section className='main'>
@@ -954,7 +1087,7 @@ export default function TodoMain() {
                 {list.map((item) => (
                     <li key={item.id} className={item.done ? 'completed' : ''}>
                         <div className='view'>
-                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => {}} />
+                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeStatus(item.id))} />
                             <label>{item.name}</label>
                             <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
                         </div>
@@ -969,30 +1102,41 @@ export default function TodoMain() {
 
 ### 修改任务状态
 
-`actions/todos.js`
+#### 步骤
+
+1. 在 `store/constants/todo.js` 文件中创建修改任务状态的 ActionType。
+
+2. 在 `store/actions/todo.js` 文件中创建修改任务状态的 actionCreator。
+
+3. 在 `store/reducers/todo.js` 文件中编写修改任务状态的 reducer。
+
+4. 在 `components/TodoMain.js` 组件中通过 dispatch action 进行修改任务状态的操作。
+
+#### 代码
+
+1. `store/constants/todo.js`
 
 ```js
-export const changeDone = (id) => ({
-    type: CHANGE_DONE,
+export const TODO_CHANGESTATUS = 'TODO_CHANGESTATUS'
+```
+
+2. `store/actions/todo.js`
+
+```js
+export const changeStatus = (id) => ({
+    type: TODO_CHANGESTATUS,
     id,
 })
 ```
 
-`constants/todos.js`
+3. `store/reducers/todo.js`
 
 ```js
-export const DEL_TODO = 'DEL_TODO'
-export const CHANGE_DONE = 'CHANGE_DONE'
-```
-
-`reducers/todos.js`
-
-```js
-export default function todos(state = initState, action) {
-    if (action.type === DEL_TODO) {
+export default function todo(state = initState, action) {
+    if (action.type === TODO_DEL) {
         return state.filter((item) => item.id !== action.id)
     }
-    if (action.type === CHANGE_DONE) {
+    if (action.type === TODO_CHANGESTATUS) {
         return state.map((item) => {
             if (item.id === action.id) {
                 return {
@@ -1008,15 +1152,15 @@ export default function todos(state = initState, action) {
 }
 ```
 
-components/TodoMain.js
+4. `components/TodoMain.js`
 
 ```js
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeDone, delTodo } from '../store/actions/todos'
+import { changeStatus, delTodo } from '../store/actions/todo'
 
 export default function TodoMain() {
-    const list = useSelector((state) => state.todos)
+    const list = useSelector((state) => state.todo)
     const dispatch = useDispatch()
     return (
         <section className='main'>
@@ -1026,7 +1170,7 @@ export default function TodoMain() {
                 {list.map((item) => (
                     <li key={item.id} className={item.done ? 'completed' : ''}>
                         <div className='view'>
-                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
+                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeStatus(item.id))} />
                             <label>{item.name}</label>
                             <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
                         </div>
@@ -1041,46 +1185,51 @@ export default function TodoMain() {
 
 ### 添加任务
 
-constants/todos.js
+#### 步骤
+
+1. 在 `store/constants/todo.js` 文件中创建添加任务的 ActionType。
+
+2. 在 `store/actions/todo.js` 文件中创建添加任务的 actionCreator。
+
+3. 在 `store/reducers/todo.js` 文件中编写添加任务的 reducer。
+
+4. 在 `components/TodoHeader.js` 组件中通过 dispatch action 进行添加任务的操作，如果敲了回车，并且 name 不为空，才进行 dispatch，最后清空输入的内容。
+
+#### 代码
+
+1. `store/constants/todo.js`
 
 ```js
-export const DEL_TODO = 'DEL_TODO'
-export const CHANGE_DONE = 'CHANGE_DONE'
-export const ADD_TODO = 'ADD_TODO'
+export const TODO_DEL = 'TODO_DEL'
+export const TODO_CHANGESTATUS = 'TODO_CHANGESTATUS'
+export const TODO_ADD = 'TODO_ADD'
 ```
 
-actions/todos.js
+2. `store/actions/todo.js`
 
 ```js
-import { DEL_TODO, CHANGE_DONE, ADD_TODO } from '../constants/todos'
+import { TODO_ADD, TODO_CHANGESTATUS, TODO_DEL } from '../constants/todo'
 
-/**
- * 删除 todo 的 action
- * @param {Number} id
- * @returns
- */
 export const delTodo = (id) => ({
-    type: DEL_TODO,
+    type: TODO_DEL,
     id,
 })
-
-export const changeDone = (id) => ({
-    type: CHANGE_DONE,
+export const changeStatus = (id) => ({
+    type: TODO_CHANGESTATUS,
     id,
 })
-
 export const addTodo = (name) => ({
-    type: ADD_TODO,
+    type: TODO_ADD,
     name,
     id: Date.now(),
 })
 ```
 
-`reducers/todos.js`
+3. `store/reducers/todo.js`
 
 ```js
-import { ADD_TODO, CHANGE_DONE, DEL_TODO } from '../constants/todos'
-let lastid = 2
+import { TODO_ADD, TODO_CHANGESTATUS, TODO_DEL } from '../constants/todo'
+
 const initState = [
     {
         id: 1,
@@ -1094,11 +1243,11 @@ const initState = [
     },
 ]
 
-export default function todos(state = initState, action) {
-    if (action.type === DEL_TODO) {
+export default function todo(state = initState, action) {
+    if (action.type === TODO_DEL) {
         return state.filter((item) => item.id !== action.id)
     }
-    if (action.type === CHANGE_DONE) {
+    if (action.type === TODO_CHANGESTATUS) {
         return state.map((item) => {
             if (item.id === action.id) {
                 return {
@@ -1110,13 +1259,7 @@ export default function todos(state = initState, action) {
             }
         })
     }
-    if (action.type === ADD_TODO) {
-        // const todo = {
-        //   // id: Date.now(), // 不存了
-        //   id: ++lastid, // 不存了
-        //   name: action.name,
-        //   done: false,
-        // }
+    if (action.type === TODO_ADD) {
         const todo = {
             id: action.id,
             name: action.name,
@@ -1128,12 +1271,12 @@ export default function todos(state = initState, action) {
 }
 ```
 
-`components/TodoHeader.js`
+4. `components/TodoHeader.js`
 
 ```js
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addTodo } from '../store/actions/todos'
+import { addTodo } from '../store/actions/todo'
 
 export default function TodoHeader() {
     const [name, setName] = useState('')
@@ -1147,38 +1290,65 @@ export default function TodoHeader() {
     }
     return (
         <header className='header'>
-            <h1>todos</h1>
+            <h1>todo</h1>
             <input className='new-todo' placeholder='What needs to be done?' autoFocus value={name} onChange={(e) => setName(e.target.value)} onKeyUp={add} />
         </header>
     )
 }
 ```
 
-### 全选
+### 全选功能
 
-constants/todos.js
+#### 步骤
+
+1. 在 `store/constants/todo.js` 文件中创建全选的 ActionType。
+
+2. 在 `store/actions/todo.js` 文件中创建全选的 actionCreator。
+
+3. 在 `store/reducers/todo.js` 文件中编写全选的 reducer。
+
+4. 在 `components/TodoMain.js` 组件中通过 dispatch action 进行全选的操作（关键点：先拿到全选的状态，点击的时候对当前全选状态进行取反的操作）。
+
+#### 代码
+
+1. `store/constants/todo.js`
 
 ```js
-export const DEL_TODO = 'DEL_TODO'
-export const CHANGE_DONE = 'CHANGE_DONE'
-export const ADD_TODO = 'ADD_TODO'
-export const CHANGE_ALL_DONE = 'CHANGE_ALL_DONE'
+export const TODO_DEL = 'TODO_DEL'
+export const TODO_CHANGESTATUS = 'TODO_CHANGESTATUS'
+export const TODO_ADD = 'TODO_ADD'
+export const TODO_CHANGEALL = 'TODO_CHANGEALL'
 ```
 
-actions/todos.js
+2. `store/actions/todo.js`
 
 ```js
-export const changeAllDone = (done) => ({
-    type: CHANGE_ALL_DONE,
+import { TODO_ADD, TODO_CHANGEALL, TODO_CHANGESTATUS, TODO_DEL } from '../constants/todo'
+
+export const delTodo = (id) => ({
+    type: TODO_DEL,
+    id,
+})
+export const changeStatus = (id) => ({
+    type: TODO_CHANGESTATUS,
+    id,
+})
+export const addTodo = (name) => ({
+    type: TODO_ADD,
+    name,
+    id: Date.now(),
+})
+export const changeAll = (done) => ({
+    type: TODO_CHANGEALL,
     done,
 })
 ```
 
-reducers/todos.js
+3. `store/reducers/todo.js`
 
 ```js
-import { ADD_TODO, CHANGE_DONE, DEL_TODO, CHANGE_ALL_DONE } from '../constants/todos'
-let lastid = 2
+import { TODO_ADD, TODO_CHANGEALL, TODO_CHANGESTATUS, TODO_DEL } from '../constants/todo'
+
 const initState = [
     {
         id: 1,
@@ -1192,11 +1362,11 @@ const initState = [
     },
 ]
 
-export default function todos(state = initState, action) {
-    if (action.type === DEL_TODO) {
+export default function todo(state = initState, action) {
+    if (action.type === TODO_DEL) {
         return state.filter((item) => item.id !== action.id)
     }
-    if (action.type === CHANGE_DONE) {
+    if (action.type === TODO_CHANGESTATUS) {
         return state.map((item) => {
             if (item.id === action.id) {
                 return {
@@ -1208,13 +1378,7 @@ export default function todos(state = initState, action) {
             }
         })
     }
-    if (action.type === ADD_TODO) {
-        // const todo = {
-        //   // id: Date.now(), // 不存了
-        //   id: ++lastid, // 不存了
-        //   name: action.name,
-        //   done: false,
-        // }
+    if (action.type === TODO_ADD) {
         const todo = {
             id: action.id,
             name: action.name,
@@ -1222,7 +1386,7 @@ export default function todos(state = initState, action) {
         }
         return [todo, ...state]
     }
-    if (action.type === CHANGE_ALL_DONE) {
+    if (action.type === TODO_CHANGEALL) {
         return state.map((item) => {
             return {
                 ...item,
@@ -1230,31 +1394,30 @@ export default function todos(state = initState, action) {
             }
         })
     }
-
     return state
 }
 ```
 
-components/TodoMain.js
+4. `components/TodoMain.js`
 
 ```js
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeAllDone, changeDone, delTodo } from '../store/actions/todos'
+import { changeAll, changeStatus, delTodo } from '../store/actions/todo'
 
 export default function TodoMain() {
-    const list = useSelector((state) => state.todos)
+    const list = useSelector((state) => state.todo)
     const dispatch = useDispatch()
     const isCheckAll = list.every((item) => item.done)
     return (
         <section className='main'>
-            <input id='toggle-all' className='toggle-all' type='checkbox' checked={isCheckAll} onChange={() => dispatch(changeAllDone(!isCheckAll))} />
+            <input id='toggle-all' className='toggle-all' type='checkbox' checked={isCheckAll} onChange={() => dispatch(changeAll(!isCheckAll))} />
             <label htmlFor='toggle-all'>Mark all as complete</label>
             <ul className='todo-list'>
                 {list.map((item) => (
                     <li key={item.id} className={item.done ? 'completed' : ''}>
                         <div className='view'>
-                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
+                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeStatus(item.id))} />
                             <label>{item.name}</label>
                             <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
                         </div>
@@ -1267,23 +1430,35 @@ export default function TodoMain() {
 }
 ```
 
-### 双击显示弹框
+### 双击显示编辑框
+
+#### 思路
+
+1. 明确：是否显示编辑框取决于 li 上是否使用 editing class。
+
+2. 创建控制是否应用 editing class 的 state，currentId，后续打算用此状态和每一行的 id 进行比较。
+
+3. 判断，`editing: item.id === currentId`。
+
+#### 代码
+
+`components/TodoMain.js`
 
 ```js
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from 'classnames'
-import { changeAllDone, changeDone, delTodo } from '../store/actions/todos'
+import { changeAll, changeStatus, delTodo } from '../store/actions/todo'
 
 export default function TodoMain() {
-    const list = useSelector((state) => state.todos)
+    const list = useSelector((state) => state.todo)
     const dispatch = useDispatch()
     const isCheckAll = list.every((item) => item.done)
 
     const [currentId, setCurrentId] = useState('')
     return (
         <section className='main'>
-            <input id='toggle-all' className='toggle-all' type='checkbox' checked={isCheckAll} onChange={() => dispatch(changeAllDone(!isCheckAll))} />
+            <input id='toggle-all' className='toggle-all' type='checkbox' checked={isCheckAll} onChange={() => dispatch(changeAll(!isCheckAll))} />
             <label htmlFor='toggle-all'>Mark all as complete</label>
             <ul className='todo-list'>
                 {list.map((item) => (
@@ -1295,7 +1470,7 @@ export default function TodoMain() {
                         })}
                     >
                         <div className='view'>
-                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
+                            <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeStatus(item.id))} />
                             <label onDoubleClick={() => setCurrentId(item.id)}>{item.name}</label>
                             <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
                         </div>
@@ -1308,15 +1483,27 @@ export default function TodoMain() {
 }
 ```
 
-### 自动获取焦点并回填
+### 自动获取焦点
 
-焦点
+#### 思路
+
+1. 通过 ref 绑定编辑框，但是能直接在 TodoMain 组件里面写吗？
+
+2. 抽离 TodoItem 组件，目的：为了每一个组件都有一个自己的 ref，不会相互影响。
+
+3. 当 currentId 变化的时候进行 `ref.current.focus()`。
+
+4. 离开编辑框的时候把 currentId 置空（为什么会出现这个问题呢，原来 currentId 放哪里，只会有一个，现在呢？）。
+
+#### 代码
+
+1. `TodoItem.js`
 
 ```js
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
-import { changeDone, delTodo } from '../store/actions/todos'
+import { changeStatus, delTodo } from '../store/actions/todo'
 
 export default function TodoItem({ item }) {
     const [currentId, setCurrentId] = useState('')
@@ -1337,36 +1524,31 @@ export default function TodoItem({ item }) {
             })}
         >
             <div className='view'>
-                <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
+                <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeStatus(item.id))} />
                 <label onDoubleClick={() => showEdit(item.id)}>{item.name}</label>
                 <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
             </div>
-            <input className='edit' value='Create a TodoMVC template' onChange={() => {}} ref={ref} />
+            <input className='edit' value='Create a TodoMVC template' onChange={() => {}} ref={ref} onBlur={() => setCurrentId('')} />
         </li>
     )
 }
 ```
 
-原来 currentId 放哪里？只会有一个，现在呢？
-
-拆分是为了都有自己的 ref
-
-TodoMain.js
+2. `TodoMain.js`
 
 ```js
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import classNames from 'classnames'
-import { changeAllDone, changeDone, delTodo } from '../store/actions/todos'
+import { changeAll } from '../store/actions/todo'
 import TodoItem from './TodoItem'
 
 export default function TodoMain() {
-    const list = useSelector((state) => state.todos)
+    const list = useSelector((state) => state.todo)
     const dispatch = useDispatch()
     const isCheckAll = list.every((item) => item.done)
     return (
         <section className='main'>
-            <input id='toggle-all' className='toggle-all' type='checkbox' checked={isCheckAll} onChange={() => dispatch(changeAllDone(!isCheckAll))} />
+            <input id='toggle-all' className='toggle-all' type='checkbox' checked={isCheckAll} onChange={() => dispatch(changeAll(!isCheckAll))} />
             <label htmlFor='toggle-all'>Mark all as complete</label>
             <ul className='todo-list'>
                 {list.map((item) => (
@@ -1378,52 +1560,23 @@ export default function TodoMain() {
 }
 ```
 
-TodoItem.js
+### 回填数据
+
+需求：双击回填数据，在编辑框中输入时并记住内容。
+
+1. 准备一个自己组件的变量来和输入框中的 value 进行绑定。
+
+2. 输入框 onChange 的时候记住内容。
+
+3. 双击的时候把 item.name 给 input 框的 value。
+
+`components/TodoItem.js`
 
 ```js
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
-import { changeDone, delTodo } from '../store/actions/todos'
-
-export default function TodoItem({ item }) {
-    const [currentId, setCurrentId] = useState('')
-    const ref = useRef(null)
-    const dispatch = useDispatch()
-    const showEdit = (id) => {
-        setCurrentId(id)
-        // ref.current.focus()
-    }
-    useEffect(() => {
-        ref.current.focus()
-    }, [currentId])
-    return (
-        <li
-            className={classNames({
-                completed: item.done,
-                editing: item.id === currentId,
-            })}
-        >
-            <div className='view'>
-                <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
-                <label onDoubleClick={() => showEdit(item.id)}>{item.name}</label>
-                <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
-            </div>
-            <input className='edit' value='Create a TodoMVC template' onChange={() => {}} ref={ref} onBlur={() => setCurrentId('')} />
-        </li>
-    )
-}
-```
-
-### 完成
-
-记住输入的内容
-
-```js
-import React, { useState, useRef, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import classNames from 'classnames'
-import { changeDone, delTodo } from '../store/actions/todos'
+import { changeStatus, delTodo } from '../store/actions/todo'
 
 export default function TodoItem({ item }) {
     const [currentId, setCurrentId] = useState('')
@@ -1433,9 +1586,8 @@ export default function TodoItem({ item }) {
     const dispatch = useDispatch()
     const showEdit = (id, name) => {
         setCurrentId(id)
-        // #2
+        // #3
         setCurrentName(name)
-        // ref.current.focus()
     }
     useEffect(() => {
         ref.current.focus()
@@ -1448,12 +1600,11 @@ export default function TodoItem({ item }) {
             })}
         >
             <div className='view'>
-                <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
-                {/* #3 */}
+                <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeStatus(item.id))} />
                 <label onDoubleClick={() => showEdit(item.id, item.name)}>{item.name}</label>
                 <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
             </div>
-            {/* #4、#5 */}
+            {/* #2 */}
             <input className='edit' value={currentName} onChange={(e) => setCurrentName(e.target.value)} ref={ref} onBlur={() => setCurrentId('')} />
         </li>
     )
@@ -1462,83 +1613,62 @@ export default function TodoItem({ item }) {
 
 ### 完成修改
 
-components/TodoItem.js
+#### 步骤
+
+1. 在 `store/constants/todo.js` 文件中创建修改 name 的 ActionType。
+
+2. 在 `store/actions/todo.js` 文件中创建修改 name 的 actionCreator。
+
+3. 在 `store/reducers/todo.js` 文件中编写修改 name 的 reducer。
+
+4. 在 `components/TodoItem.js` 组件中通过 dispatch action 进行修改 name 的操作。
+
+#### 代码
+
+1. `store/constants/todo.js`
 
 ```js
-import React, { useState, useRef, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import classNames from 'classnames'
-import { changeDone, changeName, delTodo } from '../store/actions/todos'
-
-export default function TodoItem({ item }) {
-    const [currentId, setCurrentId] = useState('')
-    // #1
-    const [currentName, setCurrentName] = useState('')
-    const ref = useRef(null)
-    const dispatch = useDispatch()
-    const showEdit = (id, name) => {
-        setCurrentId(id)
-        // #2
-        setCurrentName(name)
-        // ref.current.focus()
-    }
-    const edit = (e) => {
-        if (e.keyCode === 27) {
-            setCurrentId('')
-        }
-        if (e.keyCode === 13) {
-            dispatch(changeName(currentId, currentName))
-            setCurrentId('')
-        }
-    }
-    useEffect(() => {
-        ref.current.focus()
-    }, [currentId])
-    return (
-        <li
-            className={classNames({
-                completed: item.done,
-                editing: item.id === currentId,
-            })}
-        >
-            <div className='view'>
-                <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeDone(item.id))} />
-                {/* #3 */}
-                <label onDoubleClick={() => showEdit(item.id, item.name)}>{item.name}</label>
-                <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
-            </div>
-            {/* #4、#5 */}
-            <input className='edit' value={currentName} onChange={(e) => setCurrentName(e.target.value)} ref={ref} onBlur={() => setCurrentId('')} onKeyUp={edit} />
-        </li>
-    )
-}
+export const TODO_DEL = 'TODO_DEL'
+export const TODO_CHANGESTATUS = 'TODO_CHANGESTATUS'
+export const TODO_ADD = 'TODO_ADD'
+export const TODO_CHANGEALL = 'TODO_CHANGEALL'
+export const TODO_CHANGENAME = 'TODO_CHANGENAME'
 ```
 
-constants/todos.js
+2. `store/actions/todo.js`
 
 ```js
-export const DEL_TODO = 'DEL_TODO'
-export const CHANGE_DONE = 'CHANGE_DONE'
-export const ADD_TODO = 'ADD_TODO'
-export const CHANGE_ALL_DONE = 'CHANGE_ALL_DONE'
-export const CHANGE_NAME = 'CHANGE_NAME'
-```
+import { TODO_ADD, TODO_CHANGEALL, TODO_CHANGENAME, TODO_CHANGESTATUS, TODO_DEL } from '../constants/todo'
 
-actions/todos.js
-
-```js
+export const delTodo = (id) => ({
+    type: TODO_DEL,
+    id,
+})
+export const changeStatus = (id) => ({
+    type: TODO_CHANGESTATUS,
+    id,
+})
+export const addTodo = (name) => ({
+    type: TODO_ADD,
+    name,
+    id: Date.now(),
+})
+export const changeAll = (done) => ({
+    type: TODO_CHANGEALL,
+    done,
+})
 export const changeName = (id, name) => ({
-    type: CHANGE_NAME,
+    type: TODO_CHANGENAME,
     id,
     name,
 })
 ```
 
-`reducers/todos.js`
+3. `store/reducers/todo.js`
 
 ```js
-import { ADD_TODO, CHANGE_DONE, DEL_TODO, CHANGE_ALL_DONE, CHANGE_NAME } from '../constants/todos'
-let lastid = 2
+import { TODO_CHANGENAME, TODO_ADD, TODO_CHANGEALL, TODO_CHANGESTATUS, TODO_DEL } from '../constants/todo'
+
 const initState = [
     {
         id: 1,
@@ -1552,11 +1682,11 @@ const initState = [
     },
 ]
 
-export default function todos(state = initState, action) {
-    if (action.type === DEL_TODO) {
+export default function todo(state = initState, action) {
+    if (action.type === TODO_DEL) {
         return state.filter((item) => item.id !== action.id)
     }
-    if (action.type === CHANGE_DONE) {
+    if (action.type === TODO_CHANGESTATUS) {
         return state.map((item) => {
             if (item.id === action.id) {
                 return {
@@ -1568,13 +1698,7 @@ export default function todos(state = initState, action) {
             }
         })
     }
-    if (action.type === ADD_TODO) {
-        // const todo = {
-        //   // id: Date.now(), // 不存了
-        //   id: ++lastid, // 不存了
-        //   name: action.name,
-        //   done: false,
-        // }
+    if (action.type === TODO_ADD) {
         const todo = {
             id: action.id,
             name: action.name,
@@ -1582,7 +1706,7 @@ export default function todos(state = initState, action) {
         }
         return [todo, ...state]
     }
-    if (action.type === CHANGE_ALL_DONE) {
+    if (action.type === TODO_CHANGEALL) {
         return state.map((item) => {
             return {
                 ...item,
@@ -1590,7 +1714,7 @@ export default function todos(state = initState, action) {
             }
         })
     }
-    if (action.type === CHANGE_NAME) {
+    if (action.type === TODO_CHANGENAME) {
         return state.map((item) => {
             if (item.id === action.id) {
                 return {
@@ -1602,21 +1726,222 @@ export default function todos(state = initState, action) {
             }
         })
     }
-
     return state
 }
 ```
 
-### 清空任务
+4. `components/TodoItem.js`
 
-剩余
+```js
+import React, { useState, useRef, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import classNames from 'classnames'
+import { changeStatus, delTodo, changeName } from '../store/actions/todo'
+
+export default function TodoItem({ item }) {
+    const [currentId, setCurrentId] = useState('')
+    const [currentName, setCurrentName] = useState('')
+    const ref = useRef(null)
+    const dispatch = useDispatch()
+    const showEdit = (id, name) => {
+        setCurrentId(id)
+        setCurrentName(name)
+    }
+    const edit = (e) => {
+        // ESC
+        if (e.keyCode === 27) {
+            setCurrentId('')
+        }
+        // 回车
+        if (e.keyCode === 13) {
+            dispatch(changeName(currentId, currentName))
+            setCurrentId('') // 隐藏编辑框
+            setCurrentName('') // 置空输入的内容
+        }
+    }
+    useEffect(() => {
+        ref.current.focus()
+    }, [currentId])
+    return (
+        <li
+            className={classNames({
+                completed: item.done,
+                editing: item.id === currentId,
+            })}
+        >
+            <div className='view'>
+                <input className='toggle' type='checkbox' checked={item.done} onChange={() => dispatch(changeStatus(item.id))} />
+                <label onDoubleClick={() => showEdit(item.id, item.name)}>{item.name}</label>
+                <button className='destroy' onClick={() => dispatch(delTodo(item.id))}></button>
+            </div>
+            <input className='edit' value={currentName} onChange={(e) => setCurrentName(e.target.value)} ref={ref} onBlur={() => setCurrentId('')} onKeyUp={edit} />
+        </li>
+    )
+}
+```
+
+### 清空已完成
+
+1. `constants/todo.js`
+
+```js
+export const TODO_DEL = 'TODO_DEL'
+export const TODO_CHANGESTATUS = 'TODO_CHANGESTATUS'
+export const TODO_ADD = 'TODO_ADD'
+export const TODO_CHANGEALL = 'TODO_CHANGEALL'
+export const TODO_CHANGENAME = 'TODO_CHANGENAME'
+export const TODO_CLEARDONED = 'TODO_CLEARDONED'
+```
+
+2. `actions/todo.js`
+
+```js
+import { TODO_ADD, TODO_CHANGEALL, TODO_CHANGENAME, TODO_CHANGESTATUS, TODO_CLEARDONED, TODO_DEL } from '../constants/todo'
+
+export const delTodo = (id) => ({
+    type: TODO_DEL,
+    id,
+})
+export const changeStatus = (id) => ({
+    type: TODO_CHANGESTATUS,
+    id,
+})
+export const addTodo = (name) => ({
+    type: TODO_ADD,
+    name,
+    id: Date.now(),
+})
+export const changeAll = (done) => ({
+    type: TODO_CHANGEALL,
+    done,
+})
+export const changeName = (id, name) => ({
+    type: TODO_CHANGENAME,
+    id,
+    name,
+})
+export const clearTodo = () => ({
+    type: TODO_CLEARDONED,
+})
+```
+
+3. `reducers/todo.js`
+
+```js
+import { TODO_CHANGENAME, TODO_ADD, TODO_CHANGEALL, TODO_CHANGESTATUS, TODO_DEL, TODO_CLEARDONED } from '../constants/todo'
+
+const initState = [
+    {
+        id: 1,
+        name: '吃饭',
+        done: true,
+    },
+    {
+        id: 2,
+        name: '睡觉',
+        done: false,
+    },
+]
+
+export default function todo(state = initState, action) {
+    if (action.type === TODO_DEL) {
+        return state.filter((item) => item.id !== action.id)
+    }
+    if (action.type === TODO_CHANGESTATUS) {
+        return state.map((item) => {
+            if (item.id === action.id) {
+                return {
+                    ...item,
+                    done: !item.done,
+                }
+            } else {
+                return item
+            }
+        })
+    }
+    if (action.type === TODO_ADD) {
+        const todo = {
+            id: action.id,
+            name: action.name,
+            done: false,
+        }
+        return [todo, ...state]
+    }
+    if (action.type === TODO_CHANGEALL) {
+        return state.map((item) => {
+            return {
+                ...item,
+                done: action.done,
+            }
+        })
+    }
+    if (action.type === TODO_CHANGENAME) {
+        return state.map((item) => {
+            if (item.id === action.id) {
+                return {
+                    ...item,
+                    name: action.name,
+                }
+            } else {
+                return item
+            }
+        })
+    }
+    if (action.type === TODO_CLEARDONED) {
+        // 保留没完成，清空已完成
+        return state.filter((item) => !item.done)
+    }
+    return state
+}
+```
+
+4. `components/TodoFooter.js`
+
+```js
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { clearTodo } from '../store/actions/todo'
+
+export default function TodoFooter() {
+    const list = useSelector((state) => state.todo)
+    const leftCount = list.filter((item) => !item.done).length
+    const dispatch = useDispatch()
+    return (
+        <footer className='footer'>
+            <span className='todo-count'>
+                <strong>{leftCount}</strong> item left
+            </span>
+            <ul className='filters'>
+                <li>
+                    <a className='selected' href='#/'>
+                        All
+                    </a>
+                </li>
+                <li>
+                    <a href='#/active'>Active</a>
+                </li>
+                <li>
+                    <a href='#/completed'>Completed</a>
+                </li>
+            </ul>
+            <button className='clear-completed' onClick={() => dispatch(clearTodo())}>
+                Clear completed
+            </button>
+        </footer>
+    )
+}
+```
+
+### 统计剩余未完成数量
+
+`components/TodoFooter.js`
 
 ```js
 import React from 'react'
 import { useSelector } from 'react-redux'
 
 export default function TodoFooter() {
-    const list = useSelector((state) => state.todos)
+    const list = useSelector((state) => state.todo)
     const leftCount = list.filter((item) => !item.done).length
     return (
         <footer className='footer'>
@@ -1642,207 +1967,74 @@ export default function TodoFooter() {
 }
 ```
 
-清空
-
-constants/todos.js
-
-```js
-export const DEL_TODO = 'DEL_TODO'
-export const CHANGE_DONE = 'CHANGE_DONE'
-export const ADD_TODO = 'ADD_TODO'
-export const CHANGE_ALL_DONE = 'CHANGE_ALL_DONE'
-export const CHANGE_NAME = 'CHANGE_NAME'
-export const CLEAR_TODO = 'CLEAR_TODO'
-```
-
-actions/todos.js
-
-```js
-export const clearTodo = () => ({
-    type: CLEAR_TODO,
-})
-```
-
-reducers/todos.js
-
-```js
-import { ADD_TODO, CHANGE_DONE, DEL_TODO, CHANGE_ALL_DONE, CHANGE_NAME, CLEAR_TODO } from '../constants/todos'
-let lastid = 2
-const initState = [
-    {
-        id: 1,
-        name: '吃饭',
-        done: true,
-    },
-    {
-        id: 2,
-        name: '睡觉',
-        done: false,
-    },
-]
-
-export default function todos(state = initState, action) {
-    if (action.type === DEL_TODO) {
-        return state.filter((item) => item.id !== action.id)
-    }
-    if (action.type === CHANGE_DONE) {
-        return state.map((item) => {
-            if (item.id === action.id) {
-                return {
-                    ...item,
-                    done: !item.done,
-                }
-            } else {
-                return item
-            }
-        })
-    }
-    if (action.type === ADD_TODO) {
-        // const todo = {
-        //   // id: Date.now(), // 不存了
-        //   id: ++lastid, // 不存了
-        //   name: action.name,
-        //   done: false,
-        // }
-        const todo = {
-            id: action.id,
-            name: action.name,
-            done: false,
-        }
-        return [todo, ...state]
-    }
-    if (action.type === CHANGE_ALL_DONE) {
-        return state.map((item) => {
-            return {
-                ...item,
-                done: action.done,
-            }
-        })
-    }
-    if (action.type === CHANGE_NAME) {
-        return state.map((item) => {
-            if (item.id === action.id) {
-                return {
-                    ...item,
-                    name: action.name,
-                }
-            } else {
-                return item
-            }
-        })
-    }
-
-    if (action.type === CLEAR_TODO) {
-        // 保留没完成，清空已完成
-        return state.filter((item) => !item.done)
-    }
-
-    return state
-}
-```
-
-components/TodoFooter.js
-
-```js
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { clearTodo } from '../store/actions/todos'
-
-export default function TodoFooter() {
-    const list = useSelector((state) => state.todos)
-    const leftCount = list.filter((item) => !item.done).length
-    const dispatch = useDispatch()
-    return (
-        <footer className='footer'>
-            <span className='todo-count'>
-                <strong>{leftCount}</strong> item left
-            </span>
-            <ul className='filters'>
-                <li>
-                    <a className='selected' href='#/'>
-                        All
-                    </a>
-                </li>
-                <li>
-                    <a href='#/active'>Active</a>
-                </li>
-                <li>
-                    <a href='#/completed'>Completed</a>
-                </li>
-            </ul>
-            <button className='clear-completed' onClick={() => dispatch(clearTodo())}>
-                Clear completed
-            </button>
-        </footer>
-    )
-}
-```
-
 ### 点击高亮
 
-constants/filter.js
+#### 步骤
+
+1. 在 store/constants/filter.js 中新建过滤的 ActionType。
+
+2. 在 store/actions/filter.js 中创建过滤的 actionCreator。
+
+3. 在 store/reducers/filter.js 中编写过滤的 reducer。
+
+4. 在 components/TodoFooter.js 组件通过 dispatch action 进行过滤的操作。
+
+#### 代码
+
+1. `constants/filter.js`
 
 ```js
-export const CHANGE_FILTER = 'CHANGE_FILTER'
+export const TODO_FILTER = 'TODO_FILTER'
 ```
 
-actions/filter.js
+2. `actions/filter.js`
 
 ```js
-import { CHANGE_FILTER } from '../constants/filter'
+import { TODO_FILTER } from '../constants/filter'
 
 export const changeFilter = (filter) => ({
-    type: CHANGE_FILTER,
+    type: TODO_FILTER,
     filter,
 })
 ```
 
-`reducers/filter.js`
+3. `reducers/filter.js`
 
 ```js
-import { CHANGE_FILTER } from '../constants/filter'
+import { TODO_FILTER } from '../constants/filter'
 
 export default function filter(state = 'all', action) {
-    if (action.type === CHANGE_FILTER) {
+    if (action.type === TODO_FILTER) {
         return action.filter
     }
     return state
 }
 ```
 
-`reducers/index.js`
+4. `reducers/index.js`
 
 ```js
 import { combineReducers } from 'redux'
-import todos from './todos'
+import todo from './todo'
 import filter from './filter'
 const rootReducer = combineReducers({
-    todos,
+    todo,
     filter,
 })
 
 export default rootReducer
 ```
 
-`components/TodoFooter.js`
+5. `components/TodoFooter.js`
 
 ```js
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { changeFilter } from '../store/actions/filter'
-import { clearTodo } from '../store/actions/todos'
 
 export default function TodoFooter() {
-    const list = useSelector((state) => state.todos)
-    const leftCount = list.filter((item) => !item.done).length
-    const dispatch = useDispatch()
     const filter = useSelector((state) => state.filter)
     const arr = ['all', 'active', 'completed']
     return (
         <footer className='footer'>
-            <span className='todo-count'>
-                <strong>{leftCount}</strong> item left
-            </span>
             <ul className='filters'>
                 {arr.map((item) => (
                     <li key={item}>
@@ -1852,9 +2044,6 @@ export default function TodoFooter() {
                     </li>
                 ))}
             </ul>
-            <button className='clear-completed' onClick={() => dispatch(clearTodo())}>
-                Clear completed
-            </button>
         </footer>
     )
 }
@@ -1862,30 +2051,30 @@ export default function TodoFooter() {
 
 ### 切换数据
 
-components/TodoMain.js
+`components/TodoMain.js`
 
 ```js
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from 'classnames'
-import { changeAllDone, changeDone, delTodo } from '../store/actions/todos'
+import { changeAll, changeStatus, delTodo } from '../store/actions/todo'
 import TodoItem from './TodoItem'
 
 export default function TodoMain() {
     const list = useSelector((state) => {
         if (state.filter === 'active') {
-            return state.todos.filter((item) => !item.done)
+            return state.todo.filter((item) => !item.done)
         } else if (state.filter === 'completed') {
-            return state.todos.filter((item) => item.done)
+            return state.todo.filter((item) => item.done)
         } else {
-            return state.todos
+            return state.todo
         }
     })
     const dispatch = useDispatch()
     const isCheckAll = list.every((item) => item.done)
     return (
         <section className='main'>
-            <input id='toggle-all' className='toggle-all' type='checkbox' checked={isCheckAll} onChange={() => dispatch(changeAllDone(!isCheckAll))} />
+            <input id='toggle-all' className='toggle-all' type='checkbox' checked={isCheckAll} onChange={() => dispatch(changeAll(!isCheckAll))} />
             <label htmlFor='toggle-all'>Mark all as complete</label>
             <ul className='todo-list'>
                 {list.map((item) => (
