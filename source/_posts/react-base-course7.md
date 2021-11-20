@@ -1971,29 +1971,31 @@ export default function TodoFooter() {
 
 #### 步骤
 
-1. 在 store/constants/filter.js 中新建过滤的 ActionType。
+1. 在 store/constants/filter.js 文件中创建过滤的 ActionType。
 
-2. 在 store/actions/filter.js 中创建过滤的 actionCreator。
+2. 在 store/actions/filter.js 文件中创建过滤的 actionCreator。
 
-3. 在 store/reducers/filter.js 中编写过滤的 reducer。
+3. 在 store/reducers/filter.js 文件中编写过滤的 reducer。
 
-4. 在 components/TodoFooter.js 组件通过 dispatch action 进行过滤的操作。
+4. 在 store/reducers/index.js 引入 filter reducer。
+
+5. 在 components/TodoFooter.js 组件中通过 dispatch action 进行过滤的操作。
 
 #### 代码
 
 1. `constants/filter.js`
 
 ```js
-export const TODO_FILTER = 'TODO_FILTER'
+export const FILTER_SELECTED = 'FILTER_SELECTED'
 ```
 
 2. `actions/filter.js`
 
 ```js
-import { TODO_FILTER } from '../constants/filter'
+import { FILTER_SELECTED } from '../constants/filter'
 
 export const changeFilter = (filter) => ({
-    type: TODO_FILTER,
+    type: FILTER_SELECTED,
     filter,
 })
 ```
@@ -2001,10 +2003,10 @@ export const changeFilter = (filter) => ({
 3. `reducers/filter.js`
 
 ```js
-import { TODO_FILTER } from '../constants/filter'
+import { FILTER_SELECTED } from '../constants/filter'
 
 export default function filter(state = 'all', action) {
-    if (action.type === TODO_FILTER) {
+    if (action.type === FILTER_SELECTED) {
         return action.filter
     }
     return state
@@ -2028,22 +2030,34 @@ export default rootReducer
 5. `components/TodoFooter.js`
 
 ```js
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { clearTodo } from '../store/actions/todo'
 import { changeFilter } from '../store/actions/filter'
 
 export default function TodoFooter() {
-    const filter = useSelector((state) => state.filter)
+    const list = useSelector((state) => state.todo)
+    const leftCount = list.filter((item) => !item.done).length
+    const dispatch = useDispatch()
+    const selected = useSelector((state) => state.filter)
     const arr = ['all', 'active', 'completed']
     return (
         <footer className='footer'>
+            <span className='todo-count'>
+                <strong>{leftCount}</strong> item left
+            </span>
             <ul className='filters'>
                 {arr.map((item) => (
                     <li key={item}>
-                        <a className={item === filter ? 'selected' : ''} href='#/' onClick={() => dispatch(changeFilter(item))}>
+                        <a className={item === selected ? 'selected' : ''} href='#/' onClick={() => dispatch(changeFilter(item))}>
                             {item}
                         </a>
                     </li>
                 ))}
             </ul>
+            <button className='clear-completed' onClick={() => dispatch(clearTodo())}>
+                Clear completed
+            </button>
         </footer>
     )
 }
@@ -2054,10 +2068,9 @@ export default function TodoFooter() {
 `components/TodoMain.js`
 
 ```js
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import classNames from 'classnames'
-import { changeAll, changeStatus, delTodo } from '../store/actions/todo'
+import { changeAll } from '../store/actions/todo'
 import TodoItem from './TodoItem'
 
 export default function TodoMain() {
