@@ -1,334 +1,361 @@
 ---
-title: 08_Redux 进阶
-date: 2021-11-19 22:55:37
+title: 08_React Router
+date: 2021-11-20 21:22:37
 tags:
 ---
 
 ## 今日目标
 
-✔ 掌握 Redux 中间件的使用。
+✔ 了解什么是单页应用。
 
-## 中间件概述
+✔ 掌握 react-router-dom 的使用。
 
-### 目标
+## 了解 SPA
 
-能够理解为什么需要 redux 中间件
+[网易云音乐](https://music.163.com/)
 
-**内容：**
+-   SPA： `Single Page Application` 单页面应用程序，整个应用中只有一个页面（index.html）
 
-默认情况下，Redux 自身只能处理同步数据流。但是在实际项目开发中，状态的更新、获取，通常是使用异步操作来实现。
+-   MPA : `Multiple Page Application`多页面应用程序，整个应用中有很多个页面（\*.html）
 
--   问题：如何在 Redux 中进行异步操作呢?
--   回答：通过 Redux 中间件机制来实现。
+优势
 
-> 中间件概念
+-   加快页面响应速度，降低了对服务器的压力
 
--   中间件，可以理解为处理一个功能的中间环节
--   下图中，自来水从水库到用户家庭中的每一个环节都是一个中间件
--   中间件的优势：可以串联、组合，在一个项目中使用多个中间件
--   **Redux 中间件用来处理 状态 更新，也就是在 状态 更新的过程中，执行一系列的相应操作**
+    a，传统的多页面应用程序，每次请求服务器返回的都是一整个完整的页面
 
-![水处理](images/自来水处理.jpg)
+    b，单页面应用程序只有第一次会加载完整的页面，以后每次请求仅仅获取必要的数据
 
-## 中间件的触发时机
+-   更好的用户体验，运行更加流畅
 
--   Redux 中间件执行时机：**在 dispatching action 和 到达 reducer 之间**。
+缺点
 
-    -   没有中间件：`dispatch(action) => reducer`
-    -   使用中间件：`dispatch(action) => 执行中间件代码 => reducer`
+-   不利于 SEO 搜索引擎优化，因为爬虫只爬取 HTML 页面中的文本内容，不会执行 JS 代码
 
--   原理：封装了 redux 自己的 dispatch 方法
+-   可以通过 SSR（服务端渲染 Server Side Rendering）来解决 SEO 问题，即先在服务器端把内容渲染出来，然后，返回给浏览器的就是纯 HTML 内容了
 
-    -   没有中间件：`store.dispatch()` 就是 Redux 库自己提供的 dispatch 方法，用来发起状态更新
-    -   使用中间件：store.dispatch() 就是 中间件 封装处理后的 dispatch，但是，最终一定会调用 Redux 库自己提供的 dispatch 方法
+<!-- more -->
 
--   没有中间件：
-    -   ![redux中间件-触发时机1](images/redux中间件-触发时机1.jpg)
--   有中间件：
-    -   ![redux中间件-触发时机2](images/redux中间件-触发时机2.jpg)
+## 前端路由
 
-## logger 中间件
+现代的前端应用大多都是 SPA（单页应用程序），也就是只有一个 HTML 页面的应用程序。因为它的用户体验更好、对服务器的压力更小，所以更受欢迎。为了**有效的使用单个页面来管理原来多页面的功能，前端路由应运而生**。前端路由的功能：让用户从一个视图（页面）导航到另一个视图（页面）
 
-1. 安装：`yarn add redux-logger`
-2. 导入 redux-logger
-3. 从 redux 中导入 applyMiddleware 函数
-4. 将 applyMiddleware() 调用作为 createStore 函数的第二个参数
-5. 调用 applyMiddleware 函数时，将 logger 作为参数传入
+-   前端路由是一套**映射规则**，在 React 中，是 URL 路径 与组件的对应关系
 
--   调用 store.dispatch() 查看 logger 中间件记录的日志信息
+-   使用 React 路由简单来说就是：配置路径和组件（配对）
+
+<img src="/resource/images/ifer_router.png"/>
+
+## 模拟 Hash 路由原理
+
+`App.js`
 
 ```js
-import { createStore, applyMiddleware } from 'redux'
-import logger from 'redux-logger'
-import rootReducer from './reducers'
-const store = createStore(rootReducer, applyMiddleware(logger))
-```
+import React, { useState, useEffect } from 'react'
+import Home from './pages/Home'
+import Search from './pages/Search'
+import Comment from './pages/Comment'
 
-## redux-thunk-基本使用
-
-> `redux-thunk` 中间件可以处理`函数形式的 action`。因此，在函数形式的 action 中就可以执行异步操作代码，完成异步操作。
-
-1. 安装：`yarn add redux-thunk`
-2. 导入 redux-thunk
-3. 将 thunk 添加到中间件列表中
-4. 修改 action creator，返回一个函数
-
--   说明：
-    1. 在函数形式的 action 中执行异步操作
-    2. 在异步操作成功后，分发 action 更新状态
-
-```js
-// store/index.js
-import thunk from 'redux-thunk'
-// 将 thunk 添加到中间件列表中
-const store = createStore(rootReducer, applyMiddleware(thunk, logger))
-
-export const clearTodo = () => {
-    return (dispatch) => {
-        // 处理异步的代码
-        setTimeout(() => {
-            dispatch({
-                type: CLEAR_TODO,
-            })
-        }, 1000)
-    }
-}
-```
-
-## 使用 redux-thunk 中间件前后对比
-
-1. 不使用 redux-thunk 中间件：
-
-```js
-export const delTodo = (id) => ({ type: DEL_TODO, id })
-```
-
-2. 使用 redux-thunk 中间件：
-
-```js
-export const delTodo = (id) => {
-    return (dispatch) => {
-        setTimeout(function () {
-            dispatch({ type: DEL_TODO, id })
-        }, 1000)
-    }
-}
-```
-
-## redux-thunk-中间件原理
-
--   [redux-thunk 源码链接](https://github.com/reduxjs/redux-thunk/blob/master/src/index.js)
-
-```js
-function createThunkMiddleware(extraArgument) {
-    // Redux 中间件的写法：const myMiddleware = store => next => action => { /* 此处写 中间件 的代码 */ }
-    return ({ dispatch, getState }) =>
-        (next) =>
-        (action) => {
-            // redux-thunk 的核心代码：
-            // 判断 action 的类型是不是函数
-            // 如果是函数，就调用该函数（action），并且传入了 dispatch 和 getState
-            if (typeof action === 'function') {
-                return action(dispatch, getState, extraArgument)
-            }
-
-            // 如果不是函数，就调用下一个中间件（next），将 action 传递过去
-            // 如果没有其他中间件，那么，此处的 next 指的就是：Redux 自己的 dispatch 方法
-            return next(action)
+export default function App() {
+    const [current, setCurrent] = useState('')
+    useEffect(() => {
+        const onChange = () => {
+            setCurrent(window.location.hash.slice(1))
         }
-}
-```
-
-## redux-devtools-extension 的使用
-
-`目标`：开发 react 项目时，通过 chrome 开发者工具调试跟踪 redux 状态
-
-`步骤`：
-
-> 保证浏览器安装了 redux 的开发者工具
-
-1. 通过包管理器在项目中安装 `yarn add redux-devtools-extension`
-2. 在 index.js 中进行配置和导入
-3. 启动 react 项目，打开 chrome 开发者工具，测试
-
-`文档` [redux-devtools-exension](https://www.npmjs.com/package/redux-devtools-extension)
-
-```jsx
-import { createStore, applyMiddleware } from 'redux'
-import reducer from './reducers'
-// import logger from 'redux-logger'
-import thunk from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
-
-export default store
-```
-
-## 综合案例-黑马头条
-
-### 项目搭建
-
-引入通用样式(资料中已经准备好)
-
-```jsx
-import './styles/index.css'
-```
-
-封装频道组件和新闻列表组件
-
-`components/Channel.js`
-
-```jsx
-import React from 'react'
-
-export default function Channel() {
+        window.addEventListener('hashchange', onChange)
+        return () => {
+            window.removeEventListener('hashchange', onChange)
+        }
+    }, [])
     return (
-        <ul className='catagtory'>
-            <li className='select'>开发者资讯</li>
-            <li>ios</li>
-            <li>c++</li>
-            <li>android</li>
-            <li>css</li>
-            <li>数据库</li>
-            <li>区块链</li>
-            <li>go</li>
-            <li>产品</li>
-            <li>后端</li>
-            <li>linux</li>
-            <li>人工智能</li>
-            <li>php</li>
-            <li>javascript</li>
-            <li>架构</li>
-            <li>前端</li>
-            <li>python</li>
-            <li>java</li>
-            <li>算法</li>
-            <li>面试</li>
-            <li>科技动态</li>
-            <li>js</li>
-            <li>设计</li>
-            <li>数码产品</li>
-            <li>html</li>
-            <li>软件测试</li>
-            <li>测试开发</li>
-        </ul>
-    )
-}
-```
-
-`components/NewsList.js`
-
-```jsx
-import React from 'react'
-import avatar from '../assets/back.jpg'
-export default function NewsList() {
-    return (
-        <div className='list'>
-            <div className='article_item'>
-                <h3 className='van-ellipsis'>python数据预处理 ：数据标准化</h3>
-                <div className='img_box'>
-                    <img src={avatar} className='w100' alt='' />
-                </div>
-                <div className='info_box'>
-                    <span>13552285417</span>
-                    <span>0评论</span>
-                    <span>2018-11-29T17:02:09</span>
-                </div>
-            </div>
+        <div>
+            <ul>
+                <li>
+                    <a href='#/home'>首页</a>
+                </li>
+                <li>
+                    <a href='#/search'>搜索</a>
+                </li>
+                <li>
+                    <a href='#/comment'>评论</a>
+                </li>
+            </ul>
+            {current === '/home' && <Home />}
+            {current === '/search' && <Search />}
+            {current === '/comment' && <Comment />}
         </div>
     )
 }
 ```
 
-根组件中渲染
+## React Router
 
-```jsx
+官网：https://reactrouter.com/，https://v5.reactrouter.com/
+
+1. 安装
+
+```js
+yarn add react-router-dom@5.3.0
+```
+
+2. `react-router-dom` 这个包提供了三个核心的组件
+
+```js
+import { HashRouter, Route, Link } from 'react-router-dom'
+```
+
+3. 使用 `HashRouter` 包裹整个应用，一个项目中只会有一个 Router
+
+```js
+<Router>
+    <div className='App'>// … 省略页面内容</div>
+</Router>
+```
+
+4. 使用 Link 指定导航链接
+
+```js
+<Link to="/first">页面一</Link>
+<Link to="/two">页面二</Link>
+```
+
+5. 使用 `Route` 指定路由规则
+
+```js
+// 在哪里写的Route,最终匹配到的组件就会渲染到这
+<Route path='/first' component={First}></Route>
+```
+
+```js
 import React from 'react'
-import Channel from './components/Channel'
-import NewsList from './components/NewsList'
+import { HashRouter, Link, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import Search from './pages/Search'
+import Comment from './pages/Comment'
+
 export default function App() {
     return (
-        <div className='app'>
-            <Channel></Channel>
-            <NewsList></NewsList>
+        <HashRouter>
+            <div>
+                <ul>
+                    <li>
+                        <Link to='/home'>首页</Link>
+                    </li>
+                    <li>
+                        <Link to='/search'>搜索</Link>
+                    </li>
+                    <li>
+                        <Link to='/comment'>评论</Link>
+                    </li>
+                </ul>
+                <hr />
+                <Route path='/home' component={Home} />
+                <Route path='/search' component={Search} />
+                <Route path='/comment' component={Comment} />
+            </div>
+        </HashRouter>
+    )
+}
+```
+
+## Router 详细说明
+
+-   Router 组件：包裹整个应用，一个 React 应用只需要使用一次
+
+-   两种常用 Router：`HashRouter` 和 `BrowserRouter`
+
+-   HashRouter：使用 URL 的哈希值实现（http://localhost:3000/#/first），是通过监听 window 的 `hashchange` 事件来实现的
+
+-   （推荐）BrowserRouter：使用 H5 的 history.pushState() API 实现（http://localhost:3000/first），是通过监听 window 的 `popstate` 事件来实现的
+
+最佳实践
+
+```js
+import { HashRouter as Router, Route, Link } from 'react-router-dom'
+
+<Router>
+```
+
+## 路由的执行过程
+
+1. 点击 Link 组件（a 标签），修改了浏览器地址栏中的 url
+
+2. React 路由监听到地址栏 url 的变化 hashChange popState
+
+3. React 路由内部遍历所有 Route 组件，使用路由规则（path）与 pathname（hash）进行匹配
+
+4. 当路由规则（path）能够匹配地址栏中的 pathname（hash） 时，就展示该 Route 组件的内容
+
+## Link 与 NavLink
+
+`Link`组件最终会渲染成 a 标签，用于指定路由导航
+
+-   to 属性，将来会渲染成 a 标签的 href 属性
+-   `Link`组件无法实现导航的高亮效果
+
+`NavLink`组件，一个更特殊的`Link`组件，可以用用于指定当前导航高亮
+
+-   to 属性，用于指定地址，会渲染成 a 标签的 href 属性
+-   activeClass: 用于指定高亮的类名，默认`active`
+-   exact: 精确匹配，表示必须精确匹配类名才生效，默认模糊
+
+```js
+// 地址栏必须是 / 才有类名，而不是以 / 开头，exact 控制的是样式
+<NavLink exact to='/'>
+    首页
+</NavLink>
+```
+
+## Route
+
+> 配置路由规则
+
+```jsx
+{/*
+  如果path是 '/',能够匹配到任意的路径，，需要加上exact
+*/}
+<Route path="/" exact component={Home}></Route>
+<Route path="/comment" component={Comment}></Route>
+<Route path="/search" component={Search}></Route>
+// 一定会渲染，例如 404 兜底
+<Route component={Home}></Route>
+```
+
+-   path 的说明
+    -   默认情况下，/能够匹配任意/开始的路径
+    -   如果 path 的路径匹配上了，那么就可以对应的组件就会被 render
+    -   如果 path 没有匹配上，那么会 render null
+    -   如果没有指定 path，那么一定会被渲染
+-   exact 的说明， exact 表示精确匹配某个路径
+    -   一般来说，如果路径配置了 /， 都需要配置 exact 属性
+
+## Switch 与 404
+
+-   通常，我们会把`Route`包裹在一个`Switch`组件中
+
+-   在`Switch`组件中，不管有多少个路由规则匹配到了，都只会渲染第一个匹配的组件
+-   通过`Switch`组件非常容易的就能实现 404 错误页面的提示
+
+```js
+<Switch>
+    <Route exact path='/' component={Home} />
+    <Route path='/about' component={About} />
+    <Route path='/user' component={User} />
+    <Route component={NoMatch} />
+</Switch>
+```
+
+## 嵌套路由的配置
+
+-   在 React 中，配置嵌套路由非常的简单，因为`Route`就是一个组件，可以在任意想配置的地方进行配置
+
+-   但是配置嵌套路由的时候，需要对路径进行处理，必须要先匹配到父级路由，才能匹配到子路由
+
+```js
+<Switch>
+    <Route path='/find/top' component={Top}></Route>
+    <Route path='/find/list' component={List}></Route>
+</Switch>
+```
+
+`App.js`
+
+```js
+import React from 'react'
+import { HashRouter as Router, Route, NavLink, Switch } from 'react-router-dom'
+import Find from './pages/Find'
+import My from './pages/My'
+import Friend from './pages/Friend'
+
+export default function App() {
+    return (
+        <Router>
+            <div>
+                <ul>
+                    <li>
+                        <NavLink to='/find'>发现音乐</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/my'>我的音乐</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/friend'>朋友</NavLink>
+                    </li>
+                </ul>
+                <Switch>
+                    <Route path='/find' component={Find} />
+                    <Route path='/my' component={My} />
+                    <Route path='/friend' component={Friend} />
+                </Switch>
+            </div>
+        </Router>
+    )
+}
+```
+
+`Find.js`
+
+```js
+import React from 'react'
+import { NavLink, Switch, Route } from 'react-router-dom'
+import Top from './Top'
+import List from './List'
+
+export default function Find() {
+    return (
+        <div>
+            <h3>发现音乐</h3>
+            <ul>
+                <li>
+                    <NavLink to='/find/top'>排行榜</NavLink>
+                </li>
+                <li>
+                    <NavLink to='/find/list'>歌单</NavLink>
+                </li>
+            </ul>
+            <Switch>
+                <Route path='/find/top' component={Top} />
+                <Route path='/find/list' component={List} />
+            </Switch>
         </div>
     )
 }
 ```
 
-准备静态资源
+## 编程式导航
 
-### 接口说明
+-   第一种方式通过 props 拿到 history
 
-获取频道列表
+-   场景：点击登录按钮，登录成功后，通过代码跳转到后台首页，如何实现？
+-   编程式导航：通过 JS 代码来实现页面跳转
+-   history 是 React 路由提供的，用于获取浏览器历史记录的相关信息
+-   push(path)：跳转到某个页面，参数 path 表示要跳转的路径
+-   go(n)： 前进或后退到某个页面，参数 n 表示前进或后退页面数量（比如：-1 表示后退到上一页）
 
-http://geek.itheima.net/v1_0/channels
+```js
+// 如果使用js代码的方式实现路由的跳转----》编程式导航
+const history = useHistory()
 
-获取频道新闻
-
-http://geek.itheima.net/v1_0/articles?channel_id=频道id&timestamp=时间戳
-
-### redux 初始化
-
--   创建目录结构
-
-![image-20211109215852691](images/image-20211109215852691.png)
-
--   store/index.js
-
-```jsx
-import { createStore, applyMiddleware } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
-import thunk from 'redux-thunk'
-
-import reducer from './reducers'
-
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
-
-export default store
+history.push('地址')
+history.go() 1 -1  前进和后退
+history.replace('地址') 跳转，，会替换当前的记录，演示
 ```
 
--   store/reducers/index.js
+## 动态路由与路由参数获取
 
-```jsx
-import { combineReducers } from "redux";
-export default combineReducers({
-  channel,
-  news
-})
+-   可以使用`:id`的方式来配置动态的路由参数
 
+```js
+// 可以匹配 /users/1  /users/2  /users/xxx
+<Route path='/users/:id' component={Users} />
+```
 
-export default function channel(state = [], action) {
-  return state
+-   在组件中，通过`props`可以接收到路由的参数
+
+```js
+render(){
+    console.log(this.props.match.params)
 }
 
-export default function news(state = [], action) {
-  return state
-}
-
+建议直接使用 useParams()，useHistory()，useLocation()
 ```
-
--   index.js
-
-```jsx
-import ReactDOM from 'react-dom'
-import App from './App'
-import './styles/index.css'
-import store from './store'
-import { Provider } from 'react-redux'
-
-ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById('root')
-)
-```
-
--   通过开发者工具查看效果
-
-### 加载频道数据
-
-### 处理高亮
-
-### 渲染文章列表

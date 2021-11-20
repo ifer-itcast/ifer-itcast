@@ -2098,3 +2098,790 @@ export default function TodoMain() {
     )
 }
 ```
+
+## 中间件概述
+
+### 目标
+
+能够理解为什么需要 Redux 中间件。
+
+### 内容
+
+默认情况下，Redux 自身只能处理同步数据流，但是在实际项目开发中，状态的更新、获取，通常是使用异步操作来实现。
+
+-   问题：如何在 Redux 中进行异步操作呢?
+
+-   回答：通过 Redux 中间件机制来实现。
+
+-   中间件，可以理解为处理一个功能的中间环节，对于 Redux 中间件来说就是在数据到达 reducer 之前进行一系列的处理操作。
+
+### 触发时机
+
+-   Redux 中间件执行时机：**在 dispatching action 和 到达 reducer 之间**。
+
+    a，没有中间件：`dispatch(action) => reducer`
+
+    b，使用中间件：`dispatch(action) => 执行中间件代码 => reducer`
+
+-   原理：封装了 Redux 自己的 dispatch 方法
+
+    a，没有中间件：`store.dispatch()` 就是 Redux 库自己提供的 dispatch 方法，用来发起状态更新
+
+    b，使用中间件：`store.dispatch()` 就是中间件封装处理后的 dispatch，但是最终一定会调用 Redux 库自己提供的 dispatch 方法
+
+没有中间件
+
+<img src="/resource/images/redux中间件-触发时机1.jpg"/>
+
+有中间件
+
+<img src="/resource/images/redux中间件-触发时机2.jpg"/>
+
+## logger 中间件
+
+1. 安装：`yarn add redux-logger`。
+
+2. 导入 redux-logger。
+
+3. 从 redux 中导入 applyMiddleware 函数。
+
+4. 将 applyMiddleware() 调用作为 createStore 函数的第二个参数。
+
+5. 调用 applyMiddleware 函数时，将 logger 作为参数传入。
+
+6. 后续调用 store.dispatch() 时，控制台就会有日志信息输出。
+
+`store/index.js`
+
+```js
+import { createStore, applyMiddleware } from 'redux'
+import logger from 'redux-logger'
+import rootReducer from './reducers'
+export default createStore(rootReducer, applyMiddleware(logger))
+```
+
+## redux-thunk 使用
+
+`redux-thunk` 中间件可以处理函数形式的 action，而在函数形式的 action 中就可以执行异步操作代码，完成异步操作。
+
+1. 安装：`yarn add redux-thunk`。
+
+2. 导入 redux-thunk。
+
+3. 将 thunk 添加到中间件列表中。
+
+4. 修改 action creator，返回一个函数。
+
+5. 在函数形式的 action 中执行异步操作，在异步操作成功后，分发 action 更新状态。
+
+`store/index.js`
+
+```js
+import thunk from 'redux-thunk'
+import logger from 'redux-logger'
+import rootReducer from './reducers'
+export default createStore(rootReducer, applyMiddleware(thunk, logger))
+```
+
+`store/actions/todo.js`
+
+```js
+export const clearTodo = () => {
+    return (dispatch) => {
+        setTimeout(() => {
+            dispatch({
+                type: CLEAR_TODO,
+            })
+        }, 1000)
+    }
+}
+```
+
+## redux-thunk 原理
+
+TODO: 补充
+
+## redux-devtools-extension
+
+### 目标
+
+开发 React 项目时，能够通过 Chrome 开发者工具调试跟踪 Redux 状态。
+
+### 步骤
+
+1. 保证浏览器安装了 Redux 的开发者工具。
+
+2. 通过包管理器在项目中安装 `yarn add redux-devtools-extension`。
+
+3. 在 store/index.js 中进行配置。
+
+4. 启动 react 项目，打开 chrome 开发者工具，测试
+
+`文档` [redux-devtools-exension](https://www.npmjs.com/package/redux-devtools-extension)
+
+```jsx
+import { createStore, applyMiddleware } from 'redux'
+import reducer from './reducers'
+import thunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
+export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
+```
+
+## 黑马头条 📝
+
+<img src="/resource/images/ifer_toutiao.png" class="highlight2" width="300"/>
+
+### 项目初始化
+
+1. 通过 `npx create-react-app toutiao` 初始化项目，并清理无关文件。
+
+2. 引入结构和样式。
+
+#### `index.css`
+
+```css
+body {
+    margin: 0;
+    padding: 0;
+}
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+li {
+    list-style: none;
+}
+dl,
+dd,
+dt,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+
+.no-padding {
+    padding: 0px !important;
+}
+
+.padding-content {
+    padding: 4px 0;
+}
+
+a:focus,
+a:active {
+    outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+b {
+    font-weight: normal;
+}
+
+div:focus {
+    outline: none;
+}
+
+.fr {
+    float: right;
+}
+
+.fl {
+    float: left;
+}
+
+.pr-5 {
+    padding-right: 5px;
+}
+
+.pl-5 {
+    padding-left: 5px;
+}
+
+.block {
+    display: block;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.inlineBlock {
+    display: block;
+}
+.catagtory {
+    display: flex;
+    overflow: hidden;
+    overflow-x: scroll;
+    background-color: #f4f5f6;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+.catagtory li {
+    padding: 0 15px;
+    text-align: center;
+    line-height: 40px;
+    color: #505050;
+    cursor: pointer;
+    z-index: 99;
+    white-space: nowrap;
+}
+.catagtory li.select {
+    color: #f85959;
+}
+.list {
+    margin-top: 60px;
+}
+.article_item {
+    padding: 0 10px;
+}
+.article_item .img_box {
+    display: flex;
+    justify-content: space-between;
+}
+.article_item .img_box .w33 {
+    width: 33%;
+    height: 90px;
+    display: inline-block;
+}
+.article_item .img_box .w100 {
+    width: 100%;
+    height: 180px;
+    display: inline-block;
+}
+.article_item h3 {
+    font-weight: normal;
+    line-height: 2;
+}
+.article_item .info_box {
+    color: #999;
+    line-height: 2;
+    position: relative;
+    font-size: 12px;
+}
+.article_item .info_box span {
+    padding-right: 10px;
+}
+.article_item .info_box span.close {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    line-height: 15px;
+    height: 12px;
+    width: 16px;
+    text-align: center;
+    padding-right: 0;
+    font-size: 8px;
+    position: absolute;
+    right: 0;
+    top: 7px;
+}
+```
+
+#### `components/Channel.js`
+
+```jsx
+import React from 'react'
+
+export default function Channel() {
+    return (
+        <ul className='catagtory'>
+            <li className='select'>开发者资讯</li>
+            <li>ios</li>
+            <li>c++</li>
+            <li>android</li>
+            <li>css</li>
+            <li>数据库</li>
+            <li>区块链</li>
+            <li>go</li>
+            <li>产品</li>
+            <li>后端</li>
+            <li>linux</li>
+            <li>人工智能</li>
+            <li>php</li>
+            <li>javascript</li>
+            <li>架构</li>
+            <li>前端</li>
+            <li>python</li>
+            <li>java</li>
+            <li>算法</li>
+            <li>面试</li>
+            <li>科技动态</li>
+            <li>js</li>
+            <li>设计</li>
+            <li>数码产品</li>
+            <li>html</li>
+            <li>软件测试</li>
+            <li>测试开发</li>
+        </ul>
+    )
+}
+```
+
+#### `components/NewsList.js`
+
+```jsx
+import React from 'react'
+import avatar from '../assets/back.jpg'
+export default function NewsList() {
+    return (
+        <div className='list'>
+            <div className='article_item'>
+                <h3 className='van-ellipsis'>python数据预处理 ：数据标准化</h3>
+                <div className='img_box'>
+                    <img src={avatar} className='w100' alt='' />
+                </div>
+                <div className='info_box'>
+                    <span>13552285417</span>
+                    <span>0评论</span>
+                    <span>2018-11-29T17:02:09</span>
+                </div>
+            </div>
+        </div>
+    )
+}
+```
+
+#### `App.js`
+
+```jsx
+import React from 'react'
+import Channel from './components/Channel'
+import NewsList from './components/NewsList'
+export default function App() {
+    return (
+        <div className='app'>
+            <Channel></Channel>
+            <NewsList></NewsList>
+        </div>
+    )
+}
+```
+
+#### `src/index.js`
+
+```js
+import ReactDOM from 'react-dom'
+import App from './App'
+import './index.css'
+
+ReactDOM.render(<App />, document.querySelector('#root'))
+```
+
+### 接口说明
+
+-   获取频道列表，`http://geek.itheima.net/v1_0/channels`、`toutiao`。
+
+-   获取频道新闻，`http://geek.itheima.net/v1_0/articles?channel_id=频道id&timestamp=时间戳`。
+
+### Redux 初始化
+
+-   安装
+
+```bash
+yarn add redux react-redux redux-thunk axios redux-devtools-extension
+```
+
+-   创建目录结构，src 目录里面的文件如下
+
+```bash
+|-- App.js
+|-- assets
+|   `-- back.jpg
+|-- components
+|   |-- Channel.js
+|   `-- NewsList.js
+|-- index.css
+|-- index.js
+`-- store
+    |-- actions
+    |-- constants
+    |-- index.js
+    `-- reducers
+```
+
+-   store/index.js
+
+```jsx
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import thunk from 'redux-thunk'
+
+import reducer from './reducers'
+
+export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
+```
+
+-   store/reducers/index.js
+
+```jsx
+import { combineReducers } from 'redux'
+import channel from './channel'
+import news from './news'
+export default combineReducers({
+    channel,
+    news,
+})
+```
+
+-   store/reducers/channel.js
+
+```js
+export default function channel(state = [], action) {
+    return state
+}
+```
+
+-   store/reducers/news.js
+
+```js
+export default function news(state = [], action) {
+    return state
+}
+```
+
+-   入口文件，index.js
+
+```jsx
+import ReactDOM from 'react-dom'
+import App from './App'
+import './index.css'
+import store from './store'
+import { Provider } from 'react-redux'
+
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
+)
+```
+
+-   通过开发者工具查看效果
+
+### 加载频道数据
+
+1. `store/constants/channel.js`
+
+```js
+export const CHANNEL_GET = 'CHANNEL_GET'
+```
+
+2. `store/actions/channel.js`
+
+```js
+import axios from 'axios'
+import { CHANNEL_GET } from '../constants/channel'
+
+export const getChannelListAc = (payload) => ({
+    type: CHANNEL_GET,
+    payload,
+})
+
+export const getChannelList = () => {
+    return async (dispatch) => {
+        const res = await axios.get('http://geek.itheima.net/v1_0/channels')
+        dispatch(getChannelListAc(res.data.data.channels))
+    }
+}
+```
+
+3. `store/reducers/channel.js`
+
+```js
+import { CHANNEL_GET } from '../constants/channel'
+
+export default function channel(state = [], action) {
+    switch (action.type) {
+        case CHANNEL_GET:
+            return action.payload
+        default:
+            return state
+    }
+}
+```
+
+4. `components/Channel.js`
+
+```js
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getChannelList } from '../store/actions/channel'
+
+export default function Channel() {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getChannelList())
+    }, [dispatch])
+    const list = useSelector((state) => state.channel)
+    return (
+        <ul className='catagtory'>
+            {list.map((item) => (
+                <li key={item.id} className='select'>
+                    {item.name}
+                </li>
+            ))}
+        </ul>
+    )
+}
+```
+
+### 处理初始高亮
+
+`store/reducers/channel.js`
+
+```js
+import { CHANNEL_GET } from '../constants/channel'
+
+const initState = {
+    list: [],
+    active: 0,
+}
+
+export default function channel(state = initState, action) {
+    switch (action.type) {
+        case CHANNEL_GET:
+            return {
+                ...state,
+                list: action.payload,
+            }
+        default:
+            return state
+    }
+}
+```
+
+`components/Channel.js`
+
+```js
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getChannelList } from '../store/actions/channel'
+
+export default function Channel() {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getChannelList())
+    }, [dispatch])
+    const list = useSelector((state) => state.channel.list)
+    const active = useSelector((state) => state.channel.active)
+    return (
+        <ul className='catagtory'>
+            {list.map((item) => (
+                <li key={item.id} className={item.id === active ? 'select' : ''}>
+                    {item.name}
+                </li>
+            ))}
+        </ul>
+    )
+}
+```
+
+### 点击高亮
+
+1. `store/constants/channel.js`
+
+```js
+export const CHANNEL_GET = 'CHANNEL_GET'
+export const CHANNEL_ACTIVE = 'CHANNEL_ACTIVE'
+```
+
+2. `store/actions/channel.js`
+
+```js
+import axios from 'axios'
+import { CHANNEL_ACTIVE, CHANNEL_GET } from '../constants/channel'
+
+export const getChannelListAc = (payload) => ({
+    type: CHANNEL_GET,
+    payload,
+})
+
+export const getChannelList = () => {
+    return async (dispatch) => {
+        const res = await axios.get('http://geek.itheima.net/v1_0/channels')
+        dispatch(getChannelListAc(res.data.data.channels))
+    }
+}
+export const changeActive = (id) => ({
+    type: CHANNEL_ACTIVE,
+    id,
+})
+```
+
+3. `store/reducers/channel.js`
+
+```js
+import { CHANNEL_ACTIVE, CHANNEL_GET } from '../constants/channel'
+
+const initState = {
+    list: [],
+    active: 0,
+}
+
+export default function channel(state = initState, action) {
+    switch (action.type) {
+        case CHANNEL_GET:
+            return {
+                ...state,
+                list: action.payload,
+            }
+        case CHANNEL_ACTIVE:
+            return {
+                ...state,
+                active: action.id,
+            }
+        default:
+            return state
+    }
+}
+```
+
+4. `Components/Channel.js`
+
+```js
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeActive, getChannelList } from '../store/actions/channel'
+
+export default function Channel() {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getChannelList())
+    }, [dispatch])
+    const list = useSelector((state) => state.channel.list)
+    const active = useSelector((state) => state.channel.active)
+    return (
+        <ul className='catagtory'>
+            {list.map((item) => (
+                <li key={item.id} className={item.id === active ? 'select' : ''} onClick={() => dispatch(changeActive(item.id))}>
+                    {item.name}
+                </li>
+            ))}
+        </ul>
+    )
+}
+```
+
+### 请求数据
+
+1. `store/constants/channel.js`
+
+```js
+export const CHANNEL_GET = 'CHANNEL_GET'
+export const CHANNEL_ACTIVE = 'CHANNEL_ACTIVE'
+// 这个可以方法 news.js 中，或者只保留一个 constants/index.js 文件即可
+export const NEWS_GET = 'NEWS_GET'
+```
+
+2. `store/actions/news.js`
+
+```js
+import axios from 'axios'
+import { NEWS_GET } from '../constants/channel'
+
+export const getNewsListAc = (payload) => ({
+    type: NEWS_GET,
+    payload,
+})
+
+export const getNewsList = (id) => {
+    return async (dispatch) => {
+        const res = await axios.get(`http://geek.itheima.net/v1_0/articles?channel_id=${id}&timestamp=${Date.now()}`)
+        dispatch(getNewsListAc(res.data.data.results))
+    }
+}
+```
+
+3. `store/reducers/news.js`
+
+```js
+import { NEWS_GET } from '../constants/channel'
+
+export default function news(state = [], action) {
+    switch (action.type) {
+        case NEWS_GET:
+            return action.payload
+        default:
+            return state
+    }
+}
+```
+
+4. `components/NewsList.js`
+
+```js
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import avatar from '../assets/back.jpg'
+import { getNewsList } from '../store/actions/news'
+
+export default function NewsList() {
+    const active = useSelector((state) => state.channel.active)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getNewsList(active))
+    }, [active, dispatch])
+    return (
+        <div className='list'>
+            <div className='article_item'>
+                <h3 className='van-ellipsis'>python数据预处理 ：数据标准化</h3>
+                <div className='img_box'>
+                    <img src={avatar} className='w100' alt='' />
+                </div>
+                <div className='info_box'>
+                    <span>13552285417</span>
+                    <span>0评论</span>
+                    <span>2018-11-29T17:02:09</span>
+                </div>
+            </div>
+        </div>
+    )
+}
+```
+
+### 渲染列表
+
+```js
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import avatar from '../assets/back.jpg'
+import { getNewsList } from '../store/actions/news'
+
+export default function NewsList() {
+    const active = useSelector((state) => state.channel.active)
+    const list = useSelector((state) => state.news)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getNewsList(active))
+    }, [active, dispatch])
+    return (
+        <div className='list'>
+            {list.map((item) => (
+                <div className='article_item' key={item.art_id}>
+                    <h3 className='van-ellipsis'>{item.title}</h3>
+                    <div className='img_box'>
+                        <img src={item.cover.type === 0 ? avatar : item.cover.images[0]} className='w100' alt='' />
+                    </div>
+                    <div className='info_box'>
+                        <span>{item.aut_name}</span>
+                        <span>{item.comm_count}评论</span>
+                        <span>{item.pubdate}</span>
+                    </div>
+                </div>
+            ))}
+        </div>
+    )
+}
+```
