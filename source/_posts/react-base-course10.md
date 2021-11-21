@@ -26,34 +26,32 @@ const { Header, Sider, Content } = Layout
 export default function MyLayout() {
     return (
         <div className={styles.root}>
-            <div className='layout'>
+            <Layout>
+                <Header className='header'>
+                    <div className='logo' />
+                </Header>
                 <Layout>
-                    <Header className='header'>
-                        <div className='logo' />
-                    </Header>
-                    <Layout>
-                        <Sider width={200} className='site-layout-background'>
-                            <Menu mode='inline' defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{ height: '100%', borderRight: 0 }}>
-                                <Menu.Item key='1'>option1</Menu.Item>
-                                <Menu.Item key='2'>option2</Menu.Item>
-                                <Menu.Item key='3'>option3</Menu.Item>
-                            </Menu>
-                        </Sider>
-                        <Layout style={{ padding: '0 24px 24px' }}>
-                            <Content
-                                className='site-layout-background'
-                                style={{
-                                    padding: 24,
-                                    margin: 0,
-                                    minHeight: 280,
-                                }}
-                            >
-                                Content
-                            </Content>
-                        </Layout>
+                    <Sider width={200} className='site-layout-background'>
+                        <Menu mode='inline' defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{ height: '100%', borderRight: 0 }}>
+                            <Menu.Item key='1'>option1</Menu.Item>
+                            <Menu.Item key='2'>option2</Menu.Item>
+                            <Menu.Item key='3'>option3</Menu.Item>
+                        </Menu>
+                    </Sider>
+                    <Layout style={{ padding: '0 24px 24px' }}>
+                        <Content
+                            className='site-layout-background'
+                            style={{
+                                padding: 24,
+                                margin: 0,
+                                minHeight: 280,
+                            }}
+                        >
+                            Content
+                        </Content>
                     </Layout>
                 </Layout>
-            </div>
+            </Layout>
         </div>
     )
 }
@@ -74,41 +72,39 @@ const { Header, Sider, Content } = Layout
 export default function MyLayout() {
     return (
         <div className={styles.root}>
-            <div className='layout'>
+            <Layout>
+                <Header className='header'>
+                    <div className='logo' />
+                    <div className='profile'>
+                        <span>黑马先锋</span>
+                        <span>
+                            <LogoutOutlined></LogoutOutlined>
+                            {'  '}退出
+                        </span>
+                    </div>
+                </Header>
                 <Layout>
-                    <Header className='header'>
-                        <div className='logo' />
-                        <div className='profile'>
-                            <span>黑马先锋</span>
-                            <span>
-                                <LogoutOutlined></LogoutOutlined>
-                                {'  '}退出
-                            </span>
-                        </div>
-                    </Header>
-                    <Layout>
-                        <Sider width={200} className='site-layout-background'>
-                            <Menu mode='inline' defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{ height: '100%', borderRight: 0 }}>
-                                <Menu.Item key='1'>option1</Menu.Item>
-                                <Menu.Item key='2'>option2</Menu.Item>
-                                <Menu.Item key='3'>option3</Menu.Item>
-                            </Menu>
-                        </Sider>
-                        <Layout style={{ padding: '0 24px 24px' }}>
-                            <Content
-                                className='site-layout-background'
-                                style={{
-                                    padding: 24,
-                                    margin: 0,
-                                    minHeight: 280,
-                                }}
-                            >
-                                Content
-                            </Content>
-                        </Layout>
+                    <Sider width={200} className='site-layout-background'>
+                        <Menu mode='inline' defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{ height: '100%', borderRight: 0 }}>
+                            <Menu.Item key='1'>option1</Menu.Item>
+                            <Menu.Item key='2'>option2</Menu.Item>
+                            <Menu.Item key='3'>option3</Menu.Item>
+                        </Menu>
+                    </Sider>
+                    <Layout style={{ padding: '0 24px 24px' }}>
+                        <Content
+                            className='site-layout-background'
+                            style={{
+                                padding: 24,
+                                margin: 0,
+                                minHeight: 280,
+                            }}
+                        >
+                            Content
+                        </Content>
                     </Layout>
                 </Layout>
-            </div>
+            </Layout>
         </div>
     )
 }
@@ -156,7 +152,7 @@ export default function MyLayout() {
 -   导入图标
 
 ```jsx
-import { LogoutOutlined, HomeOutlined, HddOutlined, EditOutlined } from '@ant-design/icons'
+import { HomeOutlined, HddOutlined, EditOutlined } from '@ant-design/icons'
 ```
 
 -   修改菜单的结构
@@ -175,42 +171,109 @@ import { LogoutOutlined, HomeOutlined, HddOutlined, EditOutlined } from '@ant-de
 </Menu>
 ```
 
--   修改侧边栏的样式 layout/index.module.scss
+-   修改菜单的样式
 
-```jsx
+```scss
 .root {
-  height: 100%;
-
-  :global {
-      .ant-layout {
-          height: 100%;
+    // #1
+    height: 100%;
+    :global {
+        .ant-layout-header {
+            padding: 0;
         }
-  }
+        // 头部
+        .header {
+            // 左侧
+            .logo {
+                float: left;
+                width: 200px;
+                height: 60px;
+                margin: 2px 0px;
+                // background: rgba(255, 255, 255, 0.3);
+                background: url(~@/assets/logo.png) no-repeat 0 0;
+                background-size: 200px 60px;
+            }
+            // 右侧
+            .profile {
+                position: absolute;
+                right: 20px;
+                color: #fff;
+                font-weight: 700;
+                span {
+                    margin-left: 10px;
+                    cursor: pointer;
+                }
+            }
+        }
+        // #2
+        .ant-layout {
+            height: 100%;
+        }
+        // #3
+        .site-layout-background {
+            background-color: #fff;
+        }
+    }
+}
+```
+
+`App.js`
+
+```js
+import React from 'react'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import Login from '@/pages/Login'
+import Layout from '@/pages/Layout'
+import NotFound from '@/pages/NotFound'
+
+export default function App() {
+    return (
+        <Router>
+            <div className='app'>
+                <Switch>
+                    {/* from 默认模糊匹配，表示以 '/' 开头就匹配 */}
+                    <Redirect exact from='/' to='/home' />
+                    <Route path='/login' component={Login}></Route>
+                    <Route path='/home' component={Layout}></Route>
+                    <Route component={NotFound} />
+                </Switch>
+            </div>
+        </Router>
+    )
 }
 ```
 
 -   index.scss
 
-```jsx
+```scss
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
 #root,
 .app {
-  height: 100%;
+    height: 100%;
 }
-
 ```
 
 ## 布局-完整结构与样式
 
-**目标**：能够根据 antd 布局组件搭建基础布局
-**步骤**：
+### 目标
 
-1. 打开 antd/Layout 布局组件文档，找到示例：顶部-侧边布局-通栏
-2. 拷贝示例代码到我们的 Layout 页面中
-3. 分析并调整页面布局
+能够根据 AntD 布局组件搭建基础布局。
 
-**核心代码**：
+### 步骤
 
-pages/Layout/index.js 中：
+1. 打开 antd/Layout 布局组件文档，找到示例：顶部-侧边布局-通栏。
+
+2. 拷贝示例代码到我们的 Layout 页面中。
+
+3. 分析并调整页面布局。
+
+### 代码
+
+`pages/Layout/index.js`
 
 ```js
 import React from 'react'
@@ -272,7 +335,7 @@ export default function MyLayout() {
 }
 ```
 
-page/Layout/index.scss 中：
+`page/Layout/index.scss`
 
 ```scss
 // BEM规范
@@ -316,17 +379,23 @@ page/Layout/index.scss 中：
 
 ## 布局-嵌套路由配置
 
-**目标**：能够在右侧内容区域展示左侧菜单对应的页面内容
-**步骤**：
+### 目标
 
-1. 在 pages 目录中，分别创建：`Home`（数据概览）/`Article`（内容管理）/Publish（发布文章）页面文件夹
-2. 分别在三个文件夹中创建 index.js 并创建基础组件后导出
-3. 在 Layout 页面组件中，配置子路由
-4. 使用 Link 修改左侧菜单内容，与子路由规则匹配实现路由切换
+能够在右侧内容区域展示左侧菜单对应的页面内容。
 
-**核心代码**：
+### 步骤
 
-pages/Home/index.js 中：
+1. 在 pages 目录中，分别创建：`Home`（数据概览）/`Article`（内容管理）/Publish（发布文章）页面文件夹。
+
+2. 分别在三个文件夹中创建 index.js 并创建基础组件后导出。
+
+3. 在 Layout 页面组件中，配置子路由。
+
+4. 使用 Link 修改左侧菜单内容，与子路由规则匹配实现路由切换。
+
+### 代码
+
+`pages/Home/index.js`
 
 ```js
 const Home = () => {
@@ -336,7 +405,7 @@ const Home = () => {
 export default Home
 ```
 
-pages/Layout/index.js 中：
+`pages/Layout/index.js`
 
 ```js
 import Home from '../Home'
@@ -372,25 +441,31 @@ import Publish from '../Publish'
 ```
 
 -   嵌套路由：由于 React 路由是组件，所以，组件写在哪就会在哪个地方渲染。因此，对于 Route 来说，根据实际需求放在相应的页面位置即可。
+
     -   需要注意的是：嵌套路由的配置，由于嵌套路由展示的内容是放在某个父级路由中的，所以，要展示嵌套路由的前提就是先展示父级路由内容。因此，嵌套路由的路径是基于父级路由路径的。
+
     -   比如，当前项目功能中，`/home/article` 就是在父级路由 `/home` 的基础上，添加了 '/article'
 
-## 布局-菜单高亮
+## 菜单高亮
 
-**目标**：能够在刷新页面时保持对应菜单高亮
+### 目标
+
+能够在刷新页面时保持对应菜单高亮。
 
 -   思路：将当前访问页面的路由地址作为 Menu 选中项的值（selectedKeys）即可
     -   注意：当我们点击菜单切换路由时，Layout 组件会重新渲染，因为，每次都可以拿到当前页面的路由地址
 
-**步骤**：
+### 步骤
 
-1. 将 Menu 的 key 属性修改为与其对应的路由地址
-2. 获取到当前正在访问页面的路由地址
-3. 将当前路由地址设置为 selectedKeys 属性的值
+1. 将 Menu 的 key 属性修改为与其对应的路由地址。
 
-**核心代码**：
+2. 获取到当前正在访问页面的路由地址。
 
-pages/Layout/index.js 中：
+3. 将当前路由地址设置为 selectedKeys 属性的值。
+
+### 代码
+
+`pages/Layout/index.js`
 
 ```js
 import { useLocation } from 'react-router-dom'
@@ -416,23 +491,30 @@ const GeekLayout = () => {
 }
 ```
 
-**总结**：
+### 总结
 
 1. 通过哪个属性指定 Menu 组件的选中项？
 2. 如何做到切换页面时对应菜单高亮？
 
-## 布局-展示个人信息
+## 展示个人信息
 
-**目标**：能够在布局页面右上角展示登录用户名
-**步骤**：
+### 目标
+
+能够在布局页面右上角展示登录用户名。
+
+### 步骤
 
 1. 在 Layout 组件中 dispatch 获取个人信息的异步 action
+
 2. 在 actions/user.js 中，创建异步 action 并获取个人信息
+
 3. 将接口返回的个人信息 dispatch 到 reducer 来存储该状态
+
 4. 在 reducers/user.js 中，处理个人信息的 action，将状态存储到 redux 中
+
 5. 在 Layout 组件中获取个人信息并展示
 
-**核心代码**：
+### 代码
 
 1. 需要给 axios 配置请求拦截器，添加 token `utils/request.js`
 
@@ -512,19 +594,22 @@ useEffect(() => {
 }, [dispatch])
 ```
 
-## 布局-退出登录
+## 退出登录
 
-**目标**：能够实现退出功能
-**步骤**：
+### 目标
+
+能够实现退出功能。
+
+### 步骤
 
 1. 为气泡确认框添加确认回调事件
 2. 在回调事件中，分发退出的异步 action
 3. 在异步 action 中删除本地 token，并且分发 action 来清空 redux 状态
 4. 退出后，返回到登录页面
 
-**核心代码**：
+### 代码
 
-pages/Layout/index.js 中：
+`pages/Layout/index.js`
 
 ```js
 {
@@ -550,7 +635,7 @@ const onConfirm = () => {
 }
 ```
 
-actions/login.js 中：
+`actions/login.js`
 
 ```js
 export const logout = () => {
@@ -563,7 +648,7 @@ export const logout = () => {
 }
 ```
 
-reducers/login.js 中：
+`reducers/login.js`
 
 ```js
 export default function login(state = initValue, action) {
@@ -583,23 +668,29 @@ export default function login(state = initValue, action) {
 }
 ```
 
-## 布局-处理 token 失效
+## 处理 token 失效
 
-**目标**：能够统一处理 token 失效重定向到登录页面
+### 目标
+
+能够统一处理 token 失效重定向到登录页面。
 
 说明：为了能够在非组件环境下拿到路由信息，需要我们自定义 Router 的 history
 
-**步骤**：
+### 步骤
 
 1. 安装：`yarn add history@4.10.1`（固定版本）
+
 2. 创建 utils/history.js 文件
+
 3. 在该文件中，创建一个 hisotry 对象并导出
+
 4. 在 App.js 中导入 history 对象，并设置为 Router 的 history
+
 5. 通过响应拦截器处理 token 失效
 
-**核心代码**：
+### 代码
 
-utils/history.js 中：
+`utils/history.js`
 
 ```js
 // 自定义history对象
@@ -610,7 +701,7 @@ const history = createBrowserHistory()
 export default history
 ```
 
-App.js 中：
+`App.js`
 
 ```js
 // 注意：此处，需要导入 Router 组件
@@ -622,7 +713,7 @@ function App() {
 }
 ```
 
-utils/request.js 中：
+`utils/request.js`
 
 ```js
 // 添加响应拦截器
@@ -648,9 +739,10 @@ instance.interceptors.response.use(
 )
 ```
 
-**总结**：
+### 总结
 
 1. 如何在非组件环境下实现路由跳转？
+
 2. 使用自定义 history 时，需要使用哪个路由组件？
 
 ## 登录访问控制 - 鉴权
@@ -826,12 +918,15 @@ if (err.response.status === 401) {
 
 ## 布局-首页展示
 
-**目标**：能够渲染首页
-**核心代码**：
+### 目标
+
+能够渲染首页
+
+### 代码
 
 将 chart.png 拷贝到 assets 目录中
 
-pages/Home/index.js 中：
+`pages/Home/index.js`
 
 ```js
 import React from 'react'
@@ -841,7 +936,7 @@ export default function Home() {
 }
 ```
 
-pages/Home/index.scss 中：
+`pages/Home/index.scss`
 
 ```scss
 .root {
