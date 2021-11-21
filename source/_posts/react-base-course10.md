@@ -1,18 +1,18 @@
 ---
-title: 10_极客园
+title: 10_极客园（界面访问控制）
 date: 2021-11-21 15:10:49
 tags:
 ---
 
 ## 今日目标
 
-✔ 学习。
+✔ 掌握界面访问控制。
 
 <!-- more -->
 
 ## 搭建布局组件结构
 
-![image-20210825144229158](images/image-20210825144229158.png)
+<img src="/resource/images/ifer_geek.png"/>
 
 -   准备基本结构
 
@@ -217,7 +217,7 @@ import { HomeOutlined, HddOutlined, EditOutlined } from '@ant-design/icons'
 }
 ```
 
-`App.js`
+-   `App.js`
 
 ```js
 import React from 'react'
@@ -257,127 +257,7 @@ export default function App() {
 }
 ```
 
-## 布局-完整结构与样式
-
-### 目标
-
-能够根据 AntD 布局组件搭建基础布局。
-
-### 步骤
-
-1. 打开 antd/Layout 布局组件文档，找到示例：顶部-侧边布局-通栏。
-
-2. 拷贝示例代码到我们的 Layout 页面中。
-
-3. 分析并调整页面布局。
-
-### 代码
-
-`pages/Layout/index.js`
-
-```js
-import React from 'react'
-import styles from './index.module.scss'
-import { Layout, Menu, Breadcrumb } from 'antd'
-import { LogoutOutlined, HomeOutlined, HddOutlined, EditOutlined } from '@ant-design/icons'
-
-const { Header, Content, Sider } = Layout
-
-export default function MyLayout() {
-    return (
-        <div className={styles.root}>
-            <Layout>
-                <Header className='header'>
-                    <div className='logo' />
-                    {/* 右侧内容 */}
-                    <div className='profile'>
-                        <span>黑马先锋</span>
-                        <span>
-                            <LogoutOutlined></LogoutOutlined> 退出
-                        </span>
-                    </div>
-                </Header>
-                <Layout>
-                    <Sider width={200} className='site-layout-background'>
-                        <Menu mode='inline' theme='dark' defaultSelectedKeys={['1']} style={{ height: '100%', borderRight: 0 }}>
-                            <Menu.Item icon={<HomeOutlined />} key='1'>
-                                数据概览
-                            </Menu.Item>
-                            <Menu.Item icon={<HddOutlined />} key='2'>
-                                内容管理
-                            </Menu.Item>
-                            <Menu.Item icon={<EditOutlined />} key='3'>
-                                发布文章
-                            </Menu.Item>
-                        </Menu>
-                    </Sider>
-                    <Layout style={{ padding: '0 24px 24px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>Home</Breadcrumb.Item>
-                            <Breadcrumb.Item>List</Breadcrumb.Item>
-                            <Breadcrumb.Item>App</Breadcrumb.Item>
-                        </Breadcrumb>
-                        <Content
-                            className='site-layout-background'
-                            style={{
-                                padding: 24,
-                                margin: 0,
-                                minHeight: 280,
-                            }}
-                        >
-                            Content
-                        </Content>
-                    </Layout>
-                </Layout>
-            </Layout>
-        </div>
-    )
-}
-```
-
-`page/Layout/index.scss`
-
-```scss
-// BEM规范
-// xxx.module.scss 会对样式文件中修改样式的类名, 保证类名一定是唯一的
-.root {
-    height: 100%;
-    :global {
-        .ant-layout-header {
-            padding: 0;
-        }
-        .header {
-            .logo {
-                float: left;
-                width: 200px;
-                height: 60px;
-                margin: 2px 0px;
-                // background: rgba(255, 255, 255, 0.3);
-                background: url(~@/assets/logo.png) no-repeat 0 0;
-                background-size: 200px 60px;
-            }
-            .profile {
-                position: absolute;
-                right: 20px;
-                color: #fff;
-                font-weight: 700;
-                span {
-                    margin-left: 10px;
-                    cursor: pointer;
-                }
-            }
-        }
-        .ant-layout {
-            height: 100%;
-        }
-        .site-layout-background {
-            background-color: #fff;
-        }
-    }
-}
-```
-
-## 布局-嵌套路由配置
+## 嵌套路由配置
 
 ### 目标
 
@@ -385,7 +265,7 @@ export default function MyLayout() {
 
 ### 步骤
 
-1. 在 pages 目录中，分别创建：`Home`（数据概览）/`Article`（内容管理）/Publish（发布文章）页面文件夹。
+1. 在 pages 目录中，分别创建：`Home`（数据概览）/`Article`（内容管理）/`Publish`（发布文章）页面文件夹。
 
 2. 分别在三个文件夹中创建 index.js 并创建基础组件后导出。
 
@@ -401,50 +281,68 @@ export default function MyLayout() {
 const Home = () => {
     return <div>Home</div>
 }
-
 export default Home
 ```
 
 `pages/Layout/index.js`
 
 ```js
+import React from 'react'
+import styles from './index.module.scss'
+import { Layout, Menu } from 'antd'
+import { LogoutOutlined, HomeOutlined, HddOutlined, EditOutlined } from '@ant-design/icons'
+import { Switch, Route, Link } from 'react-router-dom'
 import Home from '../Home'
 import Article from '../Article'
 import Publish from '../Publish'
+const { Header, Sider } = Layout
 
-
-<Layout style={{ padding: '24px' }}>
-  <Switch>
-    <Route exact path="/home" component={Home}></Route>
-    <Route path="/home/article" component={Article}></Route>
-    <Route path="/home/publish" component={Publish}></Route>
-  </Switch>
-</Layout>
-
-
-<Menu
-  mode="inline"
-  theme="dark"
-  defaultSelectedKeys={['1']}
-  style={{ height: '100%', borderRight: 0 }}
->
-  <Menu.Item icon={<HomeOutlined />} key="1">
-    <Link to="/home">数据概览</Link>
-  </Menu.Item>
-  <Menu.Item icon={<HddOutlined />} key="2">
-    <Link to="/home/article">内容管理</Link>
-  </Menu.Item>
-  <Menu.Item icon={<EditOutlined />} key="3">
-    <Link to="/home/publish">发布文章</Link>
-  </Menu.Item>
-</Menu>
+// 记得修改自己的组件名，和 AntD 的 Layout 冲突了
+export default function MyLayout() {
+    return (
+        <div className={styles.root}>
+            <Layout>
+                <Header className='header'>
+                    <div className='logo' />
+                    <div className='profile'>
+                        <span>黑马先锋</span>
+                        <span>
+                            <LogoutOutlined></LogoutOutlined>
+                            {'  '}退出
+                        </span>
+                    </div>
+                </Header>
+                <Layout>
+                    <Sider width={200} className='site-layout-background'>
+                        <Menu mode='inline' theme='dark' defaultSelectedKeys={['1']} style={{ height: '100%', borderRight: 0 }}>
+                            {/* #1 入口 */}
+                            <Menu.Item icon={<HomeOutlined />} key='1'>
+                                <Link to='/home'>数据概览</Link>
+                            </Menu.Item>
+                            <Menu.Item icon={<HddOutlined />} key='2'>
+                                <Link to='/home/article'>内容管理</Link>
+                            </Menu.Item>
+                            <Menu.Item icon={<EditOutlined />} key='3'>
+                                <Link to='/home/publish'>发布文章</Link>
+                            </Menu.Item>
+                        </Menu>
+                    </Sider>
+                    <Layout style={{ padding: '24px', backgroundColor: '#fff' }}>
+                        {/* #2 出口 */}
+                        <Switch>
+                            <Route exact path='/home' component={Home} />
+                            <Route path='/home/article' component={Article} />
+                            <Route path='/home/publish' component={Publish} />
+                        </Switch>
+                    </Layout>
+                </Layout>
+            </Layout>
+        </div>
+    )
+}
 ```
 
--   嵌套路由：由于 React 路由是组件，所以，组件写在哪就会在哪个地方渲染。因此，对于 Route 来说，根据实际需求放在相应的页面位置即可。
-
-    -   需要注意的是：嵌套路由的配置，由于嵌套路由展示的内容是放在某个父级路由中的，所以，要展示嵌套路由的前提就是先展示父级路由内容。因此，嵌套路由的路径是基于父级路由路径的。
-
-    -   比如，当前项目功能中，`/home/article` 就是在父级路由 `/home` 的基础上，添加了 '/article'
+注意：由于嵌套路由展示的内容是放在某个父级路由中的，所以，要展示嵌套路由的前提就是先展示父级路由内容，因此，嵌套路由的路径是基于父级路由路径的。比如，当前项目功能中，`/home/article` 就是在父级路由 `/home` 的基础上，添加了 `/article`
 
 ## 菜单高亮
 
@@ -452,10 +350,9 @@ import Publish from '../Publish'
 
 能够在刷新页面时保持对应菜单高亮。
 
--   思路：将当前访问页面的路由地址作为 Menu 选中项的值（selectedKeys）即可
-    -   注意：当我们点击菜单切换路由时，Layout 组件会重新渲染，因为，每次都可以拿到当前页面的路由地址
-
 ### 步骤
+
+-   思路：将当前访问页面的路由地址作为 Menu 选中项的值（selectedKeys）即可。
 
 1. 将 Menu 的 key 属性修改为与其对应的路由地址。
 
@@ -463,30 +360,64 @@ import Publish from '../Publish'
 
 3. 将当前路由地址设置为 selectedKeys 属性的值。
 
+注意：不要是 defaultSelectedKeys，此属性只会在第一次进入的时候生效（为什么点击侧边栏的时候没有问题呢？因为侧边栏自带点击高亮的效果），可以从 Publish 组件中跳转到首页时发现这个问题。
+
 ### 代码
 
 `pages/Layout/index.js`
 
 ```js
-import { useLocation } from 'react-router-dom'
+import React from 'react'
+import styles from './index.module.scss'
+import { Layout, Menu } from 'antd'
+import { LogoutOutlined, HomeOutlined, HddOutlined, EditOutlined } from '@ant-design/icons'
+import { Switch, Route, Link, useLocation } from 'react-router-dom'
+import Home from '../Home'
+import Article from '../Article'
+import Publish from '../Publish'
+const { Header, Sider } = Layout
 
-const GeekLayout = () => {
+export default function MyLayout() {
+    // #1
     const location = useLocation()
-    const selectedKey = location.pathname
-
     return (
-        // ...
-        <Menu mode='inline' theme='dark' selectedKeys={[selectedKey]} style={{ height: '100%', borderRight: 0 }}>
-            <Menu.Item icon={<HomeOutlined />} key='/home'>
-                <Link to='/home'>数据概览</Link>
-            </Menu.Item>
-            <Menu.Item icon={<DiffOutlined />} key='/home/article'>
-                <Link to='/home/article'>内容管理</Link>
-            </Menu.Item>
-            <Menu.Item icon={<EditOutlined />} key='/home/publish'>
-                <Link to='/home/publish'>发布文章</Link>
-            </Menu.Item>
-        </Menu>
+        <div className={styles.root}>
+            <Layout>
+                <Header className='header'>
+                    <div className='logo' />
+                    <div className='profile'>
+                        <span>黑马先锋</span>
+                        <span>
+                            <LogoutOutlined></LogoutOutlined>
+                            {'  '}退出
+                        </span>
+                    </div>
+                </Header>
+                <Layout>
+                    <Sider width={200} className='site-layout-background'>
+                        {/* #2 */}
+                        <Menu mode='inline' theme='dark' selectedKeys={[location.pathname]} style={{ height: '100%', borderRight: 0 }}>
+                            <Menu.Item icon={<HomeOutlined />} key='/home'>
+                                <Link to='/home'>数据概览</Link>
+                            </Menu.Item>
+                            <Menu.Item icon={<HddOutlined />} key='/home/article'>
+                                <Link to='/home/article'>内容管理</Link>
+                            </Menu.Item>
+                            <Menu.Item icon={<EditOutlined />} key='/home/publish'>
+                                <Link to='/home/publish'>发布文章</Link>
+                            </Menu.Item>
+                        </Menu>
+                    </Sider>
+                    <Layout style={{ padding: '24px', backgroundColor: '#fff' }}>
+                        <Switch>
+                            <Route exact path='/home' component={Home} />
+                            <Route path='/home/article' component={Article} />
+                            <Route path='/home/publish' component={Publish} />
+                        </Switch>
+                    </Layout>
+                </Layout>
+            </Layout>
+        </div>
     )
 }
 ```
@@ -494,6 +425,7 @@ const GeekLayout = () => {
 ### 总结
 
 1. 通过哪个属性指定 Menu 组件的选中项？
+
 2. 如何做到切换页面时对应菜单高亮？
 
 ## 展示个人信息
@@ -504,94 +436,192 @@ const GeekLayout = () => {
 
 ### 步骤
 
-1. 在 Layout 组件中 dispatch 获取个人信息的异步 action
+1. 在 Layout 组件中 dispatch 获取个人信息的异步 action。
 
-2. 在 actions/user.js 中，创建异步 action 并获取个人信息
+2. 在 actions/user.js 中，创建异步 action 并获取个人信息。
 
-3. 将接口返回的个人信息 dispatch 到 reducer 来存储该状态
+3. 将接口返回的个人信息 dispatch 到 reducer 来存储该状态。
 
-4. 在 reducers/user.js 中，处理个人信息的 action，将状态存储到 redux 中
+4. 在 reducers/user.js 中，处理个人信息的 action，将状态存储到 Redux 中。
 
-5. 在 Layout 组件中获取个人信息并展示
+5. 在 Layout 组件中获取个人信息并展示。
 
 ### 代码
 
-1. 需要给 axios 配置请求拦截器，添加 token `utils/request.js`
-
-```jsx
-// 添加请求拦截器
-instance.interceptors.request.use(
-    function (config) {
-        // 在发送请求之前做些什么
-        const token = getToken()
-        if (token) {
-            // 添加token
-            config.headers.Authorization = `Bearer ${token}`
-        }
-        return config
-    },
-    function (error) {
-        // 对请求错误做些什么
-        return Promise.reject(error)
-    }
-)
-```
-
-2. 新增一个 user 的 reducer store/reducers/user.js
-
-```jsx
-import { GET_USER_INFO } from '../constants'
-
-export default function user(state = {}, action) {
-    if (action.type === GET_USER_INFO) {
-        return action.payload
-    }
-    return state
-}
-```
-
-3. 在`store/reducers/index.js`增加 user 模块
-
-```jsx
-import login from './login.js'
-import user from './user.js'
-const rootReducer = combineReducers({
-    login,
-    user,
-})
-```
-
-4. 在`store/actions/user.js`中增加一个获取用户信息的 action
-
-```jsx
-import request from '@/utils/request'
-import { GET_USER_INFO } from '../constants'
-export function getUserInfo() {
-    return async (dispatch) => {
-        const res = await request.get('/user/profile')
-        dispatch({
-            type: GET_USER_INFO,
-            payload: res.data.data,
-        })
-    }
-}
-```
-
-5. 在`store/constants/index.js`增加了类型
+1. `store/constants/index.js` 文件中创建 actionType。
 
 ```jsx
 export const LOGIN = 'LOGIN'
 export const GET_USER_INFO = 'GET_USER_INFO'
 ```
 
-6. 在`pages/Layout/index.js`中发送请求
+2. `store/actions/user.js` 文件中创建获取用户信息的异步 action 和 actionCreator。
 
 ```jsx
-const dispatch = useDispatch()
+import request from '@/utils/request'
+import { GET_USER_INFO, LOGIN } from '../constants'
+import { setToken } from '@/utils'
 
-useEffect(() => {
-    dispatch(getUserInfo())
-}, [dispatch])
+export const loginAc = (payload) => ({
+    type: LOGIN,
+    payload,
+})
+
+export const login = (payload) => {
+    return async (dispatch) => {
+        const res = await request({
+            method: 'post',
+            url: '/authorizations',
+            data: payload,
+        })
+        const token = res.data.data.token
+        setToken(token)
+        dispatch(loginAc(token))
+    }
+}
+
+export const getUserInfoAc = (payload) => ({
+    type: GET_USER_INFO,
+    payload,
+})
+
+export const getUserInfo = () => {
+    return async (dispatch) => {
+        const res = await request.get('/user/profile')
+        dispatch(getUserInfoAc(res.data.data))
+    }
+}
+```
+
+3. 在 `store/reducers/user.js` 文件中创建 user 的 reducer。
+
+```jsx
+import { GET_USER_INFO } from '../constants'
+
+export default function user(state = {}, action) {
+    switch (action.type) {
+        case GET_USER_INFO:
+            return action.payload
+        default:
+            return state
+    }
+}
+```
+
+4. 在 `store/reducers/index.js` 文件中融合 user 模块。
+
+```jsx
+import { combineReducers } from 'redux'
+
+import login from './login'
+import user from './user'
+
+const rootReducer = combineReducers({
+    login,
+    user,
+})
+
+export default rootReducer
+```
+
+5. 在 `pages/Layout/index.js` 组件中发送请求。
+
+```jsx
+import React, { useEffect } from 'react'
+import styles from './index.module.scss'
+import { Layout, Menu } from 'antd'
+import { LogoutOutlined, HomeOutlined, HddOutlined, EditOutlined } from '@ant-design/icons'
+import { Switch, Route, Link, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import Home from '../Home'
+import Article from '../Article'
+import Publish from '../Publish'
+import { getUserInfo } from '@/store/actions/login'
+const { Header, Sider } = Layout
+
+export default function MyLayout() {
+    const location = useLocation()
+    const dispatch = useDispatch()
+    // 拿到用户信息并渲染
+    const user = useSelector((state) => state.user)
+    useEffect(() => {
+        dispatch(getUserInfo())
+    }, [dispatch])
+    return (
+        <div className={styles.root}>
+            <Layout>
+                <Header className='header'>
+                    <div className='logo' />
+                    <div className='profile'>
+                        <span>{user.name}</span>
+                        <span>
+                            <LogoutOutlined></LogoutOutlined>
+                            {'  '}退出
+                        </span>
+                    </div>
+                </Header>
+                <Layout>
+                    <Sider width={200} className='site-layout-background'>
+                        <Menu mode='inline' theme='dark' selectedKeys={[location.pathname]} style={{ height: '100%', borderRight: 0 }}>
+                            <Menu.Item icon={<HomeOutlined />} key='/home'>
+                                <Link to='/home'>数据概览</Link>
+                            </Menu.Item>
+                            <Menu.Item icon={<HddOutlined />} key='/home/article'>
+                                <Link to='/home/article'>内容管理</Link>
+                            </Menu.Item>
+                            <Menu.Item icon={<EditOutlined />} key='/home/publish'>
+                                <Link to='/home/publish'>发布文章</Link>
+                            </Menu.Item>
+                        </Menu>
+                    </Sider>
+                    <Layout style={{ padding: '24px', backgroundColor: '#fff' }}>
+                        <Switch>
+                            <Route exact path='/home' component={Home} />
+                            <Route path='/home/article' component={Article} />
+                            <Route path='/home/publish' component={Publish} />
+                        </Switch>
+                    </Layout>
+                </Layout>
+            </Layout>
+        </div>
+    )
+}
+```
+
+6. 在 `utils/request.js` 文件中通过请求拦截器统一携带 Token。
+
+```jsx
+import axios from 'axios'
+import { getToken } from '.'
+
+const instance = axios.create({
+    baseURL: 'http://geek.itheima.net/v1_0/',
+    timeout: 5000,
+})
+
+instance.interceptors.request.use(
+    (config) => {
+        const token = getToken()
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`
+        }
+        return config
+    },
+    (error) => {
+        return Promise.reject(error)
+    }
+)
+
+instance.interceptors.response.use(
+    (response) => {
+        return response
+    },
+    (error) => {
+        return Promise.reject(error)
+    }
+)
+
+export default instance
 ```
 
 ## 退出登录
@@ -602,55 +632,80 @@ useEffect(() => {
 
 ### 步骤
 
-1. 为气泡确认框添加确认回调事件
-2. 在回调事件中，分发退出的异步 action
-3. 在异步 action 中删除本地 token，并且分发 action 来清空 redux 状态
-4. 退出后，返回到登录页面
+1. 在 `store/constants/index.js` 文件中创建 actionType。
+
+2. 在 `store/actions/login.js` 文件中创建退出的 action（清除本地和 Redux 中的 Token）。
+
+3. 在 `store/reducers/login.js` 文件中处理 Redux 中的数据（Token）。
+
+4. 在 `pages/Layout/index.js` 组件中进行退出的操作。
 
 ### 代码
 
-`pages/Layout/index.js`
+`store/constants/index.js`
 
 ```js
-{
-    /* 右侧内容 */
-}
-;<div className='profile'>
-    <span>{user.name}</span>
-    <Popconfirm title='你确定要退出本系统吗?' okText='确定' cancelText='取消' placement='bottomRight' onConfirm={onConfirm}>
-        <span>
-            <LogoutOutlined></LogoutOutlined> 退出
-        </span>
-    </Popconfirm>
-</div>
-
-const onConfirm = () => {
-    // 清除token
-    dispatch(logout())
-
-    // 跳转到登录页
-    history.push('/login')
-    // 提示消息
-    message.success('退出成功', 1)
-}
+export const LOGIN = 'LOGIN'
+export const GET_USER_INFO = 'GET_USER_INFO'
+export const LOGOUT = 'LOGOUT'
 ```
 
-`actions/login.js`
+`store/actions/login.js`
 
 ```js
+import request from '@/utils/request'
+import { GET_USER_INFO, LOGIN, LOGOUT } from '../constants'
+import { setToken, removeToken } from '@/utils'
+
+export const loginAc = (payload) => ({
+    type: LOGIN,
+    payload,
+})
+
+export const login = (payload) => {
+    return async (dispatch) => {
+        const res = await request({
+            method: 'post',
+            url: '/authorizations',
+            data: payload,
+        })
+        const token = res.data.data.token
+        setToken(token)
+        dispatch(loginAc(token))
+    }
+}
+
+export const getUserInfoAc = (payload) => ({
+    type: GET_USER_INFO,
+    payload,
+})
+
+export const getUserInfo = () => {
+    return async (dispatch) => {
+        const res = await request.get('/user/profile')
+        dispatch(getUserInfoAc(res.data.data))
+    }
+}
+
+export const logoutAc = () => ({
+    type: LOGOUT,
+})
 export const logout = () => {
     return (dispatch) => {
         removeToken()
-        dispatch({
-            type: LOGOUT,
-        })
+        dispatch(logoutAc())
     }
 }
 ```
 
-`reducers/login.js`
+`store/reducers/login.js`
 
 ```js
+import { LOGIN, LOGOUT } from '../constants'
+const initValue = {
+    token: '',
+}
+
 export default function login(state = initValue, action) {
     if (action.type === LOGIN) {
         return {
@@ -668,72 +723,230 @@ export default function login(state = initValue, action) {
 }
 ```
 
-## 处理 token 失效
+`pages/Layout/index.js`
+
+```jsx
+import React, { useEffect } from 'react'
+import styles from './index.module.scss'
+import { Layout, Menu, Popconfirm, message } from 'antd'
+import { LogoutOutlined, HomeOutlined, HddOutlined, EditOutlined } from '@ant-design/icons'
+import { Switch, Route, Link, useLocation, useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import Home from '../Home'
+import Article from '../Article'
+import Publish from '../Publish'
+import { getUserInfo, logout } from '@/store/actions/login'
+const { Header, Sider } = Layout
+
+export default function MyLayout() {
+    const location = useLocation()
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const user = useSelector((state) => state.user)
+    useEffect(() => {
+        dispatch(getUserInfo())
+    }, [dispatch])
+
+    const onConfirm = () => {
+        // #1 清除 Token
+        dispatch(logout())
+        // #2 跳转到登录页
+        history.push('/login')
+        // #3 提示消息
+        message.success('退出成功', 1)
+    }
+    return (
+        <div className={styles.root}>
+            <Layout>
+                <Header className='header'>
+                    <div className='logo' />
+                    <div className='profile'>
+                        <span>{user.name}</span>
+                        <Popconfirm title='你确定要退出本系统吗?' okText='确定' cancelText='取消' placement='bottomRight' onConfirm={onConfirm}>
+                            <span>
+                                <LogoutOutlined></LogoutOutlined> 退出
+                            </span>
+                        </Popconfirm>
+                    </div>
+                </Header>
+                <Layout>
+                    <Sider width={200} className='site-layout-background'>
+                        <Menu mode='inline' theme='dark' selectedKeys={[location.pathname]} style={{ height: '100%', borderRight: 0 }}>
+                            <Menu.Item icon={<HomeOutlined />} key='/home'>
+                                <Link to='/home'>数据概览</Link>
+                            </Menu.Item>
+                            <Menu.Item icon={<HddOutlined />} key='/home/article'>
+                                <Link to='/home/article'>内容管理</Link>
+                            </Menu.Item>
+                            <Menu.Item icon={<EditOutlined />} key='/home/publish'>
+                                <Link to='/home/publish'>发布文章</Link>
+                            </Menu.Item>
+                        </Menu>
+                    </Sider>
+                    <Layout style={{ padding: '24px', backgroundColor: '#fff' }}>
+                        <Switch>
+                            <Route exact path='/home' component={Home} />
+                            <Route path='/home/article' component={Article} />
+                            <Route path='/home/publish' component={Publish} />
+                        </Switch>
+                    </Layout>
+                </Layout>
+            </Layout>
+        </div>
+    )
+}
+```
+
+## 处理 Token 失效
+
+`utils/request.js`
+
+```js
+import { logout } from '@/store/actions/login'
+import { message } from 'antd'
+import axios from 'axios'
+import { getToken } from '.'
+import store from '../store'
+
+const instance = axios.create({
+    baseURL: 'http://geek.itheima.net/v1_0/',
+    timeout: 5000,
+})
+
+instance.interceptors.request.use(
+    (config) => {
+        const token = getToken()
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`
+        }
+        return config
+    },
+    (error) => {
+        return Promise.reject(error)
+    }
+)
+
+instance.interceptors.response.use(
+    (response) => {
+        return response
+    },
+    (err) => {
+        if (err.response.status === 401) {
+            // 提示消息
+            message.error('登录信息过期', 1)
+            // 清除 Token（本地和 Redux 的）
+            store.dispatch(logout())
+            // 用此跳转有问题：看不到提示消息了，因为此 API 会导致页面刷新
+            window.location.href = '/login'
+        }
+        return Promise.reject(err)
+    }
+)
+
+export default instance
+```
+
+## 处理 location.href 的问题
 
 ### 目标
 
-能够统一处理 token 失效重定向到登录页面。
-
-说明：为了能够在非组件环境下拿到路由信息，需要我们自定义 Router 的 history
+非组件中如何使用 history。
 
 ### 步骤
 
-1. 安装：`yarn add history@4.10.1`（固定版本）
+说明：为了能够在非组件环境下拿到路由信息，需要我们自定义 Router 的 history。
 
-2. 创建 utils/history.js 文件
+<!-- 1. 安装：`yarn add history@4.10.1`（固定版本）。 -->
 
-3. 在该文件中，创建一个 hisotry 对象并导出
+1. 在 `utils/history.js` 文件中创建 hisotry 对象并导出。
 
-4. 在 App.js 中导入 history 对象，并设置为 Router 的 history
+2. 在 App.js 中导入 history 对象，并设置为 Router 的 history。
 
-5. 通过响应拦截器处理 token 失效
+3. 通过响应拦截器处理 Token 失效。
 
 ### 代码
 
 `utils/history.js`
 
 ```js
-// 自定义history对象
 import { createBrowserHistory } from 'history'
-
 const history = createBrowserHistory()
-
 export default history
 ```
 
 `App.js`
 
 ```js
-// 注意：此处，需要导入 Router 组件
-import { Router } from 'react-router-dom'
+// Router + history = BrowserRouter
+// Router + hash = HashRouter
+import React from 'react'
+import { Router, Route, Switch, Redirect } from 'react-router-dom'
+import Login from '@/pages/Login'
+import Layout from '@/pages/Layout'
+import NotFound from '@/pages/NotFound'
 import history from '@/utils/history'
 
-function App() {
-    return <Router history={history}></Router>
+export default function App() {
+    return (
+        <Router history={history}>
+            <div className='app'>
+                <Switch>
+                    {/* from 默认模糊匹配，表示以 '/' 开头就匹配 */}
+                    <Redirect exact from='/' to='/home' />
+                    <Route path='/login' component={Login}></Route>
+                    <Route path='/home' component={Layout}></Route>
+                    <Route component={NotFound} />
+                </Switch>
+            </div>
+        </Router>
+    )
 }
 ```
 
 `utils/request.js`
 
 ```js
-// 添加响应拦截器
 instance.interceptors.response.use(
-    function (response) {
-        // 对响应数据做点什么
+    (response) => {
         return response
     },
-    function (err) {
+    (err) => {
         if (err.response.status === 401) {
-            // token过期了
             // 提示消息
             message.error('登录信息过期', 1)
-            // 清除token
+            // 清除 Token（本地和 Redux 的）
             store.dispatch(logout())
-            // 跳转到登录 history
-
+            // 用此跳转有问题：看不到提示消息了
+            // window.location.href = '/login'
             history.push('/login')
         }
-        // 对响应错误做点什么
+        return Promise.reject(err)
+    }
+)
+```
+
+优化：把网络改到最慢，超时时间改成 500，这个时候可能连 err.response 都没有，程序会崩掉，所以要在 #1 处处理一下。
+
+```js
+instance.interceptors.response.use(
+    (response) => {
+        return response
+    },
+    (err) => {
+        // #1
+        if (!err.response) {
+            message.error('网络繁忙，请稍后重试')
+            return Promise.reject(err)
+        }
+        if (err.response.status === 401) {
+            // 提示消息
+            message.error('登录信息过期', 1)
+            // 清除 Token（本地和 Redux 的）
+            store.dispatch(logout())
+            // 用此跳转有问题：看不到提示消息了
+            // window.location.href = '/login'
+            history.push('/login')
+        }
         return Promise.reject(err)
     }
 )
@@ -745,203 +958,259 @@ instance.interceptors.response.use(
 
 2. 使用自定义 history 时，需要使用哪个路由组件？
 
-## 登录访问控制 - 鉴权
+## 界面访问控制
 
-对于极客园 PC 端项目来说，
+### 概述
 
--   有的页面*不需要登录*就可以访问，比如，登录页
--   有的页面*需要登录*后才能访问，比如，项目后台首页、内容管理等（除了登录页面，其他页面需要登录才能访问）
+-   让需要登录才能访问的页面，必须在登录后才能访问，在没有登录时访问，直接跳转到登录页面，让用户进行登录。
 
-因此，就需要对项目进行登录访问控制，让需要登录才能访问的页面，必须在登录后才能访问。
-在没有登录时，直接跳转到登录页面，让用户进行登录。
+-   不需要登录就可以访问的页面：登录页，需要登录才能访问的页面：后台首页、内容管理等（除了登录页面，其他页面需要登录才能访问）。
 
 -   如何实现登录访问控制呢？
-    -   分析：不管哪个页面都是通过**路由**来访问的，因此，需要从路由角度来进行控制
-    -   思路：创建 `AuthRoute` 组件，判断是否登录，1 登录直接显示要访问的页面 2 没有登录跳转到登录页面
 
-**难点：react 中没有导航守卫，需要自己封装**
+    a，分析：不管哪个页面都是通过路由来访问的，因此，需要从路由角度来进行控制。
 
-### 分析 AuthRoute 鉴权路由组件
+    b，难点：React 中没有导航守卫，需要自己封装。
 
--   场景：限制某个页面只能在登录的情况下访问。
--   说明：在 React 路由中并没有直接提供该组件，需要手动封装，来实现登录访问控制（类似于 Vue 路由的导航守卫）。
--   如何封装？参考 react-router-dom 文档中提供的鉴权示例 。https://v5.reactrouter.com/web/example/auth-workflow
--   如何使用？使用 AuthRoute 组件代替默认的 Route 组件，来配置路由规则。
--   AuthRoute 组件实际上就是对原来的 Route 组件做了一次包装，来实现了一些额外的功能。
--   `<Route path component render>` render 方法，指定该路由要渲染的组件内容（类似于 component 属性）。
--   Redirect 组件：重定向组件，通过 to 属性，指定要跳转到的路由信息。
--   state 属性：表示给路由附加一些额外信息，此处，用于指定登录成功后要进入的页面地址。
+    c，思路：封装 `PrivateRoute` 组件代替默认的 Route 组件，里面会进行判断是否登录，1.登录直接显示要访问的页面 2.没有登录跳转到登录页面。
+
+### 分析 PrivateRoute 鉴权路由组件
+
+-   如何封装？参考 react-router-dom 文档中提供的鉴权示例，https://v5.reactrouter.com/web/example/auth-workflow
+
+-   PrivateRoute 组件实际上就是对原来的 Route 组件做了一次包装，来实现了一些额外的功能（判断是否登录来做相应操作）。
+
+-   Route 组件 render 属性的使用。
 
 ```js
-// 使用方式：
-<PrivateRoute path='/rent/add' component={Rent} />
+<Route
+    path='/home'
+    render={() => {
+        const token = getToken()
+        if (token) {
+            return <Layout />
+        } else {
+            return <Redirect to='/login' />
+        }
+    }}
+></Route>
 ```
 
-### 实现自己的 PrivateRoute 组件
+### 封装 PrivateRoute 鉴权路由组件
 
--   权限判断
+<font color=e32d40>**1. 基本写法**</font>
+
+`components/PrivateRoute/index.js`
 
 ```js
-import { hasToken } from '@/utils/storage'
 import React from 'react'
+import { isAuth } from '@/utils/token'
 import { Route, Redirect } from 'react-router-dom'
-// 我们需要解构所有的属性，除了component属性
+// 除了 component 属性，把所有的属性收集到 rest 中
 export default function PrivateRoute({ component: Component, ...rest }) {
     return (
         <Route
             {...rest}
             render={() => {
-                if (hasToken()) {
-                    return <Component></Component>
+                if (isAuth()) {
+                    return <Component />
                 } else {
-                    return <Redirect to='/login'></Redirect>
+                    return <Redirect to='/login' />
                 }
             }}
-        ></Route>
+        />
     )
 }
 ```
 
--   使用 PrivateRoute
+`App.js` 中使用
 
-```jsx
-{
-    /* 路由规则 */
-}
-;<Switch>
-    <Redirect exact from='/' to='/home'></Redirect>
-    <PrivateRoute path='/home' component={Layout}></PrivateRoute>
-    <Route path='/login' component={Login}></Route>
-</Switch>
+```js
+<PrivateRoute path='/home' component={Layout} />
 ```
 
--   登录成功处理
+<font color=e32d40>**2. 另一种写法**</font>
 
-```jsx
-submit = async (values) => {
-    const { mobile, code } = values
-    console.log(this.props)
-    try {
-        const res = await login(mobile, code)
-        // 存储token
-        // localStorage.setItem('itcast_geek_pc', res.data.token)
-        setToken(res.data.token)
-        // 跳转到首页
-        const { state } = this.props.location
-        if (state) {
-            this.props.history.push(state.from.pathname)
-        } else {
-            this.props.history.push('/home')
-        }
-        message.success('登录成功', 1)
-    } catch (err) {
-        message.warning(err.response.data.message, 1)
-    }
-}
-```
-
-### PrivateRoute 优化
-
--   封装 PrivateRoute 增加了 state 传参
-
-```jsx
-import { hasToken } from '@/utils/storage'
+```js
 import React from 'react'
+import { isAuth } from '@/utils/token'
+import { Route, Redirect } from 'react-router-dom'
+// 除了 component 属性，把所有的属性收集到 rest 中
+export default function PrivateRoute({ children, ...rest }) {
+    return (
+        <Route
+            {...rest}
+            render={() => {
+                if (isAuth()) {
+                    return children
+                } else {
+                    return <Redirect to='/login' />
+                }
+            }}
+        />
+    )
+}
+```
+
+`App.js` 中使用
+
+```jsx
+<PrivateRoute path='/home'>
+    <Layout />
+</PrivateRoute>
+```
+
+<font color=e32d40>**3. 综合写法**</font>
+
+```js
+import React from 'react'
+import { isAuth } from '@/utils/token'
+import { Route, Redirect } from 'react-router-dom'
+// 除了 component 属性，把所有的属性收集到 rest 中
+export default function PrivateRoute({ children, component: Component, ...rest }) {
+    return (
+        <Route
+            {...rest}
+            render={() => {
+                if (isAuth()) {
+                    return children ? children : <Component />
+                } else {
+                    return <Redirect to='/login' />
+                }
+            }}
+        />
+    )
+}
+```
+
+`App.js`
+
+```jsx
+<PrivateRoute path='/home'>
+    <Layout />
+</PrivateRoute>
+```
+
+或
+
+```jsx
+<Route path='/login' component={Login}></Route>
+```
+
+### 优化 PrivateRoute
+
+场景：在发布文章页把 Token 清除了，刷新，期望再次登录成功后还是到发布文章页。
+
+`components/PrivateRoute/index.js`
+
+```jsx
+import React from 'react'
+import { isAuth } from '@/utils/token'
 import { Route, Redirect, useLocation } from 'react-router-dom'
-// 我们需要解构所有的属性，除了component属性
 export default function PrivateRoute({ children, component: Component, ...rest }) {
     const location = useLocation()
     return (
         <Route
             {...rest}
             render={() => {
-                if (hasToken()) {
-                    return children ? children : <Component></Component>
+                if (isAuth()) {
+                    return children ? children : <Component />
                 } else {
+                    {
+                        /* Redirect 默认是 replace，也可以添加 push 属性 */
+                    }
                     return (
                         <Redirect
                             to={{
-                                // 跳转的路径
+                                // 跳转路径
                                 pathname: '/login',
-                                // 会通过state来传递额外的参数
+                                // 通过 state 来传递额外的参数
                                 state: {
                                     from: location.pathname,
                                 },
                             }}
-                        ></Redirect>
+                        />
                     )
                 }
             }}
-        ></Route>
+        />
     )
 }
 ```
 
--   修改了登录的逻辑
+登录成功后处理，`pages/Login/index.js`
 
 ```jsx
-try {
-    await dispatch(login(values))
-    message.success('登录成功', 1, () => {
-        const from = location.state ? location.state.from : '/home'
-        history.replace(from)
-    })
-} catch (e) {
-    message.error(e.response.data.message, 1, () => {
-        setLoading(false)
-    })
+const onFinish = async (values) => {
+    setLoading(true)
+    try {
+        await dispatch(login(values))
+        message.success('登录成功', 1, () => {
+            // setLoading(true) // 跳走了，所以这一行不加也没关系
+            // history.push('/home')
+            if (location.state?.from) {
+                history.push(location.state.from)
+            } else {
+                history.push('/home')
+            }
+        })
+    } catch (e) {
+        message.error(e.response.data.message, 1, () => {
+            setLoading(false)
+        })
+    }
 }
 ```
 
-## 优化-token 过期回跳处理
-
--   修改 request.js
-
-```jsx
-if (err.response.status === 401) {
-    // token过期了
-    // 提示消息
-    message.error('登录信息过期', 1)
-    // 清除token
-    store.dispatch(logout())
-    // 跳转到登录 history
-    console.log(history.location.pathname)
-    history.replace({
-        pathname: '/login',
-        // token失效，跳转到登录页之前的那个页面
-        state: {
-            from: history.location.pathname,
-        },
-    })
-}
-```
-
-## 布局-首页展示
-
-### 目标
-
-能够渲染首页
-
-### 代码
-
-将 chart.png 拷贝到 assets 目录中
-
-`pages/Home/index.js`
+问题：返回到了登录页。
 
 ```js
-import React from 'react'
-import styles from './index.module.scss'
-export default function Home() {
-    return <div className={styles.root}></div>
+const onFinish = async (values) => {
+    setLoading(true)
+    try {
+        await dispatch(login(values))
+        message.success('登录成功', 1, () => {
+            const from = location.state ? location.state.from : '/home'
+            history.replace(from)
+        })
+    } catch (e) {
+        message.error(e.response.data.message, 1, () => {
+            setLoading(false)
+        })
+    }
 }
 ```
 
-`pages/Home/index.scss`
+## 优化 Token 过期回跳处理
 
-```scss
-.root {
-    width: 100%;
-    height: 100%;
-    background: #f5f5f5 url(../../assets/chart.png) no-repeat center / contain;
-}
+期望：登录成功后跳转回过期时的那个页面。
+
+`utils/request.js`
+
+```jsx
+instance.interceptors.response.use(
+    (response) => {
+        return response
+    },
+    (err) => {
+        if (!err.response) {
+            message.error('网络繁忙，请稍后重试')
+            return Promise.reject(err)
+        }
+        if (err.response.status === 401) {
+            // 提示消息
+            message.error('登录信息过期', 1)
+            // 清除 Token（本地和 Redux 的）
+            store.dispatch(logout())
+            // history.push('/login')
+            history.replace({
+                pathname: '/login',
+                state: {
+                    from: history.location.pathname,
+                },
+            })
+        }
+        return Promise.reject(err)
+    }
+)
 ```
