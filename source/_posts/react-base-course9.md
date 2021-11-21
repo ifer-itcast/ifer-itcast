@@ -1,8 +1,16 @@
 ---
-title: 09_极客园基础
+title: 09_极客园
 date: 2021-11-21 00:48:17
 tags:
 ---
+
+## 今日目标
+
+✔ 项目初始化。
+
+✔ 登录功能。
+
+<!-- more -->
 
 ## 项目介绍
 
@@ -84,7 +92,7 @@ ReactDOM.render(
     <React.StrictMode>
         <App />
     </React.StrictMode>,
-    document.getElementById('root')
+    document.querySelector('#root')
 )
 ```
 
@@ -120,13 +128,13 @@ export default function App() {
 
 ### 目标
 
-能够在 CRA 中使用 sass 写样式。
+能够在 CRA 中使用 Sass 写样式。
 
 ### 内容
 
-`SASS` 是 CSS 预处理器，作用类似于 Less，由于 React 中内置了处理 SASS 的配置，所以，在 CRA 创建的项目中，可以直接使用 SASS 来写样式。
+`Sass` 是 CSS 预处理器，作用类似于 Less，由于 React 中内置了处理 SASS 的配置，所以，在 CRA 创建的项目中，可以直接使用 SASS 来写样式。
 
-[SASS 支持两种后缀](https://sass.bootcss.com/documentation/syntax)，分别是：`.sass` 和 `.scss`，区别如下。
+[Sass 支持两种后缀](https://sass.bootcss.com/documentation/syntax)，分别是：`.sass` 和 `.scss`，区别如下。
 
 1. `.sass` 是一种简化语法形式（例如用缩进代替 `{}`，用换行代替 `;`）
 
@@ -197,45 +205,54 @@ const Login = () => {
 export default Login
 ```
 
+`pages/Layout/index.js`
+
+```js
+import React from 'react'
+
+export default function Layout() {
+    return <div>Layout</div>
+}
+```
+
+`pages/NotFound/index.js`
+
+```js
+import React from 'react'
+
+export default function NotFound() {
+    return <div>NotFound</div>
+}
+```
+
 `App.js`
 
 ```js
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Link, Route, Switch, Redirect } from 'react-router-dom'
 import Login from './pages/Login'
 import Layout from './pages/Layout'
 import NotFound from './pages/NotFound'
+
 export default function App() {
     return (
         <Router>
             <div>
+                <Link to='/login'>登录</Link>
+                {/* 这里改成了 '/home' */}
+                <Link to='/home'>布局</Link>
+
                 <Switch>
+                    {/* from 默认模糊匹配，表示以 '/' 开头就匹配 */}
+                    <Redirect exact from='/' to='/home' />
                     <Route path='/login' component={Login}></Route>
-                    <Route path='/layout' component={Layout}></Route>
-                    {/* 增加一个404 */}
-                    <Route component={NotFound}></Route>
+                    <Route path='/home' component={Layout}></Route>
+                    <Route component={NotFound} />
                 </Switch>
             </div>
         </Router>
     )
 }
-```
-
-增加路由的重定向。
-
-```jsx
-<Router>
-    <div>
-        <Switch>
-            {/* 路由的重定向 */}
-            <Redirect exact from='/' to='/home' />
-            <Route path='/login' component={Login}></Route>
-            <Route path='/home' component={Layout}></Route>
-            {/* 增加一个404 */}
-            <Route component={NotFound}></Route>
-        </Switch>
-    </div>
-</Router>
 ```
 
 ## 组件库 AntD
@@ -244,7 +261,7 @@ export default function App() {
 
 [antd PC 端组件库文档](https://ant.design/docs/react/introduce-cn)
 
-`antd` 是基于 Ant Design 设计体系的 React UI 组件库，主要用于研发企业级中后台产品。
+`AntD` 是基于 Ant Design 设计体系的 React UI 组件库，主要用于研发企业级中后台产品。
 
 ### 目标
 
@@ -289,6 +306,12 @@ const Login = () => (
 
 ## 配置路径别名
 
+### 目标
+
+能够配置 @ 路径别名简化路径处理。
+
+### 内容
+
 [自定义 CRA 的默认配置](https://ant.design/docs/react/use-with-create-react-app-cn#%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE)
 
 [craco 配置文档](https://github.com/gsoft-inc/craco/blob/master/packages/craco/README.md#configuration)
@@ -300,10 +323,6 @@ const Login = () => (
     a，【推荐】通过第三方库来修改，比如，`@craco/craco`。
 
     b，通过执行 `yarn eject` 命令，释放 `react-scripts` 中的所有配置到项目中（注意：该操作不可逆）。
-
-### 目标
-
-能够配置 @ 路径别名简化路径处理。
 
 ### 步骤
 
@@ -347,7 +366,7 @@ module.exports = {
 
 ### 目标
 
-能够让 vscode 识别@路径并给出路径提示。
+能够让 vscode 识别 @ 路径并给出路径提示。
 
 ### 步骤
 
@@ -355,7 +374,7 @@ module.exports = {
 
 2. 在配置文件中添加以下配置。
 
-`/jsconfig.json`
+`/jsconfig.json`，如果报错，可以在配置里面搜索 `jscon`，对 Check JS 选项进行打钩。
 
 ```json
 {
@@ -371,3 +390,733 @@ module.exports = {
 ### 总结
 
 VSCode 会自动读取 `jsconfig.json` 中的配置，让 vscode 知道 @ 就是 src 目录。
+
+## 登录界面
+
+![image-20211113105817036](images/image-20211113105817036.png)
+
+### 目标
+
+能够利用模板代码搭建基础布局。
+
+### 步骤
+
+1. 在 Login/index.js 中创建登录页面基本结构。
+
+2. 在 Login 目录中创建 index.scss 文件，指定组件样式。
+
+3. 将 logo.png 和 login.png 拷贝到 assets 目录中。
+
+## 代码
+
+`pages/Login/index.js`
+
+```js
+import { Card } from 'antd'
+import logo from '@/assets/logo.png'
+import './index.scss'
+
+const Login = () => {
+    return (
+        <div className='login'>
+            <Card className='login-container'>
+                <img className='login-logo' src={logo} alt='极客园' />
+            </Card>
+        </div>
+    )
+}
+
+export default Login
+```
+
+`pages/Login/index.scss`
+
+```scss
+.login {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: center/cover url(~@/assets/login.png);
+
+    .login-logo {
+        width: 200px;
+        height: 60px;
+        display: block;
+        margin: 0 auto 20px;
+    }
+
+    .login-container {
+        width: 440px;
+        height: 360px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 50px rgb(0 0 0 / 10%);
+    }
+
+    .login-checkbox-label {
+        color: #1890ff;
+    }
+}
+```
+
+### 总结
+
+Card 卡片组件，可以用来实现对登录框内容的包裹。
+
+## 表单结构
+
+### 目标
+
+能够使用 AntD 的 `Form` 组件创建登录表单。
+
+### 步骤
+
+1. 打开 AntD [Form 组件文档](https://ant.design/components/form-cn/)。
+
+2. 找到代码演示的第一个示例（基本使用），点击`< >`（显示代码），并拷贝代码到组件中。
+
+3. 分析 Form 组件基本结构。
+
+4. 调整 Form 组件结构和样式。
+
+### 代码
+
+`pages/Login/index.js`
+
+```js
+import { Card, Form, Input, Button, Checkbox } from 'antd'
+import logo from '@/assets/logo.png'
+import './index.scss'
+
+const Login = () => {
+    return (
+        <div className='login'>
+            <Card className='login-container'>
+                {/* Logo */}
+                <img className='login-logo' src={logo} alt='极客园' />
+                {/* 登录表单 */}
+                <Form autoComplete='off' size='large'>
+                    <Form.Item>
+                        <Input placeholder='请输入手机号' />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Input placeholder='请输入验证码' />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Checkbox>我已阅读并同意[隐私条款]和[用户协议]</Checkbox>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button type='primary' htmlType='submit' block>
+                            登录
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
+    )
+}
+
+export default Login
+```
+
+### 总结
+
+1. 通过哪个属性调整 Input/Button 的大小？
+
+2. Button 组件通过哪个属性设置为 submit 按钮？
+
+## 表单校验
+
+### 目标
+
+能够为手机号和密码添加表单校验。
+
+### 步骤
+
+1. 为 Form 组件添加 `validateTrigger` 属性，指定校验触发时机的集合。
+
+2. 为 Form.Item 组件添加 name 属性，这样表单校验才会生效。
+
+3. 为 Form.Item 组件添加 `rules` 属性，用来添加表单校验。
+
+### 代码
+
+`pages/Login/index.js`
+
+```js
+import { Card, Form, Input, Button, Checkbox } from 'antd'
+import logo from '@/assets/logo.png'
+import './index.scss'
+
+const Login = () => {
+    return (
+        <div className='login'>
+            <Card className='login-container'>
+                {/* Logo */}
+                <img className='login-logo' src={logo} alt='极客园' />
+                {/* 登录表单 */}
+                <Form autoComplete='off' size='large' validateTrigger={['onBlur', 'onChange']}>
+                    <Form.Item
+                        name='mobile'
+                        rules={[
+                            {
+                                pattern: /^1[3-9]\d{9}$/,
+                                message: '手机号码格式不对',
+                            },
+                            { required: true, message: '请输入手机号' },
+                        ]}
+                    >
+                        <Input placeholder='请输入手机号' />
+                    </Form.Item>
+
+                    <Form.Item
+                        name='code'
+                        rules={[
+                            { len: 6, message: '验证码6个字符' },
+                            { required: true, message: '请输入验证码' },
+                        ]}
+                    >
+                        <Input placeholder='请输入验证码' maxLength={6} />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Checkbox className='login-checkbox-label'>我已阅读并同意「用户协议」和「隐私条款」</Checkbox>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button type='primary' htmlType='submit' block>
+                            登录
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
+    )
+}
+
+export default Login
+```
+
+### 总结
+
+-   表单校验时 Form.Item 可以没有 name 属性吗？
+
+-   Form.Item rules 中的 `validateTrigger` 必须是 Form.Item `validateTrigger` 的子集。
+
+## 自定义校验
+
+valuePropName，告诉需要拿的属性是 checked，而不是默认的 value。
+
+```js
+<Form.Item
+    name='agree'
+    valuePropName='checked'
+    rules={[
+        {
+            // 有问题，一上来是没有值的，提交会报错，ok
+            // 勾选后，错误提示消失，提交也不报错 ok，因为有值 true
+            // 取消勾选，错误提示没有再次出现（应该出现），提交也竟不报错了，有问题
+            // 原因：因为这一次取消也是有值的，只不过是 false
+            required: true,
+            message: '请阅读并同意协议',
+        },
+    ]}
+>
+    <Checkbox>我已阅读并同意[隐私条款]和[用户协议]</Checkbox>
+</Form.Item>
+```
+
+所以，不是填不填写的问题，而是 true 和 false 的问题。
+
+```jsx
+<Form.Item
+    name='agree'
+    valuePropName='checked'
+    rules={[
+        {
+            validator: (rule, value) => {
+                if (value === true) {
+                    return Promise.resolve()
+                } else {
+                    return Promise.reject(new Error('请阅读并同意条款和协议'))
+                }
+            },
+        },
+    ]}
+>
+    <Checkbox>我已阅读并同意[隐私条款]和[用户协议]</Checkbox>
+</Form.Item>
+```
+
+严格模式下的报错，解决：去掉严格模式。
+
+```bash
+index.js:1 Warning: findDOMNode is deprecated in StrictMode.
+```
+
+## 获取表单值和设置默认值
+
+### 目标
+
+能够拿到登录表单中的手机号码和验证码。
+
+### 步骤
+
+1. 为 Form 组件添加 `onFinish` 属性，该事件会在点击登录按钮时触发。
+
+2. 创建 onFinish 函数，通过函数参数 values 拿到表单值。
+
+3. 为了方便，为 Form 组件添加 `initialValues` 属性，来初始化表单值。
+
+### 代码
+
+`pages/Login/index.js`
+
+```js
+import { Card, Form, Input, Button, Checkbox } from 'antd'
+import logo from '@/assets/logo.png'
+import './index.scss'
+
+const Login = () => {
+    // 当表单校验通过，就会执行 onFinished，并且会携带数据过来
+    const onFinish = (values) => {
+        console.log(values)
+    }
+    return (
+        <div className='login'>
+            <Card className='login-container'>
+                {/* Logo */}
+                <img className='login-logo' src={logo} alt='极客园' />
+                {/* 登录表单 */}
+                <Form
+                    autoComplete='off'
+                    size='large'
+                    validateTrigger={['onBlur', 'onChange']}
+                    onFinish={onFinish}
+                    initialValues={{
+                        mobile: '13911111111',
+                        code: '246810',
+                        agree: true,
+                    }}
+                >
+                    <Form.Item
+                        name='mobile'
+                        rules={[
+                            {
+                                pattern: /^1[3-9]\d{9}$/,
+                                message: '手机号码格式不对',
+                            },
+                            { required: true, message: '请输入手机号' },
+                        ]}
+                    >
+                        <Input placeholder='请输入手机号' />
+                    </Form.Item>
+
+                    <Form.Item
+                        name='code'
+                        rules={[
+                            { len: 6, message: '验证码6个字符' },
+                            { required: true, message: '请输入验证码' },
+                        ]}
+                    >
+                        <Input placeholder='请输入验证码' maxLength={6} />
+                    </Form.Item>
+
+                    <Form.Item
+                        name='agree'
+                        valuePropName='checked'
+                        rules={[
+                            {
+                                validator: (rule, value) => {
+                                    if (value === true) {
+                                        return Promise.resolve()
+                                    } else {
+                                        return Promise.reject(new Error('请阅读并同意条款和协议'))
+                                    }
+                                },
+                            },
+                        ]}
+                    >
+                        <Checkbox className='login-checkbox-label'>我已阅读并同意「用户协议」和「隐私条款」</Checkbox>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button type='primary' htmlType='submit' block>
+                            登录
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
+    )
+}
+
+export default Login
+```
+
+### 总结
+
+1. 如何获取到 Form 表单中的值？
+
+2. 通过哪个属性可以为 Form 表单初始化值？
+
+## 配置 Redux
+
+### 目标
+
+能够完成 Redux 的基础配置。
+
+### 步骤
+
+1. 安装 Redux 相关的包：`yarn add redux react-redux redux-thunk redux-devtools-extension axios`。
+
+2. 在 store 目录中分别创建：actions 和 reducers 文件夹、index.js 文件。
+
+3. 在 store/index.js 中，创建 store 并导出。
+
+4. 创建 reducers/index.js 文件，创建 rootReducer 并导出。
+
+5. 创建 reducers/login.js 文件，创建基础 login reducer 并导出。
+
+6. 在 src/index.js 中为 React 组件接入 Redux。
+
+### 代码
+
+store 目录
+
+```tree
+|-- actions
+|-- constants
+|-- index.js
+`-- reducers
+    |-- index.js
+    `-- login.js
+
+```
+
+1. `store/reducers/login.js`
+
+```js
+const initValue = {
+    token: '',
+}
+export default function login(state = initValue, action) {
+    return state
+}
+```
+
+2. `store/reducers/index.js`
+
+```js
+import { combineReducers } from 'redux'
+
+import login from './login'
+
+const rootReducer = combineReducers({
+    login,
+})
+
+export default rootReducer
+```
+
+3. `store/index.js`
+
+```js
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import rootReducer from './reducers'
+
+const middlewares = composeWithDevTools(applyMiddleware(thunk))
+const store = createStore(rootReducer, middlewares)
+
+export default store
+```
+
+4. `src/index.js`
+
+```js
+import { Provider } from 'react-redux'
+import store from './store'
+
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
+)
+```
+
+## 封装 Axios
+
+1. 安装 axios
+
+```bash
+yarn add axios
+```
+
+2. `utils/request.js`
+
+```jsx
+import axios from 'axios'
+
+const instance = axios.create({
+    baseURL: 'http://geek.itheima.net/v1_0/',
+    timeout: 5000,
+})
+
+// 添加请求拦截器
+instance.interceptors.request.use(
+    (config) => {
+        // 在发送请求之前做些什么
+        return config
+    },
+    (error) => {
+        // 对请求错误做些什么
+        return Promise.reject(error)
+    }
+)
+
+// 添加响应拦截器
+instance.interceptors.response.use(
+    (response) => {
+        // 对响应数据做点什么
+        return response
+    },
+    (error) => {
+        // 对响应错误做点什么
+        return Promise.reject(error)
+    }
+)
+
+export default instance
+```
+
+## 发起登录请求
+
+### 目标
+
+能够通过 Redux 实现登录功能。
+
+### 步骤
+
+1. 在 `store/constants/index.js` 文件中创建登录的 actionType。
+
+2. 在 `store/actions/login.js` 文件中创建 actionCreator，并实现登录逻辑。
+
+3. 在 `store/reducers/login.js` 文件中处理登录状态。
+
+4. 在 `pages/Login/index.js` 组件中 dispatch 登录的异步 action。
+
+### 代码
+
+1. `store/constants/index.js`
+
+```jsx
+export const LOGIN = 'LOGIN'
+```
+
+2. `store/actions/login.js`
+
+```js
+import request from '@/utils/request'
+import { LOGIN } from '../constants'
+
+export const loginAc = (payload) => ({
+    type: LOGIN,
+    payload,
+})
+
+export const login = (payload) => {
+    return async (dispatch) => {
+        const res = await request({
+            method: 'post',
+            url: '/authorizations',
+            data: payload,
+        })
+        dispatch(loginAc(res.data.data.token))
+    }
+}
+```
+
+3. `store/reducers/login.js`
+
+```js
+import { LOGIN } from '../constants'
+
+const initValue = {
+    token: '',
+}
+export default function login(state = initValue, action) {
+    if (action.type === LOGIN) {
+        return {
+            ...state,
+            token: action.payload,
+        }
+    }
+    return state
+}
+```
+
+4. `pages/Login/index.js`
+
+```js
+const dispatch = useDispatch()
+const onFinish = (values) => {
+    dispatch(login(values))
+}
+```
+
+### 总结
+
+Redux 套路：组件 dispatch 异步 action -> actions 提供异步 action -> 异步 action 完成异步操作 -> 继续 dispatch 普通 action 来发起状态更新 -> reducers 处理状态更新。
+
+## 持久化 Token
+
+### 目标
+
+能够对 Token 进行持久化。
+
+### 步骤
+
+1. 在 `utils/token.js` 文件提供 `getToken`、`setToken`、`removeToken`、`isAuth` 四个工具函数并导出。
+
+2. 在 `utils/index.js` 文件，统一导出 `token.js` 中的所有内容，来简化工具函数的导入。
+
+3. 在 `store/actions/login.js` 文件，请求成功之后存储 Token。
+
+4. 在 `store/index.js` 获取初始 Token。
+
+### 代码
+
+1. `utils/storage.js`
+
+```js
+const TOKEN_KEY = 'ITCAST_GEEK_PC'
+
+export const getToken = () => localStorage.getItem(TOKEN_KEY)
+
+export const setToken = (token) => localStorage.setItem(TOKEN_KEY, token)
+
+export const removeToken = () => localStorage.removeItem(TOKEN_KEY)
+
+export const isAuth = () => !!getToken()
+```
+
+2. `utils/index.js`
+
+```js
+export { getToken, setToken, removeToken, isAuth } from './token'
+```
+
+3. `store/actions/login.js`
+
+```js
+import request from '@/utils/request'
+import { LOGIN } from '../constants'
+import { setToken } from '@/utils'
+
+export const loginAc = (payload) => ({
+    type: LOGIN,
+    payload,
+})
+
+export const login = (payload) => {
+    return async (dispatch) => {
+        const res = await request({
+            method: 'post',
+            url: '/authorizations',
+            data: payload,
+        })
+        const token = res.data.data.token
+        // mark
+        setToken(token)
+        dispatch(loginAc(token))
+    }
+}
+```
+
+4. `store/index.js`
+
+```js
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import rootReducer from './reducers'
+import { getToken } from '@/utils'
+// 3 个参数：reducer、可选的对象，可以用于提供初始值、提供中间件
+const store = createStore(
+    rootReducer,
+    {
+        login: {
+            token: getToken(),
+        },
+    },
+    composeWithDevTools(applyMiddleware(thunk))
+)
+
+export default store
+```
+
+## 消息提示组件的使用
+
+登录成功后，提示消息，并且跳转到首页
+
+```jsx
+const history = useHistory()
+const onFinish = async (values) => {
+    // console.log('Success:', values)
+    // 发送请求，进行登录
+    try {
+        await dispatch(login(values))
+        message.success('登录成功', 1, () => {
+            history.push('/home')
+        })
+    } catch (e) {
+        message.error(e.response.data.message, 1)
+    }
+}
+```
+
+## 给按钮增加 loadding 状态
+
+-   提供一个状态 loading
+
+```jsx
+const [loading, setLoading] = useState(false)
+```
+
+-   发送请求，修改 loading 状态
+
+```jsx
+const onFinish = async (values) => {
+    setLoading(true)
+    // console.log('Success:', values)
+    // 发送请求，进行登录
+    try {
+        await dispatch(login(values))
+        message.success('登录成功', 1, () => {
+            history.push('/home')
+        })
+    } catch (e) {
+        message.error(e.response.data.message, 1, () => {
+            setLoading(false)
+        })
+    }
+}
+```
+
+-   使用 loading 状态
+
+```jsx
+<Button type='primary' htmlType='submit' block loading={loading}>
+    登录
+</Button>
+```
