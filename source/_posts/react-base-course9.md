@@ -1289,10 +1289,9 @@ styles.tabBar
 styles['tab-bar']
 ```
 
--   如果是全局的类名，应该使用 `:global(.类名)` 的方式，不然会把全局类名给修改掉。
+-   被 :global 包裹的样式，css modules 就不会去修改这个类名了，相当于没有使用 CSS Modules，所有的都会受影响。
 
 ```scss
-// 被 :global 包裹的样式，css modules 就不会去修改这个类名了
 :global {
     .ant-pagination-item-active {
         border-color: red;
@@ -1302,3 +1301,56 @@ styles['tab-bar']
     }
 }
 ```
+
+### 最佳实践
+
+<font color=e32d40>**面临问题**</font>
+
+-   组件中类名多的话，都要 style.xxx，写起来麻烦。
+
+-   希望修改子组件的内部样式，使用 :global 后会影响全局。
+
+<font color=e32d40>**解决方案**</font>
+
+-   每个组件的根节点使用 CSS Modules 形式的类名（根元素的类名：root）。
+
+-   其他所有的子节点样式包裹在 root 内，并通过 :global 变成普通的 CSS 类名 。
+
+`pages/Layout/index.module.scss`
+
+```scss
+.root {
+    background-color: pink;
+    // :global 内部的样式全部没有被修改，同时又被限制在了 root 下（root 是随机生成的唯一的）
+    :global {
+        .title {
+            color: green;
+        }
+        .ant-pagination-item-active {
+            border-color: red;
+            a {
+                color: red;
+            }
+        }
+    }
+}
+```
+
+`pages/Layout/index.js`
+
+```js
+import React from 'react'
+import { Pagination } from 'antd'
+import styles from './index.module.scss'
+
+export default function Layout() {
+    return (
+        <div className={styles.root}>
+            <h3 className='title'>Layout</h3>
+            <Pagination defaultCurrent={1} total={50} />
+        </div>
+    )
+}
+```
+
+练习：改写 `pages/Login/index.scss` 为 `index.module.scss` 的形式。
