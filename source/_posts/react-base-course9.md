@@ -1065,44 +1065,120 @@ const store = createStore(
 export default store
 ```
 
-## 消息提示组件的使用
+## 登录状态提示
 
-登录成功后，提示消息，并且跳转到首页
+登录成功后，提示消息，并且跳转到首页。
 
 ```jsx
-const history = useHistory()
-const onFinish = async (values) => {
-    // console.log('Success:', values)
-    // 发送请求，进行登录
-    try {
-        await dispatch(login(values))
-        message.success('登录成功', 1, () => {
-            history.push('/home')
-        })
-    } catch (e) {
-        message.error(e.response.data.message, 1)
+import { Card, Form, Input, Button, Checkbox, message } from 'antd'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import logo from '@/assets/logo.png'
+import { login } from '@/store/actions/login'
+import './index.scss'
+
+const Login = () => {
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const onFinish = async (values) => {
+        try {
+            await dispatch(login(values))
+            message.success('登录成功', 1, () => {
+                history.push('/home')
+            })
+        } catch (e) {
+            message.error(e.response.data.message, 1)
+        }
     }
+    return (
+        <div className='login'>
+            <Card className='login-container'>
+                {/* Logo */}
+                <img className='login-logo' src={logo} alt='极客园' />
+                {/* 登录表单 */}
+                <Form
+                    autoComplete='off'
+                    size='large'
+                    validateTrigger={['onBlur', 'onChange']}
+                    onFinish={onFinish}
+                    initialValues={{
+                        mobile: '13911111111',
+                        code: '246810',
+                        agree: true,
+                    }}
+                >
+                    <Form.Item
+                        name='mobile'
+                        rules={[
+                            {
+                                pattern: /^1[3-9]\d{9}$/,
+                                message: '手机号码格式不对',
+                            },
+                            { required: true, message: '请输入手机号' },
+                        ]}
+                    >
+                        <Input placeholder='请输入手机号' />
+                    </Form.Item>
+
+                    <Form.Item
+                        name='code'
+                        rules={[
+                            { len: 6, message: '验证码6个字符' },
+                            { required: true, message: '请输入验证码' },
+                        ]}
+                    >
+                        <Input placeholder='请输入验证码' maxLength={6} />
+                    </Form.Item>
+
+                    <Form.Item
+                        name='agree'
+                        valuePropName='checked'
+                        rules={[
+                            {
+                                validator: (rule, value) => {
+                                    if (value === true) {
+                                        return Promise.resolve()
+                                    } else {
+                                        return Promise.reject(new Error('请阅读并同意条款和协议'))
+                                    }
+                                },
+                            },
+                        ]}
+                    >
+                        <Checkbox className='login-checkbox-label'>我已阅读并同意「用户协议」和「隐私条款」</Checkbox>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button type='primary' htmlType='submit' block>
+                            登录
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
+    )
 }
+
+export default Login
 ```
 
-## 给按钮增加 loadding 状态
+## 给按钮增加 loading
 
--   提供一个状态 loading
+1. 提供一个状态 loading。
 
 ```jsx
 const [loading, setLoading] = useState(false)
 ```
 
--   发送请求，修改 loading 状态
+2. 发送请求，修改 loading 状态。
 
 ```jsx
 const onFinish = async (values) => {
     setLoading(true)
-    // console.log('Success:', values)
-    // 发送请求，进行登录
     try {
         await dispatch(login(values))
         message.success('登录成功', 1, () => {
+            // setLoading(true) // 跳走了，所以这一行不加也没关系
             history.push('/home')
         })
     } catch (e) {
@@ -1113,10 +1189,116 @@ const onFinish = async (values) => {
 }
 ```
 
--   使用 loading 状态
+3. 使用 loading 状态。
 
 ```jsx
 <Button type='primary' htmlType='submit' block loading={loading}>
     登录
 </Button>
+```
+
+## CSS Modules
+
+### 需求
+
+给 Layout 组件加背景颜色。
+
+`pages/Layout/index.scss`
+
+```scss
+div {
+    background-color: pink;
+}
+```
+
+`pages/Layout/index.js`
+
+```js
+import React from 'react'
+import './index.scss'
+
+export default function Layout() {
+    return <div>Layout</div>
+}
+```
+
+### 问题
+
+组件之间的样式相互影响了。
+
+### 解决
+
+<font color=e32d40>**1. 增加 class 类名，但项目大了之后谁能保证 layout 类名不会重复呢？**</font>
+
+`pages/Layout/index.scss`
+
+```scss
+.layout {
+    background-color: pink;
+}
+```
+
+`pages/Layout/index.js`
+
+```js
+import React from 'react'
+import './index.scss'
+
+export default function Layout() {
+    return <div className='layout'>Layout</div>
+}
+```
+
+<font color=e32d40>**2. CSS BEM 命名规范。**</font>
+
+<font color=e32d40>**3. CSS IN JS。**</font>
+
+-   是什么：使用 JS 编写 CSS 的统称，用来解决 CSS 样式冲突、覆盖等问题，[CSS IN JS](https://github.com/MicheleBertoli/css-in-js) 的具体实现有 50 多种，比如：[CSS Modules](https://github.com/css-modules/css-modules)、[styled-components](https://www.styled-components.com/) 等。
+
+-   推荐使用：[CSS Modules](https://github.com/css-modules/css-modules) （React 脚手架已集成，可直接使用）。
+
+    a，改名为 `pages/Layout/index.module.scss`。
+
+    b，`pages/Layout/index.js` 使用。
+
+    ```js
+    import React from 'react'
+    import styles from './index.module.scss'
+
+    export default function Layout() {
+        return <div className={styles.layout}>Layout</div>
+    }
+    ```
+
+### 注意点
+
+-   类名最好使用驼峰命名，因为最终类名会生成 styles 对象的一个属性。
+
+```js
+// 定义
+.tabBar {}
+// 使用
+styles.tabBar
+```
+
+-   如果没有使用驼峰命名，对于不合法的命名，需要使用 `[]` 语法。
+
+```js
+.tab-bar {}
+
+styles['tab-bar']
+```
+
+-   如果是全局的类名，应该使用 `:global(.类名)` 的方式，不然会把全局类名给修改掉。
+
+```scss
+// 被 :global 包裹的样式，css modules 就不会去修改这个类名了
+:global {
+    .ant-pagination-item-active {
+        border-color: red;
+        a {
+            color: red;
+        }
+    }
+}
 ```
