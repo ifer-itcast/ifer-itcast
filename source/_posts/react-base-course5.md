@@ -563,39 +563,23 @@ useEffect(() => {}, [count])
 
 ### 基本步骤
 
-1. 初始化项目基本结构。
-
-2. 封装 MyHeader 组件。
-
-3. 封装 MyFooter 组件。
-
-4. 封装 GoodsItem 组件。
-
-5. 商品列表数据展示。
-
-6. 切换选中状态。
-
-7. 底部合计和结算。
-
-8. 商品全选。
-
-9. 数据持久化。
+参见大纲。
 
 ### 项目初始化
 
--   初始化项目并清理无关目录
+1. 初始化项目并清理无关目录。
 
 ```bash
 npx create-react-app cart
 ```
 
--   安装 bootstrap
+2. 安装 bootstrap。
 
 ```bash
 yarn add bootstrap@4.5.0
 ```
 
--   入口文件中引入 bootstrap
+3. 入口文件中引入 bootstrap。
 
 ```js
 import 'bootstrap/dist/css/bootstrap.css'
@@ -662,7 +646,7 @@ export default function MyHeader() {
 <font color=e32d40>**注意：脚手架内置了 scss 的支持，但是需要安装 scss 依赖包。**</font>
 
 ```bash
-yarn add sass sass-loader -D
+yarn add sass -D
 ```
 
 #### 需求
@@ -921,9 +905,9 @@ export default function App() {
 
 #### 步骤
 
-1. `App.js` 组件根据数据渲染商品列表。
+1. `App.js` 组件根据数据循环 GoodsItem 组件。
 
-2. GoodsItem 接收数据进行渲染。
+2. GoodsItem 组件接收数据并进行渲染。
 
 #### 代码
 

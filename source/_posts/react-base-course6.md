@@ -830,3 +830,17 @@ export default function MyCount({ count, id }) {
     )
 }
 ``` -->
+
+<!-- ```jsx
+<input
+    type='number'
+    className='form-control inp'
+    value={goods_count}
+    onChange={(e) => {
+        const reg = /^[1-9][0-9]*$/
+        if (reg.test(e.target.value)) {
+            changeCount(id, +e.target.value)
+        }
+    }}
+/>
+``` -->
