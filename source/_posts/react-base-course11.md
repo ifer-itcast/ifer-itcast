@@ -886,11 +886,27 @@ export default function Article() {
 }
 ```
 
+## 配置分页
+
+```jsx
+<Table
+    rowKey={(record) => record.id}
+    dataSource={articles.results}
+    columns={columns}
+    pagination={{
+        position: ['bottomCenter'],
+        total: articles.total_count,
+        pageSize: articles.per_page,
+        current: articles.page,
+    }}
+/>
+```
+
 ## Hooks 的函数特性
 
 ### 目标
 
-能够理解 hooks 的函数特性。
+能够理解 Hooks 的函数特性。
 
 ### 内容
 
@@ -995,6 +1011,8 @@ const Counter = () => {
 ```
 
 分析该问题的出发点：点击【延迟获取 count 值】按钮时，组件是第几次更新？
+
+什么时候获取就是什么时候的状态。
 
 ## 突破闭包限制 useRef
 
