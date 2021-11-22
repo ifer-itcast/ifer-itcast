@@ -1634,7 +1634,11 @@ export default class List extends Component {
 }
 ```
 
-时间的处理。
+### 时间处理
+
+1. 初始时间数据都变成一个对象。
+
+2. 输出的时候可以通过 dayjs 进行格式化。
 
 ```js
 import dayjs from 'dayjs'

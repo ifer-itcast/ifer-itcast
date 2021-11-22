@@ -1124,7 +1124,7 @@ const state = {
             id: 1,
             author: '刘德华',
             comment: '给我一杯忘情水',
-            time: '2021-10-10 09:09:00',
+            time: '2021-11-10 09:09:00',
             img: 'https://y.qq.com/music/photo_new/T001R300x300M000003aQYLo2x8izP.jpg?max_age=2592000',
             // 1: 点赞 0：无态度 -1:踩
             attitude: 1,
@@ -1133,7 +1133,7 @@ const state = {
             id: 2,
             author: '周杰伦',
             comment: '听妈妈的话',
-            time: '2021-10-11 09:09:00',
+            time: '2021-12-11 09:09:00',
             img: 'https://y.qq.com/music/photo_new/T001R500x500M0000025NhlN2yWrP4.jpg?max_age=2592000',
             // 1: 点赞 0：无态度 -1:踩
             attitude: 0,
@@ -1431,7 +1431,7 @@ const state = {
             id: 1,
             author: '刘德华',
             comment: '给我一杯忘情水',
-            time: '2021-10-10 09:09:00',
+            time: '2021-11-10 09:09:00',
             img: 'https://y.qq.com/music/photo_new/T001R300x300M000003aQYLo2x8izP.jpg?max_age=2592000',
             // 1: 点赞 0：无态度 -1:踩
             attitude: 1,
@@ -1440,7 +1440,7 @@ const state = {
             id: 2,
             author: '周杰伦',
             comment: '听妈妈的话',
-            time: '2021-10-11 09:09:00',
+            time: '2021-12-11 09:09:00',
             img: 'https://y.qq.com/music/photo_new/T001R500x500M0000025NhlN2yWrP4.jpg?max_age=2592000',
             // 1: 点赞 0：无态度 -1:踩
             attitude: 0,
