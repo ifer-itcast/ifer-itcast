@@ -40,6 +40,8 @@ tags:
 
 -   使用：普通组件（在一个组件中直接使用的组件）和路由组件（通过路由跳转访问到的组件）
 
+<img src="/resource/images/ifer_router.png"/>
+
 ### 小结
 
 -   组件是什么？
@@ -60,7 +62,7 @@ tags:
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const title = <h1>react的两种组件</h1>
+const title = <h1>创建组件的两种方式</h1>
 
 // 定义一个函数式组件
 const Com1 = () => {
@@ -187,22 +189,13 @@ ReactDOM.render(<Hello />, document.getElementById('root'))
 
 1. 创建 App.js，创建组件（函数 或 类）。
 
-2. 在 App.js 中导出该组件。
+2. 在 App.js 中通过 export default 默认导出该组件。
 
-3. 在 index.js 中导入 App 组件。
+3. 在 index.js 中通过 import 默认导入 App 组件。
 
 4. 渲染组件。
 
 ### 代码
-
-`index.js`
-
-```js
-import ReactDOM from 'react-dom'
-import App from './App'
-
-ReactDOM.render(<App />, document.querySelector('#root'))
-```
 
 `App.jsx`
 
@@ -214,6 +207,15 @@ export default class App extends Component {
         return <div>Hello World</div>
     }
 }
+```
+
+`index.js`
+
+```js
+import ReactDOM from 'react-dom'
+import App from './App'
+
+ReactDOM.render(<App />, document.querySelector('#root'))
 ```
 
 ### 小结
@@ -266,9 +268,9 @@ export default class App extends Component {
 
 ### 小结
 
--   状态就是用来描述事物在某一时刻的的数据。
+-   状态是什么？
 
--   React 中状态的特点: 能被修改，改了之后对应的视图也能更新。
+-   React 中状态的特点是什么？。
 
 -   函数组件是\_\_组件，类组件是\_\_组件。
 
@@ -280,9 +282,7 @@ export default class App extends Component {
 
 ### 定义
 
-通过 state 来定义状态，<font color=#e32d40>**state 对应的值必须是一个对象**</font>。
-
-第一种方式
+第一种方式：在 constructor 中通过 `this.state = {}`。
 
 ```jsx
 class App extends React.Component {
@@ -298,7 +298,7 @@ class App extends React.Component {
 }
 ```
 
-第二种方式
+第二种方式：通过 state 来定义状态，<font color=#e32d40>**state 对应的值必须是一个对象**</font>。
 
 ```jsx
 class App extends React.Component {
@@ -338,7 +338,7 @@ class App extends React.Component {
 
 -   定义组件的状态有哪两种方式？
 
--   this.state 对应的值必须是一个什么类型？
+-   this.state 对应的值必须是一个什么？
 
 ## 事件绑定
 
@@ -404,8 +404,6 @@ const App = () => {
 
 通过形参 `e` 可以拿到事件对象，例如 `e.target` 就是触发事件的那个 DOM 元素。
 
-需求：点击元素，把元素中的内容打印出来。
-
 ### 小结
 
 -   事件命名的规则是什么？
@@ -417,82 +415,6 @@ const App = () => {
 <p style="text-align: center;">需求：点击按钮让数字在原来数字的基础上进行 +1。</p>
 
 <img src="/resource/images/ifer_calc.gif" class="highlight2"/>
-
-### 目标
-
--   掌握事件绑定的基本应用。
-
--   掌握获取 state 中的数据以及如何修改数据。
-
-### 步骤
-
-1. 给按钮绑定点击事件。
-
-2. 在事件回调里面获取原来的数据。
-
-3. 通过 setState 进行修改数据。
-
-### 实现
-
-📝 需求：计数器（点击按钮加 1）
-
-1. 定义 State
-
-```jsx
-import React, { Component } from 'react'
-
-export default class App extends Component {
-    // 直接使用赋值语句
-    state = {
-        count: 0,
-    }
-    render() {
-        return (
-            <div>
-                <h2>计数器：{this.state.count}</h2>
-            </div>
-        )
-    }
-}
-```
-
-2. 绑定点击事件
-
-```jsx
-class App extends Component {
-    state = {
-        count: 0,
-    }
-    handleClick() {
-        // Cannot read properties of undefined (reading 'state')
-        console.log(this.state.count)
-    }
-    render() {
-        return (
-            <div>
-                <h2>计数器：{this.state.count}</h2>
-                <button onClick={this.handleClick}>+1</button>
-            </div>
-        )
-    }
-}
-```
-
-<font color=909090>🧐 注意：this.handleClick 不要加括号，加括号表示立即调用，期望的是点击按钮的时候才调用。</font>
-
-3. 分析原因
-
--   render 函数是被组件实例调用的（可以通过修改 render 函数的名字来观察到），因此 render 函数中的 this 指向当前组件实例，所以在 render 函数中通过 this 实例访问 state 和 handleClick 没有问题。
-
--   但！`<button onClick={this.handleClick}>+1</button>`，这样写，本质上是把 `this.handleClick` 这个方法赋值给了 onClick 这个属性，当点击按钮的时候，由 React 内部直接调用 onClick，那么 this 指向就是 undefined（class 的内部，开启了局部严格模式，所以 this 不会指向 window ）。
-
-### 小结
-
-render 函数中的 this 指向是什么？
-
-## 点击计数 2
-
-<img src="/resource/images/ifer_calc.png" class="highlight2"/>
 
 ### 目标
 
@@ -783,7 +705,7 @@ this.setState({ count: this.state.count + 1 })
 
 ### 解释
 
-也就是说不要**直接修改**原数据，而是要**产生一份新数据**，然后通过 setState 来操作原数据。为了 SCU（shouldComponentUpdate），为了性能优化。
+也就是说不要**直接修改**原数据，而是要**产生一份新数据**，然后通过 setState 用新的数据覆盖原数据，这么做的其中一个重要原因就是为了 SCU（shouldComponentUpdate），为了性能优化。
 
 ### 不建议写法
 
@@ -1343,7 +1265,7 @@ export default class App extends Component {
 
 ### 整合数据和视图
 
-改造成 class 组件
+把昨天写的代码改造成 class 组件的形式来渲染。
 
 ```jsx
 import React from 'react'

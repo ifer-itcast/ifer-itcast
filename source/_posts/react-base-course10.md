@@ -1237,5 +1237,3 @@ export default function Home() {
     return <div className={styles.root}>Home</div>
 }
 ```
-
--   去掉了 `pages/Layout/index.js` 中右侧 `<Layout/>` 组件上的 padding。

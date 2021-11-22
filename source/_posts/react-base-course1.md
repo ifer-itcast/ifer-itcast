@@ -93,20 +93,20 @@ const jsx = (
 
 ### 步骤
 
-1. 新建文件夹并初始化包管理文件
+1. 新建文件夹并初始化包管理文件。
 
 ```bash
 mkdir myreact && cd myreact
 yarn init -y
 ```
 
-2. 下载 `react` 和 `react-dom`
+2. 下载 `react` 和 `react-dom`。
 
 ```bash
 yarn add react react-dom
 ```
 
-3. 创建 `index.html` 并引入上面 2 个 JS 文件
+3. 创建 `index.html` 并引入上面 2 个 JS 文件。
 
 ```html
 <!-- React 核心依赖包 -->
@@ -115,14 +115,14 @@ yarn add react react-dom
 <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
 ```
 
-4. 创建 React 元素
+4. 创建 React 元素。
 
 ```js
 // 元素名称、元素属性、元素子节点1、元素子节点2...
 const title = React.createElement('h1', null, 'Hello World')
 ```
 
-5. 渲染 React 元素到页面中
+5. 渲染 React 元素到页面中。
 
 ```html
 <div id="root"></div>
@@ -134,7 +134,7 @@ const title = React.createElement('h1', null, 'Hello World')
 
 ### 小结
 
--   使用 React 一般需要哪 2 个包？
+使用 React 一般需要哪 2 个包？
 
 ## 脚手架创建项目
 

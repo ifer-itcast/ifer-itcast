@@ -836,7 +836,7 @@ export default class B extends Component {
 
 ### 案例目标
 
-基于第一天的结构进行<font color=e32d40>**组件化**</font>开发。
+基于第 1 天的静态结构进行<font color=e32d40>**组件化**</font>开发。
 
 <img src="/resource/images/ifer_list.png" class="highlight2"/>
 
