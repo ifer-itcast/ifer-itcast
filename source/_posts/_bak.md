@@ -4,6 +4,61 @@ date: 2021-11-22 10:00:48
 tags:
 ---
 
+<!-- 第一天 -->
+
+## 基本使用
+
+### 目标
+
+掌握 React 在 HTML 页面中的基本使用。
+
+### 步骤
+
+1. 新建文件夹并初始化包管理文件。
+
+```bash
+mkdir myreact && cd myreact
+yarn init -y
+```
+
+2. 下载 `react` 和 `react-dom`。
+
+```bash
+yarn add react react-dom
+```
+
+3. 创建 `index.html` 并引入上面 2 个 JS 文件。
+
+```html
+<!-- React 核心依赖包 -->
+<script src="./node_modules/react/umd/react.development.js"></script>
+<!-- 用来将 React 元素渲染到 DOM 元素中 -->
+<script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+```
+
+4. 创建 React 元素。
+
+```js
+// 元素名称、元素属性、元素子节点1、元素子节点2...
+const title = React.createElement('h1', null, 'Hello World')
+```
+
+5. 渲染 React 元素到页面中。
+
+```html
+<div id="root"></div>
+<script>
+    // 渲染谁、渲染到哪里
+    ReactDOM.render(title, document.querySelector('#root'))
+</script>
+```
+
+### 小结
+
+使用 React 一般需要哪 2 个包？
+
+<!-- 第二天 -->
+
 ## 点击计数
 
 <p style="text-align: center;">需求：点击按钮让数字在原来数字的基础上进行 +1。</p>

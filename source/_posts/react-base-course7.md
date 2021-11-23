@@ -829,6 +829,8 @@ export default combineReducers({
 
 ### 目标
 
+[效果](https://todomvc.com/examples/react/#/)
+
 <img src="/resource/images/todolist.png" width="400" class="highlight2"/>
 
 ### 拆分组件
