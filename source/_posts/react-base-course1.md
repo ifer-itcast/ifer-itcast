@@ -58,7 +58,7 @@ tags:
 
 -   <font color=#e32d40>声明式</font>
 
-只需要描述 UI（HTML）看起来是什么样子，就像写 HTML 一样简单，React 内部负责渲染 UI，并在数据变化时更新 UI。
+只需要描述 UI（HTML）看起来是什么样子，就像写 HTML 一样简单，React 内部负责渲染 UI，并在数据变化时自动更新 UI。
 
 ```jsx
 const jsx = (
@@ -359,7 +359,7 @@ ReactDOM.render(title, document.querySelector('#root'))
 
 🤔 换句话说，JSX 并不是标准的 ECMAScript 语法，为什么 React 脚手架中可以直接使用 JSX 呢？
 
--   JSX 需要使用 Babel 编译处理后，才能在浏览器中使用，`create-react-app` 脚手架中已经内置了该配置，无需手动再配。
+-   JSX 需要使用 Babel 编译成 `React.createElement()` 的形式，然后配合 React 才能在浏览器中使用，而 `create-react-app` 脚手架中已经内置了 Babel 及相关配置。
 
 -   编译 JSX 语法的包为：[@babel/preset-react](https://www.npmjs.com/package/@babel/preset-react)，[在线体验](https://www.babeljs.cn/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.6&spec=false&loose=false&code_lz=DwCwjAfAEgpgNnA9gAgFIGUAawD04JA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Creact%2Cstage-2&prettier=false&targets=&version=7.16.2&externalPlugins=&assumptions=%7B%7D)。
 
@@ -394,7 +394,7 @@ const r = (
 
 3. 元素若没有子节点，可以使用单标签，但一定要闭合，例如 `<span/>`。
 
-4. `React@16.14 之前`需要先引入 React 才能使用 JSX（这个也好理解，因为 JSX 最后还是要被转成 React.createElement() 的形式）。
+4. `React@16.14` 之前需要先引入 React 才能使用 JSX（这个也好理解，因为 JSX 最后还是要被转成 `React.createElement()` 的形式）。
 
 5. 换行建议使用 `()` 进行包裹，防止换行的时候[自动插入分号](https://stackoverflow.com/questions/2846283/what-are-the-rules-for-javascripts-automatic-semicolon-insertion-asi)的 Bug。
 
@@ -402,7 +402,7 @@ const r = (
 
 ### 总结
 
-至少说出 JSX 的三个注意点？
+至少说出 JSX 的三个注意点？根节点、属性名、换行的时候外部要怎样。
 
 ## 使用表达式
 
@@ -476,7 +476,7 @@ const title = <h1>盒子{span}</h1>
 
 ### 内容
 
-可以根据不同的条件渲染不同的 HTML 结构，需求：isLoading 是 true，显示“加载中...”，否则显示“加载完毕！”。
+📝 需求：isLoading 是 true，显示“加载中...”，否则显示“加载完毕！”。
 
 ```jsx
 import ReactDOM from 'react-dom'
@@ -515,7 +515,7 @@ const loadData = () => {
 
 ### 需求
 
-后端返回的数据
+后端返回的数据。
 
 ```js
 ;[
@@ -525,7 +525,7 @@ const loadData = () => {
 ]
 ```
 
-期望实现的效果
+期望实现的效果。
 
 ```html
 <ul>
@@ -569,7 +569,7 @@ ReactDOM.render(loadData(), document.querySelector('#root'))
 
 ### 关于 key
 
-1. 特点：key 值要保证唯一，尽量避免使用索引号当做 key。
+1. 特点：key 值要保证唯一，尽量避免使用索引号，key 在最终的 HTML 结构中是看不见的。
 
 2. 加在哪里：`map()` 遍历谁，就把 key 加在谁上。
 
@@ -622,31 +622,35 @@ const list = [
 
 ### 行内样式
 
-语法
+-   语法
 
 ```jsx
 <元素 style={ {css属性1：值1,css属性2：值2} }></元素>
 ```
 
-示例
+-   需求
+
+<img src="/resource/images/react_style.png" width="150"/>
+
+-   代码
 
 ```jsx
-<div style={{ width: 200, height: 200, backgroundColor: 'black', color: 'white' }}>Hello React</div>
+<div style={{ width: 200, height: 200, lineHeight: '200px', backgroundColor: 'black', color: 'white', textAlign: 'center', fontSize: 30 }}>React</div>
 ```
 
-注意点
+-   注意点
 
--   为啥有两个`{{ }}`，外层的 `{}` 表示要开始写 JS 表达式了，内层的 `{}` 表示是一个对象。
+    a，为啥有两个`{{ }}`，外层的 `{}` 表示要开始写 JS 表达式了，内层的 `{}` 表示是一个对象。
 
--   属性名是小驼峰格式，例如 `background-color` 需要写成 `backgroundColor`。
+    b，属性名是小驼峰格式，例如 `background-color` 需要写成 `backgroundColor`。
 
--   属性值是字符串，如果单位是 px，可以简写成数值。
+    c，属性值是字符串，如果单位是 px，可以简写成数值。
 
 ### className
 
 -   用 className 定义类名。
 
--   在外部准备 `*.css` 文件，然后通过 `import` 引入 `*.css` 文件。
+-   在 src 目录中准备 `index.css` 文件，然后在 `index.js` 文件中通过 `import './index.css'` 引入文件。
 
 `index.css`
 
@@ -659,6 +663,8 @@ const list = [
 }
 ```
 
+`index.js`
+
 ```jsx
 import './index.css'
 ;<div className='title'>Hello React</div>
@@ -670,7 +676,7 @@ import './index.css'
 
 -   行内样式，`<div style={{ color: 'red' }}>Hello</div>`。
 
-## 渲染 B 站评论列表 📝
+## B 站评论列表 📝
 
 ### 案例目标
 

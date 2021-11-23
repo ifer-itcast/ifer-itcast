@@ -20,17 +20,17 @@ tags:
 
 -   MPA : `Multiple Page Application` 多页面应用程序，整个应用中有很多个页面（\*.html）。
 
-优势：页面响应速度快，体验好（无刷新），降低了对服务器的压力。
+-   优势：页面响应速度快，体验好（无刷新），降低了对服务器的压力。
 
     a，传统的多页面应用程序，每次请求服务器返回的都是一整个完整的页面。
 
     b，单页面应用程序只有第一次会加载完整的页面，以后每次请求仅仅获取必要的数据。
 
-缺点：不利于 SEO 搜索引擎优化。
+-   缺点：不利于 SEO 搜索引擎优化。
 
--   因为爬虫只爬取 HTML 页面中的文本内容，不会执行 JS 代码。
+    a，因为爬虫只爬取 HTML 页面中的文本内容，不会执行 JS 代码。
 
--   可以通过 SSR（服务端渲染 Server Side Rendering）来解决 SEO 问题，即先在服务器端把内容渲染出来，返回给浏览器的就是纯 HTML 内容了。
+    b，可以通过 SSR（服务端渲染 Server Side Rendering）来解决 SEO 问题，即先在服务器端把内容渲染出来，返回给浏览器的就是纯 HTML 内容了。
 
 ## 前端路由
 
@@ -92,7 +92,7 @@ export default function App() {
 
 ## React Router
 
-官网：https://reactrouter.com/，https://v5.reactrouter.com/
+[官网](https://reactrouter.com/)，[Releases](https://github.com/remix-run/react-router/releases)，[v5](https://v5.reactrouter.com/)
 
 1. 安装。
 
@@ -108,15 +108,15 @@ import { HashRouter, Route, Link } from 'react-router-dom'
 
 3. 使用 `HashRouter` 包裹整个应用，一个项目中只会有一个 Router。
 
-```js
+```html
 <HashRouter>
-    <div className='App'>App</div>
+    <div className="App">App</div>
 </HashRouter>
 ```
 
 4. 使用 Link 指定导航链接。
 
-```js
+```html
 <Link to="/first">页面一</Link>
 <Link to="/two">页面二</Link>
 ```
@@ -164,9 +164,7 @@ export default function App() {
 
 ## Router 详细说明
 
--   常用有两种 Router：`HashRouter` 和 `BrowserRouter`。
-
--   Router 组件用来包裹整个应用，一个 React 应用只需要使用一次。
+-   常用有两种 Router：`HashRouter` 和 `BrowserRouter`，用来包裹整个应用，一个 React 应用只需要使用一次。
 
 -   HashRouter：使用 URL 的哈希值实现（`http://localhost:3000/#/first`），是通过监听 window 的 `hashchange` 事件来实现的。
 
@@ -181,7 +179,7 @@ import { HashRouter as Router, Route, Link } from 'react-router-dom'
 
 1. 点击 Link 组件（a 标签），浏览器地址栏中的 url 发生变化。
 
-2. React 路由监听到了地址栏 url 的变化，通过 hashChange 或 popState。
+2. React 路由监听到了地址栏 url 的变化，通过 `hashchange` 或 `popState` 事件。
 
 3. React 路由内部遍历所有 Route 组件，使用路由规则（path）与 pathname（hash）进行匹配。
 
@@ -189,21 +187,23 @@ import { HashRouter as Router, Route, Link } from 'react-router-dom'
 
 ## Link 与 NavLink
 
-`Link` 组件最终会渲染成 a 标签，用于指定路由导航。
+-   `Link` 组件最终会渲染成 a 标签，用于指定路由导航。
 
     a，to 属性，将来会渲染成 a 标签的 href 属性。
 
     b，`Link` 组件无法实现导航的高亮效果。
 
-`NavLink` 组件，一个更特殊的 `Link` 组件，可以用于指定当前导航高亮。
+-   `NavLink` 组件，一个更特殊的 `Link` 组件，可以用于指定当前导航高亮。
 
-    a，to 属性，用于指定地址，会渲染成 a 标签的 href 属性。
+    a，to：用于指定地址，会渲染成 a 标签的 href 属性。
 
-    b，activeClass: 用于指定高亮的类名，默认 `active`。
+    b，activeClass：用于指定高亮的类名，默认 `active`。
 
-    c，exact: 精确匹配，表示必须精确匹配类名才会应用 class，默认是模糊模糊匹配。
+    c，exact：精确匹配，表示必须精确匹配类名才会应用 class，默认是模糊模糊匹配。
 
-`App.js`，Link 改成了 NavLink 组件，首页的入口 NavLink to 改成了 /，同时出口 Route path 也改成了 /，代码如下。
+> 需求：访问 `/` 时展示首页内容，点击当前高亮。
+
+`App.js`，`<Link></Link>` 改成了 `<NavLink></NavLink>` 组件，to 对应的值改成了 `/`，同时出口 Route 组件的 path 属性也改成了 `/`，代码如下。
 
 ```js
 import React from 'react'
@@ -237,12 +237,14 @@ export default function App() {
 }
 ```
 
-第一个问题：点击搜索发现首页也应用了激活的 class 类名，解决
+问题：点击搜索发现首页也应用了激活的 class 类名。
 
 ```jsx
 // 以 / 开头的，就会被添加 class，当访问 /search 的时候，发现是以 / 开头的，所以这里也加了 class
 <NavLink to='/'>首页</NavLink>
 ```
+
+解决方法。
 
 ```jsx
 // 必须是 / 才会被加 class
@@ -260,19 +262,17 @@ export default function App() {
 ;<Route path='/' exact component={Home}></Route>
 ```
 
--   默认情况下，path 为 '/' 能够匹配路由组件，因为所有路由组件都是以 '/' 开头的。
+-   默认情况下，path 为 `/` 能够匹配所有路由组件，因为所有路由组件都是以 `/` 开头的，一般来说，如果路径配置了 `/`，往往都需要配置 exact 属性。
 
 -   如果 path 的路径匹配上了，那么对应的组件就会被 render，否则就会 render null。
 
 -   如果没有指定 path，那么一定会被渲染，例如 `<Route component={NotFound}></Route>`。
 
--   exact 表示精确匹配某个路径，一般来说，如果路径配置了 '/'，往往都需要配置 exact 属性。
-
 ## Switch 与 404
 
 -   通常，会把一个个的 `Route` 包裹在一个 `Switch` 组件中，这样只会渲染第一个匹配的组件，往往是我们期望的。
 
--   通过 `Switch` 组件配合不带 path 的 Route 能实现 404 页面的提示，即便不需要实现 404，也可以用 Switch 包裹来提升性能。
+-   通过 `Switch` 组件配合不带 path 属性的 Route 组件能实现 404 效果，即便不需要实现 404，也可以用 Switch 包裹来提升性能。
 
 ```js
 <Switch>
