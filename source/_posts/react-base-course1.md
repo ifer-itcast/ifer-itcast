@@ -131,7 +131,23 @@ const jsx = (
 
 掌握通过 React 脚手架渲染页面的基本步骤。
 
+<img src="/resource/images/ifer_hello_world.png"/>
+
 ### 步骤
+
+1. 删除 `src` 和 `public` 目录中的所有内容。
+
+2. 新建 `public/index.html`。
+
+3. 新建 `src/index.js` 文件。
+
+4. 引入 React 核心库和涉及 DOM 操作的包。
+
+5. 调用 `React.createElement()` 方法创建 React 元素。
+
+6. 调用 `ReactDOM.render()` 方法渲染 React 元素到页面。
+
+### 代码
 
 1. 删除 `src` 和 `public` 目录中的所有内容。
 
@@ -945,65 +961,13 @@ import './index.css'
 
 ### 实现步骤
 
-#### 导入样式和图片
+#### 渲染基本结构
 
 ```js
+import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import avatar from './images/avatar.png'
-```
 
-#### 准备数据和结构
-
-```js
-const state = {
-    // hot: 热度排序  time: 时间排序
-    tabs: [
-        {
-            id: 1,
-            name: '热度',
-            type: 'hot',
-        },
-        {
-            id: 2,
-            name: '时间',
-            type: 'time',
-        },
-    ],
-    active: 'time',
-    list: [
-        {
-            id: 1,
-            author: '刘德华',
-            comment: '给我一杯忘情水',
-            time: '2021-11-10 09:09:00',
-            img: 'https://y.qq.com/music/photo_new/T001R300x300M000003aQYLo2x8izP.jpg?max_age=2592000',
-            // 1: 点赞 0：无态度 -1:踩
-            attitude: 1,
-        },
-        {
-            id: 2,
-            author: '周杰伦',
-            comment: '听妈妈的话',
-            time: '2021-12-11 09:09:00',
-            img: 'https://y.qq.com/music/photo_new/T001R500x500M0000025NhlN2yWrP4.jpg?max_age=2592000',
-            // 1: 点赞 0：无态度 -1:踩
-            attitude: 0,
-        },
-        {
-            id: 3,
-            author: '陈奕迅',
-            comment: '十年',
-            time: '2021-10-11 10:09:00',
-            img: 'https://y.qq.com/music/photo_new/T001R500x500M000003Nz2So3XXYek.jpg?max_age=2592000',
-            // 1: 点赞 0：无态度 -1:踩
-            attitude: -1,
-        },
-    ],
-}
-```
-
-```jsx
 const content = (
     <div class='App'>
         <div class='comment-container'>
@@ -1091,15 +1055,114 @@ const content = (
         </div>
     </div>
 )
-```
 
-```js
 ReactDOM.render(content, document.querySelector('#root'))
 ```
 
-#### 处理 class 和 avatar
+解决 className 和图片失效的问题。
+
+#### 渲染评论数量和 Tab 栏
+
+```js
+const state = {
+    // hot: 热度排序  time: 时间排序
+    tabs: [
+        {
+            id: 1,
+            name: '热度',
+            type: 'hot',
+        },
+        {
+            id: 2,
+            name: '时间',
+            type: 'time',
+        },
+    ],
+    active: 'time',
+    list: [
+        {
+            id: 1,
+            author: '刘德华',
+            comment: '给我一杯忘情水',
+            time: '2021-11-10 09:09:00',
+            img: 'https://y.qq.com/music/photo_new/T001R300x300M000003aQYLo2x8izP.jpg?max_age=2592000',
+            // 1: 点赞 0：无态度 -1:踩
+            attitude: 1,
+        },
+        {
+            id: 2,
+            author: '周杰伦',
+            comment: '听妈妈的话',
+            time: '2021-12-11 09:09:00',
+            img: 'https://y.qq.com/music/photo_new/T001R500x500M0000025NhlN2yWrP4.jpg?max_age=2592000',
+            // 1: 点赞 0：无态度 -1:踩
+            attitude: 0,
+        },
+        {
+            id: 3,
+            author: '陈奕迅',
+            comment: '十年',
+            time: '2021-10-11 10:09:00',
+            img: 'https://y.qq.com/music/photo_new/T001R500x500M000003Nz2So3XXYek.jpg?max_age=2592000',
+            // 1: 点赞 0：无态度 -1:踩
+            attitude: -1,
+        },
+    ],
+}
+```
 
 ```jsx
+import React from 'react'
+import ReactDOM from 'react-dom'
+import avatar from './images/avatar.png'
+import './index.css'
+
+const state = {
+    // hot: 热度排序  time: 时间排序
+    tabs: [
+        {
+            id: 1,
+            name: '热度',
+            type: 'hot',
+        },
+        {
+            id: 2,
+            name: '时间',
+            type: 'time',
+        },
+    ],
+    active: 'time',
+    list: [
+        {
+            id: 1,
+            author: '刘德华',
+            comment: '给我一杯忘情水',
+            time: '2021-11-10 09:09:00',
+            img: 'https://y.qq.com/music/photo_new/T001R300x300M000003aQYLo2x8izP.jpg?max_age=2592000',
+            // 1: 点赞 0：无态度 -1:踩
+            attitude: 1,
+        },
+        {
+            id: 2,
+            author: '周杰伦',
+            comment: '听妈妈的话',
+            time: '2021-12-11 09:09:00',
+            img: 'https://y.qq.com/music/photo_new/T001R500x500M0000025NhlN2yWrP4.jpg?max_age=2592000',
+            // 1: 点赞 0：无态度 -1:踩
+            attitude: 0,
+        },
+        {
+            id: 3,
+            author: '陈奕迅',
+            comment: '十年',
+            time: '2021-10-11 10:09:00',
+            img: 'https://y.qq.com/music/photo_new/T001R500x500M000003Nz2So3XXYek.jpg?max_age=2592000',
+            // 1: 点赞 0：无态度 -1:踩
+            attitude: -1,
+        },
+    ],
+}
+
 const content = (
     <div className='App'>
         <div className='comment-container'>
@@ -1108,8 +1171,11 @@ const content = (
             </div>
             <div className='tabs-order'>
                 <ul className='sort-container'>
-                    <li className=''>按热度排序</li>
-                    <li className='on'>按时间排序</li>
+                    {state.tabs.map((item) => (
+                        <li key={item.id} className={item.type === state.active ? 'on' : ''}>
+                            按{item.name}排序
+                        </li>
+                    ))}
                 </ul>
             </div>
             <div className='comment-send'>
@@ -1187,54 +1253,107 @@ const content = (
         </div>
     </div>
 )
+
+ReactDOM.render(content, document.querySelector('#root'))
 ```
 
-#### 处理评论数和排序
+#### 循环渲染评论列表
 
 ```jsx
+import React from 'react'
+import ReactDOM from 'react-dom'
+import avatar from './images/avatar.png'
+import './index.css'
+
+const state = {
+    // hot: 热度排序  time: 时间排序
+    tabs: [
+        {
+            id: 1,
+            name: '热度',
+            type: 'hot',
+        },
+        {
+            id: 2,
+            name: '时间',
+            type: 'time',
+        },
+    ],
+    active: 'time',
+    list: [
+        {
+            id: 1,
+            author: '刘德华',
+            comment: '给我一杯忘情水',
+            time: '2021-11-10 09:09:00',
+            img: 'https://y.qq.com/music/photo_new/T001R300x300M000003aQYLo2x8izP.jpg?max_age=2592000',
+            // 1: 点赞 0：无态度 -1:踩
+            attitude: 1,
+        },
+        {
+            id: 2,
+            author: '周杰伦',
+            comment: '听妈妈的话',
+            time: '2021-12-11 09:09:00',
+            img: 'https://y.qq.com/music/photo_new/T001R500x500M0000025NhlN2yWrP4.jpg?max_age=2592000',
+            // 1: 点赞 0：无态度 -1:踩
+            attitude: 0,
+        },
+        {
+            id: 3,
+            author: '陈奕迅',
+            comment: '十年',
+            time: '2021-10-11 10:09:00',
+            img: 'https://y.qq.com/music/photo_new/T001R500x500M000003Nz2So3XXYek.jpg?max_age=2592000',
+            // 1: 点赞 0：无态度 -1:踩
+            attitude: -1,
+        },
+    ],
+}
+
 const content = (
     <div className='App'>
         <div className='comment-container'>
             <div className='comment-head'>
-                <span>{state.list.length} 评论</span>
+                <span>1 评论</span>
             </div>
             <div className='tabs-order'>
                 <ul className='sort-container'>
                     {state.tabs.map((item) => (
-                        <li className={item.type === state.active ? 'on' : ''} key={item.id}>
+                        <li key={item.id} className={item.type === state.active ? 'on' : ''}>
                             按{item.name}排序
                         </li>
                     ))}
                 </ul>
             </div>
-            {/* ... */}
-        </div>
-    </div>
-)
-```
-
-#### 循环评论列表
-
-```jsx
-const content = (
-    <div className='App'>
-        <div className='comment-container'>
-            {/* ... */}
+            <div className='comment-send'>
+                <div className='user-face'>
+                    <img className='user-head' src={avatar} alt='' />
+                </div>
+                <div className='textarea-container'>
+                    <textarea cols='80' rows='5' placeholder='发条友善的评论' className='ipt-txt'></textarea>
+                    <button className='comment-submit'>发表评论</button>
+                </div>
+                <div className='comment-emoji'>
+                    <i className='face'></i>
+                    <span className='text'>表情</span>
+                </div>
+            </div>
             <div className='comment-list'>
                 {state.list.map((item) => (
-                    <div className='list-item' key={item.id}>
+                    <div key={item.id} className='list-item'>
                         <div className='user-face'>
                             <img className='user-head' src={item.img} alt='' />
                         </div>
                         <div className='comment'>
-                            <div className='user'>{item.author}</div>
-                            <p className='text'>{item.comment}</p>
+                            <div className='user'>{item.name}</div>
+                            <p className='text'>{item.author}</p>
                             <div className='info'>
                                 <span className='time'>{item.time}</span>
-                                <span className={item.attitude === 1 ? 'like liked' : 'like'}>
+                                <span className={`like ${item.attitude === 1 ? 'liked' : ''}`}>
                                     <i className='icon'></i>
                                 </span>
-                                <span className={item.attitude === -1 ? 'hate hated' : 'hate'}>
+                                <span className={`hate ${item.attitude === -1 ? 'hated' : ''}`}>
                                     <i className='icon'></i>
                                 </span>
                                 <span className='reply btn-hover'>删除</span>
@@ -1246,6 +1365,8 @@ const content = (
         </div>
     </div>
 )
+
+ReactDOM.render(content, document.querySelector('#root'))
 ```
 
 class 的另外一种处理方式。
