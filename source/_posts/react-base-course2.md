@@ -12,11 +12,13 @@ tags:
 
 ✔ 掌握事件绑定以及 this 指向的问题。
 
-✔ 掌握表单处理。
+✔ 掌握表单处理的两种方式。
+
+✔ 完成带交互的 B 站评论列表案例。
 
 <!-- more -->
 
-## React 组件介绍
+## 组件介绍
 
 ### 目标
 
@@ -24,11 +26,11 @@ tags:
 
 ### 概念
 
-<img src="/resource/images/components.png" class="highlight2"/>
-
 组件就是页面中的一部分，是 React 的一等公民，使用 React 就是在用组件，而所谓的组件化开发就是采用分而治之的思想来管理繁杂的页面逻辑。
 
-<font color=#909090>🧐 了解模块：JS 模块一般是向外提供特定功能的代码片段，通常来说是一个文件。</font>
+<img src="/resource/images/components.png" class="highlight2"/>
+
+<font color=#909090>🧐 了解模块：JS 模块一般是向外提供特定功能的代码片段，通常来说是一个 JS 文件。</font>
 
 ### 特点
 
@@ -36,9 +38,9 @@ tags:
 
 ### 分类
 
--   功能：UI 组件（AntD）和业务组件（留言板）
+-   功能：UI 组件（AntD）和业务组件（留言板）。
 
--   使用：普通组件（在一个组件中直接使用的组件）和路由组件（通过路由跳转访问到的组件）
+-   使用：普通组件（在一个组件中直接使用的组件）和路由组件（通过路由跳转访问到的组件）。
 
 <img src="/resource/images/ifer_router.png"/>
 
@@ -50,55 +52,13 @@ tags:
 
 -   组件的分类是什么？
 
-## 创建组件的 2 种方式
-
-### 目标
-
-掌握创建组件的 2 种方式：函数式组件和 class 组件。
-
-### 示例
-
-```jsx
-import React from 'react'
-import ReactDOM from 'react-dom'
-
-const title = <h1>创建组件的两种方式</h1>
-
-// 定义一个函数式组件
-const Com1 = () => {
-    return <div>第一个函数式组件</div>
-}
-
-// 定义一个类组件
-class Com2 extends React.Component {
-    render() {
-        return <div>第一个类组件</div>
-    }
-}
-
-const content = (
-    <div>
-        {title}
-        {<Com1 />}
-        <hr />
-        {<Com2 />}
-    </div>
-)
-
-ReactDOM.render(content, document.getElementById('root'))
-```
-
-### 小结
-
-创建组件有几种方式，分别是什么？
-
 ## 函数式组件
 
 ### 目标
 
 -   掌握函数式组件的创建及注意点。
 
--   了解 ReactDOM.render 渲染函数式组件的过程。
+-   了解 `ReactDOM.render()` 渲染函数式组件的过程。
 
 ### 内容
 
@@ -270,7 +230,7 @@ ReactDOM.render(<App />, document.querySelector('#root'))
 
 -   状态是什么？
 
--   React 中状态的特点是什么？。
+-   React 中状态的特点是什么？
 
 -   函数组件是\_\_组件，类组件是\_\_组件。
 
@@ -338,7 +298,7 @@ class App extends React.Component {
 
 -   定义组件的状态有哪两种方式？
 
--   this.state 对应的值必须是一个什么？
+-   `this.state` 对应的值必须是一个什么？
 
 ## 事件绑定
 
@@ -705,7 +665,7 @@ this.setState({ count: this.state.count + 1 })
 
 ### 解释
 
-也就是说不要**直接修改**原数据，而是要**产生一份新数据**，然后通过 setState 用新的数据覆盖原数据，这么做的其中一个重要原因就是为了 SCU（shouldComponentUpdate），为了性能优化。
+也就是说不要<font color=e32d40>**直接修改**</font>原数据，而是要<font color=e32d40>**产生一份新数据**</font>，然后通过 `setState()` 用新的数据覆盖原数据，这么做的其中一个重要原因就是为了 SCU（shouldComponentUpdate），为了性能优化。
 
 ### 不建议写法
 
@@ -1261,11 +1221,13 @@ export default class App extends Component {
 
 ### 目标
 
+完成带交互的 B 站评论列表案例。
+
 <img src="/resource/images/ifer_list3.png"/>
 
 ### 整合数据和视图
 
-把昨天写的代码改造成 class 组件的形式来渲染。
+把昨天 B 站评论列表的最终代码改造成一个 class 组件的形式来渲染。
 
 ```jsx
 import React from 'react'
