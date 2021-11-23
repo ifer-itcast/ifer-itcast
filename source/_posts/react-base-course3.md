@@ -836,7 +836,7 @@ export default class B extends Component {
 
 ### 案例目标
 
-基于第 1 天的静态结构进行<font color=e32d40>**组件化**</font>开发。
+基于第 1 天的<a target="_blank" href="/2021/11/05/react-base-course1/#more">静态结构</a>进行<font color=e32d40>**组件化**</font>开发。
 
 <img src="/resource/images/ifer_list.png" class="highlight2"/>
 
@@ -1387,7 +1387,7 @@ export default class List extends Component {
 
 1. 把父组件的 tabs 数据传递给 Tabs 组件。
 
-2. Tabs 组件循环数据。
+2. Tabs 组件循环传递过来的数据。
 
 3. 把父组件的 active 传递给 Tabs 组件。
 
@@ -2250,7 +2250,7 @@ export default class List extends Component {
 
 ### 完整代码
 
-`App.jsx`
+#### `App.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -2361,7 +2361,7 @@ export default class App extends Component {
 }
 ```
 
-`components/Tabs.jsx`
+#### `components/Tabs.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -2386,7 +2386,7 @@ export default class Tabs extends Component {
 }
 ```
 
-`components/Form.jsx`
+#### `components/Form.jsx`
 
 ```jsx
 import React, { Component } from 'react'
@@ -2428,7 +2428,7 @@ export default class Form extends Component {
 }
 ```
 
-`components/List.jsx`
+#### `components/List.jsx`
 
 ```jsx
 import React, { Component } from 'react'

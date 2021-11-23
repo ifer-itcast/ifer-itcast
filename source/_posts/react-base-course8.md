@@ -179,9 +179,9 @@ import { HashRouter as Router, Route, Link } from 'react-router-dom'
 
 1. 点击 Link 组件（a 标签），浏览器地址栏中的 url 发生变化。
 
-2. React 路由监听到了地址栏 url 的变化，通过 `hashchange` 或 `popState` 事件。
+2. ReactRouter 通过 `hashchange` 或 `popState` 监听到了地址栏 url 的变化。
 
-3. React 路由内部遍历所有 Route 组件，使用路由规则（path）与 pathname（hash）进行匹配。
+3. ReactRouter 内部遍历所有 Route 组件，使用路由规则（path）与 pathname（hash）进行匹配。
 
 4. 当路由规则（path）能够匹配地址栏中的 pathname（hash）时，就展示该 Route 对应的组件。
 
@@ -201,7 +201,7 @@ import { HashRouter as Router, Route, Link } from 'react-router-dom'
 
     c，exact：精确匹配，表示必须精确匹配类名才会应用 class，默认是模糊模糊匹配。
 
-> 需求：访问 `/` 时展示首页内容，点击当前高亮。
+📝 需求：访问 `/` 时展示首页内容，点击当前高亮。
 
 `App.js`，`<Link></Link>` 改成了 `<NavLink></NavLink>` 组件，to 对应的值改成了 `/`，同时出口 Route 组件的 path 属性也改成了 `/`，代码如下。
 
@@ -285,7 +285,9 @@ export default function App() {
 
 ## 嵌套路由的配置
 
-配置嵌套路由的时候，必须要先匹配到父路由，才能匹配到子路由，需求：在发现音乐里面再展示排行榜和歌单。
+<img src="/resource/images/ifer_router_more.png"/>
+
+📝 需求：在发现音乐里面再展示推荐、排行榜。
 
 `App.js`
 
@@ -295,12 +297,13 @@ import { HashRouter as Router, Route, NavLink, Switch } from 'react-router-dom'
 import Find from './pages/Find'
 import My from './pages/My'
 import Friend from './pages/Friend'
+import './App.css'
 
 export default function App() {
     return (
         <Router>
             <div>
-                <ul>
+                <ul className='nav'>
                     <li>
                         <NavLink to='/find'>发现音乐</NavLink>
                     </li>
@@ -322,29 +325,29 @@ export default function App() {
 }
 ```
 
-`Find.js`
+`Find.js`，配置嵌套路由的时候，必须要先匹配到父路由，才能匹配到子路由。
 
 ```js
 import React from 'react'
 import { NavLink, Switch, Route } from 'react-router-dom'
-import Top from './Top'
-import List from './List'
+import Recommend from './Recommend'
+import Rank from './Rank'
 
 export default function Find() {
     return (
         <div>
             <h3>发现音乐</h3>
-            <ul>
+            <ul className='nav'>
                 <li>
-                    <NavLink to='/find/top'>排行榜</NavLink>
+                    <NavLink to='/find/recommend'>推荐</NavLink>
                 </li>
                 <li>
-                    <NavLink to='/find/list'>歌单</NavLink>
+                    <NavLink to='/find/rank'>排行榜</NavLink>
                 </li>
             </ul>
             <Switch>
-                <Route path='/find/top' component={Top} />
-                <Route path='/find/list' component={List} />
+                <Route path='/find/recommend' component={Recommend} />
+                <Route path='/find/rank' component={Rank} />
             </Switch>
         </div>
     )

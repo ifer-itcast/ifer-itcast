@@ -1227,7 +1227,7 @@ export default class App extends Component {
 
 ### 整合数据和视图
 
-把昨天 B 站评论列表的最终代码改造成一个 class 组件的形式来渲染。
+把昨天 B 站<a target="_blank" href="/2021/11/05/react-base-course1/#more">评论列表</a>的最终代码改造成一个 class 组件的形式来渲染。
 
 ```jsx
 import React from 'react'
