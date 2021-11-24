@@ -1227,7 +1227,7 @@ export default class App extends Component {
 
 ### 整合数据和视图
 
-把昨天 B 站<a target="_blank" href="/2021/11/05/react-base-course1/#more">评论列表</a>的最终代码改造成一个 class 组件的形式来渲染。
+把昨天 B 站<a target="_blank" href="/2021/11/05/react-base-course1/#more">评论列表</a>的最终代码改造成一个 class 组件（不要忘了继承自 `React.Component`）的形式来渲染。
 
 ```jsx
 import React from 'react'
@@ -1438,7 +1438,7 @@ handleChange = (e) => {
 }
 ```
 
-2. 通过 setState 添加评论并重置输入的内容。
+2. 点击发表按钮在事件回调里面通过 setState 添加评论并重置输入的内容。
 
 ```js
 addItem = () => {

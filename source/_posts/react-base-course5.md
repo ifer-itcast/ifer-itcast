@@ -555,6 +555,73 @@ useEffect(() => {}, [])
 useEffect(() => {}, [count])
 ```
 
+## 倒计时 📝
+
+考察一个问题？先点击开启定时器，再点击 +8 按钮，10s 后输出的结果是什么？
+
+```js
+import React, { useState } from 'react'
+
+export default function App() {
+    const [count, setCount] = useState(10)
+    const startTime = () => {
+        setTimeout(() => {
+            // debugger
+            console.log(count)
+        }, 10000)
+    }
+    return (
+        <div>
+            <h3>{count}</h3>
+            <button onClick={() => setCount(count + 8)}>+8</button>
+            <button onClick={startTime}>开启定时器</button>
+        </div>
+    )
+}
+```
+
+有问题的代码
+
+```js
+import React, { useState, useEffect } from 'react'
+
+export default function App() {
+    const [count, setCount] = useState(10)
+    useEffect(() => {
+        setInterval(() => {
+            setCount(count - 1)
+        }, 1000)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    return (
+        <div>
+            <h3>{count}</h3>
+        </div>
+    )
+}
+```
+
+解决方案
+
+```js
+import React, { useState, useEffect } from 'react'
+
+export default function App() {
+    const [count, setCount] = useState(10)
+    useEffect(() => {
+        setInterval(() => {
+            setCount((count) => count - 1)
+        }, 1000)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    return (
+        <div>
+            <h3>{count}</h3>
+        </div>
+    )
+}
+```
+
 ## 购物车
 
 ### 目标

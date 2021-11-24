@@ -418,6 +418,132 @@ export default class Test extends Component {
 }
 ```
 
+### 多次渲染之间共享数据
+
+点击清除定时器，错误写法
+
+```js
+import React, { useState, useEffect } from 'react'
+
+export default function App() {
+    const [count, setCount] = useState(10)
+    let timer
+    useEffect(() => {
+        timer = setInterval(() => {
+            setCount((count) => count - 1)
+        }, 1000)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    const handleStop = () => {
+        clearInterval(timer)
+    }
+    return (
+        <div>
+            <h3>{count}</h3>
+            <button onClick={handleStop}>停止定时器</button>
+        </div>
+    )
+}
+```
+
+解决方式，全局变量
+
+```js
+import React, { useState, useEffect, useRef } from 'react'
+
+export default function App() {
+    const [count, setCount] = useState(10)
+    const ref = useRef(null)
+    useEffect(() => {
+        ref.current = setInterval(() => {
+            setCount((count) => count - 1)
+        }, 1000)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    const handleStop = () => {
+        clearInterval(ref.current)
+    }
+    return (
+        <div>
+            <h3>{count}</h3>
+            <button onClick={handleStop}>停止定时器</button>
+        </div>
+    )
+}
+```
+
+给昨天的案例提个需求，就是需要定时器弹出当前状态。
+
+```js
+import React, { useState } from 'react'
+
+export default function App() {
+    const [count, setCount] = useState(10)
+    const startTime = () => {
+        setTimeout(() => {
+            // debugger
+            console.log(count)
+        }, 10000)
+    }
+    return (
+        <div>
+            <h3>{count}</h3>
+            <button onClick={() => setCount(count + 8)}>+8</button>
+            <button onClick={startTime}>开启定时器</button>
+        </div>
+    )
+}
+```
+
+全局变量
+
+```js
+import React, { useState } from 'react'
+
+let temp = 0
+export default function App() {
+    const [count, setCount] = useState(10)
+    temp = count
+    const startTime = () => {
+        setTimeout(() => {
+            // debugger
+            console.log(temp)
+        }, 3000)
+    }
+    return (
+        <div>
+            <h3>{count}</h3>
+            <button onClick={() => setCount(count + 8)}>+8</button>
+            <button onClick={startTime}>开启定时器</button>
+        </div>
+    )
+}
+```
+
+useRef，更新期间都是同一个 ref 对象，可以理解为是一个全局变量，但和全局变量不同的是它是在组件内部的，多个组件实例之间不会相互影响。
+
+```js
+import React, { useState, useRef } from 'react'
+
+export default function App() {
+    const [count, setCount] = useState(10)
+    const ref = useRef()
+    ref.current = count
+    const startTime = () => {
+        setTimeout(() => {
+            console.log(ref.current)
+        }, 3000)
+    }
+    return (
+        <div>
+            <h3>{count}</h3>
+            <button onClick={() => setCount(count + 8)}>+8</button>
+            <button onClick={startTime}>开启定时器</button>
+        </div>
+    )
+}
+```
+
 ## createContext
 
 ### 目标
