@@ -418,7 +418,9 @@ export default class Test extends Component {
 }
 ```
 
-### 多次渲染之间共享数据
+## useRef 共享数据
+
+useRef 创建的引用可以实现多次渲染之间进行共享。
 
 点击清除定时器，错误写法
 

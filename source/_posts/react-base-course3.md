@@ -24,15 +24,17 @@ tags:
 
 了解为什么需要组件通讯？
 
+<img src="/resource/images/ifer_search.png" class="highlight2"/>
+
 ### 内容
 
 -   组件是独立且封闭的单元，默认情况下，只能使用组件自己的数据。
 
 -   在组件化过程中，我们将一个完整的功能拆分成多个组件，以更好的管理整个应用的功能。
 
--   而在这个过程中，多个组件之间不可避免的要传递或共享某些数据。
+-   而在这个过程中，多个组件之间不可避免的要<font color=e32d40>**传递或共享某些数据**</font>。
 
--   为了实现这些功能，就需要<font color=e32d40>**打破组件的独立封闭性**</font>，让其与外界沟通，这个过程就是组件通讯。
+-   为了实现这些功能，就需要打破组件的独立封闭性，让其与外界沟通，这个过程就是组件通讯。
 
 ### 总结
 
@@ -113,7 +115,7 @@ export default App
 
 -   单向数据流，也叫做：自上而下的数据流。
 
-    a，父组件中的数据可以通过自定义属性传递给子组件，并且，当父组件中的数据更新时，子组件就会自动接收到最新的数据。
+    a，当父组件中的数据更新时，子组件接收到的数据也会自动更新。
 
     b，但不能反过来，例如子组件直接去修改父组件的数据。
 
@@ -290,7 +292,7 @@ export default class Child extends Component {
 }
 ```
 
-### 完整
+### 完整代码
 
 `components/Parent/index.js`
 
@@ -661,11 +663,13 @@ export default class Child extends Component {
 
 ### 步骤
 
-1. 把需要操作的 B 组件中的数据 count 提升到公共的父组件里面。
+1. 准备 A、B 兄弟组件。
 
-2. <font color=e32d40>**父组件提供数据和操作数据的方法**</font>。
+2. 把需要操作的 B 组件中的数据 count 提升到公共的父组件里面。
 
-3. 把数据传递给 B 组件，把操作数据的方法传递给 A 组件。
+3. <font color=e32d40>**父组件提供数据和操作数据的方法**</font>。
+
+4. 把数据传递给 B 组件，把操作数据的方法传递给 A 组件。
 
 `App.jsx`
 
@@ -743,11 +747,13 @@ export default class B extends Component {
 
 <img src="/resource/images/ifer_context.png"/>
 
-1. 通过 `React.crateContext()` 创建 Context。
+1. 祖先组件通过 `React.crateContext()` 创建 Context 并导出。
 
 2. 祖先组件通过 `<Context.Provider>` 配合 value 属性提供数据。
 
 3. 后代组件通过 `<Context.Consumer>` 配合函数获取数据。
+
+4. 优化：提取 `React.crateContext()` 到单独的文件里面。
 
 ### 代码
 

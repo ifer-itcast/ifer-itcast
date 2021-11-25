@@ -277,3 +277,147 @@ class App extends Component {
 ### 小结
 
 render 函数中的 this 指向是什么？
+
+## 定时器
+
+### 倒计时
+
+```js
+import React, { useState, useEffect, useRef } from 'react'
+
+export default function App() {
+    const [canSend, setCanSend] = useState(false)
+    const [count, setCount] = useState(3)
+    const ref = useRef()
+    const send = () => {
+        setCanSend(true) // 禁用
+        setCount(3)
+        ref.current = setInterval(() => {
+            setCount((count) => count - 1)
+        }, 1000)
+    }
+    useEffect(() => {
+        if (count === 0) {
+            // 恢复按钮
+            setCanSend(false)
+            clearInterval(ref.current)
+        }
+    }, [count])
+    return (
+        <div>
+            <h3>模拟手机验证码</h3>
+            <button disabled={canSend} onClick={send}>
+                {canSend ? count + '秒后再试' : '发送验证码'}
+            </button>
+        </div>
+    )
+}
+```
+
+### 跳转
+
+```js
+import React, { useState, useEffect, useRef } from 'react'
+
+export default function App() {
+    const [count, setCount] = useState(3)
+    const ref = useRef()
+
+    useEffect(() => {
+        setCount(3)
+        ref.current = setInterval(() => {
+            setCount((count) => count - 1)
+        }, 1000)
+    }, [])
+
+    useEffect(() => {
+        if (count === 0) {
+            console.log('跳转了')
+            clearInterval(ref.current)
+        }
+    }, [count])
+    return (
+        <div>
+            <h3>你要的页面不存在，{count}秒后跳转到首页</h3>
+        </div>
+    )
+}
+```
+
+### Hook 封装
+
+```js
+function useCountDown(initCount = 3, callback = () => {}) {
+    const [count, setCount] = useState(initCount)
+    const ref = useRef()
+    const start = () => {
+        // 初始化计时
+        setCount(initCount)
+        ref.current = setInterval(() => {
+            setCount((count) => count - 1)
+        }, 1000)
+    }
+    useEffect(() => {
+        if (count === 0) {
+            // 计时结束要干啥
+            callback()
+            clearInterval(ref.current)
+        }
+    }, [count, callback])
+
+    useEffect(() => {
+        return () => {
+            clearInterval(ref.current)
+        }
+    }, [])
+    return {
+        count,
+        start, // 什么时候开始由外部决定就好了
+    }
+}
+```
+
+### 倒计时改造
+
+```js
+export default function App() {
+    const [canSend, setCanSend] = useState(false)
+    const { count, start } = useCountDown(3, () => {
+        // 结束要干啥
+        setCanSend(false)
+    })
+    const send = () => {
+        setCanSend(true)
+        // 什么时候开始
+        start()
+    }
+    return (
+        <div>
+            <h3>模拟手机验证码</h3>
+            <button disabled={canSend} onClick={send}>
+                {canSend ? count + '秒后再试' : '发送验证码'}
+            </button>
+        </div>
+    )
+}
+```
+
+### 跳转改造
+
+```js
+export default function App() {
+    const { count, start } = useCountDown(5, () => {
+        // 结束要干啥
+        console.log('shit')
+    })
+    useEffect(() => {
+        // 什么时候开始
+        start()
+    }, [])
+    return (
+        <div>
+            <h3>你要的页面不存在，{count}秒后跳转到首页</h3>
+        </div>
+    )
+}
+```
