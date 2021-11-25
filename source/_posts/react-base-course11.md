@@ -1152,42 +1152,40 @@ const Counter = () => {
 
 pages/Article/index.js 中：
 
-```js
+```jsx
 const params = useRef({})
-
-
 // 筛选的时候，把参数存放到ref中
 const onFinish = (values) => {
-  if (values.status !== -1) {
-    params.current.status = values.status
-  }
+    if (values.status !== -1) {
+        params.current.status = values.status
+    }
 
-  params.current.channel_id = values.channel_id
-  if (values.date) {
-    params.current.begin_pubdate = values.date[0]
-      .startOf('day')
-      .format('YYYY-MM-DD HH:mm:ss')
-    params.current.end_pubdate = values.date[1]
-      .endOf('day')
-      .format('YYYY-MM-DD HH:mm:ss')
-  }
-  // 从第一页开始筛选
-  params.current.page = 1
-  dispatch(getArticleList(params.current))
-  // console.log(params.current)
+    params.current.channel_id = values.channel_id
+    if (values.date) {
+        params.current.begin_pubdate = values.date[0]
+        .startOf('day')
+        .format('YYYY-MM-DD HH:mm:ss')
+        params.current.end_pubdate = values.date[1]
+        .endOf('day')
+        .format('YYYY-MM-DD HH:mm:ss')
+    }
+    // 从第一页开始筛选
+    params.current.page = 1
+    dispatch(getArticleList(params.current))
+    // console.log(params.current)
 }
 
 // 分页的时候，也把参数放到ref
 pagination={{
-  position: ['bottomCenter'],
-  total: articles.total_count,
-  pageSize: articles.per_page,
-  current: articles.page,
-  onChange(page, pageSize) {
-    params.current.page = page
-    params.current.per_page = pageSize
-    dispatch(getArticleList(params.current))
-  }
+    position: ['bottomCenter'],
+    total: articles.total_count,
+    pageSize: articles.per_page,
+    current: articles.page,
+    onChange(page, pageSize) {
+        params.current.page = page
+        params.current.per_page = pageSize
+        dispatch(getArticleList(params.current))
+    }
 }}
 ```
 
@@ -1213,6 +1211,8 @@ pagination={{
 
 -   提供一个删除的 action
 
+`store/actions/article.js`
+
 ```jsx
 export const delArticle = (id) => {
     return async () => {
@@ -1226,24 +1226,28 @@ export const delArticle = (id) => {
 
 -   在组件中，弹窗提醒
 
-```jsx
+`pages/Article/index.js`
+
+```js
 {
-  title: '操作',
-  dataIndex: 'id',
-  render(id) {
-    return (
-      <Space>
-        <Button shape="circle" type="primary" icon={<EditOutlined />} />
-        <Popconfirm title="确定要删除该文章吗？" onConfirm={() => del(id)}>
-          <Button shape="circle" type="danger" icon={<DeleteOutlined />} />
-        </Popconfirm>
-      </Space>
-    )
-  }
+    title: '操作',
+    dataIndex: 'id',
+    render(id) {
+        return (
+            <Space>
+                <Button shape='circle' type='primary' icon={<EditOutlined />} />
+                <Popconfirm title='确定要删除该文章吗？' onConfirm={() => del(id)}>
+                    <Button shape='circle' type='danger' icon={<DeleteOutlined />} />
+                </Popconfirm>
+            </Space>
+        )
+    },
 }
 ```
 
 -   提供 del 方法，进行删除
+
+注意：由于需要在 column 内部用到 Hook，所以需要把 column 迁移到函数内部定义。
 
 ```jsx
 const del = async (id) => {
@@ -1260,20 +1264,197 @@ const del = async (id) => {
 
 能够实现编辑文章跳转功能
 
-### 代码
+### 结构
 
-pages/Article/index.js 中：
+外部盒子
 
 ```js
-const columns = [
-    // ...
-    {
-        title: '操作',
-        render: (data) => (
-            <Space size='middle'>
-                <Button type='primary' shape='circle' icon={<EditOutlined />} onClick={() => history.push(`/home/publish/${data.id}`)} />
-            </Space>
-        ),
-    },
-]
+import React from 'react'
+import { Link } from 'react-router-dom'
+import styles from './index.module.scss'
+import { Card, Breadcrumb } from 'antd'
+
+export default function Publish() {
+    return (
+        <div className={styles.root}>
+            <Card
+                title={
+                    <Breadcrumb separator='>'>
+                        <Breadcrumb.Item>
+                            <Link to='/home'>首页</Link>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>发布文章</Breadcrumb.Item>
+                    </Breadcrumb>
+                }
+            ></Card>
+        </div>
+    )
+}
+```
+
+标题
+
+```js
+<Form labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} size='large'>
+    <Form.Item label='标题'>
+        <Input placeholder='请输入文章的标题' style={{ width: 400 }} />
+    </Form.Item>
+</Form>
+```
+
+获取并渲染频道数据
+
+```js
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import styles from './index.module.scss'
+import { Card, Breadcrumb, Form, Input, Select } from 'antd'
+import { getChannelList } from '@/store/actions/article'
+
+export default function Publish() {
+    const dispatch = useDispatch()
+    const channels = useSelector((state) => state.article.channels)
+    useEffect(() => {
+        dispatch(getChannelList())
+    }, [dispatch])
+    return (
+        <div className={styles.root}>
+            <Card
+                title={
+                    <Breadcrumb separator='>'>
+                        <Breadcrumb.Item>
+                            <Link to='/home'>首页</Link>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>发布文章</Breadcrumb.Item>
+                    </Breadcrumb>
+                }
+            >
+                <Form labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} size='large'>
+                    <Form.Item label='标题'>
+                        <Input placeholder='请输入文章的标题' style={{ width: 400 }} />
+                    </Form.Item>
+                    <Form.Item label='频道' name='channel_id'>
+                        <Select style={{ width: 200 }} allowClear placeholder='请选择频道'>
+                            {channels.map((item) => (
+                                <Select.Option value={item.id} key={item.id}>
+                                    {item.name}
+                                </Select.Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
+    )
+}
+```
+
+其他
+
+```js
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import styles from './index.module.scss'
+import { Card, Breadcrumb, Form, Input, Select, Button, Space } from 'antd'
+import { getChannelList } from '@/store/actions/article'
+
+export default function Publish() {
+    const dispatch = useDispatch()
+    const channels = useSelector((state) => state.article.channels)
+    useEffect(() => {
+        dispatch(getChannelList())
+    }, [dispatch])
+    return (
+        <div className={styles.root}>
+            <Card
+                title={
+                    <Breadcrumb separator='>'>
+                        <Breadcrumb.Item>
+                            <Link to='/home'>首页</Link>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>发布文章</Breadcrumb.Item>
+                    </Breadcrumb>
+                }
+            >
+                <Form labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} size='large'>
+                    <Form.Item label='标题'>
+                        <Input placeholder='请输入文章的标题' style={{ width: 400 }} />
+                    </Form.Item>
+                    <Form.Item label='频道' name='channel_id'>
+                        <Select style={{ width: 200 }} allowClear placeholder='请选择频道'>
+                            {channels.map((item) => (
+                                <Select.Option value={item.id} key={item.id}>
+                                    {item.name}
+                                </Select.Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label='封面'></Form.Item>
+                    <Form.Item label='内容'></Form.Item>
+                    <Form.Item wrapperCol={{ offset: 4, span: 20 }}>
+                        <Space>
+                            <Button type='primary'>发布文章</Button>
+                            <Button>存入草稿</Button>
+                        </Space>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
+    )
+}
+```
+
+### 优化频道数据的渲染
+
+自定义 Hook 抽离频道的状态和逻辑
+
+`hooks/index.js`
+
+```js
+import { getChannelList } from '@/store/actions/article'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+/**
+ * 获取频道列表
+ * @returns array
+ */
+export function useChannels() {
+    const dispatch = useDispatch()
+    const channels = useSelector((state) => state.article.channels)
+    useEffect(() => {
+        dispatch(getChannelList())
+    }, [dispatch])
+    return channels
+}
+```
+
+自定义组件，UI 也能进行封装
+
+`src/components/Channel/index.js`
+
+```js
+import { useEffect } from 'react'
+import { Select } from 'antd'
+import { getChannelList } from '@/store/actions/article'
+import { useDispatch, useSelector } from 'react-redux'
+
+// export default function Channel({ value, onChange }) {
+export default function Channel(props) {
+    const dispatch = useDispatch()
+    const channels = useSelector((state) => state.article.channels)
+    useEffect(() => {
+        dispatch(getChannelList())
+    }, [dispatch])
+    return (
+        <Select placeholder='请选择频道' style={{ width: 200 }} {...props}>
+            {channels.map((item) => (
+                <Select.Option key={item.id} value={item.id}>
+                    {item.name}
+                </Select.Option>
+            ))}
+        </Select>
+    )
+}
 ```
