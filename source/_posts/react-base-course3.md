@@ -36,6 +36,8 @@ tags:
 
 -   为了实现这些功能，就需要打破组件的独立封闭性，让其与外界沟通，这个过程就是组件通讯。
 
+-   组件通信常见的方式有：父传子、子传父、兄弟相传、跨组件通信等。
+
 ### 总结
 
 组件通信的目的是什么？
@@ -44,11 +46,19 @@ tags:
 
 ### 目标
 
-掌握将父组件的数据，传递给子组件。
+掌握如何将父组件的数据，传递给子组件。
+
+### 需求
+
+<img src="/resource/images/ifer_p_c2.png"/>
 
 ### 内容
 
+🤔 [Vue 是怎么做的？](https://cn.vuejs.org/v2/guide/components.html#%E9%80%9A%E8%BF%87-Prop-%E5%90%91%E5%AD%90%E7%BB%84%E4%BB%B6%E4%BC%A0%E9%80%92%E6%95%B0%E6%8D%AE)
+
 1. 父组件（使用组件的地方）通过自定义属性提供数据。
+
+`src/Parent.js`
 
 ```jsx
 import React, { Component } from 'react'
@@ -56,10 +66,15 @@ import Child from './Child'
 
 class Parent extends Component {
     state = {
-        money: 8888,
+        salary: 11.46,
     }
     render() {
-        return <Child money={this.state.money}></Child>
+        return (
+            <div style={{ border: '1px solid gray', padding: 20, width: 300 }}>
+                <h3>父：黑马武汉前端 64 期平均工资</h3>
+                <Child salary={this.state.salary}></Child>
+            </div>
+        )
     }
 }
 
@@ -68,38 +83,35 @@ export default Parent
 
 2. 子组件（定义组件的地方）通过 this.props/props 接收。
 
-类组件
+类组件，`src/Child.js`
 
 ```jsx
 import React, { Component } from 'react'
 
 export default class Child extends Component {
     render() {
-        return <div>{this.props.money}</div>
+        return <div style={{ border: '1px solid red' }}>子：{this.props.salary}</div>
     }
 }
 ```
 
-函数组件
+函数组件，`src/Child.js`
 
 ```jsx
-import React from 'react'
-
-const App = (props) => {
-    return (
-        <div>
-            {props.name}
-            {props.age}
-        </div>
-    )
+const Child = (props) => {
+    return <div style={{ border: '1px solid red' }}>子：{props.salary}</div>
 }
 
-export default App
+export default Child
 ```
 
 ### 小结
 
-父怎么给子传递数据？
+父传子的 2 个步骤
+
+1. 父组件通过 \_\_ 提供数据？
+
+2. 子组件，类组件通过 \_\_ 接收数据，函数组件通过 \_\_ 接收数据？
 
 ## 注意事项
 
