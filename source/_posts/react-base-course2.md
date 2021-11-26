@@ -38,9 +38,9 @@ tags:
 
 ### 分类
 
--   功能：UI 组件（AntD）和业务组件（留言板）。
+-   功能使用：UI 组件（AntD）和业务组件（留言板）；普通组件（在一个组件中直接使用的组件）和路由组件（通过路由跳转访问到的组件）。
 
--   使用：普通组件（在一个组件中直接使用的组件）和路由组件（通过路由跳转访问到的组件）。
+-   创建方式：函数组件和类组件。
 
 <img src="/resource/images/ifer_router.png"/>
 
@@ -56,17 +56,31 @@ tags:
 
 ### 目标
 
--   掌握函数式组件的创建及注意点。
-
--   了解 `ReactDOM.render()` 渲染函数式组件的过程。
+掌握函数式组件的创建及注意点。
 
 ### 内容
 
-a，函数组件，又称简单组件或无状态组件（Hooks 之前没有自己的状态），使用 JS 的函数创建组件。
+-   概念
 
-b，函数名称<font color=#e32d40>**必须以大写字母开头**</font>，函数组件<font color=#e32d40>**必须有返回值**</font>，表示该组件的结构，返回 null，则表示不渲染任何内容。
+    通过函数创建出来的组件，又称简单组件或无状态组件（React16.8 以后函数式组件也可以拥有自己的状态），<font color=#e32d40>**本质上来说就是一个 JS 函数**</font>。
 
-c，函数式组件中的 this 是 undefined，因为 babel 编译后的代码开启了严格模式，[Babel 试一试](https://www.babeljs.cn/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.6&spec=false&loose=false&code_lz=GYVwdgxgLglg9mABAWQJ4GEC2AHAFASkQG8AoASACcBTKECpAHgAsBGAPkF_FQB1NB4fUBG_QG9yDAPSs2JAL5A&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Ces2015%2Creact%2Cstage-0&prettier=false&targets=&version=7.15.8&externalPlugins=)。
+-   步骤
+
+    1. 先定义。
+
+        a，函数名称<font color=#e32d40>**必须以大写字母开头**</font>。
+
+        b，<font color=#e32d40>**必须有返回值**</font>，返回值表示该组件的结构，如果不想渲染任何内容，可以 `return null`。
+
+    2. 再使用。
+
+        a，`<函数名/>`，单标签闭合。
+
+        b，`<函数名></函数名>`，双标签。
+
+-   注意点
+
+    函数式组件中的 this 指向是 undefined，因为 Babel 编译后的代码开启了严格模式，[Babel 试一试](https://www.babeljs.cn/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.6&spec=false&loose=false&code_lz=GYVwdgxgLglg9mABAWQJ4GEC2AHAFASkQG8AoASACcBTKECpAHgAsBGAPkF_FQB1NB4fUBG_QG9yDAPSs2JAL5A&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Ces2015%2Creact%2Cstage-0&prettier=false&targets=&version=7.15.8&externalPlugins=)。
 
 ```jsx
 import ReactDOM from 'react-dom'
@@ -80,17 +94,25 @@ function Hello() {
 ReactDOM.render(<Hello />, document.getElementById('root'))
 ```
 
-<font color=#909090>🧐 了解 `ReactDOM.render()` 解析函数式组件的过程：React 解析 `<Hello/>` 标签，发现是大写开头的会被当做组件进行解析，解析的时候又发现其是一个函数式组件，随后调用此函数，将返回的虚拟 DOM 转为真实 DOM，并渲染到页面中。</font>
-
 ### 小结
-
--   函数式组件本质是一个\_\_\_?
 
 -   函数式组件的要求：函数名？
 
--   如果不需要有返回值，用什么表示？
+-   如果不需要渲染结构，应该 return\_\_\_?
+
+-   函数式组件中的 this 指向是\_\_\_?
 
 -   `ReactDOM.render()` 解析函数式组件的过程是什么？
+
+## 函数式组件渲染过程
+
+### 目标
+
+了解 `ReactDOM.render()` 渲染函数式组件的过程。
+
+### 内容
+
+<font color=#909090>🧐 React 解析 `<Hello/>` 标签，发现是大写开头的会被当做组件进行解析，解析的时候又发现其是一个函数式组件，随后会调用此函数，将返回的虚拟 DOM 转为真实 DOM，并渲染到页面中。</font>
 
 ## 类组件
 
@@ -98,7 +120,7 @@ ReactDOM.render(<Hello />, document.getElementById('root'))
 
 -   掌握类组件的基本使用。
 
--   了解 ReactDOM.render 渲染类组件的过程。
+-   了解 `ReactDOM.render()` 渲染类组件的过程。
 
 ### 内容
 
@@ -802,7 +824,7 @@ ReactDOM.render(<App />, document.querySelector('#root'))
 
 ### 概念
 
-受控不受控一般是针对表单来说的，所谓受控表单组件，即表单元素的 value 值受到了 React 中 state 的控制（对 state 的操作会影响视图，视图的变化又会反映到 state 上）。
+受控不受控一般是针对表单来说的，所谓受控表单组件，即表单元素的 value 值受到了 React 中状态（state）的控制（对状态的操作会影响视图，视图的变化又会反映到状态上）。
 
 ### input
 
