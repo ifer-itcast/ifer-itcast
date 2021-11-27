@@ -20,11 +20,19 @@ tags:
 
 ### 内容
 
--   `Hooks`：钩子、钩住，是 React v16.8 提供的新功能，作用：为函数组件提供状态、生命周期等原本 class 组件中才有的功能，可以理解为通过 Hooks 为函数式组件钩入了 class 组件的特性。
+-   `Hooks`：
 
--   React v16.8 以前：class 组件（提供状态和生命周期） + 函数组件（展示内容）。
+    钩子、钩住，是 `React@16.8` 提供的新功能，
 
--   React v16.8 以后：
+-   作用：
+
+    为函数组件提供状态、生命周期等原本 class 组件中才有的功能，可以理解为通过 Hooks 为函数式组件钩入了 class 组件的特性。
+
+-   `React@16.8` 以前：
+
+    class 组件（提供状态和生命周期） + 函数组件（展示内容）。
+
+-   `React@16.8` 以后：
 
     1. class 组件（提供状态和生命周期） + 函数组件（展示内容）。
 
@@ -32,19 +40,21 @@ tags:
 
     3. 混用以上两种方式：部分功能用 class 组件，部分功能用 Hooks + 函数组件。
 
--   注意：**Hooks 只能在函数组件中使用**，虽然有了 Hooks，但 React 官方并没有计划从 React 库中移除 class。
+-   注意：
+
+    <font color=e32d40>**Hooks 只能在函数组件中使用**</font>，虽然有了 Hooks，但 React 官方并没有计划从 React 库中移除 class。
 
 ### 总结
 
--   Hooks 是什么？
+-   Hooks 的作用是什么？
 
--   有了 Hooks 以后，不能再把函数式组件称为无状态组件了，因为通过 Hooks 可以为函数式组件提供状态啦。
+-   有了 Hooks 以后，还能再把函数式组件称为无状态组件吗，为什么？
 
 ## 为什么要有 Hooks
 
 ### 目标
 
-能够说出为什么要有 Hooks，Hooks 解决什么问题？
+能够说出 Hooks 解决什么问题。
 
 ### 内容
 
@@ -62,7 +72,7 @@ tags:
 
     b，需要理解 class 中的 this 是如何工作的。
 
-    c，同一业务的状态或业务逻辑被拆分到不同位置。
+    c，同一业务的状态和业务逻辑被拆分到不同位置。
 
 ```js
 {
@@ -83,11 +93,10 @@ tags:
 
 <img src="/resource/images/hook.gif"/>
 
--   相比于函数组件来说，不利于代码压缩和优化，也不利于 TS 的类型推导。
+-   相比于函数组件来说，类组件不利于代码压缩和优化，也不利于 TS 的类型推导。
 
 ```bash
 # 例如不能把 componentDidMount 压缩成 c
-# Webpack 打包的时候会自动把没有用到的代码进行 tree shaking，但是对于类组件来说，例如即便没有用到 componentDidMount，其实相关代码也会打包，因为它属于源代码的一部分
 # 例如写 this 的时候没有提示，因为 this 只有在调用的时候才能确定指向，编写代码期间 TS 是不知道的
 ```
 
@@ -133,9 +142,9 @@ Hooks 解决了什么问题？
 
 ### 小结
 
-项目当中 class 组件和 函数配合 Hooks 的写法可以共存吗？
+项目中 class 组件和函数配合 Hooks 的写法可以共存吗？
 
-## useState 基本使用
+## useState 基本使用（1）
 
 ### 目标
 
@@ -179,27 +188,31 @@ export default App
 
 -   参数：初始状态，比如传入 0 就表示该状态的初始值为 0。
 
--   注意：此处的状态可以是任意值（比如，数值、字符串等），对比 class 组件中的 state 必须是对象。
+-   注意：此处的状态可以是任意值（比如，数值、字符串、对象等），注意 class 组件中的 state 必须是对象。
 
--   返回值：数组，包含两个值，状态和修改该状态的方法。
+-   返回值：数组，数组里面包含两个值，状态和修改该状态的方法。
 
 -   约定：修改状态的方法以 set 开头，后面跟上状态的名称。
 
 ### 小结
 
--   useState 的作用和返回值是什么？
+-   useState 的作用是什么？
 
-## useState 状态的读取和修改
+-   useState 的返回值是什么？
+
+## useState 基本使用（2）
 
 ### 目标
 
-能够在函数组件中获取和修改状态。
+-   能够说出 useState 能写在哪里？
+
+-   能够说出状态的不可变性。
 
 ### 内容
 
 -   读取状态
 
-    useState 只能在函数内部调用，返回的状态也是函数内部的局部变量，只可以在函数的内部使用。
+    目前，useState 只能在函数组件内部调用（也可以在后续学习的自定义 Hook 中使用），所以返回的状态也是函数内部的局部变量。
 
 -   修改状态
 
@@ -209,9 +222,7 @@ export default App
 
     c，修改状态后，组件会自动重新渲染。
 
-### 注意
-
-修改状态的时候，要使用新的状态替换掉旧的状态，而不要直接修改原状态（状态的不可变性）。
+-   状态的不可变性（修改状态的时候，要使用新的状态替换掉旧的状态，而不要直接修改原状态）。
 
 ```jsx
 import React, { useState } from 'react'
@@ -242,13 +253,15 @@ export default App
 
 ### 小结
 
-useState 只能写在函数的内部。
+-   目前，useState 只能写在哪里？
 
-## useState 组件的更新过程
+-   状态的不可变性是什么意思？
+
+## useState 与组件更新过程
 
 ### 目标
 
-能够说出使用功能 `useState` 之后，组件的更新过程。
+能够说出使用功能 `useState()` 之后，组件的更新过程。
 
 ### 内容
 
@@ -270,9 +283,15 @@ useState 只能写在函数的内部。
 
     4. 再次渲染组件，此时，获取到的状态 count 值为：1。
 
--   <font color=e32d40>**注意：useState 的初始值(参数)只会在组件第一次渲染时生效**。</font>也就是说，以后的每次渲染，useState 获取到都是最新的状态值。React 组件会记住每次更新后的最新状态值!
+-   <font color=e32d40>**注意：useState 的初始值(参数)只会在组件第一次渲染时生效**。</font>也就是说，以后的每次渲染，useState 获取到都是最新的状态值，React 组件内部会记住每次更新后的最新状态值!
 
 ## useState 另一种写法
+
+### 目标
+
+掌握 `useState(回调函数)` 的写法。
+
+### 内容
 
 -   `useState(回调函数)`，回调函数的返回值就是状态的初始值，该回调函数只会触发一次。
 
@@ -288,7 +307,9 @@ useState(() => {
 
     b，如果状态是经过一些计算得到的，此时，推荐使用 useState(回调函数)。
 
-📝 需求：把通过大量计算得到的结果当做初始值。
+### 案例
+
+📝 需求：对下面的代码进行性能优化。
 
 ```js
 import React, { useState } from 'react'
@@ -310,29 +331,31 @@ export default function App() {
 
 ### 小结
 
-useState 的参数有几种使用方式，什么情况下使用回调函数的形式？
+-   `useState(回调函数)`，回调函数的返回值表示什么？
+
+-   什么情况下使用回调函数的形式？
 
 ## useState 使用规则
 
 ### 目标
 
-能够为函数组件提供多个状态及注意点。
+掌握如何为函数组件提供多个状态以及注意点。
 
 ### 内容
 
 -   如何为函数组件提供多个状态？
 
-    多次调用 useState 即可，每一次调用返回的 [state, setState] 之间，互不影响。
+    多次调用 useState 即可，每一次调用返回的 `[state, setState]` 之间，互不影响。
 
 -   useState 的使用规则
 
-    a，React Hooks 只能直接出现在函数组件中。
+    a，目前，只能直接出现在函数组件中（其他 Hook 也一样）。
 
-    b，**React Hooks 不能嵌套在 if/for/其他函数 中！**（if 的条件判断、for 循环的次数、函数的调用与否都可能会影响 hook 的顺序）。
+    b，<font color=e32d40>**不能嵌套在 if/for/其他函数 中！**</font>（if 的条件判断、for 循环的次数、函数的调用与否都可能会影响 hook 的顺序）。
 
     c，React 是按照 Hooks 的调用顺序来识别每一个 Hook，如果每次调用的顺序不同，导致 React 无法知道是哪一个状态和修改状态的方法。
 
-    d，可以通过开发者工具进行查看。
+    d，可以通过开发者工具进行查看 React 对 Hook 的管理。
 
 ```js
 import React, { useState } from 'react'
@@ -376,7 +399,7 @@ export default function App() {
 
 -   那组件或一般函数的副作用是什么呢
 
-    a，组件的副作用：对于 React 组件来说，主作用就是根据数据（state/props）<font color=e32d40>**渲染 UI**</font>，除此之外都是副作用，比如手动修改 DOM、数据（Ajax）请求、localStorage 操作等。
+    a，组件的副作用：对于 React 组件来说，主作用就是根据数据（state/props）<font color=e32d40>**渲染 UI**</font>，除此之外都是副作用，比如手动修改 DOM、数据（AJAX）请求、localStorage 操作等。
 
     b，函数的副作用：如果一个函数修改了其局部环境之外的数据，那么它就被称为有副作用。
 
@@ -386,7 +409,9 @@ export default function App() {
 
 ### 总结
 
-对于 React 组件来说，除了渲染 UI 之外的其他操作，都可以称之为副作用。
+-   对于 React 组件来说，“主作用”是什么？
+
+-   常见的有哪些“副作用”？
 
 ## useEffect 基本使用
 
@@ -396,9 +421,25 @@ export default function App() {
 
 ### 内容
 
+-   执行时机：初始化时和数据变化的时候执行。
+
+-   相当于 class 中的 componentDidMount + componentDidUpdate。
+
+### 需求
+
+在实际开发中，副作用是不可避免的。
+
+📝 需求：点击按钮，让数字加 1，并把变化后的数字展示在网页标题上。
+
 <img src="/resource/images/ifer_useEffect.gif" class="highlight2"/>
 
-在实际开发中，副作用是不可避免的，需求：点击按钮，让数字加 1，并把变化后的数字展示在网页标题上。
+### 步骤
+
+1. 初始化时渲染数据到网页标题上。
+
+2. 当数据变化的时候把变化后的数据渲染到网页标题上。
+
+### 代码
 
 ```jsx
 import React, { useState, useEffect } from 'react'
@@ -421,11 +462,11 @@ const App = () => {
 export default App
 ```
 
--   执行时机：初始化时和数据变化的时候执行。
+### 小结
 
--   相当于 class 中的 componentDidMount + componentDidUpdate。
+上面 useEffect 的写法相当于 class 组件中哪两个钩子？
 
-## useEffect 依赖
+## useEffect 依赖说明
 
 ### 目标
 
@@ -441,7 +482,7 @@ export default App
 
 -   操作：第二个参数可以传一个数组，表示只有当数组中的选项/依赖项改变时，才会重新执行该 effect。
 
-问题展示
+### 问题
 
 ```jsx
 import React, { useState, useEffect } from 'react'
@@ -466,7 +507,7 @@ const App = () => {
 export default App
 ```
 
-问题解决
+### 解决
 
 ```js
 useEffect(() => {
@@ -474,6 +515,10 @@ useEffect(() => {
     document.title = count
 }, [count])
 ```
+
+### 小结
+
+useEffect 的第二个参数用来干嘛的？
 
 ## useEffect 依赖是一个空数组
 
@@ -502,15 +547,19 @@ useEffect(() => {
 
 -   推荐：一个 useEffect 只处理一个功能，有多个功能时，使用多次 useEffect。
 
+### 小结
+
+useEffect 的第二个参数是一个空数组，相当于 class 组件中的那个钩子？
+
 ## useEffect 不要对依赖项撒谎
 
 ### 目标
 
-能够理解如果不正确使用依赖项的可能会带来的问题。
+能够理解如果不正确使用依赖项可能会带来的问题。
 
 ### 内容
 
--   useEffect 回调函数中用到的数据（比如，count）就是依赖数据，就应该出现在依赖项数组中。
+-   useEffect 回调函数中用到的数据（比如前面学习的 count）就是依赖数据，就应该出现在依赖项数组中。
 
 -   如果 useEffect 回调函数中用到了某个数据，但是没有出现在依赖项数组中，就会导致一些 Bug 出现（例如不会更新）！
 
@@ -540,9 +589,7 @@ useEffect 完全指南：https://overreacted.io/zh-hans/a-complete-guide-to-usee
 
 ### 小结
 
-能够说出对 useEffect 第 2 个参数的几种处理方式。
-
-### 代码
+能够说出对 useEffect 第 2 个参数的几种处理方式。例如不写第二个参数、空数组、或者 `[count]`
 
 ```jsx
 // 触发时机：第一次渲染会执行，任何数据变化导致组件更新时执行，相当于 componentDidMount + ComponentDidUpdate
@@ -557,7 +604,13 @@ useEffect(() => {}, [count])
 
 ## 倒计时 📝
 
-考察一个问题？先点击开启定时器，再点击 +8 按钮，10s 后输出的结果是什么？
+### 目标
+
+把前面学习的两个 Hook 结合起来使用，完成定时器的案例。
+
+### 一个问题
+
+先点击开启定时器，再点击 +8 按钮，10s 后输出的结果是什么？
 
 ```js
 import React, { useState } from 'react'
@@ -580,7 +633,11 @@ export default function App() {
 }
 ```
 
-有问题的代码
+### 得出结论
+
+由于先开启了定时器，形成了闭包，外部的 count 一直被定时器中的函数引用着，“不敢”释放，所以<font>**定时器中的 count 永远是第一次被引用着的那个 count**</font>。
+
+### 有问题的代码
 
 ```js
 import React, { useState, useEffect } from 'react'
@@ -592,7 +649,7 @@ export default function App() {
             setCount(count - 1)
         }, 1000)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []) // 定时器确实只想开启一次，所以使用了 []
     return (
         <div>
             <h3>{count}</h3>
@@ -601,7 +658,9 @@ export default function App() {
 }
 ```
 
-解决方案
+### 解决方案
+
+setCount 的初始值使用回调函数的形式。
 
 ```js
 import React, { useState, useEffect } from 'react'
@@ -621,6 +680,12 @@ export default function App() {
     )
 }
 ```
+
+### 小结
+
+-   这个案例中，useEffect 的第二个参数，能写成 `[count]` 吗？
+
+-   完成这个案例最核心的一行代码是什么？
 
 ## 购物车
 

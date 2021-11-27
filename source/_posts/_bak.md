@@ -421,3 +421,77 @@ export default function App() {
     )
 }
 ```
+
+第六天
+
+给昨天的案例提个需求：定时器时间到的时候弹出当前状态。
+
+```js
+import React, { useState } from 'react'
+
+export default function App() {
+    const [count, setCount] = useState(10)
+    const startTime = () => {
+        setTimeout(() => {
+            // debugger
+            console.log(count)
+        }, 10000)
+    }
+    return (
+        <div>
+            <h3>{count}</h3>
+            <button onClick={() => setCount(count + 8)}>+8</button>
+            <button onClick={startTime}>开启定时器</button>
+        </div>
+    )
+}
+```
+
+全局变量
+
+```js
+import React, { useState } from 'react'
+
+let temp = 0
+export default function App() {
+    const [count, setCount] = useState(10)
+    temp = count
+    const startTime = () => {
+        setTimeout(() => {
+            // debugger
+            console.log(temp)
+        }, 3000)
+    }
+    return (
+        <div>
+            <h3>{count}</h3>
+            <button onClick={() => setCount(count + 8)}>+8</button>
+            <button onClick={startTime}>开启定时器</button>
+        </div>
+    )
+}
+```
+
+useRef，更新期间都是同一个 ref 对象，可以理解为是一个全局变量，但和全局变量不同的是它是在组件内部的，多个组件实例之间不会相互影响。
+
+```js
+import React, { useState, useRef } from 'react'
+
+export default function App() {
+    const [count, setCount] = useState(10)
+    const ref = useRef()
+    ref.current = count
+    const startTime = () => {
+        setTimeout(() => {
+            console.log(ref.current)
+        }, 3000)
+    }
+    return (
+        <div>
+            <h3>{count}</h3>
+            <button onClick={() => setCount(count + 8)}>+8</button>
+            <button onClick={startTime}>开启定时器</button>
+        </div>
+    )
+}
+```

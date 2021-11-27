@@ -10,6 +10,8 @@ tags:
 
 能够富文本编辑器
 
+<!-- more -->
+
 ### 步骤
 
 1. 安装富文本编辑器：`yarn add react-quill`

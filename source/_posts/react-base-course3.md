@@ -83,7 +83,9 @@ export default Parent
 
 2. 子组件（定义组件的地方）通过 this.props/props 接收。
 
-类组件，`src/Child.js`
+类组件：通过 `this.props` 接收。
+
+`src/Child.js`
 
 ```jsx
 import React, { Component } from 'react'
@@ -95,7 +97,9 @@ export default class Child extends Component {
 }
 ```
 
-函数组件，`src/Child.js`
+函数组件：通过 `props` 接收。
+
+`src/Child.js`
 
 ```jsx
 const Child = (props) => {
