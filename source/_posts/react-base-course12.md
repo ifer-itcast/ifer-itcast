@@ -1642,3 +1642,84 @@ export const editArticle = (draft = false, data) => {
     }
 }
 ```
+
+## 编辑文章-侧边栏高亮
+
+```js
+import React, { useEffect } from 'react'
+import styles from './index.module.scss'
+import { Layout, Menu, Popconfirm, message } from 'antd'
+import { LogoutOutlined, HomeOutlined, HddOutlined, EditOutlined } from '@ant-design/icons'
+import { Switch, Route, Link, useLocation, useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import Home from '../Home'
+import Article from '../Article'
+import Publish from '../Publish'
+import { getUserInfo, logout } from '@/store/actions/login'
+const { Header, Sider } = Layout
+
+export default function MyLayout() {
+    const location = useLocation()
+    let pathname = location.pathname
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const user = useSelector((state) => state.user)
+    if (pathname.startsWith('/home/publish')) {
+        pathname = '/home/publish'
+    }
+    useEffect(() => {
+        dispatch(getUserInfo())
+    }, [dispatch])
+
+    const onConfirm = () => {
+        // #1 清除 Token
+        dispatch(logout())
+        // #2 跳转到登录页
+        history.push('/login')
+        // #3 提示消息
+        message.success('退出成功', 1)
+    }
+    return (
+        <div className={styles.root}>
+            <Layout>
+                <Header className='header'>
+                    <div className='logo' />
+                    <div className='profile'>
+                        <span>{user.name}</span>
+                        <Popconfirm title='你确定要退出本系统吗?' okText='确定' cancelText='取消' placement='bottomRight' onConfirm={onConfirm}>
+                            <span>
+                                <LogoutOutlined></LogoutOutlined> 退出
+                            </span>
+                        </Popconfirm>
+                    </div>
+                </Header>
+                <Layout>
+                    <Sider width={200} className='site-layout-background'>
+                        <Menu mode='inline' theme='dark' selectedKeys={[pathname]} style={{ height: '100%', borderRight: 0 }}>
+                            <Menu.Item icon={<HomeOutlined />} key='/home'>
+                                <Link to='/home'>数据概览</Link>
+                            </Menu.Item>
+                            <Menu.Item icon={<HddOutlined />} key='/home/article'>
+                                <Link to='/home/article'>内容管理</Link>
+                            </Menu.Item>
+                            <Menu.Item icon={<EditOutlined />} key='/home/publish'>
+                                <Link to='/home/publish'>发布文章</Link>
+                            </Menu.Item>
+                        </Menu>
+                    </Sider>
+                    <Layout style={{ padding: 20, overflow: 'auto' }}>
+                        <Switch>
+                            <Route exact path='/home' component={Home} />
+                            <Route exact path='/home/article' component={Article} />
+                            <Route exact path='/home/publish' component={Publish} />
+                            <Route path='/home/publish/:id' component={Publish} />
+                        </Switch>
+                    </Layout>
+                </Layout>
+            </Layout>
+        </div>
+    )
+}
+```
+
+Bug：点击编辑，再点击左侧的发布，内容还在
