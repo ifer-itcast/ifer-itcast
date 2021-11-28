@@ -2239,7 +2239,7 @@ export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
 
 2. 引入结构和样式。
 
-#### `index.css`
+#### `src/index.css`
 
 ```css
 body {
@@ -2391,7 +2391,7 @@ div:focus {
 }
 ```
 
-#### `components/Channel.js`
+#### `src/components/Channel.js`
 
 ```jsx
 import React from 'react'
@@ -2431,7 +2431,7 @@ export default function Channel() {
 }
 ```
 
-#### `components/NewsList.js`
+#### `src/components/NewsList.js`
 
 ```jsx
 import React from 'react'
@@ -2455,7 +2455,7 @@ export default function NewsList() {
 }
 ```
 
-#### `App.js`
+#### `src/App.js`
 
 ```jsx
 import React from 'react'
@@ -2783,7 +2783,7 @@ export default function Channel() {
 ```js
 export const CHANNEL_GET = 'CHANNEL_GET'
 export const CHANNEL_ACTIVE = 'CHANNEL_ACTIVE'
-// 这个可以方法 news.js 中，或者只保留一个 constants/index.js 文件即可
+// 这个可以放在单独的 news.js 中，或者只保留一个 constants/index.js 文件即可
 export const NEWS_GET = 'NEWS_GET'
 ```
 
