@@ -90,12 +90,7 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 
-ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.querySelector('#root')
-)
+ReactDOM.render(<App />, document.querySelector('#root'))
 ```
 
 `src/App.js`
@@ -174,7 +169,8 @@ export default function App() {
 body {
     margin: 0;
 }
-
+html,
+body,
 #root {
     height: 100%;
 }
@@ -314,9 +310,7 @@ const Login = () => (
 
 ### 内容
 
-[自定义 CRA 的默认配置](https://ant.design/docs/react/use-with-create-react-app-cn#%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE)
-
-[craco 配置文档](https://github.com/gsoft-inc/craco/blob/master/packages/craco/README.md#configuration)
+[自定义 CRA 的默认配置](https://ant.design/docs/react/use-with-create-react-app-cn#%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE)，[craco 配置文档](https://github.com/gsoft-inc/craco/blob/master/packages/craco/README.md#configuration)
 
 -   注意：CRA 将所有工程化配置，都隐藏在了 `react-scripts` 包中，所以，项目中看不到任何配置信息。
 

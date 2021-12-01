@@ -963,6 +963,8 @@ import './index.css'
 
 #### 渲染基本结构
 
+解决 className 和图片失效的问题。
+
 ```js
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -1058,8 +1060,6 @@ const content = (
 
 ReactDOM.render(content, document.querySelector('#root'))
 ```
-
-解决 className 和图片失效的问题。
 
 #### 渲染评论数量和 Tab 栏
 

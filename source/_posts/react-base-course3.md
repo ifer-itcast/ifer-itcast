@@ -858,13 +858,17 @@ export default class B extends Component {
 
 ### 案例目标
 
-基于第 1 天的<a target="_blank" href="/2021/11/05/react-base-course1/#more">静态结构</a>进行<font color=e32d40>**组件化**</font>开发。
+<div style="text-align: center; color: #e32d40; margin-bottom: 15px;">
+    <strong>组件化开发</strong>
+</div>
 
 <img src="/resource/images/ifer_list.png" class="highlight2"/>
 
 ### 组件拆分
 
-把静态结构代码提取到 `App.jsx` 中
+#### App.jsx 拆分前
+
+把下面静态结构提取到 `App.jsx` 中，拆分 `Tabs.jsx`、`Form.jsx`、`List.jsx` 组件到 components 文件夹下。
 
 ```jsx
 import React, { Component } from 'react'
@@ -963,9 +967,7 @@ export default class App extends Component {
 }
 ```
 
-拆分 `Tabs.jsx`、`Form.jsx`、`List.jsx` 组件到 components 文件夹下。
-
-`App.jsx`
+#### App.jsx 拆分后
 
 ```jsx
 import React, { Component } from 'react'
@@ -994,7 +996,7 @@ export default class App extends Component {
 }
 ```
 
-`Tabs.jsx`
+#### Tabs.jsx
 
 ```jsx
 import React, { Component } from 'react'
@@ -1013,7 +1015,7 @@ export default class Tabs extends Component {
 }
 ```
 
-`Form.jsx`
+#### Form.jsx
 
 ```jsx
 import React, { Component } from 'react'
@@ -1040,7 +1042,7 @@ export default class Form extends Component {
 }
 ```
 
-`List.jsx`
+#### List.jsx
 
 ```jsx
 import React, { Component } from 'react'
@@ -1112,7 +1114,7 @@ export default class List extends Component {
 }
 ```
 
-`index.css`
+#### index.css
 
 ```css
 * {
