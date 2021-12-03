@@ -109,5 +109,5 @@ search:
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
     type: git
-    repository: https://github.com/ifer-itcast/react.git
-    branch: master
+    repository: https://github.com/ifer-itcast/ifer-itcast.git
+    branch: react
