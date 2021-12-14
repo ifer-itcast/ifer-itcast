@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://example.com/resource/images/redux中间件-触发时机2.jpg">
 <meta property="og:image" content="http://example.com/resource/images/ifer_toutiao.png">
 <meta property="article:published_time" content="2021-11-12T05:54:40.000Z">
-<meta property="article:modified_time" content="2021-12-12T15:36:14.691Z">
+<meta property="article:modified_time" content="2021-12-14T06:29:31.480Z">
 <meta property="article:author" content="Ifer">
 <meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
 <meta name="twitter:card" content="summary">
@@ -218,7 +218,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-12 23:36:14" itemprop="dateModified" datetime="2021-12-12T23:36:14+08:00">2021-12-12</time>
+                <time title="修改时间：2021-12-14 14:29:31" itemprop="dateModified" datetime="2021-12-14T14:29:31+08:00">2021-12-14</time>
               </span>
 
           
@@ -861,12 +861,12 @@
 </ul>
 <h3 id="触发时机"><a href="#触发时机" class="headerlink" title="触发时机"></a>触发时机</h3><ul>
 <li><p>Redux 中间件执行时机：<strong>在 dispatching action 和 到达 reducer 之间</strong>。</p>
-<p>  a，没有中间件：<code>dispatch(action) =&gt; reducer</code></p>
-<p>  b，使用中间件：<code>dispatch(action) =&gt; 执行中间件代码 =&gt; reducer</code></p>
+<p>  a，没有中间件：<code>dispatch(action) =&gt; reducer</code>。</p>
+<p>  b，使用中间件：<code>dispatch(action) =&gt; 执行中间件代码 =&gt; reducer</code>。</p>
 </li>
-<li><p>原理：封装了 Redux 自己的 dispatch 方法</p>
-<p>  a，没有中间件：<code>store.dispatch()</code> 就是 Redux 库自己提供的 dispatch 方法，用来发起状态更新</p>
-<p>  b，使用中间件：<code>store.dispatch()</code> 就是中间件封装处理后的 dispatch，但是最终一定会调用 Redux 库自己提供的 dispatch 方法</p>
+<li><p>原理：封装了 Redux 的 dispatch 方法。</p>
+<p>  a，没有中间件：<code>store.dispatch()</code> 使用的是 Redux 库自己提供的 dispatch 方法，用来发起状态更新。</p>
+<p>  b，使用中间件：<code>store.dispatch()</code> 使用的是中间件封装处理后的 dispatch，但是最终还是会调用 Redux 库自己提供的 dispatch 方法。</p>
 </li>
 </ul>
 <p>没有中间件</p>
