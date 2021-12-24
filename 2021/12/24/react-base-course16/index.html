@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标TODO…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="16_极客园 H5">
+<meta property="og:url" content="http://example.com/2021/12/24/react-base-course16/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标TODO…">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-24T08:21:53.000Z">
+<meta property="article:modified_time" content="2021-12-24T08:48:32.638Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/12/24/react-base-course16/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>16_极客园 H5 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/24/react-base-course16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          16_极客园 H5
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-12-24 16:21:53 / 修改时间：16:48:32" itemprop="dateCreated datePublished" datetime="2021-12-24T16:21:53+08:00">2021-12-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>TODO…</p>
+<span id="more"></span>
+
+<h2 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>能够手动搭建登录界面的基本结构。</p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>完成导航栏和登录标题 - <a target="_blank" rel="noopener" href="https://mobile.ant.design/zh/components/nav-bar">NavBar 组件</a></p>
+</li>
+<li><p>添加登录表单 - <a target="_blank" rel="noopener" href="https://mobile.ant.design/zh/components/form">Form 组件</a></p>
+</li>
+</ol>
+<p>3.</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p><code>login/index.tsx</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import styles from &#x27;./index.module.scss&#x27;</span><br><span class="line">import &#123; NavBar, Form, Input, List, Button &#125; from &#x27;antd-mobile&#x27;</span><br><span class="line">import &#123; useHistory &#125; from &#x27;react-router&#x27;</span><br><span class="line">export default function Login() &#123;</span><br><span class="line">    const history = useHistory()</span><br><span class="line">    return (</span><br><span class="line">        &lt;div className=&#123;styles.root&#125;&gt;</span><br><span class="line">            &lt;NavBar onBack=&#123;() =&gt; history.go(-1)&#125;&gt;&lt;/NavBar&gt;</span><br><span class="line"></span><br><span class="line">            &#123;/* 表单 */&#125;</span><br><span class="line">            &lt;div className=&#x27;login-form&#x27;&gt;</span><br><span class="line">                &lt;h2 className=&#x27;title&#x27;&gt;账号登录&lt;/h2&gt;</span><br><span class="line"></span><br><span class="line">                &lt;Form&gt;</span><br><span class="line">                    &lt;Form.Item className=&#x27;login-item&#x27;&gt;</span><br><span class="line">                        &lt;Input placeholder=&#x27;请输入用户名&#x27;&gt;&lt;/Input&gt;</span><br><span class="line">                    &lt;/Form.Item&gt;</span><br><span class="line">                    &lt;List.Item className=&#x27;login-code-extra&#x27; extra=&#123;&lt;span className=&#x27;code-extra&#x27;&gt;发送验证码&lt;/span&gt;&#125;&gt;</span><br><span class="line">                        &lt;Form.Item className=&#x27;login-item&#x27;&gt;</span><br><span class="line">                            &lt;Input placeholder=&#x27;请输入验证码&#x27;&gt;&lt;/Input&gt;</span><br><span class="line">                        &lt;/Form.Item&gt;</span><br><span class="line">                    &lt;/List.Item&gt;</span><br><span class="line">                    &lt;Form.Item&gt;</span><br><span class="line">                        &lt;Button color=&#x27;primary&#x27; block className=&#x27;login-submit&#x27;&gt;</span><br><span class="line">                            登录</span><br><span class="line">                        &lt;/Button&gt;</span><br><span class="line">                    &lt;/Form.Item&gt;</span><br><span class="line">                &lt;/Form&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>login/index.module.scss</code></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入 1px 边框的样式文件</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">&#x27;@scss/hairline.scss&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.root</span> &#123;</span><br><span class="line">    :global &#123;</span><br><span class="line">        .login-form &#123;</span><br><span class="line">            padding: <span class="number">0</span> <span class="number">33px</span>;</span><br><span class="line">            <span class="selector-class">.title</span> &#123;</span><br><span class="line">                <span class="attribute">margin</span>: <span class="number">54px</span> <span class="number">0</span> <span class="number">13px</span> <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="selector-class">.adm-list</span> &#123;</span><br><span class="line">                --<span class="attribute">align-items</span>: end <span class="meta">!important</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="selector-class">.adm-list-default</span> &#123;</span><br><span class="line">                <span class="attribute">border</span>: none;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="selector-class">.adm-list-item</span> &#123;</span><br><span class="line">                <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="selector-class">.login-item</span> &#123;</span><br><span class="line">                <span class="comment">// 注意：因为 1px 边框样式使用了决定定位，所以，此处需要将设置为相对定位</span></span><br><span class="line">                <span class="attribute">position</span>: relative;</span><br><span class="line">                <span class="comment">// 为该元素设置 1px 边框</span></span><br><span class="line">                <span class="keyword">@include</span> hairline(bottom, <span class="number">#f0f0f0</span>);</span><br><span class="line"></span><br><span class="line">                &gt; <span class="selector-class">.adm-list-item-content</span> &#123;</span><br><span class="line">                    <span class="attribute">height</span>: <span class="number">70px</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="selector-class">.adm-list-item-content</span> &#123;</span><br><span class="line">                <span class="attribute">position</span>: relative;</span><br><span class="line">                <span class="attribute">border-bottom</span>: none;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 验证码</span></span><br><span class="line">            <span class="selector-class">.login-code-extra</span> &#123;</span><br><span class="line">                &gt; <span class="selector-class">.adm-list-item-content</span> &#123;</span><br><span class="line">                    <span class="attribute">align-items</span>: center;</span><br><span class="line">                    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="selector-class">.adm-list-item-content-extra</span> &#123;</span><br><span class="line">                    <span class="attribute">position</span>: absolute;</span><br><span class="line">                    <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">                    <span class="attribute">bottom</span>: <span class="number">16px</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="selector-class">.adm-input-wrapper</span> &#123;</span><br><span class="line">                --placeholder-<span class="attribute">color</span>: <span class="number">#a5a6ab</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="selector-class">.code-extra</span> &#123;</span><br><span class="line">                <span class="attribute">color</span>: <span class="number">#595769</span>;</span><br><span class="line">                <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line"></span><br><span class="line">                &amp;-disabled &#123;</span><br><span class="line">                    <span class="attribute">color</span>: <span class="number">#a5a6ab</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="selector-class">.adm-list-item-description</span> &#123;</span><br><span class="line">                <span class="attribute">position</span>: absolute;</span><br><span class="line">                <span class="attribute">bottom</span>: -<span class="number">25px</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="selector-class">.login-submit</span> &#123;</span><br><span class="line">                <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">                <span class="attribute">margin-top</span>: <span class="number">38px</span>;</span><br><span class="line">                <span class="attribute">border</span>: none;</span><br><span class="line">                <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">                <span class="attribute">background</span>: linear-gradient(<span class="number">315deg</span>, <span class="number">#fe4f4f</span>, <span class="number">#fc6627</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="表单校验"><a href="#表单校验" class="headerlink" title="表单校验"></a>表单校验</h2><h3 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h3><p>能够为登录表单添加校验。</p>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><p><code>login/index.tsx</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&lt;Form autoComplete=&#x27;off&#x27; validateTrigger=&#123;[&#x27;onChange&#x27;, &#x27;onBlur&#x27;]&#125;&gt;</span><br><span class="line">    &lt;Form.Item</span><br><span class="line">        className=&#x27;login-item&#x27;</span><br><span class="line">        name=&#x27;mobile&#x27;</span><br><span class="line">        rules=&#123;[</span><br><span class="line">            &#123;</span><br><span class="line">                required: true,</span><br><span class="line">                message: &#x27;手机号不能为空&#x27;,</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                pattern: /^1[3-9]\d&#123;9&#125;$/,</span><br><span class="line">                message: &#x27;手机号格式错误&#x27;,</span><br><span class="line">            &#125;,</span><br><span class="line">        ]&#125;</span><br><span class="line">    &gt;</span><br><span class="line">        &lt;Input placeholder=&#x27;请输入手机号&#x27;&gt;&lt;/Input&gt;</span><br><span class="line">    &lt;/Form.Item&gt;</span><br><span class="line">    &lt;List.Item className=&#x27;login-code-extra&#x27; extra=&#123;&lt;span className=&#x27;code-extra&#x27;&gt;发送验证码&lt;/span&gt;&#125;&gt;</span><br><span class="line">        &lt;Form.Item</span><br><span class="line">            className=&#x27;login-item&#x27;</span><br><span class="line">            name=&#x27;code&#x27;</span><br><span class="line">            rules=&#123;[</span><br><span class="line">                &#123;</span><br><span class="line">                    required: true,</span><br><span class="line">                    message: &#x27;验证码不能为空&#x27;,</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    pattern: /^\d&#123;6&#125;$/,</span><br><span class="line">                    message: &#x27;验证码格式错误&#x27;,</span><br><span class="line">                &#125;,</span><br><span class="line">            ]&#125;</span><br><span class="line">        &gt;</span><br><span class="line">            &lt;Input placeholder=&#x27;请输入验证码&#x27;&gt;&lt;/Input&gt;</span><br><span class="line">        &lt;/Form.Item&gt;</span><br><span class="line">    &lt;/List.Item&gt;</span><br><span class="line">    &lt;Form.Item&gt;</span><br><span class="line">        &lt;Button color=&#x27;primary&#x27; block className=&#x27;login-submit&#x27; type=&#x27;submit&#x27;&gt;</span><br><span class="line">            登录</span><br><span class="line">        &lt;/Button&gt;</span><br><span class="line">    &lt;/Form.Item&gt;</span><br><span class="line">&lt;/Form&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取登录表单数据"><a href="#获取登录表单数据" class="headerlink" title="获取登录表单数据"></a>获取登录表单数据</h2><h3 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h3><p>能够拿到手机号和验证码数据。</p>
+<h3 id="步骤-1"><a href="#步骤-1" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>为 Form 表单添加 <code>onFinish</code>。</p>
+</li>
+<li><p>创建 onFinish 函数，作为 Form 属性 <code>onFinish</code> 的值。</p>
+</li>
+<li><p>指定函数 onFinish 的参数类型。</p>
+</li>
+<li><p>通过参数获取到表单数据</p>
+</li>
+</ol>
+<h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><p><code>login/index.tsx</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">type LoginForm = &#123;</span><br><span class="line">    mobile: string</span><br><span class="line">    code: string</span><br><span class="line">&#125;</span><br><span class="line">const Login = () =&gt; &#123;</span><br><span class="line">    const onFinish = (values: LoginForm) =&gt; &#123;</span><br><span class="line">        console.log(values)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &lt;Form onFinish=&#123;onFinish&#125;&gt;&lt;/Form&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="axios-封装"><a href="#axios-封装" class="headerlink" title="axios 封装"></a>axios 封装</h2><ul>
+<li>  安装 axios</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add axios</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  新建文件<code>utils/request.ts</code></li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 封装axios</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> instance = axios.create(&#123;</span><br><span class="line">    <span class="attr">baseURL</span>: <span class="string">&#x27;http://geek.itheima.net/v1_0/&#x27;</span>,</span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">5000</span>,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加请求拦截器</span></span><br><span class="line">instance.interceptors.request.use(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">config</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 在发送请求之前做些什么</span></span><br><span class="line">        <span class="keyword">return</span> config</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 对请求错误做些什么</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加响应拦截器</span></span><br><span class="line">instance.interceptors.response.use(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 对响应数据做点什么</span></span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 对响应错误做点什么</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> instance</span><br></pre></td></tr></table></figure>
+
+<h2 id="redux-初始化"><a href="#redux-初始化" class="headerlink" title="redux 初始化"></a>redux 初始化</h2><h3 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h3><p>能够初始化 redux</p>
+<h3 id="步骤-2"><a href="#步骤-2" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>安装 redux 相关的包：</p>
+</li>
+<li><p>在 store 目录中分别创建：actions 和 reducers 文件夹、index.ts 文件</p>
+</li>
+<li><p>在 store/index.ts 中，创建 store 并导出</p>
+</li>
+<li><p>创建 reducers/index.ts 文件，创建 rootReducer 并导出</p>
+</li>
+<li><p>创建 reducers/login.ts 文件，创建基础 login reducer 并导出</p>
+</li>
+<li><p>在 src/index.tsx 中为 React 组件接入 Redux</p>
+</li>
+</ol>
+<h3 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h3><ul>
+<li>  安装依赖包</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add redux react-redux redux-thunk@2.3.0 redux-devtools-extension axios</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  store/index.ts</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; applyMiddleware, createStore &#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; composeWithDevTools &#125; <span class="keyword">from</span> <span class="string">&#x27;redux-devtools-extension&#x27;</span></span><br><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">&#x27;redux-thunk&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> reducers <span class="keyword">from</span> <span class="string">&#x27;./reducers&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br></pre></td></tr></table></figure>
+
+<p>store/reducers/index.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; combineReducers &#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> login <span class="keyword">from</span> <span class="string">&#x27;./login&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> rootReducer = combineReducers(&#123;</span><br><span class="line">    login,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> rootReducer</span><br></pre></td></tr></table></figure>
+
+<p>store/reducers/login.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> initialState = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> login = <span class="function">(<span class="params">state = initialState, action: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> login</span><br></pre></td></tr></table></figure>
+
+<p>src/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import ReactDOM from &#x27;react-dom&#x27;</span><br><span class="line">import &#x27;./index.scss&#x27;</span><br><span class="line">import App from &#x27;./App&#x27;</span><br><span class="line">import &#123; Provider &#125; from &#x27;react-redux&#x27;</span><br><span class="line">import store from &#x27;./store&#x27;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">    &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">        &lt;App /&gt;</span><br><span class="line">    &lt;/Provider&gt;,</span><br><span class="line">    document.getElementById(&#x27;root&#x27;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置-Redux-的相关类型"><a href="#配置-Redux-的相关类型" class="headerlink" title="配置 Redux 的相关类型"></a>配置 Redux 的相关类型</h2><h3 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h3><p>能够配置 Redux 的基础类型</p>
+<h3 id="步骤-3"><a href="#步骤-3" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>在 types 目录中创建两个类型声明文件：<code>store.d.ts</code> 和 <code>data.d.ts</code></li>
+</ol>
+<ul>
+<li>  store.d.ts：用来存放跟 Redux 相关类型，比如，action 的类型等</li>
+<li>  data.d.ts：用来存放跟数据接口相关类型</li>
+</ul>
+<ol start="2">
+<li>在 store.d.ts 中添加 Redux 相关类型</li>
+</ol>
+<h3 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h3><p>types/store.d.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 存放和redux相关的所有类型</span></span><br><span class="line"><span class="comment">// RootState</span></span><br><span class="line"><span class="comment">// RootAction</span></span><br><span class="line"><span class="comment">// RootThunkAction</span></span><br><span class="line"><span class="comment">// 各个模块的Action</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;@/store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; ThunkAction &#125; <span class="keyword">from</span> <span class="string">&#x27;redux-thunk&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// store的state的类型</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> RootState = ReturnType&lt;<span class="keyword">typeof</span> store.getState&gt;</span><br><span class="line"><span class="comment">// 所有的Action的类型</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> RootAction = LoginAction</span><br><span class="line"><span class="comment">// thunkAction类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> RootThunkAction = ThunkAction&lt;<span class="built_in">void</span>, RootState, unknown, RootAction&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 各个默认的Action</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> LoginAction = &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;login/login&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>types/data.d.ts</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 存放各种通用的数据</span><br><span class="line">export type LoginForm = &#123; mobile: string; code: string &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="登录-发送请求"><a href="#登录-发送请求" class="headerlink" title="登录-发送请求"></a>登录-发送请求</h2><h3 id="目标-5"><a href="#目标-5" class="headerlink" title="目标"></a>目标</h3><p>能够在 Redux 中实现登录逻辑</p>
+<h3 id="步骤-4"><a href="#步骤-4" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>在 store/actions 中创建 login.ts 文件</li>
+<li>创建 login 函数并导出</li>
+<li>在函数中根据接口发送请求实现登录功能</li>
+</ol>
+<h3 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h3><p><code>store/actions/login.ts</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params">values: LoginForm</span>): <span class="title">RootThunkAction</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch) =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> request.post(<span class="string">&#x27;/authorizations&#x27;</span>, values)</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>pages/Login/index.tsx</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const Login = () =&gt; &#123;</span><br><span class="line">    const dispatch = useDispatch()</span><br><span class="line">    const onFinish = (values: LoginForm) =&gt; &#123;</span><br><span class="line">        dispatch(login(values))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="登录-处理-axios-的响应的类型"><a href="#登录-处理-axios-的响应的类型" class="headerlink" title="登录-处理 axios 的响应的类型"></a>登录-处理 axios 的响应的类型</h2><p>在 types/data.d.ts</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 统一的axios的响应类型</span><br><span class="line">export type ApiResponse&lt;T&gt; = &#123;</span><br><span class="line">    message: string</span><br><span class="line">    data: T</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export type Token = &#123;</span><br><span class="line">    token: string</span><br><span class="line">    refresh_token: string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 actions/login.ts</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import &#123; ApiResponse, LoginForm, Token &#125; from &#x27;@/types/data&#x27;</span><br><span class="line"></span><br><span class="line">export function login(values: LoginForm): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch) =&gt; &#123;</span><br><span class="line">        const res = await request.post&lt;ApiResponse&lt;Token&gt;&gt;(&#x27;/authorizations&#x27;, values)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="登录-处理-Action"><a href="#登录-处理-Action" class="headerlink" title="登录-处理 Action"></a>登录-处理 Action</h2><ul>
+<li>  types/store.d.ts 中</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Token &#125; <span class="keyword">from</span> <span class="string">&#x27;./data&#x27;</span></span><br><span class="line"><span class="comment">// 登录相关的 action 类型</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> LoginAction = &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;login/login&#x27;</span></span><br><span class="line">    <span class="attr">payload</span>: Token</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  store/actions/login.ts 中</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params">values: LoginForm</span>): <span class="title">RootThunkAction</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch) =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> request.post&lt;ApiResponse&lt;Token&gt;&gt;(<span class="string">&#x27;/authorizations&#x27;</span>, values)</span><br><span class="line">        dispatch(&#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;login/login&#x27;</span>,</span><br><span class="line">            <span class="attr">payload</span>: res.data.data,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  store/reducers/login.ts 中</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Token &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/data&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; LoginAction &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/store&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> initialState: Token = &#123;&#125; <span class="keyword">as</span> Token</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> login = (state = initialState, <span class="attr">action</span>: LoginAction): <span class="function"><span class="params">Token</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (action.type === <span class="string">&#x27;login/login&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> action.payload</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> login</span><br></pre></td></tr></table></figure>
+
+<h2 id="登录-登录成功的处理"><a href="#登录-登录成功的处理" class="headerlink" title="登录-登录成功的处理"></a>登录-登录成功的处理</h2><h3 id="目标-6"><a href="#目标-6" class="headerlink" title="目标"></a>目标</h3><p>能够调用登录逻辑实现登录并跳转到首页。</p>
+<h3 id="步骤-5"><a href="#步骤-5" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>登录成功后，展示成功提示</li>
+<li>跳转到首页</li>
+</ol>
+<h3 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h3><p><code>pages/Login/index.tsx</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const onFinish = async (values: LoginForm) =&gt; &#123;</span><br><span class="line">    await dispatch(login(values))</span><br><span class="line">    // 登录成功提示</span><br><span class="line">    Toast.show(&#123;</span><br><span class="line">        content: &#x27;登录成功&#x27;,</span><br><span class="line">        duration: 600,</span><br><span class="line">        afterClose: () =&gt; &#123;</span><br><span class="line">            // 返回首页</span><br><span class="line">            history.push(&#x27;/home&#x27;)</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="默认登录-异常处理"><a href="#默认登录-异常处理" class="headerlink" title="默认登录-异常处理"></a>默认登录-异常处理</h2><h3 id="目标-7"><a href="#目标-7" class="headerlink" title="目标"></a>目标</h3><p>能够处理登录时的异常。</p>
+<h3 id="代码-7"><a href="#代码-7" class="headerlink" title="代码"></a>代码</h3><p><code>pages/Login/index.tsx</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const onFinish = async (values: LoginForm) =&gt; &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        await dispatch(login(values))</span><br><span class="line">        console.log(&#x27;登陆成功&#x27;)</span><br><span class="line">    &#125; catch (e) &#123;</span><br><span class="line">        const error = e as AxiosError&lt;&#123; message: string &#125;&gt;</span><br><span class="line">        console.log(error.response?.data.message)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="错误统一处理"><a href="#错误统一处理" class="headerlink" title="错误统一处理"></a>错误统一处理</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 添加响应拦截器</span><br><span class="line">instance.interceptors.response.use(</span><br><span class="line">    function (response) &#123;</span><br><span class="line">        // 对响应数据做点什么</span><br><span class="line">        return response</span><br><span class="line">    &#125;,</span><br><span class="line">    function (error: AxiosError&lt;&#123; message: string &#125;&gt;) &#123;</span><br><span class="line">        if (!error.response) &#123;</span><br><span class="line">            Toast.show(&#x27;服务器繁忙，请稍后再试&#x27;)</span><br><span class="line">            return Promise.reject(error)</span><br><span class="line">        &#125;</span><br><span class="line">        Toast.show(error.response.data.message)</span><br><span class="line">        // 对响应错误做点什么</span><br><span class="line">        return Promise.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="存储-token-的工具函数封装"><a href="#存储-token-的工具函数封装" class="headerlink" title="存储 token 的工具函数封装"></a>存储 token 的工具函数封装</h2><h3 id="目标-8"><a href="#目标-8" class="headerlink" title="目标"></a>目标</h3><p>能够封装 token 的存储相关的操作。</p>
+<h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Token &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/data&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 本地存储的封装</span></span><br><span class="line"><span class="keyword">const</span> TOKEN_KEY = <span class="string">&#x27;geek-h5-sh88-token&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 保存token</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="variable">token</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">setToken</span>(<span class="params">token: Token</span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">    <span class="built_in">localStorage</span>.setItem(TOKEN_KEY, <span class="built_in">JSON</span>.stringify(token))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取token</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getToken</span>(<span class="params"></span>): <span class="title">Token</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(<span class="built_in">localStorage</span>.getItem(TOKEN_KEY) || <span class="string">&#x27;&#123;&#125;&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除token</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">removeToken</span>(<span class="params"></span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">    <span class="built_in">localStorage</span>.removeItem(TOKEN_KEY)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断是否有token</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">hasToken</span>(<span class="params"></span>): <span class="title">boolean</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !!getToken().token</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="登录-redux-获取-token"><a href="#登录-redux-获取-token" class="headerlink" title="登录-redux 获取 token"></a>登录-redux 获取 token</h2><h3 id="目标-9"><a href="#目标-9" class="headerlink" title="目标"></a>目标</h3><p>能够实现刷新页面时在 redux 状态中拿到 token。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>问题：登录成功后，redux 状态中有 token 值。但是，刷新页面后，redux 中的 token 值没有了<br>原因说明：只在登录时，将 token 存储到 redux 状态中，没有处理刷新的情况</p>
+<h3 id="步骤-6"><a href="#步骤-6" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>登录成功时存储 token 到本地</li>
+<li>在 store/index.ts 中导入 getToken 工具函数</li>
+<li>创建 initialState 对象，将本地存储中保存的 token 放到该对象中</li>
+<li>将 initialState 对象设置为 createStore 的第二个参数</li>
+</ol>
+<p>store/actions/login.ts</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">export function login(values: LoginForm): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch) =&gt; &#123;</span><br><span class="line">        const res = await request.post&lt;ApiResponse&lt;Token&gt;&gt;(&#x27;/authorizations&#x27;, values)</span><br><span class="line">        dispatch(&#123;</span><br><span class="line">            type: &#x27;login/login&#x27;,</span><br><span class="line">            payload: res.data.data,</span><br><span class="line">        &#125;)</span><br><span class="line">        // 存储到本地</span><br><span class="line">        setToken(res.data.data)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>store/reducers/login.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> initValue: Token = getToken()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params">state = initValue, action: LoginAction</span>): <span class="title">Token</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (action.type === <span class="string">&#x27;login/login&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> action.payload</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="动态获取验证码-拿到手机号码"><a href="#动态获取验证码-拿到手机号码" class="headerlink" title="动态获取验证码-拿到手机号码"></a>动态获取验证码-拿到手机号码</h2><h3 id="目标-10"><a href="#目标-10" class="headerlink" title="目标"></a>目标</h3><p>能够实现点击发送验证码时获取到手机号码。</p>
+<h3 id="步骤-7"><a href="#步骤-7" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>给发送验证码绑定点击事件</li>
+<li>在点击事件中获取到文本框的值</li>
+<li>判断文本框的值是否为空</li>
+<li>如果为空或手机号格式错误时，让文本框自动获得焦点</li>
+</ol>
+<h3 id="代码-8"><a href="#代码-8" class="headerlink" title="代码"></a>代码</h3><p>pages/Login/index.tsx</p>
+<ol>
+<li>注册点击事件</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;List.Item</span><br><span class="line">  className=<span class="string">&quot;login-code-extra&quot;</span></span><br><span class="line">  extra=&#123;</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">&quot;code-extra&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;onGetCode&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      发送验证码</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>如果为空或者手机号格式错误时，让文本框自动获得焦点</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">import &#123; useRef &#125; from &#x27;react&#x27;</span><br><span class="line">import &#123; InputRef &#125; from &#x27;antd-mobile/es/components/input&#x27;</span><br><span class="line"></span><br><span class="line">const Login = () =&gt; &#123;</span><br><span class="line">  const mobileRef = useRef&lt;InputRef&gt;(null)</span><br><span class="line"></span><br><span class="line">  const onGetCode = () =&gt; &#123;</span><br><span class="line">    // 拿到手机号</span><br><span class="line">    const mobile = form.getFieldValue(&#x27;mobile&#x27;)</span><br><span class="line">    // 判断手机号校验是否成功</span><br><span class="line">    const hasError = form.getFieldError(&#x27;mobile&#x27;).length &gt; 0</span><br><span class="line">    if (!mobile || hasError) &#123;</span><br><span class="line">      // 手机号码对应文本框 DOM 元素</span><br><span class="line">      const mobileInputDOM = mobileRef.current</span><br><span class="line">      // focus() 就是用来获得焦点的一个方法，是 DOM 元素自己提供的</span><br><span class="line">      mobileInputDOM?.focus()</span><br><span class="line">      return</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 获取验证码的逻辑</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    // ...</span><br><span class="line">    &lt;Input placeholder=&quot;请输入手机号&quot; maxLength=&#123;11&#125; ref=&#123;mobileRef&#125; /&gt;</span><br><span class="line">    // ...</span><br><span class="line">    &lt;List.Item</span><br><span class="line">      className=&quot;login-code-extra&quot;</span><br><span class="line">      extra=&#123;&lt;span className=&quot;code-extra&quot; onClick=&#123;onGetCode&#125;&gt;发送验证码&lt;/span&gt;&#125;</span><br><span class="line">    &gt;</span><br><span class="line">    &lt;/List.Item&gt;</span><br><span class="line">    // ...</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="动态获取验证码-发送请求"><a href="#动态获取验证码-发送请求" class="headerlink" title="动态获取验证码-发送请求"></a>动态获取验证码-发送请求</h2><h3 id="目标-11"><a href="#目标-11" class="headerlink" title="目标"></a>目标</h3><p>能够使用 redux 发送请求获取验证码。</p>
+<h3 id="步骤-8"><a href="#步骤-8" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>在 Login 组件中导入获取验证码的 action</li>
+<li>在获取验证码事件中分发获取验证码的 action</li>
+<li>在 login action 中创建获取验证码的 action 并导出</li>
+<li>发送请求获取验证码</li>
+</ol>
+<h3 id="代码-9"><a href="#代码-9" class="headerlink" title="代码"></a>代码</h3><p>pages/Login/index.tsx</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import &#123; getCode, login &#125; from &#x27;@/store/actions&#x27;</span><br><span class="line"></span><br><span class="line">const onGetCode = () =&gt; &#123;</span><br><span class="line">    // ...</span><br><span class="line"></span><br><span class="line">    dispatch(getCode(mobile))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>actions/login.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取验证码</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getCode = <span class="function">(<span class="params">mobile: <span class="built_in">string</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">        <span class="keyword">await</span> request.get(<span class="string">`/sms/codes/<span class="subst">$&#123;mobile&#125;</span>`</span>)</span><br><span class="line">        <span class="comment">// 注意：验证码是发送到手机上的，因此，不需要更新Redux状态</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="验证码倒计时-开启倒计时"><a href="#验证码倒计时-开启倒计时" class="headerlink" title="验证码倒计时-开启倒计时"></a>验证码倒计时-开启倒计时</h2><h3 id="目标-12"><a href="#目标-12" class="headerlink" title="目标"></a>目标</h3><p>能够在点击获取验证码时显示倒计时</p>
+<h3 id="步骤-9"><a href="#步骤-9" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>创建状态 timeLeft 倒计时数据</li>
+<li>在点击获取验证码的事件处理程序中，更新倒计时时间并开启定时器</li>
+<li>在定时器中，更新状态（需要使用回调函数形式的 setTimeLeft）</li>
+<li>在开启定时器时，展示倒计时时间</li>
+</ol>
+<h3 id="代码-10"><a href="#代码-10" class="headerlink" title="代码"></a>代码</h3><p>pages/Login/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import &#123; useState &#125; from &#x27;react&#x27;</span><br><span class="line"></span><br><span class="line">const Login = () =&gt; &#123;</span><br><span class="line">    const [timeLeft, settimeLeft] = useState(0)</span><br><span class="line"></span><br><span class="line">    const onGetCode = () =&gt; &#123;</span><br><span class="line">        // ...</span><br><span class="line"></span><br><span class="line">        settimeLeft(5)</span><br><span class="line">        setInterval(() =&gt; &#123;</span><br><span class="line">            settimeLeft((timeLeft) =&gt; timeLeft - 1)</span><br><span class="line">        &#125;, 1000)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return (</span><br><span class="line">        // ...</span><br><span class="line">        &lt;List.Item</span><br><span class="line">            extra=&#123;</span><br><span class="line">                &lt;span</span><br><span class="line">                    // 判断是否开启定时器，没开启绑定事件，开启后去掉事件</span><br><span class="line">                    onClick=&#123;timeLeft === 0 ? onGetCode : undefined&#125;</span><br><span class="line">                &gt;</span><br><span class="line">                    &#123;/* 判断是否开启定时器，没开启展示 发送验证码，开启后展示倒计时 */&#125;</span><br><span class="line">                    &#123;timeLeft === 0 ? &#x27;发送验证码&#x27; : `$&#123;timeLeft&#125;s后重新获取`&#125;</span><br><span class="line">                &lt;/span&gt;</span><br><span class="line">            &#125;</span><br><span class="line">        &gt;&lt;/List.Item&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="验证码倒计时-清理定时器"><a href="#验证码倒计时-清理定时器" class="headerlink" title="验证码倒计时-清理定时器"></a>验证码倒计时-清理定时器</h2><h3 id="目标-13"><a href="#目标-13" class="headerlink" title="目标"></a>目标</h3><p>能够在倒计时结束时清理定时器。</p>
+<h3 id="步骤-10"><a href="#步骤-10" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>通过 useRef Hook 创建一个 ref 对象，用来存储定时器 id</li>
+<li>在开启定时器时，将定时器 id 存储到 ref 对象中</li>
+<li>通过 useEffect Hook 监听倒计时的变化</li>
+<li>判断倒计时时间是否为 0 ，如果为 0 就清理定时器</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">const onGetCode = async () =&gt; &#123;</span><br><span class="line">    if (time &gt; 0) &#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    // 获取手机号</span><br><span class="line">    const mobile = form.getFieldValue(&#x27;mobile&#x27;)</span><br><span class="line">    // 获取手机号对应的校验错误</span><br><span class="line">    const error = form.getFieldError(&#x27;mobile&#x27;)</span><br><span class="line">    if (!mobile || error.length &gt; 0) &#123;</span><br><span class="line">        // 手机号不完整</span><br><span class="line">        mobileRef.current?.focus()</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    await dispatch(getCode(mobile))</span><br><span class="line">    setTime(60)</span><br><span class="line">    timerRef.current = window.setInterval(() =&gt; &#123;</span><br><span class="line">        setTime((time) =&gt; time - 1)</span><br><span class="line">    &#125;, 1000)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 倒计时为0 清除定时器</span><br><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">    if (time === 0) &#123;</span><br><span class="line">        // 时间到了</span><br><span class="line">        clearInterval(timerRef.current)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, [time])</span><br><span class="line"></span><br><span class="line">// 组件销毁的时候，清理定时器</span><br><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">    return () =&gt; &#123;</span><br><span class="line">        clearInterval(timerRef.current)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure>
+
+<h2 id="布局页面结构"><a href="#布局页面结构" class="headerlink" title="布局页面结构"></a>布局页面结构</h2><h3 id="目标-14"><a href="#目标-14" class="headerlink" title="目标"></a>目标</h3><p>能够使用准备好的模板搭建布局页面结构。</p>
+<h3 id="步骤-11"><a href="#步骤-11" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>使用 antd-mobile 的 TabBar 组件创建底部标签栏</p>
+</li>
+<li><p>样式在素材中已经准备好</p>
+</li>
+</ol>
+<h3 id="代码-11"><a href="#代码-11" class="headerlink" title="代码"></a>代码</h3><p>Layout/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import &#123; TabBar &#125; from &#x27;antd-mobile&#x27;</span><br><span class="line">import styles from &#x27;./index.module.scss&#x27;</span><br><span class="line"></span><br><span class="line">import Icon from &#x27;@/components/Icon&#x27;</span><br><span class="line"></span><br><span class="line">const tabs = [</span><br><span class="line">    &#123; path: &#x27;/home&#x27;, icon: &#x27;iconbtn_home&#x27;, text: &#x27;首页&#x27; &#125;,</span><br><span class="line">    &#123; path: &#x27;/home/question&#x27;, icon: &#x27;iconbtn_qa&#x27;, text: &#x27;问答&#x27; &#125;,</span><br><span class="line">    &#123; path: &#x27;/home/video&#x27;, icon: &#x27;iconbtn_video&#x27;, text: &#x27;视频&#x27; &#125;,</span><br><span class="line">    &#123; path: &#x27;/home/profile&#x27;, icon: &#x27;iconbtn_mine&#x27;, text: &#x27;我的&#x27; &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">const Layout = () =&gt; &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;div className=&#123;styles.root&#125;&gt;</span><br><span class="line">            &lt;TabBar className=&#x27;tab-bar&#x27;&gt;</span><br><span class="line">                &#123;tabs.map((item) =&gt; (</span><br><span class="line">                    &lt;TabBar.Item key=&#123;item.path&#125; icon=&#123;&lt;Icon type=&#123;item.icon&#125; className=&#x27;tab-bar-item-icon&#x27; /&gt;&#125; title=&#123;item.text&#125; /&gt;</span><br><span class="line">                ))&#125;</span><br><span class="line">            &lt;/TabBar&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default Layout</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由切换功能"><a href="#路由切换功能" class="headerlink" title="路由切换功能"></a>路由切换功能</h2><ul>
+<li>  注册 onChange 事件，实现路由的跳转</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">;&lt;div className=&#123;styles.root&#125;&gt;</span><br><span class="line">    &lt;TabBar className=&#x27;tab-bar&#x27; onChange=&#123;changeRoute&#125;&gt;</span><br><span class="line">        &#123;tabs.map((item) =&gt; (</span><br><span class="line">            &lt;TabBar.Item key=&#123;item.path&#125; icon=&#123;&lt;Icon type=&#123;item.icon&#125; className=&#x27;tab-bar-item-icon&#x27; /&gt;&#125; title=&#123;item.text&#125; /&gt;</span><br><span class="line">        ))&#125;</span><br><span class="line">    &lt;/TabBar&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">const history = useHistory()</span><br><span class="line">const changeRoute = (path: string) =&gt; &#123;</span><br><span class="line">    history.push(path)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  设置默认高亮</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;TabBar</span><br><span class="line">  className=&quot;tab-bar&quot;</span><br><span class="line">  onChange=&#123;changeRoute&#125;</span><br><span class="line">  activeKey=&#123;location.pathname&#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  设置图标与样式</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;TabBar.Item</span><br><span class="line">    key=&#123;item.path&#125;</span><br><span class="line">    icon=&#123;(active) =&gt; &#123;</span><br><span class="line">        return &lt;Icon type=&#123;active ? `$&#123;item.icon&#125;_sel` : item.icon&#125; className=&#123;&#x27;tab-bar-item-icon&#x27;&#125; /&gt;</span><br><span class="line">    &#125;&#125;</span><br><span class="line">    title=&#123;item.text&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置二级路由"><a href="#配置二级路由" class="headerlink" title="配置二级路由"></a>配置二级路由</h2><h3 id="目标-15"><a href="#目标-15" class="headerlink" title="目标"></a>目标</h3><p>能够实现 tab 切换路由和高亮。</p>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>TabBar 高亮的两种情况：</p>
+<ol>
+<li>素材中提供的组件</li>
+<li>配置二级路由</li>
+</ol>
+<h3 id="代码-12"><a href="#代码-12" class="headerlink" title="代码"></a>代码</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">&#x27;../Home&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Question <span class="keyword">from</span> <span class="string">&#x27;../Question&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Profile <span class="keyword">from</span> <span class="string">&#x27;../Profile&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Video <span class="keyword">from</span> <span class="string">&#x27;../Video&#x27;</span></span><br><span class="line">&lt;Route exact path=<span class="string">&quot;/home&quot;</span>&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">Home</span>&gt;</span><span class="tag">&lt;/<span class="name">Home</span>&gt;</span></span></span><br><span class="line">&lt;/Route&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/home/question&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">Question</span>&gt;</span><span class="tag">&lt;/<span class="name">Question</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">Route</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/home/video&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">Video</span>&gt;</span><span class="tag">&lt;/<span class="name">Video</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">Route</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/home/profile&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">Profile</span>&gt;</span><span class="tag">&lt;/<span class="name">Profile</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">Route</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/24/react-base-course15/" rel="prev" title="15_极客园 H5">
+      <i class="fa fa-chevron-left"></i> 15_极客园 H5
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/24/react-base-course17/" rel="next" title="17_极客园 H5">
+      17_极客园 H5 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">基本结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E6%A0%A1%E9%AA%8C"><span class="nav-number">3.</span> <span class="nav-text">表单校验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-number">3.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%99%BB%E5%BD%95%E8%A1%A8%E5%8D%95%E6%95%B0%E6%8D%AE"><span class="nav-number">4.</span> <span class="nav-text">获取登录表单数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-1"><span class="nav-number">4.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-2"><span class="nav-number">4.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#axios-%E5%B0%81%E8%A3%85"><span class="nav-number">5.</span> <span class="nav-text">axios 封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redux-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">6.</span> <span class="nav-text">redux 初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-3"><span class="nav-number">6.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-2"><span class="nav-number">6.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-3"><span class="nav-number">6.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-Redux-%E7%9A%84%E7%9B%B8%E5%85%B3%E7%B1%BB%E5%9E%8B"><span class="nav-number">7.</span> <span class="nav-text">配置 Redux 的相关类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-4"><span class="nav-number">7.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-3"><span class="nav-number">7.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-4"><span class="nav-number">7.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95-%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82"><span class="nav-number">8.</span> <span class="nav-text">登录-发送请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-5"><span class="nav-number">8.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-4"><span class="nav-number">8.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-5"><span class="nav-number">8.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95-%E5%A4%84%E7%90%86-axios-%E7%9A%84%E5%93%8D%E5%BA%94%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">9.</span> <span class="nav-text">登录-处理 axios 的响应的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95-%E5%A4%84%E7%90%86-Action"><span class="nav-number">10.</span> <span class="nav-text">登录-处理 Action</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95-%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">11.</span> <span class="nav-text">登录-登录成功的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-6"><span class="nav-number">11.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-5"><span class="nav-number">11.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-6"><span class="nav-number">11.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E7%99%BB%E5%BD%95-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">12.</span> <span class="nav-text">默认登录-异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-7"><span class="nav-number">12.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-7"><span class="nav-number">12.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86"><span class="nav-number">13.</span> <span class="nav-text">错误统一处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8-token-%E7%9A%84%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0%E5%B0%81%E8%A3%85"><span class="nav-number">14.</span> <span class="nav-text">存储 token 的工具函数封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-8"><span class="nav-number">14.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">14.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95-redux-%E8%8E%B7%E5%8F%96-token"><span class="nav-number">15.</span> <span class="nav-text">登录-redux 获取 token</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-9"><span class="nav-number">15.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">15.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-6"><span class="nav-number">15.3.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%8E%B7%E5%8F%96%E9%AA%8C%E8%AF%81%E7%A0%81-%E6%8B%BF%E5%88%B0%E6%89%8B%E6%9C%BA%E5%8F%B7%E7%A0%81"><span class="nav-number">16.</span> <span class="nav-text">动态获取验证码-拿到手机号码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-10"><span class="nav-number">16.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-7"><span class="nav-number">16.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-8"><span class="nav-number">16.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%8E%B7%E5%8F%96%E9%AA%8C%E8%AF%81%E7%A0%81-%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82"><span class="nav-number">17.</span> <span class="nav-text">动态获取验证码-发送请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-11"><span class="nav-number">17.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-8"><span class="nav-number">17.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-9"><span class="nav-number">17.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81%E5%80%92%E8%AE%A1%E6%97%B6-%E5%BC%80%E5%90%AF%E5%80%92%E8%AE%A1%E6%97%B6"><span class="nav-number">18.</span> <span class="nav-text">验证码倒计时-开启倒计时</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-12"><span class="nav-number">18.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-9"><span class="nav-number">18.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-10"><span class="nav-number">18.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81%E5%80%92%E8%AE%A1%E6%97%B6-%E6%B8%85%E7%90%86%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="nav-number">19.</span> <span class="nav-text">验证码倒计时-清理定时器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-13"><span class="nav-number">19.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-10"><span class="nav-number">19.2.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B1%80%E9%A1%B5%E9%9D%A2%E7%BB%93%E6%9E%84"><span class="nav-number">20.</span> <span class="nav-text">布局页面结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-14"><span class="nav-number">20.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-11"><span class="nav-number">20.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-11"><span class="nav-number">20.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%88%87%E6%8D%A2%E5%8A%9F%E8%83%BD"><span class="nav-number">21.</span> <span class="nav-text">路由切换功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BA%8C%E7%BA%A7%E8%B7%AF%E7%94%B1"><span class="nav-number">22.</span> <span class="nav-text">配置二级路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-15"><span class="nav-number">22.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">22.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-12"><span class="nav-number">22.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title=" → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="fab fa-zhihu fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

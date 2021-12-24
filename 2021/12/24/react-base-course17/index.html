@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标TODO…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="17_极客园 H5">
+<meta property="og:url" content="http://example.com/2021/12/24/react-base-course17/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标TODO…">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/12/24/react-base-course17/images/image-20210903111508949.png">
+<meta property="article:published_time" content="2021-12-24T08:30:14.000Z">
+<meta property="article:modified_time" content="2021-12-24T08:48:32.639Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/12/24/react-base-course17/images/image-20210903111508949.png">
+
+<link rel="canonical" href="http://example.com/2021/12/24/react-base-course17/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>17_极客园 H5 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/24/react-base-course17/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          17_极客园 H5
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-12-24 16:30:14 / 修改时间：16:48:32" itemprop="dateCreated datePublished" datetime="2021-12-24T16:30:14+08:00">2021-12-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>TODO…</p>
+<span id="more"></span>
+
+<h2 id="页面结构"><a href="#页面结构" class="headerlink" title="页面结构"></a>页面结构</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>能够根据模板搭建个人中心页面结构</p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>根据模板修改 Profile 页面结构</li>
+</ol>
+<h2 id="获取用户信息并展示"><a href="#获取用户信息并展示" class="headerlink" title="获取用户信息并展示"></a>获取用户信息并展示</h2><ol>
+<li><p>发送请求获取用户信息</p>
+</li>
+<li><p>将用户信息存储到 redux 中</p>
+</li>
+<li><p>页面分发获取用户信息的 action</p>
+</li>
+<li><p>获取用户信息并展示</p>
+</li>
+<li><p>导入分发 action 的函数和获取用户信息的 action</p>
+</li>
+<li><p>在进入该页面时就分发动作获取用户信息</p>
+</li>
+</ol>
+<h3 id="发送请求获取用户信息"><a href="#发送请求获取用户信息" class="headerlink" title="发送请求获取用户信息"></a>发送请求获取用户信息</h3><h3 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h3><p>能够发送请求获取用户信息</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>在使用 TS 开发与接口相关功能时，推荐按照以下步骤：</p>
+<ol>
+<li>先按照接口的返回数据，准备 TS 类型</li>
+<li>然后，在发送请求时，指定该请求的返回值类型</li>
+</ol>
+<p>这样，在接下来的操作中，如果需要用到接口的数据，都会有类型提示了。<br>如果将来后端接口返回的数据变了，只需要修改对应的 TS 类型，然后，所有用到该类型的地方如果有问题，都会自动提示出来。也就是：有利于项目代码的重构和修改。</p>
+<h3 id="步骤-1"><a href="#步骤-1" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>根据接口准备所需类型</li>
+<li>创建 actions/profile.ts 文件</li>
+<li>创建获取用户信息的 action</li>
+</ol>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>types/data.d.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 我的 - 个人信息</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> User = &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">photo</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">art_count</span>: <span class="built_in">number</span></span><br><span class="line">    <span class="attr">follow_count</span>: <span class="built_in">number</span></span><br><span class="line">    <span class="attr">fans_count</span>: <span class="built_in">number</span></span><br><span class="line">    <span class="attr">like_count</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>actions/profile.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ApiResponse, User &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/data&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; RootThunkAction &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getUser</span>(<span class="params"></span>): <span class="title">RootThunkAction</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch) =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> request.get&lt;ApiResponse&lt;User&gt;&gt;(<span class="string">&#x27;/user&#x27;</span>)</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="页面分发获取用户信息的-action"><a href="#页面分发获取用户信息的-action" class="headerlink" title="页面分发获取用户信息的 action"></a>页面分发获取用户信息的 action</h3><h4 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h4><p>能够在我的页面中分发获取用户信息的 action</p>
+<p><strong>核心代码</strong>：</p>
+<p>Profile/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import &#123; useDispatch &#125; from &#x27;react-redux&#x27;</span><br><span class="line">import &#123; useEffect &#125; from &#x27;react&#x27;</span><br><span class="line">import &#123; getUser &#125; from &#x27;@/store/actions/profile&#x27;</span><br><span class="line"></span><br><span class="line">const Profile = () =&gt; &#123;</span><br><span class="line">    const history = useHistory()</span><br><span class="line"></span><br><span class="line">    const dispatch = useDispatch()</span><br><span class="line"></span><br><span class="line">    useEffect(() =&gt; &#123;</span><br><span class="line">        dispatch(getUser())</span><br><span class="line">    &#125;, [dispatch])</span><br><span class="line">    // ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置请求拦截器 utils/request.ts</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 添加请求拦截器</span><br><span class="line">instance.interceptors.request.use(</span><br><span class="line">    function (config) &#123;</span><br><span class="line">        // 在发送请求之前做些什么</span><br><span class="line">        const token = getToken()</span><br><span class="line">        if (token.token) &#123;</span><br><span class="line">            config.headers!.Authorization = `Bearer $&#123;token.token&#125;`</span><br><span class="line">        &#125;</span><br><span class="line">        return config</span><br><span class="line">    &#125;,</span><br><span class="line">    function (error) &#123;</span><br><span class="line">        // 对请求错误做些什么</span><br><span class="line">        return Promise.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="将用户信息存储到-redux-中"><a href="#将用户信息存储到-redux-中" class="headerlink" title="将用户信息存储到 redux 中"></a>将用户信息存储到 redux 中</h3><h4 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h4><p>能够将用户信息保存到 redux 中</p>
+<h4 id="步骤-2"><a href="#步骤-2" class="headerlink" title="步骤"></a>步骤</h4><ol>
+<li>准备保存状态到 redux 的 action 类型</li>
+<li>在获取个人信息的 action 中将用户信息存储到 redux 中</li>
+<li>创建 reducers/profile.ts，并完成存储用户信息的功能</li>
+<li>在 reducers/index.ts 中，将 profile 合并到根 reducer 中</li>
+</ol>
+<p><strong>核心代码</strong>：</p>
+<p>types/store.d.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Token, User &#125; <span class="keyword">from</span> <span class="string">&#x27;./data&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 ProfileAction 联合到 redux action 类型中</span></span><br><span class="line"><span class="keyword">type</span> RootAction = LoginAction | ProfileAction</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> ProfileAction = &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;profile/getUser&#x27;</span></span><br><span class="line">    <span class="attr">payload</span>: User</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>actions/profile.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 我的页面 - 获取个人信息</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getUser = (): <span class="function"><span class="params">RootThunkAction</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch) =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> request.get&lt;UserResponse&gt;(<span class="string">&#x27;/user&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> &#123; data &#125; = res.data</span><br><span class="line">        dispatch(&#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;profile/getUser&#x27;</span>,</span><br><span class="line">            <span class="attr">payload</span>: data,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>reducers/profile.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; User &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/data&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; ProfileAction &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/store&#x27;</span></span><br><span class="line"><span class="keyword">type</span> ProfileState = &#123;</span><br><span class="line">    <span class="attr">user</span>: User</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> initialState = &#123;</span><br><span class="line">    <span class="attr">user</span>: &#123;&#125;,</span><br><span class="line">&#125; <span class="keyword">as</span> ProfileState</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> profile = (state = initialState, <span class="attr">action</span>: ProfileAction): <span class="function"><span class="params">ProfileState</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;profile/getUser&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                ...state,</span><br><span class="line">                <span class="attr">user</span>: action.payload,</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="attr">default</span>:</span><br><span class="line">            <span class="keyword">return</span> state</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> profile</span><br></pre></td></tr></table></figure>
+
+<p>reducers/index.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> profile <span class="keyword">from</span> <span class="string">&#x27;./profile&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> rootReducer = combineReducers(&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    profile,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取用户信息并展示-1"><a href="#获取用户信息并展示-1" class="headerlink" title="获取用户信息并展示"></a>获取用户信息并展示</h3><h4 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h4><p>能够展示用户信息</p>
+<h4 id="步骤-3"><a href="#步骤-3" class="headerlink" title="步骤"></a>步骤</h4><ol>
+<li>导入 useSelector</li>
+<li>调用 useSelector 获取 user 状态</li>
+<li>从 user 对象中解构出用户数据并展示在页面中</li>
+</ol>
+<p><strong>核心代码</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">const user = useSelector((state: RootState) =&gt; state.profile.user)</span><br><span class="line"></span><br><span class="line">&lt;div className=&quot;profile&quot;&gt;</span><br><span class="line">  &#123;/* 个人信息 */&#125;</span><br><span class="line">  &lt;div className=&quot;user-info&quot;&gt;</span><br><span class="line">    &lt;div className=&quot;avatar&quot;&gt;</span><br><span class="line">      &lt;img src=&#123;user.photo&#125; alt=&quot;&quot; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div className=&quot;user-name&quot;&gt;&#123;user.name&#125;&lt;/div&gt;</span><br><span class="line">    &lt;Link to=&quot;/profile/edit&quot;&gt;</span><br><span class="line">      个人信息 &lt;Icon type=&quot;iconbtn_right&quot; /&gt;</span><br><span class="line">    &lt;/Link&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">  &#123;/* 今日阅读 */&#125;</span><br><span class="line">  &lt;div className=&quot;read-info&quot;&gt;</span><br><span class="line">    &lt;Icon type=&quot;iconbtn_readingtime&quot; /&gt;</span><br><span class="line">    今日阅读</span><br><span class="line">    &lt;span&gt;10&lt;/span&gt;</span><br><span class="line">    分钟</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">  &#123;/* 动态 - 对应的这一行 */&#125;</span><br><span class="line">  &lt;div className=&quot;count-list&quot;&gt;</span><br><span class="line">    &lt;div className=&quot;count-item&quot;&gt;</span><br><span class="line">      &lt;p&gt;&#123;user.art_count&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;动态&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div className=&quot;count-item&quot;&gt;</span><br><span class="line">      &lt;p&gt;&#123;user.like_count&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;关注&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div className=&quot;count-item&quot;&gt;</span><br><span class="line">      &lt;p&gt;&#123;user.fans_count&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;粉丝&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div className=&quot;count-item&quot;&gt;</span><br><span class="line">      &lt;p&gt;&#123;user.follow_count&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;被赞&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="个人信息-页面结构"><a href="#个人信息-页面结构" class="headerlink" title="个人信息-页面结构"></a>个人信息-页面结构</h2><h3 id="目标-5"><a href="#目标-5" class="headerlink" title="目标"></a>目标</h3><p>能够根据模板展示个人信息页面</p>
+<h3 id="步骤-4"><a href="#步骤-4" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>将模板拷贝到 Profile 目录中</li>
+<li>在 App.tsx 中配置个人信息页面的路由</li>
+<li>统一调整 TabBar、List 的样式</li>
+</ol>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><p>App.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import ProfileEdit from &#x27;./pages/Profile/Edit&#x27;</span><br><span class="line"></span><br><span class="line">const App = () =&gt; &#123;</span><br><span class="line">    return (</span><br><span class="line">        // ...</span><br><span class="line">        &lt;Route path=&#x27;/profile/edit&#x27;&gt;</span><br><span class="line">            &lt;ProfileEdit /&gt;</span><br><span class="line">        &lt;/Route&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>App.scss 中：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.adm-list-default</span> &#123;</span><br><span class="line">    <span class="attribute">border</span>: none;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.adm-nav-bar-title</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">17px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.adm-nav-bar-back-arrow</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">17px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="个人信息-获取并展示个人信息"><a href="#个人信息-获取并展示个人信息" class="headerlink" title="个人信息-获取并展示个人信息"></a>个人信息-获取并展示个人信息</h2><h3 id="目标-6"><a href="#目标-6" class="headerlink" title="目标"></a>目标</h3><p>能够获取并展示编辑时的个人信息</p>
+<h3 id="步骤-5"><a href="#步骤-5" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>在 types/data.d.ts 中，根据接口准备好返回数据类型</li>
+<li>在 actions/profile.ts 中，创建获取编辑时个人信息的 action</li>
+<li>在 types/store.d.ts 中，创建相应的 redux action 类型</li>
+<li>在 actions 中分发修改 redux 状态的 action</li>
+<li>在 reducers 中处理该 action，并将状态存储到 redux 中</li>
+</ol>
+<h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><p>types/data.d.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> UserProfile = &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">photo</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">mobile</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">gender</span>: <span class="built_in">number</span></span><br><span class="line">    <span class="attr">birthday</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">intro</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>actions/profile.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ApiResponse, User, UserProfile &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/data&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getUserProfile = (): <span class="function"><span class="params">RootThunkAction</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch) =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> request.get&lt;ApiResponse&lt;UserProfile&gt;&gt;(<span class="string">&#x27;/user/profile&#x27;</span>)</span><br><span class="line">        dispatch(&#123; <span class="attr">type</span>: <span class="string">&#x27;profile/getUserProfile&#x27;</span>, <span class="attr">payload</span>: res.data.data &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>types/store/d.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Token, User, UserProfile &#125; <span class="keyword">from</span> <span class="string">&#x27;./data&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> ProfileAction =</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&#x27;profile/getUserProfile&#x27;</span></span><br><span class="line">        <span class="attr">payload</span>: UserProfile</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>reducers/profile.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意：以下代码为简化代码</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; UserProfile &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/data&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> ProfileState = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">userProfile</span>: UserProfile</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> initialState = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">userProfile</span>: &#123;&#125;,</span><br><span class="line">&#125; <span class="keyword">as</span> ProfileState</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> profile = (state = initialState, <span class="attr">action</span>: ProfileAction): <span class="function"><span class="params">ProfileState</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;profile/getUserProfile&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                ...state,</span><br><span class="line">                <span class="attr">userProfile</span>: action.payload,</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Profile/Edit/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">import &#123; useEffect &#125; from &#x27;react&#x27;</span><br><span class="line">import &#123; useDispatch, useSelector &#125; from &#x27;react-redux&#x27;</span><br><span class="line">import &#123; getUserProfile &#125; from &#x27;@/store/actions&#x27;</span><br><span class="line">import type &#123; RootState &#125; from &#x27;@/types/store&#x27;</span><br><span class="line"></span><br><span class="line">const ProfileEdit = () =&gt; &#123;</span><br><span class="line">  const dispatch = useDispatch()</span><br><span class="line">  const &#123; userProfile &#125; = useSelector((state: RootState) =&gt; state.profile)</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    dispatch(getUserProfile())</span><br><span class="line">  &#125;, [dispatch])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;div className=&quot;wrapper&quot;&gt;</span><br><span class="line">  &#123;/* 列表 */&#125;</span><br><span class="line">  &lt;List className=&quot;profile-list&quot;&gt;</span><br><span class="line">    &#123;/* 列表项 */&#125;</span><br><span class="line">    &lt;Item</span><br><span class="line">      extra=&#123;</span><br><span class="line">        &lt;span className=&quot;avatar-wrapper&quot;&gt;</span><br><span class="line">          &lt;img width=&#123;24&#125; height=&#123;24&#125; src=&#123;userProfile.photo&#125; alt=&quot;&quot; /&gt;</span><br><span class="line">        &lt;/span&gt;</span><br><span class="line">      &#125;</span><br><span class="line">      arrow</span><br><span class="line">    &gt;</span><br><span class="line">      头像</span><br><span class="line">    &lt;/Item&gt;</span><br><span class="line">    &lt;Item arrow extra=&#123;userProfile.name&#125;&gt;</span><br><span class="line">      昵称</span><br><span class="line">    &lt;/Item&gt;</span><br><span class="line">    &lt;Item</span><br><span class="line">      arrow</span><br><span class="line">      extra=&#123;</span><br><span class="line">        &lt;span</span><br><span class="line">          className=&#123;classNames(&#x27;intro&#x27;, userProfile.intro &amp;&amp; &#x27;normal&#x27;)&#125;</span><br><span class="line">        &gt;</span><br><span class="line">          &#123;userProfile.intro || &#x27;未填写&#x27;&#125;</span><br><span class="line">        &lt;/span&gt;</span><br><span class="line">      &#125;</span><br><span class="line">    &gt;</span><br><span class="line">      简介</span><br><span class="line">    &lt;/Item&gt;</span><br><span class="line">  &lt;/List&gt;</span><br><span class="line"></span><br><span class="line">  &lt;List className=&quot;profile-list&quot;&gt;</span><br><span class="line">    &lt;Item arrow extra=&#123;userProfile.gender === 0 ? &#x27;男&#x27; : &#x27;女&#x27;&#125;&gt;</span><br><span class="line">      性别</span><br><span class="line">    &lt;/Item&gt;</span><br><span class="line">    &lt;Item arrow extra=&#123;userProfile.birthday&#125;&gt;</span><br><span class="line">      生日</span><br><span class="line">    &lt;/Item&gt;</span><br><span class="line">  &lt;/List&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义-hooks-基本语法"><a href="#自定义-hooks-基本语法" class="headerlink" title="自定义 hooks 基本语法"></a>自定义 hooks 基本语法</h2><h3 id="目标-7"><a href="#目标-7" class="headerlink" title="目标"></a>目标</h3><p>能够知道什么是自定义 hooks</p>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>除了使用 React 提供的 hooks 之外，开发者还可以创建自己的 hooks，也就是自定义 hooks。<br>问题：为什么要创建自定义 hooks？<br>回答：<strong>实现状态逻辑复用</strong>，也就是将与状态相关的逻辑代码封装到一个函数中，哪个地方用到了，哪个地方调用即可。<br>自定义 hooks 的特点：</p>
+<ol>
+<li>名称必须以 <code>use</code> 开头</li>
+<li>和内置的 React Hooks 一样，自定义 hooks 也是一个函数</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建自定义 hooks 函数</span></span><br><span class="line"><span class="keyword">const</span> useXxx = <span class="function">(<span class="params">params</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// 需要复用的状态逻辑代码</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> xxx</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用自定义 hooks 函数</span></span><br><span class="line"><span class="keyword">const</span> Hello = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> xxx = useXxx(...)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>说明：自定义 hooks 就是一个函数，可以完全按照对函数的理解，来理解自定义 hooks<ul>
+<li>  比如：参数和返回值都可以可选的，可以提供也可以不提供。根据实际的需求来实现即可。</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>自定义 hooks 是函数吗？</li>
+<li>自定义 hooks 的名称有什么约束？</li>
+<li>自定义 hooks 可以没有参数或返回值吗？</li>
+</ol>
+<h2 id="封装自定义-hooks-分析要封装的代码逻辑"><a href="#封装自定义-hooks-分析要封装的代码逻辑" class="headerlink" title="封装自定义 hooks-分析要封装的代码逻辑"></a>封装自定义 hooks-分析要封装的代码逻辑</h2><h3 id="目标能够封装自定义-hooks-实现进入页面就获取数据的逻辑复用"><a href="#目标能够封装自定义-hooks-实现进入页面就获取数据的逻辑复用" class="headerlink" title="目标能够封装自定义 hooks 实现进入页面就获取数据的逻辑复用"></a>目标能够封装自定义 hooks 实现进入页面就获取数据的逻辑复用</h3><ol>
+<li>分析要封装的代码逻辑</li>
+<li>实现自定义 hooks（不考虑类型）</li>
+<li>为实现的自定义 hooks 添加类型</li>
+</ol>
+<h3 id="目标-8"><a href="#目标-8" class="headerlink" title="目标"></a>目标</h3><p>分析要封装的代码逻辑找到相同点和不同点<br><strong>分析说明</strong>：</p>
+<p>函数封装的基本思想：将相同的逻辑直接拷贝到函数中，不同的逻辑通过函数参数传入。需要返回数据，就通过函数返回值返回</p>
+<p>分析以上内容，有两个不同点：</p>
+<ol>
+<li>分发的 action 函数不同</li>
+<li>获取的状态不同</li>
+</ol>
+<p>所以，只需要把这两点作为自定义 hooks 的<strong>参数</strong>即可。<br>这两个功能最终的目的，都是为了拿到相应的应用状态。因此，把拿到的应用状态，作为自定义 hooks 的<strong>返回值</strong>即可。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> useInitialState = <span class="function">(<span class="params">action, stateName</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 需要复用的状态逻辑代码</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用自定义 hooks：</span></span><br><span class="line"><span class="keyword">const</span> &#123; userProfile &#125; = useInitialState(getUserProfile, <span class="string">&#x27;profile&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; user &#125; = useInitialState(getUser, <span class="string">&#x27;profile&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="封装自定义-hooks-实现自定义-hooks（不考虑类型）"><a href="#封装自定义-hooks-实现自定义-hooks（不考虑类型）" class="headerlink" title="封装自定义 hooks-实现自定义 hooks（不考虑类型）"></a>封装自定义 hooks-实现自定义 hooks（不考虑类型）</h2><h3 id="目标-9"><a href="#目标-9" class="headerlink" title="目标"></a>目标</h3><p>能够通过 JS 代码实现自定义 hooks</p>
+<h3 id="步骤-6"><a href="#步骤-6" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>创建 utils/hooks.ts 文件</li>
+<li>创建 useInitialState 函数（自定义 hook）</li>
+<li>导入用到的包</li>
+<li>将相同的逻辑，直接封装到 useInitialState 函数中</li>
+<li>将不同的地方，作为 useInitialState 函数的参数</li>
+<li>将拿到的状态作为 useInitialState 函数的返回值</li>
+</ol>
+<p><strong>核心代码</strong>：</p>
+<p>utils/use-initial-state.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入用到的包</span></span><br><span class="line"><span class="keyword">import</span> &#123; useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useDispatch, useSelector &#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; RootState &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/store&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 useInitialState 函数（自定义 hook）</span></span><br><span class="line"><span class="keyword">const</span> useInitialState = <span class="function">(<span class="params">action: <span class="built_in">any</span>, stateName: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> dispatch = useDispatch()</span><br><span class="line">  <span class="keyword">const</span> state = useSelector(state: <span class="function"><span class="params">any</span> =&gt;</span> state[stateName])</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    dispatch(action())</span><br><span class="line">  &#125;, [dispatch, action])</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> state</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; useInitialState &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Profile/Edit.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import &#123; useInitialState &#125; from &#x27;@/utils/use-initial-state&#x27;</span><br><span class="line"></span><br><span class="line">const ProfileEdti = () =&gt; &#123;</span><br><span class="line">    const &#123; userProfile &#125; = useInitialState(getUserProfile, &#x27;profile&#x27;)</span><br><span class="line">    // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="封装自定义-hooks-为实现的自定义-hooks-添加类型"><a href="#封装自定义-hooks-为实现的自定义-hooks-添加类型" class="headerlink" title="封装自定义 hooks-为实现的自定义 hooks 添加类型"></a>封装自定义 hooks-为实现的自定义 hooks 添加类型</h2><h3 id="目标-10"><a href="#目标-10" class="headerlink" title="目标"></a>目标</h3><p>能够为实现的自定义 hooks 添加类型</p>
+<h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>对于 useInitialState 这个自定义 hook 来说，只需要为参数指定类型即可。</p>
+<ol>
+<li>参数 action：就是一个函数，所以，直接指定为最简单的函数类型即可</li>
+<li>参数 stateName：</li>
+</ol>
+<ul>
+<li>  stateName 表示从 Redux 状态中取出的状态名称，比如，<code>&#39;profile&#39;</code></li>
+<li>  所以，stateName 应该是 RootState 中的所有状态名称中的任意一个</li>
+<li>  但是，具体是哪一个不确定，只有在使用该函数时才能确定下来。</li>
+<li>  问题：如果一个类型不确定，应该是什么 TS 中的什么类型来实现？</li>
+</ul>
+<p><strong>核心代码</strong>：</p>
+<p>utils/use-initial-state.ts 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 导入用到的包</span><br><span class="line">import &#123; useEffect &#125; from &#x27;react&#x27;</span><br><span class="line">import &#123; useDispatch, useSelector &#125; from &#x27;react-redux&#x27;</span><br><span class="line">import type &#123; RootState &#125; from &#x27;@/types/store&#x27;</span><br><span class="line"></span><br><span class="line">// 创建 useInitialState 函数（自定义 hook）</span><br><span class="line">export function useInitialState&lt;StateName extends keyof RootState&gt;(action: () =&gt; void, stateName: StateName) &#123;</span><br><span class="line">    const dispatch = useDispatch()</span><br><span class="line">    const state = useSelector((state: RootState) =&gt; state[stateName])</span><br><span class="line"></span><br><span class="line">    useEffect(() =&gt; &#123;</span><br><span class="line">        dispatch(action())</span><br><span class="line">    &#125;, [dispatch, action])</span><br><span class="line"></span><br><span class="line">    return state</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="封装自定义-hooks-应用"><a href="#封装自定义-hooks-应用" class="headerlink" title="封装自定义 hooks-应用"></a>封装自定义 hooks-应用</h2><h3 id="目标-11"><a href="#目标-11" class="headerlink" title="目标"></a>目标</h3><p>能够使用封装好的自定义 hook 改造获取个人信息功能</p>
+<h3 id="步骤-7"><a href="#步骤-7" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>导入自定义 hook</li>
+<li>调用自定义 hook，并传入相应的参数，验证是否有明确的类型提示</li>
+<li>通过返回值，拿到对应的状态</li>
+</ol>
+<p><strong>核心代码</strong>：</p>
+<p>Profile/Edit/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import &#123; useInitialState &#125; from &#x27;@/utils/use-initial-state&#x27;</span><br><span class="line"></span><br><span class="line">const ProfileEdit = () =&gt; &#123;</span><br><span class="line">    const &#123; userProfile &#125; = useInitialState(getUserProfile, &#x27;profile&#x27;)</span><br><span class="line"></span><br><span class="line">    // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改昵称和简介-准备弹层并控制显示"><a href="#修改昵称和简介-准备弹层并控制显示" class="headerlink" title="修改昵称和简介-准备弹层并控制显示"></a>修改昵称和简介-准备弹层并控制显示</h2><ul>
+<li>  准备弹层</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Button, List, NavBar, Popup &#125; from &#x27;antd-mobile&#x27;</span><br><span class="line">;&lt;Popup visible=&#123;showInput.visible&#125; position=&#x27;right&#x27;&gt;</span><br><span class="line">    &lt;div style=&#123;&#123; width: &#x27;100vw&#x27; &#125;&#125;&gt;啦啦&lt;/div&gt;</span><br><span class="line">&lt;/Popup&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  准备状态，用于控制弹层的显示</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">type InputState = &#123;</span><br><span class="line">    visible: boolean</span><br><span class="line">    type: &#x27;&#x27; | &#x27;name&#x27; | &#x27;intro&#x27;</span><br><span class="line">&#125;</span><br><span class="line">const [showInput, setShowInput] = useState&lt;InputState&gt;(&#123;</span><br><span class="line">    type: &#x27;&#x27;,</span><br><span class="line">    visible: false,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  点击昵称和简介的时候，需要显示弹层</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;Item</span><br><span class="line">  arrow</span><br><span class="line">  extra=&#123;userProfile.name&#125;</span><br><span class="line">  onClick=&#123;() =&gt;</span><br><span class="line">    setShowInput(&#123;</span><br><span class="line">      visible: true,</span><br><span class="line">      type: &#x27;name&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&gt;</span><br><span class="line">  昵称</span><br><span class="line">&lt;/Item&gt;</span><br><span class="line"></span><br><span class="line">&lt;Item</span><br><span class="line">  arrow</span><br><span class="line">  onClick=&#123;() =&gt;</span><br><span class="line">    setShowInput(&#123;</span><br><span class="line">      visible: true,</span><br><span class="line">      type: &#x27;intro&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  extra=&#123;</span><br><span class="line">    &lt;span</span><br><span class="line">      className=&#123;classNames(&#x27;intro&#x27;, userProfile.intro &amp;&amp; &#x27;normal&#x27;)&#125;</span><br><span class="line">    &gt;</span><br><span class="line">      &#123;userProfile.intro || &#x27;未填写&#x27;&#125;</span><br><span class="line">    &lt;/span&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&gt;</span><br><span class="line">  简介</span><br><span class="line">&lt;/Item&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改昵称和简介-隐藏弹层"><a href="#修改昵称和简介-隐藏弹层" class="headerlink" title="修改昵称和简介-隐藏弹层"></a>修改昵称和简介-隐藏弹层</h2><h3 id="目标-12"><a href="#目标-12" class="headerlink" title="目标"></a>目标</h3><p>能够在修改昵称组件点击返回时隐藏</p>
+<h3 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h3><p>Edit 组件和 EditInput 组件之间是父子组件的关系。<br>目标是通过 EditInput 子组件来隐藏弹出层，也就是在子组件中修改父组件中的状态。<br>所以，此处通过<strong>子到父的组件通讯</strong>来解决</p>
+<h3 id="步骤-8"><a href="#步骤-8" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>在 Edit 组件中，创建一个控制弹出层隐藏的函数</li>
+<li>将该函数作为属性传递给子组件 EditInput</li>
+<li>在 EditInput 子组件中，通过 props 接收该属性</li>
+<li>为 EditInput 组件的 props 指定类型</li>
+<li>在点击导航栏返回按钮时，调用该关闭函数即可</li>
+</ol>
+<h3 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h3><p>Edit/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 关闭弹层</span><br><span class="line">const hideInput = () =&gt; &#123;</span><br><span class="line">    setShowInput(&#123;</span><br><span class="line">        type: &#x27;&#x27;,</span><br><span class="line">        visible: false,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">;&lt;EditInput hideInput=&#123;hideInput&#125;&gt;&lt;/EditInput&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Edit/components/EditInput/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">type Props = &#123;</span><br><span class="line">    hideInput: () =&gt; void</span><br><span class="line">&#125;</span><br><span class="line">const EditInput = (&#123; hideInput &#125;: Props) =&gt; &#123;</span><br><span class="line">    ;&lt;NavBar className=&#x27;navbar&#x27; right=&#123;&lt;span className=&#x27;commit-btn&#x27;&gt;提交&lt;/span&gt;&#125; onBack=&#123;hideInput&#125;&gt;</span><br><span class="line">        编辑昵称</span><br><span class="line">    &lt;/NavBar&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改昵称和简介-修改标题文字"><a href="#修改昵称和简介-修改标题文字" class="headerlink" title="修改昵称和简介-修改标题文字"></a>修改昵称和简介-修改标题文字</h2><ul>
+<li>  传递 type 属性</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;EditInput hideName=&#123;hideName&#125; type=&#123;showInput.type&#125;&gt;&lt;/EditInput&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  根据 type 控制内容的显示和隐藏</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Input, NavBar, TextArea &#125; from &#x27;antd-mobile&#x27;</span><br><span class="line"></span><br><span class="line">import styles from &#x27;./index.module.scss&#x27;</span><br><span class="line"></span><br><span class="line">type Props = &#123;</span><br><span class="line">    hideName: () =&gt; void</span><br><span class="line">    type: &#x27;&#x27; | &#x27;name&#x27; | &#x27;intro&#x27;</span><br><span class="line">&#125;</span><br><span class="line">const EditInput = (&#123; hideName, type &#125;: Props) =&gt; &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;div className=&#123;styles.root&#125;&gt;</span><br><span class="line">            &lt;NavBar className=&#x27;navbar&#x27; right=&#123;&lt;span className=&#x27;commit-btn&#x27;&gt;提交&lt;/span&gt;&#125; onBack=&#123;() =&gt; hideName()&#125;&gt;</span><br><span class="line">                编辑&#123;type === &#x27;name&#x27; ? &#x27;昵称&#x27; : &#x27;简介&#x27;&#125;</span><br><span class="line">            &lt;/NavBar&gt;</span><br><span class="line"></span><br><span class="line">            &lt;div className=&#x27;edit-input-content&#x27;&gt;</span><br><span class="line">                &lt;h3&gt;编辑&#123;type === &#x27;name&#x27; ? &#x27;昵称&#x27; : &#x27;简介&#x27;&#125;&lt;/h3&gt;</span><br><span class="line"></span><br><span class="line">                &#123;type === &#x27;name&#x27; ? (</span><br><span class="line">                    &lt;div className=&#x27;input-wrap&#x27;&gt;</span><br><span class="line">                        &lt;Input placeholder=&#x27;请输入昵称&#x27; /&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                ) : (</span><br><span class="line">                    &lt;TextArea className=&#x27;textarea&#x27; placeholder=&#x27;请输入简介&#x27; showCount maxLength=&#123;99&#125; /&gt;</span><br><span class="line">                )&#125;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default EditInput</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改昵称和简介-数据回显"><a href="#修改昵称和简介-数据回显" class="headerlink" title="修改昵称和简介-数据回显"></a>修改昵称和简介-数据回显</h2><h3 id="目标-13"><a href="#目标-13" class="headerlink" title="目标"></a>目标</h3><p>能够在弹出层文本框中展示昵称或者简介</p>
+<h3 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h3><p>Edit/components/EditInput/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const &#123; userProfile &#125; = useSelector((state: RootState) =&gt; state.profile)</span><br><span class="line">const [value, setValue] = useState(type === &#x27;name&#x27; ? userProfile.name : userProfile.intro)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    type === &#x27;name&#x27; ? (</span><br><span class="line">        &lt;div className=&#x27;input-wrap&#x27;&gt;</span><br><span class="line">            &lt;Input placeholder=&#x27;请输入昵称&#x27; value=&#123;value&#125; onChange=&#123;(e) =&gt; setValue(e)&#125; maxLength=&#123;11&#125; /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    ) : (</span><br><span class="line">        &lt;TextArea className=&#x27;textarea&#x27; placeholder=&#x27;请输入简介&#x27; showCount maxLength=&#123;99&#125; value=&#123;value&#125; onChange=&#123;(e) =&gt; setValue(e)&#125; /&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改昵称和简介-关闭弹层-bug"><a href="#修改昵称和简介-关闭弹层-bug" class="headerlink" title="修改昵称和简介-关闭弹层 bug"></a>修改昵称和简介-关闭弹层 bug</h2><ul>
+<li>  默认情况，关闭弹层之后，数据回显还在，导致昵称和简介回显错乱</li>
+<li>  <code>destroyOnClose</code>可以保证关闭弹层时销毁组件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Popup visible=&#123;showName.visible&#125; bodyStyle=&#123;&#123; height: &#x27;100%&#x27; &#125;&#125; position=&#x27;right&#x27; destroyOnClose&gt;</span><br><span class="line">    &lt;EditInput hideName=&#123;hideName&#125; type=&#123;showName.type&#125;&gt;&lt;/EditInput&gt;</span><br><span class="line">&lt;/Popup&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改昵称和简介-自动获取光标"><a href="#修改昵称和简介-自动获取光标" class="headerlink" title="修改昵称和简介-自动获取光标"></a>修改昵称和简介-自动获取光标</h2><ul>
+<li>  创建 2 个 ref</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> inputRef = useRef&lt;InputRef&gt;(<span class="literal">null</span>)</span><br><span class="line"><span class="keyword">const</span> textRef = useRef&lt;TextAreaRef&gt;(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;Input</span><br><span class="line">  placeholder=<span class="string">&quot;请输入昵称&quot;</span></span><br><span class="line">  value=&#123;value&#125;</span><br><span class="line">  onChange=&#123;<span class="function">(<span class="params">e</span>) =&gt;</span> setValue(e)&#125;</span><br><span class="line">  ref=&#123;inputRef&#125;</span><br><span class="line">/&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">TextArea</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">className</span>=<span class="string">&quot;textarea&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">placeholder</span>=<span class="string">&quot;请输入简介&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">showCount</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">maxLength</span>=<span class="string">&#123;99&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">value</span>=<span class="string">&#123;value&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">onChange</span>=<span class="string">&#123;(e)</span> =&gt;</span> setValue(e)&#125;</span></span><br><span class="line"><span class="xml">  ref=&#123;textRef&#125;</span></span><br><span class="line"><span class="xml">/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  使用 useEffect 保证组件渲染的时候自动获取焦点</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">    if (type === &#x27;name&#x27;) &#123;</span><br><span class="line">        inputRef.current?.focus()</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        textRef.current?.focus()</span><br><span class="line">        document.querySelector(&#x27;textarea&#x27;)?.setSelectionRange(-1, -1)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, [type])</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改昵称和简介-回传给父组件"><a href="#修改昵称和简介-回传给父组件" class="headerlink" title="修改昵称和简介-回传给父组件"></a>修改昵称和简介-回传给父组件</h2><h3 id="目标-14"><a href="#目标-14" class="headerlink" title="目标"></a>目标</h3><p>能够在点击提交时拿到昵称并回传给父组件</p>
+<h3 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h3><p>用户个人信息的状态是在 Edit 父组件中拿到的，所以，修改用户个人信息也应该由 Edit 父组件发起。<br>因此，需要将修改后的昵称回传给 Edit 父组件。</p>
+<h3 id="步骤-9"><a href="#步骤-9" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>为 EditInput 组件添加 onUpdate 函数属性</li>
+<li>在 Edit 组件中为 EditInput 组件传递 onUpdate 属性</li>
+<li>为提交按钮绑定点击事件</li>
+<li>在点击事件中，调用父组件传递过来的 onUpdate 函数，将昵称回传给父组件</li>
+</ol>
+<p><strong>核心代码</strong>：</p>
+<p>Edit/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const onUpdate = (key: string, value: string) =&gt; &#123;</span><br><span class="line">    console.log(key, value)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">;&lt;EditInput hideInput=&#123;hideInput&#125; type=&#123;showInput.type&#125; onUpdate=&#123;onUpdate&#125;&gt;&lt;/EditInput&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Edit/components/EditInput/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 接收onUpdate</span><br><span class="line">type Props = &#123;</span><br><span class="line">    hideName: () =&gt; void</span><br><span class="line">    type: string</span><br><span class="line">    onUpdate: (key: string, value: string) =&gt; void</span><br><span class="line">&#125;</span><br><span class="line">;&lt;span className=&#x27;commit-btn&#x27; onClick=&#123;() =&gt; onUpdate(type, value)&#125;&gt;</span><br><span class="line">    提交</span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改昵称和简介-发送请求修改"><a href="#修改昵称和简介-发送请求修改" class="headerlink" title="修改昵称和简介-发送请求修改"></a>修改昵称和简介-发送请求修改</h2><p>actions/profile.ts 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">export function updateUserProfile(key: string, value: string): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch) =&gt; &#123;</span><br><span class="line">        await request.patch(&#x27;/user/profile&#x27;, &#123;</span><br><span class="line">            [key]: value,</span><br><span class="line">        &#125;)</span><br><span class="line">        // 重新渲染</span><br><span class="line">        dispatch(getUserProfile())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>pages/Profile/Edit/index.tsx</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const onUpdate = async (key: string, value: string) =&gt; &#123;</span><br><span class="line">    await dispatch(updateUserProfile(key, value))</span><br><span class="line">    Toast.show(&#123;</span><br><span class="line">        icon: &#x27;success&#x27;,</span><br><span class="line">        content: &#x27;修改成功&#x27;,</span><br><span class="line">    &#125;)</span><br><span class="line">    hideInput()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改性别和头像-准备弹出层"><a href="#修改性别和头像-准备弹出层" class="headerlink" title="修改性别和头像-准备弹出层"></a>修改性别和头像-准备弹出层</h2><h3 id="目标-15"><a href="#目标-15" class="headerlink" title="目标"></a>目标</h3><p>能搞显示修改性别弹出层</p>
+<h3 id="步骤-10"><a href="#步骤-10" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>将准备好的修改性别的模板拷贝到 components 目录中</li>
+<li>导入修改性别组件，在 Popup 组件中渲染</li>
+</ol>
+<p><strong>核心代码</strong>：</p>
+<p>Edit/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import EditList from &#x27;./components/EditList&#x27;</span><br><span class="line"></span><br><span class="line">const ProfileEdit = () =&gt; &#123;</span><br><span class="line">    return (</span><br><span class="line">        // ...</span><br><span class="line">        &lt;Popup visible=&#123;true&#125;&gt;</span><br><span class="line">            &lt;EditList /&gt;</span><br><span class="line">        &lt;/Popup&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改性别和头像-控制弹层的显示隐藏"><a href="#修改性别和头像-控制弹层的显示隐藏" class="headerlink" title="修改性别和头像-控制弹层的显示隐藏"></a>修改性别和头像-控制弹层的显示隐藏</h2><h3 id="目标-16"><a href="#目标-16" class="headerlink" title="目标"></a>目标</h3><p>能搞控制修改性别弹出层的展示或隐藏</p>
+<h3 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h3><p>修改性别和修改头像的弹出层内容几乎是一样的，因此，也可以复用同一个弹出层组件。<br>因此，接下来要从<strong>复用</strong>的角度，设计修改性别弹出层的逻辑（可以参考刚刚实现的修改昵称和简介）。</p>
+<h3 id="步骤-11"><a href="#步骤-11" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>准备用于控制修改性别弹出层的状态</li>
+<li>为性别添加点击事件，在点击事件中修改状态进行展示</li>
+<li>创建隐藏弹出层的控制函数，在点击遮罩时关闭弹出层，并传递给 EditList 组件</li>
+<li>为 EditList 组件添加 props 类型，并接收隐藏函数</li>
+<li>为取消按钮添加点击事件来触发隐藏弹出层</li>
+</ol>
+<h3 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h3><p>Edit/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">  type ListState = &#123;</span><br><span class="line">    visible: boolean</span><br><span class="line">    type: &#x27;&#x27; | &#x27;gender&#x27; | &#x27;photo&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">  const [showList, setShowList] = useState&lt;ListState&gt;(&#123;</span><br><span class="line">    visible: false,</span><br><span class="line">    type: &#x27;&#x27;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const hideList = setShowList(&#123;</span><br><span class="line">  type: &#x27;&#x27;,</span><br><span class="line">  visible: false,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&lt;Popup visible=&#123;showList.visible&#125; destroyOnClose onMaskClick=&#123;hideList&#125;&gt;</span><br><span class="line">  &lt;EditList type=&#123;showList.type&#125; hideList=&#123;hideList&#125; /&gt;</span><br><span class="line">&lt;/Popup&gt;</span><br><span class="line"></span><br><span class="line">// 点击显示</span><br><span class="line">&lt;Item</span><br><span class="line">  extra=&#123;</span><br><span class="line">    &lt;span className=&quot;avatar-wrapper&quot;&gt;</span><br><span class="line">      &lt;img width=&#123;24&#125; height=&#123;24&#125; src=&#123;userProfile.photo&#125; alt=&quot;&quot; /&gt;</span><br><span class="line">    &lt;/span&gt;</span><br><span class="line">  &#125;</span><br><span class="line">  arrow</span><br><span class="line">  onClick=&#123;() =&gt;</span><br><span class="line">    setShowList(&#123;</span><br><span class="line">      visible: true,</span><br><span class="line">      type: &#x27;photo&#x27;,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&gt;</span><br><span class="line">  头像</span><br><span class="line">&lt;/Item&gt;</span><br><span class="line"></span><br><span class="line">&lt;Item</span><br><span class="line">  arrow</span><br><span class="line">  onClick=&#123;() =&gt; setShowList(&#123; visible: true, type: &#x27;gender&#x27; &#125;)&#125;</span><br><span class="line">  extra=&#123;userProfile.gender === 0 ? &#x27;男&#x27; : &#x27;女&#x27;&#125;</span><br><span class="line">&gt;</span><br><span class="line">  性别</span><br><span class="line">&lt;/Item&gt;</span><br></pre></td></tr></table></figure>
+
+<p>EditList/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">type Props = &#123;</span><br><span class="line">    onClose: () =&gt; void</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const EditList = (&#123; onClose &#125;: Props) =&gt; &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;div className=&#x27;list-item&#x27; onClick=&#123;onClose&#125;&gt;</span><br><span class="line">            取消</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改性别和头像-区分头像和性别"><a href="#修改性别和头像-区分头像和性别" class="headerlink" title="修改性别和头像-区分头像和性别"></a>修改性别和头像-区分头像和性别</h2><ul>
+<li>  父组件把 type 传给子组件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;EditList hideList=&#123;hideList&#125; type=&#123;showList.type&#125;&gt;&lt;/EditList&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  子组件根据 type 属性控制需要显示的内容</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import styles from &#x27;./index.module.scss&#x27;</span><br><span class="line"></span><br><span class="line">type Props = &#123;</span><br><span class="line">    hideList: () =&gt; void</span><br><span class="line">    type: &#x27;&#x27; | &#x27;gender&#x27; | &#x27;photo&#x27;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const genderList = [</span><br><span class="line">    &#123; title: &#x27;男&#x27;, value: &#x27;0&#x27; &#125;,</span><br><span class="line">    &#123; title: &#x27;女&#x27;, value: &#x27;1&#x27; &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">const photoList = [</span><br><span class="line">    &#123; title: &#x27;拍照&#x27;, value: &#x27;&#x27; &#125;,</span><br><span class="line">    &#123; title: &#x27;本地选择&#x27;, value: &#x27;&#x27; &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">const EditList = (&#123; hideList, type &#125;: Props) =&gt; &#123;</span><br><span class="line">    const list = type === &#x27;gender&#x27; ? genderList : photoList</span><br><span class="line">    return (</span><br><span class="line">        &lt;div className=&#123;styles.root&#125;&gt;</span><br><span class="line">            &#123;list.map((item) =&gt; (</span><br><span class="line">                &lt;div key=&#123;item.title&#125; className=&#x27;list-item&#x27;&gt;</span><br><span class="line">                    &#123;item.title&#125;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            ))&#125;</span><br><span class="line"></span><br><span class="line">            &lt;div className=&#x27;list-item&#x27; onClick=&#123;hideList&#125;&gt;</span><br><span class="line">                取消</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default EditList</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改性别和头像-修改性别功能"><a href="#修改性别和头像-修改性别功能" class="headerlink" title="修改性别和头像-修改性别功能"></a>修改性别和头像-修改性别功能</h2><ul>
+<li>  父组件把 onUpdate 传递给子组件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const onUpdate = async (key: string, value: string) =&gt; &#123;</span><br><span class="line">    await dispatch(updateUserProfile(key, value))</span><br><span class="line">    Toast.show(&#123;</span><br><span class="line">        icon: &#x27;success&#x27;,</span><br><span class="line">        content: &#x27;修改成功&#x27;,</span><br><span class="line">    &#125;)</span><br><span class="line">    hideInput()</span><br><span class="line">    hideList()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">;&lt;EditList hideList=&#123;hideList&#125; type=&#123;showList.type&#125; onUpdate=&#123;onUpdate&#125;&gt;&lt;/EditList&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  子组件注册点击事件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">type Props = &#123;</span><br><span class="line">    hideList: () =&gt; void</span><br><span class="line">    type: &#x27;&#x27; | &#x27;gender&#x27; | &#x27;photo&#x27;</span><br><span class="line">    onUpdate: (key: string, value: string) =&gt; void</span><br><span class="line">&#125;</span><br><span class="line">;&lt;div key=&#123;item.title&#125; className=&#x27;list-item&#x27; onClick=&#123;() =&gt; onUpdate(type, item.value)&#125;&gt;</span><br><span class="line">    &#123;item.title&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改头像-弹窗选择图片"><a href="#修改头像-弹窗选择图片" class="headerlink" title="修改头像-弹窗选择图片"></a>修改头像-弹窗选择图片</h2><h3 id="目标-17"><a href="#目标-17" class="headerlink" title="目标"></a>目标</h3><p>能够在点击拍照或本地选择时弹窗选择图片</p>
+<h3 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h3><p>Edit/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">const fileRef = useRef&lt;HTMLInputElement&gt;(null)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;file&quot; hidden ref=&#123;fileRef&#125; /&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const onUpdate = async (key: string, value: string) =&gt; &#123;</span><br><span class="line">  if (key === &#x27;photo&#x27;) &#123;</span><br><span class="line">    // 需要修改头像</span><br><span class="line">    fileRef.current!.click()</span><br><span class="line">    return</span><br><span class="line">  &#125;</span><br><span class="line">  await dispatch(updateUserProfile(key, value))</span><br><span class="line">  Toast.show(&#123;</span><br><span class="line">    icon: &#x27;success&#x27;,</span><br><span class="line">    content: &#x27;修改成功&#x27;</span><br><span class="line">  &#125;)</span><br><span class="line">  hideInput()</span><br><span class="line">  hideList()</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="修改头像-组装修改头像的数据"><a href="#修改头像-组装修改头像的数据" class="headerlink" title="修改头像-组装修改头像的数据"></a>修改头像-组装修改头像的数据</h2><h3 id="目标-18"><a href="#目标-18" class="headerlink" title="目标"></a>目标</h3><p>能够组装修改头像需要的数据</p>
+<h3 id="步骤-12"><a href="#步骤-12" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>创建函数，监听 <code>input[type=file]</code> 选择文件的变化 change</li>
+<li>在函数中，创建 FormData 对象</li>
+<li>根据接口，拿到接口需要规定的参数名，并将选择的文件添加到 FormData 对象中</li>
+</ol>
+<p><strong>核心代码</strong>：</p>
+<p>Edit/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const ProfileEdit = () =&gt; &#123;</span><br><span class="line">    const changePhoto = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; &#123;</span><br><span class="line">        // 获取选择的文件</span><br><span class="line">        const file = e.target.files![0]</span><br><span class="line">        // 需要上传这张图片</span><br><span class="line">        const fd = new FormData()</span><br><span class="line">        fd.append(&#x27;photo&#x27;, file)</span><br><span class="line">        // 发送请求</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return (</span><br><span class="line">        // ...</span><br><span class="line">        &lt;input type=&#x27;file&#x27; onChange=&#123;onChangePhoto&#125; /&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改头像-更新头像"><a href="#修改头像-更新头像" class="headerlink" title="修改头像-更新头像"></a>修改头像-更新头像</h2><h3 id="目标-19"><a href="#目标-19" class="headerlink" title="目标"></a>目标</h3><p>能够实现更新头像</p>
+<h3 id="步骤-13"><a href="#步骤-13" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>在 Edit 组件中，分发修改头像的 action，传入 FormData 对象，并关闭弹出层</li>
+<li>在 actions 中，创建修改头像的 action，接收到传递过来的 FormData 对象</li>
+<li>发送请求，更新用户头像</li>
+<li>分发 action 重新渲染</li>
+</ol>
+<h3 id="代码-7"><a href="#代码-7" class="headerlink" title="代码"></a>代码</h3><p>Edit/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const changePhoto = async (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; &#123;</span><br><span class="line">    // 获取选择的文件</span><br><span class="line">    const file = e.target.files![0]</span><br><span class="line">    // 需要上传这张图片</span><br><span class="line">    const fd = new FormData()</span><br><span class="line">    fd.append(&#x27;photo&#x27;, file)</span><br><span class="line">    // 发送请求</span><br><span class="line">    await dispatch(updateUserPhoto(fd))</span><br><span class="line">    Toast.show(&#123;</span><br><span class="line">        icon: &#x27;success&#x27;,</span><br><span class="line">        content: &#x27;修改头像成功&#x27;,</span><br><span class="line">    &#125;)</span><br><span class="line">    hideList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>actions/profile.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">updateUserPhoto</span>(<span class="params">fd: FormData</span>): <span class="title">RootThunkAction</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch) =&gt; &#123;</span><br><span class="line">        <span class="keyword">await</span> request.patch(<span class="string">&#x27;/user/photo&#x27;</span>, fd)</span><br><span class="line">        dispatch(getUserProfile())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改生日-展示日期选择器"><a href="#修改生日-展示日期选择器" class="headerlink" title="修改生日-展示日期选择器"></a>修改生日-展示日期选择器</h2><h3 id="目标-20"><a href="#目标-20" class="headerlink" title="目标"></a>目标</h3><p>能够在点击生日时展示日期选择器</p>
+<h3 id="步骤-14"><a href="#步骤-14" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>创建状态 showBirthday 用来控制日期选择器的展示或隐藏</li>
+<li>将 showBirthday 设置为日期选择器的 visible 属性</li>
+<li>给生日绑定点击事件，在点击事件中修改 showBirthday 值为 true 来展示日期选择器</li>
+<li>为日期选择器设置 value，值为用户的生日值</li>
+<li>在日期选择器关闭的回调中，隐藏日期选择器</li>
+</ol>
+<h3 id="代码-8"><a href="#代码-8" class="headerlink" title="代码"></a>代码</h3><p>Edit/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">const ProfileEdit = () =&gt; &#123;</span><br><span class="line">  const [showBirthday, setShowBirthday] = useState(false)</span><br><span class="line"></span><br><span class="line">  const onBirthdayShow = () =&gt; &#123;</span><br><span class="line">    setShowBirthday(true)</span><br><span class="line">  &#125;</span><br><span class="line">  const onBirthdayHide = () =&gt; &#123;</span><br><span class="line">    setShowBirthday(false)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    // ...</span><br><span class="line">    &lt;Item arrow extra=&#123;birthday&#125; onClick=&#123;onBirthdayShow&#125;&gt;</span><br><span class="line">      生日</span><br><span class="line">    &lt;/Item&gt;</span><br><span class="line"></span><br><span class="line">    &lt;DatePicker</span><br><span class="line">      visible=&#123;showBirthday&#125;</span><br><span class="line">      value=&#123;new Date(birthday)&#125;</span><br><span class="line">      onCancel=&#123;onBirthdayHide&#125;</span><br><span class="line">      title=&quot;选择年月日&quot;</span><br><span class="line">      min=&#123;new Date(&#x27;1900-01-01&#x27;)&#125;</span><br><span class="line">      max=&#123;new Date()&#125;</span><br><span class="line">      onConfirm=&#123;(val) =&gt; &#123;</span><br><span class="line">          onUpdate(&#x27;birthday&#x27;, dayjs(val).format(&#x27;YYYY-MM-DD&#x27;))</span><br><span class="line">        &#125;&#125;</span><br><span class="line">    /&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="退出登录-弹窗确认"><a href="#退出登录-弹窗确认" class="headerlink" title="退出登录-弹窗确认"></a>退出登录-弹窗确认</h2><h3 id="目标-21"><a href="#目标-21" class="headerlink" title="目标"></a>目标</h3><p>能够点击退出按钮时弹窗确认是否退出</p>
+<h3 id="分析-6"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h3><p>不需要自定义样式的情况下，使用 <code>Dialog.confirm</code> 来弹窗确认即可。<br>如果需要自定义弹窗按钮的样式，需要使用 <code>Dialog.show</code> 基础方法来实现。</p>
+<h3 id="步骤-15"><a href="#步骤-15" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>为退出登录按钮绑定点击事件</li>
+<li>在点击事件中，使用 Dialog 弹窗让用户确认是否退出登录</li>
+</ol>
+<p><strong>核心代码</strong>：</p>
+<p>Edit/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">const logoutFn = () =&gt; &#123;</span><br><span class="line">    Dialog.show(&#123;</span><br><span class="line">        title: &#x27;温馨提示&#x27;,</span><br><span class="line">        content: &#x27;你确定要退出吗？&#x27;,</span><br><span class="line">        closeOnAction: true,</span><br><span class="line">        actions: [</span><br><span class="line">            [</span><br><span class="line">                &#123;</span><br><span class="line">                    key: &#x27;cancel&#x27;,</span><br><span class="line">                    text: &#x27;取消&#x27;,</span><br><span class="line">                    style: &#123;</span><br><span class="line">                        color: &#x27;blue&#x27;,</span><br><span class="line">                    &#125;,</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    key: &#x27;confirm&#x27;,</span><br><span class="line">                    text: &#x27;确定&#x27;,</span><br><span class="line">                    danger: true,</span><br><span class="line">                    bold: true,</span><br><span class="line">                    onClick: () =&gt; &#123;</span><br><span class="line">                        // 1. 清除token</span><br><span class="line">                        dispatch(logout())</span><br><span class="line">                        // 2. 跳转到登录</span><br><span class="line">                        history.push(&#x27;/login&#x27;)</span><br><span class="line">                        // 3. 给一个提示消息</span><br><span class="line">                        Toast.show(&#123;</span><br><span class="line">                            icon: &#x27;success&#x27;,</span><br><span class="line">                            content: &#x27;退出成功&#x27;,</span><br><span class="line">                        &#125;)</span><br><span class="line">                    &#125;,</span><br><span class="line">                &#125;,</span><br><span class="line">            ],</span><br><span class="line">        ],</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="退出登录-功能完成"><a href="#退出登录-功能完成" class="headerlink" title="退出登录-功能完成"></a>退出登录-功能完成</h2><h3 id="目标-22"><a href="#目标-22" class="headerlink" title="目标"></a>目标</h3><p>能够实现退出功能</p>
+<h3 id="步骤-16"><a href="#步骤-16" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>为退出按钮，绑定点击事件，在点击事件中分发退出 action</li>
+<li>在 types 中，创建退出登录的 action 类型</li>
+<li>在 actions/login.ts 中，创建退出 action</li>
+<li>在退出 action 中，分发退出 action，并清理 token</li>
+<li>在 reducers 中，处理退出 action 清空 token</li>
+<li>返回登录页面</li>
+</ol>
+<p><strong>核心代码</strong>：</p>
+<p>Edit/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const onLogout = () =&gt; &#123;</span><br><span class="line">    Dialog.show(&#123;</span><br><span class="line">        actions: [</span><br><span class="line">            [</span><br><span class="line">                &#123;</span><br><span class="line">                    text: &#x27;退出&#x27;,</span><br><span class="line">                    onClick: () =&gt; &#123;</span><br><span class="line">                        dispatch(logout())</span><br><span class="line">                        history.replace(&#x27;/login&#x27;)</span><br><span class="line">                    &#125;,</span><br><span class="line">                &#125;,</span><br><span class="line">            ],</span><br><span class="line">        ],</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>types/data.d.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 登录 action 类型</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> LoginAction =</span><br><span class="line">    | &#123;</span><br><span class="line">          <span class="attr">type</span>: <span class="string">&#x27;login/token&#x27;</span></span><br><span class="line">          <span class="attr">payload</span>: Token</span><br><span class="line">      &#125;</span><br><span class="line">    | &#123;</span><br><span class="line">          <span class="attr">type</span>: <span class="string">&#x27;login/logout&#x27;</span></span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<p>actions/login.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">logout</span>(<span class="params"></span>): <span class="title">LoginAction</span> </span>&#123;</span><br><span class="line">    removeToken()</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&#x27;login/logout&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>reducers/login.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (action.type === <span class="string">&#x27;login/logout&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">token</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">refresh_token</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="封装鉴权路由组件"><a href="#封装鉴权路由组件" class="headerlink" title="封装鉴权路由组件"></a>封装鉴权路由组件</h2><h3 id="目标-23"><a href="#目标-23" class="headerlink" title="目标"></a>目标</h3><p>能够封装鉴权路由组件实现登录访问控制功能</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://v5.reactrouter.com/web/example/auth-workflow">https://v5.reactrouter.com/web/example/auth-workflow</a></p>
+</blockquote>
+<h3 id="步骤-17"><a href="#步骤-17" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>在 components 目录中创建 PrivateRoute 路由组件</li>
+<li>在 PrivateRoute 组件中，实现路由的登录访问控制逻辑</li>
+<li>未登录时，重定向到登录页面，并传递要访问的路由地址</li>
+<li>登录时，直接渲染要访问的路由</li>
+</ol>
+<p><strong>核心代码</strong>：</p>
+<p>components/AuthRoute.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import &#123; hasToken &#125; from &#x27;@/utils/storage&#x27;</span><br><span class="line">import &#123; Route, Redirect, RouteProps &#125; from &#x27;react-router-dom&#x27;</span><br><span class="line"></span><br><span class="line">export default function PrivateRoute(&#123; children, ...rest &#125;: RouteProps) &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;Route</span><br><span class="line">            &#123;...rest&#125;</span><br><span class="line">            render=&#123;(&#123; location &#125;) =&gt;</span><br><span class="line">                hasToken() ? (</span><br><span class="line">                    children</span><br><span class="line">                ) : (</span><br><span class="line">                    &lt;Redirect</span><br><span class="line">                        to=&#123;&#123;</span><br><span class="line">                            pathname: &#x27;/login&#x27;,</span><br><span class="line">                            state: &#123; from: location.pathname &#125;,</span><br><span class="line">                        &#125;&#125;</span><br><span class="line">                    /&gt;</span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line">        /&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>App.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import &#123; PrivateRoute &#125; from &#x27;./components/AuthRoute&#x27;</span><br><span class="line"></span><br><span class="line">const App = () =&gt; &#123;</span><br><span class="line">    return (</span><br><span class="line">        // ...</span><br><span class="line">        &lt;PrivateRoute path=&#x27;/profile/edit&#x27;&gt;</span><br><span class="line">            &lt;ProfileEdit /&gt;</span><br><span class="line">        &lt;/PrivateRoute&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>pages/Layout/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import &#123; AuthRoute &#125; from &#x27;@/components/AuthRoute&#x27;</span><br><span class="line"></span><br><span class="line">const Layout = () =&gt; &#123;</span><br><span class="line">    // ...</span><br><span class="line">    return (</span><br><span class="line">        // ...</span><br><span class="line">        &lt;PrivateRoute path=&#x27;/home/profile&#x27;&gt;</span><br><span class="line">            &lt;Profile&gt;&lt;/Profile&gt;</span><br><span class="line">        &lt;/PrivateRoute&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="登录时跳转到相应页面"><a href="#登录时跳转到相应页面" class="headerlink" title="登录时跳转到相应页面"></a>登录时跳转到相应页面</h2><h3 id="目标-24"><a href="#目标-24" class="headerlink" title="目标"></a>目标</h3><p>能够在登录时根据重定向路径跳转到相应页面</p>
+<h3 id="步骤-18"><a href="#步骤-18" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>在 Login 组件中导入 useLocation 来获取路由重定向时传入的 state</li>
+<li>调用 useLocation hook 时，指定 state 的类型</li>
+<li>登录完成跳转页面时，判断 state 是否存在</li>
+<li>如果存在，跳转到 state 指定的页面</li>
+<li>如果不存在，默认跳转到首页</li>
+</ol>
+<h3 id="代码-9"><a href="#代码-9" class="headerlink" title="代码"></a>代码</h3><p>pages/Login/index.tsx 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import &#123; useLocation &#125; from &#x27;react-router-dom&#x27;</span><br><span class="line"></span><br><span class="line">const Login = () =&gt; &#123;</span><br><span class="line">  // 注意： state 可能是不存在的，所以，类型中要明确包含不存在的情况，即 undefined</span><br><span class="line">  const location = useLocation&lt;&#123; from: string &#125;&gt;()</span><br><span class="line"></span><br><span class="line">  afterClose() &#123;</span><br><span class="line">      // history.push(&#x27;/home&#x27;)</span><br><span class="line">      let pathname = location.state ? location.state.from : &#x27;/home&#x27;</span><br><span class="line">      history.replace(pathname)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="理解无感刷新-token"><a href="#理解无感刷新-token" class="headerlink" title="理解无感刷新 token"></a>理解无感刷新 token</h2><h3 id="目标-25"><a href="#目标-25" class="headerlink" title="目标"></a>目标</h3><p>能够理解什么是无感刷新 token</p>
+<h3 id="分析-7"><a href="#分析-7" class="headerlink" title="分析"></a>分析</h3><p>一般情况下，我们用到的移动端的 App（比如，微信）只要登录过一次，一般就不需要再次重新登录，除非很长时间没有使用过 App。<br>这是如何做到的呢？这就用到我们要讲的无感刷新 token 了。</p>
+<p>我们知道，登录时会拿到一个登录成功的标识 token（身份令牌），有了这个令牌就可以进行登录后的操作了，比如，获取个人资料、修改个人信息等等<br>但是，为了安全，登录标识 token 一般都是有有效期的，比如，咱们的极客园项目中 token 的有效期是 2 个小时。<br>如果不进行额外的处理，登录后，2 小时以后，就得再次登录才可以。但是，这种用户体验不好，特别是移动端（不管是 App 还是 H5）。<br>相对来说，更好的用户体验是前面提到的微信的那种方式，它的原理简单来说是这样的：</p>
+<p>在登录时，同时拿到两个 token：</p>
+<p>1 登录成功的令牌：<code>token</code><br>2 刷新 token 的令牌：<code>refresh_token</code></p>
+<p>刷新 token 的令牌用来：在 token 过期后，换取新的 token（续费），从而实现“永久登录”效果。<br>这就是所谓的：<strong>无感刷新 token</strong>。</p>
+<p>常用的处理流程：</p>
+<p><img src="images/image-20210903111508949.png" alt="image-20210903111508949"></p>
+<p>思想总结：</p>
+<ul>
+<li>  无 Token，直接跳到登录页</li>
+<li>  有 Token，则用 Refresh Token 换新 Token：换成功则用新 Token 重发原先的请求，没换成功则跳到登录页</li>
+</ul>
+<h2 id="实现无感刷新-token-换取新的-token"><a href="#实现无感刷新-token-换取新的-token" class="headerlink" title="实现无感刷新 token-换取新的 token"></a>实现无感刷新 token-换取新的 token</h2><h3 id="目标-26"><a href="#目标-26" class="headerlink" title="目标"></a>目标</h3><p>能够实现无感刷新 token 实现自动登录</p>
+<h3 id="分析-8"><a href="#分析-8" class="headerlink" title="分析"></a>分析</h3><p>概述：在登录超时或者 token 失效时，也就是服务器接口返回 401，通过 refresh_token 换取新的 token<br>过程如下（以获取个人资料数据为例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">【1】发送请求获取个人资料数据</span><br><span class="line">【2】接口返回 401，也就是 token 失效了</span><br><span class="line">【3】在响应拦截器中统一处理，换取新的 token</span><br><span class="line">【4】将新的 token 存储到本地缓存中</span><br><span class="line">【5】**继续发送获取个人资料的请求，完成数据获取** - 关键点</span><br><span class="line">【6】如果整个过程中出现了任意异常，一般来说就是 refresh_token 也过期了，换取 token 失败，此时，要进行错误处理，也就是： 清除 token，跳转到登录页面</span><br></pre></td></tr></table></figure>
+
+<p>axios 请求拦截过程说明：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1 axios.get()</span><br><span class="line">2 请求拦截器</span><br><span class="line">3 响应代码</span><br><span class="line">4 响应拦截器</span><br><span class="line"></span><br><span class="line">以上 4 个步骤的执行顺序：</span><br><span class="line"></span><br><span class="line">【1 axios.get()】 --&gt; 【2 请求拦截器】&gt;&gt;&gt; 服务器处理 &gt;&gt;&gt; 【4 响应拦截器】 --&gt; 【3 响应代码】</span><br></pre></td></tr></table></figure>
+
+<h3 id="步骤-19"><a href="#步骤-19" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>使用 try-catch 处理异常，出现异常时，清除 token，清空 redux token，跳转到登录页面</li>
+<li>判断本地存储中，是否有 <code>refresh_token</code></li>
+<li>如果没有，直接跳转到登录页面，让用户登录即可</li>
+<li>如果有，就使用 <code>refresh_token</code> 来通过 <strong>axios</strong> 发送请求，换取新的 token</li>
+<li>将新获取到的 token 存储到本地缓存中和 redux 中</li>
+<li>继续发送原来的请求</li>
+</ol>
+<p><strong>核心代码</strong>：</p>
+<p>utils/request.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加响应拦截器</span></span><br><span class="line">request.interceptors.response.use(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 对响应数据做点什么</span></span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">error: AxiosError&lt;&#123; message: <span class="built_in">string</span> &#125;&gt;</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 对响应错误做点什么</span></span><br><span class="line">        <span class="keyword">if</span> (!error.response) &#123;</span><br><span class="line">            <span class="comment">// 网络问题</span></span><br><span class="line">            Toast.show(<span class="string">&#x27;网络繁忙, 请稍后重试&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (error.response.status === <span class="number">401</span>) &#123;</span><br><span class="line">            <span class="comment">// token过期，需要额外处理</span></span><br><span class="line">            <span class="comment">// 1. 获取refreshToken</span></span><br><span class="line">            <span class="keyword">const</span> token = getToken()</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2. 判断是否有refresh_token</span></span><br><span class="line">            <span class="keyword">if</span> (!token.refresh_token) &#123;</span><br><span class="line">                <span class="comment">// 没有刷新token</span></span><br><span class="line">                history.replace(<span class="string">&#x27;/login&#x27;</span>, &#123;</span><br><span class="line">                    <span class="attr">from</span>: history.location.pathname,</span><br><span class="line">                &#125;)</span><br><span class="line">                Toast.show(<span class="string">&#x27;登录信息过期&#x27;</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3. 使用refresh_token去换取新的token</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">const</span> res = <span class="keyword">await</span> axios.request&lt;ApiResponse&lt;&#123; <span class="attr">token</span>: <span class="built_in">string</span> &#125;&gt;&gt;(&#123;</span><br><span class="line">                    <span class="attr">method</span>: <span class="string">&#x27;put&#x27;</span>,</span><br><span class="line">                    <span class="attr">url</span>: <span class="string">&#x27;/authorizations&#x27;</span>,</span><br><span class="line">                    baseURL,</span><br><span class="line">                    <span class="attr">headers</span>: &#123;</span><br><span class="line">                        <span class="attr">Authorization</span>: <span class="string">`Bearer <span class="subst">$&#123;token.refresh_token&#125;</span>`</span>,</span><br><span class="line">                    &#125;,</span><br><span class="line">                &#125;)</span><br><span class="line">                <span class="comment">// 把新的token存储到redux中</span></span><br><span class="line">                store.dispatch(</span><br><span class="line">                    saveToken(&#123;</span><br><span class="line">                        <span class="attr">token</span>: res.data.data.token,</span><br><span class="line">                        <span class="attr">refresh_token</span>: token.refresh_token,</span><br><span class="line">                    &#125;)</span><br><span class="line">                )</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 重新发送请求</span></span><br><span class="line">                <span class="keyword">return</span> request.request(error.config)</span><br><span class="line">            &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">                <span class="comment">// 刷新token失败</span></span><br><span class="line">                history.replace(<span class="string">&#x27;/login&#x27;</span>, &#123;</span><br><span class="line">                    <span class="attr">from</span>: history.location.pathname,</span><br><span class="line">                &#125;)</span><br><span class="line">                Toast.show(<span class="string">&#x27;登录信息失效&#x27;</span>)</span><br><span class="line">                store.dispatch(logout())</span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        Toast.show(error.response.data.message)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/24/react-base-course16/" rel="prev" title="16_极客园 H5">
+      <i class="fa fa-chevron-left"></i> 16_极客园 H5
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/24/react-base-course18/" rel="next" title="18_极客园 H5">
+      18_极客园 H5 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">页面结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.2.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%B9%B6%E5%B1%95%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">获取用户信息并展示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-number">3.1.</span> <span class="nav-text">发送请求获取用户信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">3.2.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">3.3.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-1"><span class="nav-number">3.4.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">3.5.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E5%88%86%E5%8F%91%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%9A%84-action"><span class="nav-number">3.6.</span> <span class="nav-text">页面分发获取用户信息的 action</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">3.6.1.</span> <span class="nav-text">目标</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0-redux-%E4%B8%AD"><span class="nav-number">3.7.</span> <span class="nav-text">将用户信息存储到 redux 中</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-3"><span class="nav-number">3.7.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-2"><span class="nav-number">3.7.2.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%B9%B6%E5%B1%95%E7%A4%BA-1"><span class="nav-number">3.8.</span> <span class="nav-text">获取用户信息并展示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-4"><span class="nav-number">3.8.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-3"><span class="nav-number">3.8.2.</span> <span class="nav-text">步骤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF-%E9%A1%B5%E9%9D%A2%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">个人信息-页面结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-5"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-4"><span class="nav-number">4.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-number">4.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF-%E8%8E%B7%E5%8F%96%E5%B9%B6%E5%B1%95%E7%A4%BA%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF"><span class="nav-number">5.</span> <span class="nav-text">个人信息-获取并展示个人信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-6"><span class="nav-number">5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-5"><span class="nav-number">5.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-2"><span class="nav-number">5.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-hooks-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">自定义 hooks 基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-7"><span class="nav-number">6.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">6.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E8%87%AA%E5%AE%9A%E4%B9%89-hooks-%E5%88%86%E6%9E%90%E8%A6%81%E5%B0%81%E8%A3%85%E7%9A%84%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91"><span class="nav-number">7.</span> <span class="nav-text">封装自定义 hooks-分析要封装的代码逻辑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E8%83%BD%E5%A4%9F%E5%B0%81%E8%A3%85%E8%87%AA%E5%AE%9A%E4%B9%89-hooks-%E5%AE%9E%E7%8E%B0%E8%BF%9B%E5%85%A5%E9%A1%B5%E9%9D%A2%E5%B0%B1%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8"><span class="nav-number">7.1.</span> <span class="nav-text">目标能够封装自定义 hooks 实现进入页面就获取数据的逻辑复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-8"><span class="nav-number">7.2.</span> <span class="nav-text">目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E8%87%AA%E5%AE%9A%E4%B9%89-hooks-%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89-hooks%EF%BC%88%E4%B8%8D%E8%80%83%E8%99%91%E7%B1%BB%E5%9E%8B%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">封装自定义 hooks-实现自定义 hooks（不考虑类型）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-9"><span class="nav-number">8.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-6"><span class="nav-number">8.2.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E8%87%AA%E5%AE%9A%E4%B9%89-hooks-%E4%B8%BA%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89-hooks-%E6%B7%BB%E5%8A%A0%E7%B1%BB%E5%9E%8B"><span class="nav-number">9.</span> <span class="nav-text">封装自定义 hooks-为实现的自定义 hooks 添加类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-10"><span class="nav-number">9.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-2"><span class="nav-number">9.2.</span> <span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E8%87%AA%E5%AE%9A%E4%B9%89-hooks-%E5%BA%94%E7%94%A8"><span class="nav-number">10.</span> <span class="nav-text">封装自定义 hooks-应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-11"><span class="nav-number">10.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-7"><span class="nav-number">10.2.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%98%B5%E7%A7%B0%E5%92%8C%E7%AE%80%E4%BB%8B-%E5%87%86%E5%A4%87%E5%BC%B9%E5%B1%82%E5%B9%B6%E6%8E%A7%E5%88%B6%E6%98%BE%E7%A4%BA"><span class="nav-number">11.</span> <span class="nav-text">修改昵称和简介-准备弹层并控制显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%98%B5%E7%A7%B0%E5%92%8C%E7%AE%80%E4%BB%8B-%E9%9A%90%E8%97%8F%E5%BC%B9%E5%B1%82"><span class="nav-number">12.</span> <span class="nav-text">修改昵称和简介-隐藏弹层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-12"><span class="nav-number">12.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-3"><span class="nav-number">12.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-8"><span class="nav-number">12.3.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-3"><span class="nav-number">12.4.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%98%B5%E7%A7%B0%E5%92%8C%E7%AE%80%E4%BB%8B-%E4%BF%AE%E6%94%B9%E6%A0%87%E9%A2%98%E6%96%87%E5%AD%97"><span class="nav-number">13.</span> <span class="nav-text">修改昵称和简介-修改标题文字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%98%B5%E7%A7%B0%E5%92%8C%E7%AE%80%E4%BB%8B-%E6%95%B0%E6%8D%AE%E5%9B%9E%E6%98%BE"><span class="nav-number">14.</span> <span class="nav-text">修改昵称和简介-数据回显</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-13"><span class="nav-number">14.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-4"><span class="nav-number">14.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%98%B5%E7%A7%B0%E5%92%8C%E7%AE%80%E4%BB%8B-%E5%85%B3%E9%97%AD%E5%BC%B9%E5%B1%82-bug"><span class="nav-number">15.</span> <span class="nav-text">修改昵称和简介-关闭弹层 bug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%98%B5%E7%A7%B0%E5%92%8C%E7%AE%80%E4%BB%8B-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E5%85%89%E6%A0%87"><span class="nav-number">16.</span> <span class="nav-text">修改昵称和简介-自动获取光标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%98%B5%E7%A7%B0%E5%92%8C%E7%AE%80%E4%BB%8B-%E5%9B%9E%E4%BC%A0%E7%BB%99%E7%88%B6%E7%BB%84%E4%BB%B6"><span class="nav-number">17.</span> <span class="nav-text">修改昵称和简介-回传给父组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-14"><span class="nav-number">17.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-4"><span class="nav-number">17.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-9"><span class="nav-number">17.3.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%98%B5%E7%A7%B0%E5%92%8C%E7%AE%80%E4%BB%8B-%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82%E4%BF%AE%E6%94%B9"><span class="nav-number">18.</span> <span class="nav-text">修改昵称和简介-发送请求修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%80%A7%E5%88%AB%E5%92%8C%E5%A4%B4%E5%83%8F-%E5%87%86%E5%A4%87%E5%BC%B9%E5%87%BA%E5%B1%82"><span class="nav-number">19.</span> <span class="nav-text">修改性别和头像-准备弹出层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-15"><span class="nav-number">19.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-10"><span class="nav-number">19.2.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%80%A7%E5%88%AB%E5%92%8C%E5%A4%B4%E5%83%8F-%E6%8E%A7%E5%88%B6%E5%BC%B9%E5%B1%82%E7%9A%84%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F"><span class="nav-number">20.</span> <span class="nav-text">修改性别和头像-控制弹层的显示隐藏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-16"><span class="nav-number">20.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-5"><span class="nav-number">20.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-11"><span class="nav-number">20.3.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-5"><span class="nav-number">20.4.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%80%A7%E5%88%AB%E5%92%8C%E5%A4%B4%E5%83%8F-%E5%8C%BA%E5%88%86%E5%A4%B4%E5%83%8F%E5%92%8C%E6%80%A7%E5%88%AB"><span class="nav-number">21.</span> <span class="nav-text">修改性别和头像-区分头像和性别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%80%A7%E5%88%AB%E5%92%8C%E5%A4%B4%E5%83%8F-%E4%BF%AE%E6%94%B9%E6%80%A7%E5%88%AB%E5%8A%9F%E8%83%BD"><span class="nav-number">22.</span> <span class="nav-text">修改性别和头像-修改性别功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%A4%B4%E5%83%8F-%E5%BC%B9%E7%AA%97%E9%80%89%E6%8B%A9%E5%9B%BE%E7%89%87"><span class="nav-number">23.</span> <span class="nav-text">修改头像-弹窗选择图片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-17"><span class="nav-number">23.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-6"><span class="nav-number">23.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%A4%B4%E5%83%8F-%E7%BB%84%E8%A3%85%E4%BF%AE%E6%94%B9%E5%A4%B4%E5%83%8F%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">24.</span> <span class="nav-text">修改头像-组装修改头像的数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-18"><span class="nav-number">24.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-12"><span class="nav-number">24.2.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%A4%B4%E5%83%8F-%E6%9B%B4%E6%96%B0%E5%A4%B4%E5%83%8F"><span class="nav-number">25.</span> <span class="nav-text">修改头像-更新头像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-19"><span class="nav-number">25.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-13"><span class="nav-number">25.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-7"><span class="nav-number">25.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%9F%E6%97%A5-%E5%B1%95%E7%A4%BA%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">26.</span> <span class="nav-text">修改生日-展示日期选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-20"><span class="nav-number">26.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-14"><span class="nav-number">26.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-8"><span class="nav-number">26.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%80%E5%87%BA%E7%99%BB%E5%BD%95-%E5%BC%B9%E7%AA%97%E7%A1%AE%E8%AE%A4"><span class="nav-number">27.</span> <span class="nav-text">退出登录-弹窗确认</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-21"><span class="nav-number">27.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-6"><span class="nav-number">27.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-15"><span class="nav-number">27.3.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%80%E5%87%BA%E7%99%BB%E5%BD%95-%E5%8A%9F%E8%83%BD%E5%AE%8C%E6%88%90"><span class="nav-number">28.</span> <span class="nav-text">退出登录-功能完成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-22"><span class="nav-number">28.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-16"><span class="nav-number">28.2.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E9%89%B4%E6%9D%83%E8%B7%AF%E7%94%B1%E7%BB%84%E4%BB%B6"><span class="nav-number">29.</span> <span class="nav-text">封装鉴权路由组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-23"><span class="nav-number">29.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-17"><span class="nav-number">29.2.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E6%97%B6%E8%B7%B3%E8%BD%AC%E5%88%B0%E7%9B%B8%E5%BA%94%E9%A1%B5%E9%9D%A2"><span class="nav-number">30.</span> <span class="nav-text">登录时跳转到相应页面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-24"><span class="nav-number">30.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-18"><span class="nav-number">30.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-9"><span class="nav-number">30.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%A7%A3%E6%97%A0%E6%84%9F%E5%88%B7%E6%96%B0-token"><span class="nav-number">31.</span> <span class="nav-text">理解无感刷新 token</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-25"><span class="nav-number">31.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-7"><span class="nav-number">31.2.</span> <span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%97%A0%E6%84%9F%E5%88%B7%E6%96%B0-token-%E6%8D%A2%E5%8F%96%E6%96%B0%E7%9A%84-token"><span class="nav-number">32.</span> <span class="nav-text">实现无感刷新 token-换取新的 token</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-26"><span class="nav-number">32.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-8"><span class="nav-number">32.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-19"><span class="nav-number">32.3.</span> <span class="nav-text">步骤</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title=" → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="fab fa-zhihu fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
