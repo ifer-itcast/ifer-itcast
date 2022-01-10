@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 搜索功能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20_极客园 H5">
+<meta property="og:url" content="http://example.com/2022/01/08/react-base-course20/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 搜索功能。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/01/08/react-base-course20/images/image-20210908173010205.png">
+<meta property="og:image" content="http://example.com/2022/01/08/react-base-course20/images/image-20210908185453822.png">
+<meta property="og:image" content="http://example.com/2022/01/08/react-base-course20/images/image-20210909103450023.png">
+<meta property="og:image" content="http://example.com/2022/01/08/react-base-course20/images/image-20210909102100740.png">
+<meta property="og:image" content="http://example.com/2022/01/08/react-base-course20/images/image-20210909105543672.png">
+<meta property="article:published_time" content="2022-01-08T04:47:26.000Z">
+<meta property="article:modified_time" content="2022-01-08T12:21:59.578Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/08/react-base-course20/images/image-20210908173010205.png">
+
+<link rel="canonical" href="http://example.com/2022/01/08/react-base-course20/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>20_极客园 H5 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/08/react-base-course20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          20_极客园 H5
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-08 12:47:26 / 修改时间：20:21:59" itemprop="dateCreated datePublished" datetime="2022-01-08T12:47:26+08:00">2022-01-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 搜索功能。</p>
+<span id="more"></span>
+
+<h2 id="文章搜索页的静态结构"><a href="#文章搜索页的静态结构" class="headerlink" title="文章搜索页的静态结构"></a>文章搜索页的静态结构</h2><blockquote>
+<p>目标：实现文章搜索页面的主要静态结构和样式</p>
+</blockquote>
+<p><strong>操作步骤</strong></p>
+<ol>
+<li>为首页 Tab 栏右边的 ”放大镜“ 按钮添加点击事件，点击后跳转到搜索页：</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;react-router&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> history = useHistory()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Icon type=<span class="string">&#x27;iconbtn_search&#x27;</span> onClick=&#123;<span class="function">() =&gt;</span> history.push(<span class="string">&#x27;/search&#x27;</span>)&#125; /&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置 search 的路由</li>
+</ol>
+<h2 id="搜索关键字的输入与防抖处理"><a href="#搜索关键字的输入与防抖处理" class="headerlink" title="搜索关键字的输入与防抖处理"></a>搜索关键字的输入与防抖处理</h2><blockquote>
+<p>目标：从文本输入框获取输入的关键字内容，且运用防抖机制降低获取频繁</p>
+</blockquote>
+<p>实现思路：</p>
+<ul>
+<li>防抖实现步骤：<ul>
+<li>  1）清理之前的定时器</li>
+<li>  2）新建定时器执行任务</li>
+</ul>
+</li>
+</ul>
+<p><strong>操作步骤</strong></p>
+<ol>
+<li>声明一个用于存放关键字的状态</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 搜索关键字内容</span></span><br><span class="line"><span class="keyword">const</span> [keyword, setKeyword] = useState(<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>为搜索框设置 <code>value</code> 属性和 <code>onChange</code> 事件</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Search placeholder=<span class="string">&#x27;请输入关键字搜索&#x27;</span> value=&#123;keyword&#125; onChange=&#123;<span class="function">(<span class="params">e</span>) =&gt;</span> setKeyword(e)&#125; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当前效果：每次键盘敲击都会打印出输入框中的内容</p>
+<img src="images/image-20210908173010205.png" alt="image-20210908173010205" style="zoom:40%;" />
+
+<ol start="3">
+<li>防抖处理</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useRef &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 存储防抖定时器</span></span><br><span class="line"><span class="keyword">const</span> timerRef = useRef(-<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> [keyword, setKeyword] = useState(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> onChange = <span class="function">(<span class="params">e: string</span>) =&gt;</span> &#123;</span><br><span class="line">    setKeyword(e)</span><br><span class="line">    <span class="comment">// 清除之前的定时器</span></span><br><span class="line">    <span class="built_in">clearTimeout</span>(timerRef.current)</span><br><span class="line">    <span class="comment">// 新建任务定时器</span></span><br><span class="line">    timerRef.current = <span class="built_in">window</span>.setTimeout(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e)</span><br><span class="line">    &#125;, <span class="number">500</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 销毁组件时记得最好要清理定时器</span></span><br><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">clearTimeout</span>(timerRef.current)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure>
+
+<h2 id="aHooks-的使用"><a href="#aHooks-的使用" class="headerlink" title="aHooks 的使用"></a>aHooks 的使用</h2><p><strong>步骤</strong>：</p>
+<ol>
+<li>安装 ahooks 包：<code>yarn add ahooks</code></li>
+<li>导入 <code>useDebounceFn</code> hook</li>
+<li>创建防抖函数</li>
+<li>搜索框中输入内容时，调用防抖函数</li>
+</ol>
+<p><strong>核心代码</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const &#123; run: getSuggest &#125; = useDebounceFn(</span><br><span class="line">    (e: string) =&gt; &#123;</span><br><span class="line">        console.log(&#x27;搜索功能&#x27;, e)</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        wait: 500,</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">const [keyword, setKeyword] = useState(&#x27;&#x27;)</span><br><span class="line">const onChange = (e: string) =&gt; &#123;</span><br><span class="line">    setKeyword(e)</span><br><span class="line">    getSuggest(e)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="发送请求获取搜索建议数据"><a href="#发送请求获取搜索建议数据" class="headerlink" title="发送请求获取搜索建议数据"></a>发送请求获取搜索建议数据</h2><blockquote>
+<p>目标：将输入的关键发送到服务端，获取和该关键字匹配的建议数据</p>
+</blockquote>
+<p>实现思路：</p>
+<ul>
+<li>  通过 Redux Action 来发送请求，获取结果数据后保存在 Redux Store 中</li>
+</ul>
+<p><strong>核心代码</strong>：</p>
+<p>types/data.d.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 搜索关键词</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> Suggestion = <span class="built_in">string</span>[]</span><br></pre></td></tr></table></figure>
+
+<p>types/store.d.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 联合到 RootAction 中</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> RootAction = LoginAction | ProfileAction | HomeAction | SearchAction</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> SearchAction = &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;search/suggestion&#x27;</span></span><br><span class="line">    <span class="attr">payload</span>: Suggestion</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>actions/search.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ApiResponse, Suggestion &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/data&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; RootThunkAction &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getSuggestion = (value: <span class="built_in">string</span>): <span class="function"><span class="params">RootThunkAction</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch) =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> request.get&lt;ApiResponse&lt;&#123; <span class="attr">options</span>: Suggestion &#125;&gt;&gt;(<span class="string">&#x27;/suggestion&#x27;</span>, &#123;</span><br><span class="line">            <span class="attr">params</span>: &#123;</span><br><span class="line">                <span class="attr">q</span>: value,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        dispatch(&#123; <span class="attr">type</span>: <span class="string">&#x27;search/suggestion&#x27;</span>, <span class="attr">payload</span>: res.data.data.options &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>reducers/search.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Suggestion &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/data&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; SearchAction &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/store&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> SearchState = &#123;</span><br><span class="line">    <span class="attr">suggestion</span>: Suggestion</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> initialState: SearchState = &#123;</span><br><span class="line">    <span class="attr">suggestion</span>: [],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Search = (state = initialState, <span class="attr">action</span>: SearchAction): <span class="function"><span class="params">SearchState</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;search/suggestion&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                ...state,</span><br><span class="line">                <span class="attr">suggestion</span>: action.payload,</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        <span class="attr">default</span>:</span><br><span class="line">            <span class="keyword">return</span> state</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Search</span><br></pre></td></tr></table></figure>
+
+<p>reducers/index.ts 中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> search <span class="keyword">from</span> <span class="string">&#x27;./search&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> rootReducer = combineReducers(&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    search,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Search/index.tsx 组件中</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; run &#125; = useDebounceFn(</span><br><span class="line">    <span class="function">(<span class="params">e: string</span>) =&gt;</span> &#123;</span><br><span class="line">        dispatch(getSuggestion(e))</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">wait</span>: <span class="number">500</span>,</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="渲染推荐数据"><a href="#渲染推荐数据" class="headerlink" title="渲染推荐数据"></a>渲染推荐数据</h2><ul>
+<li>  获取数据</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const &#123; suggestion &#125; = useSelector((state: RootState) =&gt; state.search)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  渲染推荐数据</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&#123;classnames(&#x27;search-result&#x27;, true ? &#x27;show&#x27; : &#x27;&#x27;)&#125;&gt;</span><br><span class="line">    &#123;suggestion.map((item, index) =&gt; &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;div className=&#x27;result-item&#x27; key=&#123;index&#125;&gt;</span><br><span class="line">                &lt;Icon className=&#x27;icon-search&#x27; type=&#x27;iconbtn_search&#x27; /&gt;</span><br><span class="line">                &lt;div className=&#x27;result-value text-overflow&#x27;&gt;&#123;item&#125;&lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;)&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="高亮处理"><a href="#高亮处理" class="headerlink" title="高亮处理"></a>高亮处理</h2><ul>
+<li>  封装高亮函数</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> highLight = <span class="function">(<span class="params">str: string</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> str.replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(keyword, <span class="string">&#x27;gi&#x27;</span>), <span class="function">(<span class="params">match</span>) =&gt;</span> <span class="string">`&lt;span&gt;<span class="subst">$&#123;match&#125;</span>&lt;/span&gt;`</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  封装高亮</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/dom-elements.html">https://zh-hans.reactjs.org/docs/dom-elements.html</a></p>
+</blockquote>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div</span><br><span class="line">    className=<span class="string">&#x27;result-value text-overflow&#x27;</span></span><br><span class="line">    dangerouslySetInnerHTML=&#123;&#123;</span><br><span class="line">        <span class="attr">__html</span>: highLight(item),</span><br><span class="line">    &#125;&#125;</span><br><span class="line">&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="搜索建议列表和搜索历史的按需显示"><a href="#搜索建议列表和搜索历史的按需显示" class="headerlink" title="搜索建议列表和搜索历史的按需显示"></a>搜索建议列表和搜索历史的按需显示</h2><blockquote>
+<p>目标：实现在做搜索操作时只显示搜索建议列表；其他情况只显示搜索历史</p>
+</blockquote>
+<img src="images/image-20210908185453822.png" alt="image-20210908185453822" style="zoom:40%;" />
+
+<p>实现思路：</p>
+<ul>
+<li>  利用之前创建的 <code>isSearching</code> 状态，控制建议列表和搜索历史的显示、隐藏</li>
+</ul>
+<p><strong>操作步骤</strong></p>
+<ul>
+<li>  提供 isSearching 状态</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 是否显示搜索</span></span><br><span class="line"><span class="keyword">const</span> [isSearching, setIsSearching] = useState(<span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  修改 isSearching 状态</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> onChange = <span class="function">(<span class="params">e: string</span>) =&gt;</span> &#123;</span><br><span class="line">    setKeyword(e)</span><br><span class="line">    <span class="keyword">if</span> (e) &#123;</span><br><span class="line">        run(e)</span><br><span class="line">        setIsSearching(<span class="literal">true</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        setIsSearching(<span class="literal">false</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  根据 isSearching 状态控制显示和隐藏</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="comment">/* 搜索历史 */</span>&#125;</span><br><span class="line">&lt;div</span><br><span class="line">  className=<span class="string">&quot;history&quot;</span></span><br><span class="line">  style=&#123;&#123; <span class="attr">display</span>: isSearching ? <span class="string">&#x27;none&#x27;</span> : <span class="string">&#x27;block&#x27;</span> &#125;&#125;</span><br><span class="line">&gt;</span><br><span class="line"></span><br><span class="line">&#123;<span class="comment">/* 搜素建议结果列表 */</span>&#125;</span><br><span class="line">&lt;div</span><br><span class="line">  className=&#123;classnames(<span class="string">&#x27;search-result&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">show</span>: isSearching,</span><br><span class="line">  &#125;)&#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="动态渲染搜索历史记录"><a href="#动态渲染搜索历史记录" class="headerlink" title="动态渲染搜索历史记录"></a>动态渲染搜索历史记录</h2><blockquote>
+<p>目标：将每次输入的搜索关键字记录下来，再动态渲染到界面上</p>
+</blockquote>
+<p>实现思路：</p>
+<ul>
+<li>  在成功搜索后，将关键字存入 Redux 和 LocalStorage 中</li>
+<li>  从 Redux 中获取所有关键字，并渲染到界面</li>
+</ul>
+<p><strong>操作步骤</strong></p>
+<ul>
+<li>  封装本地存储</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 搜索关键字的本地缓存键名</span></span><br><span class="line"><span class="keyword">const</span> SEARCH_HIS_KEY = <span class="string">&#x27;geek-h5-sh88-channel&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 从缓存获取搜索历史关键字</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getLocalHistories = (): <span class="function"><span class="params">History</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(<span class="built_in">localStorage</span>.getItem(SEARCH_HIS_KEY) || <span class="string">&#x27;[]&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将搜索历史关键字存入本地缓存</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Array&#125;</span> <span class="variable">histories</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> setLocalHistories = (histories: History): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">localStorage</span>.setItem(SEARCH_HIS_KEY, <span class="built_in">JSON</span>.stringify(histories))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除本地缓存中的搜索历史关键字</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> removeLocalHistories = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">localStorage</span>.removeItem(SEARCH_HIS_KEY)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  data.d.ts 中</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export type History = string[]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  store.d.ts 中</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">export type SearchAction =</span><br><span class="line">    | &#123;</span><br><span class="line">          type: &#x27;search/suggestion&#x27;</span><br><span class="line">          payload: Suggestion</span><br><span class="line">      &#125;</span><br><span class="line">    | &#123;</span><br><span class="line">          type: &#x27;search/history&#x27;</span><br><span class="line">          payload: History</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  action/history.ts 中</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="点击搜索添加历史记录"><a href="#点击搜索添加历史记录" class="headerlink" title="点击搜索添加历史记录"></a>点击搜索添加历史记录</h2><blockquote>
+<p>目标：点击顶部 ”搜索“ 按钮，或点击搜索建议列表中的一项，跳转到搜索详情页</p>
+</blockquote>
+<img src="images/image-20210909103450023.png" alt="image-20210909103450023" style="zoom:40%;" />
+
+<p><strong>操作步骤</strong></p>
+<ul>
+<li>  注册事件进行搜索</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;NavBar</span><br><span class="line">  className=<span class="string">&quot;navbar&quot;</span></span><br><span class="line">  onLeftClick=&#123;<span class="function">() =&gt;</span> history.go(-<span class="number">1</span>)&#125;</span><br><span class="line">  extra=&#123;</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">&quot;search-text&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> onSearch(keyword)&#125;&gt;</span></span><br><span class="line"><span class="xml">      搜索</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;history-list&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">  &#123;histories.map((item, index) =&gt; &#123;</span></span><br><span class="line"><span class="xml">    return (</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">span</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">className</span>=<span class="string">&quot;history-item&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">key</span>=<span class="string">&#123;index&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> onSearch(item)&#125;</span></span><br><span class="line"><span class="xml">      &gt;</span></span><br><span class="line"><span class="xml">        &#123;index !== 0 &amp;&amp; <span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">&quot;divider&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>&#125;</span></span><br><span class="line"><span class="xml">        &#123;item&#125;</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">    )</span></span><br><span class="line"><span class="xml">  &#125;)&#125;</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">className</span>=<span class="string">&quot;result-item&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">key</span>=<span class="string">&#123;index&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> onSearch(item)&#125;</span></span><br><span class="line"><span class="xml">&gt;</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">Icon</span> <span class="attr">className</span>=<span class="string">&quot;icon-search&quot;</span> <span class="attr">type</span>=<span class="string">&quot;iconbtn_search&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">div</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">    <span class="attr">className</span>=<span class="string">&quot;result-value&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">    <span class="attr">dangerouslySetInnerHTML</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">__html:</span> <span class="attr">highlight</span>(<span class="attr">item</span>, <span class="attr">keyword</span>),</span></span></span><br><span class="line"><span class="tag"><span class="xml">    &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">  &gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  提供 <em>onSearch</em>方法</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> onSearch = <span class="function">(<span class="params">key: string</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// console.log(key)</span></span><br><span class="line">    <span class="comment">// 保存搜索记录</span></span><br><span class="line">    <span class="keyword">if</span> (!key) <span class="keyword">return</span></span><br><span class="line">    dispatch(addSearchList(key))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在 reducers 中处理 history</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> initValue: SeartchType = &#123;</span><br><span class="line">  <span class="comment">// 存放推荐的结果</span></span><br><span class="line">  <span class="attr">suggestions</span>: [],</span><br><span class="line">  <span class="comment">// 存放历史记录</span></span><br><span class="line">  <span class="attr">histories</span>: [],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> type SearchAction =</span><br><span class="line">  | &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;search/saveSuggestions&#x27;</span></span><br><span class="line">      <span class="attr">payload</span>: string[]</span><br><span class="line">    &#125;</span><br><span class="line">  | &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;search/clearSuggestions&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  | &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;search/saveHistories&#x27;</span></span><br><span class="line">      <span class="attr">payload</span>: string[]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (action.type === <span class="string">&#x27;search/saveHistories&#x27;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    ...state,</span><br><span class="line">    <span class="attr">histories</span>: action.payload,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  actions 中处理添加历史记录的 action</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">addSearchList</span>(<span class="params">keyword: string</span>): <span class="title">RootThunkAction</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch, getState) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 获取到原来的histories</span></span><br><span class="line">        <span class="keyword">let</span> histories = getState().search.histories</span><br><span class="line">        <span class="comment">// 1. 不允许有重复的历史记录, 先删除原来历史记录中的keyword</span></span><br><span class="line">        histories = histories.filter(<span class="function">(<span class="params">item</span>) =&gt;</span> item !== keyword)</span><br><span class="line">        <span class="comment">// 添加keyword</span></span><br><span class="line">        histories = [keyword, ...histories]</span><br><span class="line">        <span class="comment">// 最多显示10条</span></span><br><span class="line">        <span class="keyword">if</span> (histories.length &gt; <span class="number">10</span>) &#123;</span><br><span class="line">            histories = histories.slice(<span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 保存 redux</span></span><br><span class="line">        dispatch(&#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;search/saveHistories&#x27;</span>,</span><br><span class="line">            <span class="attr">payload</span>: histories,</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="comment">// 保存到本地</span></span><br><span class="line">        setLocalHistories(histories)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  页面渲染</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">&#x27;history-list&#x27;</span>&gt;</span><br><span class="line">    &#123;histories.map(<span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">&#x27;history-item&#x27;</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> onSearch(item)&#125;&gt;</span></span><br><span class="line"><span class="xml">                &#123;index !== 0 &amp;&amp; <span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">&#x27;divider&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>&#125;</span></span><br><span class="line"><span class="xml">                &#123;item&#125;</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">        )</span><br><span class="line">    &#125;)&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="清空搜索历史记录"><a href="#清空搜索历史记录" class="headerlink" title="清空搜索历史记录"></a>清空搜索历史记录</h2><blockquote>
+<p>目标：点击”清除全部“按钮后，删除全部的搜索历史记录</p>
+</blockquote>
+<img src="images/image-20210909102100740.png" alt="image-20210909102100740" style="zoom:40%;" />
+
+<p>实现思路：</p>
+<ul>
+<li>  删除 Redux 和 LocalStorage 中存储的历史记录</li>
+</ul>
+<p><strong>操作步骤</strong></p>
+<ul>
+<li>  给清空按钮注册点击事件</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">&#x27;history-header&#x27;</span>&gt;</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span>搜索历史<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">onClick</span>=<span class="string">&#123;onClearHistory&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">Icon</span> <span class="attr">type</span>=<span class="string">&#x27;iconbtn_del&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">        清除全部</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  显示弹窗</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> onClearHistory = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 清空历史记录</span></span><br><span class="line">    Dialog.confirm(&#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&#x27;温馨提示&#x27;</span>,</span><br><span class="line">        <span class="attr">content</span>: <span class="string">&#x27;你确定要清空记录吗？&#x27;</span>,</span><br><span class="line">        <span class="attr">onConfirm</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            dispatch(clearHistories())</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在 actions 中准备 action</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 清空历史记录</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">clearHistories</span>(<span class="params"></span>): <span class="title">RootThunkAction</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 清空本地历史记录</span></span><br><span class="line">        removeLocalHistories()</span><br><span class="line">        <span class="comment">// 清空redux数据</span></span><br><span class="line">        dispatch(&#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;search/clearHistories&#x27;</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在 reducers 中处理 action</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> type SearchAction = &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;search/clearHistories&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">reducer</span>(<span class="params">state = initValue, action: SearchAction</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (action.type === <span class="string">&#x27;search/clearHistories&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            <span class="attr">histories</span>: [],</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="搜索详情页的静态结构"><a href="#搜索详情页的静态结构" class="headerlink" title="搜索详情页的静态结构"></a>搜索详情页的静态结构</h2><blockquote>
+<p>目标：实现搜索详情页的静态结构和样式</p>
+</blockquote>
+<img src="images/image-20210909105543672.png" alt="image-20210909105543672" style="zoom:40%;" />
+
+<p><strong>操作步骤</strong></p>
+<ol>
+<li>将资源包中对应的样式文件，拷贝到 <code>pages/Search/Result/</code>目录下，然后编写该目录下的<code>index.js</code>：</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> NavBar <span class="keyword">from</span> <span class="string">&#x27;@/components/NavBar&#x27;</span></span><br><span class="line"><span class="keyword">import</span> styles <span class="keyword">from</span> <span class="string">&#x27;./index.module.scss&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> SearchResult = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;styles.root&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            &#123;/* 顶部导航栏 */&#125;</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">NavBar</span>&gt;</span>搜索结果<span class="tag">&lt;/<span class="name">NavBar</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;article-list&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">div</span>&gt;</span>文章列表<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> SearchResult</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置路由</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">&quot;/search&quot;</span> exact component=&#123;Search&#125;&gt;&lt;/Route&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/search/result&quot;</span> <span class="attr">exact</span> <span class="attr">component</span>=<span class="string">&#123;SearchResult&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">Route</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>搜索的时候需要跳转</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> onSearch = <span class="function">(<span class="params">key: string</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// console.log(key)</span></span><br><span class="line">    <span class="comment">// 保存搜索记录</span></span><br><span class="line">    <span class="keyword">if</span> (!key) <span class="keyword">return</span></span><br><span class="line">    dispatch(addSearchList(key))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 跳转页面</span></span><br><span class="line">    history.push(<span class="string">&#x27;/search/result?key=&#x27;</span> + key)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="请求搜索详情页数据"><a href="#请求搜索详情页数据" class="headerlink" title="请求搜索详情页数据"></a>请求搜索详情页数据</h2><blockquote>
+<p>目标：获取从搜索页面传入的参数后，调用后端接口获取搜索详情</p>
+</blockquote>
+<p><strong>操作步骤</strong></p>
+<ol>
+<li>获取通过 URL 地址传入到搜索详情页的查询字符串参数 <code>q</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取通过 URL 地址传入的查询字符串参数const params = new URLSearchParams(location.search)const key = params.get(&#x27;key&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在 <code>store/reducers/search.js</code> 中添加保存搜索详情数据的 Reducer 逻辑</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> initValue: SeartchType = &#123;</span><br><span class="line">    <span class="comment">// 存放推荐的结果</span></span><br><span class="line">    <span class="attr">suggestions</span>: [],</span><br><span class="line">    <span class="comment">// 存放历史记录</span></span><br><span class="line">    <span class="attr">histories</span>: [],</span><br><span class="line">    <span class="comment">// 存放搜索的结果</span></span><br><span class="line">    <span class="attr">results</span>: [],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">reducer</span>(<span class="params">state = initValue, action: SearchAction</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (action.type === <span class="string">&#x27;search/saveResults&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            <span class="attr">results</span>: action.payload,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在 <code>store/actions/search.js</code>中编写 Action Creator：</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取搜索结果数据</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getSearchResults</span>(<span class="params">keyword: string, page: number</span>): <span class="title">RootThunkAction</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch) =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> res =</span><br><span class="line">            (<span class="keyword">await</span> request.get) &lt;</span><br><span class="line">            ResultRes &gt;</span><br><span class="line">            (<span class="string">&#x27;search&#x27;</span>,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">params</span>: &#123;</span><br><span class="line">                    <span class="attr">q</span>: keyword,</span><br><span class="line">                    page,</span><br><span class="line">                    <span class="attr">per_page</span>: <span class="number">10</span>,</span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;)</span><br><span class="line">        dispatch(&#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;search/saveResults&#x27;</span>,</span><br><span class="line">            <span class="attr">payload</span>: res.data.results,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>在搜索详情页面中，通过 <code>useEffect</code> 在进入页面时调用以上编写的 Action：</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> location = useLocation()</span><br><span class="line"><span class="keyword">const</span> search = <span class="keyword">new</span> URLSearchParams(location.search)</span><br><span class="line"><span class="keyword">const</span> key = search.get(<span class="string">&#x27;key&#x27;</span>)!</span><br><span class="line"><span class="keyword">const</span> dispatch = useDispatch()</span><br><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  dispatch(getSearchResults(key, <span class="number">1</span>))</span><br><span class="line">&#125;, [dispatch, key])</span><br></pre></td></tr></table></figure>
+
+<h2 id="渲染搜索详情列表"><a href="#渲染搜索详情列表" class="headerlink" title="渲染搜索详情列表"></a>渲染搜索详情列表</h2><blockquote>
+<p>目标：将请求到的搜索详情数据渲染到界面上</p>
+</blockquote>
+<p><strong>操作步骤</strong></p>
+<ol>
+<li>从 Redux 中获取搜索详情数据</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useDispatch, useSelector &#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> articles = useSelector(<span class="function">(<span class="params">state</span>) =&gt;</span> state.search.searchResults)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>将数据渲染成列表</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">&#x27;article-list&#x27;</span>&gt;</span><br><span class="line">    &#123;results.map(<span class="function">(<span class="params">item</span>) =&gt;</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">ArticleItem</span> <span class="attr">key</span>=<span class="string">&#123;item.art_id&#125;</span> <span class="attr">article</span>=<span class="string">&#123;item&#125;</span> <span class="attr">channelId</span>=<span class="string">&#123;-1&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">ArticleItem</span>&gt;</span></span></span><br><span class="line">    ))&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="加载更多数据"><a href="#加载更多数据" class="headerlink" title="加载更多数据"></a>加载更多数据</h2><ul>
+<li>  引入组件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123; InfiniteScroll &#125; from &#x27;antd-mobile-v5&#x27;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  渲染组件</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 无限加载 */</span></span><br><span class="line">&#125;</span><br><span class="line">;<span class="xml"><span class="tag">&lt;<span class="name">InfiniteScroll</span> <span class="attr">loadMore</span>=<span class="string">&#123;loadMore&#125;</span> <span class="attr">hasMore</span>=<span class="string">&#123;hasMore&#125;</span> /&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  提供属性</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 是否有更多数据</span></span><br><span class="line"><span class="keyword">const</span> [hasMore, setHasMore] = useState(<span class="literal">true</span>)</span><br><span class="line"><span class="comment">// 加载状态</span></span><br><span class="line"><span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  加载更多的逻辑</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> page = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> loadMore = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (loading) <span class="keyword">return</span></span><br><span class="line">    setLoading(<span class="literal">true</span>)</span><br><span class="line">    <span class="keyword">await</span> dispatch(getSearchResults(key, page))</span><br><span class="line">    page = page + <span class="number">1</span></span><br><span class="line">    setLoading(<span class="literal">false</span>)</span><br><span class="line">    <span class="keyword">if</span> (page &gt; <span class="number">5</span>) &#123;</span><br><span class="line">        setHasMore(<span class="literal">false</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="点击搜索详情列表跳到文章详情页"><a href="#点击搜索详情列表跳到文章详情页" class="headerlink" title="点击搜索详情列表跳到文章详情页"></a>点击搜索详情列表跳到文章详情页</h2><blockquote>
+<p>目标：实现在搜索详情列表中点击一个列表项，跳转到文章的详情页面</p>
+</blockquote>
+<p><strong>操作步骤</strong></p>
+<ol>
+<li>为搜索详情列表项添加点击事件</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div key=&#123;article.art_id&#125; onClick=&#123;<span class="function">() =&gt;</span> gotoAritcleDetail(article.art_id)&#125;&gt;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 跳转到文章详情页面</span></span><br><span class="line"><span class="keyword">const</span> gotoAritcleDetail = <span class="function">(<span class="params">articleId</span>) =&gt;</span> &#123;</span><br><span class="line">    history.push(<span class="string">`/article/<span class="subst">$&#123;articleId&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/07/react-base-course19/" rel="prev" title="19_极客园 H5">
+      <i class="fa fa-chevron-left"></i> 19_极客园 H5
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/08/react-base-course21/" rel="next" title="21_极客园 H5">
+      21_极客园 H5 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%90%9C%E7%B4%A2%E9%A1%B5%E7%9A%84%E9%9D%99%E6%80%81%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">文章搜索页的静态结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E8%BE%93%E5%85%A5%E4%B8%8E%E9%98%B2%E6%8A%96%E5%A4%84%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">搜索关键字的输入与防抖处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#aHooks-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">aHooks 的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82%E8%8E%B7%E5%8F%96%E6%90%9C%E7%B4%A2%E5%BB%BA%E8%AE%AE%E6%95%B0%E6%8D%AE"><span class="nav-number">5.</span> <span class="nav-text">发送请求获取搜索建议数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E6%8E%A8%E8%8D%90%E6%95%B0%E6%8D%AE"><span class="nav-number">6.</span> <span class="nav-text">渲染推荐数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E4%BA%AE%E5%A4%84%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">高亮处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E5%BB%BA%E8%AE%AE%E5%88%97%E8%A1%A8%E5%92%8C%E6%90%9C%E7%B4%A2%E5%8E%86%E5%8F%B2%E7%9A%84%E6%8C%89%E9%9C%80%E6%98%BE%E7%A4%BA"><span class="nav-number">8.</span> <span class="nav-text">搜索建议列表和搜索历史的按需显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%B8%B2%E6%9F%93%E6%90%9C%E7%B4%A2%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95"><span class="nav-number">9.</span> <span class="nav-text">动态渲染搜索历史记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%B9%E5%87%BB%E6%90%9C%E7%B4%A2%E6%B7%BB%E5%8A%A0%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95"><span class="nav-number">10.</span> <span class="nav-text">点击搜索添加历史记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E7%A9%BA%E6%90%9C%E7%B4%A2%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95"><span class="nav-number">11.</span> <span class="nav-text">清空搜索历史记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E8%AF%A6%E6%83%85%E9%A1%B5%E7%9A%84%E9%9D%99%E6%80%81%E7%BB%93%E6%9E%84"><span class="nav-number">12.</span> <span class="nav-text">搜索详情页的静态结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%90%9C%E7%B4%A2%E8%AF%A6%E6%83%85%E9%A1%B5%E6%95%B0%E6%8D%AE"><span class="nav-number">13.</span> <span class="nav-text">请求搜索详情页数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E6%90%9C%E7%B4%A2%E8%AF%A6%E6%83%85%E5%88%97%E8%A1%A8"><span class="nav-number">14.</span> <span class="nav-text">渲染搜索详情列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E6%9B%B4%E5%A4%9A%E6%95%B0%E6%8D%AE"><span class="nav-number">15.</span> <span class="nav-text">加载更多数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%B9%E5%87%BB%E6%90%9C%E7%B4%A2%E8%AF%A6%E6%83%85%E5%88%97%E8%A1%A8%E8%B7%B3%E5%88%B0%E6%96%87%E7%AB%A0%E8%AF%A6%E6%83%85%E9%A1%B5"><span class="nav-number">16.</span> <span class="nav-text">点击搜索详情列表跳到文章详情页</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title=" → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="fab fa-zhihu fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

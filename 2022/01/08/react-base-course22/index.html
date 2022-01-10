@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 知识点补充。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="22_React 补充">
+<meta property="og:url" content="http://example.com/2022/01/08/react-base-course22/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 知识点补充。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/01/08/react-base-course22/images/HOC.png">
+<meta property="og:image" content="http://example.com/2022/01/08/react-base-course22/images/%E7%BB%84%E4%BB%B6%E6%9B%B4%E6%96%B0.png">
+<meta property="og:image" content="http://example.com/2022/01/08/react-base-course22/images/image-20210830205522685.png">
+<meta property="og:image" content="http://example.com/2022/01/08/react-base-course22/images/image-20210830220716165.png">
+<meta property="og:image" content="http://example.com/2022/01/08/react-base-course22/images/image-20210830230820580.png">
+<meta property="og:image" content="http://example.com/2022/01/08/react-base-course22/images/image-20210901200419531.png">
+<meta property="article:published_time" content="2022-01-08T04:48:45.000Z">
+<meta property="article:modified_time" content="2022-01-08T12:25:21.596Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/08/react-base-course22/images/HOC.png">
+
+<link rel="canonical" href="http://example.com/2022/01/08/react-base-course22/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>22_React 补充 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/08/react-base-course22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          22_React 补充
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-08 12:48:45 / 修改时间：20:25:21" itemprop="dateCreated datePublished" datetime="2022-01-08T12:48:45+08:00">2022-01-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 知识点补充。</p>
+<span id="more"></span>
+
+<h2 id="mixins（已废弃）"><a href="#mixins（已废弃）" class="headerlink" title="mixins（已废弃）"></a>mixins（已废弃）</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://react.docschina.org/blog/2016/07/13/mixins-considered-harmful.html">https://react.docschina.org/blog/2016/07/13/mixins-considered-harmful.html</a></p>
+</blockquote>
+<ul>
+<li>mixin 引入了隐式依赖关系<ul>
+<li>  对于组件中的方法和数据的来源不明确，不容易维护</li>
+</ul>
+</li>
+<li>  Mixins 导致名称冲突</li>
+<li>  Mixins 导致滚雪球般的复杂性</li>
+</ul>
+<h2 id="render-props-技术"><a href="#render-props-技术" class="headerlink" title="render-props 技术"></a>render-props 技术</h2><h3 id="组件复用的说明"><a href="#组件复用的说明" class="headerlink" title="组件复用的说明"></a>组件复用的说明</h3><ul>
+<li><p>  思考：如果两个组件中的部分功能相似或相同，该如何处理？</p>
+</li>
+<li><p>  处理方式：复用相似的功能（联想函数封装）</p>
+</li>
+<li><p>  复用什么？1. state 2. 操作 state 的方法 <strong>复用组件的状态和组件的逻辑，组件的 UI 不一样</strong></p>
+</li>
+<li><p>两种解决方案</p>
+<ul>
+<li>  render-props</li>
+<li>  HOC（高阶组件）</li>
+<li>  hooks</li>
+</ul>
+</li>
+<li><p>  注意：这两种方式不是新的 API，而是利用 React 自身特点的编码技巧，演化而成的固定模式（写法）</p>
+</li>
+</ul>
+<h3 id="render-props-基本使用"><a href="#render-props-基本使用" class="headerlink" title="render-props 基本使用"></a>render-props 基本使用</h3><ul>
+<li><p>  思路：将要复用的 state 和操作 state 的方法封装到一个组件中</p>
+</li>
+<li><p>  问题：渲染的 UI 内容不一样，该怎么办</p>
+</li>
+<li><p>  <strong>在使用组件时，添加一个值为函数的 prop，通常把这个 prop 命名为 render，在组件内部调用这个函数。传进来的函数负责渲染 UI</strong></p>
+</li>
+<li><p>  问题 2：如果获取组件内部的状态</p>
+</li>
+<li><p>  <strong>在组件内部调用方法的时候，把状态当成参数进行传递</strong></p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mouse</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="comment">// … 省略state和操作state的方法</span></span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.props.render(<span class="built_in">this</span>.state)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Mouse</span><br><span class="line">    render=&#123;<span class="function">(<span class="params">mouse</span>) =&gt;</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">            鼠标当前位置 &#123;mouse.x&#125;，&#123;mouse.y&#125;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">    )&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="children-代替-render-属性"><a href="#children-代替-render-属性" class="headerlink" title="children 代替 render 属性"></a>children 代替 render 属性</h3><ul>
+<li>  注意：并不是该模式叫 render props 就必须使用名为 render 的 prop，实际上可以使用任意名称的 prop</li>
+<li>  把 prop 是一个函数并且告诉组件要渲染什么内容的技术叫做：render props 模式</li>
+<li>  推荐：使用 children 代替 render 属性</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">;<span class="xml"><span class="tag">&lt;<span class="name">Mouse</span>&gt;</span></span></span><br><span class="line"><span class="xml">    &#123;(&#123; x, y &#125;) =&gt; (</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">            鼠标的位置是 &#123;x&#125;，&#123;y&#125;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">    )&#125;</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">Mouse</span>&gt;</span></span></span><br><span class="line"><span class="comment">// 组件内部：</span></span><br><span class="line"><span class="built_in">this</span>.props.children(<span class="built_in">this</span>.state)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Context 中的用法：</span></span><br><span class="line">&lt;Consumer&gt;&#123;<span class="function">(<span class="params">data</span>) =&gt;</span> <span class="xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span>data参数表示接收到的数据 -- &#123;data&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span>&#125;&lt;/Consumer&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="render-props-优化"><a href="#render-props-优化" class="headerlink" title="render-props 优化"></a>render-props 优化</h3><ul>
+<li>  推荐：给 render props 模式添加 props 校验</li>
+<li>  应该在组件卸载时解除 mousemove 事件绑定</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Mouse.propTypes = &#123;</span><br><span class="line">    <span class="attr">chidlren</span>: PropTypes.func.isRequired,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line"> <span class="built_in">window</span>.removeEventListener(<span class="string">&#x27;mousemove&#x27;</span>, <span class="built_in">this</span>.handleMouseMove)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>封装一个组件，用于提取公共的状态和逻辑，比如鼠标的位置以及鼠标位置的更新，渲染的内容是不确定的，让组件接受一个叫 children 的 prop，而且 children 必须是一个函数</p>
+<h2 id="高阶组件-HOC"><a href="#高阶组件-HOC" class="headerlink" title="高阶组件 HOC"></a>高阶组件 HOC</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ul>
+<li><p>  目的：实现状态逻辑复用 增强一个组件的能力</p>
+</li>
+<li><p>  采用 包装（装饰）模式 ，比如说：手机壳</p>
+</li>
+<li><p>  手机：获取保护功能</p>
+</li>
+<li><p>  手机壳 ：提供保护功能</p>
+</li>
+<li><p>  高阶组件就相当于手机壳，通过包装组件，增强组件功能</p>
+</li>
+</ul>
+<p><img src="images/HOC.png"></p>
+<h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><ul>
+<li>  高阶组件（HOC，Higher-Order Component）是一个函数，接收要包装的组件，返回增强后的组件</li>
+<li>  高阶组件的命名： <code>withMouse</code> <code>withRouter</code> <code>withXXX</code></li>
+<li>高阶组件内部创建一个类组件，在这个类组件中提供复用的状态逻辑代码，通过 prop 将复用的状态传递给<br>  被包装组件</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CatWithMouse = withMouse(Cat)</span><br><span class="line"><span class="keyword">const</span> PositionWithMOuse = withMouse(Position)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 高阶组件内部创建的类组件：</span></span><br><span class="line"><span class="keyword">const</span> WithMouse = <span class="function">(<span class="params">Base</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Mouse</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 处理鼠标的位置等操作</span></span><br><span class="line">        <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Base</span> &#123;<span class="attr">...this.state</span>&#125; /&gt;</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Mouse</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h3><ul>
+<li>  创建一个函数，名称约定以 with 开头</li>
+<li>  指定函数参数（作为要增强的组件） 传入的组件只能渲染基本的 UI</li>
+<li>  在函数内部创建一个类组件，<strong>提供复用的状态逻辑代码</strong>，并返回</li>
+<li>  在内部创建的组件的 render 中，需要渲染传入的基本组件，增强功能，通过 props 的方式给基本组件传值</li>
+<li>  调用该高阶组件，传入要增强的组件，通过返回值拿到增强后的组件，并将其渲染到页面中</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建组件</span></span><br><span class="line"><span class="keyword">const</span> MousePosition = withMouse(Position)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 渲染组件</span></span><br><span class="line">&lt;MousePosition /&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="传递-props"><a href="#传递-props" class="headerlink" title="传递 props"></a>传递 props</h3><ul>
+<li>  问题：props 丢失</li>
+<li>  原因：高阶组件没有往下传递 props</li>
+<li>  解决方式：渲染 WrappedComponent 时，将 state 和 this.props 一起传递给组件</li>
+<li>  传递方式：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;WrappedComponent &#123;...this.state&#125; &#123;...this.props&#125; /&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义-hooks"><a href="#自定义-hooks" class="headerlink" title="自定义 hooks"></a>自定义 hooks</h2><h1 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h1><h2 id="组件更新机制"><a href="#组件更新机制" class="headerlink" title="组件更新机制"></a>组件更新机制</h2><ul>
+<li>  setState() 的两个作用： 1. 修改 state 2. 更新组件（UI）</li>
+<li>  过程：父组件重新渲染时，也会重新渲染子组件。但只会渲染当前组件子树（当前组件及其所有子组件）</li>
+</ul>
+<p><img src="images/%E7%BB%84%E4%BB%B6%E6%9B%B4%E6%96%B0.png"></p>
+<h2 id="组件性能优化-class-组件"><a href="#组件性能优化-class-组件" class="headerlink" title="组件性能优化-class 组件"></a>组件性能优化-class 组件</h2><ol>
+<li>功能第一</li>
+<li>性能优化</li>
+</ol>
+<h3 id="减轻-state"><a href="#减轻-state" class="headerlink" title="减轻 state"></a>减轻 state</h3><ul>
+<li>  减轻 state：只存储跟组件渲染相关的数据（比如：count / 列表数据 / loading 等）</li>
+<li>  注意：不用做渲染的数据不要放在 state 中，比如定时器 id 等</li>
+<li>对于这种需要在多个方法中用到的数据，应该直接放在 this 中<ul>
+<li>  this.xxx = ‘bbb’</li>
+<li>  this.xxx</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hello</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// timerId存储到this中，而不是state中</span></span><br><span class="line">        <span class="built_in">this</span>.timerId = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;&#125;, <span class="number">2000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    	<span class="built_in">clearInterval</span>(<span class="built_in">this</span>.timerId)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123; … &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>vue 中不要把和渲染无关的数据放到 data 中</p>
+<h3 id="避免不必要的重新渲染"><a href="#避免不必要的重新渲染" class="headerlink" title="避免不必要的重新渲染"></a>避免不必要的重新渲染</h3><ul>
+<li><p>  组件更新机制：父组件更新会引起子组件也被更新，这种思路很清晰</p>
+</li>
+<li><p>  问题：子组件没有任何变化时也会重新渲染 （接收到的 props 没有发生任何的改变）</p>
+</li>
+<li><p>  如何避免不必要的重新渲染呢？</p>
+</li>
+<li><p>  解决方式：使用钩子函数 <code>shouldComponentUpdate(nextProps, nextState)</code></p>
+</li>
+<li><p>  作用：通过返回值决定该组件是否重新渲染，返回 true 表示重新渲染，false 表示不重新渲染</p>
+</li>
+<li><p>  触发时机：更新阶段的钩子函数，组件重新渲染前执行 （shouldComponentUpdate =&gt; render）</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hello</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">shouldComponentUpdate</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 根据条件，决定是否重新渲染组件</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;…&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>案例：随机数</p>
+<h3 id="纯组件"><a href="#纯组件" class="headerlink" title="纯组件"></a>纯组件</h3><ul>
+<li>  纯组件：<code>React.PureComponent</code> 与 <code>React.Component </code>功能相似</li>
+<li>  区别：PureComponent 内部自动实现了 shouldComponentUpdate 钩子，不需要手动比较</li>
+<li>  原理：纯组件内部通过分别 对比 前后两次 props 和 state 的值，来决定是否重新渲染组件</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hello</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">PureComponent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>纯组件<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>只有在性能优化的时候可能会用到纯组件，不要所有的组件都使用纯组件，因为纯组件需要消耗性能进行对比</strong></p>
+<h3 id="纯组件比较-值类型"><a href="#纯组件比较-值类型" class="headerlink" title="纯组件比较-值类型"></a>纯组件比较-值类型</h3><ul>
+<li><p>  说明：纯组件内部的对比是 shallow compare（浅层对比）</p>
+</li>
+<li><p>  对于值类型来说：比较两个值是否相同（直接赋值即可，没有坑）</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> number = <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> newNumber = number</span><br><span class="line">newNumber = <span class="number">2</span></span><br><span class="line"><span class="built_in">console</span>.log(number === newNumber) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">state = &#123; <span class="attr">number</span>: <span class="number">0</span> &#125;</span><br><span class="line">setState(&#123;</span><br><span class="line">    <span class="attr">number</span>: <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">3</span>),</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// PureComponent内部对比：</span></span><br><span class="line">最新的state.number === 上一次的state.number <span class="comment">// false，重新渲染组件</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="纯组件比较-引用类型"><a href="#纯组件比较-引用类型" class="headerlink" title="纯组件比较-引用类型"></a>纯组件比较-引用类型</h3><ul>
+<li>  说明：纯组件内部的对比是 shallow compare（浅层对比）</li>
+<li>  对于引用类型来说：只比较对象的引用（地址）是否相同</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">number</span>: <span class="number">0</span> &#125;</span><br><span class="line"><span class="keyword">const</span> newObj = obj</span><br><span class="line">newObj.number = <span class="number">2</span></span><br><span class="line"><span class="built_in">console</span>.log(newObj === obj) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">state = &#123; <span class="attr">obj</span>: &#123; <span class="attr">number</span>: <span class="number">0</span> &#125; &#125;</span><br><span class="line"><span class="comment">// 错误做法</span></span><br><span class="line">state.obj.number = <span class="number">2</span></span><br><span class="line">setState(&#123; <span class="attr">obj</span>: state.obj &#125;)</span><br><span class="line"><span class="comment">// PureComponent内部比较：</span></span><br><span class="line">最新的state.obj === 上一次的state.obj <span class="comment">// true，不重新渲染组件</span></span><br></pre></td></tr></table></figure>
+
+<p>纯组件的最佳实践：</p>
+<p>注意：state 或 props 中属性值为引用类型时，应该创建新数据，不要直接修改原数据！</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正确！创建新数据</span></span><br><span class="line"><span class="keyword">const</span> newObj = &#123; ...state.obj, <span class="attr">number</span>: <span class="number">2</span> &#125;</span><br><span class="line">setState(&#123; <span class="attr">obj</span>: newObj &#125;)</span><br><span class="line"><span class="comment">// 正确！创建新数据</span></span><br><span class="line"><span class="comment">// 不要用数组的push / unshift 等直接修改当前数组的的方法</span></span><br><span class="line"><span class="comment">// 而应该用 concat 或 slice 等这些返回新数组的方法</span></span><br><span class="line"><span class="built_in">this</span>.setState(&#123;</span><br><span class="line">    <span class="attr">list</span>: [...this.state.list, &#123; 新数据 &#125;],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="组件性能优化-hooks"><a href="#组件性能优化-hooks" class="headerlink" title="组件性能优化-hooks"></a>组件性能优化-hooks</h2><h3 id="React-memo-高阶组件"><a href="#React-memo-高阶组件" class="headerlink" title="React.memo 高阶组件"></a>React.memo 高阶组件</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>React.memo 高阶组件的使用场景说明：</p>
+<p>React 组件更新机制：只要父组件状态更新，子组件就会无条件的一起更新。</p>
+<ul>
+<li>  子组件 props 变化时更新过程：组件代码执行 -&gt; JSX Diff（配合虚拟 DOM）-&gt; 渲染（变化后的内容）【 DOM 操作】。</li>
+<li>  子组件 props 无变化更新过程：组件代码执行 -&gt; JSX Diff（配合虚拟 DOM）【无 DOM 操作】。</li>
+</ul>
+<p>注意：此处更新指的是组件代码执行、JSX 进行 Diff 操作（纯 JS 的操作，速度非常快，不会对性能产生太多影响）。</p>
+<ul>
+<li>  如果组件 props 改变了，那么，该组件就必须要更新，才能接收到最新的 props。</li>
+<li>  但是，如果组件 props 没有改变时，组件也要进行一次更新。实际上，这一次更新是没有必要的。</li>
+</ul>
+<p>如果要避免组件 props 没有变化而进行的不必要更新（Diff），这种情况下，就要使用 React.memo 高阶组件。</p>
+<p>注：<code>对于 class 组件来说，可以使用 PureComponent 或 shouldComponentUpdate 钩子函数来实现</code>。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Child2 = <span class="function">(<span class="params">&#123; count &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Child2 子组件代码执行了&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">backgroundColor:</span> &#x27;#<span class="attr">abc</span>&#x27; &#125;&#125;&gt;</span>子组件2：&#123;count&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Child1 = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Child1 子组件代码执行了&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">backgroundColor:</span> &#x27;#<span class="attr">def</span>&#x27; &#125;&#125;&gt;</span>子组件1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> App = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">backgroundColor:</span> &#x27;<span class="attr">pink</span>&#x27;, <span class="attr">padding:</span> <span class="attr">10</span> &#125;&#125;&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">h1</span>&gt;</span>计数器：&#123;count&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount(count + 1)&#125;&gt;+1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">            &#123;/* 子组件 */&#125;</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Child1</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Child2</span> <span class="attr">count</span>=<span class="string">&#123;count&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><p>使用场景：当你想要避免函数组件 props 没有变化而产生的不必要更新时，就要用到 React.memo 了。</p>
+<p>作用：<strong>记忆组件上一次的渲染结果，在 props 没有变化时复用该结果，避免函数组件不必要的更新</strong>。</p>
+<p><img src="images/image-20210830205522685.png" alt="image-20210830205522685"></p>
+<p>解释：</p>
+<ul>
+<li>  React.memo 是一个高阶组件，用来记忆（memorize）组件。</li>
+<li>  参数（Child）：需要被记忆的组件，或者说是需要避免不必要更新的组件。</li>
+<li>  返回值（MemoChild）：React 记住的 Child 组件。</li>
+</ul>
+<p>原理：通过对比检查更新前后 props 是否相同，来决定是否复用上一次的渲染结果，</p>
+<ul>
+<li>  如果相同，复用上一次的渲染结果；</li>
+<li>  如果不同，重新渲染组件。</li>
+</ul>
+<p><strong>并不是所有的组件都适合使用 memo，比如 child2 组件，每次都需要重新渲染，使用 memo 反而会使性能变得更低，逻辑也变得更复杂</strong></p>
+<h4 id="浅层对比"><a href="#浅层对比" class="headerlink" title="浅层对比"></a>浅层对比</h4><p>默认情况下，React.memo 只会对更新前后的 props 进行浅对比（shallow compare）与 PureComponent 相同。</p>
+<p>也就是说，对于对象类型的 prop 来说，只会比较引用</p>
+<ul>
+<li>  如果更新前后的引用相同，复用上一次的渲染结果（不会重新渲染该组件）。</li>
+<li>  如果更新前后的引用不同，重新渲染该组件。</li>
+</ul>
+<p>如果你要手动控制比较过程，可以使用 React.memo 的第二个参数：</p>
+<p><img src="images/image-20210830220716165.png" alt="image-20210830220716165"></p>
+<p>解释：</p>
+<ul>
+<li>  第二个参数：用来比较更新前后 props 的函数。</li>
+<li>  返回值：如果返回 true，表示记住（不重新渲染）该组件；如果返回 false，表示重新渲染该组件。</li>
+</ul>
+<h3 id="useCallback-hook"><a href="#useCallback-hook" class="headerlink" title="useCallback hook"></a>useCallback hook</h3><h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>在使用 React.memo 时，对于对象类型的 props，只会比较引用（浅对比）。</p>
+<p>但是，因为<strong>组件每次更新都会创建新的 props 值</strong>，比如，新的对象、事件处理程序等（函数组件的特性）。</p>
+<p>这就导致：React.memo 在处理对象类型的 props 时，会失效（每次的 props 都是新对象）。</p>
+<p>但是，我们还是想让 React.memo 在处理对象类型的 props 时，也有效。</p>
+<p>为了让 React.memo 处理对象类型的 props 有效，只要在<em>组件更新期间保持对象类型引用相</em>等，就可以了。</p>
+<p>这时候，就要用到以下两个 Hooks：</p>
+<ul>
+<li>  <code>useCallback</code> Hook：记住函数的引用，在组件每次更新时返回相同引用的函数。</li>
+<li>  <code>useMemo</code> Hook：记住任意数据（数值、对象、函数等），在组件每次更新时返回相同引用的数据【功能之一】</li>
+</ul>
+<h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>使用场景：在使用 React.memo 时，为了组件每次更新时都能获取到相同引用的函数，就要用到 useCallback Hook</p>
+<p>注意：<strong>需要配合 React.memo 高阶函数一起使用</strong>。</p>
+<p>作用：记忆传入的回调函数，这个被记住的回调函数会一直生效，直到依赖项发生改变</p>
+<p><img src="images/image-20210830230820580.png" alt="image-20210830230820580"></p>
+<p>解释：</p>
+<ul>
+<li>  第一个参数：必选，需要被记忆的回调函数。</li>
+<li>  第二个参数：必选，依赖项数组，用于指定回调函数中依赖（用到）的数据（类似于 useEffect 的第二个参数）。</li>
+<li>  即使没有依赖，也得传入空数组（[]），此时，useCallback 记住的回调函数就会一直生效。</li>
+<li>  返回值：useCallback 记住的回调函数。</li>
+<li>  useCallback 记住的回调函数会一直生效（或者说会一直返回同一个回调函数），直到依赖项发生改变。</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState, memo, useCallback &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> App = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">const</span> [money, setMoney] = useState(<span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> help = useCallback(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        setCount(count - <span class="number">1</span>)</span><br><span class="line">    &#125;, [count])</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">h1</span>&gt;</span>计数器<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">div</span>&gt;</span>豆豆被打了&#123;count&#125;次<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">div</span>&gt;</span>金钱：&#123;money&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount(count + 1)&#125;&gt;打豆豆<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setMoney(money + 100)&#125;&gt;加钱<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            &#123;count &lt; 5 ? <span class="tag">&lt;<span class="name">DouDou</span> <span class="attr">count</span>=<span class="string">&#123;count&#125;</span> <span class="attr">help</span>=<span class="string">&#123;help&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">DouDou</span>&gt;</span> : &#x27;豆豆被打死了&#x27;&#125;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> DouDou = memo(<span class="function">(<span class="params">&#123; count, help &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;豆豆组件渲染&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">h3</span>&gt;</span>我是豆豆组件&#123;count&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;help&#125;</span>&gt;</span>续命<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>useCallback 需要配置 React.memo 使用才有意义，不然反而性能更低，因为 useCallback 来包裹函数也是需要开销的</strong></p>
+<h3 id="useMemo-hook"><a href="#useMemo-hook" class="headerlink" title="useMemo hook"></a>useMemo hook</h3><p>使用场景：类似于 useCallback，可以在组件更新期间保持任意数据引用相等，一般用来处理对象类型的数据</p>
+<p>对比：useCallback 只能记忆函数，而 useMemo 可以记忆任意数据。</p>
+<p>作用：<strong>记忆任意数据，这个被记住的数据会一直生效，直到依赖项发生改变 1</strong>。</p>
+<p><img src="images/image-20210901200419531.png" alt="image-20210901200419531"></p>
+<p>语法</p>
+<ul>
+<li>  第一个参数：必选，回调函数。注意：<strong>该回调函数会被调用，并通过返回值指定需要被记住的数据</strong>。</li>
+<li>  第二个参数：必选，依赖项数组，用于指定回调函数中依赖（用到）的数据。同样，没有依赖项时，传入空数组（[]）。</li>
+<li>  返回值：useMemo 记住的数据</li>
+<li>  useMemo 记住的数据会一直生效（或者说会一直返回同一个数据），直到依赖项发生改变。</li>
+</ul>
+<p>如何选择使用哪一个？</p>
+<ul>
+<li>  如果处理的是函数，推荐使用 useCallback Hook。</li>
+<li>  如果处理的是其他数据（比如，对象），推荐使用 useMemo Hook。</li>
+</ul>
+<h3 id="模拟-useCallback-的用法"><a href="#模拟-useCallback-的用法" class="headerlink" title="模拟 useCallback 的用法"></a>模拟 useCallback 的用法</h3><blockquote>
+<p><code>useCallback(fn, deps)</code> 相当于 <code>useMemo(() =&gt; fn, deps)</code>。</p>
+</blockquote>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> help = useCallback(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setCount(count - <span class="number">1</span>)</span><br><span class="line">&#125;, [count])</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> help = useMemo(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        setCount(count - <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, [count])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> memoizedValue = useMemo(<span class="function">() =&gt;</span> computeExpensiveValue(a, b), [a, b])</span><br></pre></td></tr></table></figure>
+
+<h1 id="虚拟-DOM-与-diff-算法"><a href="#虚拟-DOM-与-diff-算法" class="headerlink" title="虚拟 DOM 与 diff 算法"></a>虚拟 DOM 与 diff 算法</h1><h2 id="React-核心原理"><a href="#React-核心原理" class="headerlink" title="React 核心原理"></a>React 核心原理</h2><ol>
+<li>Virtual DOM（虚拟 DOM）和 Diff 算法</li>
+</ol>
+<ul>
+<li>  虚拟 DOM 的优势</li>
+<li>  key 属性</li>
+</ul>
+<ol start="2">
+<li>虚拟 DOM 的问题</li>
+<li>React Fiber</li>
+<li>React 合成事件<ol>
+<li>合成事件的变化</li>
+</ol>
+</li>
+<li>hooks 原理<ol>
+<li>useState</li>
+<li>useEffect</li>
+</ol>
+</li>
+<li>redux<ol>
+<li>thunk 是什么</li>
+<li>connect 用法 - 高阶组件</li>
+</ol>
+</li>
+</ol>
+<h3 id="虚拟-DOM-和-Diff-算法"><a href="#虚拟-DOM-和-Diff-算法" class="headerlink" title="虚拟 DOM 和 Diff 算法"></a>虚拟 DOM 和 Diff 算法</h3><h4 id="虚拟-DOM-对象"><a href="#虚拟-DOM-对象" class="headerlink" title="虚拟 DOM 对象"></a>虚拟 DOM 对象</h4><ul>
+<li><p>为什么使用虚拟 DOM？</p>
+<ol>
+<li>真正的 DOM 对象属性很多，处理起来不方便</li>
+<li>性能角度</li>
+<li>虚拟 DOM 的真正价值：跨平台</li>
+</ol>
+</li>
+<li><p>  Virtual DOM</p>
+</li>
+<li><p>  虚拟 DOM 对象：就是一个普通的 JS 对象，用来描述我们希望在页面中看到的 HTML 结构内容</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> element = &#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&#x27;h1&#x27;</span>,</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">className</span>: <span class="string">&#x27;greeting&#x27;</span>,</span><br><span class="line">    <span class="attr">children</span>: <span class="string">&#x27;Hello JSX!&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;&lt;/div&gt;</span><br><span class="line"><span class="comment">// &#123; type: &#x27;div&#x27; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>123<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="comment">// &#123; type: &#x27;div&#x27;, props: &#123; chilren: &#x27;123&#x27; &#125; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;tab&quot;</span>&gt;</span>123<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="comment">// &#123; type: &#x27;div&#x27;, props: &#123; className: &#x27;tab&#x27;, chilren: &#x27;123&#x27; &#125; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  原生 DOM 对象： 也是一个 JS 对象，是浏览器默认提供的</li>
+<li>  DOM 对象 和 HTML 元素之间是一一对应的关系</li>
+</ul>
+<h4 id="React-JSX-语法转化的过程"><a href="#React-JSX-语法转化的过程" class="headerlink" title="React JSX 语法转化的过程"></a>React JSX 语法转化的过程</h4><ul>
+<li>  转化过程：JSX -&gt; React.createEelement()/_jsx -&gt; 虚拟 DOM</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JSX</span></span><br><span class="line"><span class="keyword">const</span> el = <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;abc&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> &#123;&#125;&#125;&gt;123<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 旧的转化方式：</span></span><br><span class="line"><span class="comment">// React 元素</span></span><br><span class="line"><span class="keyword">const</span> el = <span class="comment">/*#__PURE__*/</span>React.createElement(<span class="string">&quot;div&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">className</span>: <span class="string">&quot;abc&quot;</span>,</span><br><span class="line">  <span class="attr">onClick</span>: <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;, <span class="string">&quot;123&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 新的转化方式：</span></span><br><span class="line"><span class="keyword">var</span> _jsxRuntime = <span class="built_in">require</span>(<span class="string">&quot;react/jsx-runtime&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> el = <span class="comment">/*#__PURE__*/</span>(<span class="number">0</span>, _jsxRuntime.jsx)(<span class="string">&quot;div&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">className</span>: <span class="string">&quot;abc&quot;</span>,</span><br><span class="line">  <span class="attr">onClick</span>: <span class="function">() =&gt;</span> &#123;&#125;,</span><br><span class="line">  <span class="attr">children</span>: <span class="string">&quot;123&quot;</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 虚拟 DOM</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&#x27;div&#x27;</span>,</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">className</span>: <span class="string">&quot;abc&quot;</span>,</span><br><span class="line">    <span class="attr">onClick</span>: <span class="function">() =&gt;</span> &#123;&#125;,</span><br><span class="line">    <span class="attr">children</span>: <span class="string">&quot;123&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Diff-算法的说明"><a href="#Diff-算法的说明" class="headerlink" title="Diff 算法的说明"></a>Diff 算法的说明</h4><ul>
+<li>  第一次页面渲染的过程：1 JSX + state =&gt; 2 虚拟 DOM 树（JS 对象） =&gt; 3 浏览器中看到的 HTML 结构内容</li>
+<li>  当更新了状态，就会重新渲染组件，也就会重新生成一棵新的 虚拟 DOM 树</li>
+<li>  Diff 算法就会：对比 初始虚拟 DOM 树 和 更新后的虚拟 DOM 树，找到不同之处，最终，只将不同的地方更新到页面中</li>
+</ul>
+<h4 id="一个组件内部更新机制"><a href="#一个组件内部更新机制" class="headerlink" title="一个组件内部更新机制"></a>一个组件内部更新机制</h4><ul>
+<li>  只要想让状态发生变化，就调用 setState()，只要调用 setState()，就会执行组件的 render 方法。来重新渲染组件</li>
+<li>注意：render 重新执行，不代表把整个组件重新渲染到页面中。而实际上，React 内部会使用 <em>虚拟 DOM</em> 和 <em>Diff 算法</em>来做到 <strong>部分更新</strong>。<ul>
+<li>  部分更新（打补丁）：只将变化的地方重新渲染到页面中，这样，尽量减少了 DOM 操作</li>
+</ul>
+</li>
+</ul>
+<h4 id="Diff-算法的说明-1"><a href="#Diff-算法的说明-1" class="headerlink" title="Diff 算法的说明 - 1"></a>Diff 算法的说明 - 1</h4><ul>
+<li>  如果两棵树的<strong>根元素类型</strong>不同，React 会销毁旧树，创建新树</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 旧树</span></span><br><span class="line">&lt;div&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">Counter</span> /&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 新树</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">Counter</span> /&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">执行过程：destory Counter -&gt; insert Counter</span><br></pre></td></tr></table></figure>
+
+<h4 id="Diff-算法的说明-2"><a href="#Diff-算法的说明-2" class="headerlink" title="Diff 算法的说明 - 2"></a>Diff 算法的说明 - 2</h4><ul>
+<li>  对于类型相同的 React DOM 元素，React 会对比两者的属性是否相同，只更新不同的属性</li>
+<li>  当处理完这个 DOM 节点，React 就会递归处理子节点。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 旧</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;before&quot;</span> <span class="attr">title</span>=<span class="string">&quot;stuff&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">// 新</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;after&quot;</span> <span class="attr">title</span>=<span class="string">&quot;stuff&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">只更新：className 属性</span><br><span class="line"></span><br><span class="line">// 旧</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;&#123;color:</span> &#x27;<span class="attr">red</span>&#x27;, <span class="attr">fontWeight:</span> &#x27;<span class="attr">bold</span>&#x27;&#125;&#125;&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">// 新</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;&#123;color:</span> &#x27;<span class="attr">green</span>&#x27;, <span class="attr">fontWeight:</span> &#x27;<span class="attr">bold</span>&#x27;&#125;&#125;&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">只更新：color属性</span><br></pre></td></tr></table></figure>
+
+<h4 id="Diff-算法的说明-3"><a href="#Diff-算法的说明-3" class="headerlink" title="Diff 算法的说明 - 3"></a>Diff 算法的说明 - 3</h4><ul>
+<li>  1 当在子节点的后面添加一个节点，这时候两棵树的转化工作执行的很好</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 旧</span></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>first<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>second<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 新</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>first<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>second<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>third<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">执行过程：</span><br><span class="line">React会匹配新旧两个&lt;li&gt;first&lt;<span class="regexp">/li&gt;，匹配两个&lt;li&gt;second&lt;/</span>li&gt;，然后添加 &lt;li&gt;third&lt;/li&gt; tree</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  2 但是如果你在开始位置插入一个元素，那么问题就来了：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 旧</span></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 新</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">执行过程：</span><br><span class="line">React将改变每一个子节点，而非保持 &lt;li&gt;Duke&lt;<span class="regexp">/li&gt; 和 &lt;li&gt;Villanova&lt;/</span>li&gt; 不变</span><br></pre></td></tr></table></figure>
+
+<h4 id="key-属性"><a href="#key-属性" class="headerlink" title="key 属性"></a>key 属性</h4><blockquote>
+<p>为了解决以上问题，React 提供了一个 key 属性。当子节点带有 key 属性，React 会通过 key 来匹配原始树和后来的树。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 旧</span></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&quot;2015&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&quot;2016&quot;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 新</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&quot;2014&quot;</span>&gt;</span>3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&quot;2015&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&quot;2016&quot;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">执行过程：</span><br><span class="line">现在 React 知道带有key <span class="string">&#x27;2014&#x27;</span> 的元素是新的，对于 <span class="string">&#x27;2015&#x27;</span> 和 <span class="string">&#x27;2016&#x27;</span> 仅仅移动位置即可</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  说明：key 属性在 React 内部使用，但不会传递给你的组件</li>
+<li>  推荐：在遍历数据时，推荐在组件中使用 key 属性：<code>&lt;li key=&#123;item.id&#125;&gt;&#123;item.name&#125;&lt;/li&gt;</code></li>
+<li>  注意：<strong>key 只需要保持与他的兄弟节点唯一即可，不需要全局唯一</strong></li>
+<li>  注意：<strong>尽可能的减少数组 index 作为 key，数组中插入元素的等操作时，会使得效率底下</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 旧</span></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&quot;0&quot;</span>&gt;</span>1 <span class="tag">&lt;<span class="name">input</span> /&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&quot;1&quot;</span>&gt;</span>2 <span class="tag">&lt;<span class="name">input</span> /&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 新</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&quot;0&quot;</span>&gt;</span>3 <span class="tag">&lt;<span class="name">input</span> /&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&quot;1&quot;</span>&gt;</span>1 <span class="tag">&lt;<span class="name">input</span> /&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&quot;2&quot;</span>&gt;</span>2 <span class="tag">&lt;<span class="name">input</span> /&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="虚拟-DOM-的真正价值"><a href="#虚拟-DOM-的真正价值" class="headerlink" title="虚拟 DOM 的真正价值"></a>虚拟 DOM 的真正价值</h4><ul>
+<li>  虚拟 DOM 的真正价值： 虚拟 DOM 让 React 代码摆脱了浏览器的限制（束缚），只要能够运行 JS 的地方，就可以执行 React 代码。</li>
+<li>  所以，使用 React 能够实现跨平台应用。</li>
+<li>  也可以将 React 看做是： 面向虚拟 DOM 编程</li>
+</ul>
+<h3 id="key-的技巧"><a href="#key-的技巧" class="headerlink" title="key 的技巧"></a><strong>key 的技巧</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 利用 key 的特性来实现让 EditInput 组件在打开抽屉时，能够获取到正确的内容</span><br><span class="line">// 原理： React 会比较更新前后的 key 是否相同，如果相同就复用该组件；</span><br><span class="line">//       如果不同，就会卸载原来的EditInput组件，然后，重新渲染EditInput组件</span><br><span class="line">&lt;EditInput key=&#123;name&#125; config=&#123;inputDrawer.type === &#x27;name&#x27; ? nameConfig : introConfig&#125; onUpdate=&#123;inputDrawer.type === &#x27;name&#x27; ? onUpdateName : onUpdateIntro&#125; onClose=&#123;onInputClose&#125; /&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="React-15"><a href="#React-15" class="headerlink" title="React 15"></a>React 15</h3><ul>
+<li><p>  包含了：虚拟 DOM 和 Diff</p>
+</li>
+<li><p>架构</p>
+<ol>
+<li>Reconciler：（协调器）负责调用 render 生成虚拟 Dom，进行 Diff，找出变化后的虚拟 Dom</li>
+<li>Renderer：（渲染器）负责接收 Reconciler 通知，将变化的组件渲染在当前<code>宿主环境</code></li>
+</ol>
+<ul>
+<li>  比如浏览器（react-dom），不同的宿主环境会有不同的 Renderer</li>
+</ul>
+</li>
+<li><p>缺陷：</p>
+<ul>
+<li>  递归同步更新 DOM 树，如果节点非常多，即使只有一次 state 变更，React 也需要进行复杂的递归更新，更新一旦开始，<strong>中途就无法中断</strong>，直到遍历完整颗树，才能释放 <code>JS 主线程</code></li>
+</ul>
+</li>
+<li><p>状态更新</p>
+<ul>
+<li>  批处理：多次调用 setState() 会合并为一次更新</li>
+<li>  原理：调用 setState() 并没有立即更新状态，而是存储到 <code>_pendingStateQueue</code> 队列中，将需要更新的组件存入 <code>dirtyComponent</code> 中。在非 异步代码 中，React 会将 <code>isBatchingUpdates</code> 标记设置为 true，表示批量更新；而当 异步代码 执行时，由于 React 已经将内部的 <code>isBatchingUpdates</code> 标记设置为 false，所以，异步代码中操作 setState 表现为非批量更新，而是调用一次 setState 就更新一次状态、组件</li>
+<li>  其实，这是一个 bug，因为在不同情况下 setState 表现不一致</li>
+<li>  React 为了解决这个问题，提供了一个 API 来实现批处理：<code>ReactDOM.unstable_batchedUpdates()</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="React-16"><a href="#React-16" class="headerlink" title="React 16"></a>React 16</h3><ul>
+<li>  <a target="_blank" rel="noopener" href="https://juejin.cn/post/7010539227284766751">参考：React 各个版本特性的变化</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://claudiopro.github.io/react-fiber-vs-stack-demo/fiber.html">React 16 实现的动画效果</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://claudiopro.github.io/react-fiber-vs-stack-demo/stack.html">React 15 实现的动画效果</a></li>
+<li>架构：<ul>
+<li>  Scheduler（调度器）：调度任务的优先级，高优任务优先进入 Reconciler</li>
+<li>  Reconciler（协调器）：负责找出变化的组件（使用 <code>Fiber</code> 重构）</li>
+<li>  Renderer（渲染器）：负责将变化的组件渲染到页面上</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>大任务拆分小任务</li>
+</ol>
+<p>React 的解决思路，就是在浏览器每一帧的时间中预留一些时间给 JS 线程，React 利用这部分时间更新组件。当预留的时间不够用时，React 将线程控制权交还给浏览器让他有时间渲染 UI，React 则等待下一帧再继续被中断的工作。</p>
+<p>将长任务分拆到每一帧中，每一帧执行一小段任务的操作，就是我们常说的时间切片</p>
+<ol start="2">
+<li>任务划分优先级</li>
+</ol>
+<p><code>Concurrent Mode</code> 就是为了解决以上两个问题而设计的一套新的架构，重点就是，让组件的渲染 “可中断” 并且具有 “优先级”。</p>
+<h4 id="requestIdleCallback"><a href="#requestIdleCallback" class="headerlink" title="requestIdleCallback"></a>requestIdleCallback</h4><ol>
+<li>跟性能密切相关的数字 16.6</li>
+</ol>
+<p>浏览器刷新频率：<code>60HZ</code> 也就是每秒刷新 60 次，大概 16.6ms 浏览器刷新一次<br>由于 <code>GUI 渲染线程</code>和 <code>JS 线程</code>是互斥的，所以 JS 脚本执行和浏览器布局、绘制不能同时执行<br><strong>在这 16.6ms 的时间里，浏览器既需要完成 JS 的执行，也需要完成样式的重排和重绘</strong>，如果 JS 执行的时间过长，超出了 16.6ms，这次刷新就没有时间执行样式布局和样式绘制了，于是在页面上就会表现为卡顿。</p>
+<ol start="2">
+<li>requestIdleCallback</li>
+</ol>
+<ul>
+<li>  <a target="_blank" rel="noopener" href="https://juejin.cn/post/6984949525928476703">参考</a></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用法示例</span></span><br><span class="line"><span class="keyword">let</span> tasksNum = <span class="number">500</span></span><br><span class="line"></span><br><span class="line">requestIdleCallback(unImportWork)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unImportWork</span>(<span class="params">deadline</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;---- 开始 ----&#x27;</span>)</span><br><span class="line">    <span class="keyword">while</span> (deadline.timeRemaining() &amp;&amp; tasksNum &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`执行了<span class="subst">$&#123;<span class="number">500</span> - tasksNum + <span class="number">1</span>&#125;</span>个任务`</span>)</span><br><span class="line">        tasksNum--</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;---- 结束 ----&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> (tasksNum &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 在未来的帧中继续执行</span></span><br><span class="line">        requestIdleCallback(unImportWork)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意：由于兼容性和刷新帧率的问题，React 并没有直接使用 requestIdleCallback ， 而是使用了 MessageChannel 模拟实现，原理是一样的。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/08/react-base-course21/" rel="prev" title="21_极客园 H5">
+      <i class="fa fa-chevron-left"></i> 21_极客园 H5
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mixins%EF%BC%88%E5%B7%B2%E5%BA%9F%E5%BC%83%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">mixins（已废弃）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#render-props-%E6%8A%80%E6%9C%AF"><span class="nav-number">3.</span> <span class="nav-text">render-props 技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8%E7%9A%84%E8%AF%B4%E6%98%8E"><span class="nav-number">3.1.</span> <span class="nav-text">组件复用的说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#render-props-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">render-props 基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#children-%E4%BB%A3%E6%9B%BF-render-%E5%B1%9E%E6%80%A7"><span class="nav-number">3.3.</span> <span class="nav-text">children 代替 render 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#render-props-%E4%BC%98%E5%8C%96"><span class="nav-number">3.4.</span> <span class="nav-text">render-props 优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6-HOC"><span class="nav-number">4.</span> <span class="nav-text">高阶组件 HOC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">4.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90"><span class="nav-number">4.2.</span> <span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="nav-number">4.3.</span> <span class="nav-text">使用步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E9%80%92-props"><span class="nav-number">4.4.</span> <span class="nav-text">传递 props</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-hooks"><span class="nav-number">5.</span> <span class="nav-text">自定义 hooks</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number"></span> <span class="nav-text">性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E6%9B%B4%E6%96%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">组件更新机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-class-%E7%BB%84%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">组件性能优化-class 组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%8F%E8%BD%BB-state"><span class="nav-number">2.1.</span> <span class="nav-text">减轻 state</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E9%87%8D%E6%96%B0%E6%B8%B2%E6%9F%93"><span class="nav-number">2.2.</span> <span class="nav-text">避免不必要的重新渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%AF%E7%BB%84%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">纯组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%AF%E7%BB%84%E4%BB%B6%E6%AF%94%E8%BE%83-%E5%80%BC%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.4.</span> <span class="nav-text">纯组件比较-值类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%AF%E7%BB%84%E4%BB%B6%E6%AF%94%E8%BE%83-%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.5.</span> <span class="nav-text">纯组件比较-引用类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-hooks"><span class="nav-number">3.</span> <span class="nav-text">组件性能优化-hooks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#React-memo-%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">React.memo 高阶组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">3.1.2.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%85%E5%B1%82%E5%AF%B9%E6%AF%94"><span class="nav-number">3.1.3.</span> <span class="nav-text">浅层对比</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useCallback-hook"><span class="nav-number">3.2.</span> <span class="nav-text">useCallback hook</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">3.2.1.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">3.2.2.</span> <span class="nav-text">基本使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useMemo-hook"><span class="nav-number">3.3.</span> <span class="nav-text">useMemo hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F-useCallback-%E7%9A%84%E7%94%A8%E6%B3%95"><span class="nav-number">3.4.</span> <span class="nav-text">模拟 useCallback 的用法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F-DOM-%E4%B8%8E-diff-%E7%AE%97%E6%B3%95"><span class="nav-number"></span> <span class="nav-text">虚拟 DOM 与 diff 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#React-%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">React 核心原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F-DOM-%E5%92%8C-Diff-%E7%AE%97%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">虚拟 DOM 和 Diff 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F-DOM-%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.1.1.</span> <span class="nav-text">虚拟 DOM 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#React-JSX-%E8%AF%AD%E6%B3%95%E8%BD%AC%E5%8C%96%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.2.</span> <span class="nav-text">React JSX 语法转化的过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Diff-%E7%AE%97%E6%B3%95%E7%9A%84%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.3.</span> <span class="nav-text">Diff 算法的说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%BB%84%E4%BB%B6%E5%86%85%E9%83%A8%E6%9B%B4%E6%96%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.4.</span> <span class="nav-text">一个组件内部更新机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Diff-%E7%AE%97%E6%B3%95%E7%9A%84%E8%AF%B4%E6%98%8E-1"><span class="nav-number">1.1.5.</span> <span class="nav-text">Diff 算法的说明 - 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Diff-%E7%AE%97%E6%B3%95%E7%9A%84%E8%AF%B4%E6%98%8E-2"><span class="nav-number">1.1.6.</span> <span class="nav-text">Diff 算法的说明 - 2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Diff-%E7%AE%97%E6%B3%95%E7%9A%84%E8%AF%B4%E6%98%8E-3"><span class="nav-number">1.1.7.</span> <span class="nav-text">Diff 算法的说明 - 3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#key-%E5%B1%9E%E6%80%A7"><span class="nav-number">1.1.8.</span> <span class="nav-text">key 属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F-DOM-%E7%9A%84%E7%9C%9F%E6%AD%A3%E4%BB%B7%E5%80%BC"><span class="nav-number">1.1.9.</span> <span class="nav-text">虚拟 DOM 的真正价值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#key-%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="nav-number">1.2.</span> <span class="nav-text">key 的技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-15"><span class="nav-number">1.3.</span> <span class="nav-text">React 15</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-16"><span class="nav-number">1.4.</span> <span class="nav-text">React 16</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#requestIdleCallback"><span class="nav-number">1.4.1.</span> <span class="nav-text">requestIdleCallback</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title=" → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="fab fa-zhihu fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

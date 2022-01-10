@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 文章详情。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="21_极客园 H5">
+<meta property="og:url" content="http://example.com/2022/01/08/react-base-course21/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 文章详情。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-08T04:48:22.000Z">
+<meta property="article:modified_time" content="2022-01-08T12:23:11.200Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/01/08/react-base-course21/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>21_极客园 H5 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/08/react-base-course21/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          21_极客园 H5
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-08 12:48:22 / 修改时间：20:23:11" itemprop="dateCreated datePublished" datetime="2022-01-08T12:48:22+08:00">2022-01-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 文章详情。</p>
+<span id="more"></span>
+
+<h2 id="文章详情-获取数据"><a href="#文章详情-获取数据" class="headerlink" title="文章详情-获取数据"></a>文章详情-获取数据</h2><ul>
+<li>  定义类型 data.d.ts</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 文章详情</span><br><span class="line">export type ArticleDetail = &#123;</span><br><span class="line">    art_id: string</span><br><span class="line">    attitude: number</span><br><span class="line">    aut_id: string</span><br><span class="line">    aut_name: string</span><br><span class="line">    aut_photo: string</span><br><span class="line">    comm_count: number</span><br><span class="line">    content: string</span><br><span class="line">    is_collected: boolean</span><br><span class="line">    is_followed: boolean</span><br><span class="line">    like_count: number</span><br><span class="line">    pubdate: string</span><br><span class="line">    read_count: number</span><br><span class="line">    title: string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  准备 action actions/article.ts</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import &#123; ApiResponse, ArticleDetail &#125; from &#x27;@/types/data&#x27;</span><br><span class="line">import &#123; RootThunkAction &#125; from &#x27;@/types/store&#x27;</span><br><span class="line">import request from &#x27;@/utils/request&#x27;</span><br><span class="line"></span><br><span class="line">export function getArticleInfo(id: string): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch) =&gt; &#123;</span><br><span class="line">        const res = await request.get&lt;ApiResponse&lt;ArticleDetail&gt;&gt;(`/articles/$&#123;id&#125;`)</span><br><span class="line">        console.log(res.data.data)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  组件中发送请求</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const Article = () =&gt; &#123;</span><br><span class="line">    const history = useHistory()</span><br><span class="line">    const dispatch = useDispatch()</span><br><span class="line">    const Params = useParams&lt;&#123; id: string &#125;&gt;()</span><br><span class="line"></span><br><span class="line">    // 获取动态路由参数</span><br><span class="line">    const articleId = Params.id</span><br><span class="line"></span><br><span class="line">    useEffect(() =&gt; &#123;</span><br><span class="line">        dispatch(getArticleInfo(articleId))</span><br><span class="line">    &#125;, [])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章详情-保存到-redux-中"><a href="#文章详情-保存到-redux-中" class="headerlink" title="文章详情-保存到 redux 中"></a>文章详情-保存到 redux 中</h2><ul>
+<li>  store.d.ts 中增加文章详情的类型</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 所有的Action的类型</span><br><span class="line">export type RootAction = LoginAction | ProfileAction | HomeAction | SearchAction | ArticleAction</span><br><span class="line"></span><br><span class="line">export type ArticleAction = &#123;</span><br><span class="line">    type: &#x27;article/setArticleInfo&#x27;</span><br><span class="line">    payload: ArticleDetail</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  修改 actions/article.ts，分发 Action</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 获取文章详情</span><br><span class="line"> * @param id</span><br><span class="line"> * @returns</span><br><span class="line"> */</span><br><span class="line">export function getArticleInfo(id: string): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch) =&gt; &#123;</span><br><span class="line">        const res = await request.get&lt;ApiResponse&lt;ArticleDetail&gt;&gt;(`/articles/$&#123;id&#125;`)</span><br><span class="line">        dispatch(&#123;</span><br><span class="line">            type: &#x27;article/setArticleInfo&#x27;,</span><br><span class="line">            payload: res.data.data,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在 reducers/article.ts 中存储数据</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import &#123; ArticleDetail &#125; from &#x27;@/types/data&#x27;</span><br><span class="line">import &#123; ArticleAction &#125; from &#x27;@/types/store&#x27;</span><br><span class="line"></span><br><span class="line">type ArticleType = &#123;</span><br><span class="line">    info: ArticleDetail</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const initialState: ArticleType = &#123;</span><br><span class="line">    // 文章详情数据</span><br><span class="line">    info: &#123;&#125;,</span><br><span class="line">&#125; as ArticleType</span><br><span class="line"></span><br><span class="line">export default function article(state = initialState, action: ArticleAction): ArticleType &#123;</span><br><span class="line">    switch (action.type) &#123;</span><br><span class="line">        case &#x27;article/setArticleInfo&#x27;:</span><br><span class="line">            return &#123;</span><br><span class="line">                ...state,</span><br><span class="line">                info: action.payload,</span><br><span class="line">            &#125;</span><br><span class="line">        default:</span><br><span class="line">            return state</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在 reducers/index.ts 中</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import article from &#x27;./article&#x27;</span><br><span class="line">const rootReducers = combineReducers(&#123;</span><br><span class="line">    // ...</span><br><span class="line">    article,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export default rootReducers</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章详情-渲染文章"><a href="#文章详情-渲染文章" class="headerlink" title="文章详情-渲染文章"></a>文章详情-渲染文章</h2><ul>
+<li>  获取文章详情数据</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 获取文章详情信息</span><br><span class="line">const &#123; info &#125; = useSelector((state: RootState) =&gt; state.article)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  渲染文章详情</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&#x27;wrapper&#x27;&gt;</span><br><span class="line">    &lt;div className=&#x27;article-wrapper&#x27;&gt;</span><br><span class="line">        &lt;div className=&#x27;header&#x27;&gt;</span><br><span class="line">            &lt;h1 className=&#x27;title&#x27;&gt;&#123;info.title&#125;&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">            &lt;div className=&#x27;info&#x27;&gt;</span><br><span class="line">                &lt;span&gt;&#123;dayjs(info.pubdate).format(&#x27;YYYY-MM-DD&#x27;)&#125;&lt;/span&gt;</span><br><span class="line">                &lt;span&gt;&#123;info.read_count&#125; 阅读&lt;/span&gt;</span><br><span class="line">                &lt;span&gt;&#123;info.comm_count&#125; 评论&lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">            &lt;div className=&#x27;author&#x27;&gt;</span><br><span class="line">                &lt;img src=&#123;info.aut_photo&#125; alt=&#x27;&#x27; /&gt;</span><br><span class="line">                &lt;span className=&#x27;name&#x27;&gt;&#123;info.aut_name&#125;&lt;/span&gt;</span><br><span class="line">                &lt;span className=&#123;classNames(&#x27;follow&#x27;, info.is_followed ? &#x27;followed&#x27; : &#x27;&#x27;)&#125;&gt;&#123;info.is_followed ? &#x27;已关注&#x27; : &#x27;关注&#x27;&#125;&lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">        &lt;div className=&#x27;content&#x27;&gt;</span><br><span class="line">            &lt;div className=&#x27;content-html dg-html&#x27; dangerouslySetInnerHTML=&#123;&#123; __html: info.content &#125;&#125; /&gt;</span><br><span class="line">            &lt;div className=&#x27;date&#x27;&gt;发布文章时间：&#123;dayjs(info.pubdate).format(&#x27;YYYY-MM-DD&#x27;)&#125;&lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章详情-useInitState-优化"><a href="#文章详情-useInitState-优化" class="headerlink" title="文章详情-useInitState 优化"></a>文章详情-useInitState 优化</h2><ul>
+<li>  使用 useInitState 来优化请求的获取，但是会遇到传参的问题，，因此需要包裹一个函数</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const &#123; info &#125; = useInitState(() =&gt; getArticleInfo(articleId), &#x27;article&#x27;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  使用 <code>useInitialState</code> 自定义 hook 会重复发送请求</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">针对该问题的分析过程：</span><br><span class="line"></span><br><span class="line">1. 定位出问题的代码位置</span><br><span class="line"></span><br><span class="line">  - 既然造成了重复请求，说明 dispatch 分发 action 的代码重复执行了。可以通过 console.log 来确认，是否会重复执行</span><br><span class="line"></span><br><span class="line">2. 分析原因</span><br><span class="line"></span><br><span class="line">  - dispatch 是在 useEffect hook 中执行的，说明 effect 重复执行。而 effect 重复执行的原因只有一个，就是：依赖项发生改变</span><br><span class="line">  - 第一个依赖项 `dispatch` 函数是不变的</span><br><span class="line">  - 只能是第二个依赖项 action 函数改变了</span><br><span class="line"></span><br><span class="line">3. 确认分析是否正确</span><br><span class="line">  - Reesult 组件中 `useInitialState` 重复执行，也就是重复更新了状态，每次更新状态都会导致组件重新渲染。</span><br><span class="line">  - 组件重新渲染时，会重新执行组件中的所有代码。</span><br><span class="line">  - 而我们传递给 `useInitialState` hook 的第一个回调函数，每次都会重新创建</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  解决思路：减少 action 的依赖</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 封装一些自定义的hooks</span><br><span class="line">export function useInitState&lt;T extends keyof RootState&gt;(action: () =&gt; void, stateName: T) &#123;</span><br><span class="line">    const dispatch = useDispatch()</span><br><span class="line">    // ...</span><br><span class="line">    const actionRef = useRef(action)</span><br><span class="line">    useEffect(() =&gt; &#123;</span><br><span class="line">        const actionFn = actionRef.current</span><br><span class="line">        dispatch(actionFn())</span><br><span class="line">    &#125;, [dispatch])</span><br><span class="line"></span><br><span class="line">    const state = useSelector((state: RootState) =&gt; state[stateName])</span><br><span class="line">    return state</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章详情-防-XSS-攻击"><a href="#文章详情-防-XSS-攻击" class="headerlink" title="文章详情-防 XSS 攻击"></a>文章详情-防 XSS 攻击</h2><blockquote>
+<p>目标：清理正文中的不安全元素，防止 XSS 安全漏洞</p>
+</blockquote>
+<p>实现思路：</p>
+<ul>
+<li>  使用 <code>dompurify</code> 对 HTML 内容进行净化处理</li>
+</ul>
+<p><strong>操作步骤</strong></p>
+<ol>
+<li>安装包</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add dompurify</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在页面中调用 <code>dompurify</code> 来对文章正文内容做净化：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import DOMPurify from &#x27;dompurify&#x27;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&#x27;content-html dg-html&#x27; dangerouslySetInnerHTML=&#123;&#123; __html: DOMPurify.sanitize(info.content || &#x27;&#x27;) &#125;&#125;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章详情-代码高亮"><a href="#文章详情-代码高亮" class="headerlink" title="文章详情-代码高亮"></a>文章详情-代码高亮</h2><blockquote>
+<p>目标：实现嵌入文章中的代码带有语法高亮效果</p>
+</blockquote>
+<p>实现思路：</p>
+<ul>
+<li>  通过 <code>highlight.js</code> 库实现对文章正文 HTML 中的代码元素自动添加语法高亮</li>
+</ul>
+<p><strong>操作步骤</strong></p>
+<ul>
+<li>  安装包</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add  highlight.js</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在页面中引入 <code>highlight.js</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import hljs from &#x27;highlight.js&#x27;</span><br><span class="line">import &#x27;highlight.js/styles/vs2015.css&#x27;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在文章加载后，对文章内容中的代码进行语法高亮</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">    // 配置 highlight.js</span><br><span class="line">    hljs.configure(&#123;</span><br><span class="line">        // 忽略未经转义的 HTML 字符</span><br><span class="line">        ignoreUnescapedHTML: true,</span><br><span class="line">    &#125;)</span><br><span class="line">    // 获取到内容中所有的code标签</span><br><span class="line">    const codes = document.querySelectorAll(&#x27;.dg-html pre code&#x27;)</span><br><span class="line">    codes.forEach((el) =&gt; &#123;</span><br><span class="line">        // 让code进行高亮</span><br><span class="line">        hljs.highlightElement(el as HTMLElement)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;, [detail])</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="文章详情-导航栏显示文章作者"><a href="#文章详情-导航栏显示文章作者" class="headerlink" title="文章详情-导航栏显示文章作者"></a>文章详情-导航栏显示文章作者</h2><p>实现思路：</p>
+<ul>
+<li>  为顶部导航栏组件 NavBar 设置中间部分的内容</li>
+<li>  监听页面的 <code>scroll</code> 事件，在页面滚动时判断描述信息区域的 <code>top</code> 是否小于等于 0；如果是，则将 NavBar 中间内容设置为显示；否则设置为隐藏</li>
+</ul>
+<p><strong>操作步骤</strong></p>
+<ul>
+<li>  为顶部导航栏添加作者信息</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;NavBar</span><br><span class="line">    onBack=&#123;() =&gt; history.go(-1)&#125;</span><br><span class="line">    right=&#123;</span><br><span class="line">        &lt;span&gt;</span><br><span class="line">            &lt;Icon type=&#x27;icongengduo&#x27; /&gt;</span><br><span class="line">        &lt;/span&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&gt;</span><br><span class="line">    &lt;div className=&#x27;nav-author&#x27;&gt;</span><br><span class="line">        &lt;img src=&#123;info.aut_photo&#125; alt=&#x27;&#x27; /&gt;</span><br><span class="line">        &lt;span className=&#x27;name&#x27;&gt;&#123;info.aut_name&#125;&lt;/span&gt;</span><br><span class="line">        &lt;span className=&#123;classNames(&#x27;follow&#x27;, info.is_followed ? &#x27;followed&#x27; : &#x27;&#x27;)&#125;&gt;&#123;info.is_followed ? &#x27;已关注&#x27; : &#x27;关注&#x27;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/NavBar&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  声明状态和对界面元素的引用</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 是否显示顶部信息</span><br><span class="line">const [isShowAuthor, setIsShowAuthor] = useState(false)</span><br><span class="line">const authorRef = useRef&lt;HTMLDivElement&gt;(null)</span><br><span class="line">const wrapRef = useRef&lt;HTMLDivElement&gt;(null)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;div className=&quot;wrapper&quot; ref=&#123;wrapRef&#125;&gt;</span><br><span class="line"></span><br><span class="line">&lt;div className=&quot;author&quot; ref=&#123;authorRef&#125;&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  控制显示隐藏的逻辑</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">    const wrapDOM = wrapRef.current!</span><br><span class="line">    const authDOM = authorRef.current!</span><br><span class="line">    const onScroll = function () &#123;</span><br><span class="line">        const rect = authDOM.getBoundingClientRect()!</span><br><span class="line">        console.log(rect.top)</span><br><span class="line"></span><br><span class="line">        if (rect.top &lt;= 0) &#123;</span><br><span class="line">            setIsShowAuthor(true)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            setIsShowAuthor(false)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    wrapDOM.addEventListener(&#x27;scroll&#x27;, onScroll)</span><br><span class="line">    return () =&gt; &#123;</span><br><span class="line">        wrapDOM.removeEventListener(&#x27;scroll&#x27;, onScroll)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  控制头部信息的显示和隐藏</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;NavBar</span><br><span class="line">    onBack=&#123;() =&gt; history.go(-1)&#125;</span><br><span class="line">    right=&#123;</span><br><span class="line">        &lt;span&gt;</span><br><span class="line">            &lt;Icon type=&#x27;icongengduo&#x27; /&gt;</span><br><span class="line">        &lt;/span&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&gt;</span><br><span class="line">    &#123;isShowAuthor &amp;&amp; (</span><br><span class="line">        &lt;div className=&#x27;nav-author&#x27;&gt;</span><br><span class="line">            &lt;img src=&#123;info.aut_photo&#125; alt=&#x27;&#x27; /&gt;</span><br><span class="line">            &lt;span className=&#x27;name&#x27;&gt;&#123;info.aut_name&#125;&lt;/span&gt;</span><br><span class="line">            &lt;span className=&#123;classNames(&#x27;follow&#x27;, info.is_followed ? &#x27;followed&#x27; : &#x27;&#x27;)&#125;&gt;&#123;info.is_followed ? &#x27;已关注&#x27; : &#x27;关注&#x27;&#125;&lt;/span&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )&#125;</span><br><span class="line">&lt;/NavBar&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章评论-获取评论数据"><a href="#文章评论-获取评论数据" class="headerlink" title="文章评论-获取评论数据"></a>文章评论-获取评论数据</h2><ul>
+<li>  data.d.ts 中</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">export type Comment = &#123;</span><br><span class="line">    aut_id: string</span><br><span class="line">    aut_name: string</span><br><span class="line">    aut_photo: string</span><br><span class="line">    com_id: string</span><br><span class="line">    content: string</span><br><span class="line">    is_followed: boolean</span><br><span class="line">    is_liking: boolean</span><br><span class="line">    like_count: number</span><br><span class="line">    pubdate: string</span><br><span class="line">    reply_count: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export type CommentRes = &#123;</span><br><span class="line">    end_id: string</span><br><span class="line">    last_id: string</span><br><span class="line">    results: Comment[]</span><br><span class="line">    total_count: number</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在 actions/articles.ts 中</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 获取文章的评论</span><br><span class="line">export function getCommentList(id: string): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch) =&gt; &#123;</span><br><span class="line">        const res = await request.get&lt;ApiResponse&lt;CommentRes&gt;&gt;(&#x27;/comments&#x27;, &#123;</span><br><span class="line">            params: &#123;</span><br><span class="line">                type: &#x27;a&#x27;,</span><br><span class="line">                source: id,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">        console.log(res)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  组件中发送请求</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useInitState(() =&gt; getCommentList(params.id), &#x27;article&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章评论-保存到-redux-中"><a href="#文章评论-保存到-redux-中" class="headerlink" title="文章评论-保存到 redux 中"></a>文章评论-保存到 redux 中</h2><ul>
+<li>  store.d.ts 中</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">export type ArticleAction =</span><br><span class="line">    | &#123;</span><br><span class="line">          type: &#x27;article/setArticleInfo&#x27;</span><br><span class="line">          payload: ArticleDetail</span><br><span class="line">      &#125;</span><br><span class="line">    | &#123;</span><br><span class="line">          type: &#x27;article/saveComment&#x27;</span><br><span class="line">          payload: CommentRes</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  actions/article.ts 中</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 获取文章的评论</span><br><span class="line">export function getCommentList(id: string): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch) =&gt; &#123;</span><br><span class="line">        const res = await request.get&lt;ApiResponse&lt;CommentRes&gt;&gt;(&#x27;/comments&#x27;, &#123;</span><br><span class="line">            params: &#123;</span><br><span class="line">                type: &#x27;a&#x27;,</span><br><span class="line">                source: id,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">        // console.log(res.data.data)</span><br><span class="line">        dispatch(&#123;</span><br><span class="line">            type: &#x27;article/saveComment&#x27;,</span><br><span class="line">            payload: res.data.data,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  reducers/article.ts 中</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">type ArticleType = &#123;</span><br><span class="line">    info: ArticleDetail</span><br><span class="line">    comment: CommentRes</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const initialState: ArticleType = &#123;</span><br><span class="line">    // 文章详情数据</span><br><span class="line">    info: &#123;&#125;,</span><br><span class="line">    comment: &#123;&#125;,</span><br><span class="line">&#125; as ArticleType</span><br><span class="line"></span><br><span class="line">export default function article(state = initialState, action: ArticleAction): ArticleType &#123;</span><br><span class="line">    if (action.type === &#x27;article/setArticleInfo&#x27;) &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            info: action.payload,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    if (action.type === &#x27;article/saveComment&#x27;) &#123;</span><br><span class="line">        const old = state.comment.results || []</span><br><span class="line">        return &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            comment: &#123;</span><br><span class="line">                ...action.payload,</span><br><span class="line">                results: [...old, ...action.payload.results],</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return state</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章评论-渲染评论"><a href="#文章评论-渲染评论" class="headerlink" title="文章评论-渲染评论"></a>文章评论-渲染评论</h2><ul>
+<li><p>  准备 noCommnet 组件，素材中已经准备好</p>
+</li>
+<li><p>  准备 CommentItem 组件，素材中已经准备好</p>
+</li>
+<li><p>  获取评论数据</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const &#123; comment &#125; = useInitState(() =&gt; getCommentList(articleId), &#x27;article&#x27;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  渲染评论</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&#x27;comment-list&#x27;&gt;&#123;info.comm_count === 0 ? &lt;NoComment&gt;&lt;/NoComment&gt; : comment.results?.map((item) =&gt; &lt;CommentItem key=&#123;item.com_id&#125; type=&#x27;normal&#x27; comment=&#123;item&#125;&gt;&lt;/CommentItem&gt;)&#125;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在 CommentItem 中渲染评论</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">import dayjs from &#x27;dayjs&#x27;</span><br><span class="line">import classnames from &#x27;classnames&#x27;</span><br><span class="line"></span><br><span class="line">import Icon from &#x27;@/components/Icon&#x27;</span><br><span class="line"></span><br><span class="line">import styles from &#x27;./index.module.scss&#x27;</span><br><span class="line">import &#123; Comment &#125; from &#x27;@/types/data&#x27;</span><br><span class="line"></span><br><span class="line">type Props = &#123;</span><br><span class="line">    // normal 普通 - 文章的评论</span><br><span class="line">    // origin 回复评论的原始评论，也就是对哪个评论进行回复</span><br><span class="line">    // reply 回复评论</span><br><span class="line">    type?: &#x27;normal&#x27; | &#x27;reply&#x27; | &#x27;origin&#x27;</span><br><span class="line">    comment: Comment</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const CommentItem = (&#123;</span><br><span class="line">    // normal 普通</span><br><span class="line">    // origin 回复评论的原始评论</span><br><span class="line">    // reply 回复评论</span><br><span class="line">    type = &#x27;normal&#x27;,</span><br><span class="line">    comment,</span><br><span class="line">&#125;: Props) =&gt; &#123;</span><br><span class="line">    // 回复按钮</span><br><span class="line">    const replyJSX =</span><br><span class="line">        type === &#x27;normal&#x27; ? (</span><br><span class="line">            &lt;span className=&#x27;replay&#x27;&gt;</span><br><span class="line">                &#123;comment.reply_count&#125; 回复</span><br><span class="line">                &lt;Icon type=&#x27;iconbtn_right&#x27; /&gt;</span><br><span class="line">            &lt;/span&gt;</span><br><span class="line">        ) : null</span><br><span class="line"></span><br><span class="line">    return (</span><br><span class="line">        &lt;div className=&#123;styles.root&#125;&gt;</span><br><span class="line">            &lt;div className=&#x27;avatar&#x27;&gt;</span><br><span class="line">                &lt;img src=&#123;comment.aut_photo&#125; alt=&#x27;&#x27; /&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div className=&#x27;comment-info&#x27;&gt;</span><br><span class="line">                &lt;div className=&#x27;comment-info-header&#x27;&gt;</span><br><span class="line">                    &lt;span className=&#x27;name&#x27;&gt;&#123;comment.aut_name&#125;&lt;/span&gt;</span><br><span class="line">                    &#123;/* 文章评论、评论的回复 */&#125;</span><br><span class="line">                    &#123;(type === &#x27;normal&#x27; || type === &#x27;reply&#x27;) &amp;&amp; (</span><br><span class="line">                        &lt;span className=&#x27;thumbs-up&#x27;&gt;</span><br><span class="line">                            &#123;comment.like_count&#125;</span><br><span class="line">                            &lt;Icon type=&#123;comment.is_liking ? &#x27;iconbtn_like_sel&#x27; : &#x27;iconbtn_like2&#x27;&#125; /&gt;</span><br><span class="line">                        &lt;/span&gt;</span><br><span class="line">                    )&#125;</span><br><span class="line">                    &#123;/* 要回复的评论 */&#125;</span><br><span class="line">                    &#123;type === &#x27;origin&#x27; &amp;&amp; &lt;span className=&#123;classnames(&#x27;follow&#x27;, comment.is_followed ? &#x27;followed&#x27; : &#x27;&#x27;)&#125;&gt;&#123;comment.is_followed ? &#x27;已关注&#x27; : &#x27;关注&#x27;&#125;&lt;/span&gt;&#125;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">                &lt;div className=&#x27;comment-content&#x27;&gt;&#123;comment.content&#125;&lt;/div&gt;</span><br><span class="line">                &lt;div className=&#x27;comment-footer&#x27;&gt;</span><br><span class="line">                    &#123;replyJSX&#125;</span><br><span class="line">                    &#123;/* 非评论的回复 */&#125;</span><br><span class="line">                    &#123;type !== &#x27;reply&#x27; &amp;&amp; &lt;span className=&#x27;comment-time&#x27;&gt;&#123;dayjs(comment.pubdate).fromNow()&#125;&lt;/span&gt;&#125;</span><br><span class="line">                    &#123;/* 文章的评论 */&#125;</span><br><span class="line">                    &#123;type === &#x27;origin&#x27; &amp;&amp; (</span><br><span class="line">                        &lt;span className=&#x27;thumbs-up&#x27;&gt;</span><br><span class="line">                            &#123;comment.like_count&#125;</span><br><span class="line">                            &lt;Icon type=&#123;comment.is_liking ? &#x27;iconbtn_like_sel&#x27; : &#x27;iconbtn_like2&#x27;&#125; /&gt;</span><br><span class="line">                        &lt;/span&gt;</span><br><span class="line">                    )&#125;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default CommentItem</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章评论-触底加载更多"><a href="#文章评论-触底加载更多" class="headerlink" title="文章评论-触底加载更多"></a>文章评论-触底加载更多</h2><ul>
+<li>  使用无限滚动组件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import &#123; InfiniteScroll &#125; from &#x27;antd-mobile&#x27;</span><br><span class="line">;&lt;InfiniteScroll hasMore=&#123;hasMore&#125; loadMore=&#123;loadMore&#125;&gt;&lt;/InfiniteScroll&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  提供逻辑</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 获取评论数据</span><br><span class="line">const &#123; results = [], total_count = -1, last_id, end_id = &#x27;&#x27; &#125; = useSelector((state: RootState) =&gt; state.article.comment)</span><br><span class="line"></span><br><span class="line">const hasMore = last_id !== end_id</span><br><span class="line"></span><br><span class="line">const loadMore = async () =&gt; &#123;</span><br><span class="line">    // console.log(&#x27;加载更多数据&#x27;)</span><br><span class="line">    await dispatch(getCommentList(articleId, comment.last_id))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章评论-底部的渲染"><a href="#文章评论-底部的渲染" class="headerlink" title="文章评论-底部的渲染"></a>文章评论-底部的渲染</h2><ul>
+<li>  渲染底部区域</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type === &#x27;normal&#x27; &amp;&amp; (</span><br><span class="line">        &lt;&gt;</span><br><span class="line">            &lt;div className=&#x27;action-item&#x27;&gt;</span><br><span class="line">                &lt;Icon type=&#x27;iconbtn_comment&#x27; /&gt;</span><br><span class="line">                &lt;p&gt;评论&lt;/p&gt;</span><br><span class="line">                &#123;!!info.comm_count &amp;&amp; &lt;span className=&#x27;bage&#x27;&gt;&#123;info.comm_count&#125;&lt;/span&gt;&#125;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div className=&#x27;action-item&#x27;&gt;</span><br><span class="line">                &lt;Icon type=&#123;info.attitude === 1 ? &#x27;iconbtn_like_sel&#x27; : &#x27;iconbtn_like2&#x27;&#125; /&gt;</span><br><span class="line">                &lt;p&gt;点赞&lt;/p&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div className=&#x27;action-item&#x27;&gt;</span><br><span class="line">                &lt;Icon type=&#123;info.is_collected ? &#x27;iconbtn_collect_sel&#x27; : &#x27;iconbtn_collect&#x27;&#125; /&gt;</span><br><span class="line">                &lt;p&gt;收藏&lt;/p&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章点赞功能"><a href="#文章点赞功能" class="headerlink" title="文章点赞功能"></a>文章点赞功能</h2><ul>
+<li>  给点赞按钮注册点击事件</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* &#x27;iconbtn_like2&#x27; */</span></span><br><span class="line">&#125;</span><br><span class="line">;<span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;action-item&#x27;</span> <span class="attr">onClick</span>=<span class="string">&#123;onLike&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">Icon</span> <span class="attr">type</span>=<span class="string">&#123;detail.attitude</span> === <span class="string">1</span> ? &#x27;<span class="attr">iconbtn_like_sel</span>&#x27; <span class="attr">:</span> &#x27;<span class="attr">iconbtn_like2</span>&#x27;&#125; /&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>点赞<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  点赞是发送 action</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> onLike = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> dispatch(likeAritcle(detail.art_id, detail.attitude))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  提供 action</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">likeAritcle</span>(<span class="params">id: string, attitude: number</span>): <span class="title">RootThunkAction</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (attitude === <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">// 取消点赞</span></span><br><span class="line">            <span class="keyword">await</span> request.delete(<span class="string">&#x27;/article/likings/&#x27;</span> + id)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 点赞</span></span><br><span class="line">            <span class="keyword">await</span> request.post(<span class="string">&#x27;/article/likings&#x27;</span>, &#123; <span class="attr">target</span>: id &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 更新</span></span><br><span class="line">        <span class="keyword">await</span> dispatch(getArticleDetail(id))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="收藏功能"><a href="#收藏功能" class="headerlink" title="收藏功能"></a>收藏功能</h2><ul>
+<li>  提供 action</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 收藏</span><br><span class="line">export function collectArticle(id: string, is_collected: boolean): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch) =&gt; &#123;</span><br><span class="line">        if (is_collected) &#123;</span><br><span class="line">            // 取消收藏</span><br><span class="line">            await request.delete(&#x27;/article/collections/&#x27; + id)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // 收藏</span><br><span class="line">            await request.post(&#x27;/article/collections&#x27;, &#123;</span><br><span class="line">                target: id,</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        await dispatch(getArticleInfo(id))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  注册点击事件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&quot;action-item&quot; onClick=&#123;collect&#125;&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  提供对应的函数</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const collect = async () =&gt; &#123;</span><br><span class="line">    dispatch(collectArticle(info.art_id, info.is_collected))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="关注用户功能"><a href="#关注用户功能" class="headerlink" title="关注用户功能"></a>关注用户功能</h2><ul>
+<li>  提供函数</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">export function followUser(userId: string, is_follow: boolean): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch, getState) =&gt; &#123;</span><br><span class="line">        if (is_follow) &#123;</span><br><span class="line">            // 取消关注</span><br><span class="line">            await request.delete(&#x27;/user/followings/&#x27; + userId)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // 关注</span><br><span class="line">            await request.post(&#x27;/user/followings&#x27;, &#123;</span><br><span class="line">                target: userId,</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        await dispatch(getArticleInfo(getState().article.info.art_id))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  注册点击事件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;span className=&#123;classNames(&#x27;follow&#x27;, info.is_followed ? &#x27;followed&#x27; : &#x27;&#x27;)&#125; onClick=&#123;onFollowUser&#125;&gt;</span><br><span class="line">    &#123;info.is_followed ? &#x27;已关注&#x27; : &#x27;关注&#x27;&#125;</span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  提供函数</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const onFollowUser = async () =&gt; &#123;</span><br><span class="line">    await dispatch(followUser(info.aut_id, info.is_followed))</span><br><span class="line">    Toast.show(&#x27;操作成功&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章评论-评论与顶部的跳转"><a href="#文章评论-评论与顶部的跳转" class="headerlink" title="文章评论-评论与顶部的跳转"></a>文章评论-评论与顶部的跳转</h2><ul>
+<li>  注册事件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&quot;action-item&quot; onClick=&#123;onComment&#125;&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  接收父组件传递的 onComment 函数</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">type Props = &#123;</span><br><span class="line">    // normal 普通评论</span><br><span class="line">    // reply 回复评论</span><br><span class="line">    type?: &#x27;normal&#x27; | &#x27;reply&#x27;</span><br><span class="line">    onComment?: () =&gt; void</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const CommentFooter = (&#123; type = &#x27;normal&#x27;, onComment &#125;: Props) =&gt; &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  父组件提供跳转逻辑</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const [isComment, setIsComment] = useState(false)</span><br><span class="line">const onComment = () =&gt; &#123;</span><br><span class="line">    // console.log(&#x27;跳转到&#x27;)</span><br><span class="line">    const commentDOM = commentRef.current!</span><br><span class="line">    const wrapDOM = wrapRef.current!</span><br><span class="line">    if (isComment) &#123;</span><br><span class="line">        wrapDOM.scrollTo(0, 0)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        wrapDOM.scrollTo(0, commentDOM.offsetTop - 44)</span><br><span class="line">    &#125;</span><br><span class="line">    setIsComment(!isComment)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章评论-封装评论表单组件"><a href="#文章评论-封装评论表单组件" class="headerlink" title="文章评论-封装评论表单组件"></a>文章评论-封装评论表单组件</h2><ul>
+<li>  素材中已经提供好了</li>
+</ul>
+<h2 id="文章评论-显示评论表单组件"><a href="#文章评论-显示评论表单组件" class="headerlink" title="文章评论-显示评论表单组件"></a>文章评论-显示评论表单组件</h2><ul>
+<li>  父组件中使用弹窗组件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Popup visible=&#123;commentShow&#125; position=&#x27;right&#x27;&gt;</span><br><span class="line">    &lt;CommentInput&gt;&lt;/CommentInput&gt;</span><br><span class="line">&lt;/Popup&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  父组件中提供状态</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 评论表单显示状态</span><br><span class="line">const [commentShow, setCommentShow] = useState(false)</span><br><span class="line">const hideComment = () =&gt; &#123;</span><br><span class="line">    setCommentShow(false)</span><br><span class="line">&#125;</span><br><span class="line">const showComment = () =&gt; &#123;</span><br><span class="line">    setCommentShow(true)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  父组件将 showComment 传递给 commentFooter 组件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    /* 底部评论栏 */</span><br><span class="line">&#125;</span><br><span class="line">;&lt;CommentFooter onComment=&#123;onComment&#125; showComment=&#123;showComment&#125; /&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  CommentFooter 组件中点击显示弹窗</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">type Props = &#123;</span><br><span class="line">    // normal 普通评论</span><br><span class="line">    // reply 回复评论</span><br><span class="line">    type?: &#x27;normal&#x27; | &#x27;reply&#x27;</span><br><span class="line">    onComment?: () =&gt; void</span><br><span class="line">    showComment: () =&gt; void</span><br><span class="line">&#125;</span><br><span class="line">;&lt;div className=&#x27;input-btn&#x27; onClick=&#123;showComment&#125;&gt;</span><br><span class="line">    &lt;Icon type=&#x27;iconbianji&#x27; /&gt;</span><br><span class="line">    &lt;span&gt;抢沙发&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  父组件将 hideComment 传递给 CommentInput 组件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Popup visible=&#123;commentShow&#125; position=&#x27;right&#x27;&gt;</span><br><span class="line">    &lt;CommentInput hideComment=&#123;hideComment&#125;&gt;&lt;/CommentInput&gt;</span><br><span class="line">&lt;/Popup&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  CommentInput 中关闭弹窗</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">type Props = &#123;</span><br><span class="line">    // 评论的作者的名字</span><br><span class="line">    name?: string</span><br><span class="line">    hideComment: () =&gt; void</span><br><span class="line">&#125;</span><br><span class="line">;&lt;NavBar right=&#123;&lt;span className=&#x27;publish&#x27;&gt;发表&lt;/span&gt;&#125; onBack=&#123;hideComment&#125;&gt;</span><br><span class="line">    &#123;name ? &#x27;回复评论&#x27; : &#x27;评论文章&#x27;&#125;</span><br><span class="line">&lt;/NavBar&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  自动获取焦点</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const textRef = useRef&lt;TextAreaRef&gt;(null)</span><br><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">    textRef.current!.focus()</span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章评论-发表评论"><a href="#文章评论-发表评论" class="headerlink" title="文章评论-发表评论"></a>文章评论-发表评论</h2><ul>
+<li>  获取评论的内容</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const [value, setValue] = useState(&#x27;&#x27;)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    /* 评论内容输入框 */</span><br><span class="line">&#125;</span><br><span class="line">;&lt;TextArea placeholder=&#x27;说点什么~&#x27; rows=&#123;10&#125; ref=&#123;textRef&#125; value=&#123;value&#125; onChange=&#123;(e) =&gt; setValue(e)&#125; /&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  给发表按钮注册点击事件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;NavBar</span><br><span class="line">  right=&#123;</span><br><span class="line">    &lt;span className=&quot;publish&quot; onClick=&#123;onClick&#125;&gt;</span><br><span class="line">      发表</span><br><span class="line">    &lt;/span&gt;</span><br><span class="line">  &#125;</span><br><span class="line">  onBack=&#123;hideComment&#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  接收添加评论的方法</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">type Props = &#123;</span><br><span class="line">    // 评论的作者的名字</span><br><span class="line">    name?: string</span><br><span class="line">    hideComment: () =&gt; void</span><br><span class="line">    onAddComment?: (value: string) =&gt; void</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const onClick = () =&gt; &#123;</span><br><span class="line">    if (!value) return</span><br><span class="line">    onAddComment &amp;&amp; onAddComment(value)</span><br><span class="line">    hideComment()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  父组件传递方法</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">;&lt;CommentInput onAddComment=&#123;onAddComment&#125; hideComment=&#123;hideComment&#125;&gt;&lt;/CommentInput&gt;</span><br><span class="line"></span><br><span class="line">const onAddComment = (value: string) =&gt; &#123;</span><br><span class="line">    console.log(&#x27;添加评论&#x27;, value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章评论-发表评论-发送请求"><a href="#文章评论-发表评论-发送请求" class="headerlink" title="文章评论-发表评论-发送请求"></a>文章评论-发表评论-发送请求</h2><ul>
+<li>  准备添加评论的 action</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">export function addComment(articleId: string, content: string): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch, getState) =&gt; &#123;</span><br><span class="line">        const res = await request.post&lt;ApiResponse&lt;&#123; new_obj: Comment &#125;&gt;&gt;(&#x27;/comments&#x27;, &#123;</span><br><span class="line">            target: articleId,</span><br><span class="line">            content,</span><br><span class="line">        &#125;)</span><br><span class="line">        console.log(res.data.data.new_obj)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  发表评论时发布 action</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const onAddComment = (value: string) =&gt; &#123;</span><br><span class="line">    dispatch(addComment(articleId, value))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章评论-保存评论数据"><a href="#文章评论-保存评论数据" class="headerlink" title="文章评论-保存评论数据"></a>文章评论-保存评论数据</h2><ul>
+<li>  在 store.d.ts 中</li>
+</ul>
+<figure class="highlight plaintext"><figcaption><span>q</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export type ArticleAction = &#123;</span><br><span class="line">    type: &#x27;article/saveNewComment&#x27;</span><br><span class="line">    payload: Comment</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  修改 action</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">export function addComment(articleId: string, content: string): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch) =&gt; &#123;</span><br><span class="line">        const res = await request.post&lt;ApiResponse&lt;&#123; new_obj: Comment &#125;&gt;&gt;(&#x27;/comments&#x27;, &#123;</span><br><span class="line">            target: articleId,</span><br><span class="line">            content,</span><br><span class="line">        &#125;)</span><br><span class="line">        dispatch(&#123;</span><br><span class="line">            type: &#x27;article/saveNewComment&#x27;,</span><br><span class="line">            payload: res.data.data.new_obj,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  reducer 处理</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if (action.type === &#x27;article/saveNewComment&#x27;) &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        ...state,</span><br><span class="line">        comment: &#123;</span><br><span class="line">            ...state.comment,</span><br><span class="line">            results: [action.payload, ...state.comment.results],</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  更新评论数量</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const onAddComment = async (value: string) =&gt; &#123;</span><br><span class="line">    await dispatch(addComment(articleId, value))</span><br><span class="line">    await dispatch(getArticleInfo(articleId))</span><br><span class="line">    Toast.show(&#123;</span><br><span class="line">        icon: &#x27;success&#x27;,</span><br><span class="line">        content: &#x27;发表成功&#x27;,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章评论-展示回复列表组件"><a href="#文章评论-展示回复列表组件" class="headerlink" title="文章评论-展示回复列表组件"></a>文章评论-展示回复列表组件</h2><ul>
+<li>  根据素材提供 CommentReply 组件</li>
+<li>  提供结构</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Popup visible=&#123;replyShow.visible&#125; position=&#x27;right&#x27; destroyOnClose&gt;</span><br><span class="line">    &lt;CommentReply hideReply=&#123;hideReply&#125;&gt;&lt;/CommentReply&gt;</span><br><span class="line">&lt;/Popup&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  提供状态</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const [replyShow, setReplyShow] = useState(&#123;</span><br><span class="line">    visible: false,</span><br><span class="line">    origin: &#123;&#125; as Comment,</span><br><span class="line">&#125;)</span><br><span class="line">const hideReply = () =&gt; &#123;</span><br><span class="line">    setReplyShow(&#123;</span><br><span class="line">        visible: false,</span><br><span class="line">        origin: &#123;&#125; as Comment,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">const onReply = (comment: Comment) =&gt; &#123;</span><br><span class="line">    setReplyShow(&#123;</span><br><span class="line">        visible: true,</span><br><span class="line">        origin: comment,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  点击回复按钮，显示评论弹窗</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">type Props = &#123;</span><br><span class="line">    // normal 普通 - 文章的评论</span><br><span class="line">    // origin 回复评论的原始评论，也就是对哪个评论进行回复</span><br><span class="line">    // reply 回复评论</span><br><span class="line">    type?: &#x27;normal&#x27; | &#x27;reply&#x27; | &#x27;origin&#x27;</span><br><span class="line">    comment: Comment</span><br><span class="line">    onReply: (comment: Comment) =&gt; void</span><br><span class="line">&#125;</span><br><span class="line">;&lt;span className=&#x27;replay&#x27; onClick=&#123;() =&gt; onReply &amp;&amp; onReply(comment)&#125;&gt;</span><br><span class="line">    &#123;comment.reply_count&#125; 回复</span><br><span class="line">    &lt;Icon type=&#x27;iconbtn_right&#x27; /&gt;</span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  父组件传递 onReply</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const onReply = (comment: Comment) =&gt; &#123;</span><br><span class="line">    setReplyShow(&#123;</span><br><span class="line">        visible: true,</span><br><span class="line">        origin: comment,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">;&lt;CommentItem key=&#123;item.com_id&#125; type=&#x27;normal&#x27; comment=&#123;item&#125; onReply=&#123;onReply&#125;&gt;&lt;/CommentItem&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="回复列表-渲染"><a href="#回复列表-渲染" class="headerlink" title="回复列表-渲染"></a>回复列表-渲染</h2><ul>
+<li>  父传子，传入评论列表</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Popup visible=&#123;replyShow.visible&#125; position=&#x27;right&#x27; destroyOnClose&gt;</span><br><span class="line">    &lt;CommentReply origin=&#123;replyShow.origin&#125; hideReply=&#123;hideReply&#125;&gt;&lt;/CommentReply&gt;</span><br><span class="line">&lt;/Popup&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  CommentReply 组件显示数据</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">type Props = &#123;</span><br><span class="line">  hideReply: () =&gt; void</span><br><span class="line">  origin: Comment</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;div className=&quot;reply-wrapper&quot;&gt;</span><br><span class="line">  &#123;/* 顶部导航栏 */&#125;</span><br><span class="line">  &lt;NavBar className=&quot;transparent-navbar&quot; onBack=&#123;hideReply&#125;&gt;</span><br><span class="line">    &lt;div&gt;&#123;origin.reply_count&#125;条回复&lt;/div&gt;</span><br><span class="line">  &lt;/NavBar&gt;</span><br><span class="line"></span><br><span class="line">  &#123;/* 原评论信息 */&#125;</span><br><span class="line">  &lt;div className=&quot;origin-comment&quot;&gt;</span><br><span class="line">    &lt;CommentItem comment=&#123;origin&#125; type=&quot;reply&quot;&gt;&lt;/CommentItem&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  封装获取回复的 action</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 获取评论的回复</span><br><span class="line">export function getReplyList(id: string, offset: string): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch) =&gt; &#123;</span><br><span class="line">        const res = await request.get&lt;ApiResponse&lt;CommentRes&gt;&gt;(&#x27;/comments&#x27;, &#123;</span><br><span class="line">            params: &#123;</span><br><span class="line">                type: &#x27;c&#x27;,</span><br><span class="line">                source: id,</span><br><span class="line">                offset,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">        console.log(res.data.data)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  组件中发送请求</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const dispatch = useDispatch()</span><br><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">    dispatch(getReplyList(origin.com_id, &#x27;&#x27;))</span><br><span class="line">&#125;, [origin, dispatch])</span><br></pre></td></tr></table></figure>
+
+<h2 id="回复列表-存储到-redux"><a href="#回复列表-存储到-redux" class="headerlink" title="回复列表-存储到 redux"></a>回复列表-存储到 redux</h2><ul>
+<li>  store.d.ts 中</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| &#123;</span><br><span class="line">    type: &#x27;article/saveReply&#x27;</span><br><span class="line">    payload: CommentRes</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  修改 action</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 获取评论的回复</span><br><span class="line">export function getReplyList(id: string, offset: string): RootThunkAction &#123;</span><br><span class="line">    return async (dispatch) =&gt; &#123;</span><br><span class="line">        const res = await request.get&lt;ApiResponse&lt;CommentRes&gt;&gt;(&#x27;/comments&#x27;, &#123;</span><br><span class="line">            params: &#123;</span><br><span class="line">                type: &#x27;c&#x27;,</span><br><span class="line">                source: id,</span><br><span class="line">                offset,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">        console.log(res.data.data)</span><br><span class="line">        dispatch(&#123;</span><br><span class="line">            type: &#x27;article/saveReply&#x27;,</span><br><span class="line">            payload: res.data.data,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  修改 reducers</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if (action.type === &#x27;article/saveReply&#x27;) &#123;</span><br><span class="line">    const old = state.reply.results || []</span><br><span class="line">    return &#123;</span><br><span class="line">        ...state,</span><br><span class="line">        reply: &#123;</span><br><span class="line">            ...action.payload,</span><br><span class="line">            results: [...old, ...action.payload.results],</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  渲染回复列表</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 回复评论的列表 */</span></span><br><span class="line">&#125;</span><br><span class="line">;<span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;reply-list&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;reply-header&#x27;</span>&gt;</span>全部回复<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    &#123;results.length === 0 ? <span class="tag">&lt;<span class="name">NoComment</span> /&gt;</span> : results.map((item) =&gt; <span class="tag">&lt;<span class="name">CommentItem</span> <span class="attr">key</span>=<span class="string">&#123;item.com_id&#125;</span> <span class="attr">comment</span>=<span class="string">&#123;item&#125;</span> <span class="attr">type</span>=<span class="string">&#x27;reply&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">CommentItem</span>&gt;</span>)&#125;</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="回复列表-无限滚动"><a href="#回复列表-无限滚动" class="headerlink" title="回复列表-无限滚动"></a>回复列表-无限滚动</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">let hasMore: boolean</span><br><span class="line">if (last_id === end_id &amp;&amp; last_id !== undefined) &#123;</span><br><span class="line">    hasMore = false</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    hasMore = true</span><br><span class="line">&#125;</span><br><span class="line">const loadMore = async () =&gt; &#123;</span><br><span class="line">    await dispatch(getReplyList(origin.com_id, &#x27;&#x27;))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">;&lt;InfiniteScroll hasMore=&#123;hasMore&#125; loadMore=&#123;loadMore&#125;&gt;&lt;/InfiniteScroll&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="keep-alive-功能实现"><a href="#keep-alive-功能实现" class="headerlink" title="keep alive 功能实现"></a>keep alive 功能实现</h2><ul>
+<li>效果：从路由 A 切换到路由 B，再返回 路由 A，如果实现了 keep alive 效果，此时，路由 A 对应页面会继续保持原来状态。<ul>
+<li>  此处，要保留的状态，包含：页面滚动位置； Tab 高亮 等</li>
+</ul>
+</li>
+</ul>
+<p>实现方式：</p>
+<ol>
+<li>用 redux 存储这些数据：也就是在离开路由 A 的时候，用 redux 保存页面当前的滚动位置；Tab 高亮</li>
+</ol>
+<ul>
+<li>  将来返回该页面，从 redux 中读取这些数据，以回复原来页面的状态</li>
+</ul>
+<ol start="2">
+<li>通过路由来实现</li>
+</ol>
+<ul>
+<li>  默认路由没有实现该功能，因为只要切换路由页面组件就会卸载，页面内容也就没有了。再返回该页面，页面相当于重新渲染，因此，原来的页面状态都会重置。也就没有实现保留上一次页面状态的效果了。</li>
+<li>  封装一个自定义路由，来实现即可</li>
+<li>  实现原理：在切换路由时，让页面不卸载，而是通过 display none 隐藏掉。这样，因为页面没有卸载，所以原来所有的操作都会被保存下来。 将来再返回该页面，只需要 display block 展示即可。这样，就可以恢复原来的内容了</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// 用法：</span><br><span class="line">// activePath 表示：要让哪个路由存活，也就是在切换到其他路由时，不是销毁该组件而是隐藏</span><br><span class="line">//  注意： activePath 和 path 应该相同</span><br><span class="line">;&lt;KeepAlive activePath=&#x27;/home&#x27; exact path=&#x27;/home&#x27;&gt;</span><br><span class="line">    &lt;Layout /&gt;</span><br><span class="line">&lt;/KeepAlive&gt;</span><br><span class="line"></span><br><span class="line">const KeepAlive = (&#123; activePath, children, ...rest &#125;: Props) =&gt; &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;Route</span><br><span class="line">            &#123;...rest&#125;</span><br><span class="line">            // 注意： children 属性，不管当前路由是否匹配，都会执行 children 函数</span><br><span class="line">            children=&#123;(props) =&gt; &#123;</span><br><span class="line">                const &#123;</span><br><span class="line">                    location: &#123; pathname &#125;,</span><br><span class="line">                &#125; = props</span><br><span class="line">                const isMatch = pathname.startsWith(activePath)</span><br><span class="line"></span><br><span class="line">                return (</span><br><span class="line">                    &lt;div className=&#123;styles.root&#125; style=&#123;&#123; display: isMatch ? &#x27;block&#x27; : &#x27;none&#x27; &#125;&#125;&gt;</span><br><span class="line">                        &#123;children&#125;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                )</span><br><span class="line">            &#125;&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/08/react-base-course20/" rel="prev" title="20_极客园 H5">
+      <i class="fa fa-chevron-left"></i> 20_极客园 H5
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/08/react-base-course22/" rel="next" title="22_React 补充">
+      22_React 补充 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%A6%E6%83%85-%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">文章详情-获取数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%A6%E6%83%85-%E4%BF%9D%E5%AD%98%E5%88%B0-redux-%E4%B8%AD"><span class="nav-number">3.</span> <span class="nav-text">文章详情-保存到 redux 中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%A6%E6%83%85-%E6%B8%B2%E6%9F%93%E6%96%87%E7%AB%A0"><span class="nav-number">4.</span> <span class="nav-text">文章详情-渲染文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%A6%E6%83%85-useInitState-%E4%BC%98%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">文章详情-useInitState 优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%A6%E6%83%85-%E9%98%B2-XSS-%E6%94%BB%E5%87%BB"><span class="nav-number">6.</span> <span class="nav-text">文章详情-防 XSS 攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%A6%E6%83%85-%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE"><span class="nav-number">7.</span> <span class="nav-text">文章详情-代码高亮</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%A6%E6%83%85-%E5%AF%BC%E8%88%AA%E6%A0%8F%E6%98%BE%E7%A4%BA%E6%96%87%E7%AB%A0%E4%BD%9C%E8%80%85"><span class="nav-number">8.</span> <span class="nav-text">文章详情-导航栏显示文章作者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E8%AE%BA-%E8%8E%B7%E5%8F%96%E8%AF%84%E8%AE%BA%E6%95%B0%E6%8D%AE"><span class="nav-number">9.</span> <span class="nav-text">文章评论-获取评论数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E8%AE%BA-%E4%BF%9D%E5%AD%98%E5%88%B0-redux-%E4%B8%AD"><span class="nav-number">10.</span> <span class="nav-text">文章评论-保存到 redux 中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E8%AE%BA-%E6%B8%B2%E6%9F%93%E8%AF%84%E8%AE%BA"><span class="nav-number">11.</span> <span class="nav-text">文章评论-渲染评论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E8%AE%BA-%E8%A7%A6%E5%BA%95%E5%8A%A0%E8%BD%BD%E6%9B%B4%E5%A4%9A"><span class="nav-number">12.</span> <span class="nav-text">文章评论-触底加载更多</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E8%AE%BA-%E5%BA%95%E9%83%A8%E7%9A%84%E6%B8%B2%E6%9F%93"><span class="nav-number">13.</span> <span class="nav-text">文章评论-底部的渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%82%B9%E8%B5%9E%E5%8A%9F%E8%83%BD"><span class="nav-number">14.</span> <span class="nav-text">文章点赞功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B6%E8%97%8F%E5%8A%9F%E8%83%BD"><span class="nav-number">15.</span> <span class="nav-text">收藏功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E6%B3%A8%E7%94%A8%E6%88%B7%E5%8A%9F%E8%83%BD"><span class="nav-number">16.</span> <span class="nav-text">关注用户功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E8%AE%BA-%E8%AF%84%E8%AE%BA%E4%B8%8E%E9%A1%B6%E9%83%A8%E7%9A%84%E8%B7%B3%E8%BD%AC"><span class="nav-number">17.</span> <span class="nav-text">文章评论-评论与顶部的跳转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E8%AE%BA-%E5%B0%81%E8%A3%85%E8%AF%84%E8%AE%BA%E8%A1%A8%E5%8D%95%E7%BB%84%E4%BB%B6"><span class="nav-number">18.</span> <span class="nav-text">文章评论-封装评论表单组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E8%AE%BA-%E6%98%BE%E7%A4%BA%E8%AF%84%E8%AE%BA%E8%A1%A8%E5%8D%95%E7%BB%84%E4%BB%B6"><span class="nav-number">19.</span> <span class="nav-text">文章评论-显示评论表单组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E8%AE%BA-%E5%8F%91%E8%A1%A8%E8%AF%84%E8%AE%BA"><span class="nav-number">20.</span> <span class="nav-text">文章评论-发表评论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E8%AE%BA-%E5%8F%91%E8%A1%A8%E8%AF%84%E8%AE%BA-%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82"><span class="nav-number">21.</span> <span class="nav-text">文章评论-发表评论-发送请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E8%AE%BA-%E4%BF%9D%E5%AD%98%E8%AF%84%E8%AE%BA%E6%95%B0%E6%8D%AE"><span class="nav-number">22.</span> <span class="nav-text">文章评论-保存评论数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E8%AE%BA-%E5%B1%95%E7%A4%BA%E5%9B%9E%E5%A4%8D%E5%88%97%E8%A1%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">23.</span> <span class="nav-text">文章评论-展示回复列表组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E5%A4%8D%E5%88%97%E8%A1%A8-%E6%B8%B2%E6%9F%93"><span class="nav-number">24.</span> <span class="nav-text">回复列表-渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E5%A4%8D%E5%88%97%E8%A1%A8-%E5%AD%98%E5%82%A8%E5%88%B0-redux"><span class="nav-number">25.</span> <span class="nav-text">回复列表-存储到 redux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E5%A4%8D%E5%88%97%E8%A1%A8-%E6%97%A0%E9%99%90%E6%BB%9A%E5%8A%A8"><span class="nav-number">26.</span> <span class="nav-text">回复列表-无限滚动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keep-alive-%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="nav-number">27.</span> <span class="nav-text">keep alive 功能实现</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title=" → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="fab fa-zhihu fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
