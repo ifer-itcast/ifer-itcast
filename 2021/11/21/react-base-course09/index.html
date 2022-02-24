@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 学会进行项目初始化。 ✔ 掌握登录功能的实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="09_极客园 PC">
+<meta property="og:url" content="http://example.com/2021/11/21/react-base-course09/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 学会进行项目初始化。 ✔ 掌握登录功能的实现。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/ifer_geek_router.png">
+<meta property="og:image" content="http://example.com/resource/images/ifer_login_box.png">
+<meta property="article:published_time" content="2021-11-20T16:48:17.000Z">
+<meta property="article:modified_time" content="2022-02-18T01:48:38.189Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/ifer_geek_router.png">
+
+<link rel="canonical" href="http://example.com/2021/11/21/react-base-course09/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>09_极客园 PC | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/21/react-base-course09/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          09_极客园 PC
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-21 00:48:17" itemprop="dateCreated datePublished" datetime="2021-11-21T00:48:17+08:00">2021-11-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-18 09:48:38" itemprop="dateModified" datetime="2022-02-18T09:48:38+08:00">2022-02-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 学会进行项目初始化。</p>
+<p>✔ 掌握登录功能的实现。</p>
+<span id="more"></span>
+
+<h2 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>了解项目定位和功能。</p>
+<h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><ul>
+<li><p>  极客园 PC 端项目：个人自媒体管理端。</p>
+</li>
+<li><p>  极客园对标 <code>CSDN</code>、<code>博客园</code> 等竞品，致力成为更加贴近年轻 IT 从业者（学员）的科技资讯类应用。</p>
+</li>
+<li><p>  产品关键词：IT、极客、活力、科技、技术分享、前沿动态、内容社交。</p>
+</li>
+<li><p>  用户特点：年轻有活力，对 IT 领域前言科技信息充满探索欲和学习热情。</p>
+</li>
+<li><p>  项目功能和演示：包括登录、退出、首页、内容（文章）管理（文章列表、发布文章、修改文章）。</p>
+</li>
+</ul>
+<h3 id="技术栈"><a href="#技术栈" class="headerlink" title="技术栈"></a>技术栈</h3><ul>
+<li><p>  项目搭建：React 官方脚手架 <code>create-react-app</code>。</p>
+</li>
+<li><p>  React Hooks。</p>
+</li>
+<li><p>  状态管理：Redux。</p>
+</li>
+<li><p>  UI 组件库：<code>AntDv4</code>。</p>
+</li>
+<li><p>  AJAX 请求库：<code>Axios</code>。</p>
+</li>
+<li><p>  路由：<code>react-router-dom</code>。</p>
+</li>
+<li><p>  富文本编辑器：<code>react-quill</code>。</p>
+</li>
+<li><p>  CSS 预编译器：<code>sass</code>。</p>
+</li>
+<li><p>  CSS Modules 避免组件之间的样式冲突。</p>
+</li>
+</ul>
+<h2 id="项目搭建"><a href="#项目搭建" class="headerlink" title="项目搭建"></a>项目搭建</h2><h3 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h3><p>能够基于脚手架搭建项目基本结构。</p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>使用 React CLI 搭建项目：<code>npx create-react-app geek-pc</code>。</p>
+</li>
+<li><p>进入项目根目录：<code>cd geek-pc</code>。</p>
+</li>
+<li><p>启动项目：<code>yarn start</code>。</p>
+</li>
+<li><p>调整项目目录结构如下。</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">src</span><br><span class="line">|-- App.js          根组件</span><br><span class="line">|-- assets          项目资源文件，比如，图片 等</span><br><span class="line">|-- components      通用组件</span><br><span class="line">|-- index.css       全局样式</span><br><span class="line">|-- index.js        项目入口</span><br><span class="line">|-- pages           页面</span><br><span class="line">|-- store           Redux 状态仓库</span><br><span class="line">`-- utils           工具，比如，token、axios 的封装等</span><br></pre></td></tr></table></figure>
+
+<p><font color=#999>🧐 通过命令 <code>tree src</code> 可以输出上面结构，空文件夹下创建 <code>.gitkeep</code> 文件可以被 Git 追踪。</font></p>
+<h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><p><code>src/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./index.css&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#root&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p><code>src/App.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>根组件<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-Git-管理项目"><a href="#使用-Git-管理项目" class="headerlink" title="使用 Git 管理项目"></a>使用 Git 管理项目</h2><h3 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h3><p>能够将项目推送到远程仓库。</p>
+<h3 id="步骤-1"><a href="#步骤-1" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>在项目根目录打开终端，并初始化 git 仓库（如果已经有了 git 仓库，无需重复该步），命令：<code>git init</code>。</p>
+</li>
+<li><p>添加项目内容到暂存区：<code>git add .</code>。</p>
+</li>
+<li><p>提交项目内容到仓库区：<code>git commit -m 项目初始化</code>。</p>
+</li>
+<li><p>添加 remote 仓库地址：<code>git remote add origin [gitee 仓库地址]</code>。</p>
+</li>
+<li><p>将项目内容推送到 gitee：<code>git push origin master -u</code>。</p>
+</li>
+<li><p>以后只需要：<code>git push</code> 即可。</p>
+</li>
+</ol>
+<h2 id="使用-CSS-预编译器"><a href="#使用-CSS-预编译器" class="headerlink" title="使用 CSS 预编译器"></a>使用 CSS 预编译器</h2><h3 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h3><p>能够在 CRA 中使用 Sass 写样式。</p>
+<h3 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h3><p><code>Sass</code> 是 CSS 预处理器，作用类似于 Less，由于 CRA 创建的项目中内置了 Sass 相关的配置，只需要 <code>yarn add sass</code> 后便可以直接使用 SASS 来写样式。<a target="_blank" rel="noopener" href="https://sass.bootcss.com/documentation/syntax">Sass 支持两种后缀</a>，分别是：<code>.sass</code> 和 <code>.scss</code>，区别如下。</p>
+<p>a，<code>.sass</code> 是一种简化语法形式（例如用缩进代替 <code>&#123;&#125;</code>，用换行代替 <code>;</code>）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.box</span><br><span class="line">    width: 200px</span><br><span class="line">    height: 200px</span><br><span class="line">    border: 1px solid #333</span><br><span class="line">    &amp;:hover</span><br><span class="line">        background-color: pink</span><br></pre></td></tr></table></figure>
+
+<p>b，<code>.scss</code> 是传统的语法形式【推荐使用】</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#333</span>;</span><br><span class="line">    &amp;<span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">        <span class="attribute">background-color</span>: pink;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="步骤-2"><a href="#步骤-2" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>安装解析 sass 的包：<code>yarn add sass</code>。</p>
+</li>
+<li><p>创建全局样式文件 <code>index.scss</code>。</p>
+</li>
+</ol>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">html</span>,</span><br><span class="line"><span class="selector-tag">body</span>,</span><br><span class="line"><span class="selector-id">#root</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在 <code>index.js</code> 中引入 <code>index.scss</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./index.scss&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"></span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#root&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置基础路由"><a href="#配置基础路由" class="headerlink" title="配置基础路由"></a>配置基础路由</h2><h3 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h3><p>能够配置登录和布局页面的路由。</p>
+<img src="/resource/images/ifer_geek_router.png"/>
+
+<h3 id="步骤-3"><a href="#步骤-3" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>安装路由：<code>yarn add react-router-dom@5.3.0</code>。</p>
+</li>
+<li><p>在 pages 目录中创建两个文件夹：Login、Layout、NotFound。</p>
+</li>
+<li><p>分别在两个目录中创建 index.js 文件，并创建一个简单的组件后导出。</p>
+</li>
+<li><p>在 App 组件中，导入路由组件以及两个页面组件。</p>
+</li>
+<li><p>配置 Login 和 Layout 的路由规则。</p>
+</li>
+</ol>
+<p><code>pages/Login/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Login</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>登录界面<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>pages/Layout/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Layout</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>布局界面<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>pages/NotFound/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">NotFound</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>NotFound<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>App.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserRouter <span class="keyword">as</span> Router, Link, Route, Switch &#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Login <span class="keyword">from</span> <span class="string">&#x27;./pages/Login&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Layout <span class="keyword">from</span> <span class="string">&#x27;./pages/Layout&#x27;</span></span><br><span class="line"><span class="keyword">import</span> NotFound <span class="keyword">from</span> <span class="string">&#x27;./pages/NotFound&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">Router</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&#x27;/login&#x27;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&#x27;/layout&#x27;</span>&gt;</span>布局<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Switch</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&#x27;/login&#x27;</span> <span class="attr">component</span>=<span class="string">&#123;Login&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">Route</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&#x27;/layout&#x27;</span> <span class="attr">component</span>=<span class="string">&#123;Layout&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">Route</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">component</span>=<span class="string">&#123;NotFound&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">Switch</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">Router</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>期望访问首页时 ‘/‘，重定向到首页，<a target="_blank" rel="noopener" href="https://v5.reactrouter.com/web/api/Redirect/exact-bool">参考文档</a>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserRouter <span class="keyword">as</span> Router, Link, Route, Switch, Redirect &#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Login <span class="keyword">from</span> <span class="string">&#x27;./pages/Login&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Layout <span class="keyword">from</span> <span class="string">&#x27;./pages/Layout&#x27;</span></span><br><span class="line"><span class="keyword">import</span> NotFound <span class="keyword">from</span> <span class="string">&#x27;./pages/NotFound&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">Router</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&#x27;/login&#x27;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="xml">                &#123;/* 为了地址栏的语义化，这里把 to 属性对应的值改成了 /home，同时出口 Route 的 path 属性也要改成 /home */&#125;</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&#x27;/home&#x27;</span>&gt;</span>布局<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Switch</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Redirect</span> <span class="attr">exact</span> <span class="attr">from</span>=<span class="string">&#x27;/&#x27;</span> <span class="attr">to</span>=<span class="string">&#x27;/home&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&#x27;/login&#x27;</span> <span class="attr">component</span>=<span class="string">&#123;Login&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">Route</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&#x27;/home&#x27;</span> <span class="attr">component</span>=<span class="string">&#123;Layout&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">Route</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">component</span>=<span class="string">&#123;NotFound&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">Switch</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">Router</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="组件库-AntD"><a href="#组件库-AntD" class="headerlink" title="组件库 AntD"></a>组件库 AntD</h2><h3 id="目标-5"><a href="#目标-5" class="headerlink" title="目标"></a>目标</h3><p>能够使用 AntD 的 Button 组件渲染按钮。</p>
+<h3 id="步骤-4"><a href="#步骤-4" class="headerlink" title="步骤"></a>步骤</h3><p><a target="_blank" rel="noopener" href="https://ant.design/index-cn">Ant Design</a> 是一套设计体系，基于这套体系有一个很成熟的 React UI 组件库，主要用于研发企业级中后台产品。</p>
+<ol>
+<li><p>安装 AntD 组件库：<code>yarn add antd</code>。</p>
+</li>
+<li><p>在项目的入口文件全局导入 AntD 组件库的样式。</p>
+</li>
+<li><p>导入 Button 组件。</p>
+</li>
+<li><p>在 Login 页面渲染 Button 组件。</p>
+</li>
+</ol>
+<p><code>src/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;antd/dist/antd.css&#x27;</span> <span class="comment">// 先导入 antd 样式文件</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./index.scss&#x27;</span> <span class="comment">// 再导入全局样式文件，防止样式覆盖！</span></span><br></pre></td></tr></table></figure>
+
+<p><code>pages/Login/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">&#x27;antd&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Login</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&#x27;primary&#x27;</span>&gt;</span>登录界面<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color=#999>🤔 以上操作做完之后，控制台会看到警告，<a target="_blank" rel="noopener" href="https://github.com/ant-design/ant-design/issues/33327">解决</a>。</font></p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="deletion">-import &#x27;antd/dist/antd.css&#x27;</span></span><br><span class="line"><span class="addition">+import &#x27;antd/dist/antd.min.css&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><p>  在哪个文件中导入 AntD 的样式文件？</p>
+</li>
+<li><p>  AntD 的样式文件和我们自己的全局样式文件的导入顺序是什么？</p>
+</li>
+</ul>
+<h2 id="配置路径别名"><a href="#配置路径别名" class="headerlink" title="配置路径别名"></a>配置路径别名</h2><h3 id="目标-6"><a href="#目标-6" class="headerlink" title="目标"></a>目标</h3><p>能够配置 @ 路径别名简化路径处理。</p>
+<h3 id="内容-2"><a href="#内容-2" class="headerlink" title="内容"></a>内容</h3><ul>
+<li><p>  注意：CRA 将所有工程化配置，都隐藏在了 <code>react-scripts</code> 包中，所以，项目中看不到任何配置信息。</p>
+</li>
+<li><p>如果要修改 CRA 的默认配置，常见的有以下两种方案。</p>
+<p>  a，根据<a target="_blank" rel="noopener" href="https://ant.design/docs/react/use-with-create-react-app-cn#%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE">文档</a>通过第三方库来修改，比如，<code>@craco/craco</code>，<font color=e32d40><strong>推荐</strong></font>。</p>
+<p>  b，通过执行 <code>yarn eject</code> 命令，释放 <code>react-scripts</code> 中的所有配置到项目中（注意：该操作不可逆）。</p>
+</li>
+</ul>
+<h3 id="步骤-5"><a href="#步骤-5" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>安装修改 CRA 配置的包：<code>yarn add -D @craco/craco</code>。</p>
+</li>
+<li><p>在项目根目录中创建 craco 的配置文件：<code>craco.config.js</code>，并在配置文件中配置路径别名。</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attr">webpack</span>: &#123;</span><br><span class="line">        <span class="attr">alias</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;@&#x27;</span>: path.join(__dirname, <span class="string">&#x27;src&#x27;</span>),</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>把 <code>package.json</code> 中的 <code>react-scripts</code> 替换为 <code>craco</code> 命令。</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;start&quot;</span>: <span class="string">&quot;craco start&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;build&quot;</span>: <span class="string">&quot;craco build&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;test&quot;</span>: <span class="string">&quot;craco test&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;eject&quot;</span>: <span class="string">&quot;react-scripts eject&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>在代码中，就可以通过 <code>@</code> 来表示 src 目录的绝对路径。</p>
+</li>
+<li><p>重启项目，让配置生效。</p>
+</li>
+</ol>
+<h2 id="别名路径提示"><a href="#别名路径提示" class="headerlink" title="@ 别名路径提示"></a>@ 别名路径提示</h2><h3 id="目标-7"><a href="#目标-7" class="headerlink" title="目标"></a>目标</h3><p>能够让 VSCode 识别 @ 路径并给出提示。</p>
+<h3 id="步骤-6"><a href="#步骤-6" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>在项目根目录创建 <code>jsconfig.json</code> 配置文件。</p>
+</li>
+<li><p>在配置文件中添加以下配置。</p>
+</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;baseUrl&quot;</span>: <span class="string">&quot;./&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;paths&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;@/*&quot;</span>: [<span class="string">&quot;src/*&quot;</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color=#999>🧐 如果 <code>/jsconfig.json</code> 文件报错，可以在 VSCode 的配置里面搜索 <code>jscon</code>，对 Check JS 选项进行打钩即可。</font></p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>VSCode 会自动读取 <code>jsconfig.json</code> 中的配置，让 VSCode 知道 @ 就是 src 目录。</p>
+<h2 id="登录界面"><a href="#登录界面" class="headerlink" title="登录界面"></a>登录界面</h2><img src="/resource/images/ifer_login_box.png"/>
+
+<h3 id="目标-8"><a href="#目标-8" class="headerlink" title="目标"></a>目标</h3><p>能够搭建出登录页面的基础布局。</p>
+<h3 id="步骤-7"><a href="#步骤-7" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>在 <code>Login/index.js</code> 中创建登录页面基本结构。</p>
+</li>
+<li><p>在 Login 目录中创建 <code>index.scss</code> 文件，指定组件样式。</p>
+</li>
+<li><p>将 logo.png 和 login.png 拷贝到 assets 目录中。</p>
+</li>
+</ol>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p><code>pages/Login/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Card &#125; <span class="keyword">from</span> <span class="string">&#x27;antd&#x27;</span></span><br><span class="line"><span class="keyword">import</span> logo <span class="keyword">from</span> <span class="string">&#x27;@/assets/logo.png&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./index.scss&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Login</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;login&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Card</span> <span class="attr">className</span>=<span class="string">&#x27;login-container&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">className</span>=<span class="string">&#x27;login-logo&#x27;</span> <span class="attr">src</span>=<span class="string">&#123;logo&#125;</span> <span class="attr">alt</span>=<span class="string">&#x27;极客园&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">Card</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>pages/Login/index.scss</code></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.login</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="comment">// 若父级没有定位，这里会相对于浏览器窗口</span></span><br><span class="line">    <span class="comment">// 学习资料：https://github.com/qianguyihao/Web/blob/master/02-CSS%E5%9F%BA%E7%A1%80/08-CSS%E5%B1%9E%E6%80%A7%EF%BC%9A%E5%AE%9A%E4%BD%8D%E5%B1%9E%E6%80%A7.md</span></span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">background</span>: center/cover url(~@/assets/login.png);</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.login-logo</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">60px</span>;</span><br><span class="line">        <span class="attribute">display</span>: block;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span> auto <span class="number">20px</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.login-container</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">440px</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">360px</span>;</span><br><span class="line">        <span class="attribute">position</span>: absolute;</span><br><span class="line">        <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">        <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">        <span class="attribute">transform</span>: translate(-<span class="number">50%</span>, -<span class="number">50%</span>);</span><br><span class="line">        <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">50px</span> rgb(<span class="number">0</span> <span class="number">0</span> <span class="number">0</span> / <span class="number">10%</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.login-checkbox-label</span> &#123;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#1890ff</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p>使用 Card 组件，可以用来实现对登录框内容的包裹。</p>
+<h2 id="表单结构"><a href="#表单结构" class="headerlink" title="表单结构"></a>表单结构</h2><h3 id="目标-9"><a href="#目标-9" class="headerlink" title="目标"></a>目标</h3><p>能够使用 AntD 的 <code>Form</code> 组件创建登录表单。</p>
+<h3 id="步骤-8"><a href="#步骤-8" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>打开 AntD <a target="_blank" rel="noopener" href="https://ant.design/components/form-cn/">Form 组件文档</a>。</p>
+</li>
+<li><p>找到代码演示的第一个示例（基本使用），点击<code>&lt; &gt;</code>（显示代码），并拷贝代码到组件中。</p>
+</li>
+<li><p>分析 Form 组件基本结构。</p>
+</li>
+<li><p>调整 Form 组件结构和样式。</p>
+</li>
+</ol>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><p><code>pages/Login/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Card, Form, Input, Button, Checkbox &#125; <span class="keyword">from</span> <span class="string">&#x27;antd&#x27;</span></span><br><span class="line"><span class="keyword">import</span> logo <span class="keyword">from</span> <span class="string">&#x27;@/assets/logo.png&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./index.scss&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Login</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;login&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Card</span> <span class="attr">className</span>=<span class="string">&#x27;login-container&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                &#123;/* Logo */&#125;</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">className</span>=<span class="string">&#x27;login-logo&#x27;</span> <span class="attr">src</span>=<span class="string">&#123;logo&#125;</span> <span class="attr">alt</span>=<span class="string">&#x27;极客园&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                &#123;/* 登录表单，注意 autoComplete 要想生效下面不要出现 password 框 */&#125;</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Form</span> <span class="attr">autoComplete</span>=<span class="string">&#x27;off&#x27;</span> <span class="attr">size</span>=<span class="string">&#x27;large&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">Input</span> <span class="attr">placeholder</span>=<span class="string">&#x27;请输入手机号&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">Input</span> <span class="attr">placeholder</span>=<span class="string">&#x27;请输入验证码&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">Checkbox</span>&gt;</span>我已阅读并同意[隐私条款]和[用户协议]<span class="tag">&lt;/<span class="name">Checkbox</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&#x27;primary&#x27;</span> <span class="attr">htmlType</span>=<span class="string">&#x27;submit&#x27;</span> <span class="attr">block</span>&gt;</span></span></span><br><span class="line"><span class="xml">                            登录</span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">Form</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">Card</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><p>  通过哪个属性调整 Input/Button 的大小？</p>
+</li>
+<li><p>  Button 组件通过哪个属性设置为 submit 按钮？</p>
+</li>
+</ul>
+<h2 id="表单校验"><a href="#表单校验" class="headerlink" title="表单校验"></a>表单校验</h2><h3 id="目标-10"><a href="#目标-10" class="headerlink" title="目标"></a>目标</h3><p>能够为手机号和密码添加表单校验。</p>
+<h3 id="步骤-9"><a href="#步骤-9" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>为 Form 组件添加 <code>validateTrigger</code> 属性，指定校验触发时机的集合。</p>
+</li>
+<li><p>为 Form.Item 组件添加 name 属性，这样表单校验才会生效，name 属性最好和<a target="_blank" rel="noopener" href="http://geek.itheima.net/api-pc.html#">接口文档</a>保持一致。</p>
+</li>
+<li><p>为 Form.Item 组件添加 <code>rules</code> 属性，用来添加表单校验。</p>
+</li>
+</ol>
+<h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><p><code>pages/Login/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Card, Form, Input, Button, Checkbox &#125; <span class="keyword">from</span> <span class="string">&#x27;antd&#x27;</span></span><br><span class="line"><span class="keyword">import</span> logo <span class="keyword">from</span> <span class="string">&#x27;@/assets/logo.png&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./index.scss&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Login</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;login&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Card</span> <span class="attr">className</span>=<span class="string">&#x27;login-container&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                &#123;/* Logo */&#125;</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">className</span>=<span class="string">&#x27;login-logo&#x27;</span> <span class="attr">src</span>=<span class="string">&#123;logo&#125;</span> <span class="attr">alt</span>=<span class="string">&#x27;极客园&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                &#123;/* 默认 onChange 或者提交表单的时候会校验，也可以通过 validateTrigger 来指定其他触发校验的时机 */&#125;</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Form</span> <span class="attr">autoComplete</span>=<span class="string">&#x27;off&#x27;</span> <span class="attr">size</span>=<span class="string">&#x27;large&#x27;</span> <span class="attr">validateTrigger</span>=<span class="string">&#123;[</span>&#x27;<span class="attr">onBlur</span>&#x27;, &#x27;<span class="attr">onChange</span>&#x27;]&#125;&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Form.Item</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">name</span>=<span class="string">&#x27;mobile&#x27;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">rules</span>=<span class="string">&#123;[</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                            &#123; <span class="attr">required:</span> <span class="attr">true</span>, <span class="attr">message:</span> &#x27;请输入手机号&#x27; &#125;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                            &#123;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                                <span class="attr">pattern:</span> /^<span class="attr">1</span>[<span class="attr">3-9</span>]\<span class="attr">d</span>&#123;<span class="attr">9</span>&#125;$/,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                                <span class="attr">message:</span> &#x27;手机号码格式不对&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                            &#125;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                        ]&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    &gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">Input</span> <span class="attr">placeholder</span>=<span class="string">&#x27;请输入手机号&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    &#123;/* len: 当输入的内容为 string 类型时为字符串长度；number 类型时为确定数字； array 类型时为数组长度 */&#125;</span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Form.Item</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">name</span>=<span class="string">&#x27;code&#x27;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">rules</span>=<span class="string">&#123;[</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                            &#123; <span class="attr">len:</span> <span class="attr">6</span>, <span class="attr">message:</span> &#x27;验证码<span class="attr">6</span>个字符&#x27; &#125;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                            &#123; <span class="attr">required:</span> <span class="attr">true</span>, <span class="attr">message:</span> &#x27;请输入验证码&#x27; &#125;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                        ]&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    &gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">Input</span> <span class="attr">placeholder</span>=<span class="string">&#x27;请输入验证码&#x27;</span> <span class="attr">maxLength</span>=<span class="string">&#123;6&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">Checkbox</span>&gt;</span>我已阅读并同意[隐私条款]和[用户协议]<span class="tag">&lt;/<span class="name">Checkbox</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&#x27;primary&#x27;</span> <span class="attr">htmlType</span>=<span class="string">&#x27;submit&#x27;</span> <span class="attr">block</span>&gt;</span></span></span><br><span class="line"><span class="xml">                            登录</span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">Form</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">Card</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义校验"><a href="#自定义校验" class="headerlink" title="自定义校验"></a>自定义校验</h2><p>valuePropName，告诉需要拿的属性是 checked，而不是默认的 value，<a target="_blank" rel="noopener" href="https://ant.design/components/form-cn/#components-form-demo-register">参考文档</a>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;Form.Item</span><br><span class="line">    name=<span class="string">&#x27;agree&#x27;</span></span><br><span class="line">    valuePropName=<span class="string">&#x27;checked&#x27;</span></span><br><span class="line">    rules=&#123;[</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 一上来是没有值的，提交会报错，ok</span></span><br><span class="line">            <span class="comment">// 勾选后，错误提示消失，提交也不报错 ok，因为有值 true</span></span><br><span class="line">            <span class="comment">// 取消勾选，错误提示没有再次出现（应该出现），提交也竟不报错了，有问题</span></span><br><span class="line">            <span class="comment">// 原因：因为这一次取消后 checked 属性也是有值的，只不过是 false</span></span><br><span class="line">            <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="attr">message</span>: <span class="string">&#x27;请阅读并同意协议&#x27;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    ]&#125;</span><br><span class="line">&gt;</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">Checkbox</span>&gt;</span>我已阅读并同意[隐私条款]和[用户协议]<span class="tag">&lt;/<span class="name">Checkbox</span>&gt;</span></span></span><br><span class="line">&lt;/Form.Item&gt;</span><br></pre></td></tr></table></figure>
+
+<p>所以，不是填不填写的问题，而是 true 和 false 的问题。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;Form.Item</span><br><span class="line">    name=<span class="string">&#x27;agree&#x27;</span></span><br><span class="line">    valuePropName=<span class="string">&#x27;checked&#x27;</span></span><br><span class="line">    rules=&#123;[</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">validator</span>: <span class="function">(<span class="params">rule, value</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (value === <span class="literal">true</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve()</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;请阅读并同意条款和协议&#x27;</span>))</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    ]&#125;</span><br><span class="line">&gt;</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">Checkbox</span>&gt;</span>我已阅读并同意[隐私条款]和[用户协议]<span class="tag">&lt;/<span class="name">Checkbox</span>&gt;</span></span></span><br><span class="line">&lt;/Form.Item&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取和设置表单默认值"><a href="#获取和设置表单默认值" class="headerlink" title="获取和设置表单默认值"></a>获取和设置表单默认值</h2><h3 id="目标-11"><a href="#目标-11" class="headerlink" title="目标"></a>目标</h3><p>能够拿到登录表单中的手机号码和验证码。</p>
+<h3 id="步骤-10"><a href="#步骤-10" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>为 Form 组件添加 <code>onFinish</code> 属性，该事件会在点击登录按钮时触发。</p>
+</li>
+<li><p>创建 onFinish 函数，通过参数 values 拿到表单值。</p>
+</li>
+<li><p>为了方便，为 Form 组件添加 <code>initialValues</code> 属性，来初始化表单值。</p>
+</li>
+</ol>
+<h3 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h3><p><code>pages/Login/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Card, Form, Input, Button, Checkbox &#125; <span class="keyword">from</span> <span class="string">&#x27;antd&#x27;</span></span><br><span class="line"><span class="keyword">import</span> logo <span class="keyword">from</span> <span class="string">&#x27;@/assets/logo.png&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./index.scss&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Login</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> onFinish = <span class="function">(<span class="params">values</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(values)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;login&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Card</span> <span class="attr">className</span>=<span class="string">&#x27;login-container&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                &#123;/* Logo */&#125;</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">className</span>=<span class="string">&#x27;login-logo&#x27;</span> <span class="attr">src</span>=<span class="string">&#123;logo&#125;</span> <span class="attr">alt</span>=<span class="string">&#x27;极客园&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                &#123;/* 默认 onChange 或者提交表单的时候会校验，也可以通过 validateTrigger 来指定其他触发校验的时机 */&#125;</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Form</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">autoComplete</span>=<span class="string">&#x27;off&#x27;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">size</span>=<span class="string">&#x27;large&#x27;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">validateTrigger</span>=<span class="string">&#123;[</span>&#x27;<span class="attr">onBlur</span>&#x27;, &#x27;<span class="attr">onChange</span>&#x27;]&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">onFinish</span>=<span class="string">&#123;onFinish&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">initialValues</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">mobile:</span> &#x27;<span class="attr">13911111111</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">code:</span> &#x27;<span class="attr">246810</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">agree:</span> <span class="attr">true</span>,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                &gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Form.Item</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">name</span>=<span class="string">&#x27;mobile&#x27;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">rules</span>=<span class="string">&#123;[</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                            &#123;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                                <span class="attr">required:</span> <span class="attr">true</span>,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                                <span class="attr">message:</span> &#x27;请输入手机号&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                            &#125;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                            &#123;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                                <span class="attr">pattern:</span> /^<span class="attr">1</span>[<span class="attr">3-9</span>]\<span class="attr">d</span>&#123;<span class="attr">9</span>&#125;$/,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                                <span class="attr">message:</span> &#x27;手机号码格式不对&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                            &#125;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                        ]&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    &gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">Input</span> <span class="attr">placeholder</span>=<span class="string">&#x27;请输入手机号&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Form.Item</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">name</span>=<span class="string">&#x27;code&#x27;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">rules</span>=<span class="string">&#123;[</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                            &#123; <span class="attr">len:</span> <span class="attr">6</span>, <span class="attr">message:</span> &#x27;验证码<span class="attr">6</span>个字符&#x27; &#125;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                            &#123; <span class="attr">required:</span> <span class="attr">true</span>, <span class="attr">message:</span> &#x27;请输入验证码&#x27; &#125;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                        ]&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    &gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">Input</span> <span class="attr">placeholder</span>=<span class="string">&#x27;请输入验证码&#x27;</span> <span class="attr">maxLength</span>=<span class="string">&#123;6&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Form.Item</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">name</span>=<span class="string">&#x27;agree&#x27;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">valuePropName</span>=<span class="string">&#x27;checked&#x27;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                        <span class="attr">rules</span>=<span class="string">&#123;[</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                            &#123;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                                <span class="attr">validator:</span> (<span class="attr">rule</span>, <span class="attr">value</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="xml">                                    if (value === true) &#123;</span></span><br><span class="line"><span class="xml">                                        return Promise.resolve()</span></span><br><span class="line"><span class="xml">                                    &#125; else &#123;</span></span><br><span class="line"><span class="xml">                                        return Promise.reject(new Error(&#x27;请阅读并同意条款和协议&#x27;))</span></span><br><span class="line"><span class="xml">                                    &#125;</span></span><br><span class="line"><span class="xml">                                &#125;,</span></span><br><span class="line"><span class="xml">                            &#125;,</span></span><br><span class="line"><span class="xml">                        ]&#125;</span></span><br><span class="line"><span class="xml">                    &gt;</span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">Checkbox</span>&gt;</span>我已阅读并同意[隐私条款]和[用户协议]<span class="tag">&lt;/<span class="name">Checkbox</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&#x27;primary&#x27;</span> <span class="attr">htmlType</span>=<span class="string">&#x27;submit&#x27;</span> <span class="attr">block</span>&gt;</span></span></span><br><span class="line"><span class="xml">                            登录</span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">Form</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">Card</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><p>  如何获取到 Form 表单中的值？</p>
+</li>
+<li><p>  通过哪个属性可以为 Form 表单初始化值？</p>
+</li>
+</ul>
+<h2 id="配置-Redux"><a href="#配置-Redux" class="headerlink" title="配置 Redux"></a>配置 Redux</h2><h3 id="目标-12"><a href="#目标-12" class="headerlink" title="目标"></a>目标</h3><p>能够完成 Redux 的基础配置。</p>
+<h3 id="步骤-11"><a href="#步骤-11" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>安装 Redux 相关的包：<code>yarn add redux react-redux redux-thunk redux-devtools-extension axios</code>。</p>
+</li>
+<li><p>在 store 目录中分别创建：actions 和 reducers 文件夹、index.js 文件。</p>
+</li>
+<li><p>在 <code>store/index.js</code> 中，创建 store 并导出。</p>
+</li>
+<li><p>在 <code>reducers/index.js</code> 文件，创建 rootReducer 并导出。</p>
+</li>
+<li><p>在 <code>reducers/login.js</code> 文件，创建基础 login reducer 并导出。</p>
+</li>
+<li><p>在 <code>src/index.js</code> 中为 React 组件接入 Redux。</p>
+</li>
+</ol>
+<h3 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h3><p>store</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">store</span><br><span class="line">|-- actions</span><br><span class="line">|-- constants</span><br><span class="line">|-- index.js</span><br><span class="line">`-- reducers</span><br><span class="line">    |-- index.js</span><br><span class="line">    `-- login.js</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>store/reducers/login.js</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> initValue = &#123;</span><br><span class="line">    <span class="attr">token</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params">state = initValue, action</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>store/reducers/index.js</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; combineReducers &#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> login <span class="keyword">from</span> <span class="string">&#x27;./login&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> rootReducer = combineReducers(&#123;</span><br><span class="line">    login,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> rootReducer</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><code>store/index.js</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span></span><br><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">&#x27;redux-thunk&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; composeWithDevTools &#125; <span class="keyword">from</span> <span class="string">&#x27;redux-devtools-extension&#x27;</span></span><br><span class="line"><span class="keyword">import</span> rootReducer <span class="keyword">from</span> <span class="string">&#x27;./reducers&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> middlewares = composeWithDevTools(applyMiddleware(thunk))</span><br><span class="line"><span class="keyword">const</span> store = createStore(rootReducer, middlewares)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><code>src/index.js</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;antd/dist/antd.css&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./index.scss&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">Provider</span> <span class="attr">store</span>=<span class="string">&#123;store&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">App</span> /&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">Provider</span>&gt;</span></span>,</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="封装-Axios"><a href="#封装-Axios" class="headerlink" title="封装 Axios"></a>封装 Axios</h2><ol>
+<li>安装 axios</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add axios</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>utils/request.js</code></li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> instance = axios.create(&#123;</span><br><span class="line">    <span class="attr">baseURL</span>: <span class="string">&#x27;http://geek.itheima.net/v1_0/&#x27;</span>,</span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">5000</span>,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加请求拦截器</span></span><br><span class="line">instance.interceptors.request.use(</span><br><span class="line">    <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 在发送请求之前做些什么</span></span><br><span class="line">        <span class="keyword">return</span> config</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 对请求错误做些什么</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加响应拦截器</span></span><br><span class="line">instance.interceptors.response.use(</span><br><span class="line">    <span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 对响应数据做点什么</span></span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 对响应错误做点什么</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> instance</span><br></pre></td></tr></table></figure>
+
+<h2 id="发起登录请求"><a href="#发起登录请求" class="headerlink" title="发起登录请求"></a>发起登录请求</h2><h3 id="目标-13"><a href="#目标-13" class="headerlink" title="目标"></a>目标</h3><p>能够通过 Redux 实现登录功能。</p>
+<h3 id="步骤-12"><a href="#步骤-12" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>在 <code>store/constants/index.js</code> 文件中创建登录的 actionType。</p>
+</li>
+<li><p>在 <code>store/actions/login.js</code> 文件中创建 actionCreator，并实现登录逻辑。</p>
+</li>
+<li><p>在 <code>store/reducers/login.js</code> 文件中处理登录状态。</p>
+</li>
+<li><p>在 <code>pages/Login/index.js</code> 组件中 dispatch 登录的异步 action。</p>
+</li>
+</ol>
+<h3 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h3><ol>
+<li><code>store/constants/index.js</code></li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> LOGIN = <span class="string">&#x27;LOGIN&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>store/actions/login.js</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; LOGIN &#125; <span class="keyword">from</span> <span class="string">&#x27;../constants&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> loginAc = <span class="function">(<span class="params">payload</span>) =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">type</span>: LOGIN,</span><br><span class="line">    payload,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> login = <span class="function">(<span class="params">payload</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch) =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> request(&#123;</span><br><span class="line">            <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">            <span class="attr">url</span>: <span class="string">&#x27;/authorizations&#x27;</span>,</span><br><span class="line">            <span class="attr">data</span>: payload,</span><br><span class="line">        &#125;)</span><br><span class="line">        dispatch(loginAc(res.data.data.token))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><code>store/reducers/login.js</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; LOGIN &#125; <span class="keyword">from</span> <span class="string">&#x27;../constants&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> initValue = &#123;</span><br><span class="line">    <span class="attr">token</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params">state = initValue, action</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (action.type === LOGIN) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            <span class="attr">token</span>: action.payload,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><code>pages/Login/index.js</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> onFinish = <span class="function">(<span class="params">values</span>) =&gt;</span> dispatch(login(values))</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结-5"><a href="#总结-5" class="headerlink" title="总结"></a>总结</h3><p>登录业务在 Redux 中的执行流程是什么？</p>
+<h2 id="持久化-Token"><a href="#持久化-Token" class="headerlink" title="持久化 Token"></a>持久化 Token</h2><h3 id="目标-14"><a href="#目标-14" class="headerlink" title="目标"></a>目标</h3><p>能够对 Token 进行持久化。</p>
+<h3 id="步骤-13"><a href="#步骤-13" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>在 <code>utils/token.js</code> 文件提供 <code>getToken</code>、<code>setToken</code>、<code>removeToken</code>、<code>isAuth</code> 四个工具函数并导出。</p>
+</li>
+<li><p>在 <code>utils/index.js</code> 文件，统一导出 <code>token.js</code> 中的所有内容，来简化工具函数的导入。</p>
+</li>
+<li><p>在 <code>store/actions/login.js</code> 文件，请求成功之后存储 Token。</p>
+</li>
+<li><p>在 <code>store/index.js</code> 获取初始 Token。</p>
+</li>
+</ol>
+<h3 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h3><ol>
+<li><code>utils/storage.js</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> TOKEN_KEY = <span class="string">&#x27;ITCAST_GEEK_PC&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getToken = <span class="function">() =&gt;</span> <span class="built_in">localStorage</span>.getItem(TOKEN_KEY)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> setToken = <span class="function">(<span class="params">token</span>) =&gt;</span> <span class="built_in">localStorage</span>.setItem(TOKEN_KEY, token)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> removeToken = <span class="function">() =&gt;</span> <span class="built_in">localStorage</span>.removeItem(TOKEN_KEY)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> isAuth = <span class="function">() =&gt;</span> !!getToken()</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>utils/index.js</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123; getToken, setToken, removeToken, isAuth &#125; <span class="keyword">from</span> <span class="string">&#x27;./storage&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><code>store/actions/login.js</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; LOGIN &#125; <span class="keyword">from</span> <span class="string">&#x27;../constants&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; setToken &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> loginAc = <span class="function">(<span class="params">payload</span>) =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">type</span>: LOGIN,</span><br><span class="line">    payload,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> login = <span class="function">(<span class="params">payload</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (dispatch) =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> request(&#123;</span><br><span class="line">            <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">            <span class="attr">url</span>: <span class="string">&#x27;/authorizations&#x27;</span>,</span><br><span class="line">            <span class="attr">data</span>: payload,</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">const</span> token = res.data.data.token</span><br><span class="line">        <span class="comment">// mark</span></span><br><span class="line">        setToken(token)</span><br><span class="line">        dispatch(loginAc(token))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><code>store/index.js</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span></span><br><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">&#x27;redux-thunk&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; composeWithDevTools &#125; <span class="keyword">from</span> <span class="string">&#x27;redux-devtools-extension&#x27;</span></span><br><span class="line"><span class="keyword">import</span> rootReducer <span class="keyword">from</span> <span class="string">&#x27;./reducers&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; getToken &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils&#x27;</span></span><br><span class="line"><span class="comment">// 3 个参数：reducer、可选的对象，可以用于提供初始值、提供中间件</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(</span><br><span class="line">    rootReducer,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">login</span>: &#123;</span><br><span class="line">            <span class="attr">token</span>: getToken(),</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    composeWithDevTools(applyMiddleware(thunk))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br></pre></td></tr></table></figure>
+
+<h2 id="登录状态提示"><a href="#登录状态提示" class="headerlink" title="登录状态提示"></a>登录状态提示</h2><p>登录成功后，提示消息，并且跳转到首页。</p>
+<p><code>pages/Login/index.js</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> onFinish = <span class="keyword">async</span> (values) =&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">await</span> dispatch(login(values))</span><br><span class="line">        message.success(<span class="string">&#x27;登录成功&#x27;</span>, <span class="number">1</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            history.push(<span class="string">&#x27;/home&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        message.error(e.response.data.message, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>🤔 问题：把网络改成 Offline，点击登录按钮，却没有报错提示（或者网络很慢的情况下，可以改成 Slow 3G 并把超时时间改的很短来模拟这种情况），解决如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">message.error(e.response?.data?.message || <span class="string">&#x27;登录失败&#x27;</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="给按钮增加-loading"><a href="#给按钮增加-loading" class="headerlink" title="给按钮增加 loading"></a>给按钮增加 loading</h2><ol>
+<li>提供一个状态 loading。</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>发送请求，修改 loading 状态。</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> onFinish = <span class="keyword">async</span> (values) =&gt; &#123;</span><br><span class="line">    setLoading(<span class="literal">true</span>)</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">await</span> dispatch(login(values))</span><br><span class="line">        message.success(<span class="string">&#x27;登录成功&#x27;</span>, <span class="number">1</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// setLoading(false) // 跳走了，所以这一行不加也没关系</span></span><br><span class="line">            history.push(<span class="string">&#x27;/home&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        message.error(e.response.data.message, <span class="number">1</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            setLoading(<span class="literal">false</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>使用 loading 状态。</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button type=<span class="string">&#x27;primary&#x27;</span> htmlType=<span class="string">&#x27;submit&#x27;</span> block loading=&#123;loading&#125;&gt;</span><br><span class="line">    登录</span><br><span class="line">&lt;/Button&gt;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/20/react-base-course08/" rel="prev" title="08_React Router">
+      <i class="fa fa-chevron-left"></i> 08_React Router
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/21/react-base-course10/" rel="next" title="10_极客园 PC">
+      10_极客园 PC <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">项目介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">2.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E6%A0%88"><span class="nav-number">2.3.</span> <span class="nav-text">技术栈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA"><span class="nav-number">3.</span> <span class="nav-text">项目搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="nav-number">3.3.</span> <span class="nav-text">核心代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Git-%E7%AE%A1%E7%90%86%E9%A1%B9%E7%9B%AE"><span class="nav-number">4.</span> <span class="nav-text">使用 Git 管理项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-1"><span class="nav-number">4.2.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-CSS-%E9%A2%84%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">使用 CSS 预编译器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-3"><span class="nav-number">5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-1"><span class="nav-number">5.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-2"><span class="nav-number">5.3.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%9F%BA%E7%A1%80%E8%B7%AF%E7%94%B1"><span class="nav-number">6.</span> <span class="nav-text">配置基础路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-4"><span class="nav-number">6.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-3"><span class="nav-number">6.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-number">6.3.</span> <span class="nav-text">优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%BA%93-AntD"><span class="nav-number">7.</span> <span class="nav-text">组件库 AntD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-5"><span class="nav-number">7.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-4"><span class="nav-number">7.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%B7%AF%E5%BE%84%E5%88%AB%E5%90%8D"><span class="nav-number">8.</span> <span class="nav-text">配置路径别名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-6"><span class="nav-number">8.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-2"><span class="nav-number">8.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-5"><span class="nav-number">8.3.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%AB%E5%90%8D%E8%B7%AF%E5%BE%84%E6%8F%90%E7%A4%BA"><span class="nav-number">9.</span> <span class="nav-text">@ 别名路径提示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-7"><span class="nav-number">9.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-6"><span class="nav-number">9.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">9.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E7%95%8C%E9%9D%A2"><span class="nav-number">10.</span> <span class="nav-text">登录界面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-8"><span class="nav-number">10.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-7"><span class="nav-number">10.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">10.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-2"><span class="nav-number">10.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E7%BB%93%E6%9E%84"><span class="nav-number">11.</span> <span class="nav-text">表单结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-9"><span class="nav-number">11.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-8"><span class="nav-number">11.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-number">11.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-3"><span class="nav-number">11.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E6%A0%A1%E9%AA%8C"><span class="nav-number">12.</span> <span class="nav-text">表单校验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-10"><span class="nav-number">12.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-9"><span class="nav-number">12.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-2"><span class="nav-number">12.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C"><span class="nav-number">13.</span> <span class="nav-text">自定义校验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%92%8C%E8%AE%BE%E7%BD%AE%E8%A1%A8%E5%8D%95%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="nav-number">14.</span> <span class="nav-text">获取和设置表单默认值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-11"><span class="nav-number">14.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-10"><span class="nav-number">14.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-3"><span class="nav-number">14.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-4"><span class="nav-number">14.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-Redux"><span class="nav-number">15.</span> <span class="nav-text">配置 Redux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-12"><span class="nav-number">15.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-11"><span class="nav-number">15.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-4"><span class="nav-number">15.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85-Axios"><span class="nav-number">16.</span> <span class="nav-text">封装 Axios</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E8%B5%B7%E7%99%BB%E5%BD%95%E8%AF%B7%E6%B1%82"><span class="nav-number">17.</span> <span class="nav-text">发起登录请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-13"><span class="nav-number">17.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-12"><span class="nav-number">17.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-5"><span class="nav-number">17.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-5"><span class="nav-number">17.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96-Token"><span class="nav-number">18.</span> <span class="nav-text">持久化 Token</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-14"><span class="nav-number">18.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-13"><span class="nav-number">18.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-6"><span class="nav-number">18.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E7%8A%B6%E6%80%81%E6%8F%90%E7%A4%BA"><span class="nav-number">19.</span> <span class="nav-text">登录状态提示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%99%E6%8C%89%E9%92%AE%E5%A2%9E%E5%8A%A0-loading"><span class="nav-number">20.</span> <span class="nav-text">给按钮增加 loading</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title=" → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="fab fa-zhihu fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

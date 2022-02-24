@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 掌握 useEffect 清理副作用。 ✔ 掌握 useRef 操作 DOM。 ✔ 掌握 useContext 组件通讯。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="06_Hooks 进阶">
+<meta property="og:url" content="http://example.com/2021/11/11/react-base-course06/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 掌握 useEffect 清理副作用。 ✔ 掌握 useRef 操作 DOM。 ✔ 掌握 useContext 组件通讯。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/ifer_ajax.png">
+<meta property="og:image" content="http://example.com/resource/images/gwc_img.png">
+<meta property="article:published_time" content="2021-11-11T07:13:26.000Z">
+<meta property="article:modified_time" content="2022-02-18T01:48:26.523Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/ifer_ajax.png">
+
+<link rel="canonical" href="http://example.com/2021/11/11/react-base-course06/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>06_Hooks 进阶 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/11/react-base-course06/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          06_Hooks 进阶
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-11 15:13:26" itemprop="dateCreated datePublished" datetime="2021-11-11T15:13:26+08:00">2021-11-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-18 09:48:26" itemprop="dateModified" datetime="2022-02-18T09:48:26+08:00">2022-02-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 掌握 useEffect 清理副作用。</p>
+<p>✔ 掌握 useRef 操作 DOM。</p>
+<p>✔ 掌握 useContext 组件通讯。</p>
+<span id="more"></span>
+
+<h2 id="useEffect-清理副作用"><a href="#useEffect-清理副作用" class="headerlink" title="useEffect 清理副作用"></a>useEffect 清理副作用</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>掌握 useEffect 清理副作用的写法。</p>
+<h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><ul>
+<li><p>  useEffect 可以返回一个函数，这个函数称为清理函数，在此函数内用来执行清理相关的操作（例如事件解绑、清除定时器等）。</p>
+</li>
+<li><p>  清理函数的执行时机：<font color=e32d40><strong>下一次</strong></font>副作用回调函数调用时以及<font color=e32d40><strong>组件卸载时</strong></font>。</p>
+</li>
+<li><p>  建议：一个 useEffect 只用来处理一个功能，有多个功能时，可以使用多个 useEffect。</p>
+</li>
+</ul>
+<h3 id="执行时机演示"><a href="#执行时机演示" class="headerlink" title="执行时机演示"></a>执行时机演示</h3><p><code>App.js</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Test <span class="keyword">from</span> <span class="string">&#x27;./Test&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [flag, setFlag] = useState(<span class="literal">true</span>)</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            &#123;flag &amp;&amp; <span class="tag">&lt;<span class="name">Test</span> /&gt;</span>&#125;</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setFlag(!flag)&#125;&gt;销毁/创建<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Test.js</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useEffect, useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;effect&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 一般用来清理上一次的副作用</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;clear effect&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">const</span> handleClick = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        setCount(count + <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            &#123;count&#125;</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span>&gt;</span>click<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="清理定时器演示"><a href="#清理定时器演示" class="headerlink" title="清理定时器演示"></a>清理定时器演示</h3><p>优化昨天的倒计时案例：组件销毁时清除定时器，<code>Test.js</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCount] = useState(<span class="number">10</span>)</span><br><span class="line">    useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> timer = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">            setCount(<span class="function">(<span class="params">count</span>) =&gt;</span> count - <span class="number">1</span>)</span><br><span class="line">        &#125;, <span class="number">1000</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">clearInterval</span>(timer)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, [])</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>useEffect 清理函数的执行时机是什么？</p>
+<h2 id="跟随鼠标的天使-📝"><a href="#跟随鼠标的天使-📝" class="headerlink" title="跟随鼠标的天使 📝"></a>跟随鼠标的天使 📝</h2><h3 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h3><p>能够完成让图片跟随鼠标移动的效果。</p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>通过 useState 提供状态。</p>
+</li>
+<li><p>通过 useEffect 给 document 注册鼠标移动事件</p>
+</li>
+<li><p>在事件回调里面修改状态为鼠标的坐标。</p>
+</li>
+<li><p>组件销毁的时候记得清理副作用（解绑事件）。</p>
+</li>
+</ol>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p><code>App.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> avatar <span class="keyword">from</span> <span class="string">&#x27;./images/avatar.png&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [pos, setPos] = useState(&#123;</span><br><span class="line">        <span class="attr">x</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">y</span>: <span class="number">0</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> move = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">            setPos(&#123;</span><br><span class="line">                <span class="attr">x</span>: e.pageX,</span><br><span class="line">                <span class="attr">y</span>: e.pageY,</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">document</span>.addEventListener(<span class="string">&#x27;mousemove&#x27;</span>, move)</span><br><span class="line">        <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">document</span>.removeEventListener(<span class="string">&#x27;mousemove&#x27;</span>, move)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, [])</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;avatar&#125;</span> <span class="attr">alt</span>=<span class="string">&#x27;头像&#x27;</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">position:</span> &#x27;<span class="attr">absolute</span>&#x27;, <span class="attr">top:</span> <span class="attr">pos.y</span>, <span class="attr">left:</span> <span class="attr">pos.x</span> &#125;&#125; /&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义-Hook"><a href="#自定义-Hook" class="headerlink" title="自定义 Hook"></a>自定义 Hook</h2><h3 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h3><p>能够使用自定义的 Hook 实现状态逻辑的复用。</p>
+<h3 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h3><ul>
+<li><p>  目的：复用状态逻辑。</p>
+</li>
+<li><p>  自定义 Hook 是一个函数，规定函数名称必须以 use 开头，格式是 <code>useXxx</code>，React 内部会据此来区分是否是一个 Hook。</p>
+</li>
+<li><p>  自定义 Hook 只能在函数组件或其他自定义 Hook 中使用，否则，会报错！</p>
+</li>
+</ul>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><p>封装一个获取鼠标位置的 Hook，<code>hooks.js</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useMouse = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> [pos, setPos] = useState(&#123;</span><br><span class="line">        <span class="attr">x</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">y</span>: <span class="number">0</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> move = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">            setPos(&#123;</span><br><span class="line">                <span class="attr">x</span>: e.pageX,</span><br><span class="line">                <span class="attr">y</span>: e.pageY,</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">document</span>.addEventListener(<span class="string">&#x27;mousemove&#x27;</span>, move)</span><br><span class="line">        <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">document</span>.removeEventListener(<span class="string">&#x27;mousemove&#x27;</span>, move)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, [])</span><br><span class="line">    <span class="keyword">return</span> pos</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>App.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> avatar <span class="keyword">from</span> <span class="string">&#x27;./images/avatar.png&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useMouse &#125; <span class="keyword">from</span> <span class="string">&#x27;./hooks&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> pos = useMouse()</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;avatar&#125;</span> <span class="attr">alt</span>=<span class="string">&#x27;头像&#x27;</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">position:</span> &#x27;<span class="attr">absolute</span>&#x27;, <span class="attr">top:</span> <span class="attr">pos.y</span>, <span class="attr">left:</span> <span class="attr">pos.x</span> &#125;&#125; /&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="封装记录滚动位置的-Hook"><a href="#封装记录滚动位置的-Hook" class="headerlink" title="封装记录滚动位置的 Hook"></a>封装记录滚动位置的 Hook</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useScroll = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> [scroll, setScroll] = useState(&#123;</span><br><span class="line">        <span class="attr">scrollLeft</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">scrollTop</span>: <span class="number">0</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> scroll = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">            setScroll(&#123;</span><br><span class="line">                <span class="attr">scrollLeft</span>: <span class="built_in">window</span>.pageXOffset,</span><br><span class="line">                <span class="attr">scrollTop</span>: <span class="built_in">window</span>.pageYOffset,</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.addEventListener(<span class="string">&#x27;scroll&#x27;</span>, scroll)</span><br><span class="line">        <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">window</span>.removeEventListener(<span class="string">&#x27;scroll&#x27;</span>, scroll)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, [])</span><br><span class="line">    <span class="keyword">return</span> scroll</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>自定义 Hook 的作用/目的是什么？</p>
+<h2 id="useEffect-发送请求"><a href="#useEffect-发送请求" class="headerlink" title="useEffect 发送请求"></a>useEffect 发送请求</h2><h3 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h3><p>能够在函数组件中通过 useEffect 发送 AJAX 请求。</p>
+<h3 id="内容-2"><a href="#内容-2" class="headerlink" title="内容"></a>内容</h3><ul>
+<li><p>  useEffect 是专门用来处理副作用的，所以发送请求这个副作用可以在 useEffect 回调内进行处理。</p>
+</li>
+<li><p>  注意：useEffect 的回调只能是一个同步函数，即不能使用 async 进行修饰。</p>
+</li>
+<li><p>  原因：如果 useEffect 的回调是异步的，此时返回值会被 Promise 化，这样的话就无法保证清理函数被立即调用。</p>
+</li>
+<li><p>  若需要使用 async/await 语法，可以在 useEffect 回调内部再次创建 async 函数并调用。</p>
+</li>
+</ul>
+<p>错误演示</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发请求是没问题，但涉及清理副作用的操作就出事了</span></span><br><span class="line">useEffect(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> xxx()</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure>
+
+<p>正确使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fetchMyAPI</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> url = <span class="string">&#x27;http://something/&#x27;</span> + productId</span><br><span class="line">        <span class="keyword">const</span> response = <span class="keyword">await</span> myFetch(url)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fetchMyAPI()</span><br><span class="line">&#125;, [productId])</span><br></pre></td></tr></table></figure>
+
+<h3 id="演示发请求"><a href="#演示发请求" class="headerlink" title="演示发请求"></a>演示发请求</h3><img src="/resource/images/ifer_ajax.png"/>
+
+<ol>
+<li><p>准备初始状态 list 和修改状态的方法 setList。</p>
+</li>
+<li><p>在 useEffect 内部定义自己的请求函数。</p>
+</li>
+<li><p>函数内部通过 axios 发送请求并把返回的数据通过 setList 设置到 list 中。</p>
+</li>
+<li><p>调用请求函数。</p>
+</li>
+<li><p>渲染 list。</p>
+</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [list, setList] = useState([])</span><br><span class="line">    useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> getData = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> res = <span class="keyword">await</span> axios.get(<span class="string">&#x27;http://geek.itheima.net/v1_0/user/channels&#x27;</span>)</span><br><span class="line">            setList(res.data.data.channels)</span><br><span class="line">        &#125;</span><br><span class="line">        getData()</span><br><span class="line">    &#125;, [])</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">            &#123;list.map((item) =&gt; (</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#123;item.id&#125;</span>&gt;</span>&#123;item.name&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">            ))&#125;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>useEffect 的回调函数不能是异步的，那么如何使用 async/await 语法来简化代码。</p>
+<h2 id="useRef-操作-DOM"><a href="#useRef-操作-DOM" class="headerlink" title="useRef 操作 DOM"></a>useRef 操作 DOM</h2><h3 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h3><p>能够使用 useRef 操作 DOM。</p>
+<h3 id="内容-3"><a href="#内容-3" class="headerlink" title="内容"></a>内容</h3><p>使用场景：DOM 操作或获取类组件的实例。</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><ul>
+<li><p>  参数：在获取 DOM 时，一般都设置为 null。</p>
+</li>
+<li><p>  返回值：返回一个带有 current 属性的对象，通过该对象就可以得到 DOM 对象或类组件实例。</p>
+</li>
+</ul>
+<h3 id="useRef-获取-DOM"><a href="#useRef-获取-DOM" class="headerlink" title="useRef 获取 DOM"></a>useRef 获取 DOM</h3><ol>
+<li>使用 useRef 创建一个有 current 属性的 ref 对象，<code>&#123; current: null &#125;</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> xxxRef = useRef(<span class="literal">null</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>通过 DOM 的 ref 属性和上面创建的对象进行关联。</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div ref=&#123;xxxRef&#125;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>通过 xxxRef.current 就可以访问到对应的 DOM 啦。</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useRef &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> App = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> inputRef = useRef(<span class="literal">null</span>)</span><br><span class="line">    <span class="keyword">const</span> add = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(inputRef.current.value)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">placeholder</span>=<span class="string">&#x27;请输入内容&#x27;</span> <span class="attr">ref</span>=<span class="string">&#123;inputRef&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;add&#125;</span>&gt;</span>添加<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App</span><br></pre></td></tr></table></figure>
+
+<p>🤔 useRef 每次都会返回相同的引用，而 createRef 每次渲染都会返回一个新的引用。</p>
+<h3 id="useRef-获取类组件"><a href="#useRef-获取类组件" class="headerlink" title="useRef 获取类组件"></a>useRef 获取类组件</h3><p><code>App.js</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useRef &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Test <span class="keyword">from</span> <span class="string">&#x27;./Test&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> App = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> testClassCmp = useRef(<span class="literal">null</span>)</span><br><span class="line">    <span class="keyword">const</span> add = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        testClassCmp.current.handleClick()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Test</span> <span class="attr">ref</span>=<span class="string">&#123;testClassCmp&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;add&#125;</span>&gt;</span>添加<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App</span><br></pre></td></tr></table></figure>
+
+<p><code>Test.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">handleClick</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>类组件<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="useRef-共享数据"><a href="#useRef-共享数据" class="headerlink" title="useRef 共享数据"></a>useRef 共享数据</h2><h3 id="目标-5"><a href="#目标-5" class="headerlink" title="目标"></a>目标</h3><p>掌握 useRef 共享数据的写法，<font color=e32d40><strong>完成点击按钮开始倒计时的功能。</strong></font></p>
+<h3 id="基础写法"><a href="#基础写法" class="headerlink" title="基础写法"></a>基础写法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCount] = useState(<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">const</span> handleStart = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// setCount(count - 1)</span></span><br><span class="line">            setCount(<span class="function">(<span class="params">count</span>) =&gt;</span> count - <span class="number">1</span>)</span><br><span class="line">        &#125;, <span class="number">1000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleStart&#125;</span>&gt;</span>开始倒计时<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color=e32d40><strong>问题：多次点击按钮时会开启多个定时器控制 count，乱了！</strong></font></p>
+<h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">let</span> timer</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCount] = useState(<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">const</span> handleStart = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">clearInterval</span>(timer)</span><br><span class="line">        timer = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            setCount(<span class="function">(<span class="params">count</span>) =&gt;</span> count - <span class="number">1</span>)</span><br><span class="line">        &#125;, <span class="number">1000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleStart&#125;</span>&gt;</span>开始倒计时<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>全局变量的问题：多个组件实例之间会共用一个全局变量，以至于会相互影响，可以通过以下代码验证。</p>
+<p><code>App.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Hello <span class="keyword">from</span> <span class="string">&#x27;./Hello&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Hello</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Hello</span> /&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">let</span> timer</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCount] = useState(<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">const</span> handleStart = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">clearInterval</span>(timer)</span><br><span class="line">        timer = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            setCount(<span class="function">(<span class="params">count</span>) =&gt;</span> count - <span class="number">1</span>)</span><br><span class="line">        &#125;, <span class="number">1000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleStart&#125;</span>&gt;</span>开始倒计时<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>useRef：可以实现多次渲染之间进行数据共享，保证了更新期间共用同一个 ref 对象（可以先理解为是一个全局变量）的同时，多个组件实例之间又不会相互影响（因为它是在组件内部的）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useRef &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// #1</span></span><br><span class="line">    <span class="keyword">const</span> timer = useRef(<span class="literal">null</span>)</span><br><span class="line">    <span class="keyword">const</span> [count, setCount] = useState(<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">const</span> handleStart = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// #2</span></span><br><span class="line">        <span class="built_in">clearInterval</span>(timer.current)</span><br><span class="line">        <span class="comment">// #3</span></span><br><span class="line">        timer.current = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            setCount(<span class="function">(<span class="params">count</span>) =&gt;</span> count - <span class="number">1</span>)</span><br><span class="line">        &#125;, <span class="number">1000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleStart&#125;</span>&gt;</span>开始倒计时<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="createContext"><a href="#createContext" class="headerlink" title="createContext"></a>createContext</h2><h3 id="目标-6"><a href="#目标-6" class="headerlink" title="目标"></a>目标</h3><p>回顾 Context 跨级组件通讯的使用。</p>
+<h3 id="内容-4"><a href="#内容-4" class="headerlink" title="内容"></a>内容</h3><ul>
+<li><p>  使用场景：跨组件共享数据。</p>
+</li>
+<li><p>  Context 作用：实现跨组件传递数据，而不必在每一个组件传递 props，简化组件之间数据传递的过程。</p>
+</li>
+<li><p>使用步骤。</p>
+<p>  a，祖先组件通过 <code>&lt;Context.Provider value/&gt;</code> 组件配合 value 属性提供数据。</p>
+<p>  b，后代组件通过 <code>&lt;Context.Consumer/&gt;</code> 组件配合函数获取提供的数据。</p>
+<p>  c，如果祖先组件没有使用 <code>&lt;Context.Provider/&gt;</code> 组件进行包裹，那么 Consumer 获取到的是 <code>React.createContext(defaultValue)</code> 的 defaultValue 值。</p>
+</li>
+</ul>
+<h3 id="步骤-1"><a href="#步骤-1" class="headerlink" title="步骤"></a>步骤</h3><p>需求：App 根组件经过 Parent 组件把数据传递到 Child 组件。</p>
+<ol>
+<li><p>新建 <code>countContext.js</code>，通过 createContext 方法创建 Context 对象。</p>
+</li>
+<li><p><code>App.js</code> 根组件通过 <code>&lt;Context.Provider/&gt;</code> 组件配合 value 属性提供数据。</p>
+</li>
+<li><p><code>Child.js</code> 孙组件通过 <code>&lt;Context.Consumer/&gt;</code> 消费数据。</p>
+</li>
+</ol>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><p><code>countContext.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createContext &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> Context = createContext()</span><br></pre></td></tr></table></figure>
+
+<p><code>App.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Context &#125; <span class="keyword">from</span> <span class="string">&#x27;./countContext&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Parent <span class="keyword">from</span> <span class="string">&#x27;./Parent&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">Context.Provider</span> <span class="attr">value</span>=<span class="string">&#123;&#123;</span> <span class="attr">count:</span> <span class="attr">0</span> &#125;&#125;&gt;</span></span></span><br><span class="line"><span class="xml">            App</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Parent</span> /&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">Context.Provider</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Parent.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Child <span class="keyword">from</span> <span class="string">&#x27;./Child&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            Parent</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Child</span> /&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Child.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; context &#125; <span class="keyword">from</span> <span class="string">&#x27;./countContext&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">Context.Consumer</span>&gt;</span></span></span><br><span class="line"><span class="xml">            &#123;(value) =&gt; &#123;</span></span><br><span class="line"><span class="xml">                return (</span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                        Child</span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123;value.count&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                )</span></span><br><span class="line"><span class="xml">            &#125;&#125;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">Context.Consumer</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h3><p>useRef 的使用步骤是什么？</p>
+<h2 id="useContext-使用"><a href="#useContext-使用" class="headerlink" title="useContext 使用"></a>useContext 使用</h2><h3 id="目标-7"><a href="#目标-7" class="headerlink" title="目标"></a>目标</h3><p>能够通过 useContext 实现跨级组件通讯。</p>
+<h3 id="内容-5"><a href="#内容-5" class="headerlink" title="内容"></a>内容</h3><ul>
+<li><p>  作用：在函数组件中，获取 <code>&lt;Context.Provider/&gt;</code> 提供的数据。</p>
+</li>
+<li><p>  参数：Context 对象，即通过 <code>React.createContext</code> 函数创建的对象。</p>
+</li>
+<li><p>  返回：<code>&lt;Context.Provider/&gt;</code> 提供的 value 数据。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useContext &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Context &#125; <span class="keyword">from</span> <span class="string">&#x27;./countContext&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> value = useContext(Context)</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            Child</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123;value.count&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="购物车案例"><a href="#购物车案例" class="headerlink" title="购物车案例"></a>购物车案例</h2><img src="/resource/images/gwc_img.png"/>
+
+<h3 id="获取列表数据"><a href="#获取列表数据" class="headerlink" title="获取列表数据"></a>获取列表数据</h3><p>📝 需求：本地有，就用本地的，本地没有，从远端获取。</p>
+<ol>
+<li><p>在新的 useEffect 中，获取本地数据。</p>
+</li>
+<li><p>如果本地有，就把获取到的数据设置到 list 数组。</p>
+</li>
+<li><p>如果本地没有，发送请求获取远端数据，并把结果设置到 list 数组。</p>
+</li>
+</ol>
+<p><code>App.js</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始的 state 也就没有必要这样写了</span></span><br><span class="line"><span class="comment">/* const [list, setList] = useState(() =&gt; &#123;</span></span><br><span class="line"><span class="comment">    return JSON.parse(localStorage.getItem(&#x27;list&#x27;)) || arr</span></span><br><span class="line"><span class="comment">&#125;) */</span></span><br><span class="line"><span class="comment">// 建议</span></span><br><span class="line"><span class="keyword">const</span> [list, setList] = useState([])</span><br><span class="line"></span><br><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 判断本地是否有数据</span></span><br><span class="line">    <span class="keyword">const</span> arr = <span class="built_in">JSON</span>.parse(<span class="built_in">localStorage</span>.getItem(<span class="string">&#x27;list&#x27;</span>)) || []</span><br><span class="line">    <span class="keyword">if</span> (arr.length) &#123;</span><br><span class="line">        <span class="keyword">return</span> setList(arr)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 本地没有数据，发送请求，获取数据</span></span><br><span class="line">    <span class="keyword">const</span> getList = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> axios.get(<span class="string">&#x27;https://www.escook.cn/api/cart&#x27;</span>)</span><br><span class="line">        setList(res.data.list)</span><br><span class="line">    &#125;</span><br><span class="line">    getList()</span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure>
+
+<h3 id="MyCount-组件的封装"><a href="#MyCount-组件的封装" class="headerlink" title="MyCount 组件的封装"></a>MyCount 组件的封装</h3><p><code>components/MyCount/index.js</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./index.scss&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">MyCount</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;my-counter&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&#x27;button&#x27;</span> <span class="attr">className</span>=<span class="string">&#x27;btn btn-light&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                -</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;number&#x27;</span> <span class="attr">className</span>=<span class="string">&#x27;form-control inp&#x27;</span> <span class="attr">value</span>=<span class="string">&#x27;1&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&#x27;button&#x27;</span> <span class="attr">className</span>=<span class="string">&#x27;btn btn-light&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                +</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>components/MyCount/index.scss</code></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.my-counter</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="selector-class">.inp</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">45px</span>;</span><br><span class="line">        <span class="attribute">text-align</span>: center;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">10px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>components/GoodItem/index.js</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> MyCount <span class="keyword">from</span> <span class="string">&#x27;../MyCount&#x27;</span></span><br><span class="line">;<span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;right&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;top&#x27;</span>&gt;</span>&#123;goods_name&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;bottom&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">&#x27;price&#x27;</span>&gt;</span>¥ &#123;goods_price&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">MyCount</span> /&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数量控制-props"><a href="#数量控制-props" class="headerlink" title="数量控制 props"></a>数量控制 props</h3><ul>
+<li>  设置初始值</li>
+</ul>
+<ol>
+<li><p>GoodsItem 中传递 <code>count=&#123;goods_count&#125;</code> 给 MyCount 组件。</p>
+</li>
+<li><p>MyCount 组件接收并绑定给 input 的 value。</p>
+</li>
+</ol>
+<ul>
+<li>  点击按钮修改数据</li>
+</ul>
+<ol>
+<li><p><code>App.js</code> 中准备 changeCount（修改数据的方法），并传递给 GoodsItem。</p>
+</li>
+<li><p>GoodsItem 中进行接收，并继续传递 <code>changeCount=&#123;(count) =&gt; changeCount(id, count)&#125;</code> 到 MyCount。</p>
+</li>
+<li><p>给 MyCount 中的加减按钮绑定点击事件，调用传递过来的 changeCount 并传递期望的 count。</p>
+</li>
+</ol>
+<p><code>App.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> changeCount = <span class="function">(<span class="params">id, count</span>) =&gt;</span> &#123;</span><br><span class="line">        setList(</span><br><span class="line">            list.map(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (item.id === id) &#123;</span><br><span class="line">                    <span class="keyword">return</span> &#123;</span><br><span class="line">                        ...item,</span><br><span class="line">                        <span class="attr">goods_count</span>: count,</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> item</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;app&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">MyHeader</span>&gt;</span>购物车<span class="tag">&lt;/<span class="name">MyHeader</span>&gt;</span></span></span><br><span class="line"><span class="xml">            &#123;list.map((item) =&gt; (</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">GoodsItem</span> <span class="attr">key</span>=<span class="string">&#123;item.id&#125;</span> &#123;<span class="attr">...item</span>&#125; <span class="attr">changeState</span>=<span class="string">&#123;changeState&#125;</span> <span class="attr">changeCount</span>=<span class="string">&#123;changeCount&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">GoodsItem</span>&gt;</span></span></span><br><span class="line"><span class="xml">            ))&#125;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>components/GoodsItem/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">GoodsItem</span>(<span class="params">&#123; goods_count, goods_img, goods_name, goods_price, goods_state, id, changeState, changeCount &#125;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;my-goods-item&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;right&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;top&#x27;</span>&gt;</span>&#123;goods_name&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;bottom&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">&#x27;price&#x27;</span>&gt;</span>¥ &#123;goods_price&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">MyCount</span> <span class="attr">count</span>=<span class="string">&#123;goods_count&#125;</span> <span class="attr">changeCount</span>=<span class="string">&#123;(count)</span> =&gt;</span> changeCount(id, count)&#125; /&gt;</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>components/MyCount/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">MyCount</span>(<span class="params">&#123; count, changeCount &#125;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> plus = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        changeCount(count + <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> minus = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (count &lt;= <span class="number">1</span>) <span class="keyword">return</span></span><br><span class="line">        changeCount(count - <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;my-counter&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&#x27;button&#x27;</span> <span class="attr">className</span>=<span class="string">&#x27;btn btn-light&#x27;</span> <span class="attr">onClick</span>=<span class="string">&#123;minus&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                -</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;number&#x27;</span> <span class="attr">className</span>=<span class="string">&#x27;form-control inp&#x27;</span> <span class="attr">value</span>=<span class="string">&#123;count&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&#x27;button&#x27;</span> <span class="attr">className</span>=<span class="string">&#x27;btn btn-light&#x27;</span> <span class="attr">onClick</span>=<span class="string">&#123;plus&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                +</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="数量控制-useContext"><a href="#数量控制-useContext" class="headerlink" title="数量控制 useContext"></a>数量控制 useContext</h3><ol>
+<li>在 App.js 中创建 Context 对象，并且导出</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> Context = createContext()</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在 App.js 中，通过 Provider 提供方法</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Context.Provider value=&#123;&#123; changeCount &#125;&#125;&gt;</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;app&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">MyHeader</span>&gt;</span>购物车<span class="tag">&lt;/<span class="name">MyHeader</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        &#123;list.map((item) =&gt; (</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">GoodsItem</span> <span class="attr">key</span>=<span class="string">&#123;item.id&#125;</span> &#123;<span class="attr">...item</span>&#125; <span class="attr">changeState</span>=<span class="string">&#123;changeState&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">GoodsItem</span>&gt;</span></span></span><br><span class="line"><span class="xml">        ))&#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">MyFooter</span> <span class="attr">list</span>=<span class="string">&#123;list&#125;</span> <span class="attr">changeAll</span>=<span class="string">&#123;changeAll&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">MyFooter</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/Context.Provider&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在 <code>components/GoodsItem/index.js</code> 中把 id 传递过去</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">&#x27;right&#x27;</span>&gt;</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;top&#x27;</span>&gt;</span>&#123;goods_name&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;bottom&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">&#x27;price&#x27;</span>&gt;</span>¥ &#123;goods_price&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">MyCount</span> <span class="attr">count</span>=<span class="string">&#123;goods_count&#125;</span> <span class="attr">id</span>=<span class="string">&#123;id&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>在 myCount 组件中，使用 useContext 获取数据</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useContext &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Context &#125; <span class="keyword">from</span> <span class="string">&#x27;../../App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./index.scss&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">MyCount</span>(<span class="params">&#123; count, id &#125;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; changeCount &#125; = useContext(Context)</span><br><span class="line">    <span class="keyword">const</span> plus = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        changeCount(id, count + <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> minus = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (count &lt;= <span class="number">1</span>) <span class="keyword">return</span></span><br><span class="line">        changeCount(id, count - <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;my-counter&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&#x27;button&#x27;</span> <span class="attr">className</span>=<span class="string">&#x27;btn btn-light&#x27;</span> <span class="attr">onClick</span>=<span class="string">&#123;minus&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                -</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;number&#x27;</span> <span class="attr">className</span>=<span class="string">&#x27;form-control inp&#x27;</span> <span class="attr">value</span>=<span class="string">&#123;count&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&#x27;button&#x27;</span> <span class="attr">className</span>=<span class="string">&#x27;btn btn-light&#x27;</span> <span class="attr">onClick</span>=<span class="string">&#123;plus&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                +</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<!-- ### 输入处理
+
+`components/MyCount/index.js`
+
+```js
+import React, { useContext } from 'react'
+import { Context } from '../../App'
+import './index.scss'
+
+export default function MyCount({ count, id }) {
+    const { changeCount } = useContext(Context)
+    const plus = () => {
+        changeCount(id, count + 1)
+    }
+    const minus = () => {
+        if (count <= 1) return
+        changeCount(id, count - 1)
+    }
+    const handleChange = (e) => {
+        let num = +e.target.value
+        if (e.target.value < 0) {
+            num = 0
+        }
+        changeCount(id, num)
+    }
+    return (
+        <div className='my-counter'>
+            <button type='button' className='btn btn-light' onClick={minus}>
+                -
+            </button>
+            <input type='number' className='form-control inp' value={count} min='0' onChange={handleChange} />
+            <button type='button' className='btn btn-light' onClick={plus}>
+                +
+            </button>
+        </div>
+    )
+}
+``` -->
+
+<!-- ```jsx
+<input
+    type='number'
+    className='form-control inp'
+    value={goods_count}
+    onChange={(e) => {
+        const reg = /^[1-9][0-9]*$/
+        if (reg.test(e.target.value)) {
+            changeCount(id, +e.target.value)
+        }
+    }}
+/>
+``` -->
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/10/react-base-course05/" rel="prev" title="05_Hooks 基础">
+      <i class="fa fa-chevron-left"></i> 05_Hooks 基础
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/12/react-base-course07/" rel="next" title="07_Redux 基础">
+      07_Redux 基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useEffect-%E6%B8%85%E7%90%86%E5%89%AF%E4%BD%9C%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">useEffect 清理副作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">2.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA%E6%BC%94%E7%A4%BA"><span class="nav-number">2.3.</span> <span class="nav-text">执行时机演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E7%90%86%E5%AE%9A%E6%97%B6%E5%99%A8%E6%BC%94%E7%A4%BA"><span class="nav-number">2.4.</span> <span class="nav-text">清理定时器演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">2.5.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%9F%E9%9A%8F%E9%BC%A0%E6%A0%87%E7%9A%84%E5%A4%A9%E4%BD%BF-%F0%9F%93%9D"><span class="nav-number">3.</span> <span class="nav-text">跟随鼠标的天使 📝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">3.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-Hook"><span class="nav-number">4.</span> <span class="nav-text">自定义 Hook</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-1"><span class="nav-number">4.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B"><span class="nav-number">4.3.</span> <span class="nav-text">案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E8%AE%B0%E5%BD%95%E6%BB%9A%E5%8A%A8%E4%BD%8D%E7%BD%AE%E7%9A%84-Hook"><span class="nav-number">4.4.</span> <span class="nav-text">封装记录滚动位置的 Hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-number">4.5.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useEffect-%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82"><span class="nav-number">5.</span> <span class="nav-text">useEffect 发送请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-3"><span class="nav-number">5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-2"><span class="nav-number">5.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA%E5%8F%91%E8%AF%B7%E6%B1%82"><span class="nav-number">5.3.</span> <span class="nav-text">演示发请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-2"><span class="nav-number">5.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useRef-%E6%93%8D%E4%BD%9C-DOM"><span class="nav-number">6.</span> <span class="nav-text">useRef 操作 DOM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-4"><span class="nav-number">6.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-3"><span class="nav-number">6.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">6.3.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useRef-%E8%8E%B7%E5%8F%96-DOM"><span class="nav-number">6.4.</span> <span class="nav-text">useRef 获取 DOM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useRef-%E8%8E%B7%E5%8F%96%E7%B1%BB%E7%BB%84%E4%BB%B6"><span class="nav-number">6.5.</span> <span class="nav-text">useRef 获取类组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useRef-%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE"><span class="nav-number">7.</span> <span class="nav-text">useRef 共享数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-5"><span class="nav-number">7.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E5%86%99%E6%B3%95"><span class="nav-number">7.2.</span> <span class="nav-text">基础写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">7.3.</span> <span class="nav-text">全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">7.4.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#createContext"><span class="nav-number">8.</span> <span class="nav-text">createContext</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-6"><span class="nav-number">8.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-4"><span class="nav-number">8.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-1"><span class="nav-number">8.3.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-number">8.4.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-3"><span class="nav-number">8.5.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useContext-%E4%BD%BF%E7%94%A8"><span class="nav-number">9.</span> <span class="nav-text">useContext 使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-7"><span class="nav-number">9.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-5"><span class="nav-number">9.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%A1%88%E4%BE%8B"><span class="nav-number">10.</span> <span class="nav-text">购物车案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%88%97%E8%A1%A8%E6%95%B0%E6%8D%AE"><span class="nav-number">10.1.</span> <span class="nav-text">获取列表数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyCount-%E7%BB%84%E4%BB%B6%E7%9A%84%E5%B0%81%E8%A3%85"><span class="nav-number">10.2.</span> <span class="nav-text">MyCount 组件的封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E9%87%8F%E6%8E%A7%E5%88%B6-props"><span class="nav-number">10.3.</span> <span class="nav-text">数量控制 props</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E9%87%8F%E6%8E%A7%E5%88%B6-useContext"><span class="nav-number">10.4.</span> <span class="nav-text">数量控制 useContext</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title=" → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="fab fa-zhihu fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
