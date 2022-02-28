@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://example.com/resource/images/TS%E6%98%AFJS%E7%9A%84%E8%B6%85%E9%9B%86.png">
 <meta property="og:image" content="http://example.com/resource/images/TS%E7%BC%96%E8%AF%91.png">
 <meta property="article:published_time" content="2021-12-07T13:16:55.000Z">
-<meta property="article:modified_time" content="2022-02-26T15:20:06.755Z">
+<meta property="article:modified_time" content="2022-02-28T12:36:20.615Z">
 <meta property="article:author" content="Ifer">
 <meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
 <meta name="twitter:card" content="summary">
@@ -213,7 +213,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-26 23:20:06" itemprop="dateModified" datetime="2022-02-26T23:20:06+08:00">2022-02-26</time>
+                <time title="修改时间：2022-02-28 20:36:20" itemprop="dateModified" datetime="2022-02-28T20:36:20+08:00">2022-02-28</time>
               </span>
 
           
@@ -870,6 +870,10 @@
 <li><p>类型变量 Key 受 Type 约束，即 Key 只能是 Type 所有键中的任意一个，或者说只能访问对象中存在的属性。</p>
 </li>
 </ol>
+<p><font color=909090>🤔 思考下面写法。</font></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getProp</span>&lt;<span class="title">Type</span>, <span class="title">Key</span> <span class="title">extends</span> <span class="title">keyof</span> </span>&#123; name: <span class="built_in">string</span>; age: <span class="built_in">number</span> &#125;&gt;(obj: Type, <span class="attr">key</span>: Key) &#123;</span><br><span class="line">    <span class="comment">// Type &#x27;Key&#x27; cannot be used to index type &#x27;Type&#x27;.</span></span><br><span class="line">    <span class="comment">// 原因：因为 Type 是泛型，什么类型都有可能，而 &#x27;name&#x27; | &#x27;age&#x27; 并没有和 Type 产生关系</span></span><br><span class="line">    <span class="keyword">return</span> obj[key]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> person = &#123; <span class="attr">name</span>: <span class="string">&#x27;jack&#x27;</span>, <span class="attr">age</span>: <span class="number">18</span> &#125;</span><br><span class="line">getProp(person, <span class="string">&#x27;name&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>了解：也可以对 Type 进行约束。</p>
 <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Type extends object 表示：Type 应该是一个对象类型，如果不是对象类型，就会报错</span></span><br><span class="line"><span class="comment">// 注意：如果要用到对象类型，应该用 object ，而不是 Object</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getProperty</span>&lt;<span class="title">Type</span> <span class="title">extends</span> <span class="title">object</span>, <span class="title">Key</span> <span class="title">extends</span> <span class="title">keyof</span> <span class="title">Type</span>&gt;(<span class="params">obj: Type, key: Key</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> obj[key]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h2><p>接口也可以配合泛型来使用，以增加其灵活性，增强其复用性。</p>
