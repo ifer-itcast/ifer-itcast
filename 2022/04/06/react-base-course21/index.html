@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Immutable Data: 一旦创建就不可被更改的数据，对此数据的任何操作都会返回一个新的 Immutable 对象。优点：降低 Mutable 带来的复杂度、节省内存、方便开发 Undo&#x2F;Redo 类似的业务、拥抱函数式编程，Article。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Immutable">
+<meta property="og:url" content="http://example.com/2022/04/06/react-base-course21/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="Immutable Data: 一旦创建就不可被更改的数据，对此数据的任何操作都会返回一个新的 Immutable 对象。优点：降低 Mutable 带来的复杂度、节省内存、方便开发 Undo&#x2F;Redo 类似的业务、拥抱函数式编程，Article。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-06T02:26:16.000Z">
+<meta property="article:modified_time" content="2022-04-12T02:25:24.564Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/04/06/react-base-course21/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Immutable | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/06/react-base-course21/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Immutable
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-06 10:26:16" itemprop="dateCreated datePublished" datetime="2022-04-06T10:26:16+08:00">2022-04-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-12 10:25:24" itemprop="dateModified" datetime="2022-04-12T10:25:24+08:00">2022-04-12</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a target="_blank" rel="noopener" href="https://github.com/immutable-js/immutable-js">Immutable</a> Data: 一旦创建就不可被更改的数据，对此数据的任何操作都会返回一个新的 Immutable 对象。优点：降低 Mutable 带来的复杂度、节省内存、方便开发 Undo/Redo 类似的业务、拥抱函数式编程，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/20295971">Article</a>。</p>
+<span id="more"></span>
+
+<h2 id="基本认识"><a href="#基本认识" class="headerlink" title="基本认识"></a>基本认识</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; <span class="built_in">Map</span> &#125; = <span class="built_in">require</span>(<span class="string">&#x27;immutable&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转成 Immutable 对象</span></span><br><span class="line"><span class="keyword">const</span> map1 = <span class="built_in">Map</span>(&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span><br><span class="line">    <span class="attr">info</span>: &#123;</span><br><span class="line">        <span class="attr">address</span>: <span class="string">&#x27;河南&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 修改：返回值是修改后的 Immutable，不会影响原数据</span></span><br><span class="line"><span class="keyword">const</span> map2 = map1.set(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;elser&#x27;</span>)</span><br><span class="line"><span class="comment">// 获取</span></span><br><span class="line"><span class="built_in">console</span>.log(map1.get(<span class="string">&#x27;name&#x27;</span>), map2.get(<span class="string">&#x27;name&#x27;</span>)) <span class="comment">// &#x27;ifer&#x27;、&#x27;elser&#x27;</span></span><br><span class="line"><span class="comment">// 内存和性能的体现</span></span><br><span class="line"><span class="built_in">console</span>.log(map1.get(<span class="string">&#x27;info&#x27;</span>) === map2.get(<span class="string">&#x27;info&#x27;</span>)) <span class="comment">// true</span></span><br><span class="line"><span class="comment">// 转换：普通对象</span></span><br><span class="line"><span class="built_in">console</span>.log(map1.toJS(), map2.toJS())</span><br></pre></td></tr></table></figure>
+
+<h2 id="List-结构"><a href="#List-结构" class="headerlink" title="List 结构"></a>List 结构</h2><p>有序的类数组的结构，<a target="_blank" rel="noopener" href="https://immutable-js.com/docs/v4.0.0/List/">Doc</a>。</p>
+<p>🧐 创建。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; List &#125; = <span class="built_in">require</span>(<span class="string">&#x27;immutable&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第 1 种方式</span></span><br><span class="line"><span class="keyword">const</span> l = List([<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第 2 种方式</span></span><br><span class="line"><span class="built_in">console</span>.log(List.of(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>🧐 判断是否是 List 结构。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(List.isList(l)) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(List.isList([<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>])) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 获取长度。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(l.size) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 修改数据。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改 list 结构的第 0 项（注意不会影响原数据，l2 才是修改后的结果）</span></span><br><span class="line"><span class="keyword">const</span> l2 = l.set(<span class="number">0</span>, <span class="string">&#x27;🍕&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(l2.toJS())</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把最后一个变成 🍔</span></span><br><span class="line"><span class="keyword">const</span> l3 = l.set(-<span class="number">1</span>, <span class="string">&#x27;🍔&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(l3.toJS())</span><br></pre></td></tr></table></figure>
+
+<p>🧐 删除数据。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接干掉了第 0 个</span></span><br><span class="line"><span class="keyword">const</span> l2 = l.delete(<span class="number">0</span>)</span><br><span class="line"><span class="built_in">console</span>.log(l4)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 直接干掉了倒数第 2 个</span></span><br><span class="line"><span class="keyword">const</span> l3 = l.delete(-<span class="number">2</span>)</span><br><span class="line"><span class="built_in">console</span>.log(l5)</span><br></pre></td></tr></table></figure>
+
+<p>🧐 插入数据。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 插入，在第 2 个位置，插入 🌭</span></span><br><span class="line"><span class="keyword">const</span> l2 = l.insert(<span class="number">1</span>, <span class="string">&#x27;🌭&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(l2)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 插入，从后数，从 -0 开始， -1 的位置插入 🌭，注意 -0 和 0 不一样</span></span><br><span class="line"><span class="keyword">const</span> l3 = l.insert(-<span class="number">1</span>, <span class="string">&#x27;🌭&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(l3)</span><br></pre></td></tr></table></figure>
+
+<p>🧐 更新。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 更新，对索引为 1 的值进行了处理</span></span><br><span class="line"><span class="keyword">const</span> l2 = l.update(<span class="number">1</span>, <span class="function">(<span class="params">x</span>) =&gt;</span> x + <span class="string">&#x27;~~&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(l2)</span><br></pre></td></tr></table></figure>
+
+<p>🧐 清空。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(l.clear().toJS())</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// push、pop、unshift、shift</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 设置 size。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// setSize，重新设定数组长度，小于原数据会截断，大于原数组会用 undefined 进行填充</span></span><br><span class="line"><span class="built_in">console</span>.log(l.setSize(<span class="number">10</span>).toJS())</span><br></pre></td></tr></table></figure>
+
+<p>🧐 setIn。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// setIn、deleteIn、insertIn、updateIn，多维</span></span><br><span class="line"><span class="keyword">const</span> &#123; List &#125; = <span class="built_in">require</span>(<span class="string">&#x27;immutable&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 目标：修改 2 为 &#x27;xxx&#x27;</span></span><br><span class="line"><span class="keyword">const</span> temp = List([List([<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>]), List([<span class="number">1</span>, <span class="number">2</span>])])</span><br><span class="line"><span class="comment">// 方法 1</span></span><br><span class="line"><span class="comment">// const r = temp.set(1, temp.get(1).set(1, &#x27;xxx&#x27;))</span></span><br><span class="line"><span class="comment">// 方法 2</span></span><br><span class="line"><span class="keyword">const</span> r = temp.setIn([<span class="number">1</span>, <span class="number">1</span>], <span class="string">&#x27;xxx&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(r.toJS()) <span class="comment">// [ [ &#x27;a&#x27;, &#x27;b&#x27; ], [ 1, &#x27;xxx&#x27; ] ]</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 concat。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// merge 是 concat 的别名，作用同 concat</span></span><br><span class="line"><span class="keyword">const</span> l = List([<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(l.concat(List([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])).toJS()) <span class="comment">// [ &#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, 1, 2, 3 ]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// map</span></span><br><span class="line"><span class="comment">// filter</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 flatten。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> l = List([List([<span class="string">&#x27;a&#x27;</span>, List([<span class="string">&#x27;b&#x27;</span>, List([<span class="string">&#x27;c&#x27;</span>])])]), <span class="string">&#x27;d&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">// true 只能搞定 1 层</span></span><br><span class="line"><span class="comment">// console.log(l.flatten(true).toJS())</span></span><br><span class="line"><span class="comment">// false 任意层</span></span><br><span class="line"><span class="comment">// console.log(l.flatten(false).toJS())</span></span><br><span class="line"><span class="comment">// 也可以指定具体数值</span></span><br><span class="line"><span class="built_in">console</span>.log(l.flatten(<span class="number">2</span>).toJS())</span><br></pre></td></tr></table></figure>
+
+<p>🧐 find。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> l = List([<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;ab&#x27;</span>, <span class="string">&#x27;abc&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 找到第一个符合条件的 value 就不再继续了</span></span><br><span class="line"><span class="keyword">const</span> l2 = l.find(<span class="function">(<span class="params">v, k</span>) =&gt;</span> v.includes(<span class="string">&#x27;b&#x27;</span>))</span><br><span class="line"><span class="built_in">console</span>.log(l2) <span class="comment">// &#x27;ab&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 findLast。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 倒着找</span></span><br><span class="line"><span class="keyword">const</span> l = List([<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;ab&#x27;</span>, <span class="string">&#x27;abc&#x27;</span>])</span><br><span class="line"><span class="keyword">const</span> l2 = l.findLast(<span class="function">(<span class="params">v, k</span>) =&gt;</span> v.includes(<span class="string">&#x27;b&#x27;</span>))</span><br><span class="line"><span class="built_in">console</span>.log(l2) <span class="comment">// &#x27;abc&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 groupBy。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; List &#125; = <span class="built_in">require</span>(<span class="string">&#x27;immutable&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> l = List([</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span><br><span class="line">        <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">        <span class="attr">sex</span>: <span class="string">&#x27;men&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;sherry&#x27;</span>,</span><br><span class="line">        <span class="attr">age</span>: <span class="number">22</span>,</span><br><span class="line">        <span class="attr">sex</span>: <span class="string">&#x27;women&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;elser&#x27;</span>,</span><br><span class="line">        <span class="attr">age</span>: <span class="number">30</span>,</span><br><span class="line">        <span class="attr">sex</span>: <span class="string">&#x27;men&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> l2 = l.groupBy(<span class="function">(<span class="params">x</span>) =&gt;</span> x.sex)</span><br><span class="line"><span class="built_in">console</span>.log(l2.toJS())</span><br><span class="line"></span><br><span class="line"><span class="comment">/* &#123;</span></span><br><span class="line"><span class="comment">    men: [</span></span><br><span class="line"><span class="comment">        &#123; name: &#x27;ifer&#x27;, age: 18, sex: &#x27;men&#x27; &#125;,</span></span><br><span class="line"><span class="comment">        &#123; name: &#x27;elser&#x27;, age: 30, sex: &#x27;men&#x27; &#125;</span></span><br><span class="line"><span class="comment">    ],</span></span><br><span class="line"><span class="comment">    women: [ &#123; name: &#x27;sherry&#x27;, age: 22, sex: &#x27;women&#x27; &#125; ]</span></span><br><span class="line"><span class="comment">&#125; */</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Map-结构"><a href="#Map-结构" class="headerlink" title="Map 结构"></a>Map 结构</h2><p>无序的类对象的结构。</p>
+<p>🧐 修改。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> m = <span class="built_in">Map</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>, <span class="attr">age</span>: <span class="number">18</span> &#125;)</span><br><span class="line"><span class="comment">// 修改</span></span><br><span class="line"><span class="keyword">const</span> m2 = m.set(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;elser&#x27;</span>).toJS()</span><br><span class="line"><span class="built_in">console</span>.log(m2)</span><br></pre></td></tr></table></figure>
+
+<p>🧐 获取。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(m.get(<span class="string">&#x27;name&#x27;</span>)) <span class="comment">// &#x27;ifer&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 删除。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> m2 = m.delete(<span class="string">&#x27;name&#x27;</span>).toJS()</span><br><span class="line"><span class="built_in">console</span>.log(m2) <span class="comment">// &#123; age: 18 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 删除所有。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> m2 = m.deleteAll([<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]).toJS()</span><br><span class="line"><span class="built_in">console</span>.log(m2) <span class="comment">// &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> m2 = m.clear().toJS()</span><br><span class="line"><span class="built_in">console</span>.log(m2) <span class="comment">// &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 更新。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// update(key, callback)</span></span><br><span class="line"><span class="keyword">const</span> m2 = m.update(<span class="string">&#x27;name&#x27;</span>, <span class="function">(<span class="params">name</span>) =&gt;</span> name + <span class="string">&#x27;~~&#x27;</span>).toJS()</span><br><span class="line"><span class="built_in">console</span>.log(m2) <span class="comment">// &#123; name: &#x27;ifer~~&#x27;, age: 18 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 合并。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// merge</span></span><br><span class="line"><span class="keyword">const</span> m2 = m.merge(&#123; <span class="attr">address</span>: <span class="string">&#x27;仙桃&#x27;</span> &#125;).toJS()</span><br><span class="line"><span class="built_in">console</span>.log(m2)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// concat 是 merge 的别名</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 setIn。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> m = <span class="built_in">Map</span>(&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">    <span class="attr">address</span>: <span class="built_in">Map</span>(&#123;</span><br><span class="line">        <span class="attr">province</span>: <span class="string">&#x27;河南&#x27;</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setIn</span></span><br><span class="line"><span class="keyword">const</span> m1 = m.setIn([<span class="string">&#x27;address&#x27;</span>, <span class="string">&#x27;province&#x27;</span>], <span class="string">&#x27;深圳&#x27;</span>).toJS()</span><br><span class="line"><span class="built_in">console</span>.log(m1)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deleteIn、updateIn、mergeIn</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// toJS() =&gt; 深转换</span></span><br><span class="line"><span class="comment">// toJSON() =&gt; 浅转换</span></span><br><span class="line"><span class="comment">// toArray() =&gt; 浅</span></span><br><span class="line"><span class="comment">// toObject() =&gt; 浅</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 equals: 判断 2 个 map 是否相等。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> m = <span class="built_in">Map</span>(&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">    <span class="attr">address</span>: <span class="built_in">Map</span>(&#123;</span><br><span class="line">        <span class="attr">province</span>: <span class="string">&#x27;河南&#x27;</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> m2 = <span class="built_in">Map</span>(&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">    <span class="attr">address</span>: <span class="built_in">Map</span>(&#123;</span><br><span class="line">        <span class="attr">province</span>: <span class="string">&#x27;河南&#x27;</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(m.equals(m2)) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 find。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> m2 = m.find(<span class="function">(<span class="params">v</span>) =&gt;</span> v === <span class="string">&#x27;ifer&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(m2) <span class="comment">// &#x27;ifer&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// flatten =&gt; false 深 =&gt; true 浅</span></span><br><span class="line"><span class="comment">// has: 判断是否有指定的 key</span></span><br><span class="line"><span class="comment">// includes</span></span><br><span class="line"><span class="comment">// forEach</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 OrderedMap。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; OrderedMap &#125; = <span class="built_in">require</span>(<span class="string">&#x27;immutable&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> m = OrderedMap(&#123;&#125;)</span><br><span class="line"><span class="keyword">const</span> m2 = m.set(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;ifer&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> m3 = m2.set(<span class="string">&#x27;age&#x27;</span>, <span class="number">18</span>)</span><br><span class="line">m3.forEach(<span class="function">(<span class="params">v</span>) =&gt;</span> <span class="built_in">console</span>.log(v))</span><br></pre></td></tr></table></figure>
+
+<h2 id="Set-结构"><a href="#Set-结构" class="headerlink" title="Set 结构"></a>Set 结构</h2><p>无序且唯一的结构。</p>
+<p>🧐 add。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Set 是无序的，实际上是没有索引的</span></span><br><span class="line"><span class="keyword">const</span> s = <span class="built_in">Set</span>([<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>])</span><br><span class="line"><span class="comment">// add</span></span><br><span class="line"><span class="keyword">const</span> s2 = s.add(<span class="string">&#x27;c&#x27;</span>).toJS()</span><br><span class="line"><span class="built_in">console</span>.log(s2)</span><br></pre></td></tr></table></figure>
+
+<p>🧐 delete。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s2 = s.delete(<span class="string">&#x27;a&#x27;</span>).toJS()</span><br><span class="line"><span class="built_in">console</span>.log(s2) <span class="comment">// [ &#x27;b&#x27; ]</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 clear。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(s.clear().toJS()) <span class="comment">// []</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 union: 并集。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s2 = s.union(<span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>])).toJS()</span><br><span class="line"><span class="built_in">console</span>.log(s2)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// intersect: N 个 set 的交集</span></span><br><span class="line"><span class="comment">// subtract: 从 set 中干掉一些值</span></span><br><span class="line"><span class="comment">// forEach</span></span><br><span class="line"><span class="comment">// get: get 的 key 和 value 是一个东西</span></span><br><span class="line"><span class="comment">// has: has 的 key 和 value 是一个东西</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s2 = s.get(<span class="string">&#x27;a&#x27;</span>) <span class="comment">// 用处不大</span></span><br><span class="line"><span class="built_in">console</span>.log(s2) <span class="comment">// &#x27;a&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// rest 除了第一个的其余元素</span></span><br><span class="line"><span class="comment">// butLast 除了最后一个的其余元素</span></span><br><span class="line"><span class="comment">// skip 跳过前 N 个，取得其余</span></span><br><span class="line"><span class="comment">// skipLast 跳过最后 N 个，取得其余</span></span><br><span class="line"><span class="comment">// skipWhile 当判断条件为 false 时，取得当前以及后面的元素</span></span><br><span class="line"><span class="comment">// skipUntil 当判断条件为 true 时，取得当前以及后面的元素</span></span><br><span class="line"><span class="comment">// take 取的前 N 个元素</span></span><br><span class="line"><span class="comment">// takeLast 取得后 N 个元素</span></span><br><span class="line"><span class="comment">// takeWhile 从前向后取元素，当判断条件为 false 时为止</span></span><br><span class="line"><span class="comment">// takeUntil 从前向后取元素，当判断条件为 true 时为止</span></span><br></pre></td></tr></table></figure>
+
+<p>🧐 OrderedSet: 有序的 Set。</p>
+<h2 id="Seq-操作"><a href="#Seq-操作" class="headerlink" title="Seq 操作"></a>Seq 操作</h2><p>🧐 Seq。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Seq &#125; = <span class="built_in">require</span>(<span class="string">&#x27;immutable&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Seq 描述了一个懒操作，允许使用 collection 的高阶方法高效的链式调用，但是不会生成中间的 collections</span></span><br><span class="line"><span class="comment">// 特点 1：Seq is immutable，不可变</span></span><br><span class="line"><span class="comment">// 特点 2：Seq is lazy，懒</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> oddSeq = Seq([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">    .filter(<span class="function">(<span class="params">x</span>) =&gt;</span> x % <span class="number">2</span> !== <span class="number">0</span>)</span><br><span class="line">    .map(<span class="function">(<span class="params">x</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 不使用 oddSeq 这儿都不会执行</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;懒~~~~~&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> x * <span class="number">2</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="built_in">console</span>.log(oddSeq.toJS())</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可以通过 Seq 方法把任意的 collection 转换成 Seq</span></span><br><span class="line"><span class="keyword">const</span> l = List([<span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">4</span>])</span><br><span class="line"><span class="keyword">const</span> s = Seq(l) <span class="comment">// 转成懒的，不运算不执行</span></span><br><span class="line"><span class="built_in">console</span>.log(s)</span><br></pre></td></tr></table></figure>
+
+<p>🧐 转换。</p>
+<p>fromJS(): 把原生的数组或对象转换成对应的 List 或 Map。</p>
+<p>toJS(): 转换成原生对象。</p>
+<h2 id="React-中使用"><a href="#React-中使用" class="headerlink" title="React 中使用"></a>React 中使用</h2><h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><p>第一种办法：定义的时候就是 Map 数据结构。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="built_in">Map</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;immutable&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        <span class="attr">info</span>: <span class="built_in">Map</span>(&#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span><br><span class="line">            <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">        &#125;),</span><br><span class="line">    &#125;</span><br><span class="line">    handleClick = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">            <span class="attr">info</span>: <span class="built_in">this</span>.state.info.set(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;elser&#x27;</span>).set(<span class="string">&#x27;age&#x27;</span>, <span class="number">19</span>),</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">h3</span>&gt;</span>name: &#123;this.state.info.get(&#x27;name&#x27;)&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">h3</span>&gt;</span>age: &#123;this.state.info.get(&#x27;age&#x27;)&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleClick&#125;</span>&gt;</span>update name/age<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二种办法：操作数据的时候转成 Map 数据结构。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="built_in">Map</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;immutable&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        <span class="attr">info</span>: &#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span><br><span class="line">            <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    handleClick = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// #1 转</span></span><br><span class="line">        <span class="keyword">const</span> old = <span class="built_in">Map</span>(<span class="built_in">this</span>.state.info)</span><br><span class="line">        <span class="comment">// #2 改</span></span><br><span class="line">        <span class="keyword">const</span> newO = old.set(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;elser&#x27;</span>).set(<span class="string">&#x27;age&#x27;</span>, <span class="number">19</span>)</span><br><span class="line">        <span class="comment">// #3 还</span></span><br><span class="line">        <span class="built_in">this</span>.setState(&#123; <span class="attr">info</span>: newO.toJS() &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">h3</span>&gt;</span>name: &#123;this.state.info.name&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">h3</span>&gt;</span>age: &#123;this.state.info.age&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleClick&#125;</span>&gt;</span>update name<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="一个问题"><a href="#一个问题" class="headerlink" title="一个问题"></a>一个问题</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="built_in">Map</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;immutable&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        <span class="attr">info</span>: <span class="built_in">Map</span>(&#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span><br><span class="line">            <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">            <span class="attr">address</span>: &#123;</span><br><span class="line">                <span class="attr">ad1</span>: <span class="string">&#x27;上海&#x27;</span>,</span><br><span class="line">                <span class="attr">ad2</span>: <span class="string">&#x27;深圳&#x27;</span>,</span><br><span class="line">                <span class="attr">ad3</span>: <span class="string">&#x27;武汉&#x27;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;),</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 问题：是一个普通的对象结构</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.state.info.get(<span class="string">&#x27;address&#x27;</span>))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解决，在 address 对象处再包裹一层 Map。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">state = &#123;</span><br><span class="line">    <span class="attr">info</span>: <span class="built_in">Map</span>(&#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span><br><span class="line">        <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">        <span class="attr">address</span>: <span class="built_in">Map</span>(&#123;</span><br><span class="line">            <span class="attr">ad1</span>: <span class="string">&#x27;上海&#x27;</span>,</span><br><span class="line">            <span class="attr">ad2</span>: <span class="string">&#x27;深圳&#x27;</span>,</span><br><span class="line">            <span class="attr">ad3</span>: <span class="string">&#x27;武汉&#x27;</span>,</span><br><span class="line">        &#125;),</span><br><span class="line">    &#125;),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="阻止更新的应用"><a href="#阻止更新的应用" class="headerlink" title="阻止更新的应用"></a>阻止更新的应用</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="built_in">Map</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;immutable&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">shouldComponentUpdate</span>(<span class="params">nextProps</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// !mark</span></span><br><span class="line">        <span class="comment">// if (this.props.address.equals(nextProps.address))</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.props.address === nextProps.address) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">componentDidUpdate</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;child componentDidUpdate&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Child<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        <span class="attr">info</span>: <span class="built_in">Map</span>(&#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span><br><span class="line">            <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">            <span class="comment">// 阻止 React 没必要渲染方面功不可没</span></span><br><span class="line">            <span class="attr">address</span>: <span class="built_in">Map</span>(&#123;</span><br><span class="line">                <span class="attr">ad1</span>: <span class="string">&#x27;上海&#x27;</span>,</span><br><span class="line">                <span class="attr">ad2</span>: <span class="string">&#x27;深圳&#x27;</span>,</span><br><span class="line">                <span class="attr">ad3</span>: <span class="string">&#x27;武汉&#x27;</span>,</span><br><span class="line">            &#125;),</span><br><span class="line">        &#125;),</span><br><span class="line">    &#125;</span><br><span class="line">    handleClick = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setState(&#123; <span class="attr">info</span>: <span class="built_in">this</span>.state.info.set(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;elser&#x27;</span>) &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>name: &#123;this.state.info.get(&#x27;name&#x27;)&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleClick&#125;</span>&gt;</span>update name<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                App</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Child</span> <span class="attr">address</span>=<span class="string">&#123;this.state.info.get(</span>&#x27;<span class="attr">address</span>&#x27;)&#125; /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="操作复杂数据"><a href="#操作复杂数据" class="headerlink" title="操作复杂数据"></a>操作复杂数据</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="built_in">Map</span>, List &#125; <span class="keyword">from</span> <span class="string">&#x27;immutable&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        <span class="attr">info</span>: <span class="built_in">Map</span>(&#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span><br><span class="line">            <span class="attr">address</span>: <span class="built_in">Map</span>(&#123;</span><br><span class="line">                <span class="attr">province</span>: <span class="string">&#x27;河南&#x27;</span>,</span><br><span class="line">                <span class="attr">city</span>: <span class="string">&#x27;周口&#x27;</span>,</span><br><span class="line">            &#125;),</span><br><span class="line">            <span class="attr">favor</span>: List([<span class="string">&#x27;吃饭&#x27;</span>, <span class="string">&#x27;睡觉&#x27;</span>]),</span><br><span class="line">        &#125;),</span><br><span class="line">    &#125;</span><br><span class="line">    updateName = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">            <span class="attr">info</span>: <span class="built_in">this</span>.state.info.set(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;elser&#x27;</span>),</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    updateCity = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">            <span class="comment">// info: this.state.info.set(&#x27;address&#x27;, Map(&#123; province: &#x27;湖北&#x27;, city: &#x27;仙桃&#x27; &#125;)),</span></span><br><span class="line">            <span class="comment">// 假如只想修改某一个呢</span></span><br><span class="line">            <span class="attr">info</span>: <span class="built_in">this</span>.state.info.set(<span class="string">&#x27;address&#x27;</span>, <span class="built_in">this</span>.state.info.get(<span class="string">&#x27;address&#x27;</span>).set(<span class="string">&#x27;city&#x27;</span>, <span class="string">&#x27;淮阳&#x27;</span>)),</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    delItem = <span class="function">(<span class="params">index</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">            <span class="attr">info</span>: <span class="built_in">this</span>.state.info.set(<span class="string">&#x27;favor&#x27;</span>, <span class="built_in">this</span>.state.info.get(<span class="string">&#x27;favor&#x27;</span>).splice(index, <span class="number">1</span>)),</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    name: &#123;this.state.info.get(&#x27;name&#x27;)&#125;</span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.updateName&#125;</span>&gt;</span>修改<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    address: &#123;this.state.info.get(&#x27;address&#x27;).get(&#x27;province&#x27;) + &#x27;~&#x27; + this.state.info.get(&#x27;address&#x27;).get(&#x27;city&#x27;)&#125;</span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.updateCity&#125;</span>&gt;</span>修改<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    &#123;this.state.info.get(&#x27;favor&#x27;).map((item, index) =&gt; (</span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#123;item&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                            &#123;item&#125;</span></span><br><span class="line"><span class="xml">                            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> this.delItem(index)&#125;&gt;x<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    ))&#125;</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="优化复杂数据操作"><a href="#优化复杂数据操作" class="headerlink" title="优化复杂数据操作"></a>优化复杂数据操作</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="built_in">Map</span>, List, fromJS &#125; <span class="keyword">from</span> <span class="string">&#x27;immutable&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        <span class="comment">// fromJS 全部转换为 Immutable</span></span><br><span class="line">        <span class="attr">info</span>: fromJS(&#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span><br><span class="line">            <span class="attr">address</span>: &#123;</span><br><span class="line">                <span class="attr">province</span>: <span class="string">&#x27;河南&#x27;</span>,</span><br><span class="line">                <span class="attr">city</span>: <span class="string">&#x27;周口&#x27;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">favor</span>: [<span class="string">&#x27;吃饭&#x27;</span>, <span class="string">&#x27;睡觉&#x27;</span>],</span><br><span class="line">        &#125;),</span><br><span class="line">    &#125;</span><br><span class="line">    updateName = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">            <span class="attr">info</span>: <span class="built_in">this</span>.state.info.set(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;elser&#x27;</span>),</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    updateCity = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">            <span class="comment">// 使用 setIn、NB</span></span><br><span class="line">            <span class="attr">info</span>: <span class="built_in">this</span>.state.info.setIn([<span class="string">&#x27;address&#x27;</span>, <span class="string">&#x27;city&#x27;</span>], <span class="string">&#x27;淮阳&#x27;</span>),</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    delItem = <span class="function">(<span class="params">index</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">            <span class="comment">// 修改数组里面的第 0 项为 &#x27;xxx&#x27;</span></span><br><span class="line">            <span class="comment">// info: this.state.info.setIn([&#x27;favor&#x27;, 0], &#x27;xxx&#x27;),</span></span><br><span class="line">            <span class="comment">/* info: this.state.info.updateIn([&#x27;favor&#x27;], (list) =&gt;</span></span><br><span class="line"><span class="comment">                list.splice(index, 1)</span></span><br><span class="line"><span class="comment">            ), */</span></span><br><span class="line">            <span class="attr">info</span>: <span class="built_in">this</span>.state.info.update(<span class="string">&#x27;favor&#x27;</span>, <span class="function">(<span class="params">list</span>) =&gt;</span> list.splice(index, <span class="number">1</span>)),</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    name: &#123;this.state.info.get(&#x27;name&#x27;)&#125;</span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.updateName&#125;</span>&gt;</span>修改<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    address: &#123;this.state.info.get(&#x27;address&#x27;).get(&#x27;province&#x27;) + &#x27;~&#x27; + this.state.info.get(&#x27;address&#x27;).get(&#x27;city&#x27;)&#125;</span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.updateCity&#125;</span>&gt;</span>修改<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    &#123;this.state.info.get(&#x27;favor&#x27;).map((item, index) =&gt; (</span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#123;item&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                            &#123;item&#125;</span></span><br><span class="line"><span class="xml">                            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> this.delItem(index)&#125;&gt;x<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">                    ))&#125;</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者，普通 data =&gt; 转 Immutable =&gt; 操作数据 =&gt; 通过 toJS 再转换为普通 data 进行 setState 赋值。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/08/react-base-course20/" rel="prev" title="20_React 补充">
+      <i class="fa fa-chevron-left"></i> 20_React 补充
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/12/react-base-course22/" rel="next" title="Mobx">
+      Mobx <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">基本认识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List-%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">List 结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map-%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">Map 结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">Set 结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Seq-%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">Seq 操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">React 中使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">6.1.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="nav-number">6.2.</span> <span class="nav-text">一个问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%BB%E6%AD%A2%E6%9B%B4%E6%96%B0%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">6.3.</span> <span class="nav-text">阻止更新的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E5%A4%8D%E6%9D%82%E6%95%B0%E6%8D%AE"><span class="nav-number">6.4.</span> <span class="nav-text">操作复杂数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%A4%8D%E6%9D%82%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C"><span class="nav-number">6.5.</span> <span class="nav-text">优化复杂数据操作</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title=" → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="fab fa-zhihu fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
