@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://example.com/resource/images/TS%E6%98%AFJS%E7%9A%84%E8%B6%85%E9%9B%86.png">
 <meta property="og:image" content="http://example.com/resource/images/TS%E7%BC%96%E8%AF%91.png">
 <meta property="article:published_time" content="2021-12-07T13:16:55.000Z">
-<meta property="article:modified_time" content="2022-04-18T10:55:26.694Z">
+<meta property="article:modified_time" content="2022-04-28T09:19:02.231Z">
 <meta property="article:author" content="Ifer">
 <meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
 <meta name="twitter:card" content="summary">
@@ -213,7 +213,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-18 18:55:26" itemprop="dateModified" datetime="2022-04-18T18:55:26+08:00">2022-04-18</time>
+                <time title="修改时间：2022-04-28 17:19:02" itemprop="dateModified" datetime="2022-04-28T17:19:02+08:00">2022-04-28</time>
               </span>
 
           
@@ -394,9 +394,6 @@
 </ul>
 <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数声明</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">num1: <span class="built_in">number</span>, num2: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> num1 + num2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 箭头函数</span></span><br><span class="line"><span class="keyword">const</span> add = (num1: <span class="built_in">number</span>, <span class="attr">num2</span>: <span class="built_in">number</span>): <span class="function"><span class="params">number</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> num1 + num2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>注意：这里校验的没有那么严格，即定义函数的时候，参数不写也不会马上报错，例如</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">num1: <span class="built_in">number</span>, num2: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> num1 + num2</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> add: AddFn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 调用的时候就会发现错误啦</span></span><br><span class="line">add() <span class="comment">// Expected 2 arguments, but got 0.</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>  同时指定参数、返回值的类型。</li>
 </ul>
@@ -565,6 +562,9 @@
 </li>
 </ul>
 <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 其实 useState 的返回值就是一个元组</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useState</span>(<span class="params">num: <span class="built_in">number</span></span>): [<span class="title">number</span>, (<span class="params"><span class="built_in">number</span></span>) =&gt; <span class="title">void</span>] </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> setNum = <span class="function">(<span class="params">num: <span class="built_in">number</span></span>) =&gt;</span> &#123;&#125;</span><br><span class="line">    <span class="keyword">return</span> [num, setNum]</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// <span class="doctag">TODO:</span> 注意这里 num 和 setNum 被推断成了 number | ((num: number) =&gt; void) 类型，一般期望 num 是 number 类型，setNum 是 ((num: number) =&gt; void) 类型，后续有办法解决</span></span><br><span class="line"><span class="keyword">const</span> [num, setNum] = useState(<span class="number">8</span>)</span><br></pre></td></tr></table></figure>
+
+<p>可以元组中每一个元素起名字。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// const arrTuple: [height: number, age: number, salary: number] = [170, 20, 17500]</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useState</span>(<span class="params">num: <span class="built_in">number</span></span>): [<span class="title">num</span>: <span class="title">number</span>, <span class="title">fn</span>: (<span class="params">n: <span class="built_in">number</span></span>) =&gt; <span class="title">void</span>] </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> setNum = (num: <span class="built_in">number</span>): <span class="function"><span class="params">void</span> =&gt;</span> &#123;&#125;</span><br><span class="line">    <span class="keyword">return</span> [num, setNum]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> [num, setNum] = useState(<span class="number">10</span>)</span><br><span class="line">setNum(<span class="number">29</span>)</span><br></pre></td></tr></table></figure>
 
 <h2 id="类型推论"><a href="#类型推论" class="headerlink" title="类型推论"></a>类型推论</h2><ul>
 <li><p>  在 TS 中，某些没有明确指出类型的地方，<font color=e32d40><strong>TS 的类型推论机制会帮助提供类型</strong></font>。</p>
