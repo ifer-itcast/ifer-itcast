@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 掌握使用 Vite 如何创建项目。 ✔ 掌握如何对 Vite 进行配置。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="04_项目搭建">
+<meta property="og:url" content="http://example.com/2022/05/21/vue-base-course04/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 掌握使用 Vite 如何创建项目。 ✔ 掌握如何对 Vite 进行配置。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-20210522214828989.jpg">
+<meta property="article:published_time" content="2022-05-21T15:38:25.000Z">
+<meta property="article:modified_time" content="2022-05-22T05:35:19.125Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20210522214828989.jpg">
+
+<link rel="canonical" href="http://example.com/2022/05/21/vue-base-course04/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>04_项目搭建 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/21/vue-base-course04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          04_项目搭建
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-21 23:38:25" itemprop="dateCreated datePublished" datetime="2022-05-21T23:38:25+08:00">2022-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-22 13:35:19" itemprop="dateModified" datetime="2022-05-22T13:35:19+08:00">2022-05-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 掌握使用 Vite 如何创建项目。</p>
+<p>✔ 掌握如何对 Vite 进行配置。</p>
+<span id="more"></span>
+
+<h2 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h2><h3 id="项目介绍-1"><a href="#项目介绍-1" class="headerlink" title="项目介绍"></a>项目介绍</h3><ul>
+<li><p>  电商发展十余年，是个成熟的模式，小兔鲜儿是 B2C 电商平台，综合品类平台。参考<a target="_blank" rel="noopener" href="http://you.163.com/">网易严选</a></p>
+</li>
+<li><p>  平台理念：（品质）新鲜、（价格）亲民、（物流）快捷。</p>
+</li>
+</ul>
+<p><img src="/resource/images/image-20210522214828989.jpg" alt="image-20210522214828989"></p>
+<ul>
+<li><p>  首页模块：顶部通栏，吸顶导航，网站头部，左侧分类，轮播图，新鲜好物，人气推荐，热门品牌，分类商品推荐，专题推荐，网站底部。</p>
+</li>
+<li><p>  一级分类：面包屑，轮播图，全部二级分类，二级分类推荐商品。</p>
+</li>
+<li><p>  二级分类：筛选区域，排序功能，商品列表，无限加载。</p>
+</li>
+<li><p>  商品详情：商品图片展示，基本信息展示，配送城市选择，SKU 选择，库存选择，商品详情展示，商品评价展示，24 小时热销，相关专题，加入购物车。</p>
+</li>
+<li><p>购物车。</p>
+<ul>
+<li><p>  头部购物车：展示商品数量和列表，删除商品，跳转购物车页面。</p>
+</li>
+<li><p>  购物车页面：购物车商品展示，选择商品，修改数量，修改商品规格，价格计算，跳转下单。</p>
+</li>
+</ul>
+</li>
+<li><p>  登录模块：表单校验，账户密码登录，手机号登录，第三方登录，绑定手机，完善信息。</p>
+</li>
+<li><p>  填写订单：订单商品展示，收货地址选择，收货地址修改，支付方式选择，生成订单。</p>
+</li>
+<li><p>  进行支付：订单信息展示，跳转支付网关，提示正在支付，等待支付结果，跳转支付成功页面。</p>
+</li>
+<li><p>个人中心。</p>
+<ul>
+<li><p>  中心首页：展示个人信息，近期收藏商品，近期足迹，猜你喜欢。</p>
+</li>
+<li><p>  订单管理：全部订单，待付款，待发货，待收货，待评价，已完成，已取消。立即付款，取消订单，确认收货，删除订单，查看物流。</p>
+</li>
+<li><p>  订单详情：订单状态，订单进度，详细信息。</p>
+</li>
+</ul>
+</li>
+<li><p>  总结：完成电商支付闭环，学完小兔鲜 =&gt; 之前负责模块登录/注册？(没啥含金量)。现在商品管理、购物车、支付、订单管理等。</p>
+</li>
+</ul>
+<h3 id="配套资源"><a href="#配套资源" class="headerlink" title="配套资源"></a>配套资源</h3><p>了解真实企业开发都会有哪些配套资源。</p>
+<p>开发配套：<a target="_blank" rel="noopener" href="https://app.mockplus.cn/run/prototype/QO7BCWlUKB/IWlj1dabSw/c-f4gj1smb0?ha=1&ps=1">原型稿</a>、<a target="_blank" rel="noopener" href="https://zhoushugang.gitee.io/erabbit-client-pc-document/api.html.html">接口文档</a>、<a target="_blank" rel="noopener" href="http://erabbit.itheima.net/#/">参照案例</a>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">账号: jfjbwb4477@sandbox.com</span><br><span class="line">密码: 111111</span><br></pre></td></tr></table></figure>
+
+<p>总结：在学习开发阶段使用本地 API 文档与 Vue3.0 版本样例。</p>
+<h3 id="使用技术"><a href="#使用技术" class="headerlink" title="使用技术"></a>使用技术</h3><h4 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h4><p>能够说出项目用到的技术栈和相关组件。</p>
+<h4 id="使用技术-1"><a href="#使用技术-1" class="headerlink" title="使用技术"></a>使用技术</h4><ul>
+<li><p>  Vue3.0 (使用组合 api 的方式来开发)。</p>
+</li>
+<li><p>  Vite 开发。</p>
+</li>
+<li><p>  Axios (请求接口)。</p>
+</li>
+<li><p>  Vue Router (单页路由)。</p>
+</li>
+<li><p>  Pinia (状态管理)。</p>
+</li>
+<li><p>  normalize.css (初始化样式)。</p>
+</li>
+<li><p>  @Vueuse/core (组合 api 常用工具库)。</p>
+</li>
+<li><p>  算法 <a target="_blank" rel="noopener" href="https://github.com/zhousg/javascript-algorithms/blob/master/src/algorithms/sets/power-set">Power Set</a>。</p>
+</li>
+<li><p>  dayjs (日期处理)。</p>
+</li>
+<li><p>  vee-validate (表单校验)。</p>
+</li>
+</ul>
+<h4 id="相关组件"><a href="#相关组件" class="headerlink" title="相关组件"></a>相关组件</h4><ul>
+<li><p>  轮播图、面包屑、查看更多、骨架屏组件等。</p>
+</li>
+<li><p>  单选框、复选框、对话框组件、消息提示、消息确认组件等。</p>
+</li>
+<li><p>  分页、步骤条、时间线、标签页、城市选择组件等。</p>
+</li>
+</ul>
+<h2 id="项目起步"><a href="#项目起步" class="headerlink" title="项目起步"></a>项目起步</h2><h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><h4 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h4><p>使用 Vite 初始化小兔鲜项目。</p>
+<h4 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h4><ul>
+<li>  使用 Vite 初始化项目。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn create vite rabbit-vue3-ts --template vue-ts</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  安装依赖包, 需要进入到 <code>rabbit-Vue3-ts</code> 项目中。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  启动项目。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn dev</span><br></pre></td></tr></table></figure>
+
+<h3 id="目录调整"><a href="#目录调整" class="headerlink" title="目录调整"></a>目录调整</h3><h4 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h4><p>能够调整项目标目录结构，规范开发环境。</p>
+<h4 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h4><p><strong>修改文件</strong></p>
+<ul>
+<li><p>  <code>main.ts</code>，不需要修改。</p>
+</li>
+<li><p>  <code>App.Vue</code>，删除无用的内容。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>app组件<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>删除文件</strong></p>
+<ul>
+<li><p>  <code>src/components/HelloWorld.Vue</code>，HelloWorld 组件。</p>
+</li>
+<li><p>  <code>src/assets/logo.png</code>，Vue 默认的 logo。</p>
+</li>
+</ul>
+<p><strong>新增文件夹</strong></p>
+<ul>
+<li><p>  <code>utils</code>，用于存放工具相关。</p>
+</li>
+<li><p>  <code>assets/images</code>，用于存放图片相关。</p>
+</li>
+<li><p>  <code>assets/styles</code>，用于存放样式相关。</p>
+</li>
+<li><p>  <code>router</code>，用于存放路由相关。</p>
+</li>
+<li><p>  <code>store</code>，用于存放数据相关。</p>
+</li>
+<li><p>  <code>views</code>，用于存放页面级别的组件。</p>
+</li>
+<li><p>  <code>types</code>，用于存放 ts 的公共类型。</p>
+</li>
+</ul>
+<h3 id="管理项目"><a href="#管理项目" class="headerlink" title="管理项目"></a>管理项目</h3><h4 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h4><p>能够使用 Git 管理项目并上传到码云。</p>
+<h4 id="内容-2"><a href="#内容-2" class="headerlink" title="内容"></a>内容</h4><ul>
+<li><p>  初始化项目：<code>git init</code>。</p>
+</li>
+<li><p>  将代码添加到暂存区： <code>git add .</code>。</p>
+</li>
+<li><p>  提交代码 <code>git commit -m &#39;初始化提交&#39;</code>。</p>
+</li>
+<li><p>  在<a target="_blank" rel="noopener" href="https://gitee.com/">码云</a>上创建项目 <code>rabbit-Vue3-ts</code>，选择开源。</p>
+</li>
+<li><p>  关联远端仓库。</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://gitee.com/ifercarly/rabbit-vue3-ts.git</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  推送到远程仓库。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+
+<h3 id="Axios-封装"><a href="#Axios-封装" class="headerlink" title="Axios 封装"></a>Axios 封装</h3><h4 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h4><p>基于 Axios 封装一个请求工具，调用接口时使用。</p>
+<h4 id="内容-3"><a href="#内容-3" class="headerlink" title="内容"></a>内容</h4><ul>
+<li>  安装 Axios。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add axios</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  新建 <code>src/utils/request.ts</code> 模块，代码如下。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 备用接口地址: http://pcapi-xiaotuxian-front-devtest.itheima.net/</span></span><br><span class="line"><span class="keyword">const</span> instance = axios.create(&#123;</span><br><span class="line">    <span class="attr">baseURL</span>: <span class="string">&#x27;http://pcapi-xiaotuxian-front.itheima.net/&#x27;</span>,</span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">5000</span>,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加请求拦截器</span></span><br><span class="line">instance.interceptors.request.use(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">config</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 在发送请求之前做些什么</span></span><br><span class="line">        <span class="keyword">return</span> config</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 对请求错误做些什么</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加响应拦截器</span></span><br><span class="line">instance.interceptors.response.use(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 对响应错误做点什么</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> instance</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在 <code>App.vue</code> 文件中进行测试。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>app组件<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;./utils/request&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> test = <span class="keyword">async</span> () =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> res = <span class="keyword">await</span> request.get(<span class="string">&#x27;/home/index&#x27;</span>)</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(res)</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    test()</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置路径别名"><a href="#配置路径别名" class="headerlink" title="配置路径别名"></a>配置路径别名</h3><h4 id="目标-5"><a href="#目标-5" class="headerlink" title="目标"></a>目标</h4><p>能够配置 <code>@</code> 路径别名，方便导入模块。</p>
+<h4 id="内容-4"><a href="#内容-4" class="headerlink" title="内容"></a>内容</h4><ul>
+<li>  在 <code>vite.config.ts</code> 中增加配置。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vite&#x27;</span></span><br><span class="line"><span class="keyword">import</span> vue <span class="keyword">from</span> <span class="string">&#x27;@Vitejs/plugin-vue&#x27;</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="comment">// https://Vitejs.dev/config/</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineConfig(&#123;</span><br><span class="line">    <span class="attr">plugins</span>: [vue()],</span><br><span class="line">    <span class="attr">resolve</span>: &#123;</span><br><span class="line">        <span class="attr">alias</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;@&#x27;</span>: path.resolve(__dirname, <span class="string">&#x27;./src&#x27;</span>),</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">server</span>: &#123;</span><br><span class="line">        <span class="attr">port</span>: <span class="number">3000</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  安装 Node 的类型声明文件。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add @types/node -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  修改 <code>tsconfig.json</code>，增加如下配置。</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="attr">&quot;baseUrl&quot;</span>: <span class="string">&quot;.&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;paths&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;@/*&quot;</span>: [<span class="string">&quot;src/*&quot;</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>🧐 注意：修改完 <code>vite.config.ts</code> 文件需要重启。</p>
+<h2 id="样式处理"><a href="#样式处理" class="headerlink" title="样式处理"></a>样式处理</h2><h3 id="less-变量与-mixins"><a href="#less-变量与-mixins" class="headerlink" title="less 变量与 mixins"></a>less 变量与 mixins</h3><h4 id="目标-6"><a href="#目标-6" class="headerlink" title="目标"></a>目标</h4><p>能够使用 less 变量定义项目中常用的颜色，使用 mixins 定义项目中常用的样式。</p>
+<h4 id="内容-5"><a href="#内容-5" class="headerlink" title="内容"></a>内容</h4><ul>
+<li>  变量 <code>src/assets/styles/variables.less</code>。</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主题</span></span><br><span class="line"><span class="variable">@xtxColor:</span> <span class="number">#27ba9b</span>;</span><br><span class="line"><span class="comment">// 辅助</span></span><br><span class="line"><span class="variable">@helpColor:</span> <span class="number">#e26237</span>;</span><br><span class="line"><span class="comment">// 成功</span></span><br><span class="line"><span class="variable">@sucColor:</span> <span class="number">#1dc779</span>;</span><br><span class="line"><span class="comment">// 警告</span></span><br><span class="line"><span class="variable">@warnColor:</span> <span class="number">#ffb302</span>;</span><br><span class="line"><span class="comment">// 价格</span></span><br><span class="line"><span class="variable">@priceColor:</span> <span class="number">#cf4444</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  混入 <code>src/assets/styles/mixins.less</code>。</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 鼠标经过上移阴影动画</span></span><br><span class="line"><span class="selector-class">.hoverShadow</span> () &#123;</span><br><span class="line">    <span class="attribute">transition</span>: all <span class="number">0.5s</span>;</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">        <span class="attribute">transform</span>: translate3d(<span class="number">0</span>, -<span class="number">3px</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">3px</span> <span class="number">8px</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在 <code>App.vue</code> 中测试。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;less&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    // 必须导入variables<span class="selector-class">.less</span></span></span><br><span class="line"><span class="css">    <span class="keyword">@import</span> <span class="string">&#x27;@/assets/styles/variables.less&#x27;</span>;</span></span><br><span class="line"><span class="css">    <span class="keyword">@import</span> <span class="string">&#x27;@/assets/styles/mixins.less&#x27;</span>;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">h1</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">background-color</span>: @warnColor;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.hoverShadow</span>();</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  需要安装 less 的依赖包。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add less -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  问题：<code>variables.less</code> 和 <code>mixins.less</code> 两个 less 文件是需要在多个组件中去使用的。但是如果组件中不导入，直接使用会报错。</li>
+</ul>
+<h3 id="自动导入"><a href="#自动导入" class="headerlink" title="自动导入"></a>自动导入</h3><h4 id="目标-7"><a href="#目标-7" class="headerlink" title="目标"></a>目标</h4><p>能够使用 <code>style-resoures-loader</code> 自动导入项目中的 <code>less变量</code> 和 <code>mixins</code>。</p>
+<h4 id="内容-6"><a href="#内容-6" class="headerlink" title="内容"></a>内容</h4><p><a target="_blank" rel="noopener" href="https://cn.vitejs.dev/config/#css-preprocessoroptions">参考文档</a></p>
+<ul>
+<li>  修改 <code>vite.config.ts</code> 文件，增加内容。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineConfig(&#123;</span><br><span class="line">    <span class="attr">css</span>: &#123;</span><br><span class="line">        <span class="attr">preprocessorOptions</span>: &#123;</span><br><span class="line">            <span class="attr">less</span>: &#123;</span><br><span class="line">                <span class="attr">additionalData</span>: <span class="string">`</span></span><br><span class="line"><span class="string">                    @import &quot;@/assets/styles/variables.less&quot;;</span></span><br><span class="line"><span class="string">                    @import &quot;@/assets/styles/mixins.less&quot;;</span></span><br><span class="line"><span class="string">                `</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  修改 <code>App.vue</code> 中的代码。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;less&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-tag">h1</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">background-color</span>: @warnColor;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.hoverShadow</span>();</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  重启服务，查看效果。</li>
+</ul>
+<h3 id="重置样式"><a href="#重置样式" class="headerlink" title="重置样式"></a>重置样式</h3><h4 id="目标-8"><a href="#目标-8" class="headerlink" title="目标"></a>目标</h4><p>能够使用功能 <a target="_blank" rel="noopener" href="https://github.com/necolas/normalize.css">normalize.css</a> 重置项目中的样式，normalize.css 是 CSS 重置的现代替代方法。</p>
+<h4 id="内容-7"><a href="#内容-7" class="headerlink" title="内容"></a>内容</h4><ul>
+<li>  安装 <code>normalize.css</code> 将浏览器中的一些默认样式，进行统一。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add normalize.css</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  使用 <code>normalize.css</code>。</li>
+</ul>
+<p><code>main.js</code> 导入 <code>normalize.css</code> 即可。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;Vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App.Vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;normalize.css&#x27;</span></span><br><span class="line">createApp(App).mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在 <code>App.vue</code> 中测试。</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">router-view</span> /&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>哈哈哈<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>123<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>456<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>这是大标题<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>🧐 通过效果会发现，h1 ul 等样式还是保留的，但是不一致的样式已经被重置了（例如 body 的 margin）。</p>
+<h3 id="公共样式"><a href="#公共样式" class="headerlink" title="公共样式"></a>公共样式</h3><h4 id="目标-9"><a href="#目标-9" class="headerlink" title="目标"></a>目标</h4><p>能够给项目设置通用的样式。虽然有了重置样式，但是项目中依旧需要通用样式。</p>
+<h4 id="内容-8"><a href="#内容-8" class="headerlink" title="内容"></a>内容</h4><ul>
+<li>  新建文件 <code>src/assets/styles/common.less</code>。</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 按照网站自己的需求，提供公用的样式</span></span><br><span class="line">* &#123;</span><br><span class="line">    <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">html</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#333</span>;</span><br><span class="line">    <span class="attribute">min-width</span>: <span class="number">1240px</span>;</span><br><span class="line">    <span class="attribute">font</span>: <span class="number">1em</span>/<span class="number">1.4</span> <span class="string">&#x27;Microsoft Yahei&#x27;</span>, <span class="string">&#x27;PingFang SC&#x27;</span>, <span class="string">&#x27;Avenir&#x27;</span>, <span class="string">&#x27;Segoe UI&#x27;</span>, <span class="string">&#x27;Hiragino Sans GB&#x27;</span>, <span class="string">&#x27;STHeiti&#x27;</span>, <span class="string">&#x27;Microsoft Sans Serif&#x27;</span>, <span class="string">&#x27;WenQuanYi Micro Hei&#x27;</span>, sans-serif;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span>,</span><br><span class="line"><span class="selector-tag">h1</span>,</span><br><span class="line"><span class="selector-tag">h3</span>,</span><br><span class="line"><span class="selector-tag">h4</span>,</span><br><span class="line"><span class="selector-tag">p</span>,</span><br><span class="line"><span class="selector-tag">dl</span>,</span><br><span class="line"><span class="selector-tag">dd</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#333</span>;</span><br><span class="line">    <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">i</span> &#123;</span><br><span class="line">    <span class="attribute">font-style</span>: normal;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[type=<span class="string">&#x27;text&#x27;</span>]</span>,</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[type=<span class="string">&#x27;search&#x27;</span>]</span>,</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[type=<span class="string">&#x27;password&#x27;</span>]</span>,</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[type=<span class="string">&#x27;checkbox&#x27;</span>]</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">outline</span>: none;</span><br><span class="line">    <span class="attribute">border</span>: none;</span><br><span class="line">    -webkit-appearance: <span class="attribute">none;</span></span><br><span class="line"><span class="attribute">    &amp;</span>::placeholder &#123;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#ccc</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">img</span> &#123;</span><br><span class="line">    <span class="attribute">max-width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">max-height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">    <span class="comment">//  background: #ebebeb;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span> &#123;</span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#app</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#f5f5f5</span>;</span><br><span class="line">    <span class="comment">// 不能选中文字</span></span><br><span class="line">    user-select: <span class="attribute">none;</span></span><br><span class="line"><span class="attribute">&#125;</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">.container &#123;</span></span><br><span class="line"><span class="attribute">    width</span>: <span class="number">1240px</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一行省略</span></span><br><span class="line"><span class="selector-class">.ellipsis</span> &#123;</span><br><span class="line">    <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">    <span class="attribute">text-overflow</span>: ellipsis;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 二行省略</span></span><br><span class="line"><span class="selector-class">.ellipsis-2</span> &#123;</span><br><span class="line">    <span class="attribute">word-break</span>: break-all;</span><br><span class="line">    <span class="attribute">text-overflow</span>: ellipsis;</span><br><span class="line">    <span class="attribute">display</span>: -webkit-box;</span><br><span class="line">    -webkit-box-orient: vertical;</span><br><span class="line">    -webkit-line-clamp: 2;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.fl</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.fr</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: right;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.clearfix</span>:<span class="selector-tag">after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&#x27;.&#x27;</span>;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">visibility</span>: hidden;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 闪动画</span></span><br><span class="line"><span class="selector-class">.shan</span> &#123;</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">        <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        <span class="attribute">position</span>: absolute;</span><br><span class="line">        <span class="attribute">animation</span>: shan <span class="number">1.5s</span> ease <span class="number">0s</span> infinite;</span><br><span class="line">        <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">30%</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">        <span class="attribute">background</span>: linear-gradient(to left, rgba(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0</span>) <span class="number">0</span>, rgba(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.3</span>) <span class="number">50%</span>, rgba(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0</span>) <span class="number">100%</span>);</span><br><span class="line">        <span class="attribute">transform</span>: skewX(-<span class="number">45deg</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@keyframes</span> shan &#123;</span><br><span class="line">    <span class="selector-tag">0%</span> &#123;</span><br><span class="line">        <span class="attribute">left</span>: -<span class="number">100%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">100%</span> &#123;</span><br><span class="line">        <span class="attribute">left</span>: <span class="number">120%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 离开淡出动画</span></span><br><span class="line"><span class="selector-class">.fade</span> &#123;</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-tag">-leave</span> &#123;</span><br><span class="line">        <span class="selector-tag">&amp;</span><span class="selector-tag">-active</span> &#123;</span><br><span class="line">            <span class="attribute">position</span>: absolute;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">            <span class="attribute">transition</span>: opacity <span class="number">0.5s</span> <span class="number">0.2s</span>;</span><br><span class="line">            <span class="attribute">z-index</span>: <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">&amp;</span><span class="selector-tag">-to</span> &#123;</span><br><span class="line">            <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 离开，透明度  1----&gt;0    位移 0----&gt;30</span></span><br><span class="line"><span class="comment">// 2. 进入，透明度  0----&gt;1    位移 30----&gt;0</span></span><br><span class="line"><span class="comment">// 执行顺序，先离开再进入</span></span><br><span class="line"><span class="selector-class">.pop</span> &#123;</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-tag">-leave</span> &#123;</span><br><span class="line">        <span class="selector-tag">&amp;</span><span class="selector-tag">-from</span> &#123;</span><br><span class="line">            <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">            <span class="attribute">transform</span>: none;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">&amp;</span><span class="selector-tag">-active</span> &#123;</span><br><span class="line">            <span class="attribute">transition</span>: all <span class="number">0.5s</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">&amp;</span><span class="selector-tag">-to</span> &#123;</span><br><span class="line">            <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">            <span class="attribute">transform</span>: translateX(<span class="number">20px</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-tag">-enter</span> &#123;</span><br><span class="line">        <span class="selector-tag">&amp;</span><span class="selector-tag">-from</span> &#123;</span><br><span class="line">            <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">            <span class="attribute">transform</span>: translateX(<span class="number">20px</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">&amp;</span><span class="selector-tag">-active</span> &#123;</span><br><span class="line">            <span class="attribute">transition</span>: all <span class="number">0.5s</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">&amp;</span><span class="selector-tag">-to</span> &#123;</span><br><span class="line">            <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">            <span class="attribute">transform</span>: none;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 表单</span></span><br><span class="line"><span class="selector-class">.xtx-form</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">50px</span> <span class="number">0</span>;</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-tag">-item</span> &#123;</span><br><span class="line">        <span class="attribute">display</span>: flex;</span><br><span class="line">        <span class="attribute">align-items</span>: center;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">700px</span>;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">        <span class="attribute">padding-bottom</span>: <span class="number">25px</span>;</span><br><span class="line">        <span class="selector-class">.label</span> &#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">180px</span>;</span><br><span class="line">            <span class="attribute">padding-right</span>: <span class="number">10px</span>;</span><br><span class="line">            <span class="attribute">text-align</span>: right;</span><br><span class="line">            <span class="attribute">color</span>: <span class="number">#999</span>;</span><br><span class="line">            ~ <span class="selector-class">.field</span> &#123;</span><br><span class="line">                <span class="attribute">margin-left</span>: <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-class">.field</span> &#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">320px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">            <span class="attribute">position</span>: relative;</span><br><span class="line">            <span class="attribute">margin-left</span>: <span class="number">190px</span>;</span><br><span class="line">            <span class="selector-class">.icon</span> &#123;</span><br><span class="line">                <span class="attribute">position</span>: absolute;</span><br><span class="line">                <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">                <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">                <span class="attribute">width</span>: <span class="number">40px</span>;</span><br><span class="line">                <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">                <span class="attribute">text-align</span>: center;</span><br><span class="line">                <span class="attribute">line-height</span>: <span class="number">50px</span>;</span><br><span class="line">                <span class="attribute">color</span>: <span class="number">#999</span>;</span><br><span class="line">                ~ <span class="selector-class">.input</span> &#123;</span><br><span class="line">                    <span class="attribute">padding-left</span>: <span class="number">40px</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="selector-class">.input</span> &#123;</span><br><span class="line">                <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#e4e4e4</span>;</span><br><span class="line">                <span class="attribute">width</span>: <span class="number">320px</span>;</span><br><span class="line">                <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">                <span class="attribute">line-height</span>: <span class="number">50px</span>;</span><br><span class="line">                <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">10px</span>;</span><br><span class="line">                <span class="selector-tag">&amp;</span><span class="selector-class">.err</span> &#123;</span><br><span class="line">                    <span class="attribute">border-color</span>: <span class="variable">@priceColor</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="selector-tag">&amp;</span><span class="selector-pseudo">:focus</span>,</span><br><span class="line">                <span class="selector-tag">&amp;</span><span class="selector-pseudo">:active</span> &#123;</span><br><span class="line">                    <span class="attribute">border-color</span>: <span class="variable">@xtxColor</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-class">.error</span> &#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">180px</span>;</span><br><span class="line">            <span class="attribute">padding-left</span>: <span class="number">10px</span>;</span><br><span class="line">            <span class="attribute">color</span>: <span class="variable">@priceColor</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.submit</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">320px</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">        <span class="attribute">border-radius</span>: <span class="number">4px</span>;</span><br><span class="line">        <span class="attribute">background</span>: <span class="variable">@xtxColor</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">        <span class="attribute">line-height</span>: <span class="number">50px</span>;</span><br><span class="line">        <span class="attribute">text-align</span>: center;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">        <span class="attribute">display</span>: block;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在 <code>main.ts</code> 导入即可。</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;Vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App.Vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;normalize.css&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@/assets/styles/common.less&#x27;</span></span><br><span class="line">createApp(App).mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/21/vue-base-course03/" rel="prev" title="03_TypeScript">
+      <i class="fa fa-chevron-left"></i> 03_TypeScript
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/21/vue-base-course05/" rel="next" title="05_布局模块">
+      05_布局模块 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">项目介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D-1"><span class="nav-number">2.1.</span> <span class="nav-text">项目介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E5%A5%97%E8%B5%84%E6%BA%90"><span class="nav-number">2.2.</span> <span class="nav-text">配套资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8A%80%E6%9C%AF"><span class="nav-number">2.3.</span> <span class="nav-text">使用技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8A%80%E6%9C%AF-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">使用技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%BB%84%E4%BB%B6"><span class="nav-number">2.3.3.</span> <span class="nav-text">相关组件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%B5%B7%E6%AD%A5"><span class="nav-number">3.</span> <span class="nav-text">项目起步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.1.</span> <span class="nav-text">创建项目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">3.1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">3.1.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E8%B0%83%E6%95%B4"><span class="nav-number">3.2.</span> <span class="nav-text">目录调整</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">3.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%A1%E7%90%86%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.3.</span> <span class="nav-text">管理项目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-3"><span class="nav-number">3.3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-2"><span class="nav-number">3.3.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Axios-%E5%B0%81%E8%A3%85"><span class="nav-number">3.4.</span> <span class="nav-text">Axios 封装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-4"><span class="nav-number">3.4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-3"><span class="nav-number">3.4.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%B7%AF%E5%BE%84%E5%88%AB%E5%90%8D"><span class="nav-number">3.5.</span> <span class="nav-text">配置路径别名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-5"><span class="nav-number">3.5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-4"><span class="nav-number">3.5.2.</span> <span class="nav-text">内容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">样式处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#less-%E5%8F%98%E9%87%8F%E4%B8%8E-mixins"><span class="nav-number">4.1.</span> <span class="nav-text">less 变量与 mixins</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-6"><span class="nav-number">4.1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-5"><span class="nav-number">4.1.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%AF%BC%E5%85%A5"><span class="nav-number">4.2.</span> <span class="nav-text">自动导入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-7"><span class="nav-number">4.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-6"><span class="nav-number">4.2.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E7%BD%AE%E6%A0%B7%E5%BC%8F"><span class="nav-number">4.3.</span> <span class="nav-text">重置样式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-8"><span class="nav-number">4.3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-7"><span class="nav-number">4.3.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AC%E5%85%B1%E6%A0%B7%E5%BC%8F"><span class="nav-number">4.4.</span> <span class="nav-text">公共样式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-9"><span class="nav-number">4.4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-8"><span class="nav-number">4.4.2.</span> <span class="nav-text">内容</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title=" → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="fab fa-zhihu fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
