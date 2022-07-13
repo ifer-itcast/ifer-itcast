@@ -35,14 +35,14 @@
 <meta property="og:image" content="http://example.com/resource/images/ifer_options.gif">
 <meta property="og:image" content="http://example.com/resource/images/ifer_del.png">
 <meta property="og:image" content="http://example.com/resource/images/v3reactive.png">
-<meta property="og:image" content="http://example.com/2022/05/21/vue-base-course01/asset/vuelife.png">
+<meta property="og:image" content="http://example.com/resource/images/vuelife.png">
 <meta property="og:image" content="http://example.com/resource/images/ifer_props2.png">
 <meta property="og:image" content="http://example.com/resource/images/ifer_props3.png">
 <meta property="og:image" content="http://example.com/resource/images/image-20220213110153307.png">
 <meta property="og:image" content="http://example.com/resource/images/ifer_provider.png">
 <meta property="og:image" content="http://example.com/resource/images/teleport.png">
 <meta property="article:published_time" content="2022-05-21T15:10:00.000Z">
-<meta property="article:modified_time" content="2022-06-11T07:08:33.709Z">
+<meta property="article:modified_time" content="2022-07-12T15:27:07.154Z">
 <meta property="article:author" content="Ifer">
 <meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
 <meta name="twitter:card" content="summary">
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-06-11 15:08:33" itemprop="dateModified" datetime="2022-06-11T15:08:33+08:00">2022-06-11</time>
+                <time title="修改时间：2022-07-12 23:27:07" itemprop="dateModified" datetime="2022-07-12T23:27:07+08:00">2022-07-12</time>
               </span>
 
           
@@ -248,7 +248,7 @@
 <h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><img src="/resource/images/onepiece.png" width="150"/>
 
 <ul>
-<li><p>  2020 年 9 月 18 日，Vue 发布了 <a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/">3.0 版本</a>，代号：One Piece<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-next/releases/tag/v3.0.0">（海贼王）</a>，周边生态原因，当时大多数开发者还处于观望状态。</p>
+<li><p>  2020 年 9 月 18 日，Vue 发布了 3.0 版本，<a target="_blank" rel="noopener" href="https://staging-cn.vuejs.org/">新官网</a>，代号：One Piece<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-next/releases/tag/v3.0.0">（海贼王）</a>，周边生态原因，当时大多数开发者还处于观望状态。</p>
 </li>
 <li><p>  现在主流组件库都已经发布了支持 Vue3.0 的版本，例如 <a target="_blank" rel="noopener" href="https://element-plus.gitee.io/zh-CN/">Element Plus</a>、<a target="_blank" rel="noopener" href="https://vant-contrib.gitee.io/vant/v3/#/zh-CN">Vant</a>、<a target="_blank" rel="noopener" href="https://vueuse.org/">Vue Use</a>，其他生态也在不断地完善中，所以 Vue3 是趋势。</p>
 </li>
@@ -256,20 +256,20 @@
 </li>
 </ul>
 <h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li><p>  性能更高了：打包大小减少 41%、初次渲染快 55%、更新渲染快 133%、内存减少 54%，主要原因在于响应式原理换成了 Proxy，VNode 算法进行了优化。</p>
+</li>
+<li><p>  提交更小了：删除了一些不常用的 API，例如过滤器、EventBus 等，代码支持按需引入，能配合 Webpack 支持<a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/migration/global-api-treeshaking.html#_2-x-%E8%AF%AD%E6%B3%95">Tree Shaking support</a>。</p>
+</li>
+<li><p>  对 TS 支持更好了：因为<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-next">源码</a>就是用 TS 重写的。</p>
+</li>
 <li><p>  <font color=e32d40><strong>Composition API</strong></font> ，能够更好的组织、封装、复用代码，<a target="_blank" rel="noopener" href="https://github.com/vuejs/rfcs/blob/master/active-rfcs/0013-composition-api.md">RFCs</a>。</p>
-</li>
-<li><p>  性能：打包大小减少 41%、初次渲染快 55%、更新渲染快 133%、内存减少 54%，主要原因在于 Proxy，VNode，<a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/migration/global-api-treeshaking.html#_2-x-%E8%AF%AD%E6%B3%95">Tree Shaking support</a>。</p>
-</li>
-<li><p>  Better TS support，<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-next">源码</a>。</p>
 </li>
 <li><p>  新特性：Fragment、Teleport、Suspense。</p>
 </li>
-<li><p>  趋势：未来肯定会有越来越多的企业使用 Vue3.0 + TS 进行大型项目的开发。</p>
-</li>
-<li><p>  对于个人来说：适应市场需求，学习流行的技术提升竞争力，加薪！</p>
+<li><p>  趋势：未来肯定会有越来越多的企业使用 Vue3.0 + TS 进行大型项目的开发，对于个人来说，学习流行的技术提升竞争力，加薪！</p>
 </li>
 </ul>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>Vue3 有哪些优点？</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>说一下你对 Vue3 的理解？</p>
 <h2 id="Vite-创建项目"><a href="#Vite-创建项目" class="headerlink" title="Vite 创建项目"></a>Vite 创建项目</h2><h3 id="Vite-基本使用"><a href="#Vite-基本使用" class="headerlink" title="Vite 基本使用"></a>Vite 基本使用</h3><h4 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h4><ul>
 <li><p>  了解 <a target="_blank" rel="noopener" href="https://cn.vitejs.dev/">Vite</a> 是什么？</p>
 </li>
@@ -342,9 +342,12 @@
 <h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><img src="/resource/images/posandadd1.png"/>
 
 <h4 id="Vue2"><a href="#Vue2" class="headerlink" title="Vue2"></a>Vue2</h4><ul>
-<li>  优点：易于学习和使用，写代码的位置已经约定好。</li>
-<li>  缺点：对于大型项目，不利于代码的复用、不利于管理和维护。</li>
-<li>  解释：同一功能的数据和业务逻辑分散在同一个文件的 N 个地方，随着业务复杂度的上升，可能会出现动图左侧的代码组织方式。</li>
+<li><p>  优点：易于学习和使用，写代码的位置已经约定好。</p>
+</li>
+<li><p>  缺点：对于大型项目，不利于代码的复用、不利于管理和维护。</p>
+</li>
+<li><p>  解释：同一功能的数据和业务逻辑分散在同一个文件的 N 个地方，随着业务复杂度的上升，可能会出现动图左侧的代码组织方式。</p>
+</li>
 </ul>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>X 轴：&#123;&#123; x &#125;&#125; Y 轴：&#123;&#123; y &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; count &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;add()&quot;</span>&gt;</span>自增<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;App&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// !#Fn1</span></span></span><br><span class="line"><span class="javascript">                <span class="attr">x</span>: <span class="number">0</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">y</span>: <span class="number">0</span>,</span></span><br><span class="line"><span class="javascript">                <span class="comment">// ?#Fn2</span></span></span><br><span class="line"><span class="javascript">                <span class="attr">count</span>: <span class="number">0</span>,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">mounted</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// !#Fn1</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">document</span>.addEventListener(<span class="string">&#x27;mousemove&#x27;</span>, <span class="built_in">this</span>.move)</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// !#Fn1</span></span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">move</span>(<span class="params">e</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.x = e.pageX</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.y = e.pageY</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">            <span class="comment">// ?#Fn2</span></span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">add</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.count++</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">destroyed</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// !#Fn1</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">document</span>.removeEventListener(<span class="string">&#x27;mousemove&#x27;</span>, <span class="built_in">this</span>.move)</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -380,9 +383,12 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123; h &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;App&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> <span class="function">() =&gt;</span> h(<span class="string">&#x27;h2&#x27;</span>, <span class="string">&#x27;Hello Vue3&#x27;</span>)</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="小结-4"><a href="#小结-4" class="headerlink" title="小结"></a>小结</h4><ul>
-<li>  setup 的执行时机是什么？</li>
-<li>  setup 中的 this 指向是什么？</li>
-<li>  想在模板中使用 setup 中定义的数据，该怎么做？</li>
+<li><p>  setup 的执行时机是什么？</p>
+</li>
+<li><p>  setup 中的 this 指向是什么？</p>
+</li>
+<li><p>  想在模板中使用 setup 中定义的数据，该怎么做？</p>
+</li>
 </ul>
 <h3 id="reactive"><a href="#reactive" class="headerlink" title="reactive"></a>reactive</h3><h4 id="reactive-包装数组"><a href="#reactive-包装数组" class="headerlink" title="reactive 包装数组"></a>reactive 包装数组</h4><h5 id="目标-5"><a href="#目标-5" class="headerlink" title="目标"></a>目标</h5><p>掌握使用 reactive 函数包装数组为响应式数据。</p>
 <h5 id="内容-3"><a href="#内容-3" class="headerlink" title="内容"></a>内容</h5><p><a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/api/basic-reactivity.html#reactive">reactive</a> 是一个函数，用来将普通对象/数组包装成响应式式数据使用，无法直接处理基本数据类型（因为它是基于 Proxy 的，而 Proxy 只能代理的是对象）。</p>
@@ -434,12 +440,16 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123; data?.name &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;updateName&quot;</span>&gt;</span>修改数据<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;App&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 初始值是 null</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">const</span> data = ref(<span class="literal">null</span>)</span></span><br><span class="line"><span class="javascript">            <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// 右边的对象可能是后端返回的</span></span></span><br><span class="line"><span class="javascript">                data.value = &#123;</span></span><br><span class="line"><span class="javascript">                    <span class="attr">name</span>: <span class="string">&#x27;ifer&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                &#125;</span></span><br><span class="line"><span class="javascript">            &#125;, <span class="number">1000</span>)</span></span><br><span class="line"><span class="javascript">            <span class="keyword">const</span> updateName = <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">                data.value.name = <span class="string">&#x27;xxx&#x27;</span></span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123; data, updateName &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="如何选择"><a href="#如何选择" class="headerlink" title="如何选择"></a>如何选择</h4><ul>
-<li>  当你明确知道需要包裹的是一个对象，那么推荐使用 reactive，其他情况使用 ref 即可。</li>
-<li>  Vue3.2 之后，更推荐使用 ref，性能得到了很大的提升。</li>
+<li><p>  当你明确知道需要包裹的是一个对象，那么推荐使用 reactive，其他情况使用 ref 即可。</p>
+</li>
+<li><p>  Vue3.2 之后，更推荐使用 ref，性能得到了很大的提升。</p>
+</li>
 </ul>
 <h4 id="小结-6"><a href="#小结-6" class="headerlink" title="小结"></a>小结</h4><ul>
-<li>  ref 函数的作用是什么？</li>
-<li>  ref 包装简单数据类型后变成了一个对象，在模板中需要 <code>.value</code> 吗？在 setup 中呢？</li>
+<li><p>  ref 函数的作用是什么？</p>
+</li>
+<li><p>  ref 包装简单数据类型后变成了一个对象，在模板中需要 <code>.value</code> 吗？在 setup 中呢？</p>
+</li>
 </ul>
 <h3 id="toRef"><a href="#toRef" class="headerlink" title="toRef"></a>toRef</h3><h4 id="目标-8"><a href="#目标-8" class="headerlink" title="目标"></a>目标</h4><p>掌握 toRef 函数的使用。</p>
 <h4 id="内容-4"><a href="#内容-4" class="headerlink" title="内容"></a>内容</h4><p>toRef 函数的作用：转换<font color=e32d40><strong>响应式对象</strong></font>中某个属性为单独响应式数据，并且转换后的值和之前是关联的（ref 函数也可以转换，但值非关联）。</p>
@@ -524,7 +534,7 @@
 <li><p>  setup、onBeforeMount、onMounted、onBeforeUpdate、onUpdated、onBeforeUnmount、onUnmounted。</p>
 </li>
 </ul>
-<img src="asset/vuelife.png"/>
+<img src="/resource/images/vuelife.png"/>
 
 <p><code>App.vue</code></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">hello-world</span> <span class="attr">v-if</span>=<span class="string">&quot;state.bBar&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;state.bBar = !state.bBar&quot;</span>&gt;</span>destroy cmp<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> HelloWorld <span class="keyword">from</span> <span class="string">&#x27;./components/HelloWorld.vue&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123; reactive &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;App&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="attr">components</span>: &#123;</span></span><br><span class="line"><span class="javascript">            HelloWorld,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">const</span> state = reactive(&#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">bBar</span>: <span class="literal">true</span>,</span></span><br><span class="line"><span class="javascript">            &#125;)</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                state,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
