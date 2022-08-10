@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 知道什么是小程序，拥有一个小程序开发者账号。 ✔ 知道小程序项目目录的构成，会使用 view、scroll-view、swiper、button、image 组件。 ✔ 了解小程序的开发、管理、上线流程，上线一个体验版小程序。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01_小程序初识">
+<meta property="og:url" content="http://example.com/2022/08/04/wx-base-course01/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 知道什么是小程序，拥有一个小程序开发者账号。 ✔ 知道小程序项目目录的构成，会使用 view、scroll-view、swiper、button、image 组件。 ✔ 了解小程序的开发、管理、上线流程，上线一个体验版小程序。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/1-1%E4%BB%80%E4%B9%88%E6%98%AF%E5%B0%8F%E7%A8%8B%E5%BA%8F.jpg">
+<meta property="og:image" content="http://example.com/resource/images/image-20220716075609217.png">
+<meta property="og:image" content="http://example.com/resource/images/1-4%20注册账号.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-5%20注册账号.png">
+<meta property="og:image" content="http://example.com/resource/images/1-6%20注册账号.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-7%20注册账号.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-10%20注册账号.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-8%20注册账号.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-9%20注册账号.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-10-1%20注册账号成功后登录.jpeg">
+<meta property="og:image" content="http://example.com/resource/images/1-11%20获取小程序的%20AppId.png">
+<meta property="og:image" content="http://example.com/resource/images/1-12%20扫码登录.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-13%20扫码登录.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-14%20设置外观.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-15%20设置代理.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-16%20新建项目.jpg">
+<meta property="og:image" content="http://example.com/resource/images/新建小程序-新版.jpeg">
+<meta property="og:image" content="http://example.com/resource/images/1-18%20预览项目.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-19%20预览项目.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-20%20编辑器的组成部分.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-21%20小程序的目录构成.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-22%20小程序的页面构成.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-23%20json%20配置文件.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-24%20app.json%20文件.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-26%20页面的%20.json%20配置文件.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-25%20sitemap.json%20文件.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-27%20新建页面.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-28%20设置首页的第一个方式.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-29%20设置首页的第一个方式.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-30%20宿主环境.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-31%20小程序的宿主环境.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-33%20小程序的通信模型.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-34%20view%20组件的基本使用.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-35%20scroll-view%20组件的基本使用.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-36%20swiper%20和%20swiper-item%20的基本使用.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-37%20了解项目成员的组织结构.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-38%20小程序的开发流程.jpg">
+<meta property="og:image" content="http://example.com/resource/images/成员管理.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-39%20不同项目成员对应的权限%20.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-40%20添加成员1.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-41%20小程序的版本.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-42%20上传代码.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-44%20在后台查看上传之后的版本.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-43%20提交审核.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-45%20%20发布.jpg">
+<meta property="og:image" content="http://example.com/resource/images/1-46%20小程序二维码.jpg">
+<meta property="article:published_time" content="2022-08-04T14:30:45.000Z">
+<meta property="article:modified_time" content="2022-08-10T00:32:20.172Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/1-1%E4%BB%80%E4%B9%88%E6%98%AF%E5%B0%8F%E7%A8%8B%E5%BA%8F.jpg">
+
+<link rel="canonical" href="http://example.com/2022/08/04/wx-base-course01/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>01_小程序初识 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/04/wx-base-course01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          01_小程序初识
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-04 22:30:45" itemprop="dateCreated datePublished" datetime="2022-08-04T22:30:45+08:00">2022-08-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-10 08:32:20" itemprop="dateModified" datetime="2022-08-10T08:32:20+08:00">2022-08-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 知道什么是小程序，拥有一个小程序开发者账号。</p>
+<p>✔ 知道小程序项目目录的构成，会使用 view、scroll-view、swiper、button、image 组件。</p>
+<p>✔ 了解小程序的开发、管理、上线流程，<font color=e32d40><strong>上线一个体验版小程序</strong></font>。</p>
+<span id="more"></span>
+
+<h2 id="什么是小程序"><a href="#什么是小程序" class="headerlink" title="什么是小程序"></a>什么是小程序</h2><h3 id="产品视角"><a href="#产品视角" class="headerlink" title="产品视角"></a>产品视角</h3><p>小程序是一种不需要下载、安装即可使用的应用，它实现了应用触手可及的梦想，用户扫一扫或者搜一下就能打开应用，也实现了用完即走的理念，用户不用安装太多应用，应用随处可用，但又无须安装卸载。</p>
+<p><img src="/resource/images/1-1%E4%BB%80%E4%B9%88%E6%98%AF%E5%B0%8F%E7%A8%8B%E5%BA%8F.jpg"></p>
+<h3 id="用户视角"><a href="#用户视角" class="headerlink" title="用户视角"></a>用户视角</h3><p>在微信里打开的应用。</p>
+<h3 id="开发视角"><a href="#开发视角" class="headerlink" title="开发视角"></a>开发视角</h3><p>新的标签、新的 API（JS）、新的页面（代码）组织规则、新的 IDE。</p>
+<h3 id="周边生态"><a href="#周边生态" class="headerlink" title="周边生态"></a>周边生态</h3><img src="/resource/images/image-20220716075609217.png" alt="image-20220716075609217" />
+
+<h2 id="小程序与网页"><a href="#小程序与网页" class="headerlink" title="小程序与网页"></a>小程序与网页</h2><ul>
+<li><p>  宿主环境不同：网页运行在浏览器环境中，小程序运行在微信环境中。</p>
+</li>
+<li><p>  使用 API 不同：在小程序中，无法调用 W3C 规定的 DOM 或浏览器提供的 BOM API；小程序中可以调用微信环境提供的各种 API，例如：微信支付、微信扫码、地理定位。</p>
+</li>
+<li><p>  开发模式不同：网页可以直接通过各种代码编辑器 + 浏览器进行开发调试；小程序从申请小程序开发账号、安装小程序开发者工具、创建和配置小程序项目、上线到微信提供的环境等，拥有自己的一套开发模式。</p>
+</li>
+</ul>
+<h2 id="注册开发账号"><a href="#注册开发账号" class="headerlink" title="注册开发账号"></a>注册开发账号</h2><h3 id="打开注册页面"><a href="#打开注册页面" class="headerlink" title="打开注册页面"></a>打开注册页面</h3><p>使用浏览器打开<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/">微信公众平台</a>网址，点击右上角的”立即注册”即可进入到小程序开发账号的注册流程。</p>
+<img src="/resource/images/1-4 注册账号.jpg" />
+
+<h3 id="选择帐号类型"><a href="#选择帐号类型" class="headerlink" title="选择帐号类型"></a>选择帐号类型</h3><img src="/resource/images/1-5 注册账号.png" />
+
+<h3 id="填写账号信息"><a href="#填写账号信息" class="headerlink" title="填写账号信息"></a>填写账号信息</h3><img src="/resource/images/1-6 注册账号.jpg" />
+
+<h3 id="登录邮箱激活"><a href="#登录邮箱激活" class="headerlink" title="登录邮箱激活"></a>登录邮箱激活</h3><img src="/resource/images/1-7 注册账号.jpg" />
+
+<h3 id="点击激活链接"><a href="#点击激活链接" class="headerlink" title="点击激活链接"></a>点击激活链接</h3><img src="/resource/images/1-10 注册账号.jpg" />
+
+<h3 id="选择主体类型"><a href="#选择主体类型" class="headerlink" title="选择主体类型"></a>选择主体类型</h3><img src="/resource/images/1-8 注册账号.jpg" />
+
+<h3 id="主体登记信息"><a href="#主体登记信息" class="headerlink" title="主体登记信息"></a>主体登记信息</h3><img src="/resource/images/1-9 注册账号.jpg" />
+
+<h3 id="登录管理后台"><a href="#登录管理后台" class="headerlink" title="登录管理后台"></a>登录管理后台</h3><p>注册完毕后可以登录小程序管理后台补充小程序的基本信息。</p>
+<img src="/resource/images/1-10-1 注册账号成功后登录.jpeg" />
+
+<h2 id="小程序-AppID"><a href="#小程序-AppID" class="headerlink" title="小程序 AppID"></a>小程序 AppID</h2><p>小程序 AppID 是用来创建小程序项目所需要的，有了 AppID 也可以调用一些高级的接口（测试 ID 有些接口无法调用）。</p>
+<img src="/resource/images/1-11 获取小程序的 AppId.png" />
+
+<h2 id="微信开发者工具"><a href="#微信开发者工具" class="headerlink" title="微信开发者工具"></a>微信开发者工具</h2><h3 id="安装微信开发者工具"><a href="#安装微信开发者工具" class="headerlink" title="安装微信开发者工具"></a>安装微信开发者工具</h3><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html">微信开发者工具</a>是官方推荐使用的小程序开发工具，它提供的主要功能有：创建小程序项目、代码的查看和编辑、小程序功能的开发和调试、小程序的预览和发布。</p>
+<h3 id="扫码登录开发者工具"><a href="#扫码登录开发者工具" class="headerlink" title="扫码登录开发者工具"></a>扫码登录开发者工具</h3><img src="/resource/images/1-12 扫码登录.jpg" />
+
+<img src="/resource/images/1-13 扫码登录.jpg" />
+
+<h3 id="配置外观和代理模式"><a href="#配置外观和代理模式" class="headerlink" title="配置外观和代理模式"></a>配置外观和代理模式</h3><ol>
+<li>设置外观，或者进入开发者工具后，可以点击设置 –&gt; 外观设置。</li>
+</ol>
+<img src="/resource/images/1-14 设置外观.jpg" />
+
+<ol start="2">
+<li>设置代理，部分同学电脑可能安装了翻墙工具，导致网络不稳定，所以推荐不使用任何代理。</li>
+</ol>
+<img src="/resource/images/1-15 设置代理.jpg" />
+
+<h3 id="演示新建小程序步骤"><a href="#演示新建小程序步骤" class="headerlink" title="演示新建小程序步骤"></a>演示新建小程序步骤</h3><ol>
+<li>点击 + 号，新建项目。</li>
+</ol>
+<img src="/resource/images/1-16 新建项目.jpg" />
+
+<ol start="2">
+<li>填写项目信息。</li>
+</ol>
+<img src="/resource/images/新建小程序-新版.jpeg" />
+
+<h3 id="预览小程序两种方式"><a href="#预览小程序两种方式" class="headerlink" title="预览小程序两种方式"></a>预览小程序两种方式</h3><ol>
+<li>在模拟器上查看项目效果。</li>
+</ol>
+<img src="/resource/images/1-18 预览项目.jpg" />
+
+<ol start="2">
+<li>在真机上预览项目效果。</li>
+</ol>
+<img src="/resource/images/1-19 预览项目.jpg" />
+
+<h3 id="开发者工具界面组成"><a href="#开发者工具界面组成" class="headerlink" title="开发者工具界面组成"></a>开发者工具界面组成</h3><p>主界面的 5 个组成部分，从上到下，到左到右，依次是：菜单栏、工具栏、模拟器、代码编辑区、调试区。</p>
+<img src="/resource/images/1-20 编辑器的组成部分.jpg" />
+
+<h2 id="小程序项目构成"><a href="#小程序项目构成" class="headerlink" title="小程序项目构成"></a>小程序项目构成</h2><h3 id="小程序目录文件数明"><a href="#小程序目录文件数明" class="headerlink" title="小程序目录文件数明"></a>小程序目录文件数明</h3><ol>
+<li><p><code>pages</code>，用来存放所有小程序的页面。</p>
+</li>
+<li><p><code>utils</code>，用来存放工具性质的模块（例如：格式化时间的自定义模块）。</p>
+</li>
+<li><p><code>.eslintrc.js</code>，ESLint 相关的配置。</p>
+</li>
+<li><p><code>app.js</code>，小程序项目的入口文件。</p>
+</li>
+<li><p><code>app.json</code>，小程序项目的全局配置文件。</p>
+</li>
+<li><p><code>app.wxss</code>，小程序项目的全局样式文件。</p>
+</li>
+<li><p><code>project.config.json</code>，项目的公共配置信息。</p>
+</li>
+<li><p><code>project.private.config.json</code>，项目的私有配置信息。</p>
+</li>
+<li><p><code>sitemap.json</code>，用来配置小程序及其页面是否允许被微信索引。</p>
+</li>
+</ol>
+<img src="/resource/images/1-21 小程序的目录构成.jpg" />
+
+<h3 id="小程序页面的组成部分"><a href="#小程序页面的组成部分" class="headerlink" title="小程序页面的组成部分"></a>小程序页面的组成部分</h3><p>小程序官方建议把所有的小程序页面，都存放在 pages 目录中，每个页面以单独的文件夹存在，每个页面由 4 个基本文件组成，具体如下。</p>
+<ol>
+<li><p><code>.js</code> 文件，页面的脚本文件，定义页面的数据、事件处理函数、生命周期等。</p>
+</li>
+<li><p><code>.json</code> 文件，当前页面的配置文件，配置页面的外观、表现等。</p>
+</li>
+<li><p><code>.wxml</code> 文件，页面的模板结构文件。</p>
+</li>
+<li><p><code>.wxss</code> 文件，当前页面的样式表文件。</p>
+</li>
+</ol>
+<img src="/resource/images/1-22 小程序的页面构成.jpg" />
+
+<h3 id="小程序中的几种配置文件"><a href="#小程序中的几种配置文件" class="headerlink" title="小程序中的几种配置文件"></a>小程序中的几种配置文件</h3><p><code>JSON</code> 是一种数据格式，在实际开发中，<code>JSON</code> 总是以配置文件的形式出现，小程序项目也不例外，通过不同的 <code>.json</code> 配置文件，可以对小程序项目进行不同级别的配置，小程序项目中有 4 种 <code>json</code> 文件，分别如下。</p>
+<ol>
+<li><p>项目根目录中的 <code>app.json</code> 配置文件。</p>
+</li>
+<li><p>每个页面文件夹中的 <code>.json</code> 配置文件。</p>
+</li>
+<li><p>项目根目录中的 <code>project.config.json</code> 配置文件。</p>
+</li>
+<li><p>项目根目录中的 <code>sitemap.json</code> 配置文件。</p>
+</li>
+</ol>
+<img src="/resource/images/1-23 json 配置文件.jpg" />
+
+<h4 id="app-json-文件"><a href="#app-json-文件" class="headerlink" title="app.json 文件"></a>app.json 文件</h4><p><code>app.json</code> 是当前小程序的<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html">全局配置</a>，包括了小程序的<code>所有页面路径</code>、<code>窗口外观</code>、<code>界面表现</code>、<code>底部 tab</code> 等。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;pages&quot;</span>: [<span class="string">&quot;pages/index/index&quot;</span>, <span class="string">&quot;pages/logs/logs&quot;</span>],</span><br><span class="line">    <span class="attr">&quot;window&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;backgroundTextStyle&quot;</span>: <span class="string">&quot;dark&quot;</span>, <span class="comment">// 开启下拉刷新是三个点的颜色</span></span><br><span class="line">        <span class="attr">&quot;enablePullDownRefresh&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">&quot;navigationBarBackgroundColor&quot;</span>: <span class="string">&quot;#fff&quot;</span>, <span class="comment">// 只支持 16 进制表示的</span></span><br><span class="line">        <span class="attr">&quot;navigationBarTitleText&quot;</span>: <span class="string">&quot;Weixin&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;navigationBarTextStyle&quot;</span>: <span class="string">&quot;black&quot;</span> <span class="comment">// 只支持 black 和 white</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;style&quot;</span>: <span class="string">&quot;v2&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;sitemapLocation&quot;</span>: <span class="string">&quot;sitemap.json&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Demo</code> 项目里面的 <code>app.json</code> 配置内容如下。</p>
+<img src="/resource/images/1-24 app.json 文件.jpg" style="zoom: 66%;" />
+
+<p>了解下这 4 个配置项的作用。</p>
+<ol>
+<li><p><code>pages</code>：用来记录当前小程序所有页面的路径。</p>
+</li>
+<li><p><code>window</code>：全局定义小程序所有页面的背景色、文字颜色等。</p>
+</li>
+<li><p><code>style</code>：全局定义小程序组件所使用的样式版本。</p>
+</li>
+<li><p><code>sitemapLocation</code>：用来指明 sitemap.json 的位置。</p>
+</li>
+</ol>
+<h4 id="页面-json-配置文件"><a href="#页面-json-配置文件" class="headerlink" title="页面.json 配置文件"></a>页面.json 配置文件</h4><p>可以对本页面的窗口外观进行<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/page.html">配置</a>，页面中的配置项会覆盖 <code>app.json</code> 中的 <code>window</code> 中的配置项。</p>
+<img src="/resource/images/1-26 页面的 .json 配置文件.jpg" style="zoom:60%;" />
+
+<h4 id="project-config-json-文件"><a href="#project-config-json-文件" class="headerlink" title="project.config.json 文件"></a>project.config.json 文件</h4><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html">项目配置文件</a>，用来记录我们对小程序开发工具所做的个性化配置，例如。</p>
+<ol>
+<li><p><code>setting</code> 中保存了项目相关的配置。</p>
+</li>
+<li><p><code>projectname</code> 中保存的是项目名称。</p>
+</li>
+<li><p><code>appid</code> 中保存的是小程序的账号 ID。</p>
+</li>
+</ol>
+<h4 id="sitemap-json-文件"><a href="#sitemap-json-文件" class="headerlink" title="sitemap.json 文件"></a>sitemap.json 文件</h4><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/framework/sitemap.html">配置</a>小程序页面是否允许微信搜索，当开发者允许微信搜索时，微信会通过爬虫的形式，为小程序的页面内容建立索引。当用户的搜索关键字和页面的索引匹配成功的时候，小程序的页面将可能展示在搜索结果中。</p>
+<img src="/resource/images/1-25 sitemap.json 文件.jpg"/>
+
+<h3 id="新建小程序页面"><a href="#新建小程序页面" class="headerlink" title="新建小程序页面"></a>新建小程序页面</h3><ol>
+<li><p>在 <code>pages</code> 文件夹上右键 <code>新建文件夹 --&gt; home</code>，在 <code>home</code> 文件夹右键 <code>新建 Page --&gt; 输入 home</code>。官方推荐文件夹名称和页面的名称一致，方便后期的维护，新建页面组件的时候，不需要输入后缀名。</p>
+</li>
+<li><p>在 <code>app.json</code> –&gt; <code>pages</code> 中新增页面的存放路径，小程序开发者工具即可帮我们自动创建对应的页面文件。</p>
+</li>
+<li><p>对 pages 目录下页面的删除或者新增都需要在 app.json 文件的 pages 数组中进行新增或删除。</p>
+</li>
+</ol>
+<img src="/resource/images/1-27 新建页面.jpg"  />
+
+<h3 id="设置首页的两个方式"><a href="#设置首页的两个方式" class="headerlink" title="设置首页的两个方式"></a>设置首页的两个方式</h3><ol>
+<li>调整 <code>app.json</code> –&gt; <code>pages</code> 数组中页面路径的前后顺序，即可修改项目的首页，小程序会把排在第一位的页面，当作项目首页进行渲染。</li>
+</ol>
+<img src="/resource/images/1-28 设置首页的第一个方式.jpg" />
+
+<ol start="2">
+<li>在 <code>app.json</code> 中 <code>pages</code> 同级，配置一个新的节点 <code>entryPagePath</code> 节点，传入需要设置为首页的路径即可，最终小程序项目的首页，以 <code>entryPagePath</code> 节点设置的为准。</li>
+</ol>
+<img src="/resource/images/1-29 设置首页的第一个方式.jpg" />
+
+<h3 id="WXML-和-HTML"><a href="#WXML-和-HTML" class="headerlink" title="WXML 和 HTML"></a>WXML 和 HTML</h3><ol>
+<li> 什么是 <code>WXML</code>？</li>
+</ol>
+<p>WXML（WeiXin Markup Language）是框架设计的一套标签语言（组件），用来构建小程序页面的结构，其作用类似于网页开发中的 HTML。</p>
+<ol start="2">
+<li><p><code>WXML</code> 和 <code>HTML</code> 的区别如下。</p>
+<ul>
+<li><p>  标签名称不同：<code>HTML</code> 常见的标签是 div、span、img、a，WXML 常见的标签是 view、text、image、navigator`。</p>
+</li>
+<li><p>  标签属性不同：HTML <code>&lt;a href=&quot;#&quot;&gt;超链接&lt;/a&gt;</code>，WXML 是 <code>&lt;navigator url=&quot;/pages/home/home&quot;&gt;&lt;/navigator&gt;</code>。</p>
+</li>
+<li><p>  提供了类似于 Vue 中的模板语法：例如插值表达式，判断、循环等。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="WXSS-和-CSS"><a href="#WXSS-和-CSS" class="headerlink" title="WXSS 和 CSS"></a>WXSS 和 CSS</h3><ol>
+<li><p>是什么：<code>WXSS</code> (<code>WeiXin Style Sheets</code>)是一套样式语言，用于描述 <code>WXML</code> 的组件样式，类似于网页开发中的 <code>CSS</code>。</p>
+</li>
+<li><p><code>WXSS</code> 和 <code>CSS</code> 之间的区别如下。</p>
+<ul>
+<li><p>新增了 rpx 自适应尺寸单位，<code>CSS</code> 中需要手动进行像素单位换算，例如 <code>rem</code>，<code>WXSS</code> 在底层支持新的尺寸单位 <code>rpx</code>，在不同大小的屏幕上小程序会自动进行换算。</p>
+</li>
+<li><p>提供了全局的样式和局部样式，项目根目录中的 <code>app.wxss</code> 会作用于所有小程序页面，局部页面的 <code>.wxss</code> 样式仅对当前页面生效。</p>
+</li>
+<li><p><code>WXSS</code> 仅支持部分 <code>CSS</code> 选择器，例如 .class 和 #id、element（标签选择器）、并集选择器和后代选择器、::after 和 ::before 等伪类选择器。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="小程序中的-JS-文件"><a href="#小程序中的-JS-文件" class="headerlink" title="小程序中的 JS 文件"></a>小程序中的 JS 文件</h3><p>小程序中的 JS 文件分为三大类，分别如下。</p>
+<ol>
+<li><p>app.js，是整个小程序项目的入口文件，通过调用 <code>App()</code> 来启动整个小程序。</p>
+</li>
+<li><p><code>页面.js</code> 文件，是页面的入口文件，通过调用 <code>Page()</code> 来创建小程序页面，并运行小程序页面。</p>
+</li>
+<li><p><code>普通的.js</code> 文件，是普通的功能模块文件，用来封装公共的函数或属性供页面使用。</p>
+</li>
+</ol>
+<h2 id="小程序宿主环境"><a href="#小程序宿主环境" class="headerlink" title="小程序宿主环境"></a>小程序宿主环境</h2><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/framework/quickstart/framework.html#%E6%B8%B2%E6%9F%93%E5%B1%82%E5%92%8C%E9%80%BB%E8%BE%91%E5%B1%82">宿主环境</a>指的是程序运行所必须的依赖环境。</p>
+<ol>
+<li>例如 Android 系统和 IOS 系统都可以说是微信的宿主环境。</li>
+</ol>
+<img src="/resource/images/1-30 宿主环境.jpg" style="zoom:100%;" />
+
+<ol start="2">
+<li>小程序的宿主环境是微信，可以完成许多普通网页无法完成的功能，例如：微信扫码、微信支付、微信登录、地理定位等如下图。</li>
+</ol>
+<img src="/resource/images/1-31 小程序的宿主环境.jpg" style="zoom:100%;" />
+
+<ol start="3">
+<li><p>小程序运行环境分为渲染层和逻辑层，其中 WXML 模板和 WXSS 样式工作在渲染层，JS 脚本工作在逻辑层。</p>
+</li>
+<li><p>渲染层和逻辑层之间的通信或逻辑层和第三方服务器之间的通信，都是由微信客户端进行转发。</p>
+</li>
+</ol>
+<img src="/resource/images/1-33 小程序的通信模型.jpg" />
+
+<h2 id="启动或渲染过程"><a href="#启动或渲染过程" class="headerlink" title="启动或渲染过程"></a>启动或渲染过程</h2><ul>
+<li><p>  小程序启动：把小程序的代码包下载到本地；加载 <code>app.json</code> 全局配置文件；执行 <code>app.js</code> 小程序入口文件，<code>调用 App() 创建小程序实例</code>；渲染小程序首页；小程序启动完成。</p>
+</li>
+<li><p>  页面渲染：加载页面的 <code>.json</code> 配置文件；加载页面的 <code>.wxml</code> 模板和 <code>.wxss</code> 样式；执行页面的 <code>.js</code> 文件，<code>调用 Page() 创建页面实例</code>；页面渲染完成。</p>
+</li>
+</ul>
+<h2 id="小程序中的组件"><a href="#小程序中的组件" class="headerlink" title="小程序中的组件"></a>小程序中的组件</h2><p>小程序中的<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/component/">组件</a>也是由宿主环境提供的，开发者可以基于组件快速搭建出漂亮的页面结构，官方把小程序的组件分为了 9 大类，分别是：视图容器、基础内容、表单组件、导航组件、媒体组件、map 地图组件、canvas 画布组件、开发能力、无障碍访问等，常用的视图容器类组件如下。</p>
+<ul>
+<li><p>  <code>view</code>：普通视图区域，类似于 HTML 中的 div，是一个块级元素，常用来实现页面的布局效果。</p>
+</li>
+<li><p>  <code>scroll-view</code>：表示可滚动的视图区域，常用来实现滚动列表效果。</p>
+</li>
+<li><p>  <code>swiper</code> 和 <code>swiper-item</code>：轮播图容器组件和轮播图 item 组件。</p>
+</li>
+</ul>
+<h3 id="view"><a href="#view" class="headerlink" title="view"></a>view</h3><p>view 类似于 div，一般主要用来布局，实现如图的横向布局效果。</p>
+<img src="/resource/images/1-34 view 组件的基本使用.jpg"/>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;view-container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span>&gt;</span>A<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span>&gt;</span>B<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span>&gt;</span>C<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.view-container</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.view-container</span> view &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.view-container</span> view<span class="selector-pseudo">:nth-child</span>(<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: lightgreen;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.view-container</span> view<span class="selector-pseudo">:nth-child</span>(<span class="number">2</span>) &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: lightskyblue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.view-container</span> view<span class="selector-pseudo">:nth-child</span>(<span class="number">3</span>) &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: lightcoral;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="scroll-view"><a href="#scroll-view" class="headerlink" title="scroll-view"></a>scroll-view</h3><img src="/resource/images/1-35 scroll-view 组件的基本使用.jpg" />
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- scroll-x 属性：允许横向滚动 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- scroll-y 属性：允许纵向滚动 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 注意：使用竖向滚动时，必须给 scroll-view 一个固定的高度 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">scroll-view</span> <span class="attr">class</span>=<span class="string">&quot;scroll-container&quot;</span> <span class="attr">scroll-y</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span>&gt;</span>A<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span>&gt;</span>B<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span>&gt;</span>C<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">scroll-view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.scroll-container</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">120px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.scroll-container</span> view &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.scroll-container</span> view<span class="selector-pseudo">:nth-child</span>(<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: lightgreen;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.scroll-container</span> view<span class="selector-pseudo">:nth-child</span>(<span class="number">2</span>) &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: lightskyblue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.scroll-container</span> view<span class="selector-pseudo">:nth-child</span>(<span class="number">3</span>) &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: lightcoral;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="swiper-和-swiper-item"><a href="#swiper-和-swiper-item" class="headerlink" title="swiper 和 swiper-item"></a>swiper 和 swiper-item</h3><img src="/resource/images/1-36 swiper 和 swiper-item 的基本使用.jpg"  />
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 轮播图区域 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- indicator-dots 属性：显示面板指示点 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">swiper</span> <span class="attr">indicator-dots</span> <span class="attr">class</span>=<span class="string">&quot;swiper-container&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 第一项 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">swiper-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">view</span>&gt;</span>A<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">swiper-item</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 第二项 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">swiper-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">view</span>&gt;</span>B<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">swiper-item</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 第三项 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">swiper-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">view</span>&gt;</span>C<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">swiper-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">swiper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.swiper-container</span> &#123;</span><br><span class="line">    <span class="comment">/* 轮播图容器的高度 */</span></span><br><span class="line">    <span class="attribute">height</span>: <span class="number">150px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.swiper-container</span> swiper-item view &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">150px</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.swiper-container</span> swiper-item<span class="selector-pseudo">:nth-child</span>(<span class="number">1</span>) view &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: lightgreen;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.swiper-container</span> swiper-item<span class="selector-pseudo">:nth-child</span>(<span class="number">2</span>) view &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: lightblue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.swiper-container</span> swiper-item<span class="selector-pseudo">:nth-child</span>(<span class="number">3</span>) view &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: lightcoral;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/component/swiper.html">swiper 组件的常用属性文档</a></p>
+<table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="center">类型</th>
+<th align="center">默认值</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">indicator-dots</td>
+<td align="center">boolean</td>
+<td align="center">false</td>
+<td align="center">是否显示面板指示点</td>
+</tr>
+<tr>
+<td align="center">indicator-color</td>
+<td align="center">color</td>
+<td align="center">rgba(0, 0, 0, .3)</td>
+<td align="center">指示点颜色</td>
+</tr>
+<tr>
+<td align="center">indicator-active-color</td>
+<td align="center">color</td>
+<td align="center">#000000</td>
+<td align="center">当前选中的指示点颜色</td>
+</tr>
+<tr>
+<td align="center">autoplay</td>
+<td align="center">boolean</td>
+<td align="center">false</td>
+<td align="center">是否自动切换</td>
+</tr>
+<tr>
+<td align="center">interval</td>
+<td align="center">number</td>
+<td align="center">5000</td>
+<td align="center">自动切换时间间隔</td>
+</tr>
+<tr>
+<td align="center">circular</td>
+<td align="center">boolean</td>
+<td align="center">false</td>
+<td align="center">是否采用衔接滑动</td>
+</tr>
+</tbody></table>
+<h3 id="text-和-rich-text"><a href="#text-和-rich-text" class="headerlink" title="text 和 rich-text"></a>text 和 rich-text</h3><ol>
+<li><p>常用的基础内容组件如下。</p>
+<ul>
+<li><p><code>text</code> 组件：文本组件，类似于 <code>HTML</code> 中的 <code>span</code> 标签，是一个行内元素。</p>
+</li>
+<li><p><code>rich-text</code> 组件：富文本组件，支持把 <code>HTML</code> 字符串渲染为 <code>WXML</code> 结构。</p>
+</li>
+</ul>
+</li>
+<li><p>通过 <code>text</code> 组件的 <code>user-select</code> 属性，实现长按选中文本内容的效果。</p>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 常用的基础内容组件 text 和 rich-text 的用法 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span></span><br><span class="line">    手机号支持长按选中效果</span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span> <span class="attr">user-select</span>&gt;</span>13812345678<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>通过 <code>rich-text</code> 组件的 <code>nodes</code> 属性节点，把 HTML 字符串渲染为对应的 UI 结构。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 应用场景 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">rich-text</span> <span class="attr">nodes</span>=<span class="string">&quot;&lt;h2 style=&#x27;color: red&#x27;&gt;我是h2标题&lt;/h2&gt;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">rich-text</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="button"><a href="#button" class="headerlink" title="button"></a>button</h3><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/component/button.html">Button 组件的详细文档</a>，功能比 <code>HTML</code> 中的 <code>button</code> 按钮丰富，通过 <code>open-type</code> 属性可以调用微信提供的各种功能（客服、转发、获取用户授权、获取用户信息等）。</p>
+<table>
+<thead>
+<tr>
+<th align="center">属性名</th>
+<th align="center">类型</th>
+<th align="center">默认值</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">size</td>
+<td align="center">String</td>
+<td align="center">default</td>
+<td align="center">按钮的大小</td>
+</tr>
+<tr>
+<td align="center">type</td>
+<td align="center">String</td>
+<td align="center">default</td>
+<td align="center">按钮的样式类型</td>
+</tr>
+<tr>
+<td align="center">plain</td>
+<td align="center">Boolean</td>
+<td align="center">false</td>
+<td align="center">按钮是否镂空，背景色透明</td>
+</tr>
+<tr>
+<td align="center">disabled</td>
+<td align="center">Boolean</td>
+<td align="center">false</td>
+<td align="center">是否禁用</td>
+</tr>
+<tr>
+<td align="center">loading</td>
+<td align="center">Boolean</td>
+<td align="center">false</td>
+<td align="center">名称是否带 loading 图标</td>
+</tr>
+</tbody></table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span>~~~ 通过 type 指定按钮类型 ~~~<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>默认按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>主色调按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;warn&quot;</span>&gt;</span>警告按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span>~~~ size=&quot;mini&quot; 小尺寸按钮 ~~~<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span>&gt;</span>默认按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>主色调按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;warn&quot;</span>&gt;</span>警告按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span>~~~ plain 镂空效果 ~~~<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">plain</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span>&gt;</span>默认按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">plain</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>主色调按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">plain</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;warn&quot;</span>&gt;</span>警告按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="image"><a href="#image" class="headerlink" title="image"></a>image</h3><p><code>src</code> 属性支持本地和网络上的图片，<code>mode</code> 属性指定图片的裁剪、缩放的模式。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 1. 空图片，默认 320 * 240 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">image</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 2. 使用 src 指向本地图片路径 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span>=<span class="string">&quot;/images/icon.jpg&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 3. 使用 src 指向网络图片路径 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span>=<span class="string">&quot;http://www.itcast.cn/2018czgw/images/logo.png&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">image &#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>image</code> 组件的 <code>mode</code> 属性用来指定图片的裁剪和缩放模式，常用的 <code>mode</code> 属性值如下。</p>
+<table>
+<thead>
+<tr>
+<th align="center">mode 值</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">scaleToFill</td>
+<td align="left">默认值，缩放模式，不保持纵横比缩放图片，使图片的宽高完全拉伸至填满 image 元素。</td>
+</tr>
+<tr>
+<td align="center">aspectFit</td>
+<td align="left">缩放模式，保持纵横比缩放图片，使图片的长边能完全显示出来并丁满 image，短边自适应。</td>
+</tr>
+<tr>
+<td align="center">widthFix</td>
+<td align="left">缩放模式，image 宽度不变，高度自动变化，保持原图宽高比不变。</td>
+</tr>
+<tr>
+<td align="center">heightFix</td>
+<td align="left">缩放模式，image 高度不变，宽度自动变化，保持原图宽高比不变。</td>
+</tr>
+</tbody></table>
+<h2 id="小程序协同工作"><a href="#小程序协同工作" class="headerlink" title="小程序协同工作"></a>小程序协同工作</h2><h3 id="了解权限管理需求"><a href="#了解权限管理需求" class="headerlink" title="了解权限管理需求"></a>了解权限管理需求</h3><p>在中大型的公司中，人员的分工非常仔细：同一个小程序项目，一般会有不同岗位、不同角色的员工同时参与设计与开发，此时出于管理需要，我们迫切需要对不同的岗位、不同的角色的员工的权限进行边界的划分，使他们能够高效的进行协同开发。</p>
+<p>项目成员的组织结构如下。</p>
+<img src="/resource/images/1-37 了解项目成员的组织结构.jpg" />
+
+<p>小程序的开发流程如下。</p>
+<img src="/resource/images/1-38 小程序的开发流程.jpg" />
+
+<h3 id="小程序成员的管理"><a href="#小程序成员的管理" class="headerlink" title="小程序成员的管理"></a>小程序成员的管理</h3><p>小程序成员管理体现在管理员对小程序<font color=e32d40>项目成员</font>及<font color=e32d40>体验成员</font>的管理，<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/wxamp/user/manage?action=index&use_role=1&token=2126243966&lang=zh_CN">后台入口</a>。</p>
+<img src="/resource/images/成员管理.jpg" />
+
+<ol>
+<li><p>项目成员：表示参与小程序开发、运营的成员，他们也可以登陆这个小程序管理后台。管理员添加项目成员的时候，也可以设置对应的权限，例如运营者权限、开发者权限、数据分析者等。</p>
+</li>
+<li><p>体验成员：表示参与小程序内测体验的成员，可使用体验版小程序，但不属于项目成员，管理员及项目成员均可添加、删除体验成员。</p>
+</li>
+</ol>
+<h3 id="开发者的权限说明"><a href="#开发者的权限说明" class="headerlink" title="开发者的权限说明"></a>开发者的权限说明</h3><ol>
+<li>不同项目成员对应的权限，项目成员分为三个角色： 运营成员、开发人员、数据分析者。</li>
+</ol>
+<img src="/resource/images/1-39 不同项目成员对应的权限 .jpg" />
+
+<ol start="2">
+<li><p>开发者的权限说明如下。</p>
+<ul>
+<li><p>登录权限：可登录小程序的后台管理，无需要管理员确认。</p>
+</li>
+<li><p>开发者权限：可使用小程序开发者工具及对小程序的功能进行代码管理。</p>
+</li>
+<li><p>管理者权限：例如设置小程序服务器域名。</p>
+</li>
+<li><p>体验者权限：可使用体验版小程序。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="如何添加对应成员"><a href="#如何添加对应成员" class="headerlink" title="如何添加对应成员"></a>如何添加对应成员</h3><p>主要分为项目成员和体验成员。</p>
+<img src="/resource/images/1-40 添加成员1.jpg" style="zoom: 80%;" />
+
+<h2 id="了解小程序发布"><a href="#了解小程序发布" class="headerlink" title="了解小程序发布"></a>了解小程序发布</h2><h3 id="了解小程序的版本阶段"><a href="#了解小程序的版本阶段" class="headerlink" title="了解小程序的版本阶段"></a>了解小程序的版本阶段</h3><ol>
+<li><p>软件开发过程中，根据时间节点的不同，会产出不同的软件版本。</p>
+<ul>
+<li><p>开发版本：开发者编写代码的同时，对项目代码进行自测。</p>
+</li>
+<li><p>体验版本：直到程序达到一个稳定可靠，可体验的状态时，开发者把体验版本给到产品经理和测试人员进行体验测试。</p>
+</li>
+<li><p>正式版本：最后修复完程序的 bug 后，发布正式版供外部用户使用。</p>
+</li>
+</ul>
+</li>
+<li><p>小程序的版本，版本审核是微信官方进行审核，审核周期一般是 3 ~ 7 天。</p>
+</li>
+</ol>
+<img src="/resource/images/1-41 小程序的版本.jpg" />
+
+<h3 id="了解发布上线主要步骤"><a href="#了解发布上线主要步骤" class="headerlink" title="了解发布上线主要步骤"></a>了解发布上线主要步骤</h3><ol>
+<li><p> 小程序发布上线一般要经过上传代码 –&gt; 提交审核 –&gt; 发布这三个步骤。</p>
+</li>
+<li><p> 上传代码：点击开发者工具顶部工具栏中的“上传”按钮，填写版本号以及项目备注。</p>
+</li>
+</ol>
+<img src="/resource/images/1-42 上传代码.jpg" />
+
+<ol start="3">
+<li> 在后台查看上传之后的版本，登录小程序管理后台 –&gt; 管理 –&gt; 版本管理 –&gt; 开发版本，即可查看刚才提交上传的版本。</li>
+</ol>
+<img src="/resource/images/1-44 在后台查看上传之后的版本.jpg" />
+
+<ol start="4">
+<li><p>提交审核。</p>
+<ul>
+<li><p>  为什么需要提交审核：为了保证小程序的质量，以及符合相关的规范，小程序的发布是需要经过腾讯官方审核的</p>
+</li>
+<li><p>  提交审核的方式：在开发版本的列表中，点击 <code>提交审核</code> 按钮之后，按照页面提示填写相关的信息，就能把小程序提交到腾讯官方进行审核</p>
+</li>
+</ul>
+</li>
+</ol>
+<img src="/resource/images/1-43 提交审核.jpg" />
+
+<ol start="5">
+<li> 发布，审核通过之后，管理员的微信中会收到小程序通过审核的通知，此时在审核版本的列表中，点击 <code>发布</code> 按钮之后，即可把 <code>审核通过</code> 的版本发布为 <code>线上版本</code>，供所有小程序用户访问和使用。</li>
+</ol>
+<img src="/resource/images/1-45  发布.jpg" />
+
+<h3 id="基于小程序码进行推广"><a href="#基于小程序码进行推广" class="headerlink" title="基于小程序码进行推广"></a>基于小程序码进行推广</h3><ol>
+<li><p>相对于普通二维码来说，小程序码的优势：在样式上更具有辨识度和视觉冲击力；能够更加清晰的树立小程序的品牌形象；可以帮助开发者、商家更好的推广小程序。</p>
+</li>
+<li><p>获取小程序码的 5 个步骤：登录小程序管理后台 –&gt; 设置 –&gt; 基本设置 –&gt; 基本信息 –&gt; 小程序码及线下物料下载。</p>
+</li>
+</ol>
+<img src="/resource/images/1-46 小程序二维码.jpg" />
+
+<h3 id="查看小程序的运营数据"><a href="#查看小程序的运营数据" class="headerlink" title="查看小程序的运营数据"></a>查看小程序的运营数据</h3><ol>
+<li><p>在小程序后台查看：登录小程序管理后台，点击侧边栏的”统计”，点击相应的 tab 可以看到相关的数据。</p>
+</li>
+<li><p>使用小程序数据助手查看：打开微信，搜索“小程序数据助手”，查看已发布的小程序相关的数据。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/06/vue-base-course13/" rel="prev" title="13_订单模块">
+      <i class="fa fa-chevron-left"></i> 13_订单模块
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/04/wx-base-course02/" rel="next" title="02_小程序语法">
+      02_小程序语法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%B0%8F%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">什么是小程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A7%E5%93%81%E8%A7%86%E8%A7%92"><span class="nav-number">2.1.</span> <span class="nav-text">产品视角</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%A7%86%E8%A7%92"><span class="nav-number">2.2.</span> <span class="nav-text">用户视角</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%A7%86%E8%A7%92"><span class="nav-number">2.3.</span> <span class="nav-text">开发视角</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%A8%E8%BE%B9%E7%94%9F%E6%80%81"><span class="nav-number">2.4.</span> <span class="nav-text">周边生态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E%E7%BD%91%E9%A1%B5"><span class="nav-number">3.</span> <span class="nav-text">小程序与网页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E5%BC%80%E5%8F%91%E8%B4%A6%E5%8F%B7"><span class="nav-number">4.</span> <span class="nav-text">注册开发账号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2"><span class="nav-number">4.1.</span> <span class="nav-text">打开注册页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%B8%90%E5%8F%B7%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.2.</span> <span class="nav-text">选择帐号类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A1%AB%E5%86%99%E8%B4%A6%E5%8F%B7%E4%BF%A1%E6%81%AF"><span class="nav-number">4.3.</span> <span class="nav-text">填写账号信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E9%82%AE%E7%AE%B1%E6%BF%80%E6%B4%BB"><span class="nav-number">4.4.</span> <span class="nav-text">登录邮箱激活</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%B9%E5%87%BB%E6%BF%80%E6%B4%BB%E9%93%BE%E6%8E%A5"><span class="nav-number">4.5.</span> <span class="nav-text">点击激活链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E4%B8%BB%E4%BD%93%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.6.</span> <span class="nav-text">选择主体类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E4%BD%93%E7%99%BB%E8%AE%B0%E4%BF%A1%E6%81%AF"><span class="nav-number">4.7.</span> <span class="nav-text">主体登记信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E7%AE%A1%E7%90%86%E5%90%8E%E5%8F%B0"><span class="nav-number">4.8.</span> <span class="nav-text">登录管理后台</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F-AppID"><span class="nav-number">5.</span> <span class="nav-text">小程序 AppID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7"><span class="nav-number">6.</span> <span class="nav-text">微信开发者工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7"><span class="nav-number">6.1.</span> <span class="nav-text">安装微信开发者工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%AB%E7%A0%81%E7%99%BB%E5%BD%95%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7"><span class="nav-number">6.2.</span> <span class="nav-text">扫码登录开发者工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%A4%96%E8%A7%82%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">6.3.</span> <span class="nav-text">配置外观和代理模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA%E6%96%B0%E5%BB%BA%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%AD%A5%E9%AA%A4"><span class="nav-number">6.4.</span> <span class="nav-text">演示新建小程序步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%A7%88%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">6.5.</span> <span class="nav-text">预览小程序两种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E7%95%8C%E9%9D%A2%E7%BB%84%E6%88%90"><span class="nav-number">6.6.</span> <span class="nav-text">开发者工具界面组成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B9%E7%9B%AE%E6%9E%84%E6%88%90"><span class="nav-number">7.</span> <span class="nav-text">小程序项目构成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E6%95%B0%E6%98%8E"><span class="nav-number">7.1.</span> <span class="nav-text">小程序目录文件数明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B5%E9%9D%A2%E7%9A%84%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86"><span class="nav-number">7.2.</span> <span class="nav-text">小程序页面的组成部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%E5%87%A0%E7%A7%8D%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">7.3.</span> <span class="nav-text">小程序中的几种配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#app-json-%E6%96%87%E4%BB%B6"><span class="nav-number">7.3.1.</span> <span class="nav-text">app.json 文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2-json-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">7.3.2.</span> <span class="nav-text">页面.json 配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#project-config-json-%E6%96%87%E4%BB%B6"><span class="nav-number">7.3.3.</span> <span class="nav-text">project.config.json 文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sitemap-json-%E6%96%87%E4%BB%B6"><span class="nav-number">7.3.4.</span> <span class="nav-text">sitemap.json 文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B5%E9%9D%A2"><span class="nav-number">7.4.</span> <span class="nav-text">新建小程序页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E9%A6%96%E9%A1%B5%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%96%B9%E5%BC%8F"><span class="nav-number">7.5.</span> <span class="nav-text">设置首页的两个方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WXML-%E5%92%8C-HTML"><span class="nav-number">7.6.</span> <span class="nav-text">WXML 和 HTML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WXSS-%E5%92%8C-CSS"><span class="nav-number">7.7.</span> <span class="nav-text">WXSS 和 CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84-JS-%E6%96%87%E4%BB%B6"><span class="nav-number">7.8.</span> <span class="nav-text">小程序中的 JS 文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AE%BF%E4%B8%BB%E7%8E%AF%E5%A2%83"><span class="nav-number">8.</span> <span class="nav-text">小程序宿主环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%88%96%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B"><span class="nav-number">9.</span> <span class="nav-text">启动或渲染过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%E7%BB%84%E4%BB%B6"><span class="nav-number">10.</span> <span class="nav-text">小程序中的组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#view"><span class="nav-number">10.1.</span> <span class="nav-text">view</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scroll-view"><span class="nav-number">10.2.</span> <span class="nav-text">scroll-view</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#swiper-%E5%92%8C-swiper-item"><span class="nav-number">10.3.</span> <span class="nav-text">swiper 和 swiper-item</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#text-%E5%92%8C-rich-text"><span class="nav-number">10.4.</span> <span class="nav-text">text 和 rich-text</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#button"><span class="nav-number">10.5.</span> <span class="nav-text">button</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#image"><span class="nav-number">10.6.</span> <span class="nav-text">image</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%8D%8F%E5%90%8C%E5%B7%A5%E4%BD%9C"><span class="nav-number">11.</span> <span class="nav-text">小程序协同工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E9%9C%80%E6%B1%82"><span class="nav-number">11.1.</span> <span class="nav-text">了解权限管理需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%88%90%E5%91%98%E7%9A%84%E7%AE%A1%E7%90%86"><span class="nav-number">11.2.</span> <span class="nav-text">小程序成员的管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%84%E6%9D%83%E9%99%90%E8%AF%B4%E6%98%8E"><span class="nav-number">11.3.</span> <span class="nav-text">开发者的权限说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%AF%B9%E5%BA%94%E6%88%90%E5%91%98"><span class="nav-number">11.4.</span> <span class="nav-text">如何添加对应成员</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%8F%91%E5%B8%83"><span class="nav-number">12.</span> <span class="nav-text">了解小程序发布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%89%88%E6%9C%AC%E9%98%B6%E6%AE%B5"><span class="nav-number">12.1.</span> <span class="nav-text">了解小程序的版本阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E5%8F%91%E5%B8%83%E4%B8%8A%E7%BA%BF%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4"><span class="nav-number">12.2.</span> <span class="nav-text">了解发布上线主要步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%A0%81%E8%BF%9B%E8%A1%8C%E6%8E%A8%E5%B9%BF"><span class="nav-number">12.3.</span> <span class="nav-text">基于小程序码进行推广</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%BF%90%E8%90%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">12.4.</span> <span class="nav-text">查看小程序的运营数据</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
