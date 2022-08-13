@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="今日目标✔ 页面导航、页面事件。 ✔ 小程序生命周期和页面的生命周期。 ✔ wxs 脚本的使用。 ✔ 实现本地生活列表页。">
+  <meta name="description" content="今日目标✔ 掌握页面导航、页面事件。 ✔ 掌握小程序生命周期和页面的生命周期。 ✔ 掌握 wxs 脚本的使用。 ✔ 掌握本地生活列表页的实现。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="03_小程序语法">
 <meta property="og:url" content="http://example.com/2022/08/04/wx-base-course03/index.html">
 <meta property="og:site_name" content="危险">
-<meta property="og:description" content="今日目标✔ 页面导航、页面事件。 ✔ 小程序生命周期和页面的生命周期。 ✔ wxs 脚本的使用。 ✔ 实现本地生活列表页。">
+<meta property="og:description" content="今日目标✔ 掌握页面导航、页面事件。 ✔ 掌握小程序生命周期和页面的生命周期。 ✔ 掌握 wxs 脚本的使用。 ✔ 掌握本地生活列表页的实现。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/resource/images/019%20-%20页面效果.jpg">
 <meta property="og:image" content="http://example.com/resource/images/001%20-%20导航到%20tabBar%20页面.jpg">
@@ -45,9 +45,12 @@
 <meta property="og:image" content="http://example.com/resource/images/014%20-%20内嵌%20%20wxs%20脚本.jpg">
 <meta property="og:image" content="http://example.com/resource/images/015%20-%20定义外联的%20wxs%20脚本.jpg">
 <meta property="og:image" content="http://example.com/resource/images/016%20-%20使用外联的%20wxs%20脚本.jpg">
+<meta property="og:image" content="http://example.com/resource/images/017%20-%20不能作为事件回调.jpg">
+<meta property="og:image" content="http://example.com/resource/images/018%20-%20不能作为事件回调.jpg">
+<meta property="og:image" content="http://example.com/resource/images/019%20-%20页面效果.jpg">
 <meta property="og:image" content="http://example.com/resource/images/020%20-%20商品列表.jpg">
 <meta property="article:published_time" content="2022-08-04T14:47:46.000Z">
-<meta property="article:modified_time" content="2022-08-08T14:28:29.094Z">
+<meta property="article:modified_time" content="2022-08-11T09:01:34.842Z">
 <meta property="article:author" content="Ifer">
 <meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
 <meta name="twitter:card" content="summary">
@@ -230,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-08 22:28:29" itemprop="dateModified" datetime="2022-08-08T22:28:29+08:00">2022-08-08</time>
+                <time title="修改时间：2022-08-11 17:01:34" itemprop="dateModified" datetime="2022-08-11T17:01:34+08:00">2022-08-11</time>
               </span>
 
           
@@ -244,52 +247,52 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 页面导航、页面事件。</p>
-<p>✔ 小程序生命周期和页面的生命周期。</p>
-<p>✔ wxs 脚本的使用。</p>
-<p>✔ 实现本地生活列表页。</p>
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 掌握页面导航、页面事件。</p>
+<p>✔ 掌握小程序生命周期和页面的生命周期。</p>
+<p>✔ 掌握 wxs 脚本的使用。</p>
+<p>✔ 掌握本地生活列表页的实现。</p>
 <span id="more"></span>
 
-<img src="/resource/images/019 - 页面效果.jpg" style="zoom:80%;" />
+<img src="/resource/images/019 - 页面效果.jpg" />
 
-<p>点击首页九宫格选项跳转到列表页（页面跳转、页面之间传参）、上拉加载更多、下拉刷新、使用 wxs 格式化手机号码的显示。</p>
+<p>🧐 点击首页九宫格选项跳转到列表页（页面跳转、页面之间传参）、上拉加载更多、下拉刷新、使用 wxs 格式化手机号码的显示。</p>
 <h2 id="页面导航"><a href="#页面导航" class="headerlink" title="页面导航"></a>页面导航</h2><p>页面导航指的是页面之间的相互跳转，在浏览器中实现页面导航的方式有如下两种：<code>a</code> 标签和 <code>location.href</code>。</p>
-<h3 id="小程序中实现页面导航的两个方式"><a href="#小程序中实现页面导航的两个方式" class="headerlink" title="小程序中实现页面导航的两个方式"></a>小程序中实现页面导航的两个方式</h3><ul>
+<h3 id="两种方式"><a href="#两种方式" class="headerlink" title="两种方式"></a>两种方式</h3><ul>
 <li><p>  声明式导航：通过点击 <code>&lt;navigator&gt;</code> 组件实现页面跳转。</p>
 </li>
-<li><p>  编程式导航：调用小程序的导航 <code>API</code>，实现页面的跳转。</p>
+<li><p>  编程式导航：调用小程序的导航 API，实现页面的跳转。</p>
 </li>
 </ul>
-<h3 id="声明式导航-导航到-tabBar-页面"><a href="#声明式导航-导航到-tabBar-页面" class="headerlink" title="声明式导航-导航到 tabBar 页面"></a>声明式导航-导航到 tabBar 页面</h3><p><code>tabBar</code> 页面指的是被配置为 <code>tabBar</code> 的页面，在使用 <code>&lt;navigator&gt;</code> 组件跳转到指定的 <code>tabBar</code> 页面时，需要指定 <code>url</code> 属性和 <code>open-type</code> 属性，说明如下。</p>
+<h3 id="声明式导航"><a href="#声明式导航" class="headerlink" title="声明式导航"></a>声明式导航</h3><h4 id="导航到-TabBar-页面"><a href="#导航到-TabBar-页面" class="headerlink" title="导航到 TabBar 页面"></a>导航到 TabBar 页面</h4><p>TabBar 页面指的是被配置为 tabBar 的页面，在使用 <code>&lt;navigator&gt;</code> 组件跳转到指定的 tabBar 页面时，需要指定 url 和 open-type 属性，说明如下。</p>
 <ul>
-<li><p>  <code>url</code> 表示要跳转的 <code>页面的地址</code>，必须以 <code>/</code> 开头。</p>
+<li><p>  url 表示要跳转的页面的地址，必须以 / 开头。</p>
 </li>
-<li><p>  <code>open-type</code> 表示 <code>跳转的方式</code> ，必须为 <code>switchTab</code>。</p>
+<li><p>  open-type 表示跳转的方式，必须为 switchTab。</p>
 </li>
 </ul>
-<img src="/resource/images/001 - 导航到 tabBar 页面.jpg" style="zoom:80%;" />
+<img src="/resource/images/001 - 导航到 tabBar 页面.jpg" />
 
-<h3 id="声明式导航-导航到非-tabBar-页面"><a href="#声明式导航-导航到非-tabBar-页面" class="headerlink" title="声明式导航-导航到非 tabBar 页面"></a>声明式导航-导航到非 tabBar 页面</h3><p><code>非 tabBar 页面</code> 指的是没有被配置为 <code>tabBar</code> 的页面，在使用 <code>&lt;navigator&gt;</code> 组件跳转到普通的非 <code>tabBar</code> 页面时，则需要指定 <code>url</code> 属性和 <code>open-type</code> 属性，说明如下。</p>
+<h4 id="导航到非-TabBar-页面"><a href="#导航到非-TabBar-页面" class="headerlink" title="导航到非 TabBar 页面"></a>导航到非 TabBar 页面</h4><p>非 tabBar 页面指的是没有被配置为 tabBar 的页面，在使用 <code>&lt;navigator&gt;</code> 组件跳转到普通的非 tabBar 页面时，则需要指定 url 和 open-type 属性，说明如下。</p>
 <ul>
-<li><p>  <code>url</code> 表示要跳转的 <code>页面的地址</code>，必须以 <code>/</code> 开头。</p>
+<li><p>  <code>url</code> 表示要跳转的页面的地址，必须以 <code>/</code> 开头。</p>
 </li>
-<li><p>  <code>open-type</code> 表示 <code>跳转的方式</code> ，必须为 <code>navigate</code>。</p>
+<li><p>  <code>open-type</code> 表示跳转的方式，必须为 navigate。</p>
 </li>
 </ul>
-<img src="/resource/images/002 - 导航到非 tabBar 页面.jpg" style="zoom:80%;" />
+<img src="/resource/images/002 - 导航到非 tabBar 页面.jpg" />
 
 <p>🤔 导航到非 tabBar 页面时，open-type 属性也可以省略。</p>
-<h3 id="声明式导航-后退导航"><a href="#声明式导航-后退导航" class="headerlink" title="声明式导航-后退导航"></a>声明式导航-后退导航</h3><p>如果要后退到上一页面或多级页面，则需要指定 <code>open-type</code> 属性和 <code>delta</code> 属性，说明如下。</p>
+<h4 id="后退导航"><a href="#后退导航" class="headerlink" title="后退导航"></a>后退导航</h4><p>如果要后退到上一页面或多级页面，则需要指定 open-type 属性和 delta 属性，说明如下。</p>
 <ul>
-<li><p>  <code>open-type</code> 的值必须是 <code>navigateBack</code>，表示要进行后退导航。</p>
+<li><p>  open-type 的值必须是 navigateBack，表示要进行后退导航。</p>
 </li>
-<li><p>  <code>delta</code> 的值必须是数字，表示要后退的层级。</p>
+<li><p>  delta 的值必须是数字，表示要后退的层级。</p>
 </li>
 </ul>
-<img src="/resource/images/003 - 后退导航.jpg" style="zoom:80%;" />
+<img src="/resource/images/003 - 后退导航.jpg" />
 
 <p>🤔 如果只后退 1 级页面 delta 属性可以省略不写。</p>
-<h3 id="编程式导航-导航到-tabBar-页面"><a href="#编程式导航-导航到-tabBar-页面" class="headerlink" title="编程式导航-导航到 tabBar 页面"></a>编程式导航-导航到 tabBar 页面</h3><p>调用 <code>wx.switchTab(Object)</code> 方法，可以跳转到 <code>tabBar</code> 页面，其中 <code>Object</code> 参数对象的属性列表如下。</p>
+<h3 id="编程式导航"><a href="#编程式导航" class="headerlink" title="编程式导航"></a>编程式导航</h3><h4 id="导航到-TabBar-页面-1"><a href="#导航到-TabBar-页面-1" class="headerlink" title="导航到 TabBar 页面"></a>导航到 TabBar 页面</h4><p>调用 <code>wx.switchTab(Object)</code> 方法，可以跳转到 tabBar 页面，其中 Object 参数对象的属性列表如下。</p>
 <table>
 <thead>
 <tr>
@@ -324,9 +327,9 @@
 <td align="center">接口调用结束的回调函数（调用成功、失败都会执行）</td>
 </tr>
 </tbody></table>
-<img src="/resource/images/004 - 导航到 tabBar 页面.jpg" style="zoom:80%;" />
+<img src="/resource/images/004 - 导航到 tabBar 页面.jpg" />
 
-<h3 id="编程式导航-导航到非-tabBar-页面"><a href="#编程式导航-导航到非-tabBar-页面" class="headerlink" title="编程式导航-导航到非 tabBar 页面"></a>编程式导航-导航到非 tabBar 页面</h3><p>调用 <code>wx.navigateTo(Object)</code> 方法，可以跳转到非 <code>tabBar</code> 的页面，其中 <code>Object</code> 参数对象的属性列表如下。</p>
+<h4 id="导航到非-TabBar-页面-1"><a href="#导航到非-TabBar-页面-1" class="headerlink" title="导航到非 TabBar 页面"></a>导航到非 TabBar 页面</h4><p>调用 <code>wx.navigateTo(Object)</code> 方法，可以跳转到非 tabBar 的页面，其中 Object 参数对象的属性列表如下。</p>
 <table>
 <thead>
 <tr>
@@ -361,9 +364,9 @@
 <td align="center">接口调用结束的回调函数（调用成功、失败都会执行）</td>
 </tr>
 </tbody></table>
-<img src="/resource/images/005 - 导航到非 tabBar 页面.jpg" style="zoom:80%;" />
+<img src="/resource/images/005 - 导航到非 tabBar 页面.jpg" />
 
-<h3 id="编程式导航-后退导航"><a href="#编程式导航-后退导航" class="headerlink" title="编程式导航-后退导航"></a>编程式导航-后退导航</h3><p>调用 <code>wx.navigateBack(Object)</code> 方法，可以返回上一页面或多级页面，其中 <code>Object</code> 参数对象可选的属性列表如下。</p>
+<h4 id="后退导航-1"><a href="#后退导航-1" class="headerlink" title="后退导航"></a>后退导航</h4><p>调用 <code>wx.navigateBack(Object)</code> 方法，可以返回上一页面或多级页面，其中 Object 参数对象可选的属性列表如下。</p>
 <table>
 <thead>
 <tr>
@@ -403,117 +406,110 @@
 <td align="left">接口调用结束的回调函数（调用成功、失败都会执行）</td>
 </tr>
 </tbody></table>
-<img src="/resource/images/006 - 后退导航.jpg" style="zoom:80%;" />
+<img src="/resource/images/006 - 后退导航.jpg" />
 
 <h3 id="声明式导航传参"><a href="#声明式导航传参" class="headerlink" title="声明式导航传参"></a>声明式导航传参</h3><ol>
-<li><code>navigator</code> 组件的 <code>url</code> 属性用来指定将要跳转到的页面的路径，<code>路径的后面还可以携带参数</code>。</li>
-</ol>
+<li><p>navigator 组件的 url 属性用来指定将要跳转到的页面的路径，路径的后面还可以携带参数。</p>
 <ul>
-<li><p>  <code>参数</code> 与 <code>路径</code> 之间使用 <code>?</code> 分隔，<code>参数键</code> 与 <code>参数值</code> 用 <code>=</code> 相连，<code>不同参数</code> 用 <code>&amp;</code> 分隔。</p>
+<li><p>参数与路径之间使用 ? 分隔，参数键与参数值用 = 相连，多个参数用 &amp; 分隔。</p>
 </li>
-<li><p>  不能够往 tabBar 页面传递参数。</p>
+<li><p>不能够往 tabBar 页面传递参数。</p>
 </li>
 </ul>
-<ol start="2">
-<li>代码示例如下。</li>
+</li>
+<li><p>代码示例如下。</p>
+</li>
 </ol>
 <img src="/resource/images/007 - 声明式导航传参.jpg" />
 
 <h3 id="编程式导航传参"><a href="#编程式导航传参" class="headerlink" title="编程式导航传参"></a>编程式导航传参</h3><ol>
-<li>调用 <code>wx.navigateTo(Object object)</code> 方法跳转页面时，也可以携带参数</li>
+<li>调用 <code>wx.navigateTo(Object object)</code> 方法跳转页面时，也可以携带参数。</li>
 </ol>
-<img src="/resource/images/008 - 编程式导航传参.jpg" style="zoom:80%;" />
+<img src="/resource/images/008 - 编程式导航传参.jpg" />
 
 <ol start="2">
 <li>不能够往 tabBar 页面传递参数。</li>
 </ol>
-<h3 id="在-onLoad-中接收导航参数"><a href="#在-onLoad-中接收导航参数" class="headerlink" title="在 onLoad 中接收导航参数"></a>在 onLoad 中接收导航参数</h3><ol>
-<li><p>通过 <code>声明式导航传参</code> 或 <code>编程式导航传参</code> 所写携带的参数，可以直接在页面的 <code>onLoad</code> 生命周期函数中直接获取到。</p>
+<h3 id="接收到导航参数"><a href="#接收到导航参数" class="headerlink" title="接收到导航参数"></a>接收到导航参数</h3><ol>
+<li><p>通过声明式导航传参或编程式导航传参所写携带的参数，可以直接在页面的 onLoad 生命周期函数中直接获取到。</p>
 </li>
 <li><p>示例代码。</p>
 </li>
 </ol>
-<img src="/resource/images/009 - 在 onLoad 中接收导航参数.jpg" style="zoom:80%;" />
+<img src="/resource/images/009 - 在 onLoad 中接收导航参数.jpg" />
 
-<h2 id="页面事件"><a href="#页面事件" class="headerlink" title="页面事件"></a>页面事件</h2><h3 id="了解什么是下拉刷新"><a href="#了解什么是下拉刷新" class="headerlink" title="了解什么是下拉刷新"></a>了解什么是下拉刷新</h3><p><code>下拉刷新</code> 是移动端的专有名词，指的是通过手指在屏幕上的下拉滑动操作，从而 <code>重新加载页面数据</code> 的行为。</p>
-<h3 id="启动下拉刷新"><a href="#启动下拉刷新" class="headerlink" title="启动下拉刷新"></a>启动下拉刷新</h3><ol>
+<h2 id="页面事件"><a href="#页面事件" class="headerlink" title="页面事件"></a>页面事件</h2><h3 id="启动下拉刷新"><a href="#启动下拉刷新" class="headerlink" title="启动下拉刷新"></a>启动下拉刷新</h3><ol>
+<li><p>下拉刷新是移动端的专有名词，指的是用户通过手指在屏幕上的下拉滑动操作，从而重新加载页面数据的行为。</p>
+</li>
 <li><p>启动下拉刷新的三种方式。</p>
 <ul>
-<li><p>全局开启下拉刷新：在 <code>app.json</code> 的 <code>window</code> 节点中，将 <code>enablePullDownRefresh</code> 设置为 <code>true</code>。</p>
+<li><p>全局开启下拉刷新：在 <code>app.json</code> 的 window 节点中，将 enablePullDownRefresh 设置为 true。</p>
 </li>
-<li><p>局部开启下拉刷新：在页面的 <code>.json</code> 配置文件中，将 <code>enablePullDownRefresh</code> 设置为 <code>true</code>。</p>
+<li><p>局部开启下拉刷新：在页面的 <code>.json</code> 配置文件中，将 enablePullDownRefresh 设置为 true。</p>
 </li>
 <li><p>使用小程序提供的 API 实现下拉刷新：<code>wx.startPullDownRefresh()</code>。</p>
 </li>
 </ul>
 </li>
-<li><p>在实际开发中，推荐使用第 2 种方式，<code>为需要的页面单独开启下拉刷新的效果 </code>。</p>
+<li><p>在实际开发中，推荐使用第 2 种方式，为需要的页面单独开启下拉刷新的效果。</p>
 </li>
-<li><p>在开启下拉刷新以后，如果不手动停止下拉，下拉动作会一直存在，不会弹回去，在模拟器中会弹回去，在真机上不会弹回去。</p>
+<li><p>在开启下拉刷新以后，如果不手动停止下拉，在真机上则不会弹回去。</p>
 </li>
 </ol>
-<h3 id="配置下拉刷新窗口的样式"><a href="#配置下拉刷新窗口的样式" class="headerlink" title="配置下拉刷新窗口的样式"></a>配置下拉刷新窗口的样式</h3><p>在全局或页面的 <code>.json</code> 配置文件中，通过 <code>backgroundColor</code> 和 <code>backgroundTextStyle</code> 来配置下拉刷新窗口的样式，其中。</p>
+<h3 id="配置下拉刷新窗口的样式"><a href="#配置下拉刷新窗口的样式" class="headerlink" title="配置下拉刷新窗口的样式"></a>配置下拉刷新窗口的样式</h3><p>在全局或页面的 <code>.json</code> 配置文件中，通过 backgroundColor 和 backgroundTextStyle 来配置下拉刷新窗口的样式。</p>
 <ul>
-<li><p>  <code>backgroundColor</code> 用来配置下拉刷新 <code>窗口的背景颜色</code>，仅支持 16 进制的颜色值。</p>
+<li><p>  backgroundColor 用来配置下拉刷新窗口的背景颜色，仅支持 16 进制的颜色值。</p>
 </li>
-<li><p>  <code>backgroundTextStyle</code> 用来配置下拉刷新 <code>loading</code> 的样式，仅支持 <code>dark</code> 和 <code>light</code>。</p>
+<li><p>  backgroundTextStyle 用来配置下拉刷新 loading 的样式，仅支持 dark 和 light。</p>
 </li>
 </ul>
 <h3 id="监听页面的下拉刷新事件"><a href="#监听页面的下拉刷新事件" class="headerlink" title="监听页面的下拉刷新事件"></a>监听页面的下拉刷新事件</h3><ol>
 <li><p>在页面的 <code>.js</code> 文件中，通过 <code>onPullDownRefresh()</code> 函数即可监听当前页面的下拉刷新事件。</p>
 </li>
-<li><p>案例 1：在页面的 <code>wxml</code> 中有如下的 <code>UI</code> 结构，点击按钮可以让 <code>count</code> 值自增 <code>+1</code>。</p>
+<li><p>案例 1：在页面的 wxml 中有如下的 UI 结构，点击按钮可以让 count 值自增 +1。</p>
 </li>
 </ol>
-<img src="/resource/images/010 - 监听页面的下拉刷新事件.jpg" style="zoom:80%;" />
+<img src="/resource/images/010 - 监听页面的下拉刷新事件.jpg" />
 
 <ol start="3">
-<li>案例 2：在触发页面的下拉刷新事件的时候，如果要把 <code>count</code> 的值重置为 0，示例代码如下.</li>
+<li>案例 2：在触发页面的下拉刷新事件的时候，如果要把 count 的值重置为 0，示例代码如下.</li>
 </ol>
-<img src="/resource/images/011 - 监听页面的下拉刷新事件.jpg.jpg" style="zoom:80%;" />
+<img src="/resource/images/011 - 监听页面的下拉刷新事件.jpg.jpg" />
 
-<h3 id="停止下拉刷新的效果"><a href="#停止下拉刷新的效果" class="headerlink" title="停止下拉刷新的效果"></a>停止下拉刷新的效果</h3><ol>
-<li><p>当处理完下拉刷新后，下拉刷新的 <code>loading</code> 效果会一直显示，<code>不会主动消失</code>， 所以需要手动隐藏 <code>loading</code> 效果，此时，调用 <code>wx.stopPullDownRefresh()</code> 可以停止当前页面的下拉刷新.</p>
+<h3 id="如何停止下拉刷新的效果"><a href="#如何停止下拉刷新的效果" class="headerlink" title="如何停止下拉刷新的效果"></a>如何停止下拉刷新的效果</h3><ol>
+<li><p>当处理完下拉刷新后，下拉刷新的 loading 效果会一直显示，所以需要手动隐藏 loading 效果，此时，调用 <code>wx.stopPullDownRefresh()</code> 可以停止当前页面的下拉刷新.</p>
 </li>
 <li><p>示例代码如下。</p>
 </li>
 </ol>
-<img src="/resource/images/012 - 停止下拉刷新的效果.jpg" style="zoom:80%;" />
+<img src="/resource/images/012 - 停止下拉刷新的效果.jpg" />
 
-<h3 id="了解什么是上拉触底"><a href="#了解什么是上拉触底" class="headerlink" title="了解什么是上拉触底"></a>了解什么是上拉触底</h3><p>上拉触底是移动端的专有名词，通过手指在屏幕上的上拉滑动操作，从而加载更多数据的行为。</p>
+<h3 id="了解什么是上拉触底行为"><a href="#了解什么是上拉触底行为" class="headerlink" title="了解什么是上拉触底行为"></a>了解什么是上拉触底行为</h3><p>上拉触底是移动端的专有名词，通过手指在屏幕上的上拉滑动操作，从而加载更多数据的行为。</p>
 <h3 id="监听页面的上拉触底事件"><a href="#监听页面的上拉触底事件" class="headerlink" title="监听页面的上拉触底事件"></a>监听页面的上拉触底事件</h3><ol>
-<li><p>在页面的 <code>.js</code> 文件中，通过 <code>onReachBottom</code> 函数即可监听当前页面上的上拉触底事件。</p>
+<li><p>在页面的 <code>.js</code> 文件中，通过 onReachBottom 函数即可监听当前页面上的上拉触底事件。</p>
 </li>
 <li><p>示例代码如下。</p>
 </li>
 </ol>
-<img src="/resource/images/013 - 监听页面上的上拉触底事件.jpg" style="zoom:80%;" />
+<img src="/resource/images/013 - 监听页面上的上拉触底事件.jpg" />
 
-<h3 id="配置上拉触底距离"><a href="#配置上拉触底距离" class="headerlink" title="配置上拉触底距离"></a>配置上拉触底距离</h3><ol>
-<li><p>上拉触底距离指的是 <code>触发上拉触底事件时，滚动条距离页面底部的距离</code>。</p>
+<h3 id="如何配置上拉触底的距离"><a href="#如何配置上拉触底的距离" class="headerlink" title="如何配置上拉触底的距离"></a>如何配置上拉触底的距离</h3><ol>
+<li><p>上拉触底距离指的是触发上拉触底事件时，滚动条距离页面底部的距离。</p>
 </li>
-<li><p>可以在全局或页面的 <code>.json</code> 配置文件中，通过 <code>onReachBottomDistance</code> 属性来配置上拉触底的距离。</p>
+<li><p>可以在全局或页面的 <code>.json</code> 配置文件中，通过 onReachBottomDistance 属性来配置上拉触底的距离。</p>
 </li>
-<li><p>小程序默认的触底距离是 <code>50px</code>，在实际开发中，可以根据自己的需求修改这个默认值。</p>
+<li><p>小程序默认的触底距离是 50px，在实际开发中，可以根据自己的需求修改这个默认值。</p>
 </li>
 <li><p>tabBar 组件页面的上拉触底函数触发距离是滚动条到 tabBar 上面的距离。</p>
 </li>
 </ol>
 <h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><h3 id="什么是生命周期"><a href="#什么是生命周期" class="headerlink" title="什么是生命周期"></a>什么是生命周期</h3><ol>
-<li><p>生命周期 <code>(Life Cycle)</code> 是指一个对象从 创建 -&gt; 运行 -&gt; 销毁 的整个阶段，强调的是一个时间段。</p>
+<li><p>生命周期是指一个对象从创建 -&gt; 运行 -&gt; 销毁 的整个阶段，强调的是一个时间段。</p>
 </li>
-<li><p>小程序的生命周期。</p>
-<ul>
-<li><p>小程序的 <code>启动</code>，表示 <code>生命周期的开始</code>。</p>
-</li>
-<li><p>小程序的 <code>关闭</code>，表示 <code>生命周期的结束</code>。</p>
-</li>
-<li><p>中间小程序运行的过程，就是小程序的生命周期。</p>
-</li>
-</ul>
+<li><p>小程序的生命周期：小程序的启动表示生命周期的开始，小程序的关闭，表示生命周期的结束，中间小程序运行的过程，就是小程序的生命周期。</p>
 </li>
 </ol>
-<h3 id="小程序生命周期的两个分类"><a href="#小程序生命周期的两个分类" class="headerlink" title="小程序生命周期的两个分类"></a>小程序生命周期的两个分类</h3><ol>
+<h3 id="生命周期的分类"><a href="#生命周期的分类" class="headerlink" title="生命周期的分类"></a>生命周期的分类</h3><ol>
 <li><p>应用生命周期：特指小程序从启动 –&gt; 运行 –&gt; 销毁的过程。</p>
 </li>
 <li><p>页面生命周期：特指小程序中，每个页面的加载 –&gt; 渲染 –&gt; 销毁的过程。</p>
@@ -521,7 +517,7 @@
 <li><p>注意：页面的生命周期范围较小，应用程序的生命周期范围较大。</p>
 </li>
 </ol>
-<img src="/resource/images/014 - 2LifeCycle.png" style="zoom:80%;" />
+<img src="/resource/images/014 - 2LifeCycle.png" />
 
 <h3 id="什么是生命周期函数"><a href="#什么是生命周期函数" class="headerlink" title="什么是生命周期函数"></a>什么是生命周期函数</h3><ol>
 <li><p>小程序框架提供的内置函数，会伴随着生命周期，自动按次序执行。</p>
@@ -530,75 +526,59 @@
 <ul>
 <li><p>允许程序员在特定的生命周期时间点上，执行某些特定的操作。</p>
 </li>
-<li><p>例如，页面刚加载( onLoad(options) )的时候，在生命周期函数中自动发起数据请求，获取当前页面的数据。</p>
+<li><p>例如，页面刚加载（onLoad）的时候，在生命周期函数中自动发起数据请求，获取当前页面的数据。</p>
 </li>
 </ul>
 </li>
 <li><p>注意：生命周期强调的是时间段，生命周期函数强调的是时间点。</p>
 </li>
 </ol>
-<h3 id="小程序中生命周期函数的两个分类"><a href="#小程序中生命周期函数的两个分类" class="headerlink" title="小程序中生命周期函数的两个分类"></a>小程序中生命周期函数的两个分类</h3><p>小程序中的生命周期函数分为两类，分别是：</p>
+<h3 id="生命周期函数的分类"><a href="#生命周期函数的分类" class="headerlink" title="生命周期函数的分类"></a>生命周期函数的分类</h3><p>小程序中的生命周期函数分为两类，分别如下。</p>
 <ol>
 <li><p>应用生命周期函数：特指小程序从启动 –&gt; 运行 –&gt; 销毁期间依次调用的那些函数。</p>
 </li>
 <li><p>页面生命周期函数：特指小程序中，每个页面从 加载 –&gt; 渲染 –&gt; 销毁期间依次调用的那些函数。</p>
 </li>
 </ol>
-<h3 id="应用的生命周期"><a href="#应用的生命周期" class="headerlink" title="应用的生命周期"></a>应用的生命周期</h3><ol>
+<h3 id="应用级别的生命周期"><a href="#应用级别的生命周期" class="headerlink" title="应用级别的生命周期"></a>应用级别的生命周期</h3><ol>
 <li><p><code>app.js</code> 是小程序执行的入口文件，在 <code>app.js</code> 中必须调用 <code>App()</code> 函数，且只能调用一次。其中，<code>App()</code> 函数是用来注册并执行小程序的</p>
 </li>
-<li><p><code>App(Object)</code> 函数接收一个 <code>Object</code> 参数，可以通过这个 <code>Object</code> 参数，指定小程序的应用生命周期函数</p>
+<li><p><code>App(Object)</code> 函数接收一个 Object 参数，可以通过这个 Object 参数，指定小程序的应用生命周期函数</p>
 </li>
-<li><p><code>app.js</code> 中的代码</p>
+<li><p><code>app.js</code> 中的代码如下。</p>
 </li>
 </ol>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">App(&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">onLaunch</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 当小程序启动，或从后台进入前台显示，会触发 onShow</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">onShow</span>: <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;&#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 当小程序从前台进入后台，会触发 onHide</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">onHide</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 当小程序发生脚本错误，或者 api 调用失败时，会触发 onError 并带上错误信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">onError</span>: <span class="function"><span class="keyword">function</span> (<span class="params">msg</span>) </span>&#123;&#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<h3 id="页面的生命周期"><a href="#页面的生命周期" class="headerlink" title="页面的生命周期"></a>页面的生命周期</h3><ol>
-<li><p>每个小程序页面，拥有自己的 <code>.js</code> 文件，且必须调用 <code>Page()</code> 函数。其中 <code>Page()</code> 函数用来注册小程序页面</p>
+<h3 id="页面级别的生命周期"><a href="#页面级别的生命周期" class="headerlink" title="页面级别的生命周期"></a>页面级别的生命周期</h3><ol>
+<li><p>每个小程序页面，拥有自己的 <code>.js</code> 文件，且必须调用 <code>Page()</code> 函数。其中 <code>Page()</code> 函数用来注册小程序页面。</p>
 </li>
-<li><p><code>Page(Object)</code> 函数接收一个 <code>Object</code> 参数，可以通过这个 <code>Object</code> 参数，指定页面的生命周期函数</p>
-</li>
-<li><p><code>page.js</code></p>
+<li><p><code>Page(Object)</code> 函数接收一个 Object 参数，可以通过这个 Object 参数，指定页面的生命周期函数。</p>
 </li>
 </ol>
+<p><code>page.js</code></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Page(&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 页面的初始数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">data</span>: &#123;&#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生命周期函数--监听页面加载</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">onLoad</span>: <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;&#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生命周期函数--监听页面初次渲染完成</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">onReady</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生命周期函数--监听页面显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">onShow</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生命周期函数--监听页面隐藏</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">onHide</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生命周期函数--监听页面卸载</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">onUnload</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<h2 id="wxs"><a href="#wxs" class="headerlink" title="wxs"></a>wxs</h2><h3 id="什么是-wxs"><a href="#什么是-wxs" class="headerlink" title="什么是 wxs"></a>什么是 <code>wxs</code></h3><ol>
-<li><p>什么是 <code>wxs</code>：<code>WXS (WeiXin Script)</code> 是小程序的一套脚本语言，结合 <code>WXML</code>，可以构建出页面的结构。</p>
+<h2 id="关于-WXS"><a href="#关于-WXS" class="headerlink" title="关于 WXS"></a>关于 WXS</h2><h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><ol>
+<li><p>WXS（WeiXin Script）是小程序的一套脚本语言，结合 WXML，可以构建出页面的结构。</p>
 </li>
-<li><p><code>wxs</code> 的应用场景。</p>
+<li><p>WXS 的应用场景。</p>
 <ul>
-<li><p>小程序中 <code>wxs</code> 的 <code>典型应用场景</code> 就是 <code>过滤器</code>，在渲染之前对 data 中的数据做一层包装处理，处理的结果最终会渲染到页面上。</p>
+<li><p>小程序中 WXS 的典型应用场景就是过滤器，在渲染之前对 data 中的数据做一层包装处理，处理的结果最终会渲染到页面上。</p>
 </li>
 <li><p>data 中的数据不发生变化。</p>
 </li>
 </ul>
 </li>
 </ol>
-<h3 id="wxs-和-JavaScript-的关系"><a href="#wxs-和-JavaScript-的关系" class="headerlink" title="wxs 和 JavaScript 的关系"></a>wxs 和 JavaScript 的关系</h3><ol>
-<li><p>虽然 <code>wxs</code> 的语法类似于 <code>JavaScript</code>，但是 <code>wxs</code> 和 <code>JavaScript</code> 是完全不同的两种语言。</p>
+<h3 id="WXS-和-JavaScript-的关系"><a href="#WXS-和-JavaScript-的关系" class="headerlink" title="WXS 和 JavaScript 的关系"></a>WXS 和 JavaScript 的关系</h3><p>虽然 WXS 的语法类似于 JavaScript，但是 WXS 和 JavaScript 是完全不同的两种语言。</p>
 <ul>
-<li><p><code>wxs</code> 有自己的数据类型</p>
-<ul>
-<li><code>number</code> 数值类型</li>
-<li><code>string</code> 字符串类型</li>
-<li><code>boolean</code> 布尔类型</li>
-<li><code>object</code> 对象类型</li>
-<li><code>function</code> 函数类型</li>
-<li><code>array</code> 数组类型</li>
-<li><code>date</code> 日期类型</li>
-<li><code>regexp</code> 正则</li>
-</ul>
+<li><p>  WXS 有自己的数据类型、<code>number</code>、<code>string</code>、<code>boolean</code>、<code>object</code>、<code>function</code>、<code>array</code>、<code>date</code>、<code>regexp</code>。</p>
 </li>
-<li><p><code>wxs</code> 不支持类似于 <code>ES6</code> 及以上的语法形式</p>
+<li><p>  WXS 不支持类似于 ES6 及以上的语法形式。</p>
 </li>
 </ul>
-</li>
-</ol>
-<h3 id="wxs-遵循-CommonJS-模块化规范"><a href="#wxs-遵循-CommonJS-模块化规范" class="headerlink" title="wxs 遵循 CommonJS 模块化规范"></a><code>wxs</code> 遵循 <code>CommonJS</code> 模块化规范</h3><blockquote>
-<p><code>CommonJS</code> 是 <code>javascript</code> 的模块化规范之一，小程序的脚本语言 <code>wxs</code> 遵循了 <code>CommonJS</code> 规范，因此，使用 <code>wxs</code> 时的体验和使用 <code>node.js</code> 的体验比较相似。</p>
-</blockquote>
+<h3 id="WXS-遵循-CommonJS-模块化规范"><a href="#WXS-遵循-CommonJS-模块化规范" class="headerlink" title="WXS 遵循 CommonJS 模块化规范"></a>WXS 遵循 CommonJS 模块化规范</h3><p><code>CommonJS</code> 是 <code>javascript</code> 的模块化规范之一，小程序的脚本语言 <code>wxs</code> 遵循了 <code>CommonJS</code> 规范，因此，使用 <code>wxs</code> 时的体验和使用 <code>node.js</code> 的体验比较相似。</p>
 <ul>
 <li><p><code>module</code> 对象</p>
 <ul>
@@ -607,8 +587,10 @@
 </li>
 <li><p><code>module.exports</code></p>
 <ul>
-<li>  由于 <code>wxs</code> 拥有独立作用域，所以在一个模块里面定义的变量与函数，默认为私有的，对其他模块不可见，</li>
-<li>  通过 <code>module.exports</code> 属性，可以对外共享本模块的私有变量与函数。</li>
+<li><p>  由于 <code>wxs</code> 拥有独立作用域，所以在一个模块里面定义的变量与函数，默认为私有的，对其他模块不可见。</p>
+</li>
+<li><p>  通过 <code>module.exports</code> 属性，可以对外共享本模块的私有变量与函数。</p>
+</li>
 </ul>
 </li>
 <li><p>require 函数</p>
@@ -620,11 +602,16 @@
 <h3 id="内嵌-wxs-脚本"><a href="#内嵌-wxs-脚本" class="headerlink" title="内嵌 wxs 脚本"></a>内嵌 wxs 脚本</h3><ol>
 <li><p>使用的规则</p>
 <ul>
-<li><code>wxs</code> 代码可以编写在 <code>wxml</code> 文件中的 <code>&lt;wxs&gt;&lt;/wxs&gt;</code> 标签内，就像 <code>javascript</code> 代码可以编写在 <code>html</code> 文件中的 <code>&lt;script&gt;&lt;/script&gt;</code> 标签内一样。</li>
-<li><code>wxml</code> 文件中的每个 <code>&lt;wxs&gt;&lt;/wxs&gt;</code> 标签，<strong>必须提供一个 <code>module</code> 属性</strong>，用来指定当前 <code>&lt;wxs&gt;&lt;/wxs&gt;</code> 标签的模块名。在单个 <code>wxml</code> 文件内，建议其值唯一。</li>
-<li>module 属性值的命名必须符合下面两个规则：<ul>
-<li>首字符必须是：字母（a-z A-Z），下划线（_）</li>
-<li>剩余字符可以是：字母（a-z A-Z），下划线（_）， 数字（0-9）</li>
+<li><p><code>wxs</code> 代码可以编写在 <code>wxml</code> 文件中的 <code>&lt;wxs&gt;&lt;/wxs&gt;</code> 标签内，就像 <code>javascript</code> 代码可以编写在 <code>html</code> 文件中的 <code>&lt;script&gt;&lt;/script&gt;</code> 标签内一样。</p>
+</li>
+<li><p><code>wxml</code> 文件中的每个 <code>&lt;wxs&gt;&lt;/wxs&gt;</code> 标签，<strong>必须提供一个 <code>module</code> 属性</strong>，用来指定当前 <code>&lt;wxs&gt;&lt;/wxs&gt;</code> 标签的模块名。在单个 <code>wxml</code> 文件内，建议其值唯一。</p>
+</li>
+<li><p>module 属性值的命名必须符合下面两个规则：</p>
+<ul>
+<li><p>首字符必须是：字母（a-z A-Z），下划线（_）</p>
+</li>
+<li><p>剩余字符可以是：字母（a-z A-Z），下划线（_）， 数字（0-9）</p>
+</li>
 </ul>
 </li>
 </ul>
@@ -632,290 +619,235 @@
 <li><p>案例代码</p>
 </li>
 </ol>
- <img src="/resource/images/014 - 内嵌  wxs 脚本.jpg"  />
+<img src="/resource/images/014 - 内嵌  wxs 脚本.jpg"  />
 
 <h3 id="定义外联的-wxs-脚本"><a href="#定义外联的-wxs-脚本" class="headerlink" title="定义外联的 wxs 脚本"></a>定义外联的 wxs 脚本</h3><ol>
-<li><p>使用的规则</p>
-<ul>
-<li><code>wxs</code> 代码可以编写在以 <code>.wxs</code> 为后缀名的文件内，就像 <code>javascript</code> 代码可以编写在以 <code>.js</code> 为后缀名文件中一样。</li>
-</ul>
+<li><p>使用的规则：wxs 代码可以编写在以 <code>.wxs</code> 为后缀名的文件内，就像 JavaScript 代码可以编写在以 <code>.js</code> 为后缀名文件中一样。</p>
 </li>
-<li><p>实例代码</p>
+<li><p>实例代码。</p>
 </li>
 </ol>
- <img src="/resource/images/015 - 定义外联的 wxs 脚本.jpg" />
+<img src="/resource/images/015 - 定义外联的 wxs 脚本.jpg" />
 
 <h3 id="使用外联的-wxs-脚本"><a href="#使用外联的-wxs-脚本" class="headerlink" title="使用外联的 wxs 脚本"></a>使用外联的 wxs 脚本</h3><ol>
-<li><p>在 <code>wxml</code> 中如果要引入外联的 <code>wxs</code> 脚本，必须为 <code>&lt;wxs&gt;&lt;/wxs&gt;</code> 标签添加 <code>module</code> 和 <code>src</code> 属性</p>
+<li><p>在 <code>wxml</code> 中如果要引入外联的 <code>wxs</code> 脚本，必须为 <code>&lt;wxs&gt;&lt;/wxs&gt;</code> 标签添加 <code>module</code> 和 <code>src</code> 属性。</p>
 <ul>
-<li><code>module</code> 用来为 <code>&lt;wxs&gt;&lt;/wxs&gt;</code> 标签指定模块名，作为当前页面访问这个模块的标识名称</li>
-<li><code>src</code> 用来指定当前 <code>&lt;wxs&gt;&lt;/wxs&gt;</code> 标签要引入的脚本路径</li>
+<li><p><code>module</code> 用来为 <code>&lt;wxs&gt;&lt;/wxs&gt;</code> 标签指定模块名，作为当前页面访问这个模块的标识名称。</p>
+</li>
+<li><p><code>src</code> 用来指定当前 <code>&lt;wxs&gt;&lt;/wxs&gt;</code> 标签要引入的脚本路径。</p>
+</li>
 </ul>
 </li>
-<li><p>示例代码</p>
+<li><p>示例代码。</p>
 </li>
 </ol>
  <img src="/resource/images/016 - 使用外联的 wxs 脚本.jpg" />
 
 <h3 id="了解-wxs-的-4-个特点"><a href="#了解-wxs-的-4-个特点" class="headerlink" title="了解 wxs 的 4 个特点"></a>了解 wxs 的 4 个特点</h3><ol>
-<li><p>没有兼容性</p>
+<li><p>没有兼容性。</p>
 <p> <code>wxs</code> 不依赖于运行时的基础库版本，可以在所有版本的小程序中运行</p>
 </li>
-<li><p>与 <code>javascript</code> 不同</p>
+<li><p>与 JavaScript 不同。</p>
 <ul>
-<li><p>  为了降低 <code>wxs</code> 的学习成本， <code>wxs</code> 语言在设计时大量借鉴了 <code>JavaScript</code> 语法</p>
+<li><p>  为了降低 wxs 的学习成本，wxs 语言在设计时大量借鉴了 JavaScript 语法。</p>
 </li>
-<li><p>  但本质上，<code>wxs</code> 与 <code>javascript</code> 是不同的语言，有自己的语法，并不和 <code>javascript</code> 一致</p>
+<li><p>  但本质上，wxs 与 JavaScript 是不同的语言，有自己的语法，并不和 JavaScript 一致。</p>
 </li>
 </ul>
 </li>
 <li><p>隔离性</p>
 <ul>
-<li><code>wxs</code> 的运行环境和其他 <code>javascript</code> 代码是隔离的<ul>
-<li>  <code>wxs</code> 中不能调用其他 <code>javascript</code> 文件中定义的函数</li>
-<li>  也不能调用小程序提供的<code>API</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>不能作为事件回调</p>
+<li><p>wxs 的运行环境和其他 JavaScript 代码是隔离的。</p>
 <ul>
-<li><p><code>wxs</code> 典型的应用场景就是 <code>过滤器</code>，经常配置 <code>Mustache</code> 语法进行使用</p>
-<pre><code>  &lt;img src=&quot;/resource/images/017 - 不能作为事件回调.jpg&quot; /&gt;
-</code></pre>
+<li><p>  wxs 中不能调用其他 JavaScript 文件中定义的函数。</p>
 </li>
-<li><p><code>wxs</code> 函数不能作为组件的事件回调</p>
-<pre><code>  &lt;img src=&quot;/resource/images/018 - 不能作为事件回调.jpg&quot; /&gt;
-</code></pre>
+<li><p>  也不能调用小程序提供的 API。</p>
 </li>
 </ul>
 </li>
-<li><p>性能好</p>
-<p> <code>iOS</code>设备上比 <code>javascript</code> 运行快</p>
-<p> 由于运行环境的差异，在 <code>iOS</code> 设备上小程序内的 <code>wxs</code> 会比 <code>javascript</code> 代码快 2 ~ 20 倍。</p>
-<p> 在 <code>android</code> 设备上二者运行效率无差异</p>
+</ul>
+</li>
+<li><p>不能作为事件回调。</p>
+<ul>
+<li><p>wxs 典型的应用场景就是过滤器，经常配置 Mustache 语法进行使用</p>
+  <img src="/resource/images/017 - 不能作为事件回调.jpg" /></li>
+<li><p>wxs 函数不能作为组件的事件回调。</p>
+  <img src="/resource/images/018 - 不能作为事件回调.jpg" /></li>
+</ul>
+</li>
+<li><p>性能好。</p>
+<ul>
+<li><p>  IOS 设备上比 JavaScript 运行快。</p>
+</li>
+<li><p>  由于运行环境的差异，在 IOS 设备上小程序内的 wxs 会比 JavaScript 代码快 2 ~ 20 倍。</p>
+</li>
+<li><p>  在 Android 设备上二者运行效率无差异。</p>
+</li>
+</ul>
 </li>
 </ol>
-<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><h3 id="商品列表页面的效果显示"><a href="#商品列表页面的效果显示" class="headerlink" title="商品列表页面的效果显示"></a>商品列表页面的效果显示</h3><p>![](/resource/images/019 - 页面效果.jpg)</p>
-<ol>
-<li><p>页面导航并传参。</p>
+<h2 id="综合案例"><a href="#综合案例" class="headerlink" title="综合案例"></a>综合案例</h2><h3 id="案例目标效果"><a href="#案例目标效果" class="headerlink" title="案例目标效果"></a>案例目标效果</h3><img src="/resource/images/019 - 页面效果.jpg"/>
+
+<p>🤔 页面跳转并传参；上拉触底时加载下一页数据；下拉刷新列表数据。</p>
+<h3 id="加载已有代码"><a href="#加载已有代码" class="headerlink" title="加载已有代码"></a>加载已有代码</h3><p>打开微信开发者工具 –&gt; 点击项目 –&gt; 导入项目 –&gt; 选择项目目录 –&gt; 如有必要，需要替换 AppID。</p>
+<h3 id="导航跳转传参"><a href="#导航跳转传参" class="headerlink" title="导航跳转传参"></a>导航跳转传参</h3><ol>
+<li><p>创建页面路径，<code>pages/shoplist/shoplist</code>。</p>
 </li>
-<li><p>上拉触底时加载下一页数据。</p>
-</li>
-<li><p>下拉刷新列表数据。</p>
+<li><p>将九宫格的容器组件 view 改成导航组件 navigator，绑定跳转地址并传参。</p>
 </li>
 </ol>
-<h3 id="把项目代码加载到微信开发者工具中"><a href="#把项目代码加载到微信开发者工具中" class="headerlink" title="把项目代码加载到微信开发者工具中"></a>把项目代码加载到微信开发者工具中</h3><p>打开微信开发者工具 –&gt; 点击 <code>项目</code> –&gt; <code>导入项目</code> –&gt; <code>选择项目目录</code> –&gt; 如有必要，需要替换 <code>AppID</code></p>
-<h3 id="实现导航跳转并传参"><a href="#实现导航跳转并传参" class="headerlink" title="实现导航跳转并传参"></a>实现导航跳转并传参</h3><ol>
-<li>创建页面路径</li>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pages/home/home.wxml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;grid-list&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">navigator</span> <span class="attr">url</span>=<span class="string">&quot;/pages/shoplist/shoplist?id=&#123;&#123; item.id &#125;&#125;&amp;title=&#123;&#123; item.name &#125;&#125;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;grid-item&quot;</span> <span class="attr">wx:for</span>=<span class="string">&quot;&#123;&#123; gridList &#125;&#125;&quot;</span> <span class="attr">wx:key</span>=<span class="string">&quot;id&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span>=<span class="string">&quot;&#123;&#123; item.icon &#125;&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span>&gt;</span>&#123;&#123; item.name &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">navigator</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="动态设置标题"><a href="#动态设置标题" class="headerlink" title="动态设置标题"></a>动态设置标题</h3><ol>
+<li>在 <code>onReady()</code> 生命周期函数中对标题栏进行赋值，<code>pages/shoplist/shoplist.js</code>。</li>
 </ol>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pages/shoplist/shoplist</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生命周期函数--监听页面初次渲染完成</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="attr">onReady</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    wx.setNavigationBarTitle(&#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&#x27;test&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
-<li>将九宫格的容器组件 <code>view</code> 改成 导航组件 <code>navigator</code> 组件，并绑定跳转的 <code>Id</code></li>
+<li>在 <code>onLoad()</code> 生命周期函数中获取到商品列表传递的参数。</li>
 </ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;grid-list&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">navigator</span> <span class="attr">url</span>=<span class="string">&quot;/pages/shoplist/shoplist?id=&#123;&#123; item.id &#125;&#125;&amp;title=&#123;&#123; item.name &#125;&#125;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;grid-item&quot;</span> <span class="attr">wx:for</span>=<span class="string">&quot;&#123;&#123; gridList &#125;&#125;&quot;</span> <span class="attr">wx:key</span>=<span class="string">&quot;id&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span>=<span class="string">&quot;&#123;&#123; item.icon &#125;&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span>&gt;</span>&#123;&#123; item.name &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">navigator</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="动态设置商品列表页面的标题内容"><a href="#动态设置商品列表页面的标题内容" class="headerlink" title="动态设置商品列表页面的标题内容"></a>动态设置商品列表页面的标题内容</h3><ol>
-<li>在 <code>onReady()</code> 生命周期函数中对标题栏进行赋值</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生命周期函数--监听页面初次渲染完成</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="attr">onReady</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    wx.setNavigationBarTitle(&#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;test&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>在 <code>onLoad()</code> 生命周期函数中获取到商品列表传递的参数</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生命周期函数--监听页面加载</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="attr">onLoad</span>: <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(options)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生命周期函数--监听页面加载</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="attr">onLoad</span>: <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(options)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ol start="3">
-<li>将 <code>options</code> 中的数据赋值给 <code>data</code> 中的数据</li>
+<li>将 options 中的数据赋值给 data 中的数据。</li>
 </ol>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data: &#123;</span><br><span class="line">    <span class="attr">query</span>: &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生命周期函数--监听页面加载</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="attr">onLoad</span>: <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">    <span class="attr">query</span>: options</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生命周期函数--监听页面加载</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="attr">onLoad</span>: <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        <span class="attr">query</span>: options</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ol start="4">
-<li>在 <code>onReady()</code> 生命周期函数中对标题栏进行赋值</li>
+<li>在 <code>onReady()</code> 生命周期函数中对标题栏进行赋值。</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生命周期函数--监听页面初次渲染完成</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="attr">onReady</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    wx.setNavigationBarTitle(&#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="built_in">this</span>.data.query.title</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生命周期函数--监听页面初次渲染完成</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="attr">onReady</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    wx.setNavigationBarTitle(&#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="built_in">this</span>.data.query.title</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="创建商铺列表页面的编译模式"><a href="#创建商铺列表页面的编译模式" class="headerlink" title="创建商铺列表页面的编译模式"></a>创建商铺列表页面的编译模式</h3><img src="/resource/images/020 - 商品列表.jpg" style="zoom:80%;" />
+<h3 id="添加编译模式"><a href="#添加编译模式" class="headerlink" title="添加编译模式"></a>添加编译模式</h3><p>添加商铺列表页面的编译模式。</p>
+<img src="/resource/images/020 - 商品列表.jpg" />
 
-<h3 id="了解-API-接口并定义需要的数据节点"><a href="#了解-API-接口并定义需要的数据节点" class="headerlink" title="了解 API 接口并定义需要的数据节点"></a>了解 API 接口并定义需要的数据节点</h3><p>以分页的形式，加载指定分类下商铺列表的数据：</p>
-<ol>
-<li><p>接口地址</p>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://www.escook.cn/categories/:cate_id/shops%E3%80%82">https://www.escook.cn/categories/:cate_id/shops。</a></p>
-</li>
-<li><p><code>URL</code> 地址中的 <code>:cate_id</code> 是动态参数，表示分类的 <code>Id</code>。</p>
-</li>
-</ul>
-</li>
-<li><p>请求方式：<code>GET</code> 请求。</p>
-</li>
-<li><p>请求参数</p>
-<ul>
-<li><p><code>_page</code> 表示请求第几页的数据。</p>
-</li>
-<li><p><code>_limit</code> 表示每页请求几条数据。</p>
-</li>
-</ul>
-</li>
-<li><p>响应参数</p>
-<ul>
-<li>响应的总条数在 <code>header</code> 字段中</li>
-</ul>
-</li>
-<li><p>案例代码</p>
-</li>
+<h3 id="了解-API-接口"><a href="#了解-API-接口" class="headerlink" title="了解 API 接口"></a>了解 API 接口</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 接口地址，`:cate_id` 是动态参数，表示分类的 Id</span></span><br><span class="line"><span class="comment"># 请求方式，GET</span></span><br><span class="line"><span class="comment"># 请求参数，_page 表示请求第几页的数据；_limit 表示每页请求几条数据</span></span><br><span class="line"><span class="comment"># 响应参数，响应的总条数在 header 字段中</span></span><br><span class="line">https://applet-base-api-t.itheima.net/categories/:cate_id/shops</span><br></pre></td></tr></table></figure>
+
+<p>🍜 案例代码如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data: &#123;</span><br><span class="line">    <span class="attr">query</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">shopList</span>: [], <span class="comment">// 商铺列表数组</span></span><br><span class="line">    <span class="attr">page</span>: <span class="number">1</span>,  <span class="comment">// 页码</span></span><br><span class="line">    <span class="attr">pageSize</span>: <span class="number">10</span>,  <span class="comment">// 每页请求的数量</span></span><br><span class="line">    <span class="attr">total</span>: <span class="number">0</span> <span class="comment">// 总条数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取商品数据"><a href="#获取商品数据" class="headerlink" title="获取商品数据"></a>获取商品数据</h3><ol>
+<li>定义获取商品数据的方法，并将数据赋值给 data 中的 shopList 以及 total。</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data: &#123;</span><br><span class="line">  <span class="attr">query</span>: &#123;&#125;,</span><br><span class="line">  <span class="attr">shopList</span>: [], <span class="comment">// 商铺列表数组</span></span><br><span class="line">  <span class="attr">page</span>: <span class="number">1</span>,  <span class="comment">// 页码</span></span><br><span class="line">  <span class="attr">pageSize</span>: <span class="number">10</span>,  <span class="comment">// 每页请求的数量</span></span><br><span class="line">  <span class="attr">total</span>: <span class="number">0</span> <span class="comment">// 总条数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getShopList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    wx.request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`https://applet-base-api-t.itheima.net/categories/<span class="subst">$&#123;<span class="built_in">this</span>.data.query.id&#125;</span>/shops`</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">        <span class="attr">data</span>: &#123;</span><br><span class="line">            <span class="attr">_page</span>: <span class="built_in">this</span>.data.page,</span><br><span class="line">            <span class="attr">_limit</span>: <span class="built_in">this</span>.data.pageSize</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">success</span>: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">                <span class="attr">shopList</span>: [...this.data.shopList, ...res.data],</span><br><span class="line">                <span class="attr">total</span>: <span class="built_in">parseInt</span>(res.header[<span class="string">&#x27;X-Total-Count&#x27;</span>])</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="定义-getShopList-方法获取商品列表数据"><a href="#定义-getShopList-方法获取商品列表数据" class="headerlink" title="定义 getShopList 方法获取商品列表数据"></a>定义 getShopList 方法获取商品列表数据</h3><ol>
-<li><p>定义获取商品数据的方法，并将数据赋值给 <code>data</code> 中的 <code>shopList</code> 以及 <code>total</code></p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getShopList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  wx.request(&#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="string">`https://www.escook.cn/categories/<span class="subst">$&#123;<span class="built_in">this</span>.data.query.id&#125;</span>/shops`</span>,</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">      <span class="attr">_page</span>: <span class="built_in">this</span>.data.page,</span><br><span class="line">      <span class="attr">_limit</span>: <span class="built_in">this</span>.data.pageSize</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">success</span>: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        <span class="attr">shopList</span>: [...this.data.shopList, ...res.data],</span><br><span class="line">        <span class="attr">total</span>: <span class="built_in">parseInt</span>(res.header[<span class="string">&#x27;X-Total-Count&#x27;</span>])</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>在 <code>onLoad</code> 钩子函数中，调用 <code>getShopList</code> 方法</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生命周期函数--监听页面加载</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="attr">onLoad</span>: <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">    <span class="attr">query</span>: options</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">this</span>.getShopList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<ol start="2">
+<li>在 onLoad 钩子函数中，调用 <code>getShopList()</code> 方法。</li>
 </ol>
-<hr>
-<h3 id="渲染商品店铺列表的-ui-结构并美化样式"><a href="#渲染商品店铺列表的-ui-结构并美化样式" class="headerlink" title="渲染商品店铺列表的 ui 结构并美化样式"></a>渲染商品店铺列表的 ui 结构并美化样式</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 循环遍历生成商铺列表 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:for</span>=<span class="string">&quot;&#123;&#123;shopList&#125;&#125;&quot;</span> <span class="attr">wx:key</span>=<span class="string">&quot;id&quot;</span> <span class="attr">class</span>=<span class="string">&quot;shop-item&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;thumb&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span>=<span class="string">&quot;&#123;&#123;item.images[0]&#125;&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;info&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;shop-title&quot;</span>&gt;</span>&#123;&#123;item.name&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 使用wxs 中的方法， 处理手机号码 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span>&gt;</span>电话： &#123;&#123;item.phone&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span>&gt;</span>地址： &#123;&#123;item.address&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span>&gt;</span>营业时间： &#123;&#123;item.businessHours&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生命周期函数--监听页面加载</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="attr">onLoad</span>: <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        <span class="attr">query</span>: options</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">this</span>.getShopList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="渲染商品店铺"><a href="#渲染商品店铺" class="headerlink" title="渲染商品店铺"></a>渲染商品店铺</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pages/shoplist/shoplist.wxml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:for</span>=<span class="string">&quot;&#123;&#123;shopList&#125;&#125;&quot;</span> <span class="attr">wx:key</span>=<span class="string">&quot;id&quot;</span> <span class="attr">class</span>=<span class="string">&quot;shop-item&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;thumb&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span>=<span class="string">&quot;&#123;&#123;item.images[0]&#125;&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;info&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;shop-title&quot;</span>&gt;</span>&#123;&#123;item.name&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 使用wxs 中的方法， 处理手机号码 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span>&gt;</span>电话： &#123;&#123;item.phone&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span>&gt;</span>地址： &#123;&#123;item.address&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span>&gt;</span>营业时间： &#123;&#123;item.businessHours&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* pages/shoplist/shoplist.wxss */</span></span><br><span class="line"><span class="selector-class">.shop-item</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">15</span>rpx;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1</span>rpx solid <span class="number">#efefef</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">8</span>rpx;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">15</span>rpx;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">1</span>rpx <span class="number">1</span>rpx <span class="number">15</span>rpx <span class="number">#ddd</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.thumb</span> image &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">250</span>rpx;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">250</span>rpx;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">margin-right</span>: <span class="number">15</span>rpx;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.info</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">flex-direction</span>: column;</span><br><span class="line">    <span class="attribute">justify-content</span>: space-around;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">24</span>rpx;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.shop-title</span> &#123;</span><br><span class="line">    <span class="attribute">font-weight</span>: bold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>image 标签白边问题：<a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000000694663">https://segmentfault.com/q/1010000000694663</a></p>
-<p>box-shadow 说明：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow">https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow</a></p>
-<hr>
-<h3 id="展示-loading-提示效果"><a href="#展示-loading-提示效果" class="headerlink" title="展示 loading 提示效果"></a>展示 loading 提示效果</h3><ol>
-<li><p>在网络请求发起之前调用 <code>wx.showLoading</code> 方法，显示 <code>loading</code> 效果</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wx.showLoading(&#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;数据加载中...&#x27;</span>,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-<li><p>在网络请求返回以后，隐藏 <code>loading</code> 显示</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">complete: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    wx.hideLoading()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>完整代码</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getShopList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  wx.showLoading(&#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;数据加载中...&#x27;</span>,</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  wx.request(&#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="string">`https://www.escook.cn/categories/<span class="subst">$&#123;<span class="built_in">this</span>.data.query.id&#125;</span>/shops`</span>,</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">      <span class="attr">_page</span>: <span class="built_in">this</span>.data.page,</span><br><span class="line">      <span class="attr">_limit</span>: <span class="built_in">this</span>.data.pagesize</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">success</span>: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        <span class="attr">shopList</span>: [...this.data.shopList, ...res.data],</span><br><span class="line">        <span class="attr">total</span>: <span class="built_in">parseInt</span>(res.header[<span class="string">&#x27;X-Total-Count&#x27;</span>])</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">complete</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      wx.hideLoading()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<h3 id="展示-loading"><a href="#展示-loading" class="headerlink" title="展示 loading"></a>展示 loading</h3><ol>
+<li>在网络请求发起之前调用 <code>wx.showLoading()</code> 方法，显示 loading 效果。</li>
 </ol>
-<h3 id="上拉触底时请求下一页数据"><a href="#上拉触底时请求下一页数据" class="headerlink" title="上拉触底时请求下一页数据"></a>上拉触底时请求下一页数据</h3><ol>
-<li><p>配置页面触底的距离</p>
- <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;usingComponents&quot;</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">&quot;onReachBottomDistance&quot;</span>: <span class="number">100</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>在 <code>onReachBottom</code> 事件处理程序中处理逻辑</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 页面上拉触底事件的处理函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="attr">onReachBottom</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">    <span class="attr">page</span>: <span class="built_in">this</span>.data.page + <span class="number">1</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">this</span>.getShopList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="对上拉触底事件进行节流控制"><a href="#对上拉触底事件进行节流控制" class="headerlink" title="对上拉触底事件进行节流控制"></a>对上拉触底事件进行节流控制</h3><ol>
-<li><p>对上拉触底进行节流处理</p>
-<ul>
-<li><p>在 <code>data</code> 中定义 <code>isLoading</code> 节流阀</p>
-<ul>
-<li><code>false</code> 表示当前没有进行任何数据请求</li>
-<li><code>true</code> 表示当前正在进行数据请求</li>
-</ul>
-</li>
-<li><p>在 <code>getShopList</code> 方法中设置 <code>isLoading</code> 节流阀的值</p>
-<ul>
-<li>在发起网络请求时，将节流阀设置为 <code>true</code></li>
-<li>在网络请求的 <code>complete</code> 回调函数中，将节流阀重置为 <code>false</code></li>
-</ul>
-</li>
-<li><p>在 <code>onReachBottom</code> 中判断节流阀的值，从而对数据请求进行节流控制</p>
-<ul>
-<li>如果节流阀的值为 <code>true</code>，则阻止当前请求</li>
-<li>如果节流阀的职位 <code>false</code>，则发起数据请求</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>代码实现</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 页面的初始数据</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">isLoading</span>: <span class="literal">false</span> <span class="comment">// 数据是否加载中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wx.showLoading(&#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;数据加载中...&#x27;</span>,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getShopList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">    <span class="attr">isLoading</span>: <span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// coding……</span></span><br><span class="line"></span><br><span class="line">  wx.request(&#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="string">`https://www.escook.cn/categories/<span class="subst">$&#123;<span class="built_in">this</span>.data.query.id&#125;</span>/shops`</span>,</span><br><span class="line">    <span class="comment">// coding……</span></span><br><span class="line">    <span class="attr">complete</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 关闭加载提示框</span></span><br><span class="line">      wx.hideLoading()</span><br><span class="line">			<span class="comment">// 关闭节流阀</span></span><br><span class="line">      <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        <span class="attr">isLoading</span>: <span class="literal">false</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 页面上拉触底事件的处理函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="attr">onReachBottom</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">this</span>.data.isLoading) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">    <span class="attr">page</span>: <span class="built_in">this</span>.data.page + <span class="number">1</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">this</span>.getShopList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<ol start="2">
+<li>在网络请求返回以后，隐藏 loading 显示。</li>
 </ol>
-<h3 id="演示并分析全部数据加载完毕后触底继续发送请求问题"><a href="#演示并分析全部数据加载完毕后触底继续发送请求问题" class="headerlink" title="演示并分析全部数据加载完毕后触底继续发送请求问题"></a>演示并分析全部数据加载完毕后触底继续发送请求问题</h3><ol>
-<li>当没有数据时，依然能发起数据请求，这样就造成了带宽的浪费</li>
-<li>在实际开发中，如果没有数据，不应该发起额外的数据请求</li>
-</ol>
-<h3 id="介绍判断是否还有下一页数据的公式"><a href="#介绍判断是否还有下一页数据的公式" class="headerlink" title="介绍判断是否还有下一页数据的公式"></a>介绍判断是否还有下一页数据的公式</h3><ol>
-<li><p>如果下面的公式成立，则证明没有下一页数据了：</p>
-<ul>
-<li><p>页码值 * 每页显示多少条数据 &gt;= 总数据条数</p>
-<ul>
-<li><code>page</code> * <code>pageSize</code> &gt;= <code>total</code></li>
-</ul>
-  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 举例1：假设总共有 77 条数据，如果每页显示 10 条数据，则总共分为 8 页，其中第 8 页只有 7 条数据 - page （7）* pageSize （10） &gt;= total（77）不成立, 所以有下一页数据 - page （8）* pageSize</span><br><span class="line">（10） &gt;= total（77）成立, 所以没有下一页数据</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">complete: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    wx.hideLoading()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 举例2：假设总共有 80 条数据，如果每页显示 10 条数据，则总共分为 8 页，其中第 8 页面有 10条数据 - page （7）* pageSize （10） &gt;= total（80）不成立, 所以有下一页数据 - page （8）* pageSize</span><br><span class="line">（10） &gt;= total（80）成立, 所以没有下一页数据</span><br></pre></td></tr></table></figure></li>
+<ol start="3">
+<li>完整代码如下。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getShopList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    wx.showLoading(&#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&#x27;数据加载中...&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    wx.request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`https://applet-base-api-t.itheima.net/categories/<span class="subst">$&#123;<span class="built_in">this</span>.data.query.id&#125;</span>/shops`</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">        <span class="attr">data</span>: &#123;</span><br><span class="line">            <span class="attr">_page</span>: <span class="built_in">this</span>.data.page,</span><br><span class="line">            <span class="attr">_limit</span>: <span class="built_in">this</span>.data.pageSize</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">success</span>: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">                <span class="attr">shopList</span>: [...this.data.shopList, ...res.data],</span><br><span class="line">                <span class="attr">total</span>: <span class="built_in">parseInt</span>(res.header[<span class="string">&#x27;X-Total-Count&#x27;</span>])</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">complete</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            wx.hideLoading()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="上拉触底加载"><a href="#上拉触底加载" class="headerlink" title="上拉触底加载"></a>上拉触底加载</h3><ol>
+<li>配置页面触底的距离，<code>shoplist/shoplist.json</code>。</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;usingComponents&quot;</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">&quot;onReachBottomDistance&quot;</span>: <span class="number">100</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在 <code>onReachBottom</code> 事件处理程序中处理逻辑。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 页面上拉触底事件的处理函数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="attr">onReachBottom</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        <span class="attr">page</span>: <span class="built_in">this</span>.data.page + <span class="number">1</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">this</span>.getShopList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="上拉触底节流"><a href="#上拉触底节流" class="headerlink" title="上拉触底节流"></a>上拉触底节流</h3><ol>
+<li><p>对上拉触底进行节流处理。</p>
+<ul>
+<li><p>在 data 中定义 isLoading 节流阀的默认值为 false，表示当前没有进行任何数据请求。</p>
+</li>
+<li><p>在 getShopList 方法中发起网络请求时，将节流阀设置为 true，在网络请求的 complete 回调函数中，将节流阀重置为 false。</p>
+</li>
+<li><p>在 onReachBottom 中判断节流阀的值，从而对数据请求进行节流控制，如果节流阀的值为 true，则阻止当前请求，如果节流阀的职位 false，则发起数据请求。</p>
+</li>
 </ul>
 </li>
-<li><p>方式二:</p>
-<ul>
-<li>可以将 <code>total</code> 的值, 和数组的长度进行对比</li>
-</ul>
+<li><p>代码实现如下。</p>
 </li>
 </ol>
-<h3 id="根据公式判断是否还有下一页的数据"><a href="#根据公式判断是否还有下一页的数据" class="headerlink" title="根据公式判断是否还有下一页的数据"></a>根据公式判断是否还有下一页的数据</h3><ol>
-<li><p>在 <code>onReachBottom</code> 钩子函数中判断数据是否加载完毕</p>
-<ul>
-<li>如果加载完毕，需要给用户提示没有更多的数据</li>
-</ul>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">onReachBottom: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">this</span>.data.page * <span class="built_in">this</span>.data.pagesize &gt;= <span class="built_in">this</span>.data.total) &#123;</span><br><span class="line">    <span class="comment">// 没有更多用户时候的提示</span></span><br><span class="line">    <span class="keyword">return</span> wx.showToast(&#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;数据加载完毕！&#x27;</span>,</span><br><span class="line">      <span class="attr">icon</span>: <span class="string">&#x27;none&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">this</span>.data.isLoading) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 思考：“this.data.page + 1” 放在这里会不会产生在请求异常一次后触底，再次触底时会遗漏数据的问题？</span></span><br><span class="line">  <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">    <span class="attr">page</span>: <span class="built_in">this</span>.data.page + <span class="number">1</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">this</span>.getShopList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="为商铺列表页面开启下拉刷新效果"><a href="#为商铺列表页面开启下拉刷新效果" class="headerlink" title="为商铺列表页面开启下拉刷新效果"></a>为商铺列表页面开启下拉刷新效果</h3><ol>
-<li><p>开启下拉刷新效果</p>
- <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;usingComponents&quot;</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">&quot;onReachBottomDistance&quot;</span>: <span class="number">100</span>,</span><br><span class="line">    <span class="attr">&quot;enablePullDownRefresh&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;backgroundColor&quot;</span>: <span class="string">&quot;#efefef&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;backgroundTextStyle&quot;</span>: <span class="string">&quot;dark&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="实现下拉刷新的逻辑"><a href="#实现下拉刷新的逻辑" class="headerlink" title="实现下拉刷新的逻辑"></a>实现下拉刷新的逻辑</h3><ol>
-<li><p>在 <code>onPullDownRefresh</code> 逻辑函数中监听用户下拉动作</p>
-<ul>
-<li>重置关键的数据</li>
-<li>重新发起数据的请求</li>
-</ul>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 页面相关事件处理函数--监听用户下拉动作</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="attr">onPullDownRefresh</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 重置关键数据</span></span><br><span class="line">  <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">    <span class="attr">page</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">shopList</span>: [],</span><br><span class="line">    <span class="attr">total</span>: <span class="number">0</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// 重新发起数据请求</span></span><br><span class="line">  <span class="built_in">this</span>.getShopList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="解决下拉窗口效果不会自动关闭的问题"><a href="#解决下拉窗口效果不会自动关闭的问题" class="headerlink" title="解决下拉窗口效果不会自动关闭的问题"></a>解决下拉窗口效果不会自动关闭的问题</h3><ol>
-<li>在 <code>complete</code> 回调函数中，调用关闭下拉刷线窗口的 <code>API</code></li>
-<li>但是我们执行上拉加载更多的时候，是不需要执行这个方法的</li>
-<li>所以我们在执行下拉，对数据重置，重新获取数据的方法中，传入回调函数</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 页面相关事件处理函数--监听用户下拉动作</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="attr">onPullDownRefresh</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 需要重置关键的数据</span></span><br><span class="line">  <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">    <span class="attr">page</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">shoplist</span>: [],</span><br><span class="line">    <span class="attr">total</span>: <span class="number">0</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// 重新发起数据请求</span></span><br><span class="line">  <span class="built_in">this</span>.getShopList(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    wx.stopPullDownRefresh()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 页面的初始数据</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">isLoading</span>: <span class="literal">false</span> <span class="comment">// 数据是否加载中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>getShopList() 中的 complete 做对应修改</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getShopList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        <span class="attr">isLoading</span>: <span class="literal">true</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// coding……</span></span><br><span class="line"></span><br><span class="line">    wx.request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`https://applet-base-api-t.itheima.net/categories/<span class="subst">$&#123;<span class="built_in">this</span>.data.query.id&#125;</span>/shops`</span>,</span><br><span class="line">        <span class="comment">// coding……</span></span><br><span class="line">        <span class="attr">complete</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 关闭加载提示框</span></span><br><span class="line">            wx.hideLoading()</span><br><span class="line">            <span class="comment">// 关闭节流阀</span></span><br><span class="line">            <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">                <span class="attr">isLoading</span>: <span class="literal">false</span></span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 页面上拉触底事件的处理函数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="attr">onReachBottom</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.data.isLoading) <span class="keyword">return</span></span><br><span class="line">    <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        <span class="attr">page</span>: <span class="built_in">this</span>.data.page + <span class="number">1</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">this</span>.getShopList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>🤔 当没有数据时，依然能发起数据请求，这样就造成了带宽的浪费。</p>
+<h3 id="是否加载公式"><a href="#是否加载公式" class="headerlink" title="是否加载公式"></a>是否加载公式</h3><ol>
+<li><p>如果页码值 * 每页显示多少条数据 &gt;= 总数据条数（<code>page\*pageSize &gt;= total</code>），则证明没有下一页数据了。</p>
+<ul>
+<li><p>举例 1：假设总共有 77 条数据，如果每页显示 10 条数据，则总共分为 8 页，其中第 8 页只有 7 条数据。</p>
+<ul>
+<li><p>page(7) * pageSize(10) &gt;= total(77) 不成立, 所以有下一页数据。</p>
+</li>
+<li><p>page(8) * pageSize(10) &gt;= total(77) 成立, 所以没有下一页数据。</p>
+</li>
+</ul>
+</li>
+<li><p>举例 2：假设总共有 80 条数据，如果每页显示 10 条数据，则总共分为 8 页，其中第 8 页面有 10 条数据。</p>
+<ul>
+<li><p>page(7) * pageSize(10) &gt;= total(80)，不成立，所以有下一页数据。</p>
+</li>
+<li><p>page(8) * pageSize(10) &gt;= total(80)，成立，所以没有下一页数据。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>方式二：可以将 total 的值, 和数组的长度进行对比。</p>
+</li>
+</ol>
+<h3 id="对应代码实现"><a href="#对应代码实现" class="headerlink" title="对应代码实现"></a>对应代码实现</h3><ol>
+<li>在 onReachBottom 钩子函数中判断数据是否加载完毕，如果加载完毕，需要给用户提示没有更多的数据。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">onReachBottom: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.data.page * <span class="built_in">this</span>.data.pageSize &gt;= <span class="built_in">this</span>.data.total) &#123;</span><br><span class="line">        <span class="comment">// 没有更多用户时候的提示</span></span><br><span class="line">        <span class="keyword">return</span> wx.showToast(&#123;</span><br><span class="line">            <span class="attr">title</span>: <span class="string">&#x27;数据加载完毕！&#x27;</span>,</span><br><span class="line">            <span class="attr">icon</span>: <span class="string">&#x27;none&#x27;</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.data.isLoading) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 思考：“this.data.page + 1” 放在这里会不会产生在请求异常一次后触底，再次触底时会遗漏数据的问题？</span></span><br><span class="line">    <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        <span class="attr">page</span>: <span class="built_in">this</span>.data.page + <span class="number">1</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">this</span>.getShopList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="开启下拉刷新"><a href="#开启下拉刷新" class="headerlink" title="开启下拉刷新"></a>开启下拉刷新</h3><p>开启下拉刷新效果，<code>pages/shoplist/shoplist.js</code>。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;usingComponents&quot;</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">&quot;onReachBottomDistance&quot;</span>: <span class="number">100</span>,</span><br><span class="line">    <span class="attr">&quot;enablePullDownRefresh&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;backgroundColor&quot;</span>: <span class="string">&quot;#efefef&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;backgroundTextStyle&quot;</span>: <span class="string">&quot;dark&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="实现下拉刷新"><a href="#实现下拉刷新" class="headerlink" title="实现下拉刷新"></a>实现下拉刷新</h3><p>在 <code>onPullDownRefresh</code> 逻辑函数中监听用户下拉动作，重置关键的数据，重新发起数据的请求。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 页面相关事件处理函数--监听用户下拉动作</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="attr">onPullDownRefresh</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 重置关键数据</span></span><br><span class="line">    <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        <span class="attr">page</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">shopList</span>: [],</span><br><span class="line">        <span class="attr">total</span>: <span class="number">0</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 重新发起数据请求</span></span><br><span class="line">    <span class="built_in">this</span>.getShopList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="关闭下拉窗口"><a href="#关闭下拉窗口" class="headerlink" title="关闭下拉窗口"></a>关闭下拉窗口</h3><p>解决下拉窗口效果不会自动关闭的问题，在 complete 回调函数中，调用关闭下拉刷新窗口的回调。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 页面相关事件处理函数--监听用户下拉动作</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="attr">onPullDownRefresh</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 需要重置关键的数据</span></span><br><span class="line">    <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        <span class="attr">page</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">shoplist</span>: [],</span><br><span class="line">        <span class="attr">total</span>: <span class="number">0</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 重新发起数据请求</span></span><br><span class="line">    <span class="built_in">this</span>.getShopList(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        wx.stopPullDownRefresh()</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>getShopList()</code> 中的 complete 做对应修改。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">complete: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    wx.hideLoading()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        <span class="attr">isLoading</span>: <span class="literal">false</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 停止下拉刷新效果的回调函数</span></span><br><span class="line">    cb &amp;&amp; cb()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="使用-wxs-处理手机号"><a href="#使用-wxs-处理手机号" class="headerlink" title="使用 wxs 处理手机号"></a>使用 wxs 处理手机号</h3><ol>
-<li><p>在 <code>utils</code> 目录下创建 <code>tools.wxs</code> 文件，并创建 <code>splitPhone</code> 方法</p>
-<ul>
-<li>splice()<ul>
-<li>第一个参数：添加/删除项目的位置</li>
-<li>第二个参数：需要删除的数量</li>
-<li>第三个参数：可选，向数组中添加的新项</li>
-</ul>
-</li>
-</ul>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">splitPhone</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str.length !== <span class="number">11</span>) <span class="keyword">return</span> str</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> arr = str.split(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="comment">// 138-1234-5678</span></span><br><span class="line">    arr.splice(<span class="number">3</span>, <span class="number">0</span>, <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">    arr.splice(<span class="number">8</span>, <span class="number">0</span>, <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr.join(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="comment">// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/substring</span></span><br><span class="line">    <span class="comment">// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/slice</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attr">splitPhone</span>: splitPhone,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<h3 id="处理手机号码"><a href="#处理手机号码" class="headerlink" title="处理手机号码"></a>处理手机号码</h3><ol>
+<li>在 utils 目录下创建 <code>tools.wxs</code> 文件，并创建 <code>splitPhone</code> 方法。</li>
 </ol>
-<p>​</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 宋颖洁-128</span></span><br><span class="line"><span class="built_in">module</span>.exports.filterPhone = <span class="function"><span class="keyword">function</span> (<span class="params">phone</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (phone.trim() &amp;&amp; phone.length === <span class="number">11</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> str = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; phone.split(<span class="string">&#x27;&#x27;</span>).length; i++) &#123;</span><br><span class="line">            str += phone.split(<span class="string">&#x27;&#x27;</span>)[i]</span><br><span class="line">            <span class="keyword">if</span> (i === <span class="number">2</span> || i === <span class="number">6</span>) &#123;</span><br><span class="line">                str += <span class="string">&#x27;-&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> str</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> phone</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 张帅-130</span></span><br><span class="line"><span class="built_in">module</span>.exports.phone = <span class="function"><span class="keyword">function</span> (<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="keyword">if</span> (str.length !== <span class="number">11</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> str</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> sign = <span class="string">&#x27;-&#x27;</span></span><br><span class="line">    <span class="keyword">var</span> first = str.slice(<span class="number">0</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="keyword">var</span> second = str.slice(<span class="number">3</span>, <span class="number">7</span>)</span><br><span class="line">    <span class="keyword">var</span> third = str.slice(<span class="number">7</span>)</span><br><span class="line">    <span class="keyword">return</span> first + sign + second + sign + third</span><br><span class="line">    <span class="comment">// return str+&#x27;-&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// splice()：第一个参数：添加/删除项目的位置；第二个参数：需要删除的数量；第三个参数：可选，向数组中添加的新项。</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">splitPhone</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str.length !== <span class="number">11</span>) <span class="keyword">return</span> str</span><br><span class="line">    <span class="keyword">var</span> arr = str.split(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="comment">// 138-1234-5678</span></span><br><span class="line">    arr.splice(<span class="number">3</span>, <span class="number">0</span>, <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">    arr.splice(<span class="number">8</span>, <span class="number">0</span>, <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr.join(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attr">splitPhone</span>: splitPhone,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ol>
-<li><p>在 <code>shoplist.wxml</code> 文件中导入 <code>tools.wxs</code> 文件</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;wxs src=<span class="string">&#x27;../../utils/tools.wxs&#x27;</span> <span class="built_in">module</span>=<span class="string">&#x27;tools&#x27;</span>&gt;&lt;/wxs&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p>使用封装的 <code>splitPhone</code> 方法</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;text&gt;电话： &#123;&#123;tools.splitPhone(item.phone)&#125;&#125;&lt;/text&gt;</span><br></pre></td></tr></table></figure></li>
+<li>在 <code>shoplist.wxml</code> 文件中导入 <code>tools.wxs</code> 文件。</li>
 </ol>
-<h3 id="在手机上预览不了的问题"><a href="#在手机上预览不了的问题" class="headerlink" title="在手机上预览不了的问题"></a>在手机上预览不了的问题</h3><ol>
-<li><p>问题</p>
-<ul>
-<li><p>小程序如果需要发起网络请求，必须在 服务器域名中对域名进行配置，</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">wxs</span> <span class="attr">src</span>=<span class="string">&quot;../../utils/tools.wxs&quot;</span> <span class="attr">module</span>=<span class="string">&quot;tools&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">wxs</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用封装的 <code>splitPhone</code> 方法。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">text</span>&gt;</span>电话： &#123;&#123;tools.splitPhone(item.phone)&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="真机预览问题"><a href="#真机预览问题" class="headerlink" title="真机预览问题"></a>真机预览问题</h3><ol>
+<li><p>配置域名：在小程序后台添加域名。</p>
 </li>
-<li><p>小程序会往配置域名中发起请求，</p>
-</li>
-<li><p>但是，我们并没有在后台配置服务器域名，所以在手机上访问不了</p>
-</li>
-</ul>
-</li>
-<li><p>解决方案</p>
-<ul>
-<li>手机扫码 –&gt; 点击小程序右上角 三个点 –&gt; 弹出面板，点击开发调试 –&gt; 弹出新的面板，点击打开调试</li>
-<li>点击悬浮框 <code>vConsole</code>，会显示页面的结构，以及 log 等，在实际开发中，可以配置模拟器进行测试</li>
-</ul>
+<li><p>开启调试：手机扫码 –&gt; 点击小程序右上角 三个点 –&gt; 弹出面板，点击开发调试 –&gt; 弹出新的面板，点击打开调试。</p>
 </li>
 </ol>
 
@@ -998,7 +930,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E5%AF%BC%E8%88%AA"><span class="nav-number">2.</span> <span class="nav-text">页面导航</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%AE%9E%E7%8E%B0%E9%A1%B5%E9%9D%A2%E5%AF%BC%E8%88%AA%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%96%B9%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">小程序中实现页面导航的两个方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E5%AF%BC%E8%88%AA-%E5%AF%BC%E8%88%AA%E5%88%B0-tabBar-%E9%A1%B5%E9%9D%A2"><span class="nav-number">2.2.</span> <span class="nav-text">声明式导航-导航到 tabBar 页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E5%AF%BC%E8%88%AA-%E5%AF%BC%E8%88%AA%E5%88%B0%E9%9D%9E-tabBar-%E9%A1%B5%E9%9D%A2"><span class="nav-number">2.3.</span> <span class="nav-text">声明式导航-导航到非 tabBar 页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E5%AF%BC%E8%88%AA-%E5%90%8E%E9%80%80%E5%AF%BC%E8%88%AA"><span class="nav-number">2.4.</span> <span class="nav-text">声明式导航-后退导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E5%AF%BC%E8%88%AA-%E5%AF%BC%E8%88%AA%E5%88%B0-tabBar-%E9%A1%B5%E9%9D%A2"><span class="nav-number">2.5.</span> <span class="nav-text">编程式导航-导航到 tabBar 页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E5%AF%BC%E8%88%AA-%E5%AF%BC%E8%88%AA%E5%88%B0%E9%9D%9E-tabBar-%E9%A1%B5%E9%9D%A2"><span class="nav-number">2.6.</span> <span class="nav-text">编程式导航-导航到非 tabBar 页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E5%AF%BC%E8%88%AA-%E5%90%8E%E9%80%80%E5%AF%BC%E8%88%AA"><span class="nav-number">2.7.</span> <span class="nav-text">编程式导航-后退导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E5%AF%BC%E8%88%AA%E4%BC%A0%E5%8F%82"><span class="nav-number">2.8.</span> <span class="nav-text">声明式导航传参</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E5%AF%BC%E8%88%AA%E4%BC%A0%E5%8F%82"><span class="nav-number">2.9.</span> <span class="nav-text">编程式导航传参</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-onLoad-%E4%B8%AD%E6%8E%A5%E6%94%B6%E5%AF%BC%E8%88%AA%E5%8F%82%E6%95%B0"><span class="nav-number">2.10.</span> <span class="nav-text">在 onLoad 中接收导航参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E4%BA%8B%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">页面事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0"><span class="nav-number">3.1.</span> <span class="nav-text">了解什么是下拉刷新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0"><span class="nav-number">3.2.</span> <span class="nav-text">启动下拉刷新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E7%AA%97%E5%8F%A3%E7%9A%84%E6%A0%B7%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">配置下拉刷新窗口的样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E4%BA%8B%E4%BB%B6"><span class="nav-number">3.4.</span> <span class="nav-text">监听页面的下拉刷新事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E7%9A%84%E6%95%88%E6%9E%9C"><span class="nav-number">3.5.</span> <span class="nav-text">停止下拉刷新的效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95"><span class="nav-number">3.6.</span> <span class="nav-text">了解什么是上拉触底</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95%E4%BA%8B%E4%BB%B6"><span class="nav-number">3.7.</span> <span class="nav-text">监听页面的上拉触底事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95%E8%B7%9D%E7%A6%BB"><span class="nav-number">3.8.</span> <span class="nav-text">配置上拉触底距离</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">4.</span> <span class="nav-text">生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">4.1.</span> <span class="nav-text">什么是生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%88%86%E7%B1%BB"><span class="nav-number">4.2.</span> <span class="nav-text">小程序生命周期的两个分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0"><span class="nav-number">4.3.</span> <span class="nav-text">什么是生命周期函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%88%86%E7%B1%BB"><span class="nav-number">4.4.</span> <span class="nav-text">小程序中生命周期函数的两个分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">4.5.</span> <span class="nav-text">应用的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">4.6.</span> <span class="nav-text">页面的生命周期</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wxs"><span class="nav-number">5.</span> <span class="nav-text">wxs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-wxs"><span class="nav-number">5.1.</span> <span class="nav-text">什么是 wxs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wxs-%E5%92%8C-JavaScript-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">5.2.</span> <span class="nav-text">wxs 和 JavaScript 的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wxs-%E9%81%B5%E5%BE%AA-CommonJS-%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83"><span class="nav-number">5.3.</span> <span class="nav-text">wxs 遵循 CommonJS 模块化规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%B5%8C-wxs-%E8%84%9A%E6%9C%AC"><span class="nav-number">5.4.</span> <span class="nav-text">内嵌 wxs 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%A4%96%E8%81%94%E7%9A%84-wxs-%E8%84%9A%E6%9C%AC"><span class="nav-number">5.5.</span> <span class="nav-text">定义外联的 wxs 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%A4%96%E8%81%94%E7%9A%84-wxs-%E8%84%9A%E6%9C%AC"><span class="nav-number">5.6.</span> <span class="nav-text">使用外联的 wxs 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3-wxs-%E7%9A%84-4-%E4%B8%AA%E7%89%B9%E7%82%B9"><span class="nav-number">5.7.</span> <span class="nav-text">了解 wxs 的 4 个特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B"><span class="nav-number">6.</span> <span class="nav-text">案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E5%93%81%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2%E7%9A%84%E6%95%88%E6%9E%9C%E6%98%BE%E7%A4%BA"><span class="nav-number">6.1.</span> <span class="nav-text">商品列表页面的效果显示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%8A%A0%E8%BD%BD%E5%88%B0%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E4%B8%AD"><span class="nav-number">6.2.</span> <span class="nav-text">把项目代码加载到微信开发者工具中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%AF%BC%E8%88%AA%E8%B7%B3%E8%BD%AC%E5%B9%B6%E4%BC%A0%E5%8F%82"><span class="nav-number">6.3.</span> <span class="nav-text">实现导航跳转并传参</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE%E5%95%86%E5%93%81%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2%E7%9A%84%E6%A0%87%E9%A2%98%E5%86%85%E5%AE%B9"><span class="nav-number">6.4.</span> <span class="nav-text">动态设置商品列表页面的标题内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%95%86%E9%93%BA%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2%E7%9A%84%E7%BC%96%E8%AF%91%E6%A8%A1%E5%BC%8F"><span class="nav-number">6.5.</span> <span class="nav-text">创建商铺列表页面的编译模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3-API-%E6%8E%A5%E5%8F%A3%E5%B9%B6%E5%AE%9A%E4%B9%89%E9%9C%80%E8%A6%81%E7%9A%84%E6%95%B0%E6%8D%AE%E8%8A%82%E7%82%B9"><span class="nav-number">6.6.</span> <span class="nav-text">了解 API 接口并定义需要的数据节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-getShopList-%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%95%86%E5%93%81%E5%88%97%E8%A1%A8%E6%95%B0%E6%8D%AE"><span class="nav-number">6.7.</span> <span class="nav-text">定义 getShopList 方法获取商品列表数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E5%95%86%E5%93%81%E5%BA%97%E9%93%BA%E5%88%97%E8%A1%A8%E7%9A%84-ui-%E7%BB%93%E6%9E%84%E5%B9%B6%E7%BE%8E%E5%8C%96%E6%A0%B7%E5%BC%8F"><span class="nav-number">6.8.</span> <span class="nav-text">渲染商品店铺列表的 ui 结构并美化样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%95%E7%A4%BA-loading-%E6%8F%90%E7%A4%BA%E6%95%88%E6%9E%9C"><span class="nav-number">6.9.</span> <span class="nav-text">展示 loading 提示效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95%E6%97%B6%E8%AF%B7%E6%B1%82%E4%B8%8B%E4%B8%80%E9%A1%B5%E6%95%B0%E6%8D%AE"><span class="nav-number">6.10.</span> <span class="nav-text">上拉触底时请求下一页数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95%E4%BA%8B%E4%BB%B6%E8%BF%9B%E8%A1%8C%E8%8A%82%E6%B5%81%E6%8E%A7%E5%88%B6"><span class="nav-number">6.11.</span> <span class="nav-text">对上拉触底事件进行节流控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA%E5%B9%B6%E5%88%86%E6%9E%90%E5%85%A8%E9%83%A8%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%E5%AE%8C%E6%AF%95%E5%90%8E%E8%A7%A6%E5%BA%95%E7%BB%A7%E7%BB%AD%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82%E9%97%AE%E9%A2%98"><span class="nav-number">6.12.</span> <span class="nav-text">演示并分析全部数据加载完毕后触底继续发送请求问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E8%BF%98%E6%9C%89%E4%B8%8B%E4%B8%80%E9%A1%B5%E6%95%B0%E6%8D%AE%E7%9A%84%E5%85%AC%E5%BC%8F"><span class="nav-number">6.13.</span> <span class="nav-text">介绍判断是否还有下一页数据的公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E5%85%AC%E5%BC%8F%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E8%BF%98%E6%9C%89%E4%B8%8B%E4%B8%80%E9%A1%B5%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">6.14.</span> <span class="nav-text">根据公式判断是否还有下一页的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%95%86%E9%93%BA%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%90%AF%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E6%95%88%E6%9E%9C"><span class="nav-number">6.15.</span> <span class="nav-text">为商铺列表页面开启下拉刷新效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E7%9A%84%E9%80%BB%E8%BE%91"><span class="nav-number">6.16.</span> <span class="nav-text">实现下拉刷新的逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E4%B8%8B%E6%8B%89%E7%AA%97%E5%8F%A3%E6%95%88%E6%9E%9C%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%85%B3%E9%97%AD%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">6.17.</span> <span class="nav-text">解决下拉窗口效果不会自动关闭的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-wxs-%E5%A4%84%E7%90%86%E6%89%8B%E6%9C%BA%E5%8F%B7"><span class="nav-number">6.18.</span> <span class="nav-text">使用 wxs 处理手机号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E6%89%8B%E6%9C%BA%E4%B8%8A%E9%A2%84%E8%A7%88%E4%B8%8D%E4%BA%86%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">6.19.</span> <span class="nav-text">在手机上预览不了的问题</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E5%AF%BC%E8%88%AA"><span class="nav-number">2.</span> <span class="nav-text">页面导航</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">两种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E5%AF%BC%E8%88%AA"><span class="nav-number">2.2.</span> <span class="nav-text">声明式导航</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%BC%E8%88%AA%E5%88%B0-TabBar-%E9%A1%B5%E9%9D%A2"><span class="nav-number">2.2.1.</span> <span class="nav-text">导航到 TabBar 页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%BC%E8%88%AA%E5%88%B0%E9%9D%9E-TabBar-%E9%A1%B5%E9%9D%A2"><span class="nav-number">2.2.2.</span> <span class="nav-text">导航到非 TabBar 页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E9%80%80%E5%AF%BC%E8%88%AA"><span class="nav-number">2.2.3.</span> <span class="nav-text">后退导航</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E5%AF%BC%E8%88%AA"><span class="nav-number">2.3.</span> <span class="nav-text">编程式导航</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%BC%E8%88%AA%E5%88%B0-TabBar-%E9%A1%B5%E9%9D%A2-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">导航到 TabBar 页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%BC%E8%88%AA%E5%88%B0%E9%9D%9E-TabBar-%E9%A1%B5%E9%9D%A2-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">导航到非 TabBar 页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E9%80%80%E5%AF%BC%E8%88%AA-1"><span class="nav-number">2.3.3.</span> <span class="nav-text">后退导航</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E5%AF%BC%E8%88%AA%E4%BC%A0%E5%8F%82"><span class="nav-number">2.4.</span> <span class="nav-text">声明式导航传参</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E5%AF%BC%E8%88%AA%E4%BC%A0%E5%8F%82"><span class="nav-number">2.5.</span> <span class="nav-text">编程式导航传参</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E6%94%B6%E5%88%B0%E5%AF%BC%E8%88%AA%E5%8F%82%E6%95%B0"><span class="nav-number">2.6.</span> <span class="nav-text">接收到导航参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E4%BA%8B%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">页面事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0"><span class="nav-number">3.1.</span> <span class="nav-text">启动下拉刷新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E7%AA%97%E5%8F%A3%E7%9A%84%E6%A0%B7%E5%BC%8F"><span class="nav-number">3.2.</span> <span class="nav-text">配置下拉刷新窗口的样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E4%BA%8B%E4%BB%B6"><span class="nav-number">3.3.</span> <span class="nav-text">监听页面的下拉刷新事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%81%9C%E6%AD%A2%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E7%9A%84%E6%95%88%E6%9E%9C"><span class="nav-number">3.4.</span> <span class="nav-text">如何停止下拉刷新的效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95%E8%A1%8C%E4%B8%BA"><span class="nav-number">3.5.</span> <span class="nav-text">了解什么是上拉触底行为</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95%E4%BA%8B%E4%BB%B6"><span class="nav-number">3.6.</span> <span class="nav-text">监听页面的上拉触底事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95%E7%9A%84%E8%B7%9D%E7%A6%BB"><span class="nav-number">3.7.</span> <span class="nav-text">如何配置上拉触底的距离</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">4.</span> <span class="nav-text">生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">4.1.</span> <span class="nav-text">什么是生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">4.2.</span> <span class="nav-text">生命周期的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0"><span class="nav-number">4.3.</span> <span class="nav-text">什么是生命周期函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">4.4.</span> <span class="nav-text">生命周期函数的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%BA%A7%E5%88%AB%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">4.5.</span> <span class="nav-text">应用级别的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E7%BA%A7%E5%88%AB%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">4.6.</span> <span class="nav-text">页面级别的生命周期</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-WXS"><span class="nav-number">5.</span> <span class="nav-text">关于 WXS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">5.1.</span> <span class="nav-text">是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WXS-%E5%92%8C-JavaScript-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">5.2.</span> <span class="nav-text">WXS 和 JavaScript 的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WXS-%E9%81%B5%E5%BE%AA-CommonJS-%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83"><span class="nav-number">5.3.</span> <span class="nav-text">WXS 遵循 CommonJS 模块化规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%B5%8C-wxs-%E8%84%9A%E6%9C%AC"><span class="nav-number">5.4.</span> <span class="nav-text">内嵌 wxs 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%A4%96%E8%81%94%E7%9A%84-wxs-%E8%84%9A%E6%9C%AC"><span class="nav-number">5.5.</span> <span class="nav-text">定义外联的 wxs 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%A4%96%E8%81%94%E7%9A%84-wxs-%E8%84%9A%E6%9C%AC"><span class="nav-number">5.6.</span> <span class="nav-text">使用外联的 wxs 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3-wxs-%E7%9A%84-4-%E4%B8%AA%E7%89%B9%E7%82%B9"><span class="nav-number">5.7.</span> <span class="nav-text">了解 wxs 的 4 个特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B"><span class="nav-number">6.</span> <span class="nav-text">综合案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E7%9B%AE%E6%A0%87%E6%95%88%E6%9E%9C"><span class="nav-number">6.1.</span> <span class="nav-text">案例目标效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E5%B7%B2%E6%9C%89%E4%BB%A3%E7%A0%81"><span class="nav-number">6.2.</span> <span class="nav-text">加载已有代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E8%88%AA%E8%B7%B3%E8%BD%AC%E4%BC%A0%E5%8F%82"><span class="nav-number">6.3.</span> <span class="nav-text">导航跳转传参</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE%E6%A0%87%E9%A2%98"><span class="nav-number">6.4.</span> <span class="nav-text">动态设置标题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%BC%96%E8%AF%91%E6%A8%A1%E5%BC%8F"><span class="nav-number">6.5.</span> <span class="nav-text">添加编译模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3-API-%E6%8E%A5%E5%8F%A3"><span class="nav-number">6.6.</span> <span class="nav-text">了解 API 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%95%86%E5%93%81%E6%95%B0%E6%8D%AE"><span class="nav-number">6.7.</span> <span class="nav-text">获取商品数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E5%95%86%E5%93%81%E5%BA%97%E9%93%BA"><span class="nav-number">6.8.</span> <span class="nav-text">渲染商品店铺</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%95%E7%A4%BA-loading"><span class="nav-number">6.9.</span> <span class="nav-text">展示 loading</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95%E5%8A%A0%E8%BD%BD"><span class="nav-number">6.10.</span> <span class="nav-text">上拉触底加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95%E8%8A%82%E6%B5%81"><span class="nav-number">6.11.</span> <span class="nav-text">上拉触底节流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%AF%E5%90%A6%E5%8A%A0%E8%BD%BD%E5%85%AC%E5%BC%8F"><span class="nav-number">6.12.</span> <span class="nav-text">是否加载公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E5%BA%94%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">6.13.</span> <span class="nav-text">对应代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0"><span class="nav-number">6.14.</span> <span class="nav-text">开启下拉刷新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0"><span class="nav-number">6.15.</span> <span class="nav-text">实现下拉刷新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E4%B8%8B%E6%8B%89%E7%AA%97%E5%8F%A3"><span class="nav-number">6.16.</span> <span class="nav-text">关闭下拉窗口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E6%89%8B%E6%9C%BA%E5%8F%B7%E7%A0%81"><span class="nav-number">6.17.</span> <span class="nav-text">处理手机号码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9C%9F%E6%9C%BA%E9%A2%84%E8%A7%88%E9%97%AE%E9%A2%98"><span class="nav-number">6.18.</span> <span class="nav-text">真机预览问题</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
