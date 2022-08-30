@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="学习目标✔ 能够理解 Vue 的概念和作用。 ✔ 能够理解 Vue CLI 脚手架工程化开发。 ✔ 能够使用 Vue 指令。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01_Vue 基础">
+<meta property="og:url" content="http://example.com/2022/08/15/vue2-base-course01/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="学习目标✔ 能够理解 Vue 的概念和作用。 ✔ 能够理解 Vue CLI 脚手架工程化开发。 ✔ 能够使用 Vue 指令。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/1627822443295.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210212192713936.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220406183618615.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210317180201113.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210317180240323.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210317180255055.png">
+<meta property="og:image" content="http://example.com/resource/images/VUE-logo.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210314200521109.png">
+<meta property="og:image" content="http://example.com/resource/images/%E6%B8%90%E8%BF%9B%E5%BC%8F-1613206784433.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210111215624065.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210212141558460.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210228083641377.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210228083746746.png">
+<meta property="og:image" content="http://example.com/resource/images/1586936282638.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210116230221236.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2021-03-26_15-24-14.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210212174314768.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210116231815543.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210116233035582.png">
+<meta property="og:image" content="http://example.com/resource/images/1627997238868.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2022-08-15_16-43-34.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210326165544865.png">
+<meta property="og:image" content="http://example.com/resource/images/1627998961715.png">
+<meta property="og:image" content="http://example.com/resource/images/1.gif">
+<meta property="og:image" content="http://example.com/resource/images/%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A.png">
+<meta property="og:image" content="http://example.com/resource/images/2.8.0_%E7%BB%83%E4%B9%A0_%E7%BF%BB%E8%BD%AC%E4%B8%96%E7%95%8C.gif">
+<meta property="og:image" content="http://example.com/resource/images/%E6%A1%88%E4%BE%8B_%E6%8A%98%E5%8F%A0%E9%9D%A2%E6%9D%BF.gif">
+<meta property="og:image" content="http://example.com/resource/images/Day01_%E4%BD%9C%E4%B8%9A_%E4%B9%B0%E6%B0%B4%E6%9E%9C.gif">
+<meta property="og:image" content="http://example.com/resource/images/4.9.1_%E7%BB%83%E4%B9%A0_%E9%80%89%E6%8B%A9%E5%96%9C%E6%AC%A2%E7%9A%84%E6%A0%8F%E7%9B%AE.gif">
+<meta property="og:image" content="http://example.com/resource/images/3.0_%E6%A1%88%E4%BE%8B_%E8%B4%AD%E7%89%A9%E8%BD%A6%E5%88%A0%E9%99%A4_%E5%B9%B2%E5%87%80%E4%BA%86%E8%BF%98%E6%9C%89%E6%8F%90%E7%A4%BA.gif">
+<meta property="og:image" content="http://example.com/resource/images/%E4%BD%9C%E4%B8%9A-%E7%82%B9%E5%90%8D%E7%B3%BB%E7%BB%9F.gif">
+<meta property="article:published_time" content="2022-08-15T00:24:01.000Z">
+<meta property="article:modified_time" content="2022-08-30T15:39:33.573Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/1627822443295.png">
+
+<link rel="canonical" href="http://example.com/2022/08/15/vue2-base-course01/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>01_Vue 基础 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/15/vue2-base-course01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          01_Vue 基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-15 08:24:01" itemprop="dateCreated datePublished" datetime="2022-08-15T08:24:01+08:00">2022-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-30 23:39:33" itemprop="dateModified" datetime="2022-08-30T23:39:33+08:00">2022-08-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h2><p>✔ 能够理解 Vue 的概念和作用。</p>
+<p>✔ 能够理解 Vue CLI 脚手架工程化开发。</p>
+<p>✔ 能够使用 Vue 指令。</p>
+<span id="more"></span>
+
+<h2 id="铺垫自学"><a href="#铺垫自学" class="headerlink" title="铺垫自学"></a>铺垫自学</h2><h3 id="Vue-Devtools"><a href="#Vue-Devtools" class="headerlink" title="Vue Devtools"></a>Vue Devtools</h3><p><img src="/resource/images/1627822443295.png" alt="1627822443295"></p>
+<h3 id="VS-Code-插件"><a href="#VS-Code-插件" class="headerlink" title="VS Code 插件"></a>VS Code 插件</h3><p>Vue 文件代码高亮插件，VS Code 中安装。</p>
+<p><img src="/resource/images/image-20210212192713936.png" alt="image-20210212192713936"></p>
+<p>代码提示插件，VS Code 中安装。</p>
+<p><img src="/resource/images/image-20220406183618615.png" alt="image-20220406183618615"></p>
+<p>🤔 也可以用 <code>VueHelper</code> 替代 Vue2 Snippets。</p>
+<h2 id="Vue-为何学"><a href="#Vue-为何学" class="headerlink" title="Vue 为何学"></a>Vue 为何学</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>学习 Vue，用更少的时间干更多的活。</p>
+<h3 id="高效"><a href="#高效" class="headerlink" title="高效"></a>高效</h3><ol>
+<li>速度对比。</li>
+</ol>
+<p><img src="/resource/images/image-20210317180201113.png" alt="image-20210317180201113"></p>
+<ol start="2">
+<li>例如：把数组数据循环铺设到 li 中，看看分别如何做的？</li>
+</ol>
+<p>原生 JS 做法。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">&quot;myUl&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> arr = [<span class="string">&#x27;春天&#x27;</span>, <span class="string">&#x27;夏天&#x27;</span>, <span class="string">&#x27;秋天&#x27;</span>, <span class="string">&#x27;冬天&#x27;</span>]</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> myUl = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;myUl&#x27;</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> theLi = <span class="built_in">document</span>.createElement(<span class="string">&#x27;li&#x27;</span>)</span></span><br><span class="line"><span class="javascript">        theLi.innerHTML = arr[i]</span></span><br><span class="line"><span class="javascript">        myUl.appendChild(theLi)</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Vue.js 做法。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;item in arr&quot;</span>&gt;</span>&#123;&#123;item&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// ...</span></span></span><br><span class="line"><span class="javascript">        <span class="attr">data</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="attr">arr</span>: [<span class="string">&#x27;春天&#x27;</span>, <span class="string">&#x27;夏天&#x27;</span>, <span class="string">&#x27;秋天&#x27;</span>, <span class="string">&#x27;冬天&#x27;</span>],</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;)</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>🤔 注意，虽然 Vue 写起来很爽，但是不要忘记 Vue 的底层还是原生 JS。</p>
+<h3 id="市场"><a href="#市场" class="headerlink" title="市场"></a>市场</h3><p>现在很多项目都是用 Vue 开发的。</p>
+<p><img src="/resource/images/image-20210317180240323.png" alt="image-20210317180240323"></p>
+<p>市场上 90%工作都要求会 Vue，会 Vue 拿高薪，甚至 Java 或测试都要学点 Vue。</p>
+<p><img src="/resource/images/image-20210317180255055.png" alt="image-20210317180255055"></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>我们为何要学习 Vue？</p>
+<details style="margin-botton: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px;">
+        <li>高效：开发更快速。</li>
+        <li>市场：企业开发都在使用，前端工程师必备技能，高薪。</li>
+    </ul> 
+</details>
+
+<h2 id="Vue-是什么"><a href="#Vue-是什么" class="headerlink" title="Vue 是什么"></a>Vue 是什么</h2><h3 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h3><p>了解 Vue 的概念。</p>
+<p><img src="/resource/images/VUE-logo.png" alt="Vue"></p>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>渐进式 JavaScript 框架，拥有自己的一套语法规则，<a target="_blank" rel="noopener" href="https://cn.vuejs.org/">官网地址</a>。</p>
+<h3 id="渐进式"><a href="#渐进式" class="headerlink" title="渐进式"></a>渐进式</h3><p>🤔 渐进式：渐进式就是按需、逐渐的使用某部分功能。</p>
+<ul>
+<li>  前端学习的渐进式：逐渐进步，学习前端的“渐进式”。</li>
+</ul>
+<p><img src="/resource/images/image-20210314200521109.png" alt="image-20210314200521109"></p>
+<ul>
+<li>  Vue 的渐进式：逐渐使用部分功能，不必全部使用。</li>
+</ul>
+<p><img src="/resource/images/%E6%B8%90%E8%BF%9B%E5%BC%8F-1613206784433.png"></p>
+<h3 id="库和框架"><a href="#库和框架" class="headerlink" title="库和框架"></a>库和框架</h3><p>库：针对特定问题的单一解决方案，<font color=e32d40><strong>小而精</strong></font>，一般封装了好用的属性或方法（例如 jQuery）。</p>
+<p>框架：提供了一整套的解决方案，特点是<font color=e32d40><strong>大而全</strong></font>，（例如 Vue）。</p>
+<p><img src="/resource/images/image-20210111215624065.png" alt="image-20210111215624065"></p>
+<p><img src="/resource/images/image-20210212141558460.png" alt="image-20210212141558460"></p>
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>Vue 是什么？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>Vue 是一个渐进式 JavaScript 框架。</li>
+    </ul> 
+</details>
+
+<p>什么是渐进式？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>渐进式就是按需、逐渐的使用某部分功能。</li>
+    </ul> 
+</details>
+
+<p>库和框架的特点分别是什么？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>小而精或大而全。</li>
+    </ul> 
+</details>
+
+<h2 id="Vue-如何学"><a href="#Vue-如何学" class="headerlink" title="Vue 如何学"></a>Vue 如何学</h2><h3 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h3><p>了解 Vue 的学习方式和开发方式。</p>
+<h3 id="学习方法"><a href="#学习方法" class="headerlink" title="学习方法"></a>学习方法</h3><ol>
+<li><p>每天的知识点要做到了如指掌，如果做不到先花时间去记住结论或套路。</p>
+</li>
+<li><p>记住 Vue 指令作用，基础语法，弄一个笔记/字典（一一映射关系）。</p>
+</li>
+<li><p>学会查找问题的方式和解决方法（弄个报错总结文档，避免反复进坑）。</p>
+</li>
+<li><p>把课上例子、练习、案例、作业，晚自习反复磨炼使用。</p>
+</li>
+<li><p>提前预习。</p>
+</li>
+</ol>
+<h3 id="开发方式"><a href="#开发方式" class="headerlink" title="开发方式"></a>开发方式</h3><ul>
+<li>  传统开发模式：基于每一个单独的 HTML/CSS/JS 文件开发 Vue。</li>
+</ul>
+<p><img src="/resource/images/image-20210228083641377.png" alt="image-20210228083641377"></p>
+<ul>
+<li>  工程化（脚手架）开发方式：在 Webpack 环境中开发 Vue，这是最推荐，企业中使用的方式。</li>
+</ul>
+<p><img src="/resource/images/image-20210228083746746.png" alt="image-20210228083746746"></p>
+<h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>我们如何才能学好 Vue？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>多学，多练，多思考，<font color=e32d40>**多总结**</font>。</li>
+    </ul> 
+</details>
+
+<p>单独写 HTML/CSS/JS 文件或基于 Webpack 开发，我们选择哪一个？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>基于 Webpack 学习/开发 Vue 项目。</li>
+    </ul> 
+</details>
+
+<h2 id="Vue-脚手架"><a href="#Vue-脚手架" class="headerlink" title="Vue 脚手架"></a>Vue 脚手架</h2><h3 id="脚手架介绍"><a href="#脚手架介绍" class="headerlink" title="脚手架介绍"></a>脚手架介绍</h3><h4 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h4><p>自己配置 Webpack 环境非常的繁琐，官方提供了 Vue CLI 这个脚手架，可以快速搭建项目基础结构。</p>
+<h4 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h4><p>生活中的脚手架是为了保证施工过程顺利而进行搭设的工作平台，在代码里的体现，就是一套固定标准的，文件夹 + 文件 + Webpack 配置。</p>
+<p><img src="/resource/images/1586936282638.png" alt="1586936282638"></p>
+<h4 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h4><ul>
+<li><p>  开箱即用。</p>
+</li>
+<li><p>  Webpack 零配置。</p>
+</li>
+<li><p>  Babel 支持。</p>
+</li>
+<li><p>  CSS、Less 支持。</p>
+</li>
+<li><p>  开发服务器支持。</p>
+</li>
+</ul>
+<h4 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h4><p>用 Vue 开发项目，需要自己从零配置 Webpack 吗？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>不需要。</li>
+    </ul> 
+</details>
+
+<p>什么是代码中的脚手架？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>一套标准的文件夹 + 文件结构 + Webpack配置，快速搭建项目基本环境。</li>
+    </ul> 
+</details>
+
+<p>使用脚手架的好处是什么？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>零配置，开箱即用，基于它快速搭建项目基本开发环境。</li>
+    </ul> 
+</details>
+
+<h3 id="脚手架准备"><a href="#脚手架准备" class="headerlink" title="脚手架准备"></a>脚手架准备</h3><h4 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h4><p>全局安装 @vue/cli 模块包，使用命令创建 Vue 脚手架项目。</p>
+<h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><ol>
+<li>全局安装 @vue/cli 模块包。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yarn global add @vue/cli</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">npm install -g @vue/cli</span><br></pre></td></tr></table></figure>
+
+<p>🤔 如果半天没动静（95%都是网速问题），可以按 ctrl c，换网络热点继续重来（记得把网线拔了）。</p>
+<ol start="2">
+<li>查看 Vue 脚手架版本。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意 -V 是大写的</span></span><br><span class="line">vue -V</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>如果出现版本号就表示安装成功，否则失败。</li>
+</ol>
+<h4 id="小结-4"><a href="#小结-4" class="headerlink" title="小结"></a>小结</h4><p>如何安装全局包？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>yarn global add 包名 或 npm i -g 包名。</li>
+    </ul> 
+</details>
+
+<p>如何查看全局包的版本？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li><code>vue -V</code></li>
+    </ul> 
+</details>
+
+<h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><h4 id="目标-5"><a href="#目标-5" class="headerlink" title="目标"></a>目标</h4><p>用 Vue 命令，创建一个脚手架项目，并启动 Webpack 开发服务器。</p>
+<h4 id="步骤-1"><a href="#步骤-1" class="headerlink" title="步骤"></a>步骤</h4><ol>
+<li>创建项目，注意：项目名不要带大写字母、中文和特殊符号。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vue 和 create 是命令，是固定的写法，vuecli-demo 是自己的文件夹名字</span></span><br><span class="line">vue create vuecli-demo</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>选择模板，可以上下箭头选择，回车确定，弄错了 ctrl+c 从第 1 步来。</li>
+</ol>
+<p><img src="/resource/images/image-20210116230221236.png" alt="image-20210116230221236"></p>
+<ol start="3">
+<li>选择包管理器。</li>
+</ol>
+<p><img src="/resource/images/Snipaste_2021-03-26_15-24-14.png" alt="Snipaste_2021-03-26_15-24-14"></p>
+<ol start="4">
+<li>耐心等待脚手架需要的依赖包（喝点水，等会 ~）。</li>
+</ol>
+<p><img src="/resource/images/image-20210212174314768.png" alt="image-20210212174314768"></p>
+<ol start="5">
+<li>通过 cd 命令进入项目路由，通过 <code>yarn serve</code> 启动服务器。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> vuecil-demo</span><br><span class="line"></span><br><span class="line">yarn serve</span><br><span class="line"><span class="comment"># 或 npm run serve</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>只要看到绿色的，表示成功了。</li>
+</ol>
+<p><img src="/resource/images/image-20210116231815543.png" alt="image-20210116231815543"></p>
+<ol start="7">
+<li>开心的在浏览器中输入地址。</li>
+</ol>
+<p><img src="/resource/images/image-20210116233035582.png" alt="image-20210116233035582"></p>
+<h4 id="小结-5"><a href="#小结-5" class="headerlink" title="小结"></a>小结</h4><p>如何创建一个开箱即用的脚手架项目？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>vue create 项目名</li>
+    </ul> 
+</details>
+
+<p>通过哪个命令启动项目？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li><code>yarn serve</code></li>
+    </ul> 
+</details>
+
+<h3 id="脚手架目录"><a href="#脚手架目录" class="headerlink" title="脚手架目录"></a>脚手架目录</h3><h4 id="目标-6"><a href="#目标-6" class="headerlink" title="目标"></a>目标</h4><p>了解目录作用，基于它开发自己项目。</p>
+<h4 id="讲解"><a href="#讲解" class="headerlink" title="讲解"></a>讲解</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">vuecil-demo         <span class="comment"># 项目目录</span></span><br><span class="line">   ├── node_modules <span class="comment"># 项目依赖的第三方包</span></span><br><span class="line">   ├── public       <span class="comment"># 静态文件目录</span></span><br><span class="line">     ├── favicon.ico<span class="comment"># 浏览器小图标</span></span><br><span class="line">     └── index.html <span class="comment"># 单页面的 HTML 文件（网页浏览的就是它）</span></span><br><span class="line">   ├── src          <span class="comment"># 源代码文件夹</span></span><br><span class="line">     ├── assets     <span class="comment"># 静态资源</span></span><br><span class="line">       └── logo.png <span class="comment"># Vue 的 logo 图片</span></span><br><span class="line">     ├── components <span class="comment"># 组件目录</span></span><br><span class="line">       └── HelloWorld.vue <span class="comment"># 欢迎页面 Vue 代码文件</span></span><br><span class="line">     ├── App.vue    <span class="comment"># 整个应用的根组件</span></span><br><span class="line">     └── main.js    <span class="comment"># 入口 JS 文件</span></span><br><span class="line">   ├── .gitignore   <span class="comment"># git 提交忽略配置</span></span><br><span class="line">   ├── babel.config.js  <span class="comment"># babel 配置</span></span><br><span class="line">   ├── package.json <span class="comment"># 依赖包列表</span></span><br><span class="line">   ├── README.md    <span class="comment"># 项目说明</span></span><br><span class="line">   └── yarn.lock    <span class="comment"># 项目包版本锁定和缓存地址</span></span><br></pre></td></tr></table></figure>
+
+<p>记住下面几个主要文件的作用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">node_modules      – 第三方依赖包</span><br><span class="line">public/index.html – 浏览器运行的网页</span><br><span class="line">src/main.js       – Webpack 打包的入口文件</span><br><span class="line">src/App.vue       – Vue 入口页面</span><br><span class="line">package.json      – 依赖包列表文件和自定义命令</span><br></pre></td></tr></table></figure>
+
+<h4 id="小结-6"><a href="#小结-6" class="headerlink" title="小结"></a>小结</h4><p>这几个文件分别表示什么意思：<code>node_modules</code>、<code>public/index.html</code>、<code>src/main.js</code>、<code>src/App.vue</code>、<code>package.json</code>。</p>
+<details style="margin-bottom: 20px;">     
+<summary>答案</summary> 
+    <ul style="line-height: 30px;">
+        <li>参考上面笔记。</li>
+    </ul> 
+</details>
+
+<h3 id="脚手架结构"><a href="#脚手架结构" class="headerlink" title="脚手架结构"></a>脚手架结构</h3><h4 id="目标-7"><a href="#目标-7" class="headerlink" title="目标"></a>目标</h4><p>知道项目入口和其他文件的关系。</p>
+<h4 id="讲解-1"><a href="#讲解-1" class="headerlink" title="讲解"></a>讲解</h4><p>如图所示，一切从 <code>main.js</code> 开始，到 <code>index.html</code> 结束。</p>
+<p><img src="/resource/images/1627997238868.png" alt="1627997238868"></p>
+<h4 id="小结-7"><a href="#小结-7" class="headerlink" title="小结"></a>小结</h4><p><code>main.js</code> 和 <code>App.vue</code> 以及 <code>index.html</code> 作用和关系？</p>
+<details style="margin-bottom: 20px;">      
+    <summary>答案</summary> 
+    <ul style="line-height: 30px;">
+        <li>main.js，项目打包入口。</li>
+        <li>App.vue，Vue 页面入口。</li>
+        <li>index.html，浏览器运行的文件。</li>
+        <li>App.vue => main.js => index.html。</li>
+    </ul> 
+</details>
+
+<h3 id="脚手架配置"><a href="#脚手架配置" class="headerlink" title="脚手架配置"></a>脚手架配置</h3><h4 id="目标-8"><a href="#目标-8" class="headerlink" title="目标"></a>目标</h4><p>脚手架内置的 Webpack，如何修改配置。</p>
+<h4 id="步骤-2"><a href="#步骤-2" class="headerlink" title="步骤"></a>步骤</h4><p>和 src 目录同级，新建 <code>vue.config.js</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; defineConfig &#125; = <span class="built_in">require</span>(<span class="string">&#x27;@vue/cli-service&#x27;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = defineConfig(&#123;</span><br><span class="line">    <span class="attr">transpileDependencies</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">lintOnSave</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">devServer</span>: &#123;</span><br><span class="line">        <span class="attr">host</span>: <span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        <span class="attr">port</span>: <span class="number">3000</span>,</span><br><span class="line">        <span class="attr">open</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="小结-8"><a href="#小结-8" class="headerlink" title="小结"></a>小结</h4><p>脚手架项目 Webpack 配置文件的名字是什么？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li><code>vue.config.js</code></li>
+    </ul> 
+</details>
+
+<h3 id="关于-ESLint"><a href="#关于-ESLint" class="headerlink" title="关于 ESLint"></a>关于 ESLint</h3><h4 id="目标-9"><a href="#目标-9" class="headerlink" title="目标"></a>目标</h4><p>了解什么是 ESLint？</p>
+<h4 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h4><p>🤔 ESLint 脚手架内置代码检查工具（插件），可以帮助我们检查你的代码风格。</p>
+<ol>
+<li>例如在 <code>main.js</code> 随便声明个变量（不使用这个变量）。</li>
+</ol>
+<p><img src="/resource/images/Snipaste_2022-08-15_16-43-34.png" alt="image-20210326165406694"></p>
+<ol start="2">
+<li>运行后观察发现，终端和页面都报错了，因为 ESLint 检测出来代码写的不严谨。</li>
+</ol>
+<p><img src="/resource/images/image-20210326165544865.png" alt="image-20210326165544865"></p>
+<h4 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h4><p>方式 1：手动解决掉错误，以后项目中会讲如何自动解决。</p>
+<p>方式 2：暂时关闭 ESLint 检查（因为现在主要精力在学习 Vue 语法上）。</p>
+<p><code>vue.config.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; defineConfig &#125; = <span class="built_in">require</span>(<span class="string">&#x27;@vue/cli-service&#x27;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = defineConfig(&#123;</span><br><span class="line">    <span class="comment">// ...其他代码</span></span><br><span class="line">    <span class="attr">lintOnSave</span>: <span class="literal">false</span>,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>🤔 注意：配置文件的修改需要重启服务才能生效。</p>
+<h4 id="小结-9"><a href="#小结-9" class="headerlink" title="小结"></a>小结</h4><p>ESLint 是什么？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>ESLint 是代码规范检查工具，能约束我们写出更好的代码。</li>
+    </ul> 
+</details>
+
+<p>如何暂时关闭？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>在 vue.config.js 中设置 lintOnSave 为 false 重启服务器即可。</li>
+    </ul> 
+</details>
+
+<h3 id="单-Vue-文件"><a href="#单-Vue-文件" class="headerlink" title="单 Vue 文件"></a>单 Vue 文件</h3><h4 id="目标-10"><a href="#目标-10" class="headerlink" title="目标"></a>目标</h4><p>掌握 Vue 文件，使用规则和特点。</p>
+<h4 id="讲解-2"><a href="#讲解-2" class="headerlink" title="讲解"></a>讲解</h4><ol>
+<li><p>template 里只能有一个根标签。</p>
+</li>
+<li><p>每一个 Vue 文件是一个独立模块，有自己的作用域，不用担心命名冲突问题。</p>
+</li>
+<li><p>style 配合 scoped 属性，可以保证样式只针对当前文件的 template 内标签生效。</p>
+</li>
+<li><p>配合 Webpack，可以把 <code>.vue</code> 文件打包起来插入到 index.html。</p>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- template 必须，只能有一个根标签，影响渲染到页面的标签结构 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>欢迎使用 Vue<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- JS 相关 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;App&#x27;</span>,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 当前组件的样式，设置 scoped，可以保证样式只对当前页面有效 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="小结-10"><a href="#小结-10" class="headerlink" title="小结"></a>小结</h4><p>单 Vue 文件的好处？</p>
+<details style="margin-bottom: 20px;">     
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>独立作用域，不再担心变量重名问题。</li>
+    </ul> 
+</details>
+
+<p>单 Vue 文件 template 中可以有几个跟标签？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>1 个。</li>
+    </ul> 
+</details>
+
+<p>单 Vue 文件里标签和样式会经过 __ 的打包，到 __ 页面？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>经过 Webpack 的打包，到 index.html 页面。</li>
+    </ul> 
+</details>
+
+<h3 id="清理欢迎界面"><a href="#清理欢迎界面" class="headerlink" title="清理欢迎界面"></a>清理欢迎界面</h3><h4 id="目标-11"><a href="#目标-11" class="headerlink" title="目标"></a>目标</h4><p>清理欢迎页面，写我们自己代码。</p>
+<h4 id="步骤-3"><a href="#步骤-3" class="headerlink" title="步骤"></a>步骤</h4><ol>
+<li>精简 <code>src/App.vue</code> 文件中的内容如下。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>App<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;&#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>assets 和 components 文件夹下的内容都清空。</li>
+</ol>
+<p><img src="/resource/images/1627998961715.png" alt="1627998961715"></p>
+<h4 id="小结-11"><a href="#小结-11" class="headerlink" title="小结"></a>小结</h4><p>让页面只显示 <code>App</code> 文字，删除了哪些东西？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>精简 App.vue 文件里的代码。</li>
+        <li>清空 assets 和 components 目录。</li>
+    </ul> 
+</details>
+
+<h3 id="阶段小结"><a href="#阶段小结" class="headerlink" title="阶段小结"></a>阶段小结</h3><p>@vue/cli 是什么？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>全局的 Vue 命令行工具，脚手架。</li>
+    </ul> 
+</details>
+
+<p>通过什么命令创建脚手架项目？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li><code>vue create 项目名</code></li>
+    </ul> 
+</details>
+
+<p>脚手架项目如何启动？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li><code>yarn serve</code></li>
+    </ul> 
+</details>
+
+<p>脚手架项目好处？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>开箱即用，配置好的一套环境和目录结构，快速开发自己项目。</li>
+    </ul> 
+</details>
+
+<p>脚手架项目入口有哪些？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>main.js，Webpack 打包入口。</li>
+        <li>App.vue，Vue 页面入口。</li>
+        <li>index.html，网页入口。</li>
+    </ul> 
+</details>
+
+<p>单 Vue 文件的好处?</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>独立作用域，JS 变量互不影响。</li>
+        <li>style 配合 scoped 属性，样式只针对当前模板生效。</li>
+    </ul> 
+</details>
+
+<h2 id="Vue-掌握插值表达式"><a href="#Vue-掌握插值表达式" class="headerlink" title="Vue 掌握插值表达式"></a>Vue 掌握插值表达式</h2><h3 id="目标-12"><a href="#目标-12" class="headerlink" title="目标"></a>目标</h3><p>学习插值表达式，能做到在 DOM 中插入内容。</p>
+<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><ul>
+<li><p>  叫法：声明式渲染/文本插值/大胡子语法。</p>
+</li>
+<li><p>  语法：<code>&#123;&#123; 表达式 &#125;&#125;</code>。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123; msg &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h2</span>&gt;</span>&#123;&#123; obj.name &#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123;&#123; obj.age &gt; 18 ? &#x27;成年&#x27; : &#x27;未成年&#x27; &#125;&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 格式固定，定义 Vue 数据之处</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// key 相当于变量名</span></span></span><br><span class="line"><span class="javascript">                <span class="attr">msg</span>: <span class="string">&#x27;Hello, Vue&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">obj</span>: &#123;</span></span><br><span class="line"><span class="javascript">                    <span class="attr">name</span>: <span class="string">&#x27;小 Vue&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                    <span class="attr">age</span>: <span class="number">5</span>,</span></span><br><span class="line"><span class="javascript">                &#125;,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-12"><a href="#小结-12" class="headerlink" title="小结"></a>小结</h3><p>差值表达式是几个括号？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>双大括号，可以把 Vue 变量/表达式直接显示在标签内。</li>
+    </ul> 
+</details>
+
+<p>Vue 中变量声明在哪个函数内？这个函数必须 return 什么数据类型？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>data 函数，return 的是一个对象，对象内的 key 就是变量名。</li>
+    </ul> 
+</details>
+
+<h2 id="Vue-MVVM-设计模式"><a href="#Vue-MVVM-设计模式" class="headerlink" title="Vue MVVM 设计模式"></a>Vue MVVM 设计模式</h2><h3 id="目标-13"><a href="#目标-13" class="headerlink" title="目标"></a>目标</h3><p>了解 Vue 设计模式，转换自己编程思想。</p>
+<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><p>演示：在上个代码基础上，通过 devtool 开发者工具改变 M 层的数据，观察 V 层（发现视图的自动同步）。</p>
+<p><img src="/resource/images/1.gif" alt="1"></p>
+<h3 id="讲解-3"><a href="#讲解-3" class="headerlink" title="讲解"></a>讲解</h3><p>设计模式：是一套被反复使用的、代码设计经验的总结（代码分层，架构设计）。</p>
+<ul>
+<li><p>MVVM 是一种软件/框架开发模式，需要了解其中所表示的含义。</p>
+<ul>
+<li><p>  M：model 数据模型（需要在 data 里定义）。</p>
+</li>
+<li><p>  V：view 视图（页面）。</p>
+</li>
+<li><p>  VM：ViewModel 视图模型（Vue 源码）。</p>
+</li>
+</ul>
+</li>
+<li><p>  MVVM 通过数据双向绑定让数据自动地同步到视图，不再需要操作 DOM（思想转变）。</p>
+</li>
+</ul>
+<p><img src="/resource/images/%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A.png"></p>
+<h3 id="小结-13"><a href="#小结-13" class="headerlink" title="小结"></a>小结</h3><p>什么是设计模式？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>前人总结好的，被反复验证的编码规范，对于 Vue 而言，设计模式是指对代码分层，引入的一种架构概念。</li>
+    </ul> 
+</details>
+
+<p>MVVM 分别表示什么意思？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>参考上面笔记。</li>
+    </ul> 
+</details>
+
+<p>有了 MVVM 设计模式，Vue 中推荐直接操作 DOM 吗？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>不推荐，减少 DOM 操作。</li>
+    </ul> 
+</details>
+
+<h2 id="Vue-v-bind-动态属性"><a href="#Vue-v-bind-动态属性" class="headerlink" title="Vue v-bind 动态属性"></a>Vue v-bind 动态属性</h2><h3 id="目标-14"><a href="#目标-14" class="headerlink" title="目标"></a>目标</h3><p>学习 v-bind，掌握给标签属性如何赋值 Vue 变量。</p>
+<h3 id="学习-1"><a href="#学习-1" class="headerlink" title="学习"></a>学习</h3><p>Vue 指令：实质上就是特殊的 HTML 标签属性，特点：<code>v-</code> 开头，每个指令都有特定的作用，学习第一个指定 <code>v-bind</code>。</p>
+<ul>
+<li><p>  语法：<code>v-bind:属性名=&quot;Vue 变量&quot;</code>。</p>
+</li>
+<li><p>  简写：<code>:属性名=&quot;Vue 变量&quot;</code>。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 通过 v-bind 指令，可以为属性动态赋值 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">v-bind:href</span>=<span class="string">&quot;url&quot;</span>&gt;</span>我是a标签<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;imgSrc&quot;</span> <span class="attr">width</span>=<span class="string">&quot;100&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">url</span>: <span class="string">&#x27;https://www.baidu.com&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">imgSrc</span>: <span class="string">&#x27;https://t7.baidu.com/it/u=4162611394,4275913936&amp;fm=193&amp;f=GIF&#x27;</span>,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-14"><a href="#小结-14" class="headerlink" title="小结"></a>小结</h3><p>通过哪个指令给 DOM 标签的属性值设置 Vue 变量？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li><code>:属性名="Vue 变量"</code></li>
+    </ul> 
+</details>
+
+<h2 id="Vue-v-on-事件绑定"><a href="#Vue-v-on-事件绑定" class="headerlink" title="Vue v-on 事件绑定"></a>Vue v-on 事件绑定</h2><h3 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h3><h4 id="目标-15"><a href="#目标-15" class="headerlink" title="目标"></a>目标</h4><p>掌握通过 v-on 进行事件绑定。</p>
+<h4 id="学习-2"><a href="#学习-2" class="headerlink" title="学习"></a>学习</h4><ul>
+<li><p>  v-on:事件名=”methods 中的函数”。</p>
+</li>
+<li><p>  v-on:事件名=”methods 中的函数(实参)”。</p>
+</li>
+<li><p>  <code>v-on:</code> 可以简写为 <code>@</code> 符号。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>你要买商品的数量：&#123;&#123; count &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">&quot;addFn&quot;</span>&gt;</span>+1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">&quot;addCountFn(5)&quot;</span>&gt;</span>+5<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;subFn&quot;</span>&gt;</span>-1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">count</span>: <span class="number">1</span>,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">addFn</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// this 表示当前组件实例，可以访问到 data 里面的数据</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.count++</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">addCountFn</span>(<span class="params">num</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.count += num</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">subFn</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.count--</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="小结-15"><a href="#小结-15" class="headerlink" title="小结"></a>小结</h4><p>如何给 DOM 标签绑定事件？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>@事件名="methods里的函数名"。</li>
+    </ul> 
+</details>
+
+<p>如何给事件传值？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>@事件名="methods里的函数名(实参)"。</li>
+    </ul> 
+</details>
+
+<h3 id="点击说笑话案例"><a href="#点击说笑话案例" class="headerlink" title="点击说笑话案例"></a>点击说笑话案例</h3><h4 id="目标-16"><a href="#目标-16" class="headerlink" title="目标"></a>目标</h4><p>点击按钮，随机切换显示一个笑话。</p>
+<h4 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h4><ol>
+<li><p>准备一个变量，给初始值，显示到页面上。</p>
+</li>
+<li><p>再准备一个笑话数组。</p>
+</li>
+<li><p>点击按钮，随机提取一个笑话字符串，赋予给 word 变量。</p>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 直接复制这个，接着写即可。 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; word &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span>&gt;</span>点击说笑话<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">word</span>: <span class="string">&#x27;这里是一条笑话&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">jokeArr</span>: [</span></span><br><span class="line"><span class="javascript">                    <span class="string">&#x27;我去相亲网站去了，那你找到对象了吗? 不! 我找到了他们网站的一个Bug&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                    <span class="string">&#x27;讲述一下车怎么翻沟里了。我坐在副驾说沟！沟!沟! 朋友说：欧嘞，欧嘞。欧嘞 结果车就翻里了。&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                    <span class="string">&#x27;几位大哥开车去钓鱼，车陷草里了，然后几个大神说把草烧了就出来了，然后就放火烧了，结果就烧没了。&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                ],</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 直接复制这个，接着写即可。 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; word &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;jokeBtnFn&quot;</span>&gt;</span>点击说笑话<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">word</span>: <span class="string">&#x27;这里是一条笑话&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">jokeArr</span>: [</span></span><br><span class="line"><span class="javascript">                    <span class="string">&#x27;我去相亲网站去了，那你找到对象了吗? 不! 我找到了他们网站的一个Bug&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                    <span class="string">&#x27;讲述一下车怎么翻沟里了。我坐在副驾说沟！沟!沟! 朋友说：欧嘞，欧嘞。欧嘞 结果车就翻里了。&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                    <span class="string">&#x27;几位大哥开车去钓鱼，车陷草里了，然后几个大神说把草烧了就出来了，然后就放火烧了，结果就烧没了。&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                ],</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">jokeBtnFn</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">const</span> randNum = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="built_in">this</span>.jokeArr.length)</span></span><br><span class="line"><span class="javascript">                <span class="keyword">const</span> str = <span class="built_in">this</span>.jokeArr[randNum]</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.word = str</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="小结-16"><a href="#小结-16" class="headerlink" title="小结"></a>小结</h4><p>点击说笑话的实现思路是什么？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>先写静态结构，再考虑动态效果。</li>
+        <li>绑定点击事件，然后随机数从数组里取字符串。</li> 
+        <li>把字符串赋予给变量 word，word 变化视图自然会更新。</li> 
+    </ul> 
+</details>
+
+<h3 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h3><h4 id="目标-17"><a href="#目标-17" class="headerlink" title="目标"></a>目标</h4><p>Vue 事件处理函数中，如何拿到事件对象。</p>
+<h4 id="学习-3"><a href="#学习-3" class="headerlink" title="学习"></a>学习</h4><ul>
+<li><p>  无传参，通过形参直接接收。</p>
+</li>
+<li><p>  传参，通过固定的 $event 指代事件对象传给事件处理函数。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> @<span class="attr">click</span>=<span class="string">&quot;one&quot;</span> <span class="attr">href</span>=<span class="string">&quot;http://www.baidu.com&quot;</span>&gt;</span>阻止跳转到百度<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> @<span class="attr">click</span>=<span class="string">&quot;two(10, $event)&quot;</span> <span class="attr">href</span>=<span class="string">&quot;http://www.baidu.com&quot;</span>&gt;</span>阻止跳转到百度<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">one</span>(<span class="params">e</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                e.preventDefault()</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">two</span>(<span class="params">num, e</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                e.preventDefault()</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="小结-17"><a href="#小结-17" class="headerlink" title="小结"></a>小结</h4><p>Vue 事件处理函数，如何拿到事件对象？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>无实参，直接用第一个形参接收。</li>
+        <li>有实参，手动传入 $event。</li>
+    </ul> 
+</details>
+
+<h3 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h3><h4 id="目标-18"><a href="#目标-18" class="headerlink" title="目标"></a>目标</h4><p>掌握事件修饰符，可以给事件带来更强大的功能。</p>
+<h4 id="学习-4"><a href="#学习-4" class="headerlink" title="学习"></a>学习</h4><p>@事件名.修饰符=”methods 里函数”。</p>
+<ul>
+<li><p>  .stop，阻止事件冒泡。</p>
+</li>
+<li><p>  .prevent，阻止默认行为。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> @<span class="attr">click</span>=<span class="string">&quot;fatherFn&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- .stop 阻止冒泡，点击按钮时，外部的 click 不会再被触发 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click.stop</span>=<span class="string">&quot;btn&quot;</span>&gt;</span>.stop阻止事件冒泡<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- .prevent 阻止默认行为，点击 a 标签不会再进行跳转 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://www.baidu.com&quot;</span> @<span class="attr">click.prevent</span>=<span class="string">&quot;btn&quot;</span>&gt;</span>.prevent阻止默认行为<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">fatherFn</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">&#x27;father 被触发&#x27;</span>)</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">btn</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="number">1</span>)</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="小结-18"><a href="#小结-18" class="headerlink" title="小结"></a>小结</h4><p>Vue 的事件修饰符 .stop 和 .prevent 分别表示什么意思？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>.stop，阻止事件冒泡。</li>
+        <li>.prevent，阻止默认行为。</li>
+    </ul> 
+</details>
+
+<h3 id="按键修饰符"><a href="#按键修饰符" class="headerlink" title="按键修饰符"></a>按键修饰符</h3><h4 id="目标-19"><a href="#目标-19" class="headerlink" title="目标"></a>目标</h4><p>给键盘事件，绑定<a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/events.html#%E6%8C%89%E9%94%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6">修饰符</a>。</p>
+<h4 id="学习-5"><a href="#学习-5" class="headerlink" title="学习"></a>学习</h4><ul>
+<li><p>  @keyup.enter，监听回车按键。</p>
+</li>
+<li><p>  @keyup.esc，监听 ESC 按键。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> @<span class="attr">keydown.enter</span>=<span class="string">&quot;enterFn&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> @<span class="attr">keydown.esc</span>=<span class="string">&quot;escFn&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">enterFn</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">&#x27;按下了 Enter&#x27;</span>)</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">escFn</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">&#x27;按下了 ESC&#x27;</span>)</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="小结-19"><a href="#小结-19" class="headerlink" title="小结"></a>小结</h4><p>按键修饰符如何使用？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>@键盘事件.按键修饰符="methods里的函数名"。</li>
+    </ul> 
+</details>
+
+<p><code>.enter</code> 和 <code>.esc</code> 修饰符什么时候会触发？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>参考上面笔记。</li>
+    </ul> 
+</details>
+
+<h3 id="翻转世界案例"><a href="#翻转世界案例" class="headerlink" title="翻转世界案例"></a>翻转世界案例</h3><h4 id="目标-20"><a href="#目标-20" class="headerlink" title="目标"></a>目标</h4><p>点击按钮，对视图中的文字进行反转。</p>
+<p><img src="/resource/images/2.8.0_%E7%BB%83%E4%B9%A0_%E7%BF%BB%E8%BD%AC%E4%B8%96%E7%95%8C.gif" alt="练习1_翻转世界"></p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123; message &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;btn&quot;</span>&gt;</span>逆转世界<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">message</span>: <span class="string">&#x27;HELLO, WORLD&#x27;</span>,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">btn</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.message = <span class="built_in">this</span>.message.split(<span class="string">&#x27;&#x27;</span>).reverse().join(<span class="string">&#x27;&#x27;</span>)</span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="小结-20"><a href="#小结-20" class="headerlink" title="小结"></a>小结</h4><p>点击翻转字符串用到了字符串的哪个 API，数组的哪个 API？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>split 和 reverse。</li>
+    </ul> 
+</details>
+
+<h2 id="Vue-v-model-双向绑定"><a href="#Vue-v-model-双向绑定" class="headerlink" title="Vue v-model 双向绑定"></a>Vue v-model 双向绑定</h2><h3 id="基本绑定"><a href="#基本绑定" class="headerlink" title="基本绑定"></a>基本绑定</h3><h4 id="目标-21"><a href="#目标-21" class="headerlink" title="目标"></a>目标</h4><p>学习 v-model，把表单值和 Vue 变量双向绑定。</p>
+<h4 id="学习-6"><a href="#学习-6" class="headerlink" title="学习"></a>学习</h4><ul>
+<li><p>  语法: v-model=”vue 数据变量”。</p>
+</li>
+<li><p>双向数据绑定。</p>
+<ul>
+<li><p>  数据变化 -&gt; 视图自动同步。</p>
+</li>
+<li><p>  视图变化 -&gt; 数据自动同步。</p>
+</li>
+</ul>
+</li>
+<li><p>  演示：text、password、select。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- v-model：是实现 Vue 变量和表单标签 value 属性，双向绑定的指令 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>用户名:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;username&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>密码:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;pass&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>来自于: <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 下拉菜单要绑定在select上 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">select</span> <span class="attr">v-model</span>=<span class="string">&quot;from&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;北京市&quot;</span>&gt;</span>北京<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;南京市&quot;</span>&gt;</span>南京<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;天津市&quot;</span>&gt;</span>天津<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">username</span>: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">pass</span>: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">from</span>: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>🤔 注意：现阶段 v-model 只能用在表单元素上，以后学组件后讲 v-model 高级用法。</p>
+<h4 id="小结-21"><a href="#小结-21" class="headerlink" title="小结"></a>小结</h4><p>现阶段，v-model 只能用在什么元素上？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>只能用在表单标签上。</li>
+    </ul> 
+</details>
+
+<p>v-model 有什么作用？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>把 Vue 的数据变量和表单的 value 属性双向绑定在一起。</li>
+    </ul> 
+</details>
+
+<p>下拉菜单 v-model 写在哪里？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>v-model 写在 select 标签上，option 标签的 value 表示 v-model 绑定的值。</li>
+    </ul> 
+</details>
+
+<h3 id="其他绑定"><a href="#其他绑定" class="headerlink" title="其他绑定"></a>其他绑定</h3><h4 id="目标-22"><a href="#目标-22" class="headerlink" title="目标"></a>目标</h4><p>v-model 在其他表单标签使用。</p>
+<h4 id="学习-7"><a href="#学习-7" class="headerlink" title="学习"></a>学习</h4><p>用在 checkbox、radio、textarea 上。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 遇到复选框，v-model 的变量值有下面两种情况 --&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 非数组，关联的是复选框的 checked 属性（true / false） --&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 数组，关联的是复选框的 value 属性 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>爱好: <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;hobby&quot;</span> <span class="attr">value</span>=<span class="string">&quot;抽烟&quot;</span> /&gt;</span>抽烟 <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;hobby&quot;</span> <span class="attr">value</span>=<span class="string">&quot;喝酒&quot;</span> /&gt;</span>喝酒 <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;hobby&quot;</span> <span class="attr">value</span>=<span class="string">&quot;写代码&quot;</span> /&gt;</span>写代码</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>性别: <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">value</span>=<span class="string">&quot;男&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;gender&quot;</span> /&gt;</span>男 <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">value</span>=<span class="string">&quot;女&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;gender&quot;</span> /&gt;</span>女</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>自我介绍<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">v-model</span>=<span class="string">&quot;intro&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">hobby</span>: [],</span></span><br><span class="line"><span class="javascript">                <span class="attr">gender</span>: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">intro</span>: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="小结-22"><a href="#小结-22" class="headerlink" title="小结"></a>小结</h4><p>v-model 用在复选框时，需要注意什么？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>v-model 的 Vue 变量是非数组，关联的是 checked 属性。</li>
+        <li>v-model 的 Vue 变量是数组，关联的是 value 属性。</li>
+    </ul> 
+</details>
+
+<p>Vue 变量初始值会不会影响表单的默认状态？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>会影响，因为双向数据绑定。</li>
+    </ul> 
+</details>
+
+<h3 id="修饰符-1"><a href="#修饰符-1" class="headerlink" title="修饰符"></a>修饰符</h3><h4 id="目标-23"><a href="#目标-23" class="headerlink" title="目标"></a>目标</h4><p>掌握 v-model 上常见的修饰符。</p>
+<h4 id="学习-8"><a href="#学习-8" class="headerlink" title="学习"></a>学习</h4><p>v-model.修饰符=”Vue 数据变量”。</p>
+<ul>
+<li><p>  .number，以 parseFloat 的形式转成数字类型。</p>
+</li>
+<li><p>  .trim，去除首尾空白字符。</p>
+</li>
+<li><p>  .lazy，在 change 时触发事件（默认是 input，输入时）。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>年龄:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model.number</span>=<span class="string">&quot;age&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>人生格言:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model.trim</span>=<span class="string">&quot;motto&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>自我介绍:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">v-model.lazy</span>=<span class="string">&quot;intro&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">age</span>: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">motto</span>: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">intro</span>: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="小结-23"><a href="#小结-23" class="headerlink" title="小结"></a>小结</h4><p>v-model 常见的修饰符 <code>.number</code>、<code>.trim</code>、<code>.lazy</code> 分别表示什么意思？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>参考上面笔记。</li>
+    </ul> 
+</details>
+
+<h2 id="Vue-v-html"><a href="#Vue-v-html" class="headerlink" title="Vue v-html"></a>Vue v-html</h2><h3 id="目标-24"><a href="#目标-24" class="headerlink" title="目标"></a>目标</h3><p>学习 v-html，解析标签及内容。</p>
+<h3 id="学习-9"><a href="#学习-9" class="headerlink" title="学习"></a>学习</h3><ul>
+<li><p>  语法：<code>v-html=&quot;Vue 数据变量&quot;</code>。</p>
+</li>
+<li><p>  注意：会覆盖插值表达式（插值表达式不会解析标签）。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-html</span>=<span class="string">&quot;str&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">str</span>: <span class="string">&#x27;&lt;h2&gt;我是一个span标签&lt;/h2&gt;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-24"><a href="#小结-24" class="headerlink" title="小结"></a>小结</h3><p>v-html 有什么作用？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>可以解析标签及内容。</li>
+    </ul> 
+</details>
+
+<h2 id="Vue-v-show-和-v-if"><a href="#Vue-v-show-和-v-if" class="headerlink" title="Vue v-show 和 v-if"></a>Vue v-show 和 v-if</h2><h3 id="目标-25"><a href="#目标-25" class="headerlink" title="目标"></a>目标</h3><p>控制标签显示或隐藏。</p>
+<h3 id="学习-10"><a href="#学习-10" class="headerlink" title="学习"></a>学习</h3><ul>
+<li><p>语法。</p>
+<ul>
+<li><p>  v-show=”Vue 变量”。</p>
+</li>
+<li><p>  v-if=”Vue 变量”。</p>
+</li>
+</ul>
+</li>
+<li><p>原理。</p>
+<ul>
+<li><p>  v-show 是通过 CSS 样式控制的显示和隐藏（频繁切换使用）。</p>
+</li>
+<li><p>  v-if 直接从 DOM 树重新创建和移除，能配合 v-else-if、v-else 使用。</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">v-show</span>=<span class="string">&quot;isOk&quot;</span>&gt;</span>v-show的盒子<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">v-if</span>=<span class="string">&quot;isOk&quot;</span>&gt;</span>v-if的盒子<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-if</span>=<span class="string">&quot;age &gt; 30&quot;</span>&gt;</span>中年<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-else-if</span>=<span class="string">&quot;age &gt; 18&quot;</span>&gt;</span>成年<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-else</span>&gt;</span>未成年<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">isOk</span>: <span class="literal">true</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">age</span>: <span class="number">18</span>,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-25"><a href="#小结-25" class="headerlink" title="小结"></a>小结</h3><p>Vue 如何控制标签显示/隐藏？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>v-show 或 v-if，给变量赋予 true/false，显示/隐藏。</li>
+    </ul> 
+</details>
+
+<p>当有一些频繁切换操作的场景选哪个？当有多个条件判断的场景选哪个？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>参考上面笔记。</li>
+    </ul> 
+</details>
+
+<h2 id="折叠面板案例"><a href="#折叠面板案例" class="headerlink" title="折叠面板案例"></a>折叠面板案例</h2><h3 id="目标-26"><a href="#目标-26" class="headerlink" title="目标"></a>目标</h3><p>需求：点击展开或收起时，把内容区域显示或者隐藏。</p>
+<p><img src="/resource/images/%E6%A1%88%E4%BE%8B_%E6%8A%98%E5%8F%A0%E9%9D%A2%E6%9D%BF.gif" alt="案例_折叠面板"></p>
+<h3 id="准备步骤"><a href="#准备步骤" class="headerlink" title="准备步骤"></a>准备步骤</h3><ol>
+<li>此案例使用了 less 语法，需要下载模块。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add less less-loader -D</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>只有标签和样式（复制继续写）。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>案例：折叠面板<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h4</span>&gt;</span>芙蓉楼送辛渐<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;btn&quot;</span>&gt;</span> 收起 <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>寒雨连江夜入吴，<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>平明送客楚山孤。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>洛阳亲友如相问，<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>一片冰心在玉壶。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;&#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;less&quot;</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-tag">body</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">background-color</span>: <span class="number">#ccc</span>;</span></span><br><span class="line"><span class="css">        <span class="selector-id">#app</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">width</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">margin</span>: <span class="number">20px</span> auto;</span></span><br><span class="line"><span class="css">            <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">border</span>: <span class="number">4px</span> solid blueviolet;</span></span><br><span class="line"><span class="css">            <span class="attribute">border-radius</span>: <span class="number">1em</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">box-shadow</span>: <span class="number">3px</span> <span class="number">3px</span> <span class="number">3px</span> <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>);</span></span><br><span class="line"><span class="css">            <span class="attribute">padding</span>: <span class="number">1em</span> <span class="number">2em</span> <span class="number">2em</span>;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">h3</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.title</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">                <span class="attribute">justify-content</span>: space-between;</span></span><br><span class="line"><span class="css">                <span class="attribute">align-items</span>: center;</span></span><br><span class="line"><span class="css">                <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#ccc</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">1em</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.title</span> <span class="selector-tag">h4</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">line-height</span>: <span class="number">2</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">margin</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.container</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#ccc</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">1em</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.btn</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="comment">/* 鼠标改成手的形状 */</span></span></span><br><span class="line"><span class="css">                <span class="attribute">cursor</span>: pointer;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="正确答案"><a href="#正确答案" class="headerlink" title="正确答案"></a>正确答案</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>案例：折叠面板<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h4</span>&gt;</span>芙蓉楼送辛渐<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- #2 isShow 作用于文案 --&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- #4 绑定点击事件 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;btn&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;isShow = !isShow&quot;</span>&gt;</span> &#123;&#123; isShow ? &#x27;收起&#x27; : &#x27;展开&#x27; &#125;&#125; <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- #3 isShow 作用于内容 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span> <span class="attr">v-show</span>=<span class="string">&quot;isShow&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>寒雨连江夜入吴,<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>平明送客楚山孤。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>洛阳亲友如相问，<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>一片冰心在玉壶。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// #1</span></span></span><br><span class="line"><span class="javascript">                <span class="attr">isShow</span>: <span class="literal">false</span>,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-26"><a href="#小结-26" class="headerlink" title="小结"></a>小结</h3><p>案例思路？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px;">
+        <li>准备静态结构和样式。</li>
+        <li>在 data 中准备控制显示隐藏的变量，并作用于【文案】和【内容】。</li>
+        <li>给按钮绑定点击事件，切换变量。</li>
+    </ul> 
+</details>
+
+<h2 id="Vue-v-for"><a href="#Vue-v-for" class="headerlink" title="Vue v-for"></a>Vue v-for</h2><h3 id="目标-27"><a href="#目标-27" class="headerlink" title="目标"></a>目标</h3><p>学习 v-for，循环数据生成标签。</p>
+<h3 id="学习-11"><a href="#学习-11" class="headerlink" title="学习"></a>学习</h3><ul>
+<li><p>  语法：<code>v-for=&quot;(值变量，索引变量) in 目标&quot;</code>。</p>
+</li>
+<li><p>  目标：数组 / 对象 / 数字 / 字符串。</p>
+</li>
+<li><p>注意。</p>
+<ul>
+<li><p>  v-for 的临时变量名不能用到 v-for 范围外。</p>
+</li>
+<li><p>  循环时候绑定的 key 值不能重复。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>遍历数组。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- v-for 把一组数据，渲染成一组 DOM --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 口诀：让谁循环生成，v-for 就写谁身上 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>学生姓名<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;(item, index) in arr&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item&quot;</span>&gt;</span>&#123;&#123; index &#125;&#125; - &#123;&#123; item &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="attr">arr</span>: [<span class="string">&quot;小明&quot;</span>, <span class="string">&quot;小欢欢&quot;</span>, <span class="string">&quot;大黄&quot;</span>]</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>遍历数组内对象。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 省略其他 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>学生详细信息<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;obj in stuArr&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;obj.id&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123; obj.name &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123; obj.sex &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123; obj.hobby &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// ...省略其他</span></span></span><br><span class="line"><span class="javascript">                <span class="attr">stuArr</span>: [</span></span><br><span class="line"><span class="javascript">                    &#123;</span></span><br><span class="line"><span class="javascript">                        <span class="attr">id</span>: <span class="number">1001</span>,</span></span><br><span class="line"><span class="javascript">                        <span class="attr">name</span>: <span class="string">&#x27;孙悟空&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                        <span class="attr">sex</span>: <span class="string">&#x27;男&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                        <span class="attr">hobby</span>: <span class="string">&#x27;吃桃子&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                    &#125;,</span></span><br><span class="line"><span class="javascript">                    &#123;</span></span><br><span class="line"><span class="javascript">                        <span class="attr">id</span>: <span class="number">1002</span>,</span></span><br><span class="line"><span class="javascript">                        <span class="attr">name</span>: <span class="string">&#x27;猪八戒&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                        <span class="attr">sex</span>: <span class="string">&#x27;男&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                        <span class="attr">hobby</span>: <span class="string">&#x27;背媳妇&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                    &#125;,</span></span><br><span class="line"><span class="javascript">                ],</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-27"><a href="#小结-27" class="headerlink" title="小结"></a>小结</h3><p>v-for 如何循环列表？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>先准备数据和要遍历的结构。</li>
+        <li>可以遍历数组/对象/固定数字/字符串。</li>
+        <li>想循环生成谁，就把 v-for 写谁身上。</li>
+    </ul> 
+</details>
+
+<p>v-for 注意事项？</p>
+<details style="margin-bottom: 20px;">         
+    <summary>答案</summary> 
+    <ul style="line-height: 30px">
+        <li>值变量和索引变量不能用到 v-for 范围以外。</li>
+        <li>v-for="(值变量，索引变量) in Vue变量"，注意 in 两边必须有空格。</li>
+        <li>循环时绑定的 key 值不能重复。</li>
+    </ul> 
+</details>
+
+<h2 id="今日作业"><a href="#今日作业" class="headerlink" title="今日作业"></a>今日作业</h2><h3 id="逛逛水果店"><a href="#逛逛水果店" class="headerlink" title="逛逛水果店"></a>逛逛水果店</h3><ol>
+<li><p>从 0 开始新建一个 Vue CLI 脚手架项目。</p>
+</li>
+<li><p>本店收银系统采用 Vue 开发，冲这点，你不来买点试试?</p>
+</li>
+<li><p>先看效果，无 CSS（可以自行美化）。</p>
+</li>
+</ol>
+<p><img src="/resource/images/Day01_%E4%BD%9C%E4%B8%9A_%E4%B9%B0%E6%B0%B4%E6%9E%9C.gif" alt="Day01_作业_买水果"></p>
+<p>只要你实现了功能 你就是对的（只不过每个程序员的想法都不太一样）。</p>
+<h3 id="选择喜欢的"><a href="#选择喜欢的" class="headerlink" title="选择喜欢的"></a>选择喜欢的</h3><p>目标：用户选择栏目，把用户选中的栏目信息在下面列表显示出来。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数据在这里</span></span><br><span class="line">;[<span class="string">&#x27;科幻&#x27;</span>, <span class="string">&#x27;喜剧&#x27;</span>, <span class="string">&#x27;动漫&#x27;</span>, <span class="string">&#x27;冒险&#x27;</span>, <span class="string">&#x27;科技&#x27;</span>, <span class="string">&#x27;军事&#x27;</span>, <span class="string">&#x27;娱乐&#x27;</span>, <span class="string">&#x27;奇闻&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p><img src="/resource/images/4.9.1_%E7%BB%83%E4%B9%A0_%E9%80%89%E6%8B%A9%E5%96%9C%E6%AC%A2%E7%9A%84%E6%A0%8F%E7%9B%AE.gif" alt="4.9.1_练习_选择喜欢的栏目"></p>
+<h3 id="购物车案例"><a href="#购物车案例" class="headerlink" title="购物车案例"></a>购物车案例</h3><h4 id="目标-28"><a href="#目标-28" class="headerlink" title="目标"></a>目标</h4><ol>
+<li><p>根据给的初始数据，把购物车页面铺设出来。</p>
+</li>
+<li><p>点击对应删除按钮，删除对应数据。</p>
+</li>
+<li><p>当数据没有了，显示一条提示消息。</p>
+</li>
+</ol>
+<p><img src="/resource/images/3.0_%E6%A1%88%E4%BE%8B_%E8%B4%AD%E7%89%A9%E8%BD%A6%E5%88%A0%E9%99%A4_%E5%B9%B2%E5%87%80%E4%BA%86%E8%BF%98%E6%9C%89%E6%8F%90%E7%A4%BA.gif" alt="3.0_案例_购物车删除_干净了还有提示"></p>
+<h4 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h4><p>HTML + CSS 和数据代码结构（复制接着写）。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">&quot;tb&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">th</span>&gt;</span>编号<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">th</span>&gt;</span>品牌名称<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">th</span>&gt;</span>创立时间<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">th</span>&gt;</span>操作<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 循环渲染的元素tr --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">td</span>&gt;</span>1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">td</span>&gt;</span>车名<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">td</span>&gt;</span>2020-08-09<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">button</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">td</span> <span class="attr">colspan</span>=<span class="string">&quot;4&quot;</span>&gt;</span>没有数据咯~<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">list</span>: [</span></span><br><span class="line"><span class="javascript">                    &#123; <span class="attr">id</span>: <span class="number">101</span>, <span class="attr">name</span>: <span class="string">&#x27;奔驰&#x27;</span>, <span class="attr">time</span>: <span class="string">&#x27;2020-08-01&#x27;</span> &#125;,</span></span><br><span class="line"><span class="javascript">                    &#123; <span class="attr">id</span>: <span class="number">201</span>, <span class="attr">name</span>: <span class="string">&#x27;宝马&#x27;</span>, <span class="attr">time</span>: <span class="string">&#x27;2020-08-02&#x27;</span> &#125;,</span></span><br><span class="line"><span class="javascript">                    &#123; <span class="attr">id</span>: <span class="number">131</span>, <span class="attr">name</span>: <span class="string">&#x27;奥迪&#x27;</span>, <span class="attr">time</span>: <span class="string">&#x27;2020-08-03&#x27;</span> &#125;,</span></span><br><span class="line"><span class="javascript">                ],</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-id">#app</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">600px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">margin</span>: <span class="number">10px</span> auto;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.tb</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">border-collapse</span>: collapse;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.tb</span> <span class="selector-tag">th</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">background-color</span>: <span class="number">#0094ff</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">color</span>: white;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.tb</span> <span class="selector-tag">td</span>,</span></span><br><span class="line"><span class="css">    <span class="selector-class">.tb</span> <span class="selector-tag">th</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">padding</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span></span><br><span class="line"><span class="css">        <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.add</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">padding</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span></span><br><span class="line"><span class="css">        <span class="attribute">margin-bottom</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="点名小案例"><a href="#点名小案例" class="headerlink" title="点名小案例"></a>点名小案例</h3><h4 id="目标-29"><a href="#目标-29" class="headerlink" title="目标"></a>目标</h4><p>点击开始，随机显示名字，点结束暂停。</p>
+<p><img src="/resource/images/%E4%BD%9C%E4%B8%9A-%E7%82%B9%E5%90%8D%E7%B3%BB%E7%BB%9F.gif" alt="作业-点名系统"></p>
+<h4 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h2</span>&gt;</span>随机点名<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>名字是：<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;qs&quot;</span>&gt;</span>这里显示姓名<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;btns&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;start&quot;</span>&gt;</span>开始<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;end&quot;</span>&gt;</span>结束<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;&#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    * &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">margin</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">padding</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-tag">h2</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.box</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">600px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">margin</span>: <span class="number">50px</span> auto;</span></span><br><span class="line"><span class="css">        <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">        <span class="attribute">font-size</span>: <span class="number">25px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">line-height</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.qs</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">450px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">height</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">color</span>: red;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.btns</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.btns</span> <span class="selector-tag">button</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">120px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">height</span>: <span class="number">35px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">50px</span>;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/15/webpack/" rel="prev" title="Webpack">
+      <i class="fa fa-chevron-left"></i> Webpack
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/15/vue2-base-course02/" rel="next" title="02_Vue 基础">
+      02_Vue 基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BA%E5%9E%AB%E8%87%AA%E5%AD%A6"><span class="nav-number">2.</span> <span class="nav-text">铺垫自学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-Devtools"><span class="nav-number">2.1.</span> <span class="nav-text">Vue Devtools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VS-Code-%E6%8F%92%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">VS Code 插件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-%E4%B8%BA%E4%BD%95%E5%AD%A6"><span class="nav-number">3.</span> <span class="nav-text">Vue 为何学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E6%95%88"><span class="nav-number">3.2.</span> <span class="nav-text">高效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%82%E5%9C%BA"><span class="nav-number">3.3.</span> <span class="nav-text">市场</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">3.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">4.</span> <span class="nav-text">Vue 是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">4.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%90%E8%BF%9B%E5%BC%8F"><span class="nav-number">4.3.</span> <span class="nav-text">渐进式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%93%E5%92%8C%E6%A1%86%E6%9E%B6"><span class="nav-number">4.4.</span> <span class="nav-text">库和框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-number">4.5.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-%E5%A6%82%E4%BD%95%E5%AD%A6"><span class="nav-number">5.</span> <span class="nav-text">Vue 如何学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95"><span class="nav-number">5.2.</span> <span class="nav-text">学习方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%96%B9%E5%BC%8F"><span class="nav-number">5.3.</span> <span class="nav-text">开发方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-2"><span class="nav-number">5.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-%E8%84%9A%E6%89%8B%E6%9E%B6"><span class="nav-number">6.</span> <span class="nav-text">Vue 脚手架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%84%9A%E6%89%8B%E6%9E%B6%E4%BB%8B%E7%BB%8D"><span class="nav-number">6.1.</span> <span class="nav-text">脚手架介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-3"><span class="nav-number">6.1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5-1"><span class="nav-number">6.1.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A5%BD%E5%A4%84"><span class="nav-number">6.1.3.</span> <span class="nav-text">好处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-3"><span class="nav-number">6.1.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%84%9A%E6%89%8B%E6%9E%B6%E5%87%86%E5%A4%87"><span class="nav-number">6.2.</span> <span class="nav-text">脚手架准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-4"><span class="nav-number">6.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">6.2.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-4"><span class="nav-number">6.2.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">6.3.</span> <span class="nav-text">创建项目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-5"><span class="nav-number">6.3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-1"><span class="nav-number">6.3.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-5"><span class="nav-number">6.3.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%84%9A%E6%89%8B%E6%9E%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">6.4.</span> <span class="nav-text">脚手架目录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-6"><span class="nav-number">6.4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%B2%E8%A7%A3"><span class="nav-number">6.4.2.</span> <span class="nav-text">讲解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-6"><span class="nav-number">6.4.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%84%9A%E6%89%8B%E6%9E%B6%E7%BB%93%E6%9E%84"><span class="nav-number">6.5.</span> <span class="nav-text">脚手架结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-7"><span class="nav-number">6.5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%B2%E8%A7%A3-1"><span class="nav-number">6.5.2.</span> <span class="nav-text">讲解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-7"><span class="nav-number">6.5.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%84%9A%E6%89%8B%E6%9E%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">6.6.</span> <span class="nav-text">脚手架配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-8"><span class="nav-number">6.6.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-2"><span class="nav-number">6.6.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-8"><span class="nav-number">6.6.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-ESLint"><span class="nav-number">6.7.</span> <span class="nav-text">关于 ESLint</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-9"><span class="nav-number">6.7.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A"><span class="nav-number">6.7.2.</span> <span class="nav-text">解释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3"><span class="nav-number">6.7.3.</span> <span class="nav-text">解决</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-9"><span class="nav-number">6.7.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95-Vue-%E6%96%87%E4%BB%B6"><span class="nav-number">6.8.</span> <span class="nav-text">单 Vue 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-10"><span class="nav-number">6.8.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%B2%E8%A7%A3-2"><span class="nav-number">6.8.2.</span> <span class="nav-text">讲解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-10"><span class="nav-number">6.8.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E7%90%86%E6%AC%A2%E8%BF%8E%E7%95%8C%E9%9D%A2"><span class="nav-number">6.9.</span> <span class="nav-text">清理欢迎界面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-11"><span class="nav-number">6.9.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-3"><span class="nav-number">6.9.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-11"><span class="nav-number">6.9.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E5%B0%8F%E7%BB%93"><span class="nav-number">6.10.</span> <span class="nav-text">阶段小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-%E6%8E%8C%E6%8F%A1%E6%8F%92%E5%80%BC%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">Vue 掌握插值表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-12"><span class="nav-number">7.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0"><span class="nav-number">7.2.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-12"><span class="nav-number">7.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-MVVM-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">Vue MVVM 设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-13"><span class="nav-number">8.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA"><span class="nav-number">8.2.</span> <span class="nav-text">演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B2%E8%A7%A3-3"><span class="nav-number">8.3.</span> <span class="nav-text">讲解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-13"><span class="nav-number">8.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-v-bind-%E5%8A%A8%E6%80%81%E5%B1%9E%E6%80%A7"><span class="nav-number">9.</span> <span class="nav-text">Vue v-bind 动态属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-14"><span class="nav-number">9.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0-1"><span class="nav-number">9.2.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-14"><span class="nav-number">9.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-v-on-%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A"><span class="nav-number">10.</span> <span class="nav-text">Vue v-on 事件绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-number">10.1.</span> <span class="nav-text">基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-15"><span class="nav-number">10.1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0-2"><span class="nav-number">10.1.2.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-15"><span class="nav-number">10.1.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%B9%E5%87%BB%E8%AF%B4%E7%AC%91%E8%AF%9D%E6%A1%88%E4%BE%8B"><span class="nav-number">10.2.</span> <span class="nav-text">点击说笑话案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-16"><span class="nav-number">10.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF"><span class="nav-number">10.2.2.</span> <span class="nav-text">模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">10.2.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-16"><span class="nav-number">10.2.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1"><span class="nav-number">10.3.</span> <span class="nav-text">事件对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-17"><span class="nav-number">10.3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0-3"><span class="nav-number">10.3.2.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-17"><span class="nav-number">10.3.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">10.4.</span> <span class="nav-text">修饰符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-18"><span class="nav-number">10.4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0-4"><span class="nav-number">10.4.2.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-18"><span class="nav-number">10.4.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E9%94%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">10.5.</span> <span class="nav-text">按键修饰符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-19"><span class="nav-number">10.5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0-5"><span class="nav-number">10.5.2.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-19"><span class="nav-number">10.5.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BF%BB%E8%BD%AC%E4%B8%96%E7%95%8C%E6%A1%88%E4%BE%8B"><span class="nav-number">10.6.</span> <span class="nav-text">翻转世界案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-20"><span class="nav-number">10.6.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-number">10.6.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-20"><span class="nav-number">10.6.3.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-v-model-%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A"><span class="nav-number">11.</span> <span class="nav-text">Vue v-model 双向绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%91%E5%AE%9A"><span class="nav-number">11.1.</span> <span class="nav-text">基本绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-21"><span class="nav-number">11.1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0-6"><span class="nav-number">11.1.2.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-21"><span class="nav-number">11.1.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%BB%91%E5%AE%9A"><span class="nav-number">11.2.</span> <span class="nav-text">其他绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-22"><span class="nav-number">11.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0-7"><span class="nav-number">11.2.2.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-22"><span class="nav-number">11.2.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E9%A5%B0%E7%AC%A6-1"><span class="nav-number">11.3.</span> <span class="nav-text">修饰符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-23"><span class="nav-number">11.3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0-8"><span class="nav-number">11.3.2.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-23"><span class="nav-number">11.3.3.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-v-html"><span class="nav-number">12.</span> <span class="nav-text">Vue v-html</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-24"><span class="nav-number">12.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0-9"><span class="nav-number">12.2.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-24"><span class="nav-number">12.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-v-show-%E5%92%8C-v-if"><span class="nav-number">13.</span> <span class="nav-text">Vue v-show 和 v-if</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-25"><span class="nav-number">13.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0-10"><span class="nav-number">13.2.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-25"><span class="nav-number">13.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%98%E5%8F%A0%E9%9D%A2%E6%9D%BF%E6%A1%88%E4%BE%8B"><span class="nav-number">14.</span> <span class="nav-text">折叠面板案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-26"><span class="nav-number">14.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E6%AD%A5%E9%AA%A4"><span class="nav-number">14.2.</span> <span class="nav-text">准备步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E7%AD%94%E6%A1%88"><span class="nav-number">14.3.</span> <span class="nav-text">正确答案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-26"><span class="nav-number">14.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-v-for"><span class="nav-number">15.</span> <span class="nav-text">Vue v-for</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-27"><span class="nav-number">15.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0-11"><span class="nav-number">15.2.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-27"><span class="nav-number">15.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E4%BD%9C%E4%B8%9A"><span class="nav-number">16.</span> <span class="nav-text">今日作业</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9B%E9%80%9B%E6%B0%B4%E6%9E%9C%E5%BA%97"><span class="nav-number">16.1.</span> <span class="nav-text">逛逛水果店</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%96%9C%E6%AC%A2%E7%9A%84"><span class="nav-number">16.2.</span> <span class="nav-text">选择喜欢的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%A1%88%E4%BE%8B"><span class="nav-number">16.3.</span> <span class="nav-text">购物车案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-28"><span class="nav-number">16.3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF-1"><span class="nav-number">16.3.2.</span> <span class="nav-text">模板</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%B9%E5%90%8D%E5%B0%8F%E6%A1%88%E4%BE%8B"><span class="nav-number">16.4.</span> <span class="nav-text">点名小案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-29"><span class="nav-number">16.4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E6%9E%84"><span class="nav-number">16.4.2.</span> <span class="nav-text">结构</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

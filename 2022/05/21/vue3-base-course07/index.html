@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 掌握商品一级分类的处理。 ✔ 掌握路由缓存问题及解决。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="07_商品分类">
+<meta property="og:url" content="http://example.com/2022/05/21/vue3-base-course07/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 掌握商品一级分类的处理。 ✔ 掌握路由缓存问题及解决。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-21T15:47:18.000Z">
+<meta property="article:modified_time" content="2022-08-30T15:39:33.668Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/05/21/vue3-base-course07/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>07_商品分类 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/21/vue3-base-course07/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          07_商品分类
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-21 23:47:18" itemprop="dateCreated datePublished" datetime="2022-05-21T23:47:18+08:00">2022-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-30 23:39:33" itemprop="dateModified" datetime="2022-08-30T23:39:33+08:00">2022-08-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 掌握商品一级分类的处理。</p>
+<p>✔ 掌握路由缓存问题及解决。</p>
+<span id="more"></span>
+
+<h2 id="面包屑封装"><a href="#面包屑封装" class="headerlink" title="面包屑封装"></a>面包屑封装</h2><ol>
+<li><p>拷贝素材中的 bread 组件到 components 文件夹。</p>
+</li>
+<li><p>注册成全局组件，<code>components/index.ts</code>。</p>
+</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 统一的注册所有的全局组件</span></span><br><span class="line"><span class="keyword">import</span> Bread <span class="keyword">from</span> <span class="string">&#x27;@/components/bread/index.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> BreadItem <span class="keyword">from</span> <span class="string">&#x27;@/components/bread/item.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; App &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="function"><span class="title">install</span>(<span class="params">app: App</span>)</span> &#123;</span><br><span class="line">        app.component(Bread.name, Bread)</span><br><span class="line">        app.component(BreadItem.name, BreadItem)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>提供类型声明，<code>global.d.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> XtxBread <span class="keyword">from</span> <span class="string">&#x27;@/components/bread/index.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> XtxBreadItem <span class="keyword">from</span> <span class="string">&#x27;@/components/bread/item.vue&#x27;</span></span><br><span class="line"><span class="keyword">declare</span> <span class="built_in">module</span> <span class="string">&#x27;vue&#x27;</span> &#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">interface</span> GlobalComponents &#123;</span><br><span class="line">        <span class="attr">XtxBread</span>: <span class="keyword">typeof</span> XtxBread</span><br><span class="line">        <span class="attr">XtxBreadItem</span>: <span class="keyword">typeof</span> XtxBreadItem</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>测试，<code>views/playground/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">XtxBread</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">XtxBreadItem</span> <span class="attr">to</span>=<span class="string">&quot;/&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">XtxBreadItem</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">XtxBreadItem</span>&gt;</span>美食<span class="tag">&lt;/<span class="name">XtxBreadItem</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">XtxBread</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="顶级分类"><a href="#顶级分类" class="headerlink" title="顶级分类"></a>顶级分类</h2><h3 id="获取面包屑数据并渲染"><a href="#获取面包屑数据并渲染" class="headerlink" title="获取面包屑数据并渲染"></a>获取面包屑数据并渲染</h3><ol>
+<li>定义某个分类下数据的类型，<code>types/goods.d.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> TopCategory = &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">picture</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">children</span>: CategoryItem[]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>准备数据，<code>store/modules/category.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; IApiRes &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/data&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; TopCategory &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/goods&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; topCategory &#125; <span class="keyword">from</span> <span class="string">&#x27;../constants&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineStore(<span class="string">&#x27;category&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">state</span>: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">        <span class="attr">topCategory</span>: &#123;&#125; <span class="keyword">as</span> TopCategory,</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="attr">actions</span>: &#123;</span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getTopCategory</span>(<span class="params">id: <span class="built_in">string</span></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> res = <span class="keyword">await</span> request.get&lt;IApiRes&lt;TopCategory&gt;&gt;(<span class="string">&#x27;/category&#x27;</span>, &#123;</span><br><span class="line">                <span class="attr">params</span>: &#123;</span><br><span class="line">                    id,</span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="built_in">this</span>.topCategory = res.data.result</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>获取数据并渲染对应的一级分类面包屑，<code>views/category/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span> <span class="attr">name</span>=<span class="string">&quot;TopCategory&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> useStore <span class="keyword">from</span> <span class="string">&#x27;@/store&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123; useRoute &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> &#123; category &#125; = useStore()</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> route = useRoute()</span></span><br><span class="line"><span class="javascript">    category.getTopCategory(route.params.id <span class="keyword">as</span> string)</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;top-category&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 渲染面包屑导航 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">XtxBread</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">XtxBreadItem</span> <span class="attr">to</span>=<span class="string">&quot;/&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">XtxBreadItem</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">XtxBreadItem</span>&gt;</span>&#123;&#123;category.topCategory.name&#125;&#125;<span class="tag">&lt;/<span class="name">XtxBreadItem</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">XtxBread</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="监听路由变化"><a href="#监听路由变化" class="headerlink" title="监听路由变化"></a>监听路由变化</h3><ul>
+<li><p>  问题：切换分类的时候，商品的数据不会发生变化。</p>
+</li>
+<li><p>  原因：由于共用了同一个路由组件，而 setup 的代码只会执行一次。</p>
+</li>
+<li><p>  解决：可以通过 watch 监听路由的变化来重新发起请求。</p>
+</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; watch &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> useStore <span class="keyword">from</span> <span class="string">&#x27;@/store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useRoute &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"><span class="keyword">const</span> &#123; category &#125; = useStore()</span><br><span class="line"><span class="keyword">const</span> route = useRoute()</span><br><span class="line">watch(</span><br><span class="line">    <span class="function">() =&gt;</span> route.params.id,</span><br><span class="line">    <span class="function">(<span class="params">newValue</span>) =&gt;</span> &#123;</span><br><span class="line">        category.getTopCategory(newValue <span class="keyword">as</span> <span class="built_in">string</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">immediate</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  报错：从分类页跳转到首页会报错，需要判断路由地址。</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">watch(</span><br><span class="line">    <span class="function">() =&gt;</span> route.params.id,</span><br><span class="line">    <span class="function">(<span class="params">newValue</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!newValue) <span class="keyword">return</span></span><br><span class="line">        category.getTopCategory(newValue <span class="keyword">as</span> <span class="built_in">string</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">immediate</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  报错：先点击一级类目，再点击其分类下的二级类目。</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">watch(</span><br><span class="line">    <span class="function">() =&gt;</span> route.params.id,</span><br><span class="line">    <span class="function">(<span class="params">newValue</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!newValue) <span class="keyword">return</span></span><br><span class="line">        <span class="comment">// 解决</span></span><br><span class="line">        <span class="keyword">if</span> (route.fullPath !== <span class="string">`/category/<span class="subst">$&#123;newValue&#125;</span>`</span>) <span class="keyword">return</span></span><br><span class="line">        category.getTopCategory(newValue <span class="keyword">as</span> <span class="built_in">string</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* if (route.fullPath === `/category/$&#123;newValue&#125;`) &#123;</span></span><br><span class="line"><span class="comment">            category.getTopCategory(newValue)</span></span><br><span class="line"><span class="comment">        &#125; */</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">immediate</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="watchEffect-的使用"><a href="#watchEffect-的使用" class="headerlink" title="watchEffect 的使用"></a>watchEffect 的使用</h3><p>使用 <a target="_blank" rel="noopener" href="https://staging-cn.vuejs.org/guide/essentials/watchers.html#watcheffect">watchEffect</a> 监听路由的变化，<a target="_blank" rel="noopener" href="https://staging-cn.vuejs.org/guide/essentials/watchers.html#watch-vs-watcheffect">watch vs watchEffect</a>，相同点：都给我们提供了创建副作用的能力；不同点：追踪响应式依赖的方式。</p>
+<ul>
+<li><p>  <code>watch</code> 只跟踪明确监视的源，回调仅会在源确实改变了才会被触发，这让我们对如何触发回调有更多的控制权。</p>
+</li>
+<li><p>  <code>watchEffect</code> 会自动追踪依赖的变化，一般来说代码会更简洁，但其响应性依赖关系则不那么显式。</p>
+</li>
+</ul>
+<p><code>views/category/index.vue</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">watchEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 只有是一级分类的情况下，才发送这个请求</span></span><br><span class="line">    <span class="keyword">const</span> id = route.params.id <span class="keyword">as</span> <span class="built_in">string</span></span><br><span class="line">    <span class="keyword">if</span> (route.fullPath === <span class="string">`/category/<span class="subst">$&#123;id&#125;</span>`</span>) &#123;</span><br><span class="line">        category.getTopCategory(id)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="渲染轮播图"><a href="#渲染轮播图" class="headerlink" title="渲染轮播图"></a>渲染轮播图</h3><p>获取轮播图数据并渲染，<code>views/category/index.vue</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span> <span class="attr">name</span>=<span class="string">&quot;TopCategory&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> useStore <span class="keyword">from</span> <span class="string">&#x27;@/store&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 注意这儿使用的还是首页轮播图中的数据。</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> &#123; category, home &#125; = useStore()</span></span><br><span class="line"><span class="javascript">    home.getBannerList()</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">XtxBread</span>&gt;</span><span class="tag">&lt;/<span class="name">XtxBread</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 轮播图 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">XtxCarousel</span> <span class="attr">:slides</span>=<span class="string">&quot;home.bannerList&quot;</span> <span class="attr">style</span>=<span class="string">&quot;height: 500px&quot;</span> <span class="attr">auto-play</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="二级分类渲染"><a href="#二级分类渲染" class="headerlink" title="二级分类渲染"></a>二级分类渲染</h3><ol>
+<li>基本结构和样式，<code>views/category/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">XtxCarousel</span>&gt;</span><span class="tag">&lt;/<span class="name">XtxCarousel</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 所有二级分类 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;sub-list&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>全部分类<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;i in 8&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;i&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://yanxuan.nosdn.127.net/3102b963e7a3c74b9d2ae90e4380da65.png?quality=95&amp;imageView&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>空调<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span> <span class="attr">lang</span>=<span class="string">&quot;less&quot;</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.top-category</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">h3</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">font-size</span>: <span class="number">28px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">color</span>: <span class="number">#666</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">font-weight</span>: normal;</span></span><br><span class="line"><span class="css">            <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="css">            <span class="attribute">line-height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.sub-list</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">margin-top</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">ul</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">                <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">32px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">flex-wrap</span>: wrap;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">li</span> &#123;</span></span><br><span class="line"><span class="css">                    <span class="attribute">width</span>: <span class="number">168px</span>;</span></span><br><span class="line"><span class="css">                    <span class="attribute">height</span>: <span class="number">160px</span>;</span></span><br><span class="line"><span class="css">                    <span class="selector-tag">a</span> &#123;</span></span><br><span class="line"><span class="css">                        <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="css">                        <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">                        <span class="attribute">font-size</span>: <span class="number">16px</span>;</span></span><br><span class="line"><span class="css">                        <span class="selector-tag">img</span> &#123;</span></span><br><span class="line"><span class="css">                            <span class="attribute">width</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="css">                            <span class="attribute">height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="css">                        &#125;</span></span><br><span class="line"><span class="css">                        <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="css">                            <span class="attribute">line-height</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">                        &#125;</span></span><br><span class="line"><span class="css">                        &amp;<span class="selector-pseudo">:hover</span> &#123;</span></span><br><span class="line"><span class="css">                            <span class="attribute">color</span>: @xtxColor;</span></span><br><span class="line"><span class="css">                        &#125;</span></span><br><span class="line"><span class="css">                    &#125;</span></span><br><span class="line"><span class="css">                &#125;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>动态渲染数据，<code>views/category/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 所有二级分类 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;sub-list&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>全部分类<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;item in category.topCategory.children&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item.id&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">RouterLink</span> <span class="attr">:to</span>=<span class="string">&quot;`/category/sub/$&#123;item.id&#125;`&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;item.picture&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; item.name &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="商品展示"><a href="#商品展示" class="headerlink" title="商品展示"></a>商品展示</h2><h3 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h3><ol>
+<li>封装商品信息组件，<code>views/category/components/goods-item.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RouterLink</span> <span class="attr">to</span>=<span class="string">&quot;/&quot;</span> <span class="attr">class</span>=<span class="string">&quot;goods-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://yanxuan-item.nosdn.127.net/46898c7fa475dbfc89dac2f7e7c2c16f.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;name ellipsis&quot;</span>&gt;</span>红功夫 麻辣小龙虾 19.99/500g 实惠到家<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;desc ellipsis&quot;</span>&gt;</span>火锅食材<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;price&quot;</span>&gt;</span><span class="symbol">&amp;yen;</span>19.99<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span> <span class="attr">name</span>=<span class="string">&quot;GoodsItem&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span> <span class="attr">lang</span>=<span class="string">&quot;less&quot;</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.goods-item</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">220px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">padding</span>: <span class="number">20px</span> <span class="number">30px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.hoverShadow</span>();</span></span><br><span class="line"><span class="css">        <span class="selector-tag">img</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">width</span>: <span class="number">160px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">height</span>: <span class="number">160px</span>;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">padding-top</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.name</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">font-size</span>: <span class="number">16px</span>;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.desc</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">color</span>: <span class="number">#999</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">height</span>: <span class="number">29px</span>;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.price</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">color</span>: @priceColor;</span></span><br><span class="line"><span class="css">            <span class="attribute">font-size</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>导入 goodsItem 组件并渲染，<code>views/category/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span> <span class="attr">name</span>=<span class="string">&quot;TopCategory&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> GoodsItem <span class="keyword">from</span> <span class="string">&#x27;./components/goods-item.vue&#x27;</span></span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 对应二级分类 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;sub-list&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 分类关联商品 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;ref-goods&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;head&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>- 海鲜 -<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;tag&quot;</span>&gt;</span>温暖柔软，品质之选<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">XtxMore</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;body&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">GoodsItem</span> <span class="attr">v-for</span>=<span class="string">&quot;i in 5&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;i&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>样式处理，<code>views/category/index.vue</code>。</li>
+</ol>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.ref-goods</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="selector-class">.head</span> &#123;</span><br><span class="line">        <span class="selector-class">.xtx-more</span> &#123;</span><br><span class="line">            <span class="attribute">position</span>: absolute;</span><br><span class="line">            <span class="attribute">top</span>: <span class="number">20px</span>;</span><br><span class="line">            <span class="attribute">right</span>: <span class="number">20px</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-class">.tag</span> &#123;</span><br><span class="line">            <span class="attribute">text-align</span>: center;</span><br><span class="line">            <span class="attribute">color</span>: <span class="number">#999</span>;</span><br><span class="line">            <span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">            <span class="attribute">position</span>: relative;</span><br><span class="line">            <span class="attribute">top</span>: -<span class="number">20px</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.body</span> &#123;</span><br><span class="line">        <span class="attribute">display</span>: flex;</span><br><span class="line">        <span class="attribute">justify-content</span>: flex-start;</span><br><span class="line">        <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">65px</span> <span class="number">30px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="动态渲染"><a href="#动态渲染" class="headerlink" title="动态渲染"></a>动态渲染</h3><ol>
+<li>循环分类下具体的商品，<code>views/category/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 分类关联商品 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;ref-goods&quot;</span> <span class="attr">v-for</span>=<span class="string">&quot;item in category.topCategory.children&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;head&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>- &#123;&#123; item.name &#125;&#125; -<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;tag&quot;</span>&gt;</span>温暖柔软，品质之选<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">XtxMore</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;body&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">GoodsItem</span> <span class="attr">v-for</span>=<span class="string">&quot;goods in item.goods&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;goods.id&quot;</span> <span class="attr">:goods</span>=<span class="string">&quot;goods&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>渲染 goods-item 组件，<code>views/category/components/goods-item.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span> <span class="attr">name</span>=<span class="string">&quot;GoodsItem&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123; PropType &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123; CategoryGoods &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/goods&#x27;</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    defineProps(&#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">goods</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="attr">type</span>: <span class="built_in">Object</span> <span class="keyword">as</span> PropType&lt;CategoryGoods&gt;,</span></span><br><span class="line"><span class="javascript">            <span class="keyword">default</span>: <span class="function">() =&gt;</span> (&#123;&#125;),</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;)</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RouterLink</span> <span class="attr">:to</span>=<span class="string">&quot;`/goods/$&#123;goods.id&#125;`&quot;</span> <span class="attr">class</span>=<span class="string">&quot;goods-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">v-lazy</span>=<span class="string">&quot;goods.picture&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;name ellipsis&quot;</span>&gt;</span>&#123;&#123; goods.name &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;desc ellipsis&quot;</span>&gt;</span>&#123;&#123; goods.desc &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;price&quot;</span>&gt;</span><span class="symbol">&amp;yen;</span>&#123;&#123; goods.price &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="处理跳转"><a href="#处理跳转" class="headerlink" title="处理跳转"></a>处理跳转</h2><ol>
+<li>在路由切换或刷新的时候，需要滚动到页面最顶部，<a target="_blank" rel="noopener" href="https://router.vuejs.org/zh/guide/advanced/scroll-behavior.html">文档</a>，<code>router/index.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = createRouter(&#123;</span><br><span class="line">    <span class="attr">history</span>: createWebHashHistory(),</span><br><span class="line">    <span class="attr">scrollBehavior</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">top</span>: <span class="number">0</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>滚动窗口，鼠标滑过一级类目<code>母婴</code>，再移动到二级类目<code>连体衣/礼盒</code>，点击二级类名<code>连体衣/礼盒</code>，发现二级类名不会被隐藏，<code>views/layout/components/app-header-nav.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;home&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">RouterLink</span> <span class="attr">to</span>=<span class="string">&quot;/&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 之前的 @mouseenter 改成了 @mousemove --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span> @<span class="attr">mousemove</span>=<span class="string">&quot;show(item)&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二级类目"><a href="#二级类目" class="headerlink" title="二级类目"></a>二级类目</h2><ol>
+<li><p>拷贝素材中的 <code>sub.vue</code> 组件到 <code>views/category</code> 目录。</p>
+</li>
+<li><p>拷贝下面的类型到 <code>types/goods.d.ts</code> 文件中。</p>
+</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> SaleProperty = &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">properties</span>: &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="built_in">string</span></span><br><span class="line">        <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">    &#125;[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> SubCategory = &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">    picture?: <span class="built_in">any</span></span><br><span class="line">    <span class="attr">parentId</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">parentName</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">brands</span>: &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="built_in">string</span></span><br><span class="line">        <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">        <span class="attr">nameEn</span>: <span class="built_in">string</span></span><br><span class="line">        <span class="attr">logo</span>: <span class="built_in">string</span></span><br><span class="line">        <span class="attr">picture</span>: <span class="built_in">string</span></span><br><span class="line">        <span class="keyword">type</span>?: <span class="built_in">any</span></span><br><span class="line">        <span class="attr">desc</span>: <span class="built_in">string</span></span><br><span class="line">        <span class="attr">place</span>: <span class="built_in">string</span></span><br><span class="line">    &#125;[]</span><br><span class="line">    <span class="attr">saleProperties</span>: SaleProperty[]</span><br><span class="line">    <span class="attr">goods</span>: CategoryGoods[]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>拷贝获取二级分类数据的接口，<code>store/modules/category.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; IApiRes &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/data&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; SubCategory &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/goods&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineStore(<span class="string">&#x27;category&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">state</span>: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">        <span class="attr">subCategory</span>: &#123;&#125; <span class="keyword">as</span> SubCategory,</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="attr">actions</span>: &#123;</span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getSubFilter</span>(<span class="params">id: <span class="built_in">string</span></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> res = <span class="keyword">await</span> request.get&lt;IApiRes&lt;SubCategory&gt;&gt;(<span class="string">&#x27;/category/sub/filter&#x27;</span>, &#123;</span><br><span class="line">                <span class="attr">params</span>: &#123;</span><br><span class="line">                    id,</span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="built_in">this</span>.subCategory = res.data.result</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/21/vue3-base-course06/" rel="prev" title="06_首页模块">
+      <i class="fa fa-chevron-left"></i> 06_首页模块
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/21/vue3-base-course08/" rel="next" title="08_商品详情">
+      08_商品详情 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%8C%85%E5%B1%91%E5%B0%81%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">面包屑封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B6%E7%BA%A7%E5%88%86%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">顶级分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E9%9D%A2%E5%8C%85%E5%B1%91%E6%95%B0%E6%8D%AE%E5%B9%B6%E6%B8%B2%E6%9F%93"><span class="nav-number">3.1.</span> <span class="nav-text">获取面包屑数据并渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E8%B7%AF%E7%94%B1%E5%8F%98%E5%8C%96"><span class="nav-number">3.2.</span> <span class="nav-text">监听路由变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watchEffect-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">watchEffect 的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E8%BD%AE%E6%92%AD%E5%9B%BE"><span class="nav-number">3.4.</span> <span class="nav-text">渲染轮播图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E5%88%86%E7%B1%BB%E6%B8%B2%E6%9F%93"><span class="nav-number">3.5.</span> <span class="nav-text">二级分类渲染</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%95%86%E5%93%81%E5%B1%95%E7%A4%BA"><span class="nav-number">4.</span> <span class="nav-text">商品展示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="nav-number">4.1.</span> <span class="nav-text">基本结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%B8%B2%E6%9F%93"><span class="nav-number">4.2.</span> <span class="nav-text">动态渲染</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E8%B7%B3%E8%BD%AC"><span class="nav-number">5.</span> <span class="nav-text">处理跳转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E7%B1%BB%E7%9B%AE"><span class="nav-number">6.</span> <span class="nav-text">二级类目</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

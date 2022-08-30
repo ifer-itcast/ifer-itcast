@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 目标。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="10_人资后台">
+<meta property="og:url" content="http://example.com/2022/08/13/rz-base-course10/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 目标。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-20210203134158686.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200802015023168.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210203012823356.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210203013704491.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210401064724990.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210203123151149.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210203133409244.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210203124942162.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210203130051507.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210203131750643.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210203133820331.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210203135829437.png">
+<meta property="article:published_time" content="2022-08-13T14:08:23.000Z">
+<meta property="article:modified_time" content="2022-08-30T15:39:33.537Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20210203134158686.png">
+
+<link rel="canonical" href="http://example.com/2022/08/13/rz-base-course10/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>10_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/13/rz-base-course10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          10_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-13 22:08:23" itemprop="dateCreated datePublished" datetime="2022-08-13T22:08:23+08:00">2022-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-30 23:39:33" itemprop="dateModified" datetime="2022-08-30T23:39:33+08:00">2022-08-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 目标。</p>
+<span id="more"></span>
+
+<h1 id="主页-审批-和-图表"><a href="#主页-审批-和-图表" class="headerlink" title="主页(审批 和 图表)"></a>主页(审批 和 图表)</h1><h2 id="首页的页面结构"><a href="#首页的页面结构" class="headerlink" title="首页的页面结构"></a>首页的页面结构</h2><p>**<code>目标</code>**： 实现系统首页的页面结构</p>
+<blockquote>
+<p>目前，我们的页面还剩下首页，这里我们可以按照如图实现一下的结构</p>
+</blockquote>
+<img src="/resource/images/image-20210203134158686.png"/>
+
+<p>首页页面结构，<strong>src/views/dashboard/index.vue</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class=&quot;dashboard-container&quot;&gt;</span><br><span class="line">        &lt;!-- 头部内容 --&gt;</span><br><span class="line">        &lt;el-card class=&quot;header-card&quot;&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;div class=&quot;fl headL&quot;&gt;</span><br><span class="line">                    &lt;div class=&quot;headImg&quot;&gt;</span><br><span class="line">                        &lt;img src=&quot;@/assets/common/head.jpg&quot; /&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                    &lt;div class=&quot;headInfoTip&quot;&gt;</span><br><span class="line">                        &lt;p class=&quot;firstChild&quot;&gt;早安，管理员，祝你开心每一天！&lt;/p&gt;</span><br><span class="line">                        &lt;p class=&quot;lastChild&quot;&gt;早安，管理员，祝你开心每一天！&lt;/p&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">                &lt;div class=&quot;fr&quot; /&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/el-card&gt;</span><br><span class="line">        &lt;!-- 主要内容 --&gt;</span><br><span class="line">        &lt;el-row type=&quot;flex&quot; justify=&quot;space-between&quot;&gt;</span><br><span class="line">            &lt;!-- 左侧内容 --&gt;</span><br><span class="line">            &lt;el-col :span=&quot;13&quot; style=&quot;padding-right:26px&quot;&gt;</span><br><span class="line">                &lt;!-- 工作日历 --&gt;</span><br><span class="line">                &lt;el-card class=&quot;box-card&quot;&gt;</span><br><span class="line">                    &lt;div slot=&quot;header&quot; class=&quot;header&quot;&gt;</span><br><span class="line">                        &lt;span&gt;工作日历&lt;/span&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                    &lt;!-- 放置日历组件 --&gt;</span><br><span class="line">                &lt;/el-card&gt;</span><br><span class="line">                &lt;!-- 公告 --&gt;</span><br><span class="line">                &lt;el-card class=&quot;box-card&quot;&gt;</span><br><span class="line">                    &lt;div class=&quot;advContent&quot;&gt;</span><br><span class="line">                        &lt;div class=&quot;title&quot;&gt;公告&lt;/div&gt;</span><br><span class="line">                        &lt;div class=&quot;contentItem&quot;&gt;</span><br><span class="line">                            &lt;ul class=&quot;noticeList&quot;&gt;</span><br><span class="line">                                &lt;li&gt;</span><br><span class="line">                                    &lt;div class=&quot;item&quot;&gt;</span><br><span class="line">                                        &lt;img src=&quot;@/assets/common/img.jpeg&quot; alt=&quot;&quot; /&gt;</span><br><span class="line">                                        &lt;div&gt;</span><br><span class="line">                                            &lt;p&gt;&lt;span class=&quot;col&quot;&gt;朱继柳&lt;/span&gt; 发布了 第1期“传智大讲堂”互动讨论获奖名单公布&lt;/p&gt;</span><br><span class="line">                                            &lt;p&gt;2018-07-21 15:21:38&lt;/p&gt;</span><br><span class="line">                                        &lt;/div&gt;</span><br><span class="line">                                    &lt;/div&gt;</span><br><span class="line">                                &lt;/li&gt;</span><br><span class="line">                                &lt;li&gt;</span><br><span class="line">                                    &lt;div class=&quot;item&quot;&gt;</span><br><span class="line">                                        &lt;img src=&quot;@/assets/common/img.jpeg&quot; alt=&quot;&quot; /&gt;</span><br><span class="line">                                        &lt;div&gt;</span><br><span class="line">                                            &lt;p&gt;&lt;span class=&quot;col&quot;&gt;朱继柳&lt;/span&gt; 发布了 第2期“传智大讲堂”互动讨论获奖名单公布&lt;/p&gt;</span><br><span class="line">                                            &lt;p&gt;2018-07-21 15:21:38&lt;/p&gt;</span><br><span class="line">                                        &lt;/div&gt;</span><br><span class="line">                                    &lt;/div&gt;</span><br><span class="line">                                &lt;/li&gt;</span><br><span class="line">                                &lt;li&gt;</span><br><span class="line">                                    &lt;div class=&quot;item&quot;&gt;</span><br><span class="line">                                        &lt;img src=&quot;@/assets/common/img.jpeg&quot; alt=&quot;&quot; /&gt;</span><br><span class="line">                                        &lt;div&gt;</span><br><span class="line">                                            &lt;p&gt;&lt;span class=&quot;col&quot;&gt;朱继柳&lt;/span&gt; 发布了 第3期“传智大讲堂”互动讨论获奖名单公布&lt;/p&gt;</span><br><span class="line">                                            &lt;p&gt;2018-07-21 15:21:38&lt;/p&gt;</span><br><span class="line">                                        &lt;/div&gt;</span><br><span class="line">                                    &lt;/div&gt;</span><br><span class="line">                                &lt;/li&gt;</span><br><span class="line">                            &lt;/ul&gt;</span><br><span class="line">                        &lt;/div&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                &lt;/el-card&gt;</span><br><span class="line">            &lt;/el-col&gt;</span><br><span class="line">            &lt;!-- 右侧内容 --&gt;</span><br><span class="line">            &lt;el-col :span=&quot;11&quot;&gt;</span><br><span class="line">                &lt;el-card class=&quot;box-card&quot;&gt;</span><br><span class="line">                    &lt;div class=&quot;header headTit&quot;&gt;</span><br><span class="line">                        &lt;span&gt;流程申请&lt;/span&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                    &lt;div class=&quot;sideNav&quot;&gt;</span><br><span class="line">                        &lt;el-button class=&quot;sideBtn&quot;&gt;加班离职&lt;/el-button&gt;</span><br><span class="line">                        &lt;el-button class=&quot;sideBtn&quot;&gt;请假调休&lt;/el-button&gt;</span><br><span class="line">                        &lt;el-button class=&quot;sideBtn&quot;&gt;审批列表&lt;/el-button&gt;</span><br><span class="line">                        &lt;el-button class=&quot;sideBtn&quot;&gt;我的信息&lt;/el-button&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                &lt;/el-card&gt;</span><br><span class="line"></span><br><span class="line">                &lt;!-- 绩效指数 --&gt;</span><br><span class="line">                &lt;el-card class=&quot;box-card&quot;&gt;</span><br><span class="line">                    &lt;div slot=&quot;header&quot; class=&quot;header&quot;&gt;</span><br><span class="line">                        &lt;span&gt;绩效指数&lt;/span&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                    &lt;!-- 放置雷达图 --&gt;</span><br><span class="line">                &lt;/el-card&gt;</span><br><span class="line">                &lt;!-- 帮助连接 --&gt;</span><br><span class="line">                &lt;el-card class=&quot;box-card&quot;&gt;</span><br><span class="line">                    &lt;div class=&quot;header headTit&quot;&gt;</span><br><span class="line">                        &lt;span&gt;帮助链接&lt;/span&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                    &lt;div class=&quot;sideLink&quot;&gt;</span><br><span class="line">                        &lt;el-row&gt;</span><br><span class="line">                            &lt;el-col :span=&quot;8&quot;&gt;</span><br><span class="line">                                &lt;a href=&quot;#&quot;&gt;</span><br><span class="line">                                    &lt;span class=&quot;icon iconGuide&quot; /&gt;</span><br><span class="line">                                    &lt;p&gt;入门指南&lt;/p&gt;</span><br><span class="line">                                &lt;/a&gt;</span><br><span class="line">                            &lt;/el-col&gt;</span><br><span class="line">                            &lt;el-col :span=&quot;8&quot;&gt;</span><br><span class="line">                                &lt;a href=&quot;#&quot;&gt;</span><br><span class="line">                                    &lt;span class=&quot;icon iconHelp&quot; /&gt;</span><br><span class="line">                                    &lt;p&gt;在线帮助手册&lt;/p&gt;</span><br><span class="line">                                &lt;/a&gt;</span><br><span class="line">                            &lt;/el-col&gt;</span><br><span class="line">                            &lt;el-col :span=&quot;8&quot;&gt;</span><br><span class="line">                                &lt;a href=&quot;#&quot;&gt;</span><br><span class="line">                                    &lt;span class=&quot;icon iconTechnology&quot; /&gt;</span><br><span class="line">                                    &lt;p&gt;联系技术支持&lt;/p&gt;</span><br><span class="line">                                &lt;/a&gt;</span><br><span class="line">                            &lt;/el-col&gt;</span><br><span class="line">                        &lt;/el-row&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                &lt;/el-card&gt;</span><br><span class="line">            &lt;/el-col&gt;</span><br><span class="line">        &lt;/el-row&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; mapGetters &#125; from &#x27;vuex&#x27;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">    name: &#x27;Dashboard&#x27;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">        ...mapGetters([&#x27;name&#x27;]),</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang=&quot;scss&quot; scoped&gt;</span><br><span class="line">.dashboard-container &#123;</span><br><span class="line">    margin: 10px;</span><br><span class="line">    li &#123;</span><br><span class="line">        list-style: none;</span><br><span class="line">    &#125;</span><br><span class="line">    .headImg &#123;</span><br><span class="line">        float: left;</span><br><span class="line">        width: 100px;</span><br><span class="line">        height: 100px;</span><br><span class="line">        border-radius: 50%;</span><br><span class="line">        background: #999;</span><br><span class="line">        img &#123;</span><br><span class="line">            width: 100%;</span><br><span class="line">            height: 100%;</span><br><span class="line">            border-radius: 50%;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .headInfoTip &#123;</span><br><span class="line">        padding: 25px 0 0;</span><br><span class="line">        margin-left: 120px;</span><br><span class="line">        p &#123;</span><br><span class="line">            padding: 0 0 15px;</span><br><span class="line">            margin: 0;</span><br><span class="line">            &amp;.firstChild &#123;</span><br><span class="line">                font-size: 24px;</span><br><span class="line">            &#125;</span><br><span class="line">            &amp;.lastChild &#123;</span><br><span class="line">                font-size: 20px;</span><br><span class="line">                color: #7f8c8d;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.box-card &#123;</span><br><span class="line">    padding: 5px 10px;</span><br><span class="line">    margin-top: 20px;</span><br><span class="line">    .header &#123;</span><br><span class="line">        span &#123;</span><br><span class="line">            color: #2c3e50;</span><br><span class="line">            font-size: 24px;</span><br><span class="line">        &#125;</span><br><span class="line">        .item &#123;</span><br><span class="line">            color: #97a8be;</span><br><span class="line">            float: right;</span><br><span class="line">            padding: 3px 0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    .headTit &#123;</span><br><span class="line">        span &#123;</span><br><span class="line">            border-bottom: 4px solid #8a97f8;</span><br><span class="line">            padding-bottom: 10px;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">.header-card &#123;</span><br><span class="line">    position: relative;</span><br><span class="line">    .header &#123;</span><br><span class="line">        position: absolute;</span><br><span class="line">        right: 20px;</span><br><span class="line">        top: 15px;</span><br><span class="line">        z-index: 1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.advContent &#123;</span><br><span class="line">    background: #fff;</span><br><span class="line">    border-radius: 5px 5px 0px 0px;</span><br><span class="line">    .title &#123;</span><br><span class="line">        font-size: 16px;</span><br><span class="line">        padding: 20px;</span><br><span class="line">        font-weight: bold;</span><br><span class="line">        border-bottom: solid 1px #ccc;</span><br><span class="line">    &#125;</span><br><span class="line">    .contentItem &#123;</span><br><span class="line">        padding: 0 30px;</span><br><span class="line">        min-height: 350px;</span><br><span class="line">        .item &#123;</span><br><span class="line">            display: flex;</span><br><span class="line">            padding: 18px 0 10px;</span><br><span class="line">            border-bottom: solid 1px #ccc;</span><br><span class="line">            .col &#123;</span><br><span class="line">                color: #8a97f8;</span><br><span class="line">            &#125;</span><br><span class="line">            img &#123;</span><br><span class="line">                width: 56px;</span><br><span class="line">                height: 56px;</span><br><span class="line">                border-radius: 50%;</span><br><span class="line">                margin-right: 10px;</span><br><span class="line">            &#125;</span><br><span class="line">            p &#123;</span><br><span class="line">                padding: 0 0 8px;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">.noticeList &#123;</span><br><span class="line">    margin: 0;</span><br><span class="line">    padding: 0;</span><br><span class="line">&#125;</span><br><span class="line">.sideNav,</span><br><span class="line">.sideLink &#123;</span><br><span class="line">    padding: 30px 0 12px;</span><br><span class="line">    .sideBtn &#123;</span><br><span class="line">        padding: 16px 26px;</span><br><span class="line">        font-size: 16px;</span><br><span class="line">        margin: 10px 5px;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">.sideLink &#123;</span><br><span class="line">    text-align: center;</span><br><span class="line">    .icon &#123;</span><br><span class="line">        display: inline-block;</span><br><span class="line">        width: 76px;</span><br><span class="line">        height: 76px;</span><br><span class="line">        background: url(&#x27;./../../assets/common/icon.png&#x27;) no-repeat;</span><br><span class="line">    &#125;</span><br><span class="line">    .iconGuide &#123;</span><br><span class="line">        background-position: 0 0;</span><br><span class="line">    &#125;</span><br><span class="line">    .iconHelp &#123;</span><br><span class="line">        background-position: -224px 0;</span><br><span class="line">    &#125;</span><br><span class="line">    .iconTechnology &#123;</span><br><span class="line">        background-position: -460px 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>通过上面的代码，我们得到了如下的页面</p>
+</blockquote>
+<img src="/resource/images/image-20200802015023168.png"/>
+
+<p>我们预留了**<code>工作日历</code><strong>和</strong><code>绩效指数</code>**两个组件，我们会在后续的组件中进行开发</p>
+<h2 id="首页用户资料显示"><a href="#首页用户资料显示" class="headerlink" title="首页用户资料显示"></a>首页用户资料显示</h2><img src="/resource/images/image-20210203012823356.png"/>
+
+<p>​ **<code>目标</code>**：将首页的信息换成真实的用户资料</p>
+<blockquote>
+<p>直接获取 Vuex 的用户资料即可</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; mapGetters, mapState &#125; from &#x27;vuex&#x27;</span><br><span class="line">import defaultImg from &#x27;@/assets/common/bigUserHeader.png&#x27;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">    name: &#x27;Dashboard&#x27;,</span><br><span class="line">    data() &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            defaultImg,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">        ...mapGetters([&#x27;name&#x27;]),</span><br><span class="line">        ...mapState(&#x27;user&#x27;, [&#x27;userInfo&#x27;]),</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在 vue 视图中绑定</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;headImg&quot;&gt;</span><br><span class="line">  &lt;img v-imgerror=&quot;defaultImg&quot; :src=&quot;userInfo.staffPhoto&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;headInfoTip&quot;&gt;</span><br><span class="line">  &lt;p class=&quot;firstChild&quot;&gt;早安，&#123;&#123; userInfo.username &#125;&#125;，祝你开心每一天！&lt;/p&gt;</span><br><span class="line">  &lt;p class=&quot;lastChild&quot;&gt;早安，&#123;&#123; userInfo.username &#125;&#125; | &#123;&#123; userInfo.companyName &#125;&#125; | &#123;&#123; userInfo.departmentName &#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="工作日历组件封装"><a href="#工作日历组件封装" class="headerlink" title="工作日历组件封装"></a>工作日历组件封装</h2><p>**<code>目标</code>**封装一个工作日历组件在首页中展示</p>
+<img src="/resource/images/image-20210203013704491.png"/>
+
+<h3 id="新建工作日历组件结构"><a href="#新建工作日历组件结构" class="headerlink" title="新建工作日历组件结构"></a>新建工作日历组件结构</h3><blockquote>
+<p>工作日历的要求很简单，显示每个月的日期，可以设定日期的范围</p>
+</blockquote>
+<img src="/resource/images/image-20210401064724990.png"/>
+
+<img src="/resource/images/image-20210203123151149.png"/>
+
+<p>基本代码结构如下 <strong><code>src/views/dashboard/components/work-calendar.vue</code></strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!-- 工作日历, 年和月 --&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;select-box&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">el-select</span> <span class="attr">v-model</span>=<span class="string">&quot;currentYear&quot;</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width: 120px; margin-right: 10px&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="comment">&lt;!-- 年份取给定年份的, 前五年 + 后五年 --&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">el-option</span> <span class="attr">v-for</span>=<span class="string">&quot;item in yearList&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item&quot;</span> <span class="attr">:label</span>=<span class="string">&quot;item&quot;</span> <span class="attr">:value</span>=<span class="string">&quot;item&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">el-select</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">el-select</span> <span class="attr">v-model</span>=<span class="string">&quot;currentMonth&quot;</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width: 120px;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">el-option</span> <span class="attr">v-for</span>=<span class="string">&quot;item in 12&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item&quot;</span> <span class="attr">:label</span>=<span class="string">&quot;item&quot;</span> <span class="attr">:value</span>=<span class="string">&quot;item&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">el-select</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">props</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">startDate</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">type</span>: <span class="built_in">Date</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">default</span>: <span class="function">() =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>()</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">currentYear</span>: <span class="literal">null</span>, <span class="comment">// 当前年份</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">currentMonth</span>: <span class="literal">null</span>, <span class="comment">// 当前月份</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">yearList</span>: [] <span class="comment">// 要遍历的年的数组</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="built_in">this</span>.currentYear = <span class="built_in">this</span>.startDate.getFullYear() <span class="comment">// 得到当前年份</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="built_in">this</span>.currentMonth = <span class="built_in">this</span>.startDate.getMonth() + <span class="number">1</span> <span class="comment">// 当前月份</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">&#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span></span><br><span class="line"><span class="css"><span class="xml"><span class="selector-class">.select-box</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">  <span class="attribute">display</span>: flex;</span></span></span><br><span class="line"><span class="css"><span class="xml">  <span class="attribute">justify-content</span>: flex-end;</span></span></span><br><span class="line"><span class="css"><span class="xml">&#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="动态计算-yearList"><a href="#动态计算-yearList" class="headerlink" title="动态计算 yearList"></a>动态计算 yearList</h3><img src="/resource/images/image-20210203133409244.png"/>
+
+<p>这里的 yearList 我们是写死的空数组, 应该是基于当前 currentYear 动态计算的, 应该是一个计算属性!</p>
+<p><code>Array.from</code>还可以接受第二个参数，作用类似于数组的<code>map</code>方法，</p>
+<p>用来对每个元素进行处理，将处理后的值放入返回的数组。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">10</span>), <span class="function">(<span class="params">item, index</span>) =&gt;</span> index)</span><br><span class="line">=&gt; [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
+
+<p>计算设置 yearList</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  <span class="comment">// 要遍历的年的数组</span></span><br><span class="line">  <span class="function"><span class="title">yearList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">11</span>), <span class="function">(<span class="params">item, index</span>) =&gt;</span> index + <span class="built_in">this</span>.currentYear - <span class="number">5</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line"><span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.currentYear = <span class="built_in">this</span>.startDate.getFullYear() <span class="comment">// 得到当前年份</span></span><br><span class="line">  <span class="built_in">this</span>.currentMonth = <span class="built_in">this</span>.startDate.getMonth() + <span class="number">1</span> <span class="comment">// 当前月份</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用日历组件</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-calendar&gt;&lt;/el-calendar&gt;</span><br></pre></td></tr></table></figure>
+
+<p>样式:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&lt;style lang=&quot;scss&quot; scoped&gt;</span><br><span class="line"><span class="selector-class">.select-box</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: flex-end;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">::v-deep .el-calendar-day &#123;</span><br><span class="line">  height:  auto;</span><br><span class="line"> &#125;</span><br><span class="line">::v-deep .el-calendar-table__row td::v-deep .el-calendar-table tr td:first-child, ::v-deep .el-calendar-table__row td.prev&#123;</span><br><span class="line">  border: none;</span><br><span class="line"> &#125;</span><br><span class="line"><span class="selector-class">.date-content</span> &#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">40px</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">40px</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.date-content</span> <span class="selector-class">.rest</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">background</span>: rgb(<span class="number">250</span>, <span class="number">124</span>, <span class="number">77</span>);</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">  <span class="attribute">margin-left</span>: <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.date-content</span> <span class="selector-class">.text</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">20px</span>;</span><br><span class="line"> <span class="attribute">display</span>: inline-block;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">::v-deep .el-calendar-table td.is-selected .text&#123;</span><br><span class="line">   background: <span class="number">#409eff</span>;</span><br><span class="line">   <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">   <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line"> &#125;</span><br><span class="line">::v-deep .el-calendar__header &#123;</span><br><span class="line">   display: none</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>基本结构效果图:</p>
+<img src="/resource/images/image-20210203124942162.png"/>
+
+<h3 id="实现工作日历选择逻辑"><a href="#实现工作日历选择逻辑" class="headerlink" title="实现工作日历选择逻辑"></a>实现工作日历选择逻辑</h3><p>绑定变量</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-calendar v-model=<span class="string">&quot;currentDate&quot;</span>/&gt;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">currentYear</span>: <span class="literal">null</span>, <span class="comment">// 当前年份</span></span><br><span class="line">    <span class="attr">currentMonth</span>: <span class="literal">null</span>, <span class="comment">// 当前月份</span></span><br><span class="line">    <span class="attr">currentDate</span>: <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>改变年份, 月份, 日历都要更新 =&gt; 注册 change 事件</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-select v-model=<span class="string">&quot;currentYear&quot;</span> size=<span class="string">&quot;small&quot;</span> style=<span class="string">&quot;width: 120px; margin-right: 10px&quot;</span> @change=<span class="string">&quot;changeDate&quot;</span>&gt;<span class="xml"><span class="tag">&lt;<span class="name">el-select</span> <span class="attr">v-model</span>=<span class="string">&quot;currentYear&quot;</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width: 120px; margin-right: 10px&quot;</span> @<span class="attr">change</span>=<span class="string">&quot;changeDate&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">created() &#123;</span></span><br><span class="line"><span class="xml">  this.currentYear = this.startDate.getFullYear() // 得到当前年份</span></span><br><span class="line"><span class="xml">  this.currentMonth = this.startDate.getMonth() + 1 // 当前月份</span></span><br><span class="line"><span class="xml">  this.changeDate()</span></span><br><span class="line"><span class="xml">&#125;,</span></span><br><span class="line"><span class="xml">methods: &#123;</span></span><br><span class="line"><span class="xml">  changeDate() &#123;</span></span><br><span class="line"><span class="xml">    // 生成新的日期</span></span><br><span class="line"><span class="xml">    this.currentDate = new Date(this.currentYear + &#x27;-&#x27; + this.currentMonth + &#x27;-1&#x27;)</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>效果图:</p>
+<img src="/resource/images/image-20210203130051507.png"/>
+
+<h3 id="定制日历内容-插槽"><a href="#定制日历内容-插槽" class="headerlink" title="定制日历内容 (插槽)"></a>定制日历内容 (插槽)</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-calendar v-model=<span class="string">&quot;currentDate&quot;</span>&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">template</span> #<span class="attr">dateCell</span>=<span class="string">&quot;&#123; data &#125;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    &#123;&#123; data.day | getDay &#125;&#125;</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line">&lt;/el-calendar&gt;</span><br></pre></td></tr></table></figure>
+
+<p>过滤器去掉年月, 去掉 0</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">filters: &#123;</span><br><span class="line">  <span class="function"><span class="title">getDay</span>(<span class="params">value</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> day = value.split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">2</span>] <span class="comment">// 11, 02</span></span><br><span class="line">    <span class="keyword">return</span> day.startsWith(<span class="string">&#x27;0&#x27;</span>) ? day.slice(<span class="number">1</span>) : day</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>加类优化结构</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-calendar v-model=<span class="string">&quot;currentDate&quot;</span>&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">template</span> #<span class="attr">dateCell</span>=<span class="string">&quot;&#123; data, date &#125;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;date-content&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;text&quot;</span>&gt;</span>&#123;&#123; data.day | getDay &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">span</span> <span class="attr">v-if</span>=<span class="string">&quot;isWeek(date)&quot;</span> <span class="attr">class</span>=<span class="string">&quot;rest&quot;</span>&gt;</span>休<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line">&lt;/el-calendar&gt;</span><br></pre></td></tr></table></figure>
+
+<p>判断是否是周末</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">isWeek</span>(<span class="params">date</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> date.getDay() === <span class="number">6</span> || date.getDay() === <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果如图:</p>
+<img src="/resource/images/image-20210203131750643.png"/>
+
+<h3 id="watch-监视解决日历同步"><a href="#watch-监视解决日历同步" class="headerlink" title="watch 监视解决日历同步"></a>watch 监视解决日历同步</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">  <span class="function"><span class="title">currentDate</span>(<span class="params">newValue</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// console.log(newValue)</span></span><br><span class="line">    <span class="built_in">this</span>.currentYear = newValue.getFullYear()</span><br><span class="line">    <span class="built_in">this</span>.currentMonth = newValue.getMonth() + <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h2 id="封装雷达图图表显示在首页"><a href="#封装雷达图图表显示在首页" class="headerlink" title="封装雷达图图表显示在首页"></a>封装雷达图图表显示在首页</h2><p>**<code>目标</code>**：封装一个 echarts 中的雷达图表显示在首页的绩效指数的位置</p>
+<h3 id="了解雷达图"><a href="#了解雷达图" class="headerlink" title="了解雷达图"></a>了解雷达图</h3><img src="/resource/images/image-20210203133820331.png"/>
+
+<h3 id="封装雷达图插件"><a href="#封装雷达图插件" class="headerlink" title="封装雷达图插件"></a>封装雷达图插件</h3><blockquote>
+<p>首页中，还有一个绩效指数的位置需要放置一个雷达图的图表，我们可以采用百度的 echarts 进行封装</p>
+</blockquote>
+<p>第一步， 安装 echarts 图表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn add echarts</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>echarts 是一个很大的包，里面包含了众多图形，假设我们只使用雷达图，可以做按需加载</strong></p>
+</blockquote>
+<p>第二步， 新建雷达图组件，**<code>src/views/dashboard/components/radar.vue</code>**</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;!-- 雷达图  图表必须给高和宽度--&gt;</span><br><span class="line">    &lt;div ref=&quot;myDiv&quot; class=&quot;radar-echart&quot; /&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">// 完整加载过程</span><br><span class="line">// import * as echarts from &#x27;echarts&#x27;</span><br><span class="line">// 按需加载</span><br><span class="line">import * as echarts from &#x27;echarts/core&#x27; // 引入主模块</span><br><span class="line">import &#123; RadarChart &#125; from &#x27;echarts/charts&#x27; // 引入雷达图</span><br><span class="line">// 引入提示框和标题组件</span><br><span class="line">import &#123; TitleComponent, TooltipComponent, LegendComponent &#125; from &#x27;echarts/components&#x27;</span><br><span class="line">// 引入canvas渲染器</span><br><span class="line">import &#123; CanvasRenderer &#125; from &#x27;echarts/renderers&#x27;</span><br><span class="line">// 注册必须的组件</span><br><span class="line">echarts.use([TitleComponent, TooltipComponent, LegendComponent, RadarChart, CanvasRenderer])</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">    // 页面渲染完毕事件</span><br><span class="line">    mounted() &#123;</span><br><span class="line">        const myChart = echarts.init(this.$refs.myDiv) // 得到图表实例</span><br><span class="line">        myChart.setOption(&#123;</span><br><span class="line">            title: &#123;</span><br><span class="line">                text: &#x27;基础雷达图&#x27;,</span><br><span class="line">            &#125;,</span><br><span class="line">            tooltip: &#123;&#125;,</span><br><span class="line">            legend: &#123;</span><br><span class="line">                data: [&#x27;平均水平&#x27;, &#x27;个人价值&#x27;],</span><br><span class="line">            &#125;,</span><br><span class="line">            radar: &#123;</span><br><span class="line">                // shape: &#x27;circle&#x27;,</span><br><span class="line">                name: &#123;</span><br><span class="line">                    textStyle: &#123;</span><br><span class="line">                        color: &#x27;#fff&#x27;,</span><br><span class="line">                        backgroundColor: &#x27;#999&#x27;,</span><br><span class="line">                        borderRadius: 3,</span><br><span class="line">                        padding: [3, 5],</span><br><span class="line">                    &#125;,</span><br><span class="line">                &#125;,</span><br><span class="line">                indicator: [</span><br><span class="line">                    &#123; name: &#x27;工作效率&#x27;, max: 100 &#125;,</span><br><span class="line">                    &#123; name: &#x27;考勤&#x27;, max: 100 &#125;,</span><br><span class="line">                    &#123; name: &#x27;积极性&#x27;, max: 100 &#125;,</span><br><span class="line">                    &#123; name: &#x27;帮助同事&#x27;, max: 100 &#125;,</span><br><span class="line">                    &#123; name: &#x27;自主学习&#x27;, max: 100 &#125;,</span><br><span class="line">                    &#123; name: &#x27;正确率&#x27;, max: 100 &#125;,</span><br><span class="line">                ],</span><br><span class="line">            &#125;,</span><br><span class="line">            series: [</span><br><span class="line">                &#123;</span><br><span class="line">                    name: &#x27;平均 vs 个人&#x27;,</span><br><span class="line">                    type: &#x27;radar&#x27;,</span><br><span class="line">                    // areaStyle: &#123;normal: &#123;&#125;&#125;,</span><br><span class="line">                    data: [</span><br><span class="line">                        &#123;</span><br><span class="line">                            value: [80, 80, 80, 80, 80, 80],</span><br><span class="line">                            name: &#x27;平均水平&#x27;,</span><br><span class="line">                        &#125;,</span><br><span class="line">                        &#123;</span><br><span class="line">                            value: [90, 75, 95, 90, 95, 90],</span><br><span class="line">                            name: &#x27;个人价值&#x27;,</span><br><span class="line">                        &#125;,</span><br><span class="line">                    ],</span><br><span class="line">                &#125;,</span><br><span class="line">            ],</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">.radar-echart &#123;</span><br><span class="line">    width: 500px;</span><br><span class="line">    height: 400px;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>我们得到一个雷达图，对绩效指数进行统计</p>
+<img src="/resource/images/image-20210203135829437.png"/>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/13/rz-base-course09/" rel="prev" title="09_人资后台">
+      <i class="fa fa-chevron-left"></i> 09_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/13/rz-base-course11/" rel="next" title="11_人资后台">
+      11_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E9%A1%B5-%E5%AE%A1%E6%89%B9-%E5%92%8C-%E5%9B%BE%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">主页(审批 和 图表)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5%E7%9A%84%E9%A1%B5%E9%9D%A2%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">首页的页面结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5%E7%94%A8%E6%88%B7%E8%B5%84%E6%96%99%E6%98%BE%E7%A4%BA"><span class="nav-number">1.2.</span> <span class="nav-text">首页用户资料显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%8E%86%E7%BB%84%E4%BB%B6%E5%B0%81%E8%A3%85"><span class="nav-number">1.3.</span> <span class="nav-text">工作日历组件封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%8E%86%E7%BB%84%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.1.</span> <span class="nav-text">新建工作日历组件结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%AE%A1%E7%AE%97-yearList"><span class="nav-number">1.3.2.</span> <span class="nav-text">动态计算 yearList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%8E%86%E9%80%89%E6%8B%A9%E9%80%BB%E8%BE%91"><span class="nav-number">1.3.3.</span> <span class="nav-text">实现工作日历选择逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E6%97%A5%E5%8E%86%E5%86%85%E5%AE%B9-%E6%8F%92%E6%A7%BD"><span class="nav-number">1.3.4.</span> <span class="nav-text">定制日历内容 (插槽)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch-%E7%9B%91%E8%A7%86%E8%A7%A3%E5%86%B3%E6%97%A5%E5%8E%86%E5%90%8C%E6%AD%A5"><span class="nav-number">1.3.5.</span> <span class="nav-text">watch 监视解决日历同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E9%9B%B7%E8%BE%BE%E5%9B%BE%E5%9B%BE%E8%A1%A8%E6%98%BE%E7%A4%BA%E5%9C%A8%E9%A6%96%E9%A1%B5"><span class="nav-number">1.4.</span> <span class="nav-text">封装雷达图图表显示在首页</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E9%9B%B7%E8%BE%BE%E5%9B%BE"><span class="nav-number">1.4.1.</span> <span class="nav-text">了解雷达图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E9%9B%B7%E8%BE%BE%E5%9B%BE%E6%8F%92%E4%BB%B6"><span class="nav-number">1.4.2.</span> <span class="nav-text">封装雷达图插件</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

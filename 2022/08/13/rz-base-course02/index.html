@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 目标。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02_人资后台">
+<meta property="og:url" content="http://example.com/2022/08/13/rz-base-course02/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 目标。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-20200811014205189.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200710162221402.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200710164040042.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200710164517167.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200711002545085.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210705071310997.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20201013014442950.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200830212537835.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210117220104521.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200826110754199.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210117221015364.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210117225042564.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210117234659857.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210117235807698.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210118011821808.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210118011840055.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210118002644989.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210118002947661.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210118003004155.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210118012916965.png">
+<meta property="article:published_time" content="2022-08-13T14:07:09.000Z">
+<meta property="article:modified_time" content="2022-08-30T15:39:33.385Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20200811014205189.png">
+
+<link rel="canonical" href="http://example.com/2022/08/13/rz-base-course02/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>02_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/13/rz-base-course02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          02_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-13 22:07:09" itemprop="dateCreated datePublished" datetime="2022-08-13T22:07:09+08:00">2022-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-30 23:39:33" itemprop="dateModified" datetime="2022-08-30T23:39:33+08:00">2022-08-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 目标。</p>
+<span id="more"></span>
+
+<h1 id="登录模块"><a href="#登录模块" class="headerlink" title="登录模块"></a>登录模块</h1><p><a target="_blank" rel="noopener" href="http://ihrm-java.itheima.net/#/login">线上地址</a></p>
+<p>本章节，我们将在现有模板的基础上，完成如图的登录模块的功能</p>
+<img src="/resource/images/image-20200811014205189.png"/>
+
+<h2 id="设置固定的本地访问端口-和-网站名称"><a href="#设置固定的本地访问端口-和-网站名称" class="headerlink" title="设置固定的本地访问端口 和 网站名称"></a>设置固定的本地访问端口 和 网站名称</h2><p><strong><code>目标</code></strong>: 设置端口号 和 网站 title</p>
+<p>在正式开发业务之前，先将项目的<strong>本地端口</strong>和<strong>网站名称</strong>进行一下调整</p>
+<p><strong>本地服务端口</strong>: 在**<code>vue.config.js</code>**中进行设置 <a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/">文档地址</a></p>
+<blockquote>
+<p>如图，是开发环境服务端口的位置</p>
+</blockquote>
+<img src="/resource/images/image-20200710162221402.png"/>
+
+<p>我们看到上面的 **<code>process.env.port</code>**实际上是一个 nodejs 服务下的环境变量，该变量在哪里设置呢？</p>
+<p>在项目下, 我们发现了**<code>.env.development</code><strong>和</strong><code>.env.production</code>**两个文件</p>
+<ol>
+<li><p>当我们运行<strong>npm run dev</strong>进行开发调试的时候,此时会加载执行**<code>.env.development</code>**文件内容</p>
+</li>
+<li><p>当我们运行<strong>npm run build:prod</strong>进行生产环境打包的时候,会加载执行**<code>.env.production</code>**文件内容</p>
+</li>
+</ol>
+<p>所以,如果想要设置开发环境的接口,直接在**<code>.env.development</code>**中写入对于 port 变量的赋值即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置端口号</span></span><br><span class="line">port = 8888</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>本节注意</code></strong>:修改服务的配置文件,想要生效的话,必须要重新启动服务，值‘8888’后面不能留有空格</p>
+<p><strong>网站名称</strong></p>
+<p>网站名称实际在<strong>configureWebpack</strong>选项中的<strong>name</strong>选项,通过阅读代码,我们会发现 name 实际上来源于 src 目录下</p>
+<p>**<code>settings.js</code>**文件</p>
+<p>所以,我们可以将网站名称改成”<strong><code>人力资源管理平台</code></strong>“</p>
+<img src="/resource/images/image-20200710164040042.png"/>
+
+<p><strong>提交代码</strong></p>
+<p><strong><code>本节注意</code></strong>: 修改服务的配置文件,想要生效的话,必须要重新启动服务，值 “8888” 后面不能留有空格</p>
+<p>**<code>本节任务</code>**：完成网站的开发服务端口设置和网站名称设置</p>
+<h2 id="登录页面的基础布局"><a href="#登录页面的基础布局" class="headerlink" title="登录页面的基础布局"></a>登录页面的基础布局</h2><p>**<code>目标</code>**完成登录页面的基础布局</p>
+<p><strong>页面效果</strong></p>
+<img src="/resource/images/image-20200710164517167.png"/>
+
+<p>首先要实现以上的页面效果, 我们可以直接将当前的登录页面进行相应的改造</p>
+<p><strong>设置头部背景</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 放置标题图片 @是设置的别名--&gt;</span><br><span class="line">&lt;div class=&quot;title-container&quot;&gt;</span><br><span class="line">        &lt;h3 class=&quot;title&quot;&gt;</span><br><span class="line">          &lt;img src=&quot;@/assets/common/login-logo.png&quot; alt=&quot;&quot;&gt;</span><br><span class="line">        &lt;/h3&gt;</span><br><span class="line"> &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>**<code>注意</code>**： <code>@</code>是我们在 vue.config.js 中设置的一个路径别名，指定 src 根目录，这样可以很方便的寻找文件</p>
+<p><strong>设置背景图片</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* reset element-ui css */</span></span><br><span class="line"><span class="selector-class">.login-container</span> &#123;</span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="string">&#x27;~@/assets/common/login.jpg&#x27;</span>); // 设置背景图片</span><br><span class="line">    <span class="attribute">background-position</span>: center; // 将图片位置设置为充满整个屏幕</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>**<code>注意</code><strong>： 如需要在样式表中使用</strong><code>@</code><strong>别名的时候，需要在@前面加上一个</strong><code>~</code>**符号，否则不识别</p>
+<p><strong>设置手机号和密码的字体颜色</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$light_gray: <span class="number">#407ffe</span>; // 修改输入框字体颜色</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置输入表单整体背景色</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.el-form-item</span> &#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.1</span>);</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.9</span>); // 输入登录表单的背景色</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#454545</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置错误信息的颜色</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.el-form-item__error</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置登录按钮的样式</strong></p>
+<blockquote>
+<p>需要给 el-button 增加一个 loginBtn 的 class 样式</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.loginBtn</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#407ffe</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">64px</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">32px</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">24px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>修改显示的提示文本和登录文本</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;tips&quot;</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;margin-right:20px;&quot;</span>&gt;</span>账号: 13800000002<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">span</span>&gt;</span> 密码: 123456<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>经过以上的改动, 我们得到了一个比较完善的登录页面</p>
+<img src="/resource/images/image-20200711002545085.png"/>
+
+<blockquote>
+<p>解释:我们该项目的侧重点在于更多的介绍 Vue 中台项目所应用的技术</p>
+<p>所以对于一些过于细节的样式或者布局,我们采用直接粘贴或者拷贝成型代码的方式, 实际工作可以慢慢调整</p>
+</blockquote>
+<p><strong>提交代码</strong></p>
+<p>**<code>本节注意</code><strong>： 如需要在样式表中使用</strong><code>@</code><strong>别名的时候，需要在@前面加上一个</strong><code>~</code>**符号，否则不识别</p>
+<p>**<code>本节任务</code>**： 完成登录首页的基本布局</p>
+<h2 id="element-ui-的基本使用"><a href="#element-ui-的基本使用" class="headerlink" title="element-ui 的基本使用"></a>element-ui 的基本使用</h2><h3 id="安装配置-element-ui"><a href="#安装配置-element-ui" class="headerlink" title="安装配置 element-ui"></a>安装配置 element-ui</h3><blockquote>
+<p>新建一个小项目，练习 element-ui</p>
+</blockquote>
+<p>组件库认知: element-ui 饿了么 (PC 端, 基于 vue) vant ( 移动端)</p>
+<p>1 安装 <a target="_blank" rel="noopener" href="https://element.eleme.io/#/zh-CN/component/installation">https://element.eleme.io/#/zh-CN/component/installation</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add element-ui</span><br></pre></td></tr></table></figure>
+
+<p>2 全部导入</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 导入 element-ui</span></span><br><span class="line"><span class="keyword">import</span> ElementUI <span class="keyword">from</span> <span class="string">&#x27;element-ui&#x27;</span></span><br><span class="line"><span class="comment">// 2. 导入 element-ui 的样式表</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;element-ui/lib/theme-chalk/index.css&#x27;</span></span><br><span class="line"><span class="comment">// 3. 通过 .use 安装注册 element-ui 插件</span></span><br><span class="line">Vue.use(ElementUI)</span><br></pre></td></tr></table></figure>
+
+<p>3 使用 button 组件</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-button type=<span class="string">&#x27;primary&#x27;</span>&gt;我是按钮&lt;/el-button&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="element-ui-基本表单"><a href="#element-ui-基本表单" class="headerlink" title="element-ui 基本表单"></a>element-ui 基本表单</h3><p>说明：我们先学习 element-ui 表单组件的基本结构使用</p>
+<p>需求：实现如图效果</p>
+<img src="/resource/images/image-20210705071310997.png"/>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#x27;padding: 30px&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">el-form</span> <span class="attr">label-width</span>=<span class="string">&#x27;100px&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&#x27;手机号：&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">placeholder</span>=<span class="string">&#x27;请输入手机号&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&#x27;验证码：&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">placeholder</span>=<span class="string">&#x27;请输入验证码：&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&#x27;primary&#x27;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">el-button</span>&gt;</span>重置<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="element-ui-基本校验"><a href="#element-ui-基本校验" class="headerlink" title="element-ui 基本校验"></a>element-ui 基本校验</h3><p>说明：在向后端发请求调用接口之前，我们需要对所要传递的参数进行验证，把用户的错误扼杀在摇篮之中。</p>
+<p>讲解内容:</p>
+<ul>
+<li><p>element-ui 的校验</p>
+<ul>
+<li><p>  el-form: <code>model</code>属性, <code>rules</code>规则</p>
+</li>
+<li><p>  el-form-item: 绑定 <code>prop</code> 属性</p>
+</li>
+<li><p>  el-input: 绑定<code> v-model</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Form 组件提供了表单验证的功能</p>
+<ol>
+<li> form 组件需要 <code>:model</code>绑定 form 对象（必须）， 需要通过 <code>rules</code> 属性传入约定的验证规则</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-form :model=<span class="string">&quot;form&quot;</span> :rules=<span class="string">&quot;rules&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">form</span>: &#123;</span><br><span class="line">        <span class="attr">mobile</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">code</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在 data 中准备 rules 规则</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rules: &#123;</span><br><span class="line">    <span class="attr">mobile</span>: [</span><br><span class="line">        &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&#x27;请输入手机号&#x27;</span>, <span class="attr">trigger</span>: [<span class="string">&#x27;blur&#x27;</span>, <span class="string">&#x27;change&#x27;</span>] &#125;,</span><br><span class="line">        &#123; <span class="attr">min</span>: <span class="number">5</span>, <span class="attr">max</span>: <span class="number">11</span>, <span class="attr">message</span>: <span class="string">&#x27;长度在 5 到 11 个字符&#x27;</span>, <span class="attr">trigger</span>: [<span class="string">&#x27;blur&#x27;</span>, <span class="string">&#x27;change&#x27;</span>] &#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li> 将 Form-Item 的 <code>prop</code> 属性设置为需校验的字段名</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;手机号：&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;mobile&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;form.mobile&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入手机号&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输入错误时, 控制台会有黄色的警告, 可以忽略, 实际上线是没有的, 但是如果想去掉, 可以在 node_modules 源码中注释掉</p>
+<img src="/resource/images/image-20201013014442950.png"/>
+
+<h3 id="element-ui-正则校验"><a href="#element-ui-正则校验" class="headerlink" title="element-ui 正则校验"></a>element-ui 正则校验</h3><p>下面是常用内置的基本验证规则：其余校验规则参见 <a target="_blank" rel="noopener" href="https://github.com/yiminghe/async-validator">async-validator</a></p>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>required</td>
+<td>必须的，例如校验内容是否非空</td>
+</tr>
+<tr>
+<td>pattern</td>
+<td>正则表达式，例如校验手机号码格式、校验邮箱格式</td>
+</tr>
+<tr>
+<td>range</td>
+<td>使用 min 和 max 属性定义范围。对于字符串和数组类型，将根据长度进行比较，对于数字类型，数字不得小于 min，也不得大于 max。</td>
+</tr>
+</tbody></table>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">rules: &#123;</span><br><span class="line">  <span class="attr">mobile</span>: [</span><br><span class="line">    &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&#x27;请输入手机号&#x27;</span>, <span class="attr">trigger</span>: [<span class="string">&#x27;blur&#x27;</span>, <span class="string">&#x27;change&#x27;</span>] &#125;,</span><br><span class="line">    &#123; <span class="attr">pattern</span>: <span class="regexp">/^1\d&#123;10&#125;$/</span>, message: <span class="string">&#x27;请输入正确的手机号&#x27;</span>, <span class="attr">trigger</span>: [<span class="string">&#x27;blur&#x27;</span>, <span class="string">&#x27;change&#x27;</span>] &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">code</span>: [</span><br><span class="line">    &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&#x27;请输入验证码&#x27;</span>, <span class="attr">trigger</span>: [<span class="string">&#x27;blur&#x27;</span>, <span class="string">&#x27;change&#x27;</span>] &#125;,</span><br><span class="line">    &#123; <span class="attr">pattern</span>: <span class="regexp">/^\d&#123;6&#125;$/</span>, message: <span class="string">&#x27;请输入正确的验证码&#x27;</span>, <span class="attr">trigger</span>: [<span class="string">&#x27;blur&#x27;</span>, <span class="string">&#x27;change&#x27;</span>] &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不要忘了配置 prop</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">prop</span>=<span class="string">&quot;code&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="element-ui-自定义校验"><a href="#element-ui-自定义校验" class="headerlink" title="element-ui 自定义校验"></a>element-ui 自定义校验</h3><p>支持传入一个函数, 进行自定义校验的配置</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-form-item label=<span class="string">&quot;年龄：&quot;</span> prop=<span class="string">&quot;age&quot;</span>&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">el-input</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入年龄：&quot;</span> /&gt;</span></span></span><br><span class="line">&lt;/el-form-item&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">form</span>: &#123;</span><br><span class="line">      ...,</span><br><span class="line">      <span class="attr">age</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">rules</span>: &#123;</span><br><span class="line">      ...,</span><br><span class="line">      <span class="attr">age</span>: [</span><br><span class="line">        &#123; <span class="attr">validator</span>: 校验函数, <span class="attr">trigger</span>: [<span class="string">&#x27;blur&#x27;</span>, <span class="string">&#x27;change&#x27;</span>] &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置校验函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">age: [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">validator</span>: <span class="function"><span class="keyword">function</span> (<span class="params">rule, value, callback</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="regexp">/^[1-9]\d&#123;0,2&#125;$/</span>.test(value) &amp;&amp; value &lt;= <span class="number">120</span>) &#123;</span><br><span class="line">                callback()</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                callback(<span class="string">&#x27;请输入正确的年纪&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">trigger</span>: [<span class="string">&#x27;blur&#x27;</span>, <span class="string">&#x27;change&#x27;</span>],</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>不要忘了配置 prop</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">prop</span>=<span class="string">&quot;age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="登录提交校验-和-重置"><a href="#登录提交校验-和-重置" class="headerlink" title="登录提交校验 和 重置"></a>登录提交校验 和 重置</h3><p>每次点击按钮, 进行 ajax 登录前, 应该先对整个表单内容校验, 不然还是会发送很多无效的请求!!!</p>
+<p>要通过校验了, 才发送请求!!!</p>
+<p><strong>作用: <code>ref</code> 属性配合 <code>$refs</code> 可以获取 dom 元素 (或者 vue 组件实例)</strong></p>
+<ol>
+<li>给组件或者元素, 添加 ref 属性</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">hello</span> <span class="attr">ref</span>=<span class="string">&quot;bb&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">hello</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>通过 this.$refs 可以获取对应的引用, 并且调用方法</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$refs.bb.sayHi()</span><br></pre></td></tr></table></figure>
+
+<p><strong>添加登录提交的校验</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-form ref=<span class="string">&quot;form&quot;</span> :model=<span class="string">&quot;form&quot;</span> :rules=<span class="string">&quot;rules&quot;</span> label-width=<span class="string">&quot;100px&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">methods: &#123;</span><br><span class="line">  login () &#123;</span><br><span class="line">    <span class="built_in">this</span>.$refs.form.validate(<span class="function"><span class="params">flag</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (!flag) <span class="keyword">return</span></span><br><span class="line">      <span class="comment">// 校验通过, 再发送ajax请求</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>添加重置功能</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">  reset () &#123;</span><br><span class="line">    <span class="built_in">this</span>.$refs.form.resetFields()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="登录表单的校验"><a href="#登录表单的校验" class="headerlink" title="登录表单的校验"></a>登录表单的校验</h2><p>**<code>目标</code>**对登录表单进行规则校验</p>
+<blockquote>
+<p>基础模板已经有了基础校验的代码,我们只需在此基础上修改即可</p>
+</blockquote>
+<h3 id="el-form-表单校验的必要条件"><a href="#el-form-表单校验的必要条件" class="headerlink" title="el-form 表单校验的必要条件"></a><strong>el-form 表单校验的必要条件</strong></h3><img src="/resource/images/image-20200830212537835.png"/>
+
+<h3 id="手机号和密码的校验"><a href="#手机号和密码的校验" class="headerlink" title="手机号和密码的校验"></a>手机号和密码的校验</h3><p><strong>字段名对应</strong></p>
+<blockquote>
+<p>基础模板采用的是**<code>username</code><strong>的字段,但是实际接口中采用的是</strong><code>mobile</code>**的字段,</p>
+<p>为了更方便的写代码,所以我们将**<code>username</code><strong>改成</strong><code>mobile</code>**</p>
+</blockquote>
+<p>这里除了字段名，还有我们的规则校验名称，以及 prop 名称。</p>
+<p><strong>英文提示变成中文</strong></p>
+<p>基础模板中都是<strong>placeHolder</strong>占位符是英文,要变成中文</p>
+<p>登录按钮文字同样需要换成中文</p>
+<p><strong>校验手机号和校验密码</strong></p>
+<p>基础模板中,已经做了校验,我们针对代码进行一些优化</p>
+<p>新规则：手机号必填，并且进行格式校验，密码必填，长度 6-16 位之间</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">   <span class="comment">// 自定义校验函数</span></span><br><span class="line">   <span class="keyword">const</span> validateMobile = <span class="function">(<span class="params">rule, value, callback</span>) =&gt;</span> &#123;</span><br><span class="line">     <span class="keyword">if</span> (!validMobile(value)) &#123;</span><br><span class="line">       callback(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;手机格式有误&#x27;</span>))</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       callback()</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> &#123;</span><br><span class="line">     <span class="attr">loginForm</span>: &#123;</span><br><span class="line">       <span class="attr">mobile</span>: <span class="string">&#x27;13800000002&#x27;</span>,</span><br><span class="line">       <span class="attr">password</span>: <span class="string">&#x27;123456&#x27;</span></span><br><span class="line">     &#125;,</span><br><span class="line">     <span class="attr">loginRules</span>: &#123;</span><br><span class="line">       <span class="attr">mobile</span>: [</span><br><span class="line">         &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&#x27;请输入手机号&#x27;</span>, <span class="attr">trigger</span>: [<span class="string">&#x27;blur&#x27;</span>, <span class="string">&#x27;change&#x27;</span>] &#125;,</span><br><span class="line">         &#123; <span class="attr">validator</span>: validateMobile, <span class="attr">trigger</span>: [<span class="string">&#x27;blur&#x27;</span>, <span class="string">&#x27;change&#x27;</span>] &#125;</span><br><span class="line">       ],</span><br><span class="line">       <span class="attr">password</span>: [</span><br><span class="line">         &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&#x27;请输入密码&#x27;</span>, <span class="attr">trigger</span>: [<span class="string">&#x27;blur&#x27;</span>, <span class="string">&#x27;change&#x27;</span>] &#125;,</span><br><span class="line">         &#123; <span class="attr">min</span>: <span class="number">6</span>, <span class="attr">max</span>: <span class="number">16</span>, <span class="attr">message</span>: <span class="string">&#x27;密码必须是6-16位&#x27;</span>, <span class="attr">trigger</span>: [<span class="string">&#x27;blur&#x27;</span>, <span class="string">&#x27;change&#x27;</span>] &#125;</span><br><span class="line">       ]</span><br><span class="line">     &#125;,</span><br><span class="line">     <span class="attr">loading</span>: <span class="literal">false</span>,</span><br><span class="line">     <span class="attr">passwordType</span>: <span class="string">&#x27;password&#x27;</span>,</span><br><span class="line">     <span class="attr">redirect</span>: <span class="literal">undefined</span></span><br><span class="line">   &#125;</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>我们在**<code>utils/validate.js</code>**方法中增加了一个校验手机号的方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 校验手机号</span></span><br><span class="line"><span class="comment"> * **/</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">validMobile</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="regexp">/^1[3-9]\d&#123;9&#125;$/</span>.test(str) <span class="comment">// 校验手机号</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>**<code>utils/validate.js</code>**是一个专门存放校验工具方法的文件</p>
+<p><strong>提交代码</strong></p>
+<p>**<code>本节任务</code>**：实现登录用户的手机号和密码校验</p>
+<h2 id="测试登录功能"><a href="#测试登录功能" class="headerlink" title="测试登录功能"></a>测试登录功能</h2><p>1 将 request 方法, 挂载到原型上</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;./utils/request&#x27;</span></span><br><span class="line">Vue.prototype.$request = request</span><br></pre></td></tr></table></figure>
+
+<p>2 点击登录 - 发送登录请求, 基础地址: <a target="_blank" rel="noopener" href="http://ihrm-java.itheima.net/api">http://ihrm-java.itheima.net/api</a></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">handleLogin</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.$refs.loginForm.validate(<span class="function"><span class="params">valid</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (valid) &#123;</span><br><span class="line">      <span class="built_in">this</span>.loading = <span class="literal">true</span></span><br><span class="line">      <span class="comment">// 校验通过发送登录请求</span></span><br><span class="line">      <span class="keyword">const</span> loginUrl = <span class="string">&#x27;http://ihrm-java.itheima.net/api/sys/login&#x27;</span></span><br><span class="line">      <span class="built_in">this</span>.$request.post(loginUrl, <span class="built_in">this</span>.loginForm).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;error submit!!&#x27;</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3 这里明显跨域了, 但是后台设置了 <code>access-control-allow-origin: *</code>, 允许了跨域</p>
+<img src="/resource/images/image-20210117220104521.png"/>
+
+<p>如果后台开发过程中, 没有配置 cors, 前端可以利用 webpack 开发服务器进行代理, 解决跨域问题</p>
+<h2 id="Vue-Cli-配置跨域代理"><a href="#Vue-Cli-配置跨域代理" class="headerlink" title="Vue-Cli 配置跨域代理"></a>Vue-Cli 配置跨域代理</h2><p><strong><code>目标</code></strong>: 通过配置 vue-cli 的代理解决跨域访问的问题</p>
+<h3 id="为什么会出现跨域？"><a href="#为什么会出现跨域？" class="headerlink" title="为什么会出现跨域？"></a>为什么会出现跨域？</h3><p>只要域名端口协议有一个不同, 就是跨域了~</p>
+<p>当下, 最流行的就是**<code>前后分离</code><strong>开发项目,也就是</strong><code>前端项目</code><strong>和</strong><code>后端接口</code>**并不在一个域名之下，</p>
+<p>那么前端项目开发时, 去访问后端接口就会存在**<code>跨域</code>**的行为.</p>
+<img src="/resource/images/image-20200826110754199.png"/>
+
+<h3 id="解决开发环境的跨域问题"><a href="#解决开发环境的跨域问题" class="headerlink" title="解决开发环境的跨域问题"></a>解决开发环境的跨域问题</h3><p><strong>开发环境的跨域</strong></p>
+<p>开发环境的跨域，也就是在**<code>vue-cli脚手架环境</code>**下开发启动服务时，我们访问接口所遇到的跨域问题，</p>
+<p>vue-cli 为我们在本地**<code>开启了一个服务</code><strong>,可以通过这个服务帮我们</strong><code>代理请求</code>**,解决跨域问题</p>
+<p>vue-cli 的配置文件即**<code>vue.config.js</code>**,这里有我们需要的 <a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/config/#devserver-proxy">代理选项</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attr">devServer</span>: &#123;</span><br><span class="line">        <span class="comment">// 代理配置</span></span><br><span class="line">        <span class="attr">proxy</span>: &#123;</span><br><span class="line">            <span class="comment">// 这里的api 表示如果我们的请求地址有/api的时候,就出触发代理机制</span></span><br><span class="line">            <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">                <span class="attr">target</span>: <span class="string">&#x27;http://www.baidu.com&#x27;</span>, <span class="comment">// 我们要代理请求的地址</span></span><br><span class="line">                <span class="comment">// 路径重写</span></span><br><span class="line">                <span class="attr">pathRewrite</span>: &#123;</span><br><span class="line">                    <span class="comment">// 路径重写  localhost:8888/api/login  =&gt; www.baidu.com/api/login</span></span><br><span class="line">                    <span class="string">&#x27;^/api&#x27;</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 假设我们想把 localhost:8888/api/login 变成www.baidu.com/login 就需要这么做</span></span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上就是我们在 vue-cli 项目中配置的代理设置</p>
+<blockquote>
+<p>接下来,我们在代码中将要代理的后端地址变成 <a target="_blank" rel="noopener" href="http://ihrm-java.itheima.net/">后端接口地址</a></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 代理跨域的配置</span></span><br><span class="line"><span class="attr">proxy</span>: &#123;</span><br><span class="line">  <span class="comment">// 当我们的本地的请求 有/api的时候，就会代理我们的请求地址向另外一个服务器发出请求</span></span><br><span class="line">  <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">    <span class="attr">target</span>: <span class="string">&#x27;http://ihrm-java.itheima.net/&#x27;</span>, <span class="comment">// 跨域请求的地址</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>本节注意</code><strong>：我们并没有进行</strong><code>pathRewrite</code></strong>, 因为后端接口就是**<code>ihrm-java.itheima.net/api</code>**这种格式,所以不需要重写</p>
+<p>**<code>vue.config.js</code>**的改动如果要生效,需要进行重启服务</p>
+<p>同时，还需要注意的是，我们一定要注释掉(或删除) mock 的加载，因为 mock-server 会导致代理服务的异常</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// before: require(&#x27;./mock/mock-server.js&#x27;),  // 注释mock-server加载</span></span><br></pre></td></tr></table></figure>
+
+<p>修改请求地址, 走代理</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> loginUrl = <span class="string">&#x27;http://localhost:8888/api/sys/login&#x27;</span> <span class="comment">// 走代理</span></span><br><span class="line"><span class="built_in">this</span>.$request.post(loginUrl, <span class="built_in">this</span>.loginForm).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>最终效果图:</p>
+<img src="/resource/images/image-20210117221015364.png"/>
+
+<p><strong>生产环境的跨域</strong> (了解)</p>
+<p>生产环境表示我们已经开发完成项目，将项目部署到了服务器上,这时已经没有了 vue-cli 脚手架的**<code>辅助</code>**了，</p>
+<p>我们只是把打包好的**<code>html+js+css</code>**交付运维人员，放到服务器而已, 如果此时还是跨域,</p>
+<p>一般可以借助**<code>Nginx</code>**进行代理, 请阅读这篇文章<a target="_blank" rel="noopener" href="https://www.cnblogs.com/elfpower/p/8818759.html">Nginx 反向代理</a>, 或者后台开启 cors</p>
+<p><strong>提交代码</strong></p>
+<p><strong><code>本节注意</code><strong>：我们并没有进行</strong><code>pathRewrite</code></strong>,因为后端接口就是**<code>ihrm-java.itheima.net/api</code>**这种格式,所以不需要重写</p>
+<p>**<code>本节任务</code>**： 配置 vue-cli 的反向代理，实现后端接口的跨域访问</p>
+<h2 id="将登陆请求封装到-api-模块"><a href="#将登陆请求封装到-api-模块" class="headerlink" title="将登陆请求封装到 api 模块"></a>将登陆请求封装到 api 模块</h2><p><strong><code>目标</code></strong> 在单独请求模块中,单独封装登录接口</p>
+<blockquote>
+<p>完成登录模块之后，我们需要对登录接口进行封装, 登录请求应该单独封装到一个模块中, 便于维护和管理</p>
+</blockquote>
+<p>首先，查阅接口文档中的登录接口</p>
+<h3 id="基本封装"><a href="#基本封装" class="headerlink" title="基本封装"></a>基本封装</h3><p><code>api/user.js</code> 封装请求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">reqLogin</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/login&#x27;</span>, <span class="comment">// 这里的 /api 由于开发环境所有接口都要加, 通过baseUrl加</span></span><br><span class="line">        data,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="基于环境变量配置基地址"><a href="#基于环境变量配置基地址" class="headerlink" title="基于环境变量配置基地址"></a>基于环境变量配置基地址</h3><p><code>utils/request.js</code> 配置基础地址</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建了axios实例, 使用的是自己的配置项</span></span><br><span class="line"><span class="keyword">const</span> instance = axios.create(&#123;</span><br><span class="line">    <span class="comment">// 开发环境, 找 env.development, 找 VUE_APP_BASE_API 变量</span></span><br><span class="line">    <span class="comment">// 生产环境, 找 env.production,  找 VUE_APP_BASE_API 变量</span></span><br><span class="line">    <span class="attr">baseURL</span>: process.env.VUE_APP_BASE_API, <span class="comment">// 环境变量</span></span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">5000</span>, <span class="comment">// request timeout</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 请求拦截器</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 响应拦截器</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> instance</span><br></pre></td></tr></table></figure>
+
+<p><code>.env.development</code> yarn dev 加载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># base api</span><br><span class="line"># 最终请求地址 /api/sys/login =&gt; http://ihrm-java.itheima.net/api/sys/login</span><br><span class="line">VUE_APP_BASE_API = &#x27;/api&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><code>.env.production</code> yarn build:prod 加载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># base api</span><br><span class="line"># 最终请求地址: http://ihrm-java.itheima.net/api/sys/login</span><br><span class="line">VUE_APP_BASE_API = &#x27;http://ihrm-java.itheima.net/api/&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="页面测试"><a href="#页面测试" class="headerlink" title="页面测试"></a>页面测试</h3><p>页面中导入测试:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; reqLogin &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/user&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">handleLogin</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.$refs.loginForm.validate(<span class="function"><span class="params">valid</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (valid) &#123;</span><br><span class="line">      <span class="built_in">this</span>.loading = <span class="literal">true</span></span><br><span class="line">      <span class="comment">// 发送登录请求</span></span><br><span class="line">      reqLogin(<span class="built_in">this</span>.loginForm).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;error submit!!&#x27;</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果图:</p>
+<img src="/resource/images/image-20210117225042564.png"/>
+
+<h2 id="vuex-管理-token"><a href="#vuex-管理-token" class="headerlink" title="vuex 管理 token"></a>vuex 管理 token</h2><p><strong><code>目标 </code></strong> 封装获取 token 的登录 action, 在 vuex 中存储 token</p>
+<p>tips: 之前, 我们是在页面中发送登录请求, 获取到 token 后, 通过提交 mutation 的方式, 将 token 存到 vuex 中</p>
+<p>这里希望将<code>登录获取token</code>的异步操作, 也封装成 action, 封装到 vuex 中, 集中管理关于 token 操作</p>
+<h3 id="vuex-封装-action-存-token"><a href="#vuex-封装-action-存-token" class="headerlink" title="vuex 封装 action 存 token"></a>vuex 封装 action 存 token</h3><p>1 <code>store/modules/user.js</code>准备状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">    <span class="attr">token</span>: <span class="literal">null</span>, <span class="comment">// token字符串</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> mutations = &#123;&#125;</span><br><span class="line"><span class="keyword">const</span> actions = &#123;&#125;</span><br><span class="line"><span class="keyword">const</span> getters = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">namespaced</span>: <span class="literal">true</span>,</span><br><span class="line">    state,</span><br><span class="line">    mutations,</span><br><span class="line">    actions,</span><br><span class="line">    getters,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2 <code>store/modules/user.js</code> 封装 action 和 对应的 mutation</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">    <span class="function"><span class="title">setToken</span>(<span class="params">state, newToken</span>)</span> &#123;</span><br><span class="line">        state.token = newToken</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="title">login</span>(<span class="params">context, data</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> reqLogin(data)</span><br><span class="line">        <span class="keyword">const</span> newToken = res.data.data</span><br><span class="line">        context.commit(<span class="string">&#x27;setToken&#x27;</span>, newToken)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3 页面中导入, 调用</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; mapActions &#125; <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">  ...mapActions(<span class="string">&#x27;user&#x27;</span>, [<span class="string">&#x27;login&#x27;</span>]),</span><br><span class="line">  <span class="function"><span class="title">handleLogin</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.$refs.loginForm.validate(<span class="function"><span class="params">valid</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (valid) &#123;</span><br><span class="line">        <span class="built_in">this</span>.loading = <span class="literal">true</span></span><br><span class="line">        <span class="comment">// 发送登录请求, 调用action</span></span><br><span class="line">        <span class="built_in">this</span>.login(<span class="built_in">this</span>.loginForm)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;error submit!!&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终效果图:</p>
+<img src="/resource/images/image-20210117234659857.png"/>
+
+<h3 id="添加-token-的-getters"><a href="#添加-token-的-getters" class="headerlink" title="添加 token 的 getters"></a>添加 token 的 getters</h3><p>为了更好的让其他模块和组件更好的获取 token 数据，</p>
+<p>我们可以在**<code>store/getters.js</code>**中将 token 值, 添加成公共的 getters, 便于将来访问</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getters = &#123;</span><br><span class="line">    <span class="attr">sidebar</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.app.sidebar,</span><br><span class="line">    <span class="attr">device</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.app.device,</span><br><span class="line">    <span class="attr">token</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.user.token,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> getters</span><br></pre></td></tr></table></figure>
+
+<h3 id="vuex-持久化"><a href="#vuex-持久化" class="headerlink" title="vuex 持久化"></a>vuex 持久化</h3><p>刚才在登录时, 已经可以成功的将 token 存到 vuex 中了, 但是 vuex 刷新会丢失, 所以需要结合 web 存储进行持久化</p>
+<p>之前我们是用的 localStorage 存的 token, 这里用 cookie 也能存 token</p>
+<p>且在**<code>utils/auth.js</code><strong>中,基础模板已经为我们提供了</strong><code>获取token</code><strong>,</strong><code>设置token</code><strong>,</strong><code>删除token</code>**的方法,可以直接使用</p>
+<p>只需要将存储的 key 放置成特定值即可</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Cookies <span class="keyword">from</span> <span class="string">&#x27;js-cookie&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> TokenKey = <span class="string">&#x27;hrsaas_hm_75_token&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getToken</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Cookies.get(TokenKey) || <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">setToken</span>(<span class="params">token</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Cookies.set(TokenKey, token)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">removeToken</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Cookies.remove(TokenKey)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1 一进来优先从缓存 cookie 中取</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">    <span class="comment">// 一进来优先从缓存中取</span></span><br><span class="line">    <span class="attr">token</span>: getToken(), <span class="comment">// token字符串</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2 vuex 中存 token 时, 也同步存到 cookie 中</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">    <span class="comment">// 设置token</span></span><br><span class="line">    <span class="function"><span class="title">setToken</span>(<span class="params">state, newToken</span>)</span> &#123;</span><br><span class="line">        state.token = newToken</span><br><span class="line">        <span class="comment">// 设置了 token 的同时, 同步到本地cookies中</span></span><br><span class="line">        setToken(newToken)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果: 刷新后, token 还是有的, 持久化存储了</p>
+<img src="/resource/images/image-20210117235807698.png"/>
+
+<h3 id="promise-包装-action-操作"><a href="#promise-包装-action-操作" class="headerlink" title="promise 包装 action 操作"></a>promise 包装 action 操作</h3><p>将来如果登录 action 成功了, 存 token(vuex 相关的), 页面中就要跳转到首页(页面相关), 如果登录失败了, 还需要给用户提示</p>
+<p>action 是异步的, 需要用 promise 包装下, 才便于处理, 且使用 promise 封装时的函数不能直接用 async, 需要改写代码</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    <span class="function"><span class="title">login</span>(<span class="params">context, data</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 发送登录请求, 异步操作</span></span><br><span class="line">            reqLogin(data)</span><br><span class="line">                .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">const</span> newToken = res.data.data</span><br><span class="line">                    context.commit(<span class="string">&#x27;setToken&#x27;</span>, newToken)</span><br><span class="line">                    <span class="comment">// 成功resolve</span></span><br><span class="line">                    resolve(res)</span><br><span class="line">                &#125;)</span><br><span class="line">                .catch(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// 失败reject</span></span><br><span class="line">                    reject(error)</span><br><span class="line">                &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><code>login.vue</code> 中使用测试</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">handleLogin</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.$refs.loginForm.validate(<span class="function"><span class="params">valid</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (valid) &#123;</span><br><span class="line">      <span class="built_in">this</span>.loading = <span class="literal">true</span></span><br><span class="line">      <span class="comment">// 发送登录请求, 调用action</span></span><br><span class="line">      <span class="built_in">this</span>.login(<span class="built_in">this</span>.loginForm).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 成功跳转到首页</span></span><br><span class="line">        <span class="built_in">this</span>.$router.push(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">      &#125;).catch(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.dir(error)</span><br><span class="line">        <span class="built_in">this</span>.$message.error(error.message)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;error submit!!&#x27;</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>登录成功没有问题, 正常跳转</p>
+<img src="/resource/images/image-20210118011821808.png"/>
+
+<p>但是失败有问题了, 失败也跳转了, 失败走的也是 .then, 没有走 .catch,</p>
+<p>这是因为当请求失败有误时, 后台只是将 success 字段标记成 false 了, 我们需要对错误做统一的处理</p>
+<p>一旦发现 success 为 false, 就在响应拦截器中抛出错误, 不让走 .then 了</p>
+<img src="/resource/images/image-20210118011840055.png"/>
+
+<h2 id="axios-的响应拦截器处理响应"><a href="#axios-的响应拦截器处理响应" class="headerlink" title="axios 的响应拦截器处理响应"></a>axios 的响应拦截器处理响应</h2><p>响应拦截器中做的处理:</p>
+<ol>
+<li>处理 axios 默认的一层包裹</li>
+<li>统一对错误响应进行处理 =&gt; 提示用户错误消息, 并 reject 抛出错误, 让代码走.catch</li>
+</ol>
+<h3 id="处理-axios-默认的一层包裹"><a href="#处理-axios-默认的一层包裹" class="headerlink" title="处理 axios 默认的一层包裹"></a>处理 axios 默认的一层包裹</h3><p>目标: axios 返回的数据中默认增加了一层**<code>data的包裹</code>**, 每次我们都要 res.data.data, 太麻烦, 所以我们需要在这里处理下</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 响应拦截器</span></span><br><span class="line">instance.interceptors.response.use(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 对响应数据做点什么</span></span><br><span class="line">        <span class="keyword">const</span> res = response.data</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 对响应错误做点什么</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>处理响应时, 就少了一层 data, res 直接就是后台返回的结果</p>
+<img src="/resource/images/image-20210118002644989.png"/>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    <span class="function"><span class="title">login</span>(<span class="params">context, data</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 发送登录请求</span></span><br><span class="line">            reqLogin(data)</span><br><span class="line">                .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">const</span> newToken = res.data</span><br><span class="line">                    context.commit(<span class="string">&#x27;setToken&#x27;</span>, newToken)</span><br><span class="line">                    <span class="comment">// 成功resolve</span></span><br><span class="line">                    resolve(res)</span><br><span class="line">                &#125;)</span><br><span class="line">                .catch(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// 失败reject</span></span><br><span class="line">                    reject(error)</span><br><span class="line">                &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="响应拦截器统一处理失败"><a href="#响应拦截器统一处理失败" class="headerlink" title="响应拦截器统一处理失败"></a>响应拦截器统一处理失败</h3><p>成功正确响应, 肯定是正常走我们的逻辑,</p>
+<p>但是如果失败出错, 那应该要<code>给用户提示</code>, 且<code>后续代码不能接着走 .then 了, 应该走 .catch</code></p>
+<img src="/resource/images/image-20210118002947661.png"/>
+
+<img src="/resource/images/image-20210118003004155.png"/>
+
+<p>整个系统接口有个特征, 如果是请求操作有误, 都会在响应中标记 success 为 false,</p>
+<p>所以一旦 success 为 false 了, 就需要提示错误, 并将错误 reject 抛出</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 响应拦截器</span></span><br><span class="line">instance.interceptors.response.use(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 对响应数据做点什么</span></span><br><span class="line">        <span class="keyword">const</span> res = response.data</span><br><span class="line">        <span class="keyword">const</span> &#123; message, success &#125; = res</span><br><span class="line">        <span class="keyword">if</span> (!success) &#123;</span><br><span class="line">            Message.error(message) <span class="comment">// 提示错误消息</span></span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(message)) <span class="comment">// 业务已经错误了, 应该进catch</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 对响应错误做点什么, 服务器错误, 400, 404, 500</span></span><br><span class="line">        <span class="built_in">console</span>.dir(error) <span class="comment">// 便于调试</span></span><br><span class="line">        Message.error(error.message) <span class="comment">// 提示错误消息</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>效果图: 提示错误, 且不会跳走到登录页</p>
+<img src="/resource/images/image-20210118012916965.png"/>
+
+<p>优化:</p>
+<ol>
+<li>既然响应拦截器中, 统一对错误进行了处理, 那么 login 页的错误提示可以删除了</li>
+<li>无论成功还是失败按钮应该恢复状态, finally</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">handleLogin</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.$refs.loginForm.validate(<span class="function"><span class="params">valid</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (valid) &#123;</span><br><span class="line">      <span class="built_in">this</span>.loading = <span class="literal">true</span></span><br><span class="line">      <span class="comment">// 发送登录请求, 调用action</span></span><br><span class="line">      <span class="built_in">this</span>.login(<span class="built_in">this</span>.loginForm).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 成功跳转到首页</span></span><br><span class="line">        <span class="built_in">this</span>.$router.push(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">      &#125;).catch(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.dir(error)</span><br><span class="line">      &#125;).finally(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.loading = <span class="literal">false</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;error submit!!&#x27;</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>提交代码</strong></p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// promise承诺, 一般承诺的是将来的事情, 有成功, 有失败</span><br><span class="line">// promise的三个状态</span><br><span class="line">// pending 等待中..</span><br><span class="line">// fulfilled 成功</span><br><span class="line">// rejected 失败</span><br><span class="line"></span><br><span class="line">const p = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	// promise 内部可以封装一个异步的操作</span><br><span class="line">	// resolve 在成功的时候调用的函数 将promise的状态, 改成了fulfilled</span><br><span class="line">	// reject  在失败的时候调用的函数 将promise的状态, 改成了rejected</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/13/rz-base-course01/" rel="prev" title="01_人资后台">
+      <i class="fa fa-chevron-left"></i> 01_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/13/rz-base-course03/" rel="next" title="03_人资后台">
+      03_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E6%A8%A1%E5%9D%97"><span class="nav-number">1.</span> <span class="nav-text">登录模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%9B%BA%E5%AE%9A%E7%9A%84%E6%9C%AC%E5%9C%B0%E8%AE%BF%E9%97%AE%E7%AB%AF%E5%8F%A3-%E5%92%8C-%E7%BD%91%E7%AB%99%E5%90%8D%E7%A7%B0"><span class="nav-number">1.1.</span> <span class="nav-text">设置固定的本地访问端口 和 网站名称</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2%E7%9A%84%E5%9F%BA%E7%A1%80%E5%B8%83%E5%B1%80"><span class="nav-number">1.2.</span> <span class="nav-text">登录页面的基础布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#element-ui-%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">element-ui 的基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE-element-ui"><span class="nav-number">1.3.1.</span> <span class="nav-text">安装配置 element-ui</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#element-ui-%E5%9F%BA%E6%9C%AC%E8%A1%A8%E5%8D%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">element-ui 基本表单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#element-ui-%E5%9F%BA%E6%9C%AC%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.3.3.</span> <span class="nav-text">element-ui 基本校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#element-ui-%E6%AD%A3%E5%88%99%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.3.4.</span> <span class="nav-text">element-ui 正则校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#element-ui-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.3.5.</span> <span class="nav-text">element-ui 自定义校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E6%8F%90%E4%BA%A4%E6%A0%A1%E9%AA%8C-%E5%92%8C-%E9%87%8D%E7%BD%AE"><span class="nav-number">1.3.6.</span> <span class="nav-text">登录提交校验 和 重置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E8%A1%A8%E5%8D%95%E7%9A%84%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.4.</span> <span class="nav-text">登录表单的校验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#el-form-%E8%A1%A8%E5%8D%95%E6%A0%A1%E9%AA%8C%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.4.1.</span> <span class="nav-text">el-form 表单校验的必要条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E6%9C%BA%E5%8F%B7%E5%92%8C%E5%AF%86%E7%A0%81%E7%9A%84%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.4.2.</span> <span class="nav-text">手机号和密码的校验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD"><span class="nav-number">1.5.</span> <span class="nav-text">测试登录功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-Cli-%E9%85%8D%E7%BD%AE%E8%B7%A8%E5%9F%9F%E4%BB%A3%E7%90%86"><span class="nav-number">1.6.</span> <span class="nav-text">Vue-Cli 配置跨域代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0%E8%B7%A8%E5%9F%9F%EF%BC%9F"><span class="nav-number">1.6.1.</span> <span class="nav-text">为什么会出现跨域？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-number">1.6.2.</span> <span class="nav-text">解决开发环境的跨域问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E7%99%BB%E9%99%86%E8%AF%B7%E6%B1%82%E5%B0%81%E8%A3%85%E5%88%B0-api-%E6%A8%A1%E5%9D%97"><span class="nav-number">1.7.</span> <span class="nav-text">将登陆请求封装到 api 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%B0%81%E8%A3%85"><span class="nav-number">1.7.1.</span> <span class="nav-text">基本封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E5%9F%BA%E5%9C%B0%E5%9D%80"><span class="nav-number">1.7.2.</span> <span class="nav-text">基于环境变量配置基地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E6%B5%8B%E8%AF%95"><span class="nav-number">1.7.3.</span> <span class="nav-text">页面测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vuex-%E7%AE%A1%E7%90%86-token"><span class="nav-number">1.8.</span> <span class="nav-text">vuex 管理 token</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vuex-%E5%B0%81%E8%A3%85-action-%E5%AD%98-token"><span class="nav-number">1.8.1.</span> <span class="nav-text">vuex 封装 action 存 token</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-token-%E7%9A%84-getters"><span class="nav-number">1.8.2.</span> <span class="nav-text">添加 token 的 getters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vuex-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.8.3.</span> <span class="nav-text">vuex 持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#promise-%E5%8C%85%E8%A3%85-action-%E6%93%8D%E4%BD%9C"><span class="nav-number">1.8.4.</span> <span class="nav-text">promise 包装 action 操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#axios-%E7%9A%84%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%E5%A4%84%E7%90%86%E5%93%8D%E5%BA%94"><span class="nav-number">1.9.</span> <span class="nav-text">axios 的响应拦截器处理响应</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86-axios-%E9%BB%98%E8%AE%A4%E7%9A%84%E4%B8%80%E5%B1%82%E5%8C%85%E8%A3%B9"><span class="nav-number">1.9.1.</span> <span class="nav-text">处理 axios 默认的一层包裹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86%E5%A4%B1%E8%B4%A5"><span class="nav-number">1.9.2.</span> <span class="nav-text">响应拦截器统一处理失败</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">1.10.</span> <span class="nav-text">补充</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="目标✔ 掌握什么是 Vuex。 ✔ 了解 Vuex 解决的问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="07_Vue 基础">
+<meta property="og:url" content="http://example.com/2022/08/15/vue2-base-course07/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="目标✔ 掌握什么是 Vuex。 ✔ 了解 Vuex 解决的问题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/vuex使用场景.gif">
+<meta property="og:image" content="http://example.com/resource/images/image-20210601103033022.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210323175925844.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210601212946879.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210601215035990.png">
+<meta property="og:image" content="http://example.com/resource/images/在脚手架工具中选中vuex.gif">
+<meta property="og:image" content="http://example.com/resource/images/image-20210601210940718.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210603101500328.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210601121840170.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210927115530792.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210927114822586.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210927115932890.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210603155218649.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210602203233284.png">
+<meta property="og:image" content="http://example.com/resource/images/vuex.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210604084953510.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210929094114297.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210929102824675.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210929111941092.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210928150511854.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210927152822203.png">
+<meta property="article:published_time" content="2022-08-15T00:26:29.000Z">
+<meta property="article:modified_time" content="2022-08-30T15:39:33.634Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/vuex使用场景.gif">
+
+<link rel="canonical" href="http://example.com/2022/08/15/vue2-base-course07/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>07_Vue 基础 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/15/vue2-base-course07/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          07_Vue 基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-15 08:26:29" itemprop="dateCreated datePublished" datetime="2022-08-15T08:26:29+08:00">2022-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-30 23:39:33" itemprop="dateModified" datetime="2022-08-30T23:39:33+08:00">2022-08-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>✔ 掌握什么是 Vuex。</p>
+<p>✔ 了解 Vuex 解决的问题。</p>
+<span id="more"></span>
+
+<h2 id="Vuex-基本介绍"><a href="#Vuex-基本介绍" class="headerlink" title="Vuex 基本介绍"></a>Vuex 基本介绍</h2><h3 id="问题导入"><a href="#问题导入" class="headerlink" title="问题导入"></a>问题导入</h3><p>观察下图中的效果：修改头像之后，左侧菜单和右上角的头像都会跟着变化。</p>
+<img src="/resource/images/vuex使用场景.gif"  />
+
+<p>抽象一下这个问题。</p>
+<img src="/resource/images/image-20210601103033022.png" alt="image-20210601103033022" style="zoom:50%;" />
+
+<p>思考，如何实现一处数据的修改能同步到其他的组件？</p>
+<h3 id="回顾组件关系和通信方案"><a href="#回顾组件关系和通信方案" class="headerlink" title="回顾组件关系和通信方案"></a>回顾组件关系和通信方案</h3><p><img src="/resource/images/image-20210323175925844.png" alt="image-20210323175925844"></p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>组件关系</th>
+<th>数据通信</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>父子关系</td>
+<td>父亲通过自定义属性传递，儿子通过 props 接收。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>子父关系</td>
+<td>儿子通过 $emit 触发父亲的自定义事件。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>非父子关系</td>
+<td>eventBus，$on 监听，$emit 触发。</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>非父子关系</strong></td>
+<td><strong>Vuex。</strong></td>
+</tr>
+</tbody></table>
+<h3 id="Vuex-是什么"><a href="#Vuex-是什么" class="headerlink" title="Vuex 是什么"></a>Vuex 是什么</h3><p><a target="_blank" rel="noopener" href="https://vuex.vuejs.org/zh/">Vuex</a> 是一个专为 Vue.js 应用程序开发的全局状态管理库，采用集中式存储管理应用的所有组件的状态，解决多组件数据通信。</p>
+<ol>
+<li><p>Vue 官方搭配，专属使用 (类似于：vue-router)，有专门的调试工具。</p>
+</li>
+<li><p>集中式状态方案（操作更简洁）<code>data() &#123; return &#123; 数据, 状态 &#125;&#125;</code>。</p>
+</li>
+<li><p>数据变化是可预测的（响应式）。</p>
+</li>
+</ol>
+<p><img src="/resource/images/image-20210601212946879.png" alt="image-20210601212946879"></p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>大型项目。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>Vuex 是 Vue 官方提供的独立于组件体系之外的，管理公共数据的工具。</p>
+<h2 id="Vuex-学习内容"><a href="#Vuex-学习内容" class="headerlink" title="Vuex 学习内容"></a>Vuex 学习内容</h2><h3 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h3><p>了解 vuex 的学习内容</p>
+<h3 id="Vuex-的学习内容"><a href="#Vuex-的学习内容" class="headerlink" title="Vuex 的学习内容"></a>Vuex 的学习内容</h3><ol>
+<li><p>state：统一定义公共数据（类似于 <code>data()&#123;return &#123;a:1, b:2，xxxxxx&#125;&#125;</code>）。</p>
+</li>
+<li><p>mutations：使用它来修改数据（类似于 methods）。</p>
+</li>
+<li><p>getters：类似于 computed（计算属性，对现有的状态进行计算得到新的数据）。</p>
+</li>
+<li><p>actions：发起异步请求。</p>
+</li>
+<li><p>modules：模块拆分。</p>
+</li>
+</ol>
+<img src="/resource/images/image-20210601215035990.png" alt="image-20210601215035990" style="zoom: 67%;" />
+
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>五个概念：state，mutations，getters，actions，modules。</p>
+<h2 id="在-Vue-项目使用-Vuex"><a href="#在-Vue-项目使用-Vuex" class="headerlink" title="在 Vue 项目使用 Vuex"></a>在 Vue 项目使用 Vuex</h2><h3 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h3><p>掌握在 Vue 项目中使用 Vuex 的方式。</p>
+<h3 id="两种情况"><a href="#两种情况" class="headerlink" title="两种情况"></a>两种情况</h3><p>情况 1：在老项目中使用，先额外安装 Vuex 包，然后再配置。</p>
+<p>情况 2：在新项目中使用，在使用 vue-cli 创建项目时，就可以直接选中 vuex 项，这样就不用做任何配置了（脚手架会自动帮我们完成的），具体如下图示。</p>
+<img src="/resource/images/在脚手架工具中选中vuex.gif"  />
+
+<h3 id="在旧项目中使用-Vuex"><a href="#在旧项目中使用-Vuex" class="headerlink" title="在旧项目中使用 Vuex"></a>在旧项目中使用 Vuex</h3><ol>
+<li>安装，它是一个独立的包，需要先安装。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add vuex@3.6.2</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在 <code>store/index.js</code> 中创建 Vuex.store 实例。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    <span class="attr">state</span>: &#123;</span><br><span class="line">        <span class="attr">count</span>: <span class="number">0</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>向 Vue 实例注入 store，<code>src/main.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...省略其他</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./store&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    <span class="comment">// ...省略其他</span></span><br><span class="line">    store, <span class="comment">// 注入 Vue 实例</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>在任意组件中通过 <code>this.$store.state</code> 来获取公共数据。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>count: &#123;&#123;this.$store.state.count&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;App&#x27;</span>,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>在老项目中使用 Vuex 的步骤。</p>
+<h2 id="state-定义公共数据并在组件中使用"><a href="#state-定义公共数据并在组件中使用" class="headerlink" title="state 定义公共数据并在组件中使用"></a>state 定义公共数据并在组件中使用</h2><h3 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h3><p>掌握 state 的使用方式。</p>
+<h3 id="state-的作用"><a href="#state-的作用" class="headerlink" title="state 的作用"></a>state 的作用</h3><p>保存公共数据。</p>
+<h3 id="定义公共数据"><a href="#定义公共数据" class="headerlink" title="定义公共数据"></a>定义公共数据</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vuex.store(&#123;</span><br><span class="line">    <span class="attr">state</span>: &#123;</span><br><span class="line">        属性名：属性值</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vuex.store(&#123;</span><br><span class="line">    <span class="attr">state</span>: &#123;</span><br><span class="line">        <span class="attr">userInfo</span>: &#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;tom&#x27;</span>,</span><br><span class="line">            <span class="attr">skills</span>: [<span class="string">&#x27;抖音&#x27;</span>, <span class="string">&#x27;B站&#x27;</span>, <span class="string">&#x27;美团&#x27;</span>],</span><br><span class="line">            <span class="attr">address</span>: <span class="string">&#x27;武汉黑马&#x27;</span>,</span><br><span class="line">            <span class="attr">logo</span>: <span class="string">&#x27;https://www.runoob.com/wp-content/uploads/2016/02/react.png&#x27;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用公共数据"><a href="#使用公共数据" class="headerlink" title="使用公共数据"></a>使用公共数据</h3><ul>
+<li><p>  在组件中，通过 <code>this.$store.state.属性名</code> 来访问。</p>
+</li>
+<li><p>  在模板中，可以省略 <code>this</code>，直接写成：<code>&#123;&#123;$store.state.属性名&#125;&#125;</code>。</p>
+</li>
+</ul>
+<p><img src="/resource/images/image-20210601210940718.png" alt="image-20210601210940718"></p>
+<h3 id="Vue-Devtool-调试工具"><a href="#Vue-Devtool-调试工具" class="headerlink" title="Vue Devtool 调试工具"></a>Vue Devtool 调试工具</h3><p>在调试工具中查看。</p>
+<p><img src="/resource/images/image-20210603101500328.png" alt="image-20210603101500328"></p>
+<h3 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h3><p>state 的作用是：保存公共数据（多组件中共用的数据）。</p>
+<p>state 是响应式的：如果修改了数据，相应的在视图上的值也会变化。</p>
+<h2 id="用-mutations-修改公共数据"><a href="#用-mutations-修改公共数据" class="headerlink" title="用 mutations 修改公共数据"></a>用 mutations 修改公共数据</h2><h3 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h3><p>掌握 mutations 的作用及格式，能用它来修改 state。</p>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>通过调用 mutations 来修改 state 中的公共数据。</p>
+<img src="/resource/images/image-20210601121840170.png" alt="image-20210601121840170" style="zoom: 80%;" />
+
+<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><p>分两个格式：注册的格式，调用的格式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vue.store(&#123;</span><br><span class="line">    <span class="comment">// ...省略其他</span></span><br><span class="line">    mutations：&#123;</span><br><span class="line">        <span class="comment">// 每一项都是一个函数，可以声明两个形参</span></span><br><span class="line">        mutation名<span class="number">1</span>：<span class="function"><span class="keyword">function</span>(<span class="params">state [, 载荷]</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;,</span><br><span class="line">        mutation名<span class="number">2</span>：<span class="function"><span class="keyword">function</span>(<span class="params">state [, 载荷]</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>mutations 中的每一项都是一个函数，可以声明两个形参。</p>
+<ul>
+<li><p>  第一个参数表示当前的 state，Vuex 内部传入的。</p>
+</li>
+<li><p>  第二个参数表示载荷，表示在调用 mutation 时传入的实参。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$store.commit(<span class="string">&#x27;mutation名&#x27;</span>, 实参, 给第二个参数)</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>在 <code>store/index.js</code> 中，补充。</p>
+<ul>
+<li><p>  数据项 url。</p>
+</li>
+<li><p>  更新数据项 url 的 mutations。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    <span class="comment">// state：用来保存所有的公共数据</span></span><br><span class="line">    <span class="attr">state</span>: &#123;</span><br><span class="line">        <span class="attr">userInfo</span>: &#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;tom&#x27;</span>,</span><br><span class="line">            <span class="attr">skills</span>: [<span class="string">&#x27;抖音&#x27;</span>, <span class="string">&#x27;B站&#x27;</span>, <span class="string">&#x27;美团&#x27;</span>],</span><br><span class="line">            <span class="attr">address</span>: <span class="string">&#x27;武汉黑马&#x27;</span>,</span><br><span class="line">            <span class="attr">logo</span>: <span class="string">&#x27;https://www.runoob.com/wp-content/uploads/2016/02/react.png&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// mutations：用它提供修改数据的方法。</span></span><br><span class="line">    <span class="comment">// 中文是：变化，异动。</span></span><br><span class="line">    <span class="comment">// 数据不应该在组件内部直接修改，必须在组件内调用 mutations 来修改。</span></span><br><span class="line">    <span class="attr">mutations</span>: &#123;</span><br><span class="line">        <span class="function"><span class="title">setLogo</span>(<span class="params">state, newUrl</span>)</span> &#123;</span><br><span class="line">            state.userInfo.logo = newUrl</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>App.vue</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;$store.state.userInfo.logo&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;$store.commit(&#x27;setLogo&#x27;, url)&quot;</span>&gt;</span>修改头像<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;App&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">url</span>: <span class="string">&#x27;http://s02.mifile.cn/assets/static/image/logo-mi2.png&#x27;</span>,</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="在-devtool-中观察"><a href="#在-devtool-中观察" class="headerlink" title="在 devtool 中观察"></a>在 devtool 中观察</h3><p>打开调试工具，查看效果。</p>
+<h3 id="小结-4"><a href="#小结-4" class="headerlink" title="小结"></a>小结</h3><p>mutations 的中文含义是：变异，它是 Vuex 中用来修改公共数据的唯一入口。</p>
+<h2 id="小案例-发请求取数据做保存"><a href="#小案例-发请求取数据做保存" class="headerlink" title="小案例-发请求取数据做保存"></a>小案例-发请求取数据做保存</h2><h3 id="目标-5"><a href="#目标-5" class="headerlink" title="目标"></a>目标</h3><p>综合使用 Axios、mutation、state。</p>
+<h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>我们希望在某组件创建成功之后。</p>
+<ol>
+<li>请求后端接口。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://www.fastmock.site/mock/37d3b9f13a48d528a9339fbed1b81bd5/book/api/books</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>保存数据到 state 中。</li>
+</ol>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>组件 created 钩子函数中。</p>
+<ul>
+<li><p>  用 Axios 库获取数据。</p>
+</li>
+<li><p>  调用 mutations 保存数据到 Vuex。</p>
+</li>
+<li><p>  在组件中使用数据。</p>
+</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p><code>App.vue</code> 组件的 created 钩子函数，代码如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    axios(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;https://www.fastmock.site/mock/37d3b9f13a48d528a9339fbed1b81bd5/book/api/books&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span></span><br><span class="line">    &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">        <span class="built_in">this</span>.$store.commit(<span class="string">&#x27;setBooks&#x27;</span>, res.data.data)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>src/store/index.js</code> 中，补充对应的数据项 books 和操作的方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    <span class="attr">state</span>: &#123;</span><br><span class="line">        <span class="attr">books</span>: [],</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">mutations</span>: &#123;</span><br><span class="line">        <span class="function"><span class="title">setBooks</span>(<span class="params">state, books</span>)</span> &#123;</span><br><span class="line">            state.books = books</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br></pre></td></tr></table></figure>
+
+<p><code>App.vue</code> 模板中渲染数据。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;(book, idx) in $store.state.books&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;idx&quot;</span>&gt;</span>&#123;&#123; book.name &#125;&#125; --- &#123;&#123; book.price &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-5"><a href="#小结-5" class="headerlink" title="小结"></a>小结</h3><p><img src="/resource/images/image-20210927115530792.png" alt="image-20210927115530792"></p>
+<h2 id="用-getters-的派生状态"><a href="#用-getters-的派生状态" class="headerlink" title="用 getters 的派生状态"></a>用 getters 的派生状态</h2><h3 id="目标-6"><a href="#目标-6" class="headerlink" title="目标"></a>目标</h3><p>了解 getters 的作用；掌握它的用法。</p>
+<h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><p>在 state 中的数据的基础上，进一步对数据进行加工得到新数据。(与组件中 computed 一样)</p>
+<p>例如：计算总价。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vuex.store(&#123;</span><br><span class="line">    <span class="attr">state</span>: &#123;</span><br><span class="line">        <span class="attr">books</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;javasript技术内幕&#x27;</span>,</span><br><span class="line">                <span class="attr">price</span>: <span class="number">100</span>,</span><br><span class="line">                <span class="attr">img</span>: <span class="string">&#x27;https://img3m7.ddimg.cn/64/26/29120617-1_u_8.jpg&#x27;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;数学之美&#x27;</span>,</span><br><span class="line">                <span class="attr">price</span>: <span class="number">44</span>,</span><br><span class="line">                <span class="attr">img</span>: <span class="string">&#x27;https://img3m2.ddimg.cn/18/30/28538352-1_b_5.jpg&#x27;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;认知天性&#x27;</span>,</span><br><span class="line">                <span class="attr">price</span>: <span class="number">40</span>,</span><br><span class="line">                <span class="attr">img</span>: <span class="string">&#x27;https://img3m3.ddimg.cn/74/33/1732997153-3_u_3.jpg&#x27;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        ],</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="定义格式"><a href="#定义格式" class="headerlink" title="定义格式"></a>定义格式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vuex.store(&#123;</span><br><span class="line">    <span class="comment">// 省略其他...</span></span><br><span class="line">    <span class="attr">getters</span>: &#123;</span><br><span class="line">        <span class="comment">// state 就是上边定义的公共数据state</span></span><br><span class="line">        getter的名字<span class="number">1</span>: <span class="function"><span class="keyword">function</span> (<span class="params">state</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> 要返回的值</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>state 就是上边定义的公共数据 state。</p>
+<h3 id="使用格式"><a href="#使用格式" class="headerlink" title="使用格式"></a>使用格式</h3><p>在组件中通过：<code>$store.getters.getter的名字</code> 来访问。</p>
+<h3 id="在调试工具中查看"><a href="#在调试工具中查看" class="headerlink" title="在调试工具中查看"></a>在调试工具中查看</h3><h3 id="小结-6"><a href="#小结-6" class="headerlink" title="小结"></a>小结</h3><p>它的作用是从已有公共数据项中派生出新的数据项，类似于 computed</p>
+<h2 id="state-mutation-getters-小结"><a href="#state-mutation-getters-小结" class="headerlink" title="state-mutation-getters 小结"></a>state-mutation-getters 小结</h2><p>Vuex 维护公共数据，主要有两个动作。</p>
+<ol>
+<li><p>定义数据。</p>
+</li>
+<li><p>提供获取/修改数据的方法。</p>
+</li>
+</ol>
+<p><img src="/resource/images/image-20210927114822586.png" alt="image-20210927114822586"></p>
+<h2 id="actions-发异步请求"><a href="#actions-发异步请求" class="headerlink" title="actions-发异步请求"></a>actions-发异步请求</h2><h3 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h3><p>上面获取图书信息的方式是。</p>
+<ol>
+<li><p>组件内部发 ajax。</p>
+</li>
+<li><p>ajax 回来之后，去调用 mutations 来保存到 vuex 中。</p>
+</li>
+</ol>
+<p>这种方式有一个问题：代码不好重用。</p>
+<h3 id="actions-介绍"><a href="#actions-介绍" class="headerlink" title="actions 介绍"></a>actions 介绍</h3><ul>
+<li><p>  actions 是 vuex 的一个配置项。</p>
+</li>
+<li><p>  作用：发异步请求获取数据，调用 mutations 来保存数据，将整个 ajax 操作封装到 Vuex 的内部。</p>
+</li>
+<li><p>要点。</p>
+<ul>
+<li><p>  action 内部可以发异步请求操作。</p>
+</li>
+<li><p>  action 是间接修改 state 的：是通过调用 mutation 来修改 state。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="格式-1"><a href="#格式-1" class="headerlink" title="格式"></a>格式</h3><p>定义格式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vuex.store(&#123;</span><br><span class="line">    <span class="comment">// 省略其他...</span></span><br><span class="line">    <span class="attr">actions</span>: &#123;</span><br><span class="line">        <span class="comment">// context对象会自动传入，它与store实例具有相同的方法和属性</span></span><br><span class="line">        action的名字: <span class="function"><span class="keyword">function</span> (<span class="params">context, 载荷</span>) </span>&#123;</span><br><span class="line">            <span class="comment">// 1. 发异步请求，请求数据</span></span><br><span class="line">            <span class="comment">// 2. commit调用mutation来修改数据</span></span><br><span class="line">            <span class="comment">// context.commit(&#x27;mutation名&#x27;, 载荷)</span></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>调用格式</p>
+<p>在组件中通过 <code>this.$store.dispatch(&#39;actions的名字&#39;, 参数)</code> 来调用 action。</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>修改上面例子中的发请求图书的代码，将 axios 的部分写到 action 中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发ajax请求，从后端获取数据，再来去修改state中的数据</span></span><br><span class="line"><span class="attr">actions</span>: &#123;</span><br><span class="line">    getBooks (context) &#123;</span><br><span class="line">        <span class="comment">// 1. 发异步请求</span></span><br><span class="line">        axios(&#123;</span><br><span class="line">            <span class="attr">url</span>: <span class="string">&#x27;https://www.fastmock.site/mock/37d3b9f13a48d528a9339fbed1b81bd5/book/api/books&#x27;</span>,</span><br><span class="line">            <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span></span><br><span class="line">        &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(res)</span><br><span class="line">            <span class="comment">// 2. 调用mutation</span></span><br><span class="line">            context.commit(<span class="string">&#x27;setBooks&#x27;</span>, res.data.data)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-7"><a href="#小结-7" class="headerlink" title="小结"></a>小结</h3><p>action 一般用来发异步请求，数据回来之后，在去调用 mutations 来保存数据。</p>
+<p><img src="/resource/images/image-20210927115932890.png" alt="image-20210927115932890"></p>
+<p>将 AJAX 请求放在 actions 中有两个好处。</p>
+<ol>
+<li><p>代码得到了进一步封装。将发 ajax 和保存数据到 vuex 绑定在一起。</p>
+</li>
+<li><p>逻辑更通顺。如果数据需要保存在 Vuex 的 state 中，那从接口处获取数据的操作就定义在 Vuex 的 actions 中。</p>
+</li>
+</ol>
+<h2 id="用-modules-来拆分复杂业务"><a href="#用-modules-来拆分复杂业务" class="headerlink" title="用 modules 来拆分复杂业务"></a>用 modules 来拆分复杂业务</h2><h3 id="问题导入-1"><a href="#问题导入-1" class="headerlink" title="问题导入"></a>问题导入</h3><p>随着项目越来越大，需要放在 vuex 中的数据越来越多，整个 store/index.js 中代码会越来越长，怎么办呢？</p>
+<h3 id="modules-的作用"><a href="#modules-的作用" class="headerlink" title="modules 的作用"></a>modules 的作用</h3><p>拆分模板，把复杂的场景按模块来拆开</p>
+<h3 id="格式-2"><a href="#格式-2" class="headerlink" title="格式"></a>格式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    <span class="comment">// state: 用来保存所有的公共数据</span></span><br><span class="line">    <span class="attr">state</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">getters</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">mutations</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">actions</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">modules</span>: &#123;</span><br><span class="line">        模块名<span class="number">1</span>：&#123;</span><br><span class="line">            <span class="comment">// namespaced 为 true，则在使用 mutations 时，就必须要加上模块名</span></span><br><span class="line">            <span class="attr">namespaced</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="attr">state</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">getters</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">mutations</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">actions</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">modules</span>: &#123;&#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        模块名<span class="number">2</span>：&#123;</span><br><span class="line">            <span class="comment">// namespaced不写，默认为 false，则在使用mutations时，不需要加模块名</span></span><br><span class="line">            <span class="attr">state</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">getters</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">mutations</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">actions</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">modules</span>: &#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>也可以更进一步对文件进行拆分。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">|--store /</span><br><span class="line">|------- index.js # 引入模块</span><br><span class="line">|------- modules</span><br><span class="line">|-------------- / mod1.js # 模块1</span><br><span class="line">|-------------- / mod2.js # 模块2</span><br></pre></td></tr></table></figure>
+
+<h3 id="访问数据和修改数据的调整"><a href="#访问数据和修改数据的调整" class="headerlink" title="访问数据和修改数据的调整"></a>访问数据和修改数据的调整</h3><ul>
+<li>  访问模块中的数据，要加上模块名。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">获取数据项： &#123;&#123;<span class="variable">$store</span>.state.模块名.数据项名&#125;&#125;</span><br><span class="line">获取getters：&#123;&#123;<span class="variable">$store</span>.getters[<span class="string">&#x27;模块名/getters名&#x27;</span>]&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>访问模块中的 mutations/actions。</p>
+<ul>
+<li><p>  如果 namespaced 为 true，则需要额外去补充模块名。</p>
+</li>
+<li><p>  如果 namespaced 为 false，则不需要额外补充模块名。</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$store.commit(<span class="string">&#x27;mutations名&#x27;</span>) <span class="comment">// namespaced为false</span></span><br><span class="line">$store.commit(<span class="string">&#x27;模块名/mutations名&#x27;</span>) <span class="comment">// namespaced为true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-8"><a href="#小结-8" class="headerlink" title="小结"></a>小结</h3><p>使用了 modules 之后，在访问数据时就要额外添加 modules 的名字了。</p>
+<p>结论：在使用 modules 时，建议都给加上 namespaced!</p>
+<h2 id="用-modules-之后代码结构优化"><a href="#用-modules-之后代码结构优化" class="headerlink" title="用 modules 之后代码结构优化"></a>用 modules 之后代码结构优化</h2><p><img src="/resource/images/image-20210603155218649.png" alt="image-20210603155218649"></p>
+<h2 id="辅助函数-mapState-来使用公共数据"><a href="#辅助函数-mapState-来使用公共数据" class="headerlink" title="辅助函数 mapState 来使用公共数据"></a>辅助函数 mapState 来使用公共数据</h2><h3 id="目标-7"><a href="#目标-7" class="headerlink" title="目标"></a>目标</h3><p>掌握 mapState 的用法，将 state 中的变量映射到当前的组件中使用；</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>当访问某个数据项嵌套太深了，能不能优化一下访问的方式？</p>
+<p>用 mapState 把公共数据（vuex.store） 映射 到本组件内部的<strong>计算属性</strong>中。</p>
+<h3 id="mapState-的使用步骤"><a href="#mapState-的使用步骤" class="headerlink" title="mapState 的使用步骤"></a>mapState 的使用步骤</h3><h4 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 导入辅助函数mapState，它是在vuex中定义的一个工具函数。</span></span><br><span class="line"><span class="comment">// ES6 按需导入 import &#123; mapState &#125; from &#x27;vuex&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; mapState &#125; <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">computed</span>: &#123;</span><br><span class="line">   <span class="comment">// 说明1：...对象 是把对象展开，合并到computed</span></span><br><span class="line">   <span class="comment">// 说明2：mapState是一个函数</span></span><br><span class="line">   <span class="comment">//  [&#x27;数据项1&#x27;， &#x27;数据项2&#x27;]</span></span><br><span class="line">   ...mapState([<span class="string">&#x27;xxx&#x27;</span>])，</span><br><span class="line">   ...mapState(&#123;<span class="string">&#x27;新名字&#x27;</span>: <span class="string">&#x27;xxx&#x27;</span>&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">this.xxx</span><br><span class="line">&#123;&#123;xxx&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 导入辅助函数mapState，它是在vuex中定义的一个工具函数</span></span><br><span class="line"><span class="comment">// ES6 按需导入 import &#123; mapState &#125; from &#x27;vuex&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; mapState &#125; <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 在 computed 中使用 ...mapState([&#x27;books&#x27;])</span></span><br><span class="line"><span class="comment">// const res = mapState([&#x27;books&#x27;])</span></span><br><span class="line"><span class="comment">// res 的结果是一个对象：&#123; books: function() &#123;&#125;&#125;</span></span><br><span class="line"><span class="comment">// console.log(&#x27;mapState&#x27;, res)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        c1 () &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;c1&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// books: function() &#123;&#125;</span></span><br><span class="line">        <span class="comment">// ..res：把res这个对象合并到computed对象中</span></span><br><span class="line">        <span class="comment">// ...res</span></span><br><span class="line">        ...mapState([<span class="string">&#x27;books&#x27;</span>])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-9"><a href="#小结-9" class="headerlink" title="小结"></a>小结</h3><ol>
+<li><p>mapState 是辅助函数，将 vuex 中的数据投射到组件内部。</p>
+</li>
+<li><p>computed:{ …mapState() } 这里的…是对象的展开运算符，整体来看是对象的合并。</p>
+</li>
+</ol>
+<h2 id="辅助函数-mapState-对数据重命名"><a href="#辅助函数-mapState-对数据重命名" class="headerlink" title="辅助函数 mapState 对数据重命名"></a>辅助函数 mapState 对数据重命名</h2><h3 id="目标-8"><a href="#目标-8" class="headerlink" title="目标"></a>目标</h3><p>掌握 mapState 对数据重命名的用法。</p>
+<h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>Vuex 中的数据与本组件内的数据名相同。</p>
+<h3 id="格式-3"><a href="#格式-3" class="headerlink" title="格式"></a>格式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">...mapState(&#123;<span class="string">&#x27;新名字&#x27;</span>: <span class="string">&#x27;xxx&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="map-函数用法汇总"><a href="#map-函数用法汇总" class="headerlink" title="map 函数用法汇总"></a>map 函数用法汇总</h2><img src="/resource/images/image-20210602203233284.png" alt="image-20210602203233284" style="zoom:50%;" />
+
+<h3 id="如何使用全局-state"><a href="#如何使用全局-state" class="headerlink" title="如何使用全局 state"></a>如何使用全局 state</h3><ul>
+<li><p>  直接使用：<code>this.$store.state.xxx;</code>。</p>
+</li>
+<li><p>  map 辅助函数。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        ...mapState([<span class="string">&#x27;xxx&#x27;</span>]),</span><br><span class="line">        ...mapState(&#123;<span class="string">&#x27;新名字&#x27;</span>: <span class="string">&#x27;xxx&#x27;</span>&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何使用-modules-中的-state"><a href="#如何使用-modules-中的-state" class="headerlink" title="如何使用 modules 中的 state"></a>如何使用 modules 中的 state</h3><ul>
+<li><p>  直接使用：<code>this.$store.state.模块名.xxx;</code>。</p>
+</li>
+<li><p>  map 辅助函数。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        ...mapState(<span class="string">&#x27;模块名&#x27;</span>, [<span class="string">&#x27;xxx&#x27;</span>]),</span><br><span class="line">        ...mapState(<span class="string">&#x27;模块名&#x27;</span>, &#123;<span class="string">&#x27;新名字&#x27;</span>: <span class="string">&#x27;xxx&#x27;</span>&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何使用全局-getters"><a href="#如何使用全局-getters" class="headerlink" title="如何使用全局 getters"></a>如何使用全局 getters</h3><ul>
+<li><p>  直接使用：<code>this.$store.getters.xxx</code>。</p>
+</li>
+<li><p>  map 辅助函数。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        ...mapGetters([<span class="string">&#x27;xxx&#x27;</span>]),</span><br><span class="line">        ...mapGetters(&#123;<span class="string">&#x27;新名字&#x27;</span>: <span class="string">&#x27;xxx&#x27;</span>&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何使用-modules-中的-getters"><a href="#如何使用-modules-中的-getters" class="headerlink" title="如何使用 modules 中的 getters"></a>如何使用 modules 中的 getters</h3><ul>
+<li><p>  直接使用：<code>this.$store.getters.模块名.xxx</code>。</p>
+</li>
+<li><p>  map 辅助函数。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        ...mapGetters(<span class="string">&#x27;模块名&#x27;</span>, [<span class="string">&#x27;xxx&#x27;</span>]),</span><br><span class="line">        ...mapGetters(<span class="string">&#x27;模块名&#x27;</span>,&#123;<span class="string">&#x27;新名字&#x27;</span>: <span class="string">&#x27;xxx&#x27;</span>&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何使用全局-mutations"><a href="#如何使用全局-mutations" class="headerlink" title="如何使用全局 mutations"></a>如何使用全局 mutations</h3><ul>
+<li><p>  直接使用：<code>this.$store.commit(&#39;mutation名&#39;, 参数)</code>。</p>
+</li>
+<li><p>  map 辅助函数。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        ...mapMutations([<span class="string">&#x27;mutation名&#x27;</span>]),</span><br><span class="line">        ...mapMutations(&#123;<span class="string">&#x27;新名字&#x27;</span>: <span class="string">&#x27;mutation名&#x27;</span>&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何使用-modules-中的-mutations（namespaced-true）"><a href="#如何使用-modules-中的-mutations（namespaced-true）" class="headerlink" title="如何使用 modules 中的 mutations（namespaced:true）"></a>如何使用 modules 中的 mutations（namespaced:true）</h3><ul>
+<li><p>  直接使用：<code>this.$store.commit(&#39;模块名/mutation名&#39;, 参数)</code>。</p>
+</li>
+<li><p>  map 辅助函数。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        ...mapMutations(<span class="string">&#x27;模块名&#x27;</span>, [<span class="string">&#x27;xxx&#x27;</span>]),</span><br><span class="line">        ...mapMutations(<span class="string">&#x27;模块名&#x27;</span>,&#123;<span class="string">&#x27;新名字&#x27;</span>: <span class="string">&#x27;xxx&#x27;</span>&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何使用全局-actions"><a href="#如何使用全局-actions" class="headerlink" title="如何使用全局 actions"></a>如何使用全局 actions</h3><ul>
+<li><p>  直接使用：<code>this.$store.dispatch(&#39;action名&#39;, 参数)</code>。</p>
+</li>
+<li><p>  map 辅助函数。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        ...mapActions([<span class="string">&#x27;actions名&#x27;</span>]),</span><br><span class="line">        ...mapActions(&#123;<span class="string">&#x27;新名字&#x27;</span>: <span class="string">&#x27;actions名&#x27;</span>&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何使用-modules-中的-actions（namespaced-true）"><a href="#如何使用-modules-中的-actions（namespaced-true）" class="headerlink" title="如何使用 modules 中的 actions（namespaced:true）"></a>如何使用 modules 中的 actions（namespaced:true）</h3><ul>
+<li><p>  直接使用：<code>this.$store.dispatch(&#39;模块名/action名&#39;, 参数)</code>。</p>
+</li>
+<li><p>  map 辅助函数。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        ...mapActions(<span class="string">&#x27;模块名&#x27;</span>, [<span class="string">&#x27;xxx&#x27;</span>]),</span><br><span class="line">        ...mapActions(<span class="string">&#x27;模块名&#x27;</span>,&#123;<span class="string">&#x27;新名字&#x27;</span>: <span class="string">&#x27;xxx&#x27;</span>&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结-10"><a href="#小结-10" class="headerlink" title="小结"></a>小结</h2><p>图 1：actions 和 mutations 和 state 的关系图</p>
+<p><img src="/resource/images/vuex.png" alt="vuex"></p>
+<p>图 2：全天核心 API 小结</p>
+<p><img src="/resource/images/image-20210604084953510.png" alt="image-20210604084953510"></p>
+<h2 id="改写-todos"><a href="#改写-todos" class="headerlink" title="改写 todos"></a>改写 todos</h2><ol>
+<li><p>安装 Vuex，配置 store。</p>
+</li>
+<li><p>把 TodoMain 组件中的数据，从 Vuex 从读出。</p>
+</li>
+<li><p>添加。</p>
+</li>
+</ol>
+<p><img src="/resource/images/image-20210929094114297.png" alt="image-20210929094114297"></p>
+<ol start="4">
+<li><p>删除。</p>
+<ul>
+<li><p>准备 mutations，通过下标来删除（<code>数组.splice(下标，1)</code>）。</p>
+</li>
+<li><p>调用 mutations。</p>
+</li>
+</ul>
+</li>
+<li><p>统计数量，准备 getters。</p>
+</li>
+<li><p>筛选。</p>
+</li>
+</ol>
+<p><img src="/resource/images/image-20210929102824675.png" alt="image-20210929102824675"></p>
+<ol start="7">
+<li>清除已完成。</li>
+</ol>
+<p><img src="/resource/images/image-20210929111941092.png" alt="image-20210929111941092"></p>
+<ol start="8">
+<li><p>切换全选中/全不选中。</p>
+</li>
+<li><p>本地存储。</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">watch</span>: &#123;</span><br><span class="line">        <span class="comment">//监听 list 改变时把数据存储在本地上</span></span><br><span class="line">        <span class="comment">// &#x27;list&#x27;</span></span><br><span class="line">        <span class="comment">// this.数据</span></span><br><span class="line">        <span class="comment">// this.计算属性</span></span><br><span class="line">        <span class="comment">// this.$route</span></span><br><span class="line">        <span class="comment">// this.$route.query.xxx</span></span><br><span class="line">        <span class="string">&#x27;$store.state.list&#x27;</span>: &#123;</span><br><span class="line">            <span class="attr">deep</span>:<span class="literal">true</span>,</span><br><span class="line">            <span class="function"><span class="title">handler</span>(<span class="params">newVal</span>)</span>&#123;</span><br><span class="line">                <span class="built_in">localStorage</span>.setItem(<span class="string">&#x27;tododd&#x27;</span>,<span class="built_in">JSON</span>.stringify(newVal))</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.fastmock.site/mock/246d74598d65f839ebc49f635d312202/todo/todolist">https://www.fastmock.site/mock/246d74598d65f839ebc49f635d312202/todo/todolist</a></p>
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><ol>
+<li>默写画图，小结中的 图 1，图 2</li>
+</ol>
+<p><img src="/resource/images/image-20210928150511854.png" alt="image-20210928150511854"></p>
+<ol start="2">
+<li>操作。</li>
+</ol>
+<p><img src="/resource/images/image-20210927152822203.png" alt="image-20210927152822203"></p>
+<ol start="3">
+<li>用 Vuex 改写 todos。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/15/vue2-base-course06/" rel="prev" title="06_Vue 基础">
+      <i class="fa fa-chevron-left"></i> 06_Vue 基础
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/15/vue2-base-course08/" rel="next" title="08_Vue 基础">
+      08_Vue 基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vuex-%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">Vuex 基本介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%AF%BC%E5%85%A5"><span class="nav-number">2.1.</span> <span class="nav-text">问题导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE%E7%BB%84%E4%BB%B6%E5%85%B3%E7%B3%BB%E5%92%8C%E9%80%9A%E4%BF%A1%E6%96%B9%E6%A1%88"><span class="nav-number">2.2.</span> <span class="nav-text">回顾组件关系和通信方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuex-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.3.</span> <span class="nav-text">Vuex 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.4.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">2.5.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vuex-%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">Vuex 学习内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuex-%E7%9A%84%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9"><span class="nav-number">3.2.</span> <span class="nav-text">Vuex 的学习内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-number">3.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-Vue-%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8-Vuex"><span class="nav-number">4.</span> <span class="nav-text">在 Vue 项目使用 Vuex</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E6%83%85%E5%86%B5"><span class="nav-number">4.2.</span> <span class="nav-text">两种情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E6%97%A7%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex"><span class="nav-number">4.3.</span> <span class="nav-text">在旧项目中使用 Vuex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-2"><span class="nav-number">4.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#state-%E5%AE%9A%E4%B9%89%E5%85%AC%E5%85%B1%E6%95%B0%E6%8D%AE%E5%B9%B6%E5%9C%A8%E7%BB%84%E4%BB%B6%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">state 定义公共数据并在组件中使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-3"><span class="nav-number">5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#state-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">5.2.</span> <span class="nav-text">state 的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%85%AC%E5%85%B1%E6%95%B0%E6%8D%AE"><span class="nav-number">5.3.</span> <span class="nav-text">定义公共数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%85%AC%E5%85%B1%E6%95%B0%E6%8D%AE"><span class="nav-number">5.4.</span> <span class="nav-text">使用公共数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-Devtool-%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="nav-number">5.5.</span> <span class="nav-text">Vue Devtool 调试工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-3"><span class="nav-number">5.6.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8-mutations-%E4%BF%AE%E6%94%B9%E5%85%AC%E5%85%B1%E6%95%B0%E6%8D%AE"><span class="nav-number">6.</span> <span class="nav-text">用 mutations 修改公共数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-4"><span class="nav-number">6.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">6.2.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F"><span class="nav-number">6.3.</span> <span class="nav-text">格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">6.4.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-devtool-%E4%B8%AD%E8%A7%82%E5%AF%9F"><span class="nav-number">6.5.</span> <span class="nav-text">在 devtool 中观察</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-4"><span class="nav-number">6.6.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%A1%88%E4%BE%8B-%E5%8F%91%E8%AF%B7%E6%B1%82%E5%8F%96%E6%95%B0%E6%8D%AE%E5%81%9A%E4%BF%9D%E5%AD%98"><span class="nav-number">7.</span> <span class="nav-text">小案例-发请求取数据做保存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-5"><span class="nav-number">7.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E6%8F%8F%E8%BF%B0"><span class="nav-number">7.2.</span> <span class="nav-text">任务描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">7.3.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">7.4.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-5"><span class="nav-number">7.5.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8-getters-%E7%9A%84%E6%B4%BE%E7%94%9F%E7%8A%B6%E6%80%81"><span class="nav-number">8.</span> <span class="nav-text">用 getters 的派生状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-6"><span class="nav-number">8.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8-1"><span class="nav-number">8.2.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E6%A0%BC%E5%BC%8F"><span class="nav-number">8.3.</span> <span class="nav-text">定义格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A0%BC%E5%BC%8F"><span class="nav-number">8.4.</span> <span class="nav-text">使用格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B8%AD%E6%9F%A5%E7%9C%8B"><span class="nav-number">8.5.</span> <span class="nav-text">在调试工具中查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-6"><span class="nav-number">8.6.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#state-mutation-getters-%E5%B0%8F%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">state-mutation-getters 小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#actions-%E5%8F%91%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82"><span class="nav-number">10.</span> <span class="nav-text">actions-发异步请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5"><span class="nav-number">10.1.</span> <span class="nav-text">导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#actions-%E4%BB%8B%E7%BB%8D"><span class="nav-number">10.2.</span> <span class="nav-text">actions 介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F-1"><span class="nav-number">10.3.</span> <span class="nav-text">格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">10.4.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-7"><span class="nav-number">10.5.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8-modules-%E6%9D%A5%E6%8B%86%E5%88%86%E5%A4%8D%E6%9D%82%E4%B8%9A%E5%8A%A1"><span class="nav-number">11.</span> <span class="nav-text">用 modules 来拆分复杂业务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%AF%BC%E5%85%A5-1"><span class="nav-number">11.1.</span> <span class="nav-text">问题导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#modules-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">11.2.</span> <span class="nav-text">modules 的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F-2"><span class="nav-number">11.3.</span> <span class="nav-text">格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%92%8C%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E7%9A%84%E8%B0%83%E6%95%B4"><span class="nav-number">11.4.</span> <span class="nav-text">访问数据和修改数据的调整</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-8"><span class="nav-number">11.5.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8-modules-%E4%B9%8B%E5%90%8E%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96"><span class="nav-number">12.</span> <span class="nav-text">用 modules 之后代码结构优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0-mapState-%E6%9D%A5%E4%BD%BF%E7%94%A8%E5%85%AC%E5%85%B1%E6%95%B0%E6%8D%AE"><span class="nav-number">13.</span> <span class="nav-text">辅助函数 mapState 来使用公共数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-7"><span class="nav-number">13.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">13.2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mapState-%E7%9A%84%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="nav-number">13.3.</span> <span class="nav-text">mapState 的使用步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%98%A0%E5%B0%84"><span class="nav-number">13.3.1.</span> <span class="nav-text">映射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">13.3.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-number">13.4.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-9"><span class="nav-number">13.5.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0-mapState-%E5%AF%B9%E6%95%B0%E6%8D%AE%E9%87%8D%E5%91%BD%E5%90%8D"><span class="nav-number">14.</span> <span class="nav-text">辅助函数 mapState 对数据重命名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-8"><span class="nav-number">14.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF"><span class="nav-number">14.2.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F-3"><span class="nav-number">14.3.</span> <span class="nav-text">格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map-%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%E6%B1%87%E6%80%BB"><span class="nav-number">15.</span> <span class="nav-text">map 函数用法汇总</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%85%A8%E5%B1%80-state"><span class="nav-number">15.1.</span> <span class="nav-text">如何使用全局 state</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-modules-%E4%B8%AD%E7%9A%84-state"><span class="nav-number">15.2.</span> <span class="nav-text">如何使用 modules 中的 state</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%85%A8%E5%B1%80-getters"><span class="nav-number">15.3.</span> <span class="nav-text">如何使用全局 getters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-modules-%E4%B8%AD%E7%9A%84-getters"><span class="nav-number">15.4.</span> <span class="nav-text">如何使用 modules 中的 getters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%85%A8%E5%B1%80-mutations"><span class="nav-number">15.5.</span> <span class="nav-text">如何使用全局 mutations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-modules-%E4%B8%AD%E7%9A%84-mutations%EF%BC%88namespaced-true%EF%BC%89"><span class="nav-number">15.6.</span> <span class="nav-text">如何使用 modules 中的 mutations（namespaced:true）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%85%A8%E5%B1%80-actions"><span class="nav-number">15.7.</span> <span class="nav-text">如何使用全局 actions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-modules-%E4%B8%AD%E7%9A%84-actions%EF%BC%88namespaced-true%EF%BC%89"><span class="nav-number">15.8.</span> <span class="nav-text">如何使用 modules 中的 actions（namespaced:true）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-10"><span class="nav-number">16.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E5%86%99-todos"><span class="nav-number">17.</span> <span class="nav-text">改写 todos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A"><span class="nav-number">18.</span> <span class="nav-text">作业</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

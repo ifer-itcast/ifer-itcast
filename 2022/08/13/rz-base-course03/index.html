@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 目标。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03_人资后台">
+<meta property="og:url" content="http://example.com/2022/08/13/rz-base-course03/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 目标。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-20200714093601730-1610943125132.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200714142517337-1610986276042.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200812023354631-1610986276043.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200827104724769-1610986276043.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200714172602305-1610986276043.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210119005836966.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200715233339927-1610986276044.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200827111324564-1611025266963.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210119113012454.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210119114125776.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210119115831621.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210119122748332.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200827140451144-1611025266965.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200827143847893-1611025266965.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210119133423803.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200716015113164-1611025266965.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200827152601712-1611025266965.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210121135154593.png">
+<meta property="article:published_time" content="2022-08-13T14:07:51.000Z">
+<meta property="article:modified_time" content="2022-08-30T15:39:33.403Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20200714093601730-1610943125132.png">
+
+<link rel="canonical" href="http://example.com/2022/08/13/rz-base-course03/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>03_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/13/rz-base-course03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          03_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-13 22:07:51" itemprop="dateCreated datePublished" datetime="2022-08-13T22:07:51+08:00">2022-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-30 23:39:33" itemprop="dateModified" datetime="2022-08-30T23:39:33+08:00">2022-08-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 目标。</p>
+<span id="more"></span>
+
+<h1 id="主页模块"><a href="#主页模块" class="headerlink" title="主页模块"></a>主页模块</h1><h2 id="主页的-token-登录拦截处理"><a href="#主页的-token-登录拦截处理" class="headerlink" title="主页的 token 登录拦截处理"></a>主页的 token 登录拦截处理</h2><p>**<code>目标</code>**：根据 token 处理主页的访问权限问题 (没有 token 的用户, 不让你进系统的)</p>
+<h3 id="权限拦截的流程图"><a href="#权限拦截的流程图" class="headerlink" title="权限拦截的流程图"></a>权限拦截的流程图</h3><blockquote>
+<p>我们已经完成了登录的过程，并且存储了 token，但是此时主页并没有因为 token 的有无, 而被控制访问权限</p>
+</blockquote>
+<p>接下来我们需要实现以下如下的流程图, 会在路由前置守卫中, 做拦截判断</p>
+<img src="/resource/images/image-20200714093601730-1610943125132.png"/>
+
+<blockquote>
+<p>在基础框架阶段，我们已经知道**<code>src/permission.js</code>**是专门处理路由权限的，所以我们在这里处理</p>
+</blockquote>
+<h3 id="流程图转化代码"><a href="#流程图转化代码" class="headerlink" title="流程图转化代码"></a>流程图转化代码</h3><p><strong>流程图转化的代码</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路由前置守卫</span></span><br><span class="line"><span class="comment">// 进行登录拦截的控制 (后面自己写)</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;@/router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;@/store&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> whiteList = [<span class="string">&#x27;/login&#x27;</span>, <span class="string">&#x27;/404&#x27;</span>] <span class="comment">// 定义白名单  所有不受权限控制的页面</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 导航前置守卫</span></span><br><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> token = store.getters.token</span><br><span class="line">    <span class="comment">// 判断有无token</span></span><br><span class="line">    <span class="keyword">if</span> (token) &#123;</span><br><span class="line">        <span class="comment">// 判断是不是去登录页</span></span><br><span class="line">        <span class="keyword">if</span> (to.path === <span class="string">&#x27;/login&#x27;</span>) &#123;</span><br><span class="line">            next(<span class="string">&#x27;/&#x27;</span>) <span class="comment">// 引导到首页</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            next() <span class="comment">// 放行</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 看在不在白名单中(免登陆即可访问的页面)</span></span><br><span class="line">        <span class="keyword">if</span> (whiteList.includes(to.path)) &#123;</span><br><span class="line">            next()</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            next(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加进度条效果-优化体验"><a href="#添加进度条效果-优化体验" class="headerlink" title="添加进度条效果 (优化体验)"></a>添加<code>进度条</code>效果 (优化体验)</h3><p>博客: <a target="_blank" rel="noopener" href="https://blog.csdn.net/wn1245343496/article/details/82151273">https://blog.csdn.net/wn1245343496/article/details/82151273</a></p>
+<p>在导航守卫的位置，我们添加了 NProgress 的插件，可以完成进入时的进度条效果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路由前置守卫</span></span><br><span class="line"><span class="comment">// 进行登录拦截的控制 (后面自己写)</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;@/router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;@/store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> NProgress <span class="keyword">from</span> <span class="string">&#x27;nprogress&#x27;</span> <span class="comment">// 引入一份进度条插件</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;nprogress/nprogress.css&#x27;</span> <span class="comment">// 引入进度条样式</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> whiteList = [<span class="string">&#x27;/login&#x27;</span>, <span class="string">&#x27;/404&#x27;</span>] <span class="comment">// 定义白名单  所有不受权限控制的页面</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 导航前置守卫</span></span><br><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">    NProgress.start()</span><br><span class="line">    <span class="keyword">const</span> token = store.getters.token</span><br><span class="line">    <span class="comment">// 判断有无token</span></span><br><span class="line">    <span class="keyword">if</span> (token) &#123;</span><br><span class="line">        <span class="comment">// 判断是不是去登录页</span></span><br><span class="line">        <span class="keyword">if</span> (to.path === <span class="string">&#x27;/login&#x27;</span>) &#123;</span><br><span class="line">            next(<span class="string">&#x27;/&#x27;</span>) <span class="comment">// 跳到首页, 被next拦截走的, 不会自动关闭, 因为没有进入到 afterEach, 需要手动关闭</span></span><br><span class="line">            NProgress.done()</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            next() <span class="comment">// 放行</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 看在不在白名单中(免登陆即可访问的页面)</span></span><br><span class="line">        <span class="keyword">if</span> (whiteList.includes(to.path)) &#123;</span><br><span class="line">            next()</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            next(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">            NProgress.done()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">router.afterEach(<span class="function">(<span class="params">to, <span class="keyword">from</span></span>) =&gt;</span> &#123;</span><br><span class="line">    NProgress.done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>提交代码</strong></p>
+<h2 id="主页的左侧导航基本样式"><a href="#主页的左侧导航基本样式" class="headerlink" title="主页的左侧导航基本样式"></a>主页的左侧导航基本样式</h2><p>**<code>目标</code>**设置左侧的导航样式</p>
+<blockquote>
+<p>接下来我们需要将左侧导航设置成如图样式</p>
+</blockquote>
+<img src="/resource/images/image-20200714142517337-1610986276042.png"/>
+
+<blockquote>
+<p>主页的布局组件位置**<code>src/layout</code>**</p>
+</blockquote>
+<p><strong>主页布局架构</strong></p>
+<img src="/resource/images/image-20200812023354631-1610986276043.png"/>
+
+<p><strong>左侧导航组件的样式文件</strong><code>styles/siderbar.scss</code></p>
+<p><strong>设置背景渐变色</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.sidebar-container</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">-webkit-linear-gradient</span>(bottom, <span class="number">#3d6df8</span>, <span class="number">#5b8cff</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置左侧导航背景图片</strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.scrollbar-wrapper</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: url(<span class="string">&#x27;~@/assets/common/leftnavBg.png&#x27;</span>) no-repeat <span class="number">0</span> <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>**<code>注意</code><strong>：在 scss 中，如果我们想要使用</strong><code>@</code><strong>别名，需要在前面加上一个</strong><code>~</code>**才可以</p>
+<p><strong>设置菜单选中颜色</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">.el-menu &#123;</span><br><span class="line">  border: none;</span><br><span class="line">  height: 100%;</span><br><span class="line">  width: 100% !important;</span><br><span class="line">  a&#123;</span><br><span class="line">    li&#123;</span><br><span class="line">      .svg-icon&#123;</span><br><span class="line">        color: <span class="comment">#fff;</span></span><br><span class="line">        font-size: 18px;</span><br><span class="line">        vertical-align: middle;</span><br><span class="line">        .icon&#123;</span><br><span class="line">          color:<span class="comment">#fff;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      span&#123;</span><br><span class="line">        color: <span class="comment">#fff;</span></span><br><span class="line">      &#125;</span><br><span class="line">      &amp;:hover&#123;</span><br><span class="line">        .svg-icon&#123;</span><br><span class="line">          color: <span class="comment">#43a7fe;</span></span><br><span class="line">        &#125;</span><br><span class="line">        span&#123;</span><br><span class="line">          color: <span class="comment">#43a7fe;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>**<code>注意</code>**：因为我们后期没有二级菜单，所以这里暂时不用对二级菜单的样式进行控制</p>
+<p><strong>显示左侧 logo 图片</strong> <strong><code>src/setttings.js</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;人力资源管理平台&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@type <span class="type">&#123;boolean&#125;</span> </span>true | false</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@description </span>Whether fix the header</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">fixedHeader</span>: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@type <span class="type">&#123;boolean&#125;</span> </span>true | false</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@description </span>Whether show the logo in sidebar</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">sidebarLogo</span>: <span class="literal">true</span>, <span class="comment">// 显示logo</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置头部图片结构</strong> <strong><code>src/layout/components/Sidebar/Logo.vue</code></strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;sidebar-logo-container&quot; :class=&quot;&#123; collapse: collapse &#125;&quot;&gt;</span><br><span class="line">    &lt;transition name=&quot;sidebarLogoFade&quot;&gt;</span><br><span class="line">        </span><br><span class="line">      &lt;router-link key=&quot;collapse&quot; class=&quot;sidebar-logo-link&quot; to=&quot;/&quot;&gt;</span><br><span class="line">        &lt;img src=&quot;@/assets/common/logo.png&quot; class=&quot;sidebar-logo  &quot;&gt;</span><br><span class="line">      &lt;/router-link&gt;</span><br><span class="line">        </span><br><span class="line">    &lt;/transition&gt;</span><br><span class="line">  &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置大图和小图的样式</strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&amp; <span class="selector-class">.sidebar-logo</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">140px</span>;</span><br><span class="line">    <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">    <span class="attribute">margin-right</span>: <span class="number">12px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 大图样式</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&amp;<span class="selector-class">.collapse</span> &#123;</span><br><span class="line">    <span class="selector-class">.sidebar-logo</span> &#123;</span><br><span class="line">        <span class="attribute">margin-right</span>: <span class="number">0px</span>;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">24px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 小图样式</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>去除 logo 的背景色</strong></p>
+<img src="/resource/images/image-20200827104724769-1610986276043.png"/>
+
+<p><strong>提交代码</strong></p>
+<p>**<code>本节任务</code>**： 完成主页的左侧导航样式</p>
+<p>**<code>本节注意</code>**：我们该项目中没有二级显示菜单，所以二级菜单的样式并没有做过多处理</p>
+<h2 id="设置头部内容的布局和样式"><a href="#设置头部内容的布局和样式" class="headerlink" title="设置头部内容的布局和样式"></a>设置头部内容的布局和样式</h2><p>**<code>目标</code>**设置头部内容的布局和样式</p>
+<blockquote>
+<p>我们需要把页面设置成如图样式</p>
+</blockquote>
+<img src="/resource/images/image-20200714172602305-1610986276043.png"/>
+
+<p><strong>头部组件位置</strong> <strong><code>layout/components/Navbar.vue</code></strong></p>
+<p><strong>添加公司名称</strong>，<strong>注释面包屑</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app-breadcrumb&quot;</span>&gt;</span></span><br><span class="line">    江苏传智播客教育科技股份有限公司</span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;breadBtn&quot;</span>&gt;</span>体验版<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- &lt;breadcrumb class=&quot;breadcrumb-container&quot; /&gt; --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>公司样式</strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.app-breadcrumb</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline-block;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">margin-left</span>: <span class="number">10px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#ffffff</span>;</span><br><span class="line">    <span class="attribute">cursor</span>: text;</span><br><span class="line">    <span class="selector-class">.breadBtn</span> &#123;</span><br><span class="line">        <span class="attribute">background</span>: <span class="number">#84a9fe</span>;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">10px</span>;</span><br><span class="line">        <span class="attribute">display</span>: inline-block;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">30px</span>;</span><br><span class="line">        <span class="attribute">line-height</span>: <span class="number">30px</span>;</span><br><span class="line">        <span class="attribute">border-radius</span>: <span class="number">10px</span>;</span><br><span class="line">        <span class="attribute">margin-left</span>: <span class="number">15px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>头部背景渐变色</strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.navbar</span> &#123;</span><br><span class="line">    <span class="attribute">background-image</span>: -webkit-linear-gradient(left, <span class="number">#3d6df8</span>, <span class="number">#5b8cff</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>汉堡组件图标颜色</strong> <strong><code>src/components/Hamburger/index.vue</code></strong></p>
+<p><strong><code>注意</code><strong>这里的图标我们使用了</strong><code>svg</code><strong>，设置颜色需要使用 svg 标签的</strong><code>fill属性</code></strong></p>
+<blockquote>
+<p>设置 svg 图标为白色</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;svg</span><br><span class="line">     :class=&quot;&#123;&#x27;is-active&#x27;:isActive&#125;&quot;</span><br><span class="line">     class=&quot;hamburger&quot;</span><br><span class="line">     viewBox=&quot;0 0 1024 1024&quot;</span><br><span class="line">     xmlns=&quot;http://www.w3.org/2000/svg&quot;</span><br><span class="line">     width=&quot;64&quot;</span><br><span class="line">     height=&quot;64&quot;</span><br><span class="line">     fill=&quot;#fff&quot;</span><br><span class="line"> &gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果要调整大小, 需要给 svg 标签, 加上 viewBox 属性</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- viewBox的四个值, 分别是x(<span class="number">0</span>), y(<span class="number">0</span>), 宽度, 高度 --&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;128&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100&quot;</span> <span class="attr">viewBox</span>=<span class="string">&quot;0 0 128 100&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;red&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>右侧下拉菜单设置</strong></p>
+<blockquote>
+<p>将下拉菜单调节成**<code>首页/项目地址/退出登录</code>**</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;right-menu&quot;&gt;</span><br><span class="line">  &lt;el-dropdown class=&quot;avatar-container&quot; trigger=&quot;click&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;avatar-wrapper&quot;&gt;</span><br><span class="line">      &lt;img src=&quot;@/assets/common/bigUserHeader.png&quot; class=&quot;user-avatar&quot;&gt;</span><br><span class="line">      &lt;span class=&quot;name&quot;&gt;管理员&lt;/span&gt;</span><br><span class="line">      &lt;i class=&quot;el-icon-caret-bottom&quot; style=&quot;color:#fff&quot; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;el-dropdown-menu slot=&quot;dropdown&quot; class=&quot;user-dropdown&quot;&gt;</span><br><span class="line">      &lt;router-link to=&quot;/&quot;&gt;</span><br><span class="line">        &lt;el-dropdown-item&gt;</span><br><span class="line">          首页</span><br><span class="line">        &lt;/el-dropdown-item&gt;</span><br><span class="line">      &lt;/router-link&gt;</span><br><span class="line">      &lt;a target=&quot;_blank&quot; href=&quot;https://xxx.com&quot;&gt;</span><br><span class="line">        &lt;el-dropdown-item&gt;项目地址&lt;/el-dropdown-item&gt;</span><br><span class="line">      &lt;/a&gt;</span><br><span class="line">      &lt;el-dropdown-item divided @click.native=&quot;logout&quot;&gt;</span><br><span class="line">        &lt;span style=&quot;display:block;&quot;&gt;退出登录&lt;/span&gt;</span><br><span class="line">      &lt;/el-dropdown-item&gt;</span><br><span class="line">    &lt;/el-dropdown-menu&gt;</span><br><span class="line">  &lt;/el-dropdown&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>头像和下拉菜单样式</strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.avatar-wrapper</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.user-avatar</span> &#123;</span><br><span class="line">        <span class="attribute">cursor</span>: pointer;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">30px</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">30px</span>;</span><br><span class="line">        <span class="attribute">border-radius</span>: <span class="number">15px</span>;</span><br><span class="line">        <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.name</span> &#123;</span><br><span class="line">        <span class="attribute">cursor</span>: pointer;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">        <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">        <span class="attribute">margin-left</span>: <span class="number">5px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.user-dropdown</span> &#123;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.el-icon-caret-bottom</span> &#123;</span><br><span class="line">        <span class="attribute">cursor</span>: pointer;</span><br><span class="line">        <span class="attribute">position</span>: absolute;</span><br><span class="line">        <span class="attribute">right</span>: -<span class="number">20px</span>;</span><br><span class="line">        <span class="attribute">top</span>: <span class="number">20px</span>;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用户名和头像我们先用了假数据进行，下小章节，会进行这份数据的获取</p>
+<p><strong>最终效果</strong></p>
+<img src="/resource/images/image-20210119005836966.png"/>
+
+<p><strong>提交代码</strong></p>
+<h2 id="获取用户资料接口"><a href="#获取用户资料接口" class="headerlink" title="获取用户资料接口"></a>获取用户资料接口</h2><p><strong><code>目标</code></strong> 封装获取用户资料的资料信息</p>
+<blockquote>
+<p>上小节中，我们完成了头部菜单的基本布局，但是头像和名称没有，需要通过接口调用的方式获取当前用户的资料信息</p>
+</blockquote>
+<p><strong>获取用户资料接口</strong></p>
+<p>在**<code>src/api/user.js</code>**中封装获取用户资料的方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取用户的基本资料</span></span><br><span class="line"><span class="comment"> ***/</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">reqGetUserInfo</span>(<span class="params">token</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/profile&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个接口, 需要配置 headers 请求头, 配置 token, 而我们在请求任何带安全权限的接口时都需要**<code>令牌(token)</code>**</p>
+<p>即如图:</p>
+<img src="/resource/images/image-20200715233339927-1610986276044.png"/>
+
+<p>每次在接口中携带**<code>令牌（token）</code>**很麻烦，所以我们可以在 axios 拦截器中统一添加 token</p>
+<p><strong>统一添加 token</strong> <strong><code>src/utils/request.js</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 请求拦截器</span></span><br><span class="line">instance.interceptors.request.use(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">config</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 在发送请求之前做些什么</span></span><br><span class="line">        <span class="keyword">if</span> (store.getters.token) &#123;</span><br><span class="line">            <span class="comment">// 如果token存在 注入token</span></span><br><span class="line">            config.headers.Authorization = <span class="string">`Bearer <span class="subst">$&#123;store.getters.token&#125;</span>`</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> config</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 对请求错误做些什么</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>**<code>本节任务</code>**： 完成获取用户资料接口 和 拦截器统一携带 token</p>
+<h2 id="vuex-存储用户资料"><a href="#vuex-存储用户资料" class="headerlink" title="vuex 存储用户资料"></a>vuex 存储用户资料</h2><p>**<code>目标</code>**： 在用户的 vuex 模块中封装获取用户资料的 action，并存储相关状态到 vuex 中</p>
+<blockquote>
+<p>用户状态会在后续的开发中，频繁用到，所以我们将用户状态同样的封装到 action 中</p>
+</blockquote>
+<img src="/resource/images/image-20200827111324564-1611025266963.png"/>
+
+<p><strong>1</strong> <strong>封装获取用户资料 action</strong> <strong><code>action</code></strong> <strong><code>src/store/modules/user.js</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; login, getUserInfo &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/user&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取用户资料的action</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">getUserInfo</span>(<span class="params">context, data</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> reqGetUserInfo()</span><br><span class="line">  <span class="built_in">console</span>.log(res)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2 navBar 组件中调用测试</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; mapActions &#125; <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.getUserInfo()</span><br><span class="line">&#125;,</span><br><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">  ...mapActions(<span class="string">&#x27;user&#x27;</span>, [<span class="string">&#x27;getUserInfo&#x27;</span>]),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>成功响应:</p>
+<img src="/resource/images/image-20210119113012454.png"/>
+
+<p><strong>3 提交 mutation, 将用户信息存储到 vuex 中</strong></p>
+<p>准备 state 和 mutation</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">  <span class="attr">token</span>: getToken(), <span class="comment">// 优先从cookie中读取</span></span><br><span class="line">  <span class="attr">userInfo</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// mutations重要的原则: 只能是同步的</span></span><br><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">  <span class="comment">// 设置token</span></span><br><span class="line">  ...,</span><br><span class="line">  <span class="function"><span class="title">setUserInfo</span>(<span class="params">state, newUserInfo</span>)</span> &#123;</span><br><span class="line">    state.userInfo = newUserInfo</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">removeUserInfo</span>(<span class="params">state</span>)</span> &#123;</span><br><span class="line">    state.userInfo = &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">	...,</span><br><span class="line">  <span class="comment">// 获取用户资料的action</span></span><br><span class="line">  <span class="keyword">async</span> <span class="function"><span class="title">getUserInfo</span>(<span class="params">context</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; data &#125; = <span class="keyword">await</span> reqGetUserInfo() <span class="comment">// data 就是用户基本的资料</span></span><br><span class="line">    context.commit(<span class="string">&#x27;setUserInfo&#x27;</span>, data)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>验证成功:</p>
+<img src="/resource/images/image-20210119114125776.png"/>
+
+<p><strong>4 页面中使用</strong></p>
+<p>建立用户名的全局 getters (快捷访问)</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getters = &#123;</span><br><span class="line">    <span class="attr">sidebar</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.app.sidebar,</span><br><span class="line">    <span class="attr">device</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.app.device,</span><br><span class="line">    <span class="attr">token</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.user.token,</span><br><span class="line">    <span class="attr">name</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.user.userInfo.username, <span class="comment">// 建立用户名称的映射</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> getters</span><br></pre></td></tr></table></figure>
+
+<p>页面中 mapGetters 使用</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  ...mapGetters([</span><br><span class="line">    <span class="string">&#x27;sidebar&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;avatar&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;name&#x27;</span></span><br><span class="line">  ])</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由前置守卫处获取个人资料-伏笔"><a href="#路由前置守卫处获取个人资料-伏笔" class="headerlink" title="路由前置守卫处获取个人资料(伏笔)"></a>路由前置守卫处获取个人资料(伏笔)</h2><p><code>前置说明</code>: 获取用户资料在哪调用? 我们刚才是在菜单头部调用, 但是那时已经晚了, 已经进入到页面了</p>
+<p>其实, <code>对于不同的用户角色, 将来需要有不同的菜单展示的</code>, <strong>我们应该在一准备要进入到页面, 就获取用户信息</strong>, 要等用户信息获取完了, 再让你完全进页面</p>
+<img src="/resource/images/image-20210119115831621.png"/>
+
+<p>所以: 要放在 全局前置守卫中 获取用户信息, 将来会基于这个用户信息控制页面的展示路由, 这里为后面的权限控制埋好伏笔</p>
+<p><code>目标</code>: 将获取用户资料的 action, 迁移到路由前置守卫中获取</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导航前置守卫</span></span><br><span class="line">router.beforeEach(<span class="keyword">async</span> (to, <span class="keyword">from</span>, next) =&gt; &#123;</span><br><span class="line">    NProgress.start()</span><br><span class="line">    <span class="keyword">const</span> token = store.getters.token</span><br><span class="line">    <span class="comment">// 判断有无token</span></span><br><span class="line">    <span class="keyword">if</span> (token) &#123;</span><br><span class="line">        <span class="comment">// 判断是不是去登录页</span></span><br><span class="line">        <span class="keyword">if</span> (to.path === <span class="string">&#x27;/login&#x27;</span>) &#123;</span><br><span class="line">            next(<span class="string">&#x27;/&#x27;</span>) <span class="comment">// 跳到首页 (这是就是一个小的重定向, 如果访问有token访问login, 就拦截到首页)</span></span><br><span class="line">            NProgress.done()</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 正常放行, 正常访问首页等内部页面, 需要获取用户信息</span></span><br><span class="line">            <span class="comment">// 如果当前vuex中已经有用户资料了, 就不需要再获取了 (没必要重复获取资料)</span></span><br><span class="line">            <span class="keyword">if</span> (!store.state.user.userInfo.userId) &#123;</span><br><span class="line">                <span class="comment">// 没有id表示当前用户资料没有获取过, 就获取一下次</span></span><br><span class="line">                <span class="keyword">const</span> res = <span class="keyword">await</span> store.dispatch(<span class="string">&#x27;user/getUserInfo&#x27;</span>)</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&#x27;将来权限控制&#x27;</span>, res)</span><br><span class="line">            &#125;</span><br><span class="line">            next()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 看在不在白名单中(免登陆即可访问的页面)</span></span><br><span class="line">        <span class="keyword">if</span> (whiteList.includes(to.path)) &#123;</span><br><span class="line">            next()</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            next(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">            NProgress.done()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>获取用户资料时, 要 return 一下结果, 方便获取</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取用户资料的action</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">getUserInfo</span>(<span class="params">context, data</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> reqGetUserInfo()</span><br><span class="line">  context.commit(<span class="string">&#x27;setUserInfo&#x27;</span>, res.data)</span><br><span class="line">  <span class="keyword">return</span> res.data</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/image-20210119122748332.png"/>
+
+<p>小结: 这里我们将获取用户资料调整到了导航守卫的位置, 为将来的权限控制, 埋下了伏笔</p>
+<h2 id="获取头像接口合并数据"><a href="#获取头像接口合并数据" class="headerlink" title="获取头像接口合并数据"></a>获取头像接口合并数据</h2><p><strong>头像怎么办？</strong></p>
+<blockquote>
+<p>我们发现头像并不在接口的返回体中（接口原因），我们可以通过另一个接口来获取头像，并把头像合并到当前的资料中</p>
+</blockquote>
+<p><strong>封装获取用户信息接口</strong> <strong><code>src/api/user.js</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** *</span></span><br><span class="line"><span class="comment"> * 获取用户的基本信息  现在写它 完全是为了显示头像</span></span><br><span class="line"><span class="comment"> * **/</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">reqGetUserDetailById</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`/sys/user/<span class="subst">$&#123;id&#125;</span>`</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个接口需要用户的 userId，在前一个接口处，我们已经获取到了，所以可以直接在后面的内容去衔接</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; reqLogin, reqGetUserInfo, reqGetUserDetailById &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/user&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取用户资料的action</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">getUserInfo</span>(<span class="params">context</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="attr">data</span>: data1 &#125; = <span class="keyword">await</span> reqGetUserInfo() <span class="comment">// data 就是用户基本的资料</span></span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="attr">data</span>: data2 &#125; = <span class="keyword">await</span> reqGetUserDetailById(data1.userId) <span class="comment">// 包含头像的资料</span></span><br><span class="line">  <span class="keyword">const</span> baseResult = &#123;</span><br><span class="line">    ...data1,</span><br><span class="line">    ...data2</span><br><span class="line">  &#125;</span><br><span class="line">  context.commit(<span class="string">&#x27;setUserInfo&#x27;</span>, baseResult)</span><br><span class="line">  <span class="keyword">return</span> baseResult</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>为了页面中更好地获取头像，同样可以把头像放于 getters 中</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">staffPhoto: <span class="function">(<span class="params">state</span>) =&gt;</span> state.user.userInfo.staffPhoto <span class="comment">// 建立用户头像的映射</span></span><br></pre></td></tr></table></figure>
+
+<p>此时，我们的头像和名称已经获取到了，可以直接将之前的假数据换成真正的头像和名称</p>
+<p><strong>用户名</strong> <strong><code>layout/components/Navbar.vue</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  ...mapGetters([</span><br><span class="line">    <span class="string">&#x27;sidebar&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;avatar&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;name&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;staffPhoto&#x27;</span></span><br><span class="line">  ])</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;staffPhoto&quot;</span> <span class="attr">class</span>=<span class="string">&quot;user-avatar&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;name&quot;</span>&gt;</span>&#123;&#123; name &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>通过设置，用户名已经显示，头像依然没有显示，是因为图片失效了, 将来我们上传自己的一个新头像就不会有问题</p>
+<p>但是这边显示一张碎图肯定不合适, 我们需要处理一下, 如果图片加载失败, 应该给一张默认图展示</p>
+<img src="/resource/images/image-20200827140451144-1611025266965.png"/>
+
+<p>**<code>本节任务</code>**：封装获取头像接口, 合并数据</p>
+<p><strong><code>下节任务</code></strong>: 处理图片加载失败的情况</p>
+<h2 id="自定义指令-处理图片加载失败"><a href="#自定义指令-处理图片加载失败" class="headerlink" title="自定义指令-处理图片加载失败"></a>自定义指令-处理图片加载失败</h2><p>问题: 图片加载失败, 不是只有这一边会失败, 其实很多地方图片都可能会加载失败, 需要我们处理</p>
+<p>之前 vant 中, 图片加载失败, 我们用的是组件库中内置的效果, 这里我们自己封装自定义指令实现 <strong>(原理进阶)</strong></p>
+<p>**<code>目标</code>**： 通过自定义指令处理图片加载失败</p>
+<h3 id="自定义指令基本使用"><a href="#自定义指令基本使用" class="headerlink" title="自定义指令基本使用"></a>自定义指令基本使用</h3><p>注册自定义指令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Vue.directive(<span class="string">&#x27;指令名称&#x27;</span>, &#123;</span><br><span class="line">    <span class="comment">// 会在当前指令作用的dom元素 插入之后执行</span></span><br><span class="line">    <span class="comment">// el 指令所在dom元素</span></span><br><span class="line">    <span class="comment">// bindings 里面是指令的参数信息对象</span></span><br><span class="line">    <span class="function"><span class="title">inserted</span>(<span class="params">el, bindings</span>)</span> &#123;&#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>当图片有地址 但是地址没有加载成功的时候 会报错 会触发图片的一个事件 =&gt; onerror</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义全局的自定义指令</span></span><br><span class="line">Vue.directive(<span class="string">&#x27;imgerror&#x27;</span>, &#123;</span><br><span class="line">    <span class="comment">// el 指令所在的元素</span></span><br><span class="line">    <span class="comment">// binding 指令的相关信息对象, binding.value 指令的值</span></span><br><span class="line">    <span class="function"><span class="title">inserted</span>(<span class="params">el, bindings</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// console.log(el, bindings)</span></span><br><span class="line">        el.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">// console.log(&#x27;图片加载失败了&#x27;), 设置备用图片地址</span></span><br><span class="line">            el.src = bindings.value</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>注意:</p>
+<ol>
+<li><p>这里图片如果是用本地图片, 需要导入</p>
+</li>
+<li><p>如果是完整地址的网图, 直接赋值即可</p>
+</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;img v-imgerror=<span class="string">&quot;defaultImg&quot;</span> :src=<span class="string">&quot;staffPhoto&quot;</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;user-avatar&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Img <span class="keyword">from</span> <span class="string">&#x27;@/assets/common/head.jpg&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">defaultImg</span>: Img</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line">或者直接完整地址的网图赋值</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">defaultImg</span>: <span class="string">&#x27;https://xxx.com/xx.png&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line"><span class="attr">https</span>:<span class="comment">//ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2944476239,2235255584&amp;fm=26&amp;gp=0.jpg</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义指令模块封装"><a href="#自定义指令模块封装" class="headerlink" title="自定义指令模块封装"></a>自定义指令模块封装</h3><p>将来自定义指令多了, 又全都堆在 main.js 中, 所以新建一个模块统一管理所有的自定义指令</p>
+<p>新建 <strong><code>src/directives/index.js</code></strong>, 这个文件负责管理所有的自定义指令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 负责管理所有的自定义指令</span></span><br><span class="line"><span class="comment">// v-imgerror=&quot;备用图地址&quot;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> imgerror = &#123;</span><br><span class="line">    <span class="comment">// el 指令所在的元素</span></span><br><span class="line">    <span class="comment">// binding 指令的相关信息对象, binding.value 指令的值</span></span><br><span class="line">    <span class="function"><span class="title">inserted</span>(<span class="params">el, binding</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// console.log(el, bindings)</span></span><br><span class="line">        el.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">// console.log(&#x27;图片加载失败了&#x27;), 设置备用图片地址</span></span><br><span class="line">            el.src = binding.value</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// v-color=&quot;字体颜色&quot;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> color = &#123;</span><br><span class="line">    <span class="function"><span class="title">inserted</span>(<span class="params">el, binding</span>)</span> &#123;</span><br><span class="line">        el.style.color = binding.value</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用按需导入即可</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; imgerror, color &#125; <span class="keyword">from</span> <span class="string">&#x27;@/directives&#x27;</span></span><br><span class="line"></span><br><span class="line">Vue.directive(<span class="string">&#x27;imgerror&#x27;</span>, imgerror)</span><br><span class="line">Vue.directive(<span class="string">&#x27;color&#x27;</span>, color)</span><br></pre></td></tr></table></figure>
+
+<h3 id="main-js-批量注册指令-进阶"><a href="#main-js-批量注册指令-进阶" class="headerlink" title="main.js 批量注册指令 (进阶)"></a>main.js 批量注册指令 (进阶)</h3><p>重命名小知识点区分:</p>
+<ol>
+<li>解构赋值的重命名, 使用 <code>:</code> 进行重命名</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const &#123; name: username &#125; = obj</span><br><span class="line">console.log(username)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>按需导入时的重命名, 使用 <code>as</code> 进行重命名</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; fn1 &#125; <span class="keyword">from</span> <span class="string">&#x27;./test.js&#x27;</span></span><br><span class="line">fn1()</span><br><span class="line"></span><br><span class="line">----------------------------------------------------</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; fn1 <span class="keyword">as</span> myFn &#125; <span class="keyword">from</span> <span class="string">&#x27;./test.js&#x27;</span></span><br><span class="line">myFn</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>对于按需导入, 可以全部直接导入</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> results <span class="keyword">from</span> <span class="string">&#x27;./xxx.js&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>results 是一个对象, 这个对象中, 会得到 xxx.js 模块中的所有的按需导出</p>
+<hr>
+<p>基本注册</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; imgerror, color &#125; <span class="keyword">from</span> <span class="string">&#x27;@/directives&#x27;</span></span><br><span class="line"><span class="comment">// 定义全局的自定义指令</span></span><br><span class="line">Vue.directive(<span class="string">&#x27;imgerror&#x27;</span>, imgerror)</span><br><span class="line">Vue.directive(<span class="string">&#x27;color&#x27;</span>, color)</span><br></pre></td></tr></table></figure>
+
+<p>但是一个个的注册太麻烦了, 可以批量注册</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> directives <span class="keyword">from</span> <span class="string">&#x27;@/directives&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后，在**<code>main.js</code>**中完成对于指令的注册</p>
+<p>(1) 批量注册用 for in</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> directives <span class="keyword">from</span> <span class="string">&#x27;@/directives&#x27;</span></span><br><span class="line"><span class="comment">// 遍历得到的对象, 批量进行自定义指令的注册</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> directives) &#123;</span><br><span class="line">    <span class="comment">// console.log(key, directives[key])</span></span><br><span class="line">    Vue.directive(key, directives[key])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(2) 批量注册用 Object.keys (推荐) 遍历对象, 优先用 Object.keys, 先转数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> directives <span class="keyword">from</span> <span class="string">&#x27;@/directives&#x27;</span></span><br><span class="line"><span class="comment">// 批量注册全局的自定义指令</span></span><br><span class="line"><span class="built_in">Object</span>.keys(directives).forEach(<span class="function">(<span class="params">key</span>) =&gt;</span> &#123;</span><br><span class="line">    Vue.directive(key, directives[key])</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>针对上面的引入语法 <strong><code>import * as 变量</code></strong> 得到的是一个对象**<code>&#123; 变量1：对象1，变量2： 对象2 ... &#125;</code>**,</p>
+<p>可以采用 Object.keys 得到一个对象键的数组, 进行遍历处理</p>
+<p>**<code>本节任务</code>**：实现一个自定义指令，解决图片加载失败的问题, 并封装指令模块</p>
+<h2 id="实现退出功能"><a href="#实现退出功能" class="headerlink" title="实现退出功能"></a>实现退出功能</h2><p>**<code>目标</code>**：实现用户的退出操作</p>
+<p>思考: 退出仅仅是跳到登录页吗？</p>
+<p>不，当然不是，我们要处理如下</p>
+<img src="/resource/images/image-20200827143847893-1611025266965.png"/>
+
+<p>同样的，退出功能，我们在 vuex 中的用户模块中实现对应的<strong>action</strong> 和 mutations</p>
+<p><strong>登出 action</strong> <strong><code>src/store/modules/user.js</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; getToken, setToken, removeToken &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils/auth&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// mutations重要的原则: 只能是同步的</span></span><br><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">    <span class="comment">// 设置token</span></span><br><span class="line">    <span class="function"><span class="title">setToken</span>(<span class="params">state, newToken</span>)</span> &#123;</span><br><span class="line">        state.token = newToken</span><br><span class="line">        <span class="comment">// 设置了 token 的同时, 同步到本地cookies中</span></span><br><span class="line">        setToken(newToken)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 删除token</span></span><br><span class="line">    <span class="function"><span class="title">removeToken</span>(<span class="params">state</span>)</span> &#123;</span><br><span class="line">        state.token = <span class="literal">null</span></span><br><span class="line">        <span class="comment">// 清除vuex token的同时, 同步到本地cookies中移出</span></span><br><span class="line">        removeToken()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">setUserInfo</span>(<span class="params">state, newUserInfo</span>)</span> &#123;</span><br><span class="line">        state.userInfo = newUserInfo</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">removeUserInfo</span>(<span class="params">state</span>)</span> &#123;</span><br><span class="line">        state.userInfo = &#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    <span class="comment">// 退出的action</span></span><br><span class="line">    <span class="function"><span class="title">logout</span>(<span class="params">context</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 删除token</span></span><br><span class="line">        context.commit(<span class="string">&#x27;removeToken&#x27;</span>)</span><br><span class="line">        <span class="comment">// 删除用户资料</span></span><br><span class="line">        context.commit(<span class="string">&#x27;removeUserInfo&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>头部菜单调用 action</strong> <strong><code>src/layout/components/Navbar.vue</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">  ...mapActions(<span class="string">&#x27;user&#x27;</span>, [<span class="string">&#x27;getUserInfo&#x27;</span>, <span class="string">&#x27;logout&#x27;</span>]),</span><br><span class="line">  <span class="function"><span class="title">clickLogout</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">// 发起一个退出的action</span></span><br><span class="line">    <span class="built_in">this</span>.logout()</span><br><span class="line">    <span class="built_in">this</span>.$router.push(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>提交代码</strong></p>
+<p>**<code>本节任务</code>**： 实现退出功能</p>
+<h2 id="Token-失效的处理"><a href="#Token-失效的处理" class="headerlink" title="Token 失效的处理"></a>Token 失效的处理</h2><p>**<code>目标</code>**： 实现 token 失效的处理</p>
+<img src="/resource/images/image-20210119133423803.png"/>
+
+<p>token 超时的错误码是**<code>10002</code>**</p>
+<p><strong>代码实现</strong> <strong><code>src/utils/request.js</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">, <span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.dir(error) <span class="comment">// 方便调错</span></span><br><span class="line">  <span class="keyword">if</span> (error.response.status === <span class="number">401</span> &amp;&amp; error.response.data.code === <span class="number">10002</span>) &#123;</span><br><span class="line">    <span class="comment">// token过期了</span></span><br><span class="line">    Message.error(<span class="string">&#x27;登录会话已过期, 请重新登录~&#x27;</span>)</span><br><span class="line">    <span class="comment">// 进行退出action操作</span></span><br><span class="line">    store.dispatch(<span class="string">&#x27;user/logout&#x27;</span>)</span><br><span class="line">    <span class="comment">// 跳转到登录</span></span><br><span class="line">    router.push(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 服务器错误, 404 500 505</span></span><br><span class="line">    Message.error(error.message)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 对响应错误做点什么</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>本节任务</code></strong> Token 失效的处理</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本章节我们一步步实现了如下的效果</p>
+<img src="/resource/images/image-20200716015113164-1611025266965.png"/>
+
+<p>实际的业务走向</p>
+<img src="/resource/images/image-20200827152601712-1611025266965.png"/>
+
+<p>实际上，我们的主页内部功能等到我们完成基本业务之后再进行展开</p>
+<img src="/resource/images/image-20210121135154593.png"/>
+
+<p>中台大型后端平台的深入是一个**<code>抽丝剥茧</code>**的过程，循序渐进的明白每一步的操作是非常关键的。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/13/rz-base-course02/" rel="prev" title="02_人资后台">
+      <i class="fa fa-chevron-left"></i> 02_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/13/rz-base-course04/" rel="next" title="04_人资后台">
+      04_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E9%A1%B5%E6%A8%A1%E5%9D%97"><span class="nav-number">1.</span> <span class="nav-text">主页模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%B5%E7%9A%84-token-%E7%99%BB%E5%BD%95%E6%8B%A6%E6%88%AA%E5%A4%84%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">主页的 token 登录拦截处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E6%8B%A6%E6%88%AA%E7%9A%84%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">1.1.1.</span> <span class="nav-text">权限拦截的流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BD%AC%E5%8C%96%E4%BB%A3%E7%A0%81"><span class="nav-number">1.1.2.</span> <span class="nav-text">流程图转化代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%BF%9B%E5%BA%A6%E6%9D%A1%E6%95%88%E6%9E%9C-%E4%BC%98%E5%8C%96%E4%BD%93%E9%AA%8C"><span class="nav-number">1.1.3.</span> <span class="nav-text">添加进度条效果 (优化体验)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%B5%E7%9A%84%E5%B7%A6%E4%BE%A7%E5%AF%BC%E8%88%AA%E5%9F%BA%E6%9C%AC%E6%A0%B7%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">主页的左侧导航基本样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%A4%B4%E9%83%A8%E5%86%85%E5%AE%B9%E7%9A%84%E5%B8%83%E5%B1%80%E5%92%8C%E6%A0%B7%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">设置头部内容的布局和样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E8%B5%84%E6%96%99%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.4.</span> <span class="nav-text">获取用户资料接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vuex-%E5%AD%98%E5%82%A8%E7%94%A8%E6%88%B7%E8%B5%84%E6%96%99"><span class="nav-number">1.5.</span> <span class="nav-text">vuex 存储用户资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%89%8D%E7%BD%AE%E5%AE%88%E5%8D%AB%E5%A4%84%E8%8E%B7%E5%8F%96%E4%B8%AA%E4%BA%BA%E8%B5%84%E6%96%99-%E4%BC%8F%E7%AC%94"><span class="nav-number">1.6.</span> <span class="nav-text">路由前置守卫处获取个人资料(伏笔)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%A4%B4%E5%83%8F%E6%8E%A5%E5%8F%A3%E5%90%88%E5%B9%B6%E6%95%B0%E6%8D%AE"><span class="nav-number">1.7.</span> <span class="nav-text">获取头像接口合并数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4-%E5%A4%84%E7%90%86%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E5%A4%B1%E8%B4%A5"><span class="nav-number">1.8.</span> <span class="nav-text">自定义指令-处理图片加载失败</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.8.1.</span> <span class="nav-text">自定义指令基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4%E6%A8%A1%E5%9D%97%E5%B0%81%E8%A3%85"><span class="nav-number">1.8.2.</span> <span class="nav-text">自定义指令模块封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main-js-%E6%89%B9%E9%87%8F%E6%B3%A8%E5%86%8C%E6%8C%87%E4%BB%A4-%E8%BF%9B%E9%98%B6"><span class="nav-number">1.8.3.</span> <span class="nav-text">main.js 批量注册指令 (进阶)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E9%80%80%E5%87%BA%E5%8A%9F%E8%83%BD"><span class="nav-number">1.9.</span> <span class="nav-text">实现退出功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Token-%E5%A4%B1%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">1.10.</span> <span class="nav-text">Token 失效的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.11.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 目标。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="04_人资后台">
+<meta property="og:url" content="http://example.com/2022/08/13/rz-base-course04/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 目标。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-20200827153753307.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210708065612249.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200716150421791.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200716153900077.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200716154315430.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210121014942449.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210121014122031.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210121015536288.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210121020240587.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210121022453809.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200828103109646.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210121024155949.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210121025505304.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210121032414357.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210121034024443.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210121034358042.png">
+<meta property="article:published_time" content="2022-08-13T14:07:56.000Z">
+<meta property="article:modified_time" content="2022-08-30T15:39:33.422Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20200827153753307.png">
+
+<link rel="canonical" href="http://example.com/2022/08/13/rz-base-course04/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>04_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/13/rz-base-course04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          04_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-13 22:07:56" itemprop="dateCreated datePublished" datetime="2022-08-13T22:07:56+08:00">2022-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-30 23:39:33" itemprop="dateModified" datetime="2022-08-30T23:39:33+08:00">2022-08-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 目标。</p>
+<span id="more"></span>
+
+<h1 id="路由基本配置"><a href="#路由基本配置" class="headerlink" title="路由基本配置"></a>路由基本配置</h1><h2 id="了解路由设计思想"><a href="#了解路由设计思想" class="headerlink" title="了解路由设计思想"></a>了解路由设计思想</h2><p><strong><code>目标</code></strong> 了解这种大型中台项目的路由设计思想</p>
+<p>首先，我们需要知道类似这种大型中台项目的页面路由是如何设置的。</p>
+<p><strong>简单项目</strong></p>
+<img src="/resource/images/image-20200827153753307.png"/>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">routes: [</span><br><span class="line">	&#123; path: ..., component: ... &#125;,</span><br><span class="line">	&#123; path: ..., component: ... &#125;,</span><br><span class="line">	&#123; path: ..., component: ..., children: [ &#123;&#125;, &#123;&#125;, &#123;&#125; ] &#125;,</span><br><span class="line">    &#123; path: ..., component: ... &#125;,</span><br><span class="line">	&#123; path: ..., component: ... &#125;,</span><br><span class="line">	&#123; path: ..., component: ..., children: [ &#123;&#125;, &#123;&#125;, &#123;&#125; ] &#125;,</span><br><span class="line">    &#123; path: ..., component: ... &#125;,</span><br><span class="line">	&#123; path: ..., component: ... &#125;,</span><br><span class="line">	&#123; path: ..., component: ..., children: [ &#123;&#125;, &#123;&#125;, &#123;&#125; ] &#125;,</span><br><span class="line">    &#123; path: ..., component: ... &#125;,</span><br><span class="line">	&#123; path: ..., component: ... &#125;,</span><br><span class="line">	&#123; path: ..., component: ..., children: [ &#123;&#125;, &#123;&#125;, &#123;&#125; ] &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><strong>当前项目结构</strong>: 将路由进行了模块拆分, 同模块的路由规则将来会放到一起</p>
+<img src="/resource/images/image-20210708065612249.png"/>
+
+<blockquote>
+<p>为什么要拆成若干个路由模块呢？</p>
+</blockquote>
+<p>因为复杂中台项目的页面众多，不可能把所有的业务都<code>集中在一个文件上</code>进行管理和维护， (<strong>可维护性角度</strong>)</p>
+<p><strong>并且还有最重要的，前端的页面中主要分为两部分</strong> (我们的项目很可能带权限设计的!)</p>
+<ol>
+<li>一部分是所有人都可以访问的，(<code>静态路由</code> - 一直都有的路由) 比如: 登录页, 首页, 404</li>
+<li>一部分是只有有权限的人才可以访问的 (<code>动态路由</code> - 动态新增或移除的路由) 比如: 薪资管理, 人员管理</li>
+</ol>
+<p><strong>拆分多个模块便于更好的权限的控制 和 维护</strong></p>
+<img src="/resource/images/image-20200716150421791.png"/>
+
+<p>**<code>注意</code>**这里的动态路由并不是 <strong>路由传参</strong>的动态路由</p>
+<p><strong>小结:</strong></p>
+<p>拆分成不同的路由模块, 好处:</p>
+<ol>
+<li>便于维护, 同模块的三个四个路由都放到一起了</li>
+<li>方便进行统一权限控制</li>
+</ol>
+<p>概念:</p>
+<ol>
+<li>静态路由: 没有进行权限控制的路由, 只要登录过了, 直接都开放的路由 (登录页, 404, 个人中心, …)</li>
+<li>动态路由: 进行了权限控制的路由, 只有有权限的人, 才能访问到的路由 (员工管理, 财务报表)</li>
+</ol>
+<h2 id="路由页面整理"><a href="#路由页面整理" class="headerlink" title="路由页面整理"></a>路由页面整理</h2><p><strong><code>目标</code></strong> 删除基础模板中附带的多余页面</p>
+<blockquote>
+<p>基础模板帮我们提前内置了一些页面，本章节我们进行一下整理</p>
+</blockquote>
+<p><strong>删除多余的路由表</strong> <strong><code>src/router/index.js</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 静态路由表 =&gt;  静态路由(不需要权限即可访问的)</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> constantRoutes = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;/login&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/login/index&#x27;</span>),</span><br><span class="line">        <span class="attr">hidden</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;/404&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/404&#x27;</span>),</span><br><span class="line">        <span class="attr">hidden</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: Layout,</span><br><span class="line">        <span class="attr">redirect</span>: <span class="string">&#x27;/dashboard&#x27;</span>,</span><br><span class="line">        <span class="attr">children</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">path</span>: <span class="string">&#x27;dashboard&#x27;</span>,</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;Dashboard&#x27;</span>,</span><br><span class="line">                <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/dashboard/index&#x27;</span>),</span><br><span class="line">                <span class="attr">meta</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;Dashboard&#x27;</span>, <span class="attr">icon</span>: <span class="string">&#x27;dashboard&#x27;</span> &#125;,</span><br><span class="line">            &#125;,</span><br><span class="line">        ],</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 没有匹配到的页面, 走404</span></span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;*&#x27;</span>, <span class="attr">redirect</span>: <span class="string">&#x27;/404&#x27;</span>, <span class="attr">hidden</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上面代码，我们只对登录页/404/主页进行了保留</p>
+</blockquote>
+<p>并且我们发现，删除了其他页面之后，左侧导航菜单的数据也只剩下了首页</p>
+<img src="/resource/images/image-20200716153900077.png"/>
+
+<p><strong>这是因为左侧导航菜单的数据来源于路由信息, 将来菜单是动态根据开放的路由表的信息渲染的, 目前先不纠结</strong></p>
+<p><strong>删除多余的路由组件</strong></p>
+<img src="/resource/images/image-20200716154315430.png"/>
+
+<blockquote>
+<p>只保留以上三个路由组件的内容，后续慢慢增加</p>
+</blockquote>
+<p>同样的在 api 目录下，存在多余的 api-table.js 一并删除</p>
+<p><strong>提交代码</strong></p>
+<p>**<code>本节任务</code>**：完成业务路由 和 页面的整理</p>
+<h2 id="业务模块-页面快速搭建"><a href="#业务模块-页面快速搭建" class="headerlink" title="业务模块 - 页面快速搭建"></a>业务模块 - 页面快速搭建</h2><h3 id="新建模块页面文件夹"><a href="#新建模块页面文件夹" class="headerlink" title="新建模块页面文件夹"></a>新建模块页面文件夹</h3><p>**<code>目标</code>**： 快速搭建 - 人资项目的常规业务模块 - 主页面</p>
+<blockquote>
+<p>截止到现在，我们已经完成了一个中台系统的基本轮廓</p>
+</blockquote>
+<p>接下来，我们可以快速<code>搭建模块的主页面</code> (新建模块文件夹, 新建 index.vue) 一个模块不是只有一个页面, 我们先只建主页面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">├──views</span><br><span class="line">  ├── approvals           <span class="comment"># 审批</span></span><br><span class="line">  ├── attendances         <span class="comment"># 考勤</span></span><br><span class="line">  ├── dashboard           <span class="comment"># 首页 -- 已有</span></span><br><span class="line">  ├── departments         <span class="comment"># 组织架构</span></span><br><span class="line">  ├── employees           <span class="comment"># 员工</span></span><br><span class="line">  ├── login               <span class="comment"># 登录 -- 已有</span></span><br><span class="line">  ├── permission          <span class="comment"># 权限管理</span></span><br><span class="line">  ├── salarys             <span class="comment"># 工资</span></span><br><span class="line">  ├── setting             <span class="comment"># 公司设置</span></span><br><span class="line">  ├── social              <span class="comment"># 社保</span></span><br><span class="line">  ├── 404                 <span class="comment"># 404 -- 已有</span></span><br></pre></td></tr></table></figure>
+
+<p>根据上图中的结构，在 views 目录下，建立对应的目录，给每个模块新建一个**<code>index.vue</code>**，作为每个模块的主页面</p>
+<p><strong>快速新建文件夹</strong>: 利用 git bash(linux 环境) 命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir approvals attendances departments employees permission salarys setting social</span><br></pre></td></tr></table></figure>
+
+<p>每个模块的内容，可以先按照标准的模板建立，如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class=&quot;dashboard-container&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;app-container&quot;&gt;</span><br><span class="line">            &lt;h2&gt;首页&lt;/h2&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置模块路由规则测试"><a href="#配置模块路由规则测试" class="headerlink" title="配置模块路由规则测试"></a>配置模块路由规则测试</h3><p>根据以上的标准建立好对应页面之后，接下来<code>建立模块的路由规则</code>,</p>
+<p>我们<code>先不管静态, 动态</code>, 先简单配一个路由看看</p>
+<hr>
+<p>按照我们之前的习惯, 是把路由配置到布局路由 <code>/</code> 的 <code>children </code>下, 但是这样就是将<code>所有模块的路由都放到一起</code>了</p>
+<p>而我们一个模块还会有<code>多个路由</code>, 比如: 员工模块首页, 员工模块详情页, 员工模块编辑页等, 且将来要控制路由的开放与否</p>
+<p>所以我们这边会拆分出来, 每个模块一个路由规则, 以组织架构 departments 为例~</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首页模块</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">  <span class="attr">component</span>: Layout,</span><br><span class="line">  <span class="attr">redirect</span>: <span class="string">&#x27;/dashboard&#x27;</span>,</span><br><span class="line">  <span class="attr">children</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;dashboard&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;dashboard&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/dashboard/index&#x27;</span>),</span><br><span class="line">      <span class="attr">meta</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;首页&#x27;</span>, <span class="attr">icon</span>: <span class="string">&#x27;dashboard&#x27;</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// 组织架构模块</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">path</span>: <span class="string">&#x27;/departments&#x27;</span>,</span><br><span class="line">  <span class="attr">component</span>: Layout,</span><br><span class="line">  <span class="attr">children</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;departments&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/departments&#x27;</span>),</span><br><span class="line">      <span class="attr">meta</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;组织架构&#x27;</span>, <span class="attr">icon</span>: <span class="string">&#x27;dashboard&#x27;</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>效果图:</p>
+<img src="/resource/images/image-20210121014942449.png"/>
+
+<p>很奇怪, 路由配好了, 导航自动就出来了? 我们下一节研究一下~</p>
+<h2 id="左侧菜单定制设置"><a href="#左侧菜单定制设置" class="headerlink" title="左侧菜单定制设置"></a>左侧菜单定制设置</h2><p><strong><code>目标</code></strong> 解析左侧菜单的显示逻辑， 设置左侧导航菜单的图标内容</p>
+<h3 id="菜单源码解读"><a href="#菜单源码解读" class="headerlink" title="菜单源码解读"></a>菜单源码解读</h3><p>上小节中，我们多配了一个路由规则，菜单就显示一个导航内容了，这是为什么 ？</p>
+<p>如果每多配一个规则, 就多显示一个导航, 那么 404 和 login 为什么不显示导航 ?</p>
+<p><strong>阅读左侧菜单代码</strong>: <strong><code>src/layout/components/Sidebar/SidebarItem.vue</code></strong></p>
+<ol>
+<li>只要配了一个规则, 就多出来一个菜单, 是因为菜单的项, 是遍历路由规则动态渲染出来的</li>
+</ol>
+<img src="/resource/images/image-20210121014122031.png"/>
+
+<ol start="2">
+<li>路由规则上, 可以配置一个 hidden 属性, 配置 true, 就是将来不渲染菜单</li>
+</ol>
+<img src="/resource/images/image-20210121015536288.png"/>
+
+<p>对应源码:</p>
+<img src="/resource/images/image-20210121020240587.png"/>
+
+<ol start="3">
+<li>这里菜单的渲染, 处理了<code>一级导航菜单</code> 和 <code>二级导航菜单</code>, 二级导航我们这边虽然不需要, 但也不用删除 (不影响功能)</li>
+</ol>
+<img src="/resource/images/image-20210121022453809.png"/>
+
+<p>即如图的逻辑</p>
+<img src="/resource/images/image-20200828103109646.png"/>
+
+<p><code>注意</code>: 由于，该项目不需要二级菜单的显示，所以对代码进行一下处理，只保留一级菜单路由</p>
+<p><code>重点</code>: 如何拿到当前项目中, 现在的所有路由表信息, <code>this.$router.options.routes</code></p>
+<h3 id="配置菜单文字和-icon-图标"><a href="#配置菜单文字和-icon-图标" class="headerlink" title="配置菜单文字和 icon 图标"></a>配置菜单文字和 icon 图标</h3><p><code>目标</code>: 配置菜单文字 和 菜单图标</p>
+<p>阅读源码 <code>SidebarItem.vue</code>:</p>
+<img src="/resource/images/image-20210121024155949.png"/>
+
+<ol>
+<li><p>左侧菜单的文字 =&gt; 读取的是 meta 属性的 title, 直接改即可</p>
+</li>
+<li><p>左侧菜单的图标 =&gt; 读取的是 meta 属性的 icon，这个 icon 需要我们提前放置在**<code>src/icons/svg</code>**目录下</p>
+</li>
+</ol>
+<p>修改步骤:</p>
+<ol>
+<li><p><strong>拷贝 svg 图标到项目中</strong>: 该资源已经在资料 svg 目录中提供，请将该目录下的所有 svg 放到**<code>src/icons/svg</code>**目录下</p>
+</li>
+<li><p><strong>修改 icon 名字</strong>: 具体的 icon 名称也可参考<a target="_blank" rel="noopener" href="https://panjiachen.github.io/vue-element-admin/#/icon/index">线上地址</a></p>
+<p> svg 组件的使用, 参考:</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000015367490">懒人神器：svg-sprite-loader 实现自己的 Icon 组件</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.zhangxinxu.com/wordpress/2014/07/introduce-svg-sprite-technology/">未来必热：SVG Sprites 技术介绍</a></p>
+</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">path</span>: <span class="string">&#x27;/departments&#x27;</span>,</span><br><span class="line">  <span class="attr">component</span>: Layout,</span><br><span class="line">  <span class="attr">children</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;departments&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/departments&#x27;</span>),</span><br><span class="line">      <span class="attr">meta</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;组织架构&#x27;</span>, <span class="attr">icon</span>: <span class="string">&#x27;tree&#x27;</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p><strong>模块对应 icon 参照表</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">├── dashboard           # dashboard</span><br><span class="line">├── departments         # tree</span><br><span class="line">├── employees           # people</span><br><span class="line">├── setting             # setting</span><br><span class="line">├── salarys             # money</span><br><span class="line">├── social              # table</span><br><span class="line">├── attendances         # skill</span><br><span class="line">├── approvals           # tree-table</span><br><span class="line">├── permission          # lock</span><br></pre></td></tr></table></figure>
+
+<p>效果图:</p>
+<img src="/resource/images/image-20210121025505304.png"/>
+
+<p><strong><code>本节任务：</code></strong> 理解左侧菜单的生成逻辑，并设置左侧菜单的图标</p>
+<h2 id="新建路由模块"><a href="#新建路由模块" class="headerlink" title="新建路由模块"></a>新建路由模块</h2><p><code>目标</code>: 新建路由模块</p>
+<p>按刚才的方式, 成功新增了一个路由模块, 但是如果所有的路由全都写在一个文件中肯定不合适, 所以要拆模块</p>
+<p>业务路由模块目录结构</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">├── router               <span class="comment"># 路由目录</span></span><br><span class="line"> ├── index.js            <span class="comment"># 路由主文件</span></span><br><span class="line"> ├── modules             <span class="comment"># 模块目录</span></span><br><span class="line">  ├── approvals.js       <span class="comment"># 审批  			图标: tree-table</span></span><br><span class="line">  ├── attendances.js     <span class="comment"># 考勤  			图标: skill</span></span><br><span class="line">  ├── departments.js     <span class="comment"># 组织架构 	 图标: tree</span></span><br><span class="line">  ├── employees.js       <span class="comment"># 员工 			图标: people</span></span><br><span class="line">  ├── permission.js      <span class="comment"># 权限管理		 图标: lock</span></span><br><span class="line">  ├── salarys.js         <span class="comment"># 工资				图标: money</span></span><br><span class="line">  ├── setting.js         <span class="comment"># 公司设置		 图标: setting</span></span><br><span class="line">  ├── social.js          <span class="comment"># 社保			  图标: table</span></span><br></pre></td></tr></table></figure>
+
+<p>快速创建文件命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ touch approvals.js attendances.js departments.js employees.js permission.js setting.js salarys.js salarys.js social.js</span><br></pre></td></tr></table></figure>
+
+<p>改造文件内容:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 组织架构模块</span></span><br><span class="line"><span class="keyword">import</span> Layout <span class="keyword">from</span> <span class="string">&#x27;@/layout&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/departments&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: Layout,</span><br><span class="line">    <span class="attr">children</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;departments&#x27;</span>,</span><br><span class="line">            <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/departments&#x27;</span>),</span><br><span class="line">            <span class="attr">meta</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;组织架构&#x27;</span>, <span class="attr">icon</span>: <span class="string">&#x27;tree&#x27;</span> &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>**<code>本节任务</code>**：完成其他模块的页面和路由的快速搭建</p>
+<h2 id="静态路由和动态路由临时合并，形成完整左侧菜单"><a href="#静态路由和动态路由临时合并，形成完整左侧菜单" class="headerlink" title="静态路由和动态路由临时合并，形成完整左侧菜单"></a>静态路由和动态路由临时合并，形成完整左侧菜单</h2><p>**<code>目标</code>**： 将静态路由和动态路由的路由表进行临时合并</p>
+<blockquote>
+<p>什么叫临时合并？</p>
+</blockquote>
+<p>在第一个小节中，我们讲过了，动态路由是需要权限进行访问的，但是权限的动态路由访问是比较复杂的，</p>
+<p>我们后面再进行讲解，所以为了更好地看到效果，我们可以先将 静态路由和动态路由进行合并, 也就是默认开放所有路由权限</p>
+<p><strong>路由主文件</strong> <strong><code>src/router/index.js</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入多个模块的规则</span></span><br><span class="line"><span class="keyword">import</span> approvalsRouter <span class="keyword">from</span> <span class="string">&#x27;./modules/approvals&#x27;</span></span><br><span class="line"><span class="keyword">import</span> departmentsRouter <span class="keyword">from</span> <span class="string">&#x27;./modules/departments&#x27;</span></span><br><span class="line"><span class="keyword">import</span> employeesRouter <span class="keyword">from</span> <span class="string">&#x27;./modules/employees&#x27;</span></span><br><span class="line"><span class="keyword">import</span> permissionRouter <span class="keyword">from</span> <span class="string">&#x27;./modules/permission&#x27;</span></span><br><span class="line"><span class="keyword">import</span> attendancesRouter <span class="keyword">from</span> <span class="string">&#x27;./modules/attendances&#x27;</span></span><br><span class="line"><span class="keyword">import</span> salarysRouter <span class="keyword">from</span> <span class="string">&#x27;./modules/salarys&#x27;</span></span><br><span class="line"><span class="keyword">import</span> settingRouter <span class="keyword">from</span> <span class="string">&#x27;./modules/setting&#x27;</span></span><br><span class="line"><span class="keyword">import</span> socialRouter <span class="keyword">from</span> <span class="string">&#x27;./modules/social&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 动态路由表 =&gt; 动态路由(需要权限才可以访问的) 我们这里准备一个数组存放</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> asyncRoutes = [approvalsRouter, departmentsRouter, employeesRouter, permissionRouter, attendancesRouter, salarysRouter, settingRouter, socialRouter]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> createRouter = <span class="function">() =&gt;</span></span><br><span class="line">    <span class="keyword">new</span> Router(&#123;</span><br><span class="line">        <span class="comment">// mode: &#x27;history&#x27;, // require service support</span></span><br><span class="line">        <span class="attr">scrollBehavior</span>: <span class="function">() =&gt;</span> (&#123; <span class="attr">y</span>: <span class="number">0</span> &#125;), <span class="comment">// 管理滚动行为, 让页面切换时回到顶部</span></span><br><span class="line">        <span class="attr">routes</span>: [...constantRoutes, ...asyncRoutes], <span class="comment">// 临时合并动态路由和静态路由</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>通过上面的操作，我们将静态路由和动态路由进行了合并</p>
+</blockquote>
+<p>效果图:</p>
+<img src="/resource/images/image-20210121032414357.png"/>
+
+<p><strong>提交代码</strong></p>
+<p>**<code>本节任务</code>**： 将静态路由和动态路由临时合并，形成左侧菜单</p>
+<h2 id="处理高亮激活-可选"><a href="#处理高亮激活-可选" class="headerlink" title="处理高亮激活 (可选)"></a>处理高亮激活 (可选)</h2><p>左侧菜单被选中时, 会加上一个 is-active 类, 可以在 sidebar.scss 覆盖下样式</p>
+<img src="/resource/images/image-20210121034024443.png"/>
+
+<p>代码如下:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">li</span><span class="selector-class">.is-active</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#fff</span> <span class="meta">!important</span>;</span><br><span class="line">    <span class="selector-class">.svg-icon</span> &#123;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#43a7fe</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">span</span> &#123;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#43a7fe</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果图:</p>
+<img src="/resource/images/image-20210121034358042.png"/>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/13/rz-base-course03/" rel="prev" title="03_人资后台">
+      <i class="fa fa-chevron-left"></i> 03_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/13/rz-base-course05/" rel="next" title="05_人资后台">
+      05_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">路由基本配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E8%B7%AF%E7%94%B1%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">1.1.</span> <span class="nav-text">了解路由设计思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E9%A1%B5%E9%9D%A2%E6%95%B4%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">路由页面整理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%9D%97-%E9%A1%B5%E9%9D%A2%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA"><span class="nav-number">1.3.</span> <span class="nav-text">业务模块 - 页面快速搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E6%A8%A1%E5%9D%97%E9%A1%B5%E9%9D%A2%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">1.3.1.</span> <span class="nav-text">新建模块页面文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9D%97%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99%E6%B5%8B%E8%AF%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">配置模块路由规则测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E5%AE%9A%E5%88%B6%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.4.</span> <span class="nav-text">左侧菜单定制设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8F%9C%E5%8D%95%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB"><span class="nav-number">1.4.1.</span> <span class="nav-text">菜单源码解读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%8F%9C%E5%8D%95%E6%96%87%E5%AD%97%E5%92%8C-icon-%E5%9B%BE%E6%A0%87"><span class="nav-number">1.4.2.</span> <span class="nav-text">配置菜单文字和 icon 图标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%9D%97"><span class="nav-number">1.5.</span> <span class="nav-text">新建路由模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%92%8C%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E4%B8%B4%E6%97%B6%E5%90%88%E5%B9%B6%EF%BC%8C%E5%BD%A2%E6%88%90%E5%AE%8C%E6%95%B4%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95"><span class="nav-number">1.6.</span> <span class="nav-text">静态路由和动态路由临时合并，形成完整左侧菜单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E9%AB%98%E4%BA%AE%E6%BF%80%E6%B4%BB-%E5%8F%AF%E9%80%89"><span class="nav-number">1.7.</span> <span class="nav-text">处理高亮激活 (可选)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

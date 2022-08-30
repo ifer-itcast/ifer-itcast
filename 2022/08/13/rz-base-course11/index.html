@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 目标。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="11_人资后台">
+<meta property="og:url" content="http://example.com/2022/08/13/rz-base-course11/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 目标。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-20210204161936361.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210204105017454.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210204114307002.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210204123640893.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210204123724384.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210403002301862.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210204123640893.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210204123724384.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210204132218518.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210403010228468.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210204132208755.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210204133456548.png">
+<meta property="article:published_time" content="2022-08-13T14:08:27.000Z">
+<meta property="article:modified_time" content="2022-08-30T15:39:33.559Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20210204161936361.png">
+
+<link rel="canonical" href="http://example.com/2022/08/13/rz-base-course11/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>11_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/13/rz-base-course11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          11_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-13 22:08:27" itemprop="dateCreated datePublished" datetime="2022-08-13T22:08:27+08:00">2022-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-30 23:39:33" itemprop="dateModified" datetime="2022-08-30T23:39:33+08:00">2022-08-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 目标。</p>
+<span id="more"></span>
+
+<h1 id="全屏-多语言-tab-页-主题切换"><a href="#全屏-多语言-tab-页-主题切换" class="headerlink" title="全屏-多语言-tab 页-主题切换"></a>全屏-多语言-tab 页-主题切换</h1><h2 id="全屏插件的引用"><a href="#全屏插件的引用" class="headerlink" title="全屏插件的引用"></a>全屏插件的引用</h2><p><strong>目标</strong>：实现页面的全屏功能</p>
+<h3 id="基本介绍-和-组件创建"><a href="#基本介绍-和-组件创建" class="headerlink" title="基本介绍 和 组件创建"></a>基本介绍 和 组件创建</h3><blockquote>
+<p>全屏功能可以借助一个插件来实现 (将来插件的 api, 可以到 npm 上找!)</p>
+<p>底层:</p>
+<p>1 开启全屏: document.documentElement.requestFullscreen()</p>
+<p>2 关闭全屏: document.exitFullscreen()</p>
+</blockquote>
+<p>第一步，安装全局插件<strong>screenfull</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn add screenfull</span><br></pre></td></tr></table></figure>
+
+<p>第二步，封装全屏显示的组件 <strong><code>src/components/ScreenFull/index.vue</code></strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;!-- 放置一个图标 --&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    全屏图标</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">name</span>: <span class="string">&#x27;ScreenFull&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">&#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>第三步，全局注册该组件 <strong><code>src/components/index.js</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ScreenFull <span class="keyword">from</span> <span class="string">&#x27;./ScreenFull&#x27;</span></span><br><span class="line">Vue.component(<span class="string">&#x27;ScreenFull&#x27;</span>, ScreenFull) <span class="comment">// 注册全屏组件</span></span><br></pre></td></tr></table></figure>
+
+<p>第四步，放置于**<code>layout/navbar.vue</code>**中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;right-menu&quot;&gt;</span><br><span class="line">  &lt;!-- 全屏组件 --&gt;</span><br><span class="line">  &lt;screen-full class=&quot;right-menu-item&quot; /&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>样式:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.right-menu-item</span> &#123;</span><br><span class="line">    <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/image-20210204161936361.png"/>
+
+<h3 id="准备全屏的-svg-图标"><a href="#准备全屏的-svg-图标" class="headerlink" title="准备全屏的 svg 图标"></a>准备全屏的 svg 图标</h3><p>svg-icon 图标组件使用步骤:</p>
+<ol>
+<li>写一个 svg-icon 组件</li>
+<li>加 icon-class 属性即可指定使用哪个图标 <code>&lt;svg-icon icon-class=&quot;fullscreen&quot; /&gt;</code></li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;!-- 放置一个图标 --&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">svg-icon</span> <span class="attr">icon-class</span>=<span class="string">&quot;fullscreen&quot;</span> <span class="attr">class</span>=<span class="string">&quot;fullscreen&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">name</span>: <span class="string">&#x27;ScreenFull&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">&#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span></span><br><span class="line"><span class="css"><span class="xml"><span class="selector-class">.fullscreen</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">  <span class="attribute">width</span>: <span class="number">20px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">  <span class="attribute">height</span>: <span class="number">20px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">  fill: <span class="number">#fff</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">  <span class="attribute">cursor</span>: pointer;</span></span></span><br><span class="line"><span class="css"><span class="xml">&#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>效果图:</p>
+<img src="/resource/images/image-20210204105017454.png"/>
+
+<h3 id="全屏功能实现"><a href="#全屏功能实现" class="headerlink" title="全屏功能实现"></a>全屏功能实现</h3><p>全局插件 <strong>screenfull</strong> 已安装过, 这里可以使用它的 api 完成功能</p>
+<p>导入: <code>import ScreenFull from &#39;screenfull&#39;</code></p>
+<p>属性: <code>ScreenFull.isEnabled</code> 获取浏览器是否支持全屏, 支持, 就返回 true</p>
+<p>方法: <code>ScreenFull.toggle(element)</code> 切换全屏状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;!-- 放置一个图标 --&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;!-- svg-icon组件, 配置icon-class属性, 配置成svg的文件名即可 --&gt;</span><br><span class="line">        &lt;svg-icon v-if=&quot;!isFullScreen&quot; icon-class=&quot;fullscreen&quot; class=&quot;fullscreen&quot; @click=&quot;toggleFullScreen&quot; /&gt;</span><br><span class="line">        &lt;svg-icon v-else icon-class=&quot;exit-fullscreen&quot; class=&quot;fullscreen&quot; @click=&quot;toggleFullScreen&quot; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import ScreenFull from &#x27;screenfull&#x27;</span><br><span class="line">export default &#123;</span><br><span class="line">    name: &#x27;ScreenFull&#x27;,</span><br><span class="line">    data() &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            isFullScreen: false, // 默认不全屏</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        toggleFullScreen() &#123;</span><br><span class="line">            // 查看是否支持全屏</span><br><span class="line">            if (ScreenFull.isEnabled) &#123;</span><br><span class="line">                // 支持</span><br><span class="line">                ScreenFull.toggle()</span><br><span class="line">                this.isFullScreen = !this.isFullScreen</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                // 不支持</span><br><span class="line">                this.$message.error(&#x27;兄弟, 您的浏览器版本过低, 不支持全屏功能哦!&#x27;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang=&quot;scss&quot; scoped&gt;</span><br><span class="line">.fullscreen &#123;</span><br><span class="line">    width: 20px;</span><br><span class="line">    height: 20px;</span><br><span class="line">    fill: #fff;</span><br><span class="line">    cursor: pointer;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>提交代码</strong></p>
+<p>**<code>本节任务</code>**： 实现页面的全屏功能</p>
+<h2 id="动态主题的设置-体力活-换肤"><a href="#动态主题的设置-体力活-换肤" class="headerlink" title="动态主题的设置 (体力活 - 换肤)"></a>动态主题的设置 (体力活 - 换肤)</h2><p>**<code>目标</code>**： 实现动态主题的设置</p>
+<blockquote>
+<p>我们想要实现在页面中实时的切换颜色，此时页面的主题可以跟着设置的颜色进行变化</p>
+</blockquote>
+<img src="/resource/images/image-20210204114307002.png"/>
+
+<img src="/resource/images/image-20210204123640893.png"/>
+
+<img src="/resource/images/image-20210204123724384.png"/>
+
+<h3 id="自定义主题-element-ui-自带的效果切换"><a href="#自定义主题-element-ui-自带的效果切换" class="headerlink" title="自定义主题 (element-ui 自带的效果切换)"></a>自定义主题 (element-ui 自带的效果切换)</h3><p><strong>简单说明原理：</strong></p>
+<ol>
+<li>颜色选择器: <a target="_blank" rel="noopener" href="https://element.eleme.io/#/zh-CN/component/color-picker">https://element.eleme.io/#/zh-CN/component/color-picker</a></li>
+<li>element-ui 自定义主题: <a target="_blank" rel="noopener" href="https://element.eleme.io/#/zh-CN/component/custom-theme">https://element.eleme.io/#/zh-CN/component/custom-theme</a></li>
+</ol>
+<p>步骤:</p>
+<ol>
+<li>新建 <code>styles/element-variables.scss</code> 测试文件</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 改变主题色变量 */</span></span><br><span class="line">$--color-primary: teal;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 改变 icon 字体路径变量，必需 */</span></span><br><span class="line">$--font-path: <span class="string">&#x27;~element-ui/lib/theme-chalk/fonts&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">import</span> <span class="string">&quot;~element-ui/packages/theme-chalk/src/index&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>main.js 中导入</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@/styles/element-variables.scss&#x27;</span> <span class="comment">// global css</span></span><br></pre></td></tr></table></figure>
+
+<p>问题: 这样的 element ui 主题色, 是写死的主题色, 所以这个样式需要根据我们选择的颜色动态配置, 是需要动态生成样式去覆盖</p>
+<p>而实际的代码不用我们写, 已经有人家封装好的组件了</p>
+<h3 id="使用-ThemePicker-组件"><a href="#使用-ThemePicker-组件" class="headerlink" title="使用 ThemePicker 组件"></a>使用 ThemePicker 组件</h3><p>演示地址: <a target="_blank" rel="noopener" href="https://panjiachen.gitee.io/vue-element-admin/#/dashboard">https://panjiachen.gitee.io/vue-element-admin/#/dashboard</a></p>
+<p>第一步， 拷贝颜色选择组件 <strong><code>ThemePicker</code></strong> 代码地址：<a target="_blank" rel="noopener" href="https://gitee.com/mirrors/vue-element-admin/blob/master/src/components/ThemePicker/index.vue">@/components/ThemePicker</a>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;el-color-picker v-model=&quot;theme&quot; :predefine=&quot;[&#x27;#409EFF&#x27;, &#x27;#1890ff&#x27;, &#x27;#304156&#x27;, &#x27;#212121&#x27;, &#x27;#11a983&#x27;, &#x27;#13c2c2&#x27;, &#x27;#6959CD&#x27;, &#x27;#f5222d&#x27;]&quot; class=&quot;theme-picker&quot; popper-class=&quot;theme-picker-dropdown&quot; /&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">const version = require(&#x27;element-ui/package.json&#x27;).version // element-ui version from node_modules</span><br><span class="line">const ORIGINAL_THEME = &#x27;#409EFF&#x27; // default color</span><br><span class="line">export default &#123;</span><br><span class="line">    data() &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            chalk: &#x27;&#x27;, // content of theme-chalk css</span><br><span class="line">            theme: &#x27;&#x27;,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">        defaultTheme() &#123;</span><br><span class="line">            return this.$store.state.settings.theme</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    watch: &#123;</span><br><span class="line">        defaultTheme: &#123;</span><br><span class="line">            handler: function (val, oldVal) &#123;</span><br><span class="line">                this.theme = val</span><br><span class="line">            &#125;,</span><br><span class="line">            immediate: true,</span><br><span class="line">        &#125;,</span><br><span class="line">        async theme(val) &#123;</span><br><span class="line">            const oldVal = this.chalk ? this.theme : ORIGINAL_THEME</span><br><span class="line">            if (typeof val !== &#x27;string&#x27;) return</span><br><span class="line">            const themeCluster = this.getThemeCluster(val.replace(&#x27;#&#x27;, &#x27;&#x27;))</span><br><span class="line">            const originalCluster = this.getThemeCluster(oldVal.replace(&#x27;#&#x27;, &#x27;&#x27;))</span><br><span class="line">            console.log(themeCluster, originalCluster)</span><br><span class="line">            const $message = this.$message(&#123;</span><br><span class="line">                message: &#x27;  Compiling the theme&#x27;,</span><br><span class="line">                customClass: &#x27;theme-message&#x27;,</span><br><span class="line">                type: &#x27;success&#x27;,</span><br><span class="line">                duration: 0,</span><br><span class="line">                iconClass: &#x27;el-icon-loading&#x27;,</span><br><span class="line">            &#125;)</span><br><span class="line">            const getHandler = (variable, id) =&gt; &#123;</span><br><span class="line">                return () =&gt; &#123;</span><br><span class="line">                    const originalCluster = this.getThemeCluster(ORIGINAL_THEME.replace(&#x27;#&#x27;, &#x27;&#x27;))</span><br><span class="line">                    const newStyle = this.updateStyle(this[variable], originalCluster, themeCluster)</span><br><span class="line">                    let styleTag = document.getElementById(id)</span><br><span class="line">                    if (!styleTag) &#123;</span><br><span class="line">                        styleTag = document.createElement(&#x27;style&#x27;)</span><br><span class="line">                        styleTag.setAttribute(&#x27;id&#x27;, id)</span><br><span class="line">                        document.head.appendChild(styleTag)</span><br><span class="line">                    &#125;</span><br><span class="line">                    styleTag.innerText = newStyle</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if (!this.chalk) &#123;</span><br><span class="line">                const url = `https://unpkg.com/element-ui@$&#123;version&#125;/lib/theme-chalk/index.css`</span><br><span class="line">                await this.getCSSString(url, &#x27;chalk&#x27;)</span><br><span class="line">            &#125;</span><br><span class="line">            const chalkHandler = getHandler(&#x27;chalk&#x27;, &#x27;chalk-style&#x27;)</span><br><span class="line">            chalkHandler()</span><br><span class="line">            const styles = [].slice.call(document.querySelectorAll(&#x27;style&#x27;)).filter((style) =&gt; &#123;</span><br><span class="line">                const text = style.innerText</span><br><span class="line">                return new RegExp(oldVal, &#x27;i&#x27;).test(text) &amp;&amp; !/Chalk Variables/.test(text)</span><br><span class="line">            &#125;)</span><br><span class="line">            styles.forEach((style) =&gt; &#123;</span><br><span class="line">                const &#123; innerText &#125; = style</span><br><span class="line">                if (typeof innerText !== &#x27;string&#x27;) return</span><br><span class="line">                style.innerText = this.updateStyle(innerText, originalCluster, themeCluster)</span><br><span class="line">            &#125;)</span><br><span class="line">            this.$emit(&#x27;change&#x27;, val)</span><br><span class="line">            $message.close()</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        updateStyle(style, oldCluster, newCluster) &#123;</span><br><span class="line">            let newStyle = style</span><br><span class="line">            oldCluster.forEach((color, index) =&gt; &#123;</span><br><span class="line">                newStyle = newStyle.replace(new RegExp(color, &#x27;ig&#x27;), newCluster[index])</span><br><span class="line">            &#125;)</span><br><span class="line">            return newStyle</span><br><span class="line">        &#125;,</span><br><span class="line">        getCSSString(url, variable) &#123;</span><br><span class="line">            return new Promise((resolve) =&gt; &#123;</span><br><span class="line">                const xhr = new XMLHttpRequest()</span><br><span class="line">                xhr.onreadystatechange = () =&gt; &#123;</span><br><span class="line">                    if (xhr.readyState === 4 &amp;&amp; xhr.status === 200) &#123;</span><br><span class="line">                        this[variable] = xhr.responseText.replace(/@font-face&#123;[^&#125;]+&#125;/, &#x27;&#x27;)</span><br><span class="line">                        resolve()</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                xhr.open(&#x27;GET&#x27;, url)</span><br><span class="line">                xhr.send()</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">        getThemeCluster(theme) &#123;</span><br><span class="line">            const tintColor = (color, tint) =&gt; &#123;</span><br><span class="line">                let red = parseInt(color.slice(0, 2), 16)</span><br><span class="line">                let green = parseInt(color.slice(2, 4), 16)</span><br><span class="line">                let blue = parseInt(color.slice(4, 6), 16)</span><br><span class="line">                if (tint === 0) &#123;</span><br><span class="line">                    // when primary color is in its rgb space</span><br><span class="line">                    return [red, green, blue].join(&#x27;,&#x27;)</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    red += Math.round(tint * (255 - red))</span><br><span class="line">                    green += Math.round(tint * (255 - green))</span><br><span class="line">                    blue += Math.round(tint * (255 - blue))</span><br><span class="line">                    red = red.toString(16)</span><br><span class="line">                    green = green.toString(16)</span><br><span class="line">                    blue = blue.toString(16)</span><br><span class="line">                    return `#$&#123;red&#125;$&#123;green&#125;$&#123;blue&#125;`</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            const shadeColor = (color, shade) =&gt; &#123;</span><br><span class="line">                let red = parseInt(color.slice(0, 2), 16)</span><br><span class="line">                let green = parseInt(color.slice(2, 4), 16)</span><br><span class="line">                let blue = parseInt(color.slice(4, 6), 16)</span><br><span class="line">                red = Math.round((1 - shade) * red)</span><br><span class="line">                green = Math.round((1 - shade) * green)</span><br><span class="line">                blue = Math.round((1 - shade) * blue)</span><br><span class="line">                red = red.toString(16)</span><br><span class="line">                green = green.toString(16)</span><br><span class="line">                blue = blue.toString(16)</span><br><span class="line">                return `#$&#123;red&#125;$&#123;green&#125;$&#123;blue&#125;`</span><br><span class="line">            &#125;</span><br><span class="line">            const clusters = [theme]</span><br><span class="line">            for (let i = 0; i &lt;= 9; i++) &#123;</span><br><span class="line">                clusters.push(tintColor(theme, Number((i / 10).toFixed(2))))</span><br><span class="line">            &#125;</span><br><span class="line">            clusters.push(shadeColor(theme, 0.1))</span><br><span class="line">            return clusters</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">.theme-message,</span><br><span class="line">.theme-picker-dropdown &#123;</span><br><span class="line">    z-index: 99999 !important;</span><br><span class="line">&#125;</span><br><span class="line">.theme-picker .el-color-picker__trigger &#123;</span><br><span class="line">    height: 26px !important;</span><br><span class="line">    width: 26px !important;</span><br><span class="line">    padding: 2px;</span><br><span class="line">&#125;</span><br><span class="line">.theme-picker-dropdown .el-color-dropdown__link-btn &#123;</span><br><span class="line">    display: none;</span><br><span class="line">&#125;</span><br><span class="line">.el-color-picker &#123;</span><br><span class="line">    height: auto !important;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注册组件</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ThemePicker <span class="keyword">from</span> <span class="string">&#x27;./ThemePicker&#x27;</span></span><br><span class="line">Vue.component(<span class="string">&#x27;ThemePicker&#x27;</span>, ThemePicker)</span><br></pre></td></tr></table></figure>
+
+<p>第二步， 放置于**<code>layout/navbar.vue</code>**中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;right-menu&quot;&gt;</span><br><span class="line">  &lt;!-- 全屏组件 --&gt;</span><br><span class="line">  &lt;screen-full class=&quot;right-menu-item&quot; /&gt;</span><br><span class="line">  &lt;!-- 放置换肤插件 --&gt;</span><br><span class="line">  &lt;theme-picker class=&quot;right-menu-item&quot; /&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>第三步, setting 模块中, 准备 theme 属性, 配置默认主题色 (注意格式: #xxxxxx)</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">    <span class="attr">showSettings</span>: showSettings,</span><br><span class="line">    <span class="attr">fixedHeader</span>: fixedHeader,</span><br><span class="line">    <span class="attr">sidebarLogo</span>: sidebarLogo,</span><br><span class="line">    <span class="attr">theme</span>: <span class="string">&#x27;#409eff&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第四步, 一进入页面, 就希望能够调整颜色, 改造 watch 代码, 添加 immediate: true</p>
+<img src="/resource/images/image-20210403002301862.png"/>
+
+<h3 id="将颜色同步到-vuex-中-实现持久化"><a href="#将颜色同步到-vuex-中-实现持久化" class="headerlink" title="将颜色同步到 vuex 中, 实现持久化"></a>将颜色同步到 vuex 中, 实现持久化</h3><p>改变主题色, 注册 change 事件监听</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;theme-picker <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;right-menu-item&quot;</span> @change=<span class="string">&quot;changeTheme&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>同步到 vuex 中, 提交了 action</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">changeTheme</span>(<span class="params">val</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// 发布action, 同步主题色到vuex中</span></span><br><span class="line">  <span class="built_in">this</span>.$store.dispatch(<span class="string">&#x27;settings/changeSetting&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">key</span>: <span class="string">&#x27;theme&#x27;</span>,</span><br><span class="line">    <span class="attr">value</span>: val</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>持久化处理 theme, (使用 Cookies 持久化)</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> defaultSettings <span class="keyword">from</span> <span class="string">&#x27;@/settings&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Cookies <span class="keyword">from</span> <span class="string">&#x27;js-cookie&#x27;</span></span><br><span class="line"><span class="keyword">const</span> &#123; showSettings, fixedHeader, sidebarLogo &#125; = defaultSettings</span><br><span class="line"><span class="keyword">const</span> themeKey = <span class="string">&#x27;hm-hrsaas-exm-theme&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">    <span class="attr">showSettings</span>: showSettings,</span><br><span class="line">    <span class="attr">fixedHeader</span>: fixedHeader,</span><br><span class="line">    <span class="attr">sidebarLogo</span>: sidebarLogo,</span><br><span class="line">    <span class="attr">theme</span>: Cookies.get(themeKey) || <span class="string">&#x27;#409eff&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">    <span class="attr">CHANGE_SETTING</span>: <span class="function">(<span class="params">state, &#123; key, value &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// eslint-disable-next-line no-prototype-builtins</span></span><br><span class="line">        <span class="keyword">if</span> (state.hasOwnProperty(key)) &#123;</span><br><span class="line">            state[key] = value</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (key === <span class="string">&#x27;theme&#x27;</span>) &#123;</span><br><span class="line">            Cookies.set(themeKey, value)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    <span class="function"><span class="title">changeSetting</span>(<span class="params">&#123; commit &#125;, data</span>)</span> &#123;</span><br><span class="line">        commit(<span class="string">&#x27;CHANGE_SETTING&#x27;</span>, data)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">namespaced</span>: <span class="literal">true</span>,</span><br><span class="line">    state,</span><br><span class="line">    mutations,</span><br><span class="line">    actions,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="退出时-清除主题色信息"><a href="#退出时-清除主题色信息" class="headerlink" title="退出时, 清除主题色信息"></a>退出时, 清除主题色信息</h3><p>提供 mutation</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> defaultSettings <span class="keyword">from</span> <span class="string">&#x27;@/settings&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Cookies <span class="keyword">from</span> <span class="string">&#x27;js-cookie&#x27;</span></span><br><span class="line"><span class="keyword">const</span> &#123; showSettings, fixedHeader, sidebarLogo &#125; = defaultSettings</span><br><span class="line"><span class="keyword">const</span> themeKey = <span class="string">&#x27;hm-hrsaas-exm-theme&#x27;</span></span><br><span class="line"><span class="keyword">const</span> themeDefaultColor = <span class="string">&#x27;#5485fd&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">    <span class="attr">showSettings</span>: showSettings,</span><br><span class="line">    <span class="attr">fixedHeader</span>: fixedHeader,</span><br><span class="line">    <span class="attr">sidebarLogo</span>: sidebarLogo,</span><br><span class="line">    <span class="attr">theme</span>: Cookies.get(themeKey) || themeDefaultColor,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">    <span class="attr">CHANGE_SETTING</span>: <span class="function">(<span class="params">state, &#123; key, value &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// eslint-disable-next-line no-prototype-builtins</span></span><br><span class="line">        <span class="keyword">if</span> (state.hasOwnProperty(key)) &#123;</span><br><span class="line">            state[key] = value</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (key === <span class="string">&#x27;theme&#x27;</span>) &#123;</span><br><span class="line">            Cookies.set(themeKey, value)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">resetTheme</span>(<span class="params">state</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 重置成默认颜色</span></span><br><span class="line">        state.theme = themeDefaultColor</span><br><span class="line">        <span class="comment">// cookies中也要移出</span></span><br><span class="line">        Cookies.remove(themeKey)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    <span class="function"><span class="title">changeSetting</span>(<span class="params">&#123; commit &#125;, data</span>)</span> &#123;</span><br><span class="line">        commit(<span class="string">&#x27;CHANGE_SETTING&#x27;</span>, data)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">namespaced</span>: <span class="literal">true</span>,</span><br><span class="line">    state,</span><br><span class="line">    mutations,</span><br><span class="line">    actions,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>退出的 action 操作</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">logout</span>(<span class="params">context</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// 1. 移除vuex个人信息</span></span><br><span class="line">  context.commit(<span class="string">&#x27;removeUserInfo&#x27;</span>)</span><br><span class="line">  <span class="comment">// 2. 移除token信息</span></span><br><span class="line">  context.commit(<span class="string">&#x27;removeToken&#x27;</span>)</span><br><span class="line">  <span class="comment">// 3. 重置路由 (每个人登进来权限是不一样的, 需要在退出时重置成默认的)</span></span><br><span class="line">  resetRouter()</span><br><span class="line">  <span class="comment">// 4. 将vuex中路由信息数组, 也重置</span></span><br><span class="line">  <span class="comment">// 需求: 需要调用 permission 模块中的 setRoutes (mutation)</span></span><br><span class="line">  context.commit(<span class="string">&#x27;permission/setRoutes&#x27;</span>, [], &#123; <span class="attr">root</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">  <span class="comment">// 5. 清除主题色信息</span></span><br><span class="line">  context.commit(<span class="string">&#x27;settings/resetTheme&#x27;</span>, <span class="literal">null</span>, &#123; <span class="attr">root</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h3 id="行内样式-自定义效果定制"><a href="#行内样式-自定义效果定制" class="headerlink" title="行内样式 - 自定义效果定制"></a>行内样式 - 自定义效果定制</h3><p><code>navbar</code>导航</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;navbar&quot;</span> :style=<span class="string">&quot;&#123; background: $store.state.settings.theme &#125;&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>sidebar / 整体背景</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div :<span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;&#123;&#x27;has-logo&#x27;:showLogo&#125;&quot;</span> :style=<span class="string">&quot;&#123; background: $store.state.settings.theme &#125;&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/image-20210204123640893.png"/>
+
+<img src="/resource/images/image-20210204123724384.png"/>
+
+<h3 id="切换类名-自定义样式-体力活"><a href="#切换类名-自定义样式-体力活" class="headerlink" title="切换类名 - 自定义样式 (体力活)"></a>切换类名 - 自定义样式 (体力活)</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span> <span class="attr">:class</span>=<span class="string">&quot;classObj&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!-- 路由出口 --&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">router-view</span> /&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">name</span>: <span class="string">&#x27;App&#x27;</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">computed</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="function"><span class="title">classObj</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="keyword">let</span> className = <span class="string">&#x27;&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="keyword">switch</span> (<span class="built_in">this</span>.$store.state.settings.theme) &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">case</span> <span class="string">&#x27;#6959CD&#x27;</span>:</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          className = <span class="string">&#x27;purple-theme&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="keyword">break</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">case</span> <span class="string">&#x27;#F5222D&#x27;</span>:</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          className = <span class="string">&#x27;red-theme&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="keyword">break</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">case</span> <span class="string">&#x27;#304156&#x27;</span>:</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          className = <span class="string">&#x27;black-theme&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="keyword">break</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="attr">default</span>:</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          className = <span class="string">&#x27;default-theme&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        [className]: <span class="literal">true</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">&#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>样式文件:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.purple-theme</span> &#123;</span><br><span class="line">    <span class="selector-class">.breadBtn</span> &#123;</span><br><span class="line">        <span class="attribute">background-color</span>: orange <span class="meta">!important</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.red-theme</span> &#123;</span><br><span class="line">    <span class="selector-class">.breadBtn</span> &#123;</span><br><span class="line">        <span class="attribute">background-color</span>: blue <span class="meta">!important</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.black-theme</span> &#123;</span><br><span class="line">    <span class="selector-class">.breadBtn</span> &#123;</span><br><span class="line">        <span class="attribute">background-color</span>: brown <span class="meta">!important</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.default-theme</span> &#123;</span><br><span class="line">    <span class="selector-class">.breadBtn</span> &#123;</span><br><span class="line">        <span class="attribute">background-color</span>: <span class="number">#84a9fe</span> <span class="meta">!important</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多语言实现-体力活-翻译工作"><a href="#多语言实现-体力活-翻译工作" class="headerlink" title="多语言实现(体力活 - 翻译工作)"></a>多语言实现(体力活 - 翻译工作)</h2><img src="/resource/images/image-20210204132218518.png"/>
+
+<p>**<code>目标</code>**实现国际化语言切换 <a target="_blank" rel="noopener" href="http://kazupon.github.io/vue-i18n/zh/introduction.html">http://kazupon.github.io/vue-i18n/zh/introduction.html</a></p>
+<h3 id="初始化多语言包"><a href="#初始化多语言包" class="headerlink" title="初始化多语言包"></a>初始化多语言包</h3><p>本项目使用国际化 i18n 方案。通过 <a target="_blank" rel="noopener" href="https://github.com/kazupon/vue-i18n">vue-i18n</a>而实现。</p>
+<p><strong>第一步，我们需要首先国际化的包</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn add vue-i18n@8.22.2</span><br></pre></td></tr></table></figure>
+
+<p><strong>第二步，需要单独一个多语言的实例化文件 <code>src/lang/index.js</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span> <span class="comment">// 引入Vue</span></span><br><span class="line"><span class="keyword">import</span> VueI18n <span class="keyword">from</span> <span class="string">&#x27;vue-i18n&#x27;</span> <span class="comment">// 引入国际化的插件包</span></span><br><span class="line"><span class="keyword">import</span> Cookies <span class="keyword">from</span> <span class="string">&#x27;js-cookie&#x27;</span> <span class="comment">// 引入cookie包</span></span><br><span class="line"><span class="keyword">import</span> elementEN <span class="keyword">from</span> <span class="string">&#x27;element-ui/lib/locale/lang/en&#x27;</span> <span class="comment">// 引入饿了么的英文包</span></span><br><span class="line"><span class="keyword">import</span> elementZH <span class="keyword">from</span> <span class="string">&#x27;element-ui/lib/locale/lang/zh-CN&#x27;</span> <span class="comment">// 引入饿了么的中文包</span></span><br><span class="line">Vue.use(VueI18n) <span class="comment">// 全局注册国际化包</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建国际化插件的实例</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> VueI18n(&#123;</span><br><span class="line">    <span class="comment">// 指定语言类型</span></span><br><span class="line">    <span class="attr">locale</span>: Cookies.get(<span class="string">&#x27;language&#x27;</span>) || <span class="string">&#x27;zh&#x27;</span>, <span class="comment">// 从cookie中获取语言类型 获取不到就是中文</span></span><br><span class="line">    <span class="attr">messages</span>: &#123;</span><br><span class="line">        <span class="attr">en</span>: &#123;</span><br><span class="line">            ...elementEN, <span class="comment">// 将饿了么的英文语言包引入</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">zh</span>: &#123;</span><br><span class="line">            ...elementZH, <span class="comment">// 将饿了么的中文语言包引入</span></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上面的代码的作用是将 Element 的两种语言导入了</p>
+</blockquote>
+<p><strong>第三步，在 main.js 中对挂载 i18n 的插件，并配置 ElementUI 的中英切换逻辑</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> i18n <span class="keyword">from</span> <span class="string">&#x27;@/lang&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置ElementUI的中英切换逻辑</span></span><br><span class="line">Vue.use(ElementUI, &#123;</span><br><span class="line">    <span class="attr">i18n</span>: <span class="function">(<span class="params">key, value</span>) =&gt;</span> i18n.t(key, value),</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    router,</span><br><span class="line">    store,</span><br><span class="line">    i18n,</span><br><span class="line">    <span class="attr">render</span>: <span class="function">(<span class="params">h</span>) =&gt;</span> h(App),</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="引入自定义语言包"><a href="#引入自定义语言包" class="headerlink" title="引入自定义语言包"></a>引入自定义语言包</h3><blockquote>
+<p>此时，element 已经变成了 zh，也就是中文，但是我们常规的内容怎么根据当前语言类型显示？</p>
+</blockquote>
+<p>这里，针对英文和中文，我们可以提供两个不同的语言包 <strong><code>src/lang/zh.js , src/lang/en.js</code></strong></p>
+<p><strong>在 index.js 中同样引入该语言包</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span> <span class="comment">// 引入Vue</span></span><br><span class="line"><span class="keyword">import</span> VueI18n <span class="keyword">from</span> <span class="string">&#x27;vue-i18n&#x27;</span> <span class="comment">// 引入国际化的插件包</span></span><br><span class="line"><span class="keyword">import</span> Cookies <span class="keyword">from</span> <span class="string">&#x27;js-cookie&#x27;</span> <span class="comment">// 引入cookie包</span></span><br><span class="line"><span class="keyword">import</span> elementEN <span class="keyword">from</span> <span class="string">&#x27;element-ui/lib/locale/lang/en&#x27;</span> <span class="comment">// 引入饿了么的英文包</span></span><br><span class="line"><span class="keyword">import</span> elementZH <span class="keyword">from</span> <span class="string">&#x27;element-ui/lib/locale/lang/zh-CN&#x27;</span> <span class="comment">// 引入饿了么的中文包</span></span><br><span class="line"><span class="keyword">import</span> customZH <span class="keyword">from</span> <span class="string">&#x27;./zh&#x27;</span> <span class="comment">// 引入自定义中文包</span></span><br><span class="line"><span class="keyword">import</span> customEN <span class="keyword">from</span> <span class="string">&#x27;./en&#x27;</span> <span class="comment">// 引入自定义英文包</span></span><br><span class="line"></span><br><span class="line">Vue.use(VueI18n) <span class="comment">// 全局注册国际化包</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> VueI18n(&#123;</span><br><span class="line">    <span class="attr">locale</span>: Cookies.get(<span class="string">&#x27;language&#x27;</span>) || <span class="string">&#x27;en&#x27;</span>, <span class="comment">// 从cookie中获取语言类型 获取不到就是中文</span></span><br><span class="line">    <span class="attr">messages</span>: &#123;</span><br><span class="line">        <span class="attr">en</span>: &#123;</span><br><span class="line">            ...elementEN, <span class="comment">// 将饿了么的英文语言包引入</span></span><br><span class="line">            ...customEN,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">zh</span>: &#123;</span><br><span class="line">            ...elementZH, <span class="comment">// 将饿了么的中文语言包引入</span></span><br><span class="line">            ...customZH,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="在左侧菜单中应用多语言包"><a href="#在左侧菜单中应用多语言包" class="headerlink" title="在左侧菜单中应用多语言包"></a>在左侧菜单中应用多语言包</h3><blockquote>
+<p>自定义语言包的内容怎么使用?</p>
+</blockquote>
+<p><strong>在左侧菜单应用</strong></p>
+<p>当我们全局注册 i18n 的时候，每个组件都会拥有一个**<code>$t</code>**的方法， $t 方法会被挂载到 vue 原型上</p>
+<p>它会根据传入的 key，自动的去寻找当前语言的文本， $t(‘navbar.title’)</p>
+<ol>
+<li><p>我们可以自己添加一些中英翻译, 将头部翻译成中英文</p>
+ <img src="/resource/images/image-20210403010228468.png"/>
+
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;app-breadcrumb&quot;</span>&gt;</span><br><span class="line">  &#123;&#123; $t(<span class="string">&#x27;navbar.title&#x27;</span>) &#125;&#125;</span><br><span class="line">  &lt;span <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;breadBtn&quot;</span>&gt;&#123;&#123; $t(<span class="string">&#x27;navbar.enjoy&#x27;</span>) &#125;&#125;&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>我们可以将左侧菜单变成多语言展示文本</p>
+</li>
+</ol>
+<p><strong><code>layout/components/SidebarItem.vue</code></strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;item :icon=&quot;onlyOneChild.meta.icon || (item.meta &amp;&amp; item.meta.icon)&quot; :title=&quot;$t(&#x27;route.&#x27; + onlyOneChild.name)&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意：当文本的值为嵌套时，可以通过**<code>$t(&#39;key1.key2.key3...&#39;)</code>**的方式获取</p>
+<blockquote>
+<p>现在，我们已经完成了多语言的接入，现在封装切换多语言的组件</p>
+</blockquote>
+<h3 id="封装多语言组件-切换语言"><a href="#封装多语言组件-切换语言" class="headerlink" title="封装多语言组件 - 切换语言"></a>封装多语言组件 - 切换语言</h3><p><strong>封装多语言组件</strong> <strong><code>src/components/Lang/index.vue</code></strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;el-dropdown trigger=&quot;click&quot; @command=&quot;changeLanguage&quot;&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;svg-icon style=&quot;color:#fff;font-size:20px&quot; icon-class=&quot;language&quot; /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;el-dropdown-menu slot=&quot;dropdown&quot;&gt;</span><br><span class="line">            &lt;el-dropdown-item command=&quot;zh&quot; :disabled=&quot;&#x27;zh&#x27; === $i18n.locale&quot;&gt;中文&lt;/el-dropdown-item&gt;</span><br><span class="line">            &lt;el-dropdown-item command=&quot;en&quot; :disabled=&quot;&#x27;en&#x27; === $i18n.locale&quot;&gt;en&lt;/el-dropdown-item&gt;</span><br><span class="line">        &lt;/el-dropdown-menu&gt;</span><br><span class="line">    &lt;/el-dropdown&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import Cookies from &#x27;js-cookie&#x27;</span><br><span class="line">export default &#123;</span><br><span class="line">    methods: &#123;</span><br><span class="line">        changeLanguage(lang) &#123;</span><br><span class="line">            Cookies.set(&#x27;language&#x27;, lang) // 切换多语言</span><br><span class="line">            this.$i18n.locale = lang // 设置给本地的i18n插件</span><br><span class="line">            this.$message.success(&#x27;切换多语言成功&#x27;)</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line">// this.$i18n.locale = &#x27;语言字符串&#x27;  切语言</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>component/index.js</code>全局注册</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Lang <span class="keyword">from</span> <span class="string">&#x27;./Lang&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="comment">// 插件的初始化, 插件给你提供的全局的功能, 都可以在这里配置</span></span><br><span class="line">  <span class="function"><span class="title">install</span>(<span class="params">Vue</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// 进行组件的全局注册</span></span><br><span class="line">		...</span><br><span class="line">    Vue.component(<span class="string">&#x27;Lang&#x27;</span>, Lang)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Navbar 组件中引入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 语言包 --&gt;</span><br><span class="line">&lt;lang class=&quot;right-menu-item&quot; /&gt;</span><br><span class="line">&lt;!-- 全屏组件 --&gt;</span><br><span class="line">&lt;screen-full class=&quot;right-menu-item&quot; /&gt;</span><br><span class="line">&lt;!-- 放置换肤插件 --&gt;</span><br><span class="line">&lt;theme-picker class=&quot;right-menu-item&quot; @change=&quot;changeTheme&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>最终效果</p>
+<img src="/resource/images/image-20210204132208755.png"/>
+
+<h2 id="tab-页的视图引入"><a href="#tab-页的视图引入" class="headerlink" title="tab 页的视图引入"></a>tab 页的视图引入</h2><p>**<code>目标</code>**： 实现 tab 页打开路由的功能</p>
+<p>当前我们实现的打开页面，看到一个页面之后，另一个页面就会关闭，为了显示更加有效率，我们可以引入多页签组件</p>
+<p>在资源目录中，**<code>多页签</code>** 目录下放置的是 组件和 vuex 模块</p>
+<p>第一步，将组件 TagsView 目录放置到**<code>src/components</code>** , 并全局注册</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> TagsView <span class="keyword">from</span> <span class="string">&#x27;./TagsView&#x27;</span></span><br><span class="line">Vue.component(<span class="string">&#x27;TagsView&#x27;</span>, TagsView)</span><br></pre></td></tr></table></figure>
+
+<p>第二步，将 Vuex 模块**<code>tagsView.js</code>**放置到 <strong><code>src/store/modules</code></strong></p>
+<p>并在 store 中引入该模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tagsView <span class="keyword">from</span> <span class="string">&#x27;./modules/tagsView&#x27;</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    <span class="attr">modules</span>: &#123;</span><br><span class="line">        app,</span><br><span class="line">        settings,</span><br><span class="line">        user,</span><br><span class="line">        permission,</span><br><span class="line">        tagsView,</span><br><span class="line">    &#125;,</span><br><span class="line">    getters,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>第三步，在**<code>src/layout/Index.vue</code>**中引入该组件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div :class=&quot;classObj&quot; class=&quot;app-wrapper&quot;&gt;</span><br><span class="line">        &lt;div v-if=&quot;device === &#x27;mobile&#x27; &amp;&amp; sidebar.opened&quot; class=&quot;drawer-bg&quot; @click=&quot;handleClickOutside&quot; /&gt;</span><br><span class="line">        &lt;sidebar class=&quot;sidebar-container&quot; /&gt;</span><br><span class="line">        &lt;div class=&quot;main-container&quot;&gt;</span><br><span class="line">            &lt;div :class=&quot;&#123; &#x27;fixed-header&#x27;: fixedHeader &#125;&quot;&gt;</span><br><span class="line">                &lt;navbar /&gt;</span><br><span class="line">                &lt;!-- 放置tags-view --&gt;</span><br><span class="line">                &lt;tags-view /&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;app-main /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>第四步, 添加缓存控制 <code>layout/components/AppMain.vue</code></p>
+<p>include 配置的是缓存的组件名数组</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">&quot;app-main&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!-- 动画效果 --&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">transition</span> <span class="attr">name</span>=<span class="string">&quot;fade-transform&quot;</span> <span class="attr">mode</span>=<span class="string">&quot;out-in&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">keep-alive</span> <span class="attr">:include</span>=<span class="string">&quot;cachedViews&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">router-view</span> <span class="attr">:key</span>=<span class="string">&quot;key&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">keep-alive</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">name</span>: <span class="string">&#x27;AppMain&#x27;</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">computed</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="function"><span class="title">cachedViews</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="keyword">return</span> <span class="built_in">this</span>.$store.state.tagsView.cachedViews.map(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">return</span> item[<span class="number">0</span>].toUpperCase() + item.slice(<span class="number">1</span>)</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;)</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="function"><span class="title">key</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="keyword">return</span> <span class="built_in">this</span>.$route.path</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">&#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>效果如下</p>
+<img src="/resource/images/image-20210204133456548.png"/>
+
+<p><strong><code>提交代码</code></strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/13/rz-base-course10/" rel="prev" title="10_人资后台">
+      <i class="fa fa-chevron-left"></i> 10_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/13/rz-base-course12/" rel="next" title="12_人资后台">
+      12_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8%E5%B1%8F-%E5%A4%9A%E8%AF%AD%E8%A8%80-tab-%E9%A1%B5-%E4%B8%BB%E9%A2%98%E5%88%87%E6%8D%A2"><span class="nav-number">1.</span> <span class="nav-text">全屏-多语言-tab 页-主题切换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%8F%E6%8F%92%E4%BB%B6%E7%9A%84%E5%BC%95%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">全屏插件的引用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D-%E5%92%8C-%E7%BB%84%E4%BB%B6%E5%88%9B%E5%BB%BA"><span class="nav-number">1.1.1.</span> <span class="nav-text">基本介绍 和 组件创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%85%A8%E5%B1%8F%E7%9A%84-svg-%E5%9B%BE%E6%A0%87"><span class="nav-number">1.1.2.</span> <span class="nav-text">准备全屏的 svg 图标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%8F%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.1.3.</span> <span class="nav-text">全屏功能实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE-%E4%BD%93%E5%8A%9B%E6%B4%BB-%E6%8D%A2%E8%82%A4"><span class="nav-number">1.2.</span> <span class="nav-text">动态主题的设置 (体力活 - 换肤)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%BB%E9%A2%98-element-ui-%E8%87%AA%E5%B8%A6%E7%9A%84%E6%95%88%E6%9E%9C%E5%88%87%E6%8D%A2"><span class="nav-number">1.2.1.</span> <span class="nav-text">自定义主题 (element-ui 自带的效果切换)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-ThemePicker-%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">使用 ThemePicker 组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E9%A2%9C%E8%89%B2%E5%90%8C%E6%AD%A5%E5%88%B0-vuex-%E4%B8%AD-%E5%AE%9E%E7%8E%B0%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.2.3.</span> <span class="nav-text">将颜色同步到 vuex 中, 实现持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%80%E5%87%BA%E6%97%B6-%E6%B8%85%E9%99%A4%E4%B8%BB%E9%A2%98%E8%89%B2%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.4.</span> <span class="nav-text">退出时, 清除主题色信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E5%86%85%E6%A0%B7%E5%BC%8F-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%88%E6%9E%9C%E5%AE%9A%E5%88%B6"><span class="nav-number">1.2.5.</span> <span class="nav-text">行内样式 - 自定义效果定制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E7%B1%BB%E5%90%8D-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F-%E4%BD%93%E5%8A%9B%E6%B4%BB"><span class="nav-number">1.2.6.</span> <span class="nav-text">切换类名 - 自定义样式 (体力活)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0-%E4%BD%93%E5%8A%9B%E6%B4%BB-%E7%BF%BB%E8%AF%91%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">多语言实现(体力活 - 翻译工作)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%A4%9A%E8%AF%AD%E8%A8%80%E5%8C%85"><span class="nav-number">1.3.1.</span> <span class="nav-text">初始化多语言包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80%E5%8C%85"><span class="nav-number">1.3.2.</span> <span class="nav-text">引入自定义语言包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E4%B8%AD%E5%BA%94%E7%94%A8%E5%A4%9A%E8%AF%AD%E8%A8%80%E5%8C%85"><span class="nav-number">1.3.3.</span> <span class="nav-text">在左侧菜单中应用多语言包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E5%A4%9A%E8%AF%AD%E8%A8%80%E7%BB%84%E4%BB%B6-%E5%88%87%E6%8D%A2%E8%AF%AD%E8%A8%80"><span class="nav-number">1.3.4.</span> <span class="nav-text">封装多语言组件 - 切换语言</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tab-%E9%A1%B5%E7%9A%84%E8%A7%86%E5%9B%BE%E5%BC%95%E5%85%A5"><span class="nav-number">1.4.</span> <span class="nav-text">tab 页的视图引入</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

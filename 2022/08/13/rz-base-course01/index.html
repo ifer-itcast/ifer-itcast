@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 目标。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01_人资后台">
+<meta property="og:url" content="http://example.com/2022/08/13/rz-base-course01/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 目标。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-20210311065944009.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200810012833240.png">
+<meta property="og:image" content="http://example.com/2022/08/13/rz-base-course01/assets/image-20200703173319390.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210116233911391.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200706131337563.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200706134607517.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200706134614330.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200708010741325.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200824153141764.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200824155103340.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200708014558617.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200824165153331.png">
+<meta property="og:image" content="http://example.com/2022/08/13/rz-base-course01/assets/image-20200824171327384.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200824173239955.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200811012945409.png">
+<meta property="article:published_time" content="2022-08-13T14:02:15.000Z">
+<meta property="article:modified_time" content="2022-08-30T15:39:33.370Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20210311065944009.png">
+
+<link rel="canonical" href="http://example.com/2022/08/13/rz-base-course01/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>01_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/13/rz-base-course01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          01_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-13 22:02:15" itemprop="dateCreated datePublished" datetime="2022-08-13T22:02:15+08:00">2022-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-30 23:39:33" itemprop="dateModified" datetime="2022-08-30T23:39:33+08:00">2022-08-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 目标。</p>
+<span id="more"></span>
+
+<h1 id="项目课整体设计"><a href="#项目课整体设计" class="headerlink" title="项目课整体设计"></a>项目课整体设计</h1><ol>
+<li><p><strong>hrsaas 项目基本预览</strong> (一个公司, 员工入职, 新增员工, 分配员工角色) <strong>重心: 权限控制!</strong></p>
+<p> (1) 在线项目 <a target="_blank" rel="noopener" href="http://ihrm-java.itheima.net/#/login">http://ihrm-java.itheima.net/#/login</a></p>
+<p> (2) 笔记 =&gt; 示例代码 =&gt; yarn 安装依赖 =&gt; yarn dev 启动</p>
+ <img src="/resource/images/image-20210311065944009.png"/></li>
+<li><p>基本业务模块介绍</p>
+<pre><code> 登录 主页 组织 企业 员工 **权限**
+</code></pre>
+ <img src="/resource/images/image-20200810012833240.png"/></li>
+<li><p>基本菜单功能演示 =&gt; 不同角色登录进来, 看到的菜单应该不一样的</p>
+<p> RBAC 的权限控制说明 (role based access control 基于角色的权限控制)</p>
+</li>
+</ol>
+<h1 id="人力资源的环境搭建"><a href="#人力资源的环境搭建" class="headerlink" title="人力资源的环境搭建"></a>人力资源的环境搭建</h1><p>问题: 这类的系统太常见了! 一切从零开始, 效率太低! 会参考已经集成的模板</p>
+<h2 id="vue-element-admin-的了解和介绍"><a href="#vue-element-admin-的了解和介绍" class="headerlink" title="vue-element-admin 的了解和介绍"></a>vue-element-admin 的了解和介绍</h2><p><strong><code>目标</code></strong>: 学习和了解通用的 vue 后台 集成方案**<code>vue-element-admin</code>** vant (移动端) element-ui(PC 端)</p>
+<p><a target="_blank" rel="noopener" href="https://panjiachen.gitee.io/vue-element-admin-site/zh/">vue-element-admin</a> 是一个后台前端解决方案，它基于 <a target="_blank" rel="noopener" href="https://github.com/vuejs/vue">vue</a> 和 <a target="_blank" rel="noopener" href="https://github.com/ElemeFE/element">element-ui</a>实现。</p>
+<p>它使用了最新的前端技术栈，内置国际化解决方案，动态路由，权限验证，提炼了典型的业务模型，提供了丰富的功能组件，</p>
+<p>它可以帮助你快速搭建企业级中后台产品原型。</p>
+<p><code>vue-element-admin</code> 是一个后台集成方案, 集成了 PC 项目中很多的业务场景和功能, 我们可以从中获得很多成熟的解决方案.</p>
+<blockquote>
+<p><code>vue-element-admin</code> 有一个成熟的<a target="_blank" rel="noopener" href="https://github.com/PanJiaChen/vue-element-admin">集成方案</a>，里面包含了所有的业务功能和场景,并不适合直接拿来进行二次开发,</p>
+<p>但是可以通过该项目中的一个案例来进行学习和使用</p>
+</blockquote>
+<p>这里是<a target="_blank" rel="noopener" href="https://panjiachen.gitee.io/vue-element-admin-site/zh/">官网地址</a></p>
+<p>这里是<a target="_blank" rel="noopener" href="https://gitee.com/panjiachen/vue-element-admin">线上 demo 地址</a>, <a target="_blank" rel="noopener" href="https://panjiachen.github.io/vue-element-admin/#/login?redirect=%2Fdashboard">线上预览地址</a></p>
+<p><img src="assets/image-20200703173319390.png" alt="image-20200703173319390"></p>
+<blockquote>
+<p>集成方案并不适合我们直接拿来进行二次开发，<a target="_blank" rel="noopener" href="https://gitee.com/panjiachen/vue-admin-template">基础模板</a>则是一个更好的选择</p>
+</blockquote>
+<p>基础模板, 包含了基本的 <strong>登录 / 权限架子 / 主页布局</strong> 的一些基础功能模板, 我们可以直接在该模板上进行功能的扩展和项目的二次开发</p>
+<p>基础模板地址: <a target="_blank" rel="noopener" href="https://gitee.com/panjiachen/vue-admin-template">https://gitee.com/panjiachen/vue-admin-template</a></p>
+<p>**<code>小结</code>**： 浏览 vue-element-admin，了解这个集成方案</p>
+<h2 id="搭建项目前的一些基本准备"><a href="#搭建项目前的一些基本准备" class="headerlink" title="搭建项目前的一些基本准备"></a>搭建项目前的一些基本准备</h2><p><strong><code>目标</code></strong>: 介绍搭建一个 vue 中台项目,需要<code>环境</code>和<code>工具</code></p>
+<blockquote>
+<p>接下来要做的是一个大型的项目，我们需要更好的环境准备和资源前置，所以提前检查我们的环境和资源</p>
+</blockquote>
+<p><strong>nodejs 环境</strong></p>
+<blockquote>
+<p>nodejs 是当下前端工程化开发必不可少的环境, 使用 nodejs 的**<code>npm</code>**功能来管理依赖包</p>
+</blockquote>
+<p>查看 node 和 npm 的版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ node -v <span class="comment">#查看node版本</span></span><br><span class="line">$ npm  -v <span class="comment">#查看npm版本</span></span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/image-20210116233911391.png"/>
+
+<p><strong>git 版本控制</strong></p>
+<p>查看 git 安装版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git --version <span class="comment">#查看git安装版本</span></span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/image-20200706131337563.png"/>
+
+<p><strong>npm 淘宝镜像</strong></p>
+<p>如果用 npm, 不用 yarn, 一定要配置淘宝镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm config <span class="built_in">set</span> registry  https://registry.npm.taobao.org/  <span class="comment">#设置淘宝镜像地址</span></span><br><span class="line">$ npm config get registry  <span class="comment">#查看镜像地址</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>vscode 编辑器</strong></p>
+<blockquote>
+<p>vscode 编辑器是目前前端开发的编码利器， 以及丰富的插件系统，非常适合开发前端项目</p>
+</blockquote>
+<p>vscode 编辑器插件 + <strong><code>vetur</code></strong> + <strong><code>eslint</code></strong></p>
+<blockquote>
+<p>vetur 是基于 单文件组件开发的支持插件, eslint 是 基于代码校验的插件工具</p>
+</blockquote>
+<img src="/resource/images/image-20200706134607517.png"/>
+
+<img src="/resource/images/image-20200706134614330.png"/>
+
+<p>除此之外, eslint 需要在 vscode 中进行一些参数的配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;editor.codeActionsOnSave&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;source.fixAll.eslint&quot;</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>本项目的技术栈 本项目技术栈基于 <a target="_blank" rel="noopener" href="http://es6.ruanyifeng.com/">ES2015+</a>、<a target="_blank" rel="noopener" href="https://cn.vuejs.org/index.html">vue</a>、<a target="_blank" rel="noopener" href="https://vuex.vuejs.org/zh-cn/">vuex</a>、<a target="_blank" rel="noopener" href="https://router.vuejs.org/zh-cn/">vue-router</a> 、<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-cli">vue-cli</a> 、<a target="_blank" rel="noopener" href="https://github.com/axios/axios">axios</a> 和 <a target="_blank" rel="noopener" href="https://github.com/ElemeFE/element">element-ui</a></p>
+</blockquote>
+<p>**<code>本节任务</code>**： 大家检查各自的开发环境和资源，尤其是 npm 的淘宝镜像额外需要注意</p>
+<h2 id="项目模板启动-和-目录介绍"><a href="#项目模板启动-和-目录介绍" class="headerlink" title="项目模板启动 和 目录介绍"></a>项目模板启动 和 目录介绍</h2><p><strong><code>目标</code></strong>: 拉取基础模板的内容, 运行起来, 并对目录进行介绍</p>
+<p>git 拉取基础项目模板</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git@gitee.com:panjiachen/vue-admin-template.git hrsaas # 拉取基础模板的代码</span><br></pre></td></tr></table></figure>
+
+<p>git 下载完毕后, 可以将 .git 文件夹删除, 我们后面自己初始化</p>
+<p><strong>安装项目依赖</strong>（定位到项目目录下）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm i  <span class="comment">#安装依赖 yarn</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>启动项目</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm run dev <span class="comment">#启动开发模式的服务 yarn dev</span></span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/image-20200708010741325.png"/>
+
+<p>项目运行完毕，浏览器会自动打开基础模板的登录页，如上图</p>
+<p><strong>目录结构</strong></p>
+<p>本项目已经为你生成了一个基本的开发框架，提供了涵盖中后台开发的各类功能和坑位，下面是整个项目的目录结构。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">├── build                      <span class="comment"># 构建打包相关</span></span><br><span class="line">├── mock                       <span class="comment"># 项目mock 模拟数据</span></span><br><span class="line">├── public                     <span class="comment"># 静态资源</span></span><br><span class="line">│   │── favicon.ico            <span class="comment"># favicon图标</span></span><br><span class="line">│   └── index.html             <span class="comment"># html模板</span></span><br><span class="line">├── src                        <span class="comment"># 源代码</span></span><br><span class="line">│   ├── api                    <span class="comment"># 所有请求</span></span><br><span class="line">│   ├── assets                 <span class="comment"># 主题 字体等静态资源</span></span><br><span class="line">│   ├── components             <span class="comment"># 全局公用组件</span></span><br><span class="line">│   ├── icons                  <span class="comment"># 项目所有 svg icons</span></span><br><span class="line">│   ├── layout                 <span class="comment"># 全局 layout</span></span><br><span class="line">│   ├── router                 <span class="comment"># 路由</span></span><br><span class="line">│   ├── store                  <span class="comment"># 全局 store管理</span></span><br><span class="line">│   ├── styles                 <span class="comment"># 全局样式</span></span><br><span class="line">│   ├── utils                  <span class="comment"># 全局公用方法</span></span><br><span class="line">│   ├── vendor                 <span class="comment"># 公用vendor</span></span><br><span class="line">│   ├── views                  <span class="comment"># views 所有页面</span></span><br><span class="line">│   ├── App.vue                <span class="comment"># 入口页面</span></span><br><span class="line">│   ├── main.js                <span class="comment"># 入口文件 加载组件 初始化等</span></span><br><span class="line">│   └── permission.js          <span class="comment"># 权限管理</span></span><br><span class="line">│   └── settings.js          <span class="comment"># 配置文件</span></span><br><span class="line">├── tests                      <span class="comment"># 测试</span></span><br><span class="line">├── .env.xxx                   <span class="comment"># 环境变量配置</span></span><br><span class="line">├── .eslintrc.js               <span class="comment"># eslint 配置项</span></span><br><span class="line">├── .babelrc                   <span class="comment"># babel-loader 配置</span></span><br><span class="line">├── .travis.yml                <span class="comment"># 自动化CI配置</span></span><br><span class="line">├── vue.config.js              <span class="comment"># vue-cli 配置</span></span><br><span class="line">├── postcss.config.js          <span class="comment"># postcss 配置</span></span><br><span class="line">└── package.json               <span class="comment"># package.json</span></span><br></pre></td></tr></table></figure>
+
+<p>此时,你可能会<strong>眼花缭乱</strong>, 因为生成的目录里面有太多的文件 我们在做项目时 其中最关注的就是**<code>src</code>**目录, 里面是所有的源代码和资源, 至于其他目录, 都是对项目的环境和工具的配置</p>
+<p>图标 <code>.env.development</code> 不高亮 =&gt; 装插件 <code> DotENV</code></p>
+<p>**<code>本节任务</code>**： 按照操作和讲解步骤，进行拉取代码，安装依赖，运行项目，阅读目录和文件的操作</p>
+<h2 id="项目运行机制和代码注释"><a href="#项目运行机制和代码注释" class="headerlink" title="项目运行机制和代码注释"></a>项目运行机制和代码注释</h2><p><strong><code>目标</code></strong>: 了解当前模板的基本运行机制和基础架构</p>
+<blockquote>
+<p>眼花缭乱的目录和文件到底是怎么工作的？ 我们进行一下最基本的讲解，帮助大家更好的去理解和开发</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">├── src                        <span class="comment"># 源代码</span></span><br><span class="line">│   ├── api                    <span class="comment"># 所有请求</span></span><br><span class="line">│   ├── assets                 <span class="comment"># 主题 字体等静态资源</span></span><br><span class="line">│   ├── components             <span class="comment"># 全局公用组件</span></span><br><span class="line">│   ├── icons                  <span class="comment"># 项目所有 svg icons</span></span><br><span class="line">│   ├── layout                 <span class="comment"># 全局 layout</span></span><br><span class="line">│   ├── router                 <span class="comment"># 路由</span></span><br><span class="line">│   ├── store                  <span class="comment"># 全局 store管理</span></span><br><span class="line">│   ├── styles                 <span class="comment"># 全局样式</span></span><br><span class="line">│   ├── utils                  <span class="comment"># 全局公用方法</span></span><br><span class="line">│   ├── vendor                 <span class="comment"># 公用vendor</span></span><br><span class="line">│   ├── views                  <span class="comment"># views 所有页面</span></span><br><span class="line">│   ├── App.vue                <span class="comment"># 入口页面</span></span><br><span class="line">│   ├── main.js                <span class="comment"># 入口文件 加载组件 初始化等</span></span><br><span class="line">│   └── permission.js          <span class="comment"># 权限管理</span></span><br><span class="line">│   └── settings.js            <span class="comment"># 配置文件</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a><strong>main.js</strong></h3><img src="/resource/images/image-20200824153141764.png"/>
+
+<p>删除 main.js **<code>mock数据</code><strong>的部分，删除</strong><code>mock</code>**文件夹，我们开发的时候用不到模拟数据 (有线上接口)</p>
+<p>同时，请删除掉**<code>vue.config.js</code>**中 devServer 中配的, 约 39 行的 <strong>before: require(‘./mock/mock-server.js’)</strong></p>
+<h3 id="App-vue"><a href="#App-vue" class="headerlink" title="App.vue"></a><strong>App.vue</strong></h3><img src="/resource/images/image-20200824155103340.png"/>
+
+<h3 id="permission-js"><a href="#permission-js" class="headerlink" title="permission.js"></a><strong>permission.js</strong></h3><blockquote>
+<p>src 下，除了 main.js 还有两个文件，**<code>permission.js</code>** 和**<code>settings.js</code>**</p>
+</blockquote>
+<p><strong><code>permission.js</code></strong> 是控制页面登录权限(路由访问)的文件， 我们可以先将此处的代码进行注释或删除，现在还没做登录拦截</p>
+<p>等我们构建权限功能时，再从 0 到 1 进行构建。</p>
+<p><strong>注释代码</strong></p>
+<img src="/resource/images/image-20200708014558617.png"/>
+
+<blockquote>
+<p>**<code>settings.js</code><strong>则是对于一些项目信息的配置，里面有三个属性 <strong><code>title</code></strong>(项目名称)，</strong><code>fixedHeader</code>**（固定头部），</p>
+<p>**<code>sidebarLogo</code>**（显示左侧菜单 logo）</p>
+</blockquote>
+<p>**<code>settings.js</code>**中的文件在其他的位置会引用到，所以这里暂时不去对该文件进行变动</p>
+<h3 id="Vuex-结构"><a href="#Vuex-结构" class="headerlink" title="Vuex 结构"></a><strong>Vuex 结构</strong></h3><blockquote>
+<p>当前的 Vuex 结构采用了模块形式进行管理共享状态，其架构如下</p>
+</blockquote>
+<img src="/resource/images/image-20200824165153331.png"/>
+
+<blockquote>
+<p>其中 app.js 模块和 settings.js 模块，功能已经完备，不需要再进行修改。</p>
+<p>user.js 模块是我们后期需要重点开发的内容，所以这里我们将 user.js 里面的内容删除，并且导出一个默认配置</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">namespaced</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">state</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">mutations</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">actions</span>: &#123;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时，由于 getters 中引用了 user 中的状态，所以我们将 getters 中的状态改为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getters = &#123;</span><br><span class="line">    <span class="attr">sidebar</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.app.sidebar,</span><br><span class="line">    <span class="attr">device</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.app.device,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> getters</span><br></pre></td></tr></table></figure>
+
+<h3 id="scss"><a href="#scss" class="headerlink" title="scss"></a>scss</h3><blockquote>
+<p>该项目还使用了<a target="_blank" rel="noopener" href="https://www.sass.hk/">scss</a>作为 css 的扩展语言，在**<code>styles</code>**目录下，我们可以发现 scss 的相关文件<img src="assets/image-20200824171327384.png" alt="image-20200824171327384"></p>
+</blockquote>
+<h3 id="icons"><a href="#icons" class="headerlink" title="icons"></a><strong>icons</strong></h3><blockquote>
+<p>icons 的结构如下</p>
+</blockquote>
+<img src="/resource/images/image-20200824173239955.png"/>
+
+<blockquote>
+<p>以上就是 vue-element-admin 的基础和介绍,希望大家在这过程中体会 一个基础的模板运行机制</p>
+</blockquote>
+<p>**<code>本节任务</code>**： 大家根据目录结构和设计图，对以上的内容进行了解</p>
+<h2 id="建立远程-Git-仓库并完成初始提交"><a href="#建立远程-Git-仓库并完成初始提交" class="headerlink" title="建立远程 Git 仓库并完成初始提交"></a>建立远程 Git 仓库并完成初始提交</h2><p><strong><code>目标</code></strong> 在<a target="_blank" rel="noopener" href="https://gitee.com/">码云</a>或者<a target="_blank" rel="noopener" href="https://github.com/">github</a>上建立相应的远程仓库,并将代码分支提交</p>
+<p><strong>建立远程仓库</strong></p>
+<blockquote>
+<p>远程仓库建立只需要在网站上直接操作即可</p>
+</blockquote>
+<p><strong>本地项目提交</strong></p>
+<p><strong><code>注意</code></strong>: 由于我们之前的项目是直接 **<code>克隆</code><strong>而来,里面拥有原来的提交记录, 需要先将原来的</strong><code>.git</code>**文件夹删除掉</p>
+<p>并且对项目进行 git 初始化</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git init  <span class="comment">#初始化项目</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  git add . <span class="comment">#将修改添加到暂存</span></span><br><span class="line">$  git commit -m <span class="string">&#x27;人资项目初始化&#x27;</span> <span class="comment">#将暂存提到本地仓库</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>查看版本日志</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> --oneline <span class="comment">#查看版本日志</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>推送到远程仓库</strong></p>
+<p>推送到远程仓库一般先将**<code>远程仓库地址</code>**用本地仓库别名代替</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin &lt;远程仓库地址&gt;  <span class="comment">#添加远程仓库地址</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>当我们不清楚自己的仓库对应的 origin 地址时, 我们可以通过命令查看当前的远程仓库地址</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote <span class="comment">#查看本地仓库的远程仓库地址映射</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>推送 master 分支到远程仓库</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push -u origin master <span class="comment">#将master分支推送到origin所代表的远程仓库地址</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><code>本节任务</code></strong>: 根据以上操作,将拉取下的项目提交到自己的仓库里面</p>
+<h2 id="API-模块-和-请求封装模块介绍"><a href="#API-模块-和-请求封装模块介绍" class="headerlink" title="API 模块 和 请求封装模块介绍"></a>API 模块 和 请求封装模块介绍</h2><p><strong><code>目标</code></strong> 介绍 API 模块的单独请求和 request 模块的封装</p>
+<h3 id="Axios-的拦截器介绍"><a href="#Axios-的拦截器介绍" class="headerlink" title="Axios 的拦截器介绍"></a>Axios 的拦截器介绍</h3><blockquote>
+<p>该项目采用了 API 的单独模块封装和 axios 拦截器的方式进行开发</p>
+</blockquote>
+<p>axios 的拦截器原理如下</p>
+<img src="/resource/images/image-20200811012945409.png"/>
+
+<p><strong>axios 拦截器</strong></p>
+<p>axios 作为网络请求的第三方工具, 可以进行请求和响应的拦截</p>
+<p><strong>通过 create 创建了一个新的 axios 实例</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建了一个新的axios实例</span></span><br><span class="line"><span class="keyword">const</span> service = axios.create(&#123;</span><br><span class="line">    <span class="attr">baseURL</span>: process.env.VUE_APP_BASE_API, <span class="comment">// url = base url + request url</span></span><br><span class="line">    <span class="comment">// withCredentials: true, // send cookies when cross-domain requests</span></span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">5000</span>, <span class="comment">// 超时时间</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>请求拦截器</strong></p>
+<p>请求拦截器主要处理 token 的**<code>统一注入问题</code>**</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// axios的请求拦截器</span></span><br><span class="line">service.interceptors.request.use(</span><br><span class="line">    <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// do something before request is sent</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (store.getters.token) &#123;</span><br><span class="line">            <span class="comment">// let each request carry token</span></span><br><span class="line">            <span class="comment">// [&#x27;X-Token&#x27;] is a custom headers key</span></span><br><span class="line">            <span class="comment">// please modify it according to the actual situation</span></span><br><span class="line">            config.headers[<span class="string">&#x27;X-Token&#x27;</span>] = getToken()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> config</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// do something with request error</span></span><br><span class="line">        <span class="built_in">console</span>.log(error) <span class="comment">// for debug</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>响应拦截器</strong></p>
+<p>响应拦截器主要处理 返回的**<code>数据异常</code>** 和**<code>数据结构</code>**问题</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 响应拦截器</span></span><br><span class="line">service.interceptors.response.use(</span><br><span class="line">    <span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> res = response.data</span><br><span class="line"></span><br><span class="line">        <span class="comment">// if the custom code is not 20000, it is judged as an error.</span></span><br><span class="line">        <span class="keyword">if</span> (res.code !== <span class="number">20000</span>) &#123;</span><br><span class="line">            Message(&#123;</span><br><span class="line">                <span class="attr">message</span>: res.message || <span class="string">&#x27;Error&#x27;</span>,</span><br><span class="line">                <span class="attr">type</span>: <span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                <span class="attr">duration</span>: <span class="number">5</span> * <span class="number">1000</span>,</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">if</span> (res.code === <span class="number">50008</span> || res.code === <span class="number">50012</span> || res.code === <span class="number">50014</span>) &#123;</span><br><span class="line">                <span class="comment">// to re-login</span></span><br><span class="line">                MessageBox.confirm(<span class="string">&#x27;You have been logged out, you can cancel to stay on this page, or log in again&#x27;</span>, <span class="string">&#x27;Confirm logout&#x27;</span>, &#123;</span><br><span class="line">                    <span class="attr">confirmButtonText</span>: <span class="string">&#x27;Re-Login&#x27;</span>,</span><br><span class="line">                    <span class="attr">cancelButtonText</span>: <span class="string">&#x27;Cancel&#x27;</span>,</span><br><span class="line">                    <span class="attr">type</span>: <span class="string">&#x27;warning&#x27;</span>,</span><br><span class="line">                &#125;).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    store.dispatch(<span class="string">&#x27;user/resetToken&#x27;</span>).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                        location.reload()</span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(res.message || <span class="string">&#x27;Error&#x27;</span>))</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;err&#x27;</span> + error) <span class="comment">// for debug</span></span><br><span class="line">        Message(&#123;</span><br><span class="line">            <span class="attr">message</span>: error.message,</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">            <span class="attr">duration</span>: <span class="number">5</span> * <span class="number">1000</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里为了后续更清楚的书写代码,我们将原有代码注释掉,换成如下代码</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个axios的实例</span></span><br><span class="line"><span class="keyword">const</span> service = axios.create(&#123;</span><br><span class="line">    <span class="attr">baseURL</span>: process.env.VUE_APP_BASE_API, <span class="comment">// url = base url + request url</span></span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">5000</span>, <span class="comment">// request timeout</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> service <span class="comment">// 导出axios实例</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="api-模块的单独封装"><a href="#api-模块的单独封装" class="headerlink" title="api 模块的单独封装"></a><strong>api 模块的单独封装</strong></h3><p>我们习惯性的将所有的网络请求 放置在 api 目录下统一管理, 按照模块进行划分</p>
+<p><strong>单独封装代码</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/vue-admin-template/user/login&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">        data,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getInfo</span>(<span class="params">token</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/vue-admin-template/user/info&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;get&#x27;</span>,</span><br><span class="line">        <span class="attr">params</span>: &#123; token &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">logout</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/vue-admin-template/user/logout&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中,使用了封装的 request 工具,每个接口的请求都单独**<code>导出</code>**了一个方法,这样做的好处就是,任何位置需要请求的话,可以直接引用我们导出的请求方法</p>
+<p>为了后续更好的开发，我们可以先将<strong>user.js</strong>代码的方法设置为空，后续在进行更正</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// import request from &#x27;@/utils/request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params">data</span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getInfo</span>(<span class="params">token</span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">logout</span>(<span class="params"></span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>提交代码</strong></p>
+<p>**<code>本节任务</code>**： 将 request 和用户模块的代码进行清理，理解 request 和模块封装</p>
+<h2 id="公共资源图片和公共样式"><a href="#公共资源图片和公共样式" class="headerlink" title="公共资源图片和公共样式"></a>公共资源图片和公共样式</h2><p><strong><code>目标</code></strong> 将一些公共的图片和样式资源放入到 规定目录中</p>
+<blockquote>
+<p>我们已经将整体的基础模块进行了简单的介绍，接下来，我们需要将该项目所用到的图片和样式进行统一的处理</p>
+</blockquote>
+<p><strong>图片资源</strong></p>
+<blockquote>
+<p>图片资源在课程资料的图片文件中，我们只需要将**<code>common</code>**文件夹拷贝放置到 **<code>assets</code>**目录即可</p>
+</blockquote>
+<p><strong>样式</strong></p>
+<blockquote>
+<p>样式资源在 资源/样式目录下</p>
+</blockquote>
+<p>修改**<code>variables.scss</code>**</p>
+<p>新增**<code>common.scss</code>**</p>
+<p>我们在**<code>variables.scss</code>**添加了一些基础的变量值</p>
+<p>我们提供了 一份公共的**<code>common.scss</code>**样式,里面内置了一部分内容的样式,在开发期间可以帮助我们快速的实现页面样式和布局</p>
+<p>将两个文件放置到<strong>styles</strong>目录下，然后在**<code>index.scss</code>**中引入该样式</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> <span class="string">&#x27;./common.scss&#x27;</span>; <span class="comment">//引入common.scss样式表</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>提交代码</strong></p>
+<p><strong><code>本节注意</code><strong>：注意在 scss 文件中，通过</strong>@import</strong> 引入其他样式文件，需要注意最后加分号，否则会报错</p>
+<p><strong><code>本节任务</code></strong> 将公共资源的图片和样式放置到规定位置</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/04/wx-base-course05/" rel="prev" title="05_品优购项目">
+      <i class="fa fa-chevron-left"></i> 05_品优购项目
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/13/rz-base-course02/" rel="next" title="02_人资后台">
+      02_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%AF%BE%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">项目课整体设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%BA%E5%8A%9B%E8%B5%84%E6%BA%90%E7%9A%84%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">人力资源的环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-element-admin-%E7%9A%84%E4%BA%86%E8%A7%A3%E5%92%8C%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.1.</span> <span class="nav-text">vue-element-admin 的了解和介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%89%8D%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E5%87%86%E5%A4%87"><span class="nav-number">2.2.</span> <span class="nav-text">搭建项目前的一些基本准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%A8%A1%E6%9D%BF%E5%90%AF%E5%8A%A8-%E5%92%8C-%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.3.</span> <span class="nav-text">项目模板启动 和 目录介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%A0%81%E6%B3%A8%E9%87%8A"><span class="nav-number">2.4.</span> <span class="nav-text">项目运行机制和代码注释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#main-js"><span class="nav-number">2.4.1.</span> <span class="nav-text">main.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#App-vue"><span class="nav-number">2.4.2.</span> <span class="nav-text">App.vue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#permission-js"><span class="nav-number">2.4.3.</span> <span class="nav-text">permission.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuex-%E7%BB%93%E6%9E%84"><span class="nav-number">2.4.4.</span> <span class="nav-text">Vuex 结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scss"><span class="nav-number">2.4.5.</span> <span class="nav-text">scss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#icons"><span class="nav-number">2.4.6.</span> <span class="nav-text">icons</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E8%BF%9C%E7%A8%8B-Git-%E4%BB%93%E5%BA%93%E5%B9%B6%E5%AE%8C%E6%88%90%E5%88%9D%E5%A7%8B%E6%8F%90%E4%BA%A4"><span class="nav-number">2.5.</span> <span class="nav-text">建立远程 Git 仓库并完成初始提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API-%E6%A8%A1%E5%9D%97-%E5%92%8C-%E8%AF%B7%E6%B1%82%E5%B0%81%E8%A3%85%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.6.</span> <span class="nav-text">API 模块 和 请求封装模块介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Axios-%E7%9A%84%E6%8B%A6%E6%88%AA%E5%99%A8%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.6.1.</span> <span class="nav-text">Axios 的拦截器介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#api-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%8D%95%E7%8B%AC%E5%B0%81%E8%A3%85"><span class="nav-number">2.6.2.</span> <span class="nav-text">api 模块的单独封装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E5%9B%BE%E7%89%87%E5%92%8C%E5%85%AC%E5%85%B1%E6%A0%B7%E5%BC%8F"><span class="nav-number">2.7.</span> <span class="nav-text">公共资源图片和公共样式</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 目标。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="12_人资后台">
+<meta property="og:url" content="http://example.com/2022/08/13/rz-base-course12/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 目标。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-20210205111126976.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210205111319568.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210205113555565.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200805012430884.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20210205122537433.png">
+<meta property="article:published_time" content="2022-08-13T14:08:32.000Z">
+<meta property="article:modified_time" content="2022-08-30T15:39:33.572Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20210205111126976.png">
+
+<link rel="canonical" href="http://example.com/2022/08/13/rz-base-course12/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>12_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/13/rz-base-course12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          12_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-13 22:08:32" itemprop="dateCreated datePublished" datetime="2022-08-13T22:08:32+08:00">2022-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-30 23:39:33" itemprop="dateModified" datetime="2022-08-30T23:39:33+08:00">2022-08-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 目标。</p>
+<span id="more"></span>
+
+<h1 id="打包上线"><a href="#打包上线" class="headerlink" title="打包上线"></a>打包上线</h1><h2 id="配置路由模式"><a href="#配置路由模式" class="headerlink" title="配置路由模式"></a>配置路由模式</h2><h3 id="路由模式的介绍"><a href="#路由模式的介绍" class="headerlink" title="路由模式的介绍"></a>路由模式的介绍</h3><p>**<code>目标</code>**认识不同的路由模式</p>
+<blockquote>
+<p>在 SPA 单页应用中，我们需要认识两种常用的路由模式</p>
+<p>(总共有三种:<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38564268/article/details/105378003">https://blog.csdn.net/weixin_38564268/article/details/105378003</a> 了解即可, 常用的是两种)</p>
+</blockquote>
+<p><strong>hash 模式</strong> ：使用 URL 的 hash 来模拟一个完整的 URL, 其显示的网路路径中会有 “#” 号。</p>
+<p>hash 虽然出现 URL 中，但不会被包含在 HTTP 请求中，对后端完全没有影响，因此改变 hash 后刷新, 也不会有问题</p>
+<p>hash 模式示例: <a target="_blank" rel="noopener" href="http://localhost:8080/#/home">http://localhost:8080/#/home</a> <a target="_blank" rel="noopener" href="http://localhost:8080/#/user">http://localhost:8080/#/user</a></p>
+<p><strong>history 模式</strong>： 美化后的 hash 模式，路径中不包含“#”。依赖于 Html5 的 <code>history api </code>。</p>
+<p>由于改变了地址, 刷新时会按照修改后的地址请求后端, <strong>需要后端配置处理, 将地址访问做映射, 否则会 404</strong></p>
+<p>history 模式示例: <a target="_blank" rel="noopener" href="http://localhost:8080/home">http://localhost:8080/home</a> <a target="_blank" rel="noopener" href="http://localhost:8080/user">http://localhost:8080/user</a></p>
+<h3 id="修改路由模式"><a href="#修改路由模式" class="headerlink" title="修改路由模式"></a>修改路由模式</h3><p>**<code>目标</code>**修改路由模式</p>
+<blockquote>
+<p>开发到现在，我们一直都在用 hash 模式，打包我们尝试用 history 模式</p>
+</blockquote>
+<p>改成 history 模式非常简单，只需要将路由的 mode 类型改成 history 即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建路由实例</span></span><br><span class="line"><span class="keyword">const</span> createRouter = <span class="function">() =&gt;</span></span><br><span class="line">    <span class="keyword">new</span> Router(&#123;</span><br><span class="line">        <span class="attr">mode</span>: <span class="string">&#x27;history&#x27;</span>, <span class="comment">// require service support</span></span><br><span class="line">        <span class="attr">scrollBehavior</span>: <span class="function">() =&gt;</span> (&#123; <span class="attr">y</span>: <span class="number">0</span> &#125;),</span><br><span class="line">        <span class="comment">// 指定路由规则</span></span><br><span class="line">        <span class="attr">routes</span>: [</span><br><span class="line">            ...constantRoutes, <span class="comment">// 静态路由, 首页</span></span><br><span class="line">        ],</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>我们会发现刷新没有任何问题 =&gt; 是因为 webpack 默认配好了对于 history 模式的处理</p>
+<p>实际上线的服务器, 让后台配即可, 网上步骤一搜就有 (我们后面演示 node 配置)</p>
+<p><strong>提交代码</strong></p>
+<h2 id="性能分析和-CDN-的应用"><a href="#性能分析和-CDN-的应用" class="headerlink" title="性能分析和 CDN 的应用"></a>性能分析和 CDN 的应用</h2><p>打包优化:</p>
+<ol>
+<li><p>异步组件, 路由按需加载 (vue 打包出来的单页应用, 解决首屏加载过慢)</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">component: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/attendances/index&#x27;</span>),</span><br></pre></td></tr></table></figure></li>
+<li><p>排除一些依赖包, 加快打包速度, 做 cdn 加速 (cdn: 内容分发网络, 花钱买的速度快的服务器, 帮你分发资源)</p>
+<p> cdn 服务器上, 仅仅是用于加速用户的访问, 一般会放一些不太会变化的包, vue, element-ui, … , 组件库 js</p>
+</li>
+</ol>
+<p>**<code>目标</code>**： 对开发的应用进行性能分析 和 CDN 的应用</p>
+<h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><blockquote>
+<p>我们集成了功能，写了很多组件，最终都会打包成一堆文件，那么真实运行的性能如何呢？</p>
+</blockquote>
+<p>我们可以使用 vue-cli 本身提供的性能分析工具，对我们开发的所有功能进行打包分析</p>
+<p>vue.config.js 确定绝对路径</p>
+<img src="/resource/images/image-20210205111126976.png"/>
+
+<p>它的应用非常简单</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn preview -- --report</span><br></pre></td></tr></table></figure>
+
+<p>这个命令会从我们的**<code>入口main.js</code>**进行依赖分析，分析出最大的包，方便我们进行观察和优化</p>
+<p>执行完这个命令，我们会看到如下的页面</p>
+<img src="/resource/images/image-20210205111319568.png"/>
+
+<p>如图所以，方块越大，说明该文件占用的文件越大，文件越大，对于网络带宽和访问速度的要求就越高，</p>
+<p>这也就是我们优化的方向</p>
+<blockquote>
+<p>像这种情况，我们怎么优化一下呢 =&gt; <strong>cdn 加速!!!</strong></p>
+</blockquote>
+<h3 id="webpack-排除打包"><a href="#webpack-排除打包" class="headerlink" title="webpack 排除打包"></a>webpack 排除打包</h3><p>CDN 加速, 是一个比较好的方式 (一般要付费) , 一些开源的包, 有免费服务: <a target="_blank" rel="noopener" href="https://www.bootcdn.cn/">https://www.bootcdn.cn/</a></p>
+<blockquote>
+<p>文件不是大吗？我们就不要把这些大的文件和那些小的文件打包到一起了，</p>
+<p>像这种 xlsx,element 这种功能性很全的插件，我们可以放到 CDN 服务器上，</p>
+<p>一来，减轻整体包的大小，二来 CDN 的加速服务可以加快我们对于插件的访问速度</p>
+</blockquote>
+<p><strong>使用方式</strong></p>
+<p>先找到 <code>vue.config.js</code>， 添加 <code>externals</code> 让 <code>webpack</code> 不打包 <code>xlsx</code> 和 <code>element</code></p>
+<p><strong><code>vue.config.js</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">configureWebpack: &#123;</span><br><span class="line">  <span class="comment">// 配置单页应用程序的页面的标题</span></span><br><span class="line">  <span class="attr">name</span>: name,</span><br><span class="line">  <span class="attr">externals</span>: &#123;</span><br><span class="line">    <span class="comment">// key(要排除的包名), value(引入的CDN包的全局变量名)</span></span><br><span class="line">    <span class="string">&#x27;vue&#x27;</span>: <span class="string">&#x27;Vue&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;element-ui&#x27;</span>: <span class="string">&#x27;ELEMENT&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;xlsx&#x27;</span>: <span class="string">&#x27;XLSX&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;moment&#x27;</span>: <span class="string">&#x27;moment&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">resolve</span>: &#123;</span><br><span class="line">    <span class="attr">alias</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;@&#x27;</span>: resolve(<span class="string">&#x27;src&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>再次运行，我们会发现包的大小已经大幅减小</p>
+<img src="/resource/images/image-20210205113555565.png"/>
+
+<p>注意: 此时由于排除了一些包, 所以代码是无法运行的! 必须配置 cdn 包的加载</p>
+<h3 id="CDN-文件配置"><a href="#CDN-文件配置" class="headerlink" title="CDN 文件配置"></a>CDN 文件配置</h3><blockquote>
+<p>但是，没有被打包的几个模块怎么处理？</p>
+</blockquote>
+<p>可以采用 CDN 的方式，在页面模板中预先引入</p>
+<p><strong><code>vue.config.js</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cdn = &#123;</span><br><span class="line">    <span class="attr">css</span>: [</span><br><span class="line">        <span class="string">&#x27;https://unpkg.com/element-ui/lib/theme-chalk/index.css&#x27;</span>, <span class="comment">// element-ui css 样式表</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">js</span>: [</span><br><span class="line">        <span class="comment">// vue must at first!</span></span><br><span class="line">        <span class="string">&#x27;https://unpkg.com/vue/dist/vue.js&#x27;</span>, <span class="comment">// vuejs</span></span><br><span class="line">        <span class="string">&#x27;https://unpkg.com/element-ui/lib/index.js&#x27;</span>, <span class="comment">// element-ui js</span></span><br><span class="line">        <span class="string">&#x27;https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/jszip.min.js&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/xlsx.full.min.js&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.min.js&#x27;</span>,</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>但是请注意，这时的配置实际上是对 <code>开发环境 </code>和 <code>生产环境</code> 都生效的，</p>
+<p>在开发环境时，没有必要使用 CDN，此时我们可以使用环境变量来进行区分</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> externals = &#123;&#125;</span><br><span class="line"><span class="keyword">let</span> cdn = &#123; <span class="attr">css</span>: [], <span class="attr">js</span>: [] &#125;</span><br><span class="line"><span class="keyword">const</span> isProduction = process.env.NODE_ENV === <span class="string">&#x27;production&#x27;</span> <span class="comment">// 判断是否是生产环境</span></span><br><span class="line"><span class="keyword">if</span> (isProduction) &#123;</span><br><span class="line">    externals = &#123;</span><br><span class="line">        <span class="comment">// key(要排除的包名), value(引入的CDN包的全局变量名)</span></span><br><span class="line">        <span class="attr">vue</span>: <span class="string">&#x27;Vue&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;element-ui&#x27;</span>: <span class="string">&#x27;ELEMENT&#x27;</span>,</span><br><span class="line">        <span class="attr">xlsx</span>: <span class="string">&#x27;XLSX&#x27;</span>,</span><br><span class="line">        <span class="attr">moment</span>: <span class="string">&#x27;moment&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    cdn = &#123;</span><br><span class="line">        <span class="attr">css</span>: [</span><br><span class="line">            <span class="string">&#x27;https://unpkg.com/element-ui/lib/theme-chalk/index.css&#x27;</span>, <span class="comment">// element-ui css 样式表</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">js</span>: [</span><br><span class="line">            <span class="comment">// vue must at first!</span></span><br><span class="line">            <span class="string">&#x27;https://unpkg.com/vue/dist/vue.js&#x27;</span>, <span class="comment">// vuejs</span></span><br><span class="line">            <span class="string">&#x27;https://unpkg.com/element-ui/lib/index.js&#x27;</span>, <span class="comment">// element-ui js</span></span><br><span class="line">            <span class="string">&#x27;https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/jszip.min.js&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/xlsx.full.min.js&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.min.js&#x27;</span>,</span><br><span class="line">        ],</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>底下使用 externals</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">configureWebpack: &#123;</span><br><span class="line">  <span class="comment">// 配置单页应用程序的页面的标题</span></span><br><span class="line">  <span class="attr">name</span>: name,</span><br><span class="line">  <span class="attr">externals</span>: externals,</span><br><span class="line">  <span class="attr">resolve</span>: &#123;</span><br><span class="line">    <span class="attr">alias</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;@&#x27;</span>: resolve(<span class="string">&#x27;src&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h3 id="注入-CDN-文件变量-到模板"><a href="#注入-CDN-文件变量-到模板" class="headerlink" title="注入 CDN 文件变量 到模板"></a>注入 CDN 文件变量 到模板</h3><p>之后通过 <code>html-webpack-plugin</code>注入到 <code>index.html</code>之中:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">chainWebpack</span>(<span class="params">config</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// it can improve the speed of the first screen, it is recommended to turn on preload</span></span><br><span class="line">  config.plugin(<span class="string">&#x27;preload&#x27;</span>).tap(<span class="function">() =&gt;</span> [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">rel</span>: <span class="string">&#x27;preload&#x27;</span>,</span><br><span class="line">      <span class="comment">// to ignore runtime.js</span></span><br><span class="line">      <span class="comment">// https://github.com/vuejs/vue-cli/blob/dev/packages/@vue/cli-service/lib/config/app.js#L171</span></span><br><span class="line">      <span class="attr">fileBlacklist</span>: [<span class="regexp">/\.map$/</span>, <span class="regexp">/hot-update\.js$/</span>, <span class="regexp">/runtime\..*\.js$/</span>],</span><br><span class="line">      <span class="attr">include</span>: <span class="string">&#x27;initial&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ])</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 注入cdn变量 (打包时会执行)</span></span><br><span class="line">  config.plugin(<span class="string">&#x27;html&#x27;</span>).tap(<span class="function"><span class="params">args</span> =&gt;</span> &#123;</span><br><span class="line">    args[<span class="number">0</span>].cdn = cdn <span class="comment">// 配置cdn给插件</span></span><br><span class="line">    <span class="keyword">return</span> args</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>找到 <code>public/index.html</code>。通过你配置的<code>CDN Config</code> 依次注入 css 和 js。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;!-- 引入样式 --&gt;</span><br><span class="line">  &lt;% for(var css of htmlWebpackPlugin.options.cdn.css) &#123; %&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;%=css%&gt;&quot;&gt;</span><br><span class="line">  &lt;% &#125; %&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 引入JS --&gt;</span><br><span class="line">&lt;% for(var js of htmlWebpackPlugin.options.cdn.js) &#123; %&gt;</span><br><span class="line">&lt;script src=&quot;&lt;%=js%&gt;&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>最后，进行打包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn build:prod</span><br></pre></td></tr></table></figure>
+
+<h2 id="在-nodejs-环境中应用并代理跨域-可选"><a href="#在-nodejs-环境中应用并代理跨域-可选" class="headerlink" title="在 nodejs 环境中应用并代理跨域(可选)"></a>在 nodejs 环境中应用并代理跨域(可选)</h2><p>**<code>目标</code>**将打包好的代码打包上线，并在 nodejs 中代理跨域</p>
+<h3 id="使用-koa-框架部署项目"><a href="#使用-koa-框架部署项目" class="headerlink" title="使用 koa 框架部署项目"></a>使用 koa 框架部署项目</h3><blockquote>
+<p>到现在为止，我们已经完成了一个前端工程师的开发流程，按照常规的做法，此时，运维会将我们的代码部署到阿里云的 nginx 服务上，对于我们而言，我们可以将其部署到本机的 nodejs 环境中</p>
+</blockquote>
+<p>部署: 自动化部署 /手动部署</p>
+<p>第一步，建立 web 服务文件夹 <strong><code>hrServer</code></strong></p>
+<p>第二步，在该文件夹下，初始化 npm</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn init -y</span><br></pre></td></tr></table></figure>
+
+<p>第三步，安装服务端框架 koa(也可以采用 express 或者 egg)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn add koa koa-static</span><br></pre></td></tr></table></figure>
+
+<p>第四步，hrServer 中新建 public 目录, 并拷贝上小节打包的 dist 目录内容, 到**<code>hrServer/public</code>**下</p>
+<p>第五步，在根目录下创建 app.js，代码如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">&#x27;koa&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> serve = <span class="built_in">require</span>(<span class="string">&#x27;koa-static&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line"></span><br><span class="line">app.use(serve(__dirname + <span class="string">&#x27;/public&#x27;</span>)) <span class="comment">// 将public下的代码静态化</span></span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3333</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;人资项目启动: 3333端口&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>此时，先清除缓存, 保证退出登录状态, 如果发现缓存清了, 还卡着不进去(有可能是免费的 cdn 服务不稳定)</p>
+<p>我们再访问，<a target="_blank" rel="noopener" href="http://localhost:3333/">http://localhost:3333</a></p>
+</blockquote>
+<p>页面出来了</p>
+<img src="/resource/images/image-20200805012430884.png"/>
+
+<h3 id="解决-history-页面-访问问题"><a href="#解决-history-页面-访问问题" class="headerlink" title="解决 history 页面 访问问题"></a>解决 history 页面 访问问题</h3><p>但是，此时存在两个问题，</p>
+<ol>
+<li><strong>当我们刷新页面，发现 404</strong></li>
+</ol>
+<blockquote>
+<p>这是因为我们采用了 history 的模式，地址的变化会引起服务器的刷新，我们只需要在 app.js 对所有的地址进行一下处理即可</p>
+</blockquote>
+<p>安装 koa 中间件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn add koa2-connect-history-api-fallback <span class="comment">#专门处理history模式的中间件</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注册中间件</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">&#x27;koa&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> serve = <span class="built_in">require</span>(<span class="string">&#x27;koa-static&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; historyApiFallback &#125; = <span class="built_in">require</span>(<span class="string">&#x27;koa2-connect-history-api-fallback&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line"><span class="comment">// 这句话 的意思是除接口之外所有的请求, 都发送给 index.html</span></span><br><span class="line">app.use(</span><br><span class="line">    historyApiFallback(&#123;</span><br><span class="line">        <span class="attr">whiteList</span>: [<span class="string">&#x27;/api&#x27;</span>],</span><br><span class="line">    &#125;)</span><br><span class="line">) <span class="comment">// 这里的whiteList是 白名单的意思</span></span><br><span class="line">app.use(serve(__dirname + <span class="string">&#x27;/public&#x27;</span>)) <span class="comment">//将public下的代码静态化</span></span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3333</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;人资项目启动&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>此时解决了刷新 404 的问题 (注意: 如果点了登录, 记得清除 cookies 再测试)</p>
+<h3 id="解决-生产环境-跨域问题"><a href="#解决-生产环境-跨域问题" class="headerlink" title="解决 生产环境 跨域问题"></a>解决 生产环境 跨域问题</h3><h3 id="问题说明"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明</h3><p>其实 vue-cli 的 webpack 代理只存在于开发期，当我们上线到 node 环境或者 nginx 环境时，需要我们再次在环境中代理</p>
+<h3 id="node-配置反向代理"><a href="#node-配置反向代理" class="headerlink" title="node 配置反向代理"></a>node 配置反向代理</h3><p>安装跨域代理中间件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn add koa2-proxy-middleware</span><br></pre></td></tr></table></figure>
+
+<p>配置跨越代理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">&#x27;koa&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> serve = <span class="built_in">require</span>(<span class="string">&#x27;koa-static&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; historyApiFallback &#125; = <span class="built_in">require</span>(<span class="string">&#x27;koa2-connect-history-api-fallback&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> proxy = <span class="built_in">require</span>(<span class="string">&#x27;koa2-proxy-middleware&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line"></span><br><span class="line">app.use(</span><br><span class="line">    proxy(&#123;</span><br><span class="line">        <span class="attr">targets</span>: &#123;</span><br><span class="line">            <span class="comment">// (.*) means anything</span></span><br><span class="line">            <span class="string">&#x27;/api/(.*)&#x27;</span>: &#123;</span><br><span class="line">                <span class="attr">target</span>: <span class="string">&#x27;http://ihrm-java.itheima.net&#x27;</span>, <span class="comment">//后端服务器地址</span></span><br><span class="line">                <span class="attr">changeOrigin</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="comment">// 配置代理, 会多一个 /api 路径, 如果希望保留, 就不重写</span></span><br><span class="line">                <span class="comment">// 如果不希望保留, 就重写掉</span></span><br><span class="line">                <span class="comment">// pathRewrite: &#123;</span></span><br><span class="line">                <span class="comment">//   &#x27;/api&#x27;: &quot;&quot;</span></span><br><span class="line">                <span class="comment">// &#125;</span></span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这句话 的意思是除接口之外所有的请求都发送给了 index.html</span></span><br><span class="line">app.use(</span><br><span class="line">    historyApiFallback(&#123;</span><br><span class="line">        <span class="attr">whiteList</span>: [<span class="string">&#x27;/api&#x27;</span>],</span><br><span class="line">    &#125;)</span><br><span class="line">) <span class="comment">// 这里的whiteList是 白名单的意思</span></span><br><span class="line">app.use(serve(__dirname + <span class="string">&#x27;/public&#x27;</span>)) <span class="comment">//将public下的代码静态化</span></span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3333</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;人资项目启动&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="前端修改-baseUrl-重点"><a href="#前端修改-baseUrl-重点" class="headerlink" title="前端修改 baseUrl (重点)"></a>前端修改 baseUrl (重点)</h3><p>前端修改生产环境的 baseUrl</p>
+<p><code>.env.production</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VUE_APP_BASE_API = <span class="string">&#x27;/api&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>重新打包, 将目录重新给到 node public 目录, 重新运行</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn build:prod</span><br></pre></td></tr></table></figure>
+
+<p>重新运行</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node app.js</span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/image-20210205122537433.png"/>
+
+<p>此时，我们的项目就可以跨域访问了！</p>
+<p>到现在为止，我们在十几天的时间里，完成了一个较为复杂的中台项目的解剖和开发，</p>
+<p>任何一个复杂的项目都是各种各样的功能通过合理的设计和布局组装而成的，</p>
+<p>所以未来我们不论项目的难度和复杂度，都要学会技术的解耦和设计，这样开发能力就会变得越来越强</p>
+<p><strong>That is All !</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/13/rz-base-course11/" rel="prev" title="11_人资后台">
+      <i class="fa fa-chevron-left"></i> 11_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/15/webpack/" rel="next" title="Webpack">
+      Webpack <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E4%B8%8A%E7%BA%BF"><span class="nav-number">1.</span> <span class="nav-text">打包上线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">配置路由模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.1.</span> <span class="nav-text">路由模式的介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.2.</span> <span class="nav-text">修改路由模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%92%8C-CDN-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">性能分析和 CDN 的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">1.2.1.</span> <span class="nav-text">性能分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-%E6%8E%92%E9%99%A4%E6%89%93%E5%8C%85"><span class="nav-number">1.2.2.</span> <span class="nav-text">webpack 排除打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CDN-%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.3.</span> <span class="nav-text">CDN 文件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E5%85%A5-CDN-%E6%96%87%E4%BB%B6%E5%8F%98%E9%87%8F-%E5%88%B0%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.2.4.</span> <span class="nav-text">注入 CDN 文件变量 到模板</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-nodejs-%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%BA%94%E7%94%A8%E5%B9%B6%E4%BB%A3%E7%90%86%E8%B7%A8%E5%9F%9F-%E5%8F%AF%E9%80%89"><span class="nav-number">1.3.</span> <span class="nav-text">在 nodejs 环境中应用并代理跨域(可选)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-koa-%E6%A1%86%E6%9E%B6%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.3.1.</span> <span class="nav-text">使用 koa 框架部署项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3-history-%E9%A1%B5%E9%9D%A2-%E8%AE%BF%E9%97%AE%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.2.</span> <span class="nav-text">解决 history 页面 访问问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3-%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.3.</span> <span class="nav-text">解决 生产环境 跨域问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%AF%B4%E6%98%8E"><span class="nav-number">1.3.4.</span> <span class="nav-text">问题说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node-%E9%85%8D%E7%BD%AE%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">1.3.5.</span> <span class="nav-text">node 配置反向代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E4%BF%AE%E6%94%B9-baseUrl-%E9%87%8D%E7%82%B9"><span class="nav-number">1.3.6.</span> <span class="nav-text">前端修改 baseUrl (重点)</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
