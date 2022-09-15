@@ -28,7 +28,7 @@
 <meta property="og:description" content="✔ 目标。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-13T14:08:19.000Z">
-<meta property="article:modified_time" content="2022-08-30T15:39:33.516Z">
+<meta property="article:modified_time" content="2022-09-15T08:44:09.854Z">
 <meta property="article:author" content="Ifer">
 <meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
 <meta name="twitter:card" content="summary">
@@ -210,7 +210,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-30 23:39:33" itemprop="dateModified" datetime="2022-08-30T23:39:33+08:00">2022-08-30</time>
+                <time title="修改时间：2022-09-15 16:44:09" itemprop="dateModified" datetime="2022-09-15T16:44:09+08:00">2022-09-15</time>
               </span>
 
           
@@ -227,22 +227,13 @@
         <p>✔ 目标。</p>
 <span id="more"></span>
 
-<h1 id="全模块集成-了解"><a href="#全模块集成-了解" class="headerlink" title="全模块集成 (了解)"></a>全模块集成 (了解)</h1><p><strong>目标</strong>： 将其他业务模块代码集成到该项目中</p>
-<p>到目前为止，我们已经完成了一个基本项目框架 + 组织架构 + 公司 + 员工 + 权限的 业务联调，</p>
-<p>时间关系，我们不可能将所有的业务都去编写一遍，这里提供大家 其余模块的集成代码，</p>
-<p>最终的目的是让大家得到一个完成的业务模块</p>
-<p>要集成的模块业务，包括: 工资模块，社保模块，考勤模块，审批模块</p>
-<blockquote>
-<p>在我们提供的资源集成模块中，我们提供了四个模块的**<code>路由</code><strong>/</strong><code>页面</code>**/*<em><code>api</code></em>, 按照下面的路径拷贝即可</p>
-</blockquote>
-<p>路由 =&gt; <strong><code>src/router/modules</code></strong></p>
-<p>页面 =&gt; <strong><code>src/views</code></strong></p>
-<p>api =&gt; <strong><code>src/api</code></strong></p>
-<p>filters =&gt; <code>src/filters</code></p>
-<p>除此之外，我们需要将 <strong><code>router/modules/user.js </code></strong> 导入到静态路由中，</p>
-<p>因为这个模块是所有用户都可以访问的</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> user <span class="keyword">from</span> <span class="string">&#x27;./modules/user&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> constantRoutes = [</span><br><span class="line">  ...,</span><br><span class="line">  <span class="comment">// 上传excel页</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/import&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: Layout,</span><br><span class="line">    <span class="attr">hidden</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">children</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;import&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/import/index&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  user</span><br><span class="line">  <span class="comment">// 如果前面的路由都没有匹配到, 那么就会被 * 匹配, 重定向到了 /404</span></span><br><span class="line">  <span class="comment">// &#123; path: &#x27;*&#x27;, redirect: &#x27;/404&#x27;, hidden: true &#125;</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
+<h2 id="全模块集成"><a href="#全模块集成" class="headerlink" title="全模块集成"></a>全模块集成</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>将其他业务模块代码集成到该项目中。</p>
+<p>到目前为止，我们已经完成了一个基本项目框架 + 组织架构 + 公司 + 员工 + 权限的 业务联调， 时间关系，我们不可能将所有的业务都去编写一遍，这里提供大家 其余模块的集成代码，最终的目的是让大家得到一个完成的业务模块。</p>
+<p>要集成的模块业务，包括工资模块，社保模块，考勤模块，审批模块，按照下面的路径拷贝即可。</p>
+<p>路由 =&gt; <code>src/router/modules</code></p>
+<p>页面 =&gt; <code>src/views</code></p>
+<p>api =&gt; <code>src/api</code></p>
+<p>除此之外，我们需要将 <code>router/modules/user.js </code> 导入到静态路由中，因为这个模块是所有模块都可以访问的</p>
 <p>最终，我们将得到一个较为完整的系统业务。</p>
 
     </div>
@@ -324,7 +315,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8%E6%A8%A1%E5%9D%97%E9%9B%86%E6%88%90-%E4%BA%86%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">全模块集成 (了解)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E6%A8%A1%E5%9D%97%E9%9B%86%E6%88%90"><span class="nav-number">1.</span> <span class="nav-text">全模块集成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">目标</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
