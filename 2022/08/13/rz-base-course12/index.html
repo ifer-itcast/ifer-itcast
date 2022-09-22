@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://example.com/resource/images/image-20200804015849396.png">
 <meta property="og:image" content="http://example.com/resource/images/image-20200805012430884.png">
 <meta property="article:published_time" content="2022-08-13T14:08:32.000Z">
-<meta property="article:modified_time" content="2022-09-15T08:44:09.857Z">
+<meta property="article:modified_time" content="2022-09-22T01:33:18.283Z">
 <meta property="article:author" content="Ifer">
 <meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
 <meta name="twitter:card" content="summary">
@@ -214,7 +214,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-15 16:44:09" itemprop="dateModified" datetime="2022-09-15T16:44:09+08:00">2022-09-15</time>
+                <time title="修改时间：2022-09-22 09:33:18" itemprop="dateModified" datetime="2022-09-22T09:33:18+08:00">2022-09-22</time>
               </span>
 
           
@@ -232,64 +232,61 @@
 <span id="more"></span>
 
 <h2 id="打包之前的路由模式"><a href="#打包之前的路由模式" class="headerlink" title="打包之前的路由模式"></a>打包之前的路由模式</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>配置打包之前的路由模式。</p>
-<blockquote>
-<p>在 SPA 单页应用中，有两种路由模式</p>
-</blockquote>
-<p>hash 模式 ： #后面是路由路径，特点是前端访问，#后面的变化不会经过服务器</p>
-<p>history 模式：正常的/访问模式，特点是后端访问，任意地址的变化都会访问服务器</p>
-<blockquote>
-<p>开发到现在，我们一直都在用 hash 模式，打包我们尝试用 history 模式</p>
-</blockquote>
-<p>改成 history 模式非常简单，只需要将路由的 mode 类型改成 history 即可</p>
+<h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><p>在 SPA 单页应用中，有如下两种路由模式，刷新页面时，对于后端的表现不一样。</p>
+<ul>
+<li>hash 模式：刷新页面时，hash 地址也就是（也就是 # 号后面的内容），不会作为资源发送到服务端，后端拿到的都是 <code>/</code> 这个请求地址，它只需要返回 <code>index.html</code> 页面就好啦。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//www.baidu.com/#/news</span></span><br><span class="line">https:<span class="comment">//www.baidu.com/#/user</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>history 模式：刷新页面时，history 地址对于服务端来说是一个新的请求，后端拿到的是不同的请求地址，也就意味着需要服务端对这些请求做处理，否则会 404。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//www.baidu.com/news</span></span><br><span class="line">https:<span class="comment">//www.baidu.com/user</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>做什么处理呢？匹配到相关 GET 请求，统一返回 <code>index.html</code>，<code>index.html</code> 加载的有路由相关的代码，所以也就转换为由前端路由来处理啦。</p>
+</li>
+<li><p>开发到现在，我们一直都在用 hash 模式，打包我们尝试用 history 模式，将路由的 mode 类型改成 history 即可。</p>
+</li>
+</ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> createRouter = <span class="function">() =&gt;</span></span><br><span class="line">    <span class="keyword">new</span> Router(&#123;</span><br><span class="line">        <span class="attr">mode</span>: <span class="string">&#x27;history&#x27;</span>, <span class="comment">// require service support</span></span><br><span class="line">        <span class="attr">scrollBehavior</span>: <span class="function">() =&gt;</span> (&#123; <span class="attr">y</span>: <span class="number">0</span> &#125;), <span class="comment">// 管理滚动行为 如果出现滚动 切换就让 让页面回到顶部</span></span><br><span class="line">        <span class="attr">routes</span>: [...constantRoutes], <span class="comment">// 改成只有静态路由</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>假设我们的地址是这样的 <code>www.xxxx/com/hr</code>/a <code>www.xxxx/com/hr</code>/b</p>
-</blockquote>
-<p>我们会发现，其实域名是<code>www.xxxx/com</code>，hr 是特定的前缀地址，此时我们可以配置一个 base 属性，配置为 hr</p>
+<h3 id="基地址"><a href="#基地址" class="headerlink" title="基地址"></a>基地址</h3><p>需求：假设我们希望地址是这样的 <code>www.xxxx/com/hr/a</code>、<code>www.xxxx/com/hr/b</code>。</p>
+<p>解决：可以通过 base 属性配置一个基地址。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> createRouter = <span class="function">() =&gt;</span></span><br><span class="line">    <span class="keyword">new</span> Router(&#123;</span><br><span class="line">        <span class="attr">mode</span>: <span class="string">&#x27;history&#x27;</span>, <span class="comment">// require service support</span></span><br><span class="line">        <span class="attr">base</span>: <span class="string">&#x27;/hr/&#x27;</span>, <span class="comment">// 配置项目的基础地址</span></span><br><span class="line">        <span class="attr">scrollBehavior</span>: <span class="function">() =&gt;</span> (&#123; <span class="attr">y</span>: <span class="number">0</span> &#125;), <span class="comment">// 管理滚动行为 如果出现滚动 切换就让 让页面回到顶部</span></span><br><span class="line">        <span class="attr">routes</span>: [...constantRoutes], <span class="comment">// 改成只有静态路由</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
 
-<p>此时，我们会发现地址已经变成我们想要的样子了</p>
+<p>此时，我们会发现地址已经变成我们想要的样子了。</p>
 <p><img src="/resource/images/image-20200804014626686.png" alt="image-20200804014626686"></p>
-<p>提交代码</p>
 <h2 id="性能分析和-CDN-的应用"><a href="#性能分析和-CDN-的应用" class="headerlink" title="性能分析和 CDN 的应用"></a>性能分析和 CDN 的应用</h2><h3 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h3><p>对开发的应用进行性能分析和 CDN 的应用。</p>
-<h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><blockquote>
-<p>我们集成了 功能，写了很多组件，最终都会打包成一堆文件，那么真实运行的性能如何呢？</p>
-</blockquote>
-<p>我们可以使用 vue-cli 本身提供的性能分析工具，对我们开发的所有功能进行打包分析</p>
-<p>它的应用非常简单</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm run preview -- --report</span><br></pre></td></tr></table></figure>
+<h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><p>我们集成了功能，写了很多组件，最终都会打包成一堆文件，那么真实运行的性能如何呢？我们可以使用 vue-cli 本身提供的性能分析工具，对我们开发的所有功能进行打包分析，使用如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run preview -- --report</span><br></pre></td></tr></table></figure>
 
-<p>这个命令会从我们的<code>入口main.js</code>进行依赖分析，分析出最大的包，方便我们进行观察和优化</p>
-<p>执行完这个命令，我们会看到如下的页面</p>
+<p>这个命令会从我们的入口 <code>main.js</code> 进行依赖分析，分析出最大的包，方便我们进行观察和优化。</p>
+<p>执行完这个命令，我们会看到如下的页面。</p>
 <p><img src="/resource/images/image-20200804015849396.png" alt="image-20200804015849396"></p>
 <p>如图所以，方块越大，说明该文件占用的文件越大，文件越大，对于网络带宽和访问速度的要求就越高，这也就是我们优化的方向</p>
-<blockquote>
-<p>像这种情况，我们怎么优化一下呢</p>
-</blockquote>
-<h3 id="webpack-排除打包"><a href="#webpack-排除打包" class="headerlink" title="webpack 排除打包"></a>webpack 排除打包</h3><p>CDN 是一个比较好的方式</p>
+<p>像这种情况，我们怎么优化一下呢？</p>
+<h3 id="webpack-排除打包"><a href="#webpack-排除打包" class="headerlink" title="webpack 排除打包"></a>webpack 排除打包</h3><p>CDN 是一个比较好的方式。</p>
 <blockquote>
 <p>文件不是大吗？我们就不要把这些大的文件和那些小的文件打包到一起了，像这种 xlsx,element 这种功能性很全的插件，我们可以放到 CDN 服务器上，一来，减轻整体包的大小，二来 CDN 的加速服务可以加快我们对于插件的访问速度</p>
 </blockquote>
-<p>使用方式</p>
-<p>先找到 <code>vue.config.js</code>， 添加 <code>externals</code> 让 <code>webpack</code> 不打包 <code>xlsx</code> 和 <code>element</code></p>
+<p>使用方式。</p>
+<p>先找到 <code>vue.config.js</code>， 添加 <code>externals</code> 让 <code>webpack</code> 不打包 <code>xlsx</code> 和 <code>element</code>。</p>
 <p><code>vue.config.js</code></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 排除 elementUI xlsx  和 vue</span></span><br><span class="line"> <span class="attr">externals</span>:</span><br><span class="line">     &#123;</span><br><span class="line">       <span class="string">&#x27;vue&#x27;</span>: <span class="string">&#x27;Vue&#x27;</span>,</span><br><span class="line">       <span class="string">&#x27;element-ui&#x27;</span>: <span class="string">&#x27;ELEMENT&#x27;</span>,</span><br><span class="line">       <span class="string">&#x27;xlsx&#x27;</span>: <span class="string">&#x27;XLSX&#x27;</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p>再次运行，我们会发现包的大小已经大幅减小</p>
+<p>再次运行，我们会发现包的大小已经大幅减小。</p>
 <h3 id="CDN-文件配置"><a href="#CDN-文件配置" class="headerlink" title="CDN 文件配置"></a>CDN 文件配置</h3><blockquote>
 <p>但是，没有被打包的几个模块怎么处理？</p>
 </blockquote>
-<p>可以采用 CDN 的方式，在页面模板中预先引入</p>
+<p>可以采用 CDN 的方式，在页面模板中预先引入。</p>
 <p><code>vue.config.js</code></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cdn = &#123;</span><br><span class="line">    <span class="attr">css</span>: [</span><br><span class="line">        <span class="comment">// element-ui css</span></span><br><span class="line">        <span class="string">&#x27;https://unpkg.com/element-ui/lib/theme-chalk/index.css&#x27;</span>, <span class="comment">// 样式表</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">js</span>: [</span><br><span class="line">        <span class="comment">// vue must at first!</span></span><br><span class="line">        <span class="string">&#x27;https://unpkg.com/vue/dist/vue.js&#x27;</span>, <span class="comment">// vuejs</span></span><br><span class="line">        <span class="comment">// element-ui js</span></span><br><span class="line">        <span class="string">&#x27;https://unpkg.com/element-ui/lib/index.js&#x27;</span>, <span class="comment">// elementUI</span></span><br><span class="line">        <span class="string">&#x27;https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/jszip.min.js&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/xlsx.full.min.js&#x27;</span>,</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>但是请注意，这时的配置实际上是对开发环境和生产环境都生效的，在开发环境时，没有必要使用 CDN，此时我们可以使用环境变量来进行区分</p>
-</blockquote>
+<p>但是请注意，这时的配置实际上是对开发环境和生产环境都生效的，在开发环境时，没有必要使用 CDN，此时我们可以使用环境变量来进行区分。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> cdn = &#123; <span class="attr">css</span>: [], <span class="attr">js</span>: [] &#125;</span><br><span class="line"><span class="comment">// 通过环境变量 来区分是否使用cdn</span></span><br><span class="line"><span class="keyword">const</span> isProd = process.env.NODE_ENV === <span class="string">&#x27;production&#x27;</span> <span class="comment">// 判断是否是生产环境</span></span><br><span class="line"><span class="keyword">let</span> externals = &#123;&#125;</span><br><span class="line"><span class="keyword">if</span> (isProd) &#123;</span><br><span class="line">    <span class="comment">// 如果是生产环境 就排除打包 否则不排除</span></span><br><span class="line">    externals = &#123;</span><br><span class="line">        <span class="comment">// key(包名) / value(这个值 是 需要在CDN中获取js, 相当于 获取的js中 的该包的全局的对象的名字)</span></span><br><span class="line">        <span class="attr">vue</span>: <span class="string">&#x27;Vue&#x27;</span>, <span class="comment">// 后面的名字不能随便起 应该是 js中的全局对象名</span></span><br><span class="line">        <span class="string">&#x27;element-ui&#x27;</span>: <span class="string">&#x27;ELEMENT&#x27;</span>, <span class="comment">// 都是js中全局定义的</span></span><br><span class="line">        <span class="attr">xlsx</span>: <span class="string">&#x27;XLSX&#x27;</span>, <span class="comment">// 都是js中全局定义的</span></span><br><span class="line">    &#125;</span><br><span class="line">    cdn = &#123;</span><br><span class="line">        <span class="attr">css</span>: [</span><br><span class="line">            <span class="string">&#x27;https://unpkg.com/element-ui/lib/theme-chalk/index.css&#x27;</span>, <span class="comment">// 提前引入elementUI样式</span></span><br><span class="line">        ], <span class="comment">// 放置css文件目录</span></span><br><span class="line">        <span class="attr">js</span>: [</span><br><span class="line">            <span class="string">&#x27;https://unpkg.com/vue/dist/vue.js&#x27;</span>, <span class="comment">// vuejs</span></span><br><span class="line">            <span class="string">&#x27;https://unpkg.com/element-ui/lib/index.js&#x27;</span>, <span class="comment">// element</span></span><br><span class="line">            <span class="string">&#x27;https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/xlsx.full.min.js&#x27;</span>, <span class="comment">// xlsx 相关</span></span><br><span class="line">            <span class="string">&#x27;https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/jszip.min.js&#x27;</span>, <span class="comment">// xlsx 相关</span></span><br><span class="line">        ], <span class="comment">// 放置js文件目录</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="注入-CDN-文件到模板"><a href="#注入-CDN-文件到模板" class="headerlink" title="注入 CDN 文件到模板"></a>注入 CDN 文件到模板</h3><p>之后通过 <code>html-webpack-plugin</code>注入到 <code>index.html</code>之中:</p>
+<h3 id="注入-CDN-文件到模板"><a href="#注入-CDN-文件到模板" class="headerlink" title="注入 CDN 文件到模板"></a>注入 CDN 文件到模板</h3><p>之后通过 <code>html-webpack-plugin</code>注入到 <code>index.html</code>之中。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">config.plugin(<span class="string">&#x27;html&#x27;</span>).tap(<span class="function">(<span class="params">args</span>) =&gt;</span> &#123;</span><br><span class="line">    args[<span class="number">0</span>].cdn = cdn</span><br><span class="line">    <span class="keyword">return</span> args</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <p>找到 <code>public/index.html</code>。通过你配置的<code>CDN Config</code> 依次注入 css 和 js。</p>
@@ -352,8 +349,6 @@
 <blockquote>
 <p>到现在为止，我们在十几天的时间里，完成了一个较为复杂的中台项目的解剖和开发，任何一个复杂的项目都是各种各样的功能通过合理的设计和布局组装而成的，所以未来我们每个同学要掌握的能力就是不论项目的难度和复杂度，都要学会技术的解耦和设计，这样我们的开发能力就会变得越来越强</p>
 </blockquote>
-<p>That is All !</p>
-<p>感谢 ! ! !</p>
 
     </div>
 
@@ -434,7 +429,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E4%B9%8B%E5%89%8D%E7%9A%84%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">打包之前的路由模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%92%8C-CDN-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">性能分析和 CDN 的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">2.2.</span> <span class="nav-text">性能分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-%E6%8E%92%E9%99%A4%E6%89%93%E5%8C%85"><span class="nav-number">2.3.</span> <span class="nav-text">webpack 排除打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CDN-%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">2.4.</span> <span class="nav-text">CDN 文件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E5%85%A5-CDN-%E6%96%87%E4%BB%B6%E5%88%B0%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.5.</span> <span class="nav-text">注入 CDN 文件到模板</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-nodejs-%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%BA%94%E7%94%A8%E5%B9%B6%E4%BB%A3%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">3.</span> <span class="nav-text">在 nodejs 环境中应用并代理跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-koa-%E6%A1%86%E6%9E%B6%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.2.</span> <span class="nav-text">使用 koa 框架部署项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3-history-%E9%A1%B5%E9%9D%A2%E8%AE%BF%E9%97%AE%E9%97%AE%E9%A2%98"><span class="nav-number">3.3.</span> <span class="nav-text">解决 history 页面访问问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-number">3.4.</span> <span class="nav-text">解决生产环境跨域问题</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E4%B9%8B%E5%89%8D%E7%9A%84%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">打包之前的路由模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">1.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E5%9C%B0%E5%9D%80"><span class="nav-number">1.3.</span> <span class="nav-text">基地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%92%8C-CDN-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">性能分析和 CDN 的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">2.2.</span> <span class="nav-text">性能分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-%E6%8E%92%E9%99%A4%E6%89%93%E5%8C%85"><span class="nav-number">2.3.</span> <span class="nav-text">webpack 排除打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CDN-%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">2.4.</span> <span class="nav-text">CDN 文件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E5%85%A5-CDN-%E6%96%87%E4%BB%B6%E5%88%B0%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.5.</span> <span class="nav-text">注入 CDN 文件到模板</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-nodejs-%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%BA%94%E7%94%A8%E5%B9%B6%E4%BB%A3%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">3.</span> <span class="nav-text">在 nodejs 环境中应用并代理跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-koa-%E6%A1%86%E6%9E%B6%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.2.</span> <span class="nav-text">使用 koa 框架部署项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3-history-%E9%A1%B5%E9%9D%A2%E8%AE%BF%E9%97%AE%E9%97%AE%E9%A2%98"><span class="nav-number">3.3.</span> <span class="nav-text">解决 history 页面访问问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-number">3.4.</span> <span class="nav-text">解决生产环境跨域问题</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
