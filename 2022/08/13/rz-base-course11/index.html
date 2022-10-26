@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://example.com/resource/images/image-20200804015849396.png">
 <meta property="og:image" content="http://example.com/resource/images/image-20200805012430884.png">
 <meta property="article:published_time" content="2022-08-13T14:08:32.000Z">
-<meta property="article:modified_time" content="2022-10-18T05:25:06.697Z">
+<meta property="article:modified_time" content="2022-10-26T02:23:05.495Z">
 <meta property="article:author" content="Ifer">
 <meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
 <meta name="twitter:card" content="summary">
@@ -213,7 +213,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-18 13:25:06" itemprop="dateModified" datetime="2022-10-18T13:25:06+08:00">2022-10-18</time>
+                <time title="修改时间：2022-10-26 10:23:05" itemprop="dateModified" datetime="2022-10-26T10:23:05+08:00">2022-10-26</time>
               </span>
 
           
@@ -251,7 +251,7 @@
 
 <h3 id="CDN-文件配置"><a href="#CDN-文件配置" class="headerlink" title="CDN 文件配置"></a>CDN 文件配置</h3><p>没有被打包的几个模块可以采用 CDN 的方式，在页面模板中预先引入，<code>vue.config.js</code>。</p>
 <p>注意，这时的配置实际上是对开发环境和生产环境都生效的，在开发环境时，没有必要使用 CDN，此时我们可以使用环境变量来进行区分。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> cdn = &#123; <span class="attr">css</span>: [], <span class="attr">js</span>: [] &#125;</span><br><span class="line"><span class="keyword">const</span> isProd = process.env.NODE_ENV === <span class="string">&#x27;production&#x27;</span></span><br><span class="line"><span class="keyword">if</span> (isProd) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    cdn = &#123;</span><br><span class="line">        <span class="attr">css</span>: [<span class="string">&#x27;https://unpkg.com/element-ui/lib/theme-chalk/index.css&#x27;</span>],</span><br><span class="line">        <span class="attr">js</span>: [</span><br><span class="line">            <span class="string">&#x27;https://unpkg.com/vue/dist/vue.js&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;https://unpkg.com/element-ui/lib/index.js&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/xlsx.full.min.js&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/jszip.min.js&#x27;</span>,</span><br><span class="line">        ],</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> cdn = &#123; <span class="attr">css</span>: [], <span class="attr">js</span>: [] &#125;</span><br><span class="line"><span class="keyword">const</span> isProd = process.env.NODE_ENV === <span class="string">&#x27;production&#x27;</span></span><br><span class="line"><span class="keyword">if</span> (isProd) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    cdn = &#123;</span><br><span class="line">        <span class="attr">css</span>: [<span class="string">&#x27;https://unpkg.com/element-ui/lib/theme-chalk/index.css&#x27;</span>],</span><br><span class="line">        <span class="attr">js</span>: [</span><br><span class="line">            <span class="comment">// &#x27;https://unpkg.com/vue/dist/vue.js&#x27;,</span></span><br><span class="line">            <span class="string">&#x27;https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;https://unpkg.com/element-ui/lib/index.js&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/xlsx.full.min.js&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/jszip.min.js&#x27;</span>,</span><br><span class="line">        ],</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="注入-CDN-文件到模板"><a href="#注入-CDN-文件到模板" class="headerlink" title="注入 CDN 文件到模板"></a>注入 CDN 文件到模板</h3><ol>
 <li>通过 <code>html-webpack-plugin</code> 注入到 <code>index.html</code> 之中。</li>
@@ -276,49 +276,41 @@
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir hrServer <span class="comment">#建立hrServer文件夹</span></span><br></pre></td></tr></table></figure>
 
-<p>第二步，在该文件夹下，初始化 npm</p>
+<ol start="2">
+<li>在该文件夹下，初始化 npm。</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br></pre></td></tr></table></figure>
 
-<p>第三步，安装服务端框架 koa(也可以采用 express 或者 egg)</p>
+<ol start="3">
+<li>安装服务端框架 koa(也可以采用 express 或者 egg)。</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i koa koa-static</span><br></pre></td></tr></table></figure>
 
-<p>第四步，拷贝上小节打包的 dist 目录到<code>hrServer/public</code>下</p>
-<p>第五步，在根目录下创建 app.js，代码如下</p>
+<ol start="4">
+<li><p>拷贝上小节打包的 dist 目录到 <code>hrServer/public</code> 下。</p>
+</li>
+<li><p>在根目录下创建 app.js，代码如下</p>
+</li>
+</ol>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">&#x27;koa&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> serve = <span class="built_in">require</span>(<span class="string">&#x27;koa-static&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line">app.use(serve(__dirname + <span class="string">&#x27;/public&#x27;</span>)) <span class="comment">//将public下的代码静态化</span></span><br><span class="line">app.listen(<span class="number">3333</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;人资项目启动&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>此时，我们可以访问，<a target="_blank" rel="noopener" href="http://localhost:3333/">http://localhost:3333</a></p>
-</blockquote>
-<p>页面出来了</p>
+<ol start="6">
+<li>此时，我们可以访问，<code>http://localhost:3333</code>。</li>
+</ol>
 <p><img src="/resource/images/image-20200805012430884.png" alt="image-20200805012430884"></p>
-<h3 id="解决-history-页面访问问题"><a href="#解决-history-页面访问问题" class="headerlink" title="解决 history 页面访问问题"></a>解决 history 页面访问问题</h3><p>但是，此时存在两个问题，</p>
-<ol>
-<li>当我们刷新页面，发现 404</li>
-</ol>
-<blockquote>
-<p>这是因为我们采用了 history 的模式，地址的变化会引起服务器的刷新，我们只需要在 app.js 对所有的地址进行一下处理即可</p>
-</blockquote>
-<p>安装 koa 中间件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i koa2-connect-history-api-fallback <span class="comment">#专门处理history模式的中间件</span></span><br></pre></td></tr></table></figure>
+<h3 id="解决-history-页面访问问题"><a href="#解决-history-页面访问问题" class="headerlink" title="解决 history 页面访问问题"></a>解决 history 页面访问问题</h3><p>刷新页面，发现 404？</p>
+<p>原因：history 的模式，刷新时地址的变化对于服务器来说是一次新的请求，需要在 app.js 对相关的请求地址进行统一处理。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 koa 中间件</span></span><br><span class="line">npm i koa2-connect-history-api-fallback <span class="comment"># 专门处理 history 模式的中间件</span></span><br></pre></td></tr></table></figure>
 
-<p>注册中间件</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">&#x27;koa&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> serve = <span class="built_in">require</span>(<span class="string">&#x27;koa-static&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; historyApiFallback &#125; = <span class="built_in">require</span>(<span class="string">&#x27;koa2-connect-history-api-fallback&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line"><span class="comment">// 这句话 的意思是除接口之外所有的请求都发送给了 index.html</span></span><br><span class="line">app.use(</span><br><span class="line">    historyApiFallback(&#123;</span><br><span class="line">        <span class="attr">whiteList</span>: [<span class="string">&#x27;/prod-api&#x27;</span>],</span><br><span class="line">    &#125;)</span><br><span class="line">) <span class="comment">// 这里的whiteList是 白名单的意思</span></span><br><span class="line">app.use(serve(__dirname + <span class="string">&#x27;/public&#x27;</span>)) <span class="comment">//将public下的代码静态化</span></span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3333</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;人资项目启动&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册中间件</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">&#x27;koa&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> serve = <span class="built_in">require</span>(<span class="string">&#x27;koa-static&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; historyApiFallback &#125; = <span class="built_in">require</span>(<span class="string">&#x27;koa2-connect-history-api-fallback&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line"><span class="comment">// 除接口之外所有的请求都发送给了 index.html</span></span><br><span class="line">app.use(</span><br><span class="line">    historyApiFallback(&#123;</span><br><span class="line">        <span class="attr">whiteList</span>: [<span class="string">&#x27;/prod-api&#x27;</span>],</span><br><span class="line">    &#125;)</span><br><span class="line">)</span><br><span class="line">app.use(serve(__dirname + <span class="string">&#x27;/public&#x27;</span>))</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3333</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;人资项目启动&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<h3 id="解决生产环境跨域问题"><a href="#解决生产环境跨域问题" class="headerlink" title="解决生产环境跨域问题"></a>解决生产环境跨域问题</h3><ol>
-<li>当点击登录时，发现接口 404</li>
-</ol>
-<blockquote>
-<p>前面我们讲过，vue-cli 的代理只存在于开发期，当我们上线到 node 环境或者 ngix 环境时，需要我们再次在环境中代理</p>
-</blockquote>
-<p>在 nodejs 中代理</p>
-<p>安装跨域代理中间件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i koa2-proxy-middleware</span><br></pre></td></tr></table></figure>
+<h3 id="解决生产环境跨域问题"><a href="#解决生产环境跨域问题" class="headerlink" title="解决生产环境跨域问题"></a>解决生产环境跨域问题</h3><p>当点击登录时，发现接口 404？</p>
+<p>Vue CLI 的代理只存在于开发期，当我们上线到 Node 环境或 Nginx 环境时，需要再次配置代理。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装跨域代理中间件</span></span><br><span class="line">npm i koa2-proxy-middleware</span><br></pre></td></tr></table></figure>
 
-<p>配置跨越代理</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> proxy = <span class="built_in">require</span>(<span class="string">&#x27;koa2-proxy-middleware&#x27;</span>)</span><br><span class="line"></span><br><span class="line">app.use(</span><br><span class="line">    proxy(&#123;</span><br><span class="line">        <span class="attr">targets</span>: &#123;</span><br><span class="line">            <span class="comment">// (.*) means anything</span></span><br><span class="line">            <span class="string">&#x27;/prod-api/(.*)&#x27;</span>: &#123;</span><br><span class="line">                <span class="attr">target</span>: <span class="string">&#x27;http://ihrm-java.itheima.net/api&#x27;</span>, <span class="comment">//后端服务器地址</span></span><br><span class="line">                <span class="attr">changeOrigin</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">pathRewrite</span>: &#123;</span><br><span class="line">                    <span class="string">&#x27;/prod-api&#x27;</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> proxy = <span class="built_in">require</span>(<span class="string">&#x27;koa2-proxy-middleware&#x27;</span>)</span><br><span class="line"></span><br><span class="line">app.use(</span><br><span class="line">    proxy(&#123;</span><br><span class="line">        <span class="attr">targets</span>: &#123;</span><br><span class="line">            <span class="comment">// (.*) means anything</span></span><br><span class="line">            <span class="string">&#x27;/prod-api/(.*)&#x27;</span>: &#123;</span><br><span class="line">                <span class="comment">// 后端服务器地址</span></span><br><span class="line">                <span class="attr">target</span>: <span class="string">&#x27;http://ihrm-java.itheima.net/api&#x27;</span>,</span><br><span class="line">                <span class="attr">changeOrigin</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">pathRewrite</span>: &#123;</span><br><span class="line">                    <span class="string">&#x27;/prod-api&#x27;</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
-<p>注意：这里之所以用了 pathRewrite，是因为生产环境的请求基础地址是 /prod-api，需要将该地址去掉</p>
-<p>此时，我们的项目就可以跨域访问了！</p>
+<p>注意：这里之所以用了 pathRewrite，是因为生产环境的请求基础地址是 /prod-api，需要将该地址去掉，此时我们的项目就可以跨域访问啦。</p>
 
     </div>
 
