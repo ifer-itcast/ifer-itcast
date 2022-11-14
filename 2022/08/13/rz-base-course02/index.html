@@ -27,7 +27,6 @@
 <meta property="og:site_name" content="危险">
 <meta property="og:description" content="今日目标✔ 掌握登录功能的业务流程。 ✔ 能够持久化 token 到 Vuex 中。 ✔ 掌握响应拦截器处的业务处理过程。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/resource/images/image-20200811014205189.png">
 <meta property="og:image" content="http://example.com/resource/images/image-20200710164517167.png">
 <meta property="og:image" content="http://example.com/resource/images/image-20200711002545085.png">
 <meta property="og:image" content="http://example.com/resource/images/image-20200830212537835.png">
@@ -36,11 +35,11 @@
 <meta property="og:image" content="http://example.com/resource/images/vuexxxx.png">
 <meta property="og:image" content="http://example.com/resource/images/image-20200812020656210.png">
 <meta property="article:published_time" content="2022-08-13T14:07:09.000Z">
-<meta property="article:modified_time" content="2022-10-03T13:23:08.958Z">
+<meta property="article:modified_time" content="2022-11-14T03:43:45.712Z">
 <meta property="article:author" content="Ifer">
 <meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/resource/images/image-20200811014205189.png">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20200710164517167.png">
 
 <link rel="canonical" href="http://example.com/2022/08/13/rz-base-course02/">
 
@@ -219,7 +218,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-03 21:23:08" itemprop="dateModified" datetime="2022-10-03T21:23:08+08:00">2022-10-03</time>
+                <time title="修改时间：2022-11-14 11:43:45" itemprop="dateModified" datetime="2022-11-14T11:43:45+08:00">2022-11-14</time>
               </span>
 
           
@@ -238,7 +237,6 @@
 <p>✔ 掌握响应拦截器处的业务处理过程。</p>
 <span id="more"></span>
 
-<p><img src="/resource/images/image-20200811014205189.png" alt="image-20200811014205189"></p>
 <h2 id="登录页面的基础布局"><a href="#登录页面的基础布局" class="headerlink" title="登录页面的基础布局"></a>登录页面的基础布局</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>完成登录页面的基础布局。</p>
 <h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="/resource/images/image-20200710164517167.png" alt="image-20200710164517167"></p>
 <p><code>views/login/index.vue</code></p>
@@ -312,7 +310,7 @@
 <ol>
 <li>前端通过代理服务器处理，<code>vue.config.js</code>。</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">proxy</span>: &#123;</span><br><span class="line">        <span class="comment">// 当我们的本地的请求有 /api 的时候，就会代理我们的请求地址向另外一个服务器发出请求</span></span><br><span class="line">        <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">            <span class="attr">target</span>: <span class="string">&#x27;http://ihrm-java.itheima.net/&#x27;</span>, <span class="comment">// 跨域请求的地址</span></span><br><span class="line">            <span class="attr">changeOrigin</span>: <span class="literal">true</span> <span class="comment">// 只有这个值为 true 的情况下，才表示开启跨域</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">proxy</span>: &#123;</span><br><span class="line">        <span class="comment">// 当我们的本地的请求有 /api 的时候，就会代理我们的请求地址向另外一个服务器发出请求</span></span><br><span class="line">        <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">            <span class="attr">target</span>: <span class="string">&#x27;http://ihrm-java.itheima.net/&#x27;</span>, <span class="comment">// 跨域请求的地址</span></span><br><span class="line">            <span class="attr">changeOrigin</span>: <span class="literal">true</span> <span class="comment">// 开启跨域</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>🤔 注意：<code>vue.config.js</code> 的改动如果要生效，需要进行重启服务。</p>
 <ol start="2">
