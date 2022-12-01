@@ -53,7 +53,7 @@
 <meta property="og:image" content="http://example.com/resource/images/image-20201028180651472.png">
 <meta property="og:image" content="http://example.com/resource/images/image-20200728013006535.png">
 <meta property="article:published_time" content="2022-08-13T14:08:10.000Z">
-<meta property="article:modified_time" content="2022-11-29T10:39:41.301Z">
+<meta property="article:modified_time" content="2022-11-30T08:57:28.670Z">
 <meta property="article:author" content="Ifer">
 <meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
 <meta name="twitter:card" content="summary">
@@ -236,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-29 18:39:41" itemprop="dateModified" datetime="2022-11-29T18:39:41+08:00">2022-11-29</time>
+                <time title="修改时间：2022-11-30 16:57:28" itemprop="dateModified" datetime="2022-11-30T16:57:28+08:00">2022-11-30</time>
               </span>
 
           
@@ -644,7 +644,7 @@
 </tbody></table>
 <p>multiHeader 里面是一个二维数组，里面的一个元素是一行表头，假设你想得到一个如图的结构。</p>
 <p><img src="/resource/images/excel.png" alt="image-20201014152302636"></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> header = [<span class="string">&#x27;姓名&#x27;</span>, <span class="string">&#x27;手机号&#x27;</span>, <span class="string">&#x27;入职日期&#x27;</span>, <span class="string">&#x27;聘用形式&#x27;</span>, <span class="string">&#x27;转正日期&#x27;</span>, <span class="string">&#x27;工号&#x27;</span>, <span class="string">&#x27;部门&#x27;</span>]</span><br><span class="line"><span class="comment">// multiHeader 中的一行表头中的字段的个数需要和真正的列数相等，假设想要跨列，多余的空间需要定义成空串</span></span><br><span class="line"><span class="keyword">const</span> multiHeader = [</span><br><span class="line">    [<span class="string">&#x27;姓名&#x27;</span>, <span class="string">&#x27;主要信息&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;部门&#x27;</span>]</span><br><span class="line">]</span><br><span class="line"><span class="comment">// 指定 merges 规则</span></span><br><span class="line"><span class="keyword">const</span> merges = [<span class="string">&#x27;A1:A2&#x27;</span>, <span class="string">&#x27;B1:F1&#x27;</span>, <span class="string">&#x27;G1:G2&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// multiHeader 中的一行表头中的字段的个数需要和真正的列数相等，假设想要跨列，多余的空间需要定义成空串</span></span><br><span class="line"><span class="keyword">const</span> multiHeader = [</span><br><span class="line">    [<span class="string">&#x27;姓名&#x27;</span>, <span class="string">&#x27;主要信息&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;部门&#x27;</span>]</span><br><span class="line">]</span><br><span class="line"><span class="keyword">const</span> header = [<span class="string">&#x27;姓名&#x27;</span>, <span class="string">&#x27;手机号&#x27;</span>, <span class="string">&#x27;入职日期&#x27;</span>, <span class="string">&#x27;聘用形式&#x27;</span>, <span class="string">&#x27;转正日期&#x27;</span>, <span class="string">&#x27;工号&#x27;</span>, <span class="string">&#x27;部门&#x27;</span>]</span><br><span class="line"><span class="comment">// 指定 merges 规则</span></span><br><span class="line"><span class="keyword">const</span> merges = [<span class="string">&#x27;A1:A2&#x27;</span>, <span class="string">&#x27;B1:F1&#x27;</span>, <span class="string">&#x27;G1:G2&#x27;</span>]</span><br></pre></td></tr></table></figure>
 
 <h2 id="员工详情页创建和布局"><a href="#员工详情页创建和布局" class="headerlink" title="员工详情页创建和布局"></a>员工详情页创建和布局</h2><h3 id="目标-9"><a href="#目标-9" class="headerlink" title="目标"></a>目标</h3><p>创建员工详情的布局和路由。</p>
 <h3 id="准备基本结构和样式"><a href="#准备基本结构和样式" class="headerlink" title="准备基本结构和样式"></a>准备基本结构和样式</h3><p><img src="/resource/images/image-20200726130305221.png" alt="image-20200726130305221"></p>
