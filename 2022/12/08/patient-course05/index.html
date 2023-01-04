@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 掌握项目的基本搭建。 ✔ 掌握 Axios 的基本封装。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="patient-course05">
+<meta property="og:url" content="http://example.com/2022/12/08/patient-course05/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 掌握项目的基本搭建。 ✔ 掌握 Axios 的基本封装。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2022-12-12_17-02-58.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2022-12-15_10-59-12.png">
+<meta property="og:image" content="http://example.com/resource/images/vite.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220730222310940.9c1735c7.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220731214535978.b9be7077.png">
+<meta property="article:published_time" content="2022-12-08T14:19:30.000Z">
+<meta property="article:modified_time" content="2022-12-28T05:03:24.486Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/Snipaste_2022-12-12_17-02-58.png">
+
+<link rel="canonical" href="http://example.com/2022/12/08/patient-course05/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>patient-course05 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/08/patient-course05/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          patient-course05
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-12-08 22:19:30" itemprop="dateCreated datePublished" datetime="2022-12-08T22:19:30+08:00">2022-12-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-28 13:03:24" itemprop="dateModified" datetime="2022-12-28T13:03:24+08:00">2022-12-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 掌握项目的基本搭建。</p>
+<p>✔ 掌握 Axios 的基本封装。</p>
+<span id="more"></span>
+
+<h2 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>了解整体项目概况和课程中会实现哪些功能。</p>
+<h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><p><a target="_blank" rel="noopener" href="https://app.mockplus.cn/s/dtKxarcngm8">产品原型</a>、<a target="_blank" rel="noopener" href="https://app.mockplus.cn/s/S77krW4rKh">产品设计</a>、<a target="_blank" rel="noopener" href="https://www.apifox.cn/apidoc/shared-16a58bff-e4db-465c-9c8b-859c839318ac">接口文档</a>、<a target="_blank" rel="noopener" href="https://cp.itheima.net/">演示项目</a>、<a target="_blank" rel="noopener" href="http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/app/test/20220903/202209032213177645201.mp4">视频演示</a>。</p>
+<h2 id="能学到什么"><a href="#能学到什么" class="headerlink" title="能学到什么"></a>能学到什么</h2><h3 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h3><p>了解项目中会使用到哪些技术方案。</p>
+<h3 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h3><ul>
+<li><p>基于 <code>Vue3 + TypeScript</code> 中大型项目开发解决方案；基于 Vant 组件库快速构建 H5 界面解决方案。</p>
+</li>
+<li><p>基于 <code>Vue Router</code> 的前端路由解决方案；基于 Vite 的 <code>create-vue</code> 构建 Vue3 项目解决方案。</p>
+</li>
+<li><p>基于 <code>Pinia</code> 的状态管理解决方案；基于 <code>pinia-plugin-persistedstate</code> 状态持久化解决方案。</p>
+</li>
+<li><p>基于 <code>@vuecore/use</code> 的组合式API工具库解决方案；基于 <code>id-validator</code> 的身份证信息校验解决方案。</p>
+</li>
+<li><p>基于 <code>postcss-px-to-viewport</code> 移动端适配解决方案；基于 <code>vite-plugin-svg-icons</code> 的 svg 图标组件方案。</p>
+</li>
+<li><p>基于 <code>vite-plugin-html</code> 自定义html模板解决方案；基于 <code>unplugin-vue-components</code> 组件自动注册解决方案。</p>
+</li>
+<li><p>基于 <code>socket.io</code> 的即时通讯问诊室解决方案；第三方登录、支付、地图解决方案。</p>
+</li>
+<li><p>PNPM 包管理方案；CSS 变量主题定制方案；自定义 hook 解决方案；Axios 二次封装解决方案。</p>
+</li>
+<li><p><code>Services API</code> 接口分层解决方案；基于 Vant 的通用组件封装解决方案；mock 本地数据模拟解决方案。</p>
+</li>
+<li><p>基于 Eruda 的移动端调试解决方案；生产环境配置方案；<code>CI/CD</code> 持续集成自动部署方案。</p>
+</li>
+</ul>
+<h3 id="业务"><a href="#业务" class="headerlink" title="业务"></a>业务</h3><p>医生与文章推荐业务、快速问诊业务、问诊费用支付宝支付业务、问诊室业务、药品订单支付宝支付业务、实时物流高德地图业务、QQ 登录业务。</p>
+<h2 id="PNPM-介绍"><a href="#PNPM-介绍" class="headerlink" title="PNPM 介绍"></a>PNPM 介绍</h2><h3 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h3><p>掌握 <a target="_blank" rel="noopener" href="https://www.pnpm.cn/motivation">pnpm</a> 的安装和使用。</p>
+<h3 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h3><p>它是一个包管理工具，相比较 <code>npm/yarn</code> 主要优势如下。</p>
+<ul>
+<li><p>包安装速度极快。</p>
+</li>
+<li><p>磁盘空间利用效率高。</p>
+</li>
+</ul>
+<p>如何安装？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i pnpm -g</span><br></pre></td></tr></table></figure>
+
+<p>如何使用？</p>
+<table>
+<thead>
+<tr>
+<th>NPM 命令</th>
+<th>PNPM 命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>npm install</td>
+<td>pnpm install</td>
+</tr>
+<tr>
+<td>npm i axios</td>
+<td>pnpm add axios</td>
+</tr>
+<tr>
+<td>npm i webpack -D</td>
+<td>pnpm add webpack -D</td>
+</tr>
+<tr>
+<td>npm run dev</td>
+<td>pnpm dev</td>
+</tr>
+</tbody></table>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>pnpm 是一个高效的包管理工具，相比较 <code>npm/yarn</code> 包安装速度极快、磁盘空间利用效率高。</p>
+<h2 id="项目的创建"><a href="#项目的创建" class="headerlink" title="项目的创建"></a>项目的创建</h2><h3 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h3><p>使用 <a target="_blank" rel="noopener" href="https://github.com/vuejs/create-vue">create-vue</a> 脚手架创建项目。</p>
+<h3 id="内容-2"><a href="#内容-2" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>执行创建命令。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pnpm create vue</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">npm init vue@latest</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">yarn create vue</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>选择项目依赖内容。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">✔ Project name: … patients-h5-100</span><br><span class="line">✔ Add TypeScript? … No / `Yes`</span><br><span class="line">✔ Add JSX Support? … `No` / Yes</span><br><span class="line">✔ Add Vue Router <span class="keyword">for</span> Single Page Application development? … No / `Yes`</span><br><span class="line">✔ Add Pinia <span class="keyword">for</span> state management? … No / `Yes`</span><br><span class="line">✔ Add Vitest <span class="keyword">for</span> Unit Testing? … `No` / Yes</span><br><span class="line">✔ Add Cypress <span class="keyword">for</span> both Unit and End-to-End testing? … `No` / Yes</span><br><span class="line">✔ Add ESLint <span class="keyword">for</span> code quality? … No / `Yes`</span><br><span class="line">✔ Add Prettier <span class="keyword">for</span> code formatting? … No / `Yes`</span><br><span class="line"></span><br><span class="line">Scaffolding project <span class="keyword">in</span> /Users/zhousg/Desktop/patient-h5-100...</span><br><span class="line"></span><br><span class="line">Done. Now run:</span><br><span class="line"></span><br><span class="line">  <span class="built_in">cd</span> patient-h5-100</span><br><span class="line">  pnpm install</span><br><span class="line">  pnpm lint</span><br><span class="line">  pnpm dev</span><br></pre></td></tr></table></figure>
+
+<h2 id="VSCode-插件安装"><a href="#VSCode-插件安装" class="headerlink" title="VSCode 插件安装"></a>VSCode 插件安装</h2><h3 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h3><p>安装项目开发需要的一些插件。</p>
+<h3 id="必装"><a href="#必装" class="headerlink" title="必装"></a>必装</h3><p><code>Vue Language Features (Volar)</code> Vue3 语法支持，默认的格式化工具设置为这个。</p>
+<p><code>TypeScript Vue Plugin (Volar)</code> Vue3 中更好的 TS 提示。</p>
+<p><code>ESLint</code> 代码风格校验。</p>
+<img src="/resource/images/Snipaste_2022-12-12_17-02-58.png"/>
+
+<img src="/resource/images/Snipaste_2022-12-15_10-59-12.png"/>
+
+<p>❗ VSCode 如果安装了 Prettier 插件的可以先禁用，或者关闭保存自动格式化功能，避免和项目的 ESLint 风格冲突。</p>
+<h3 id="可选"><a href="#可选" class="headerlink" title="可选"></a>可选</h3><p><code>GitLens — Git supercharged</code> ，代码 Git 提交记录提示。</p>
+<p><code>json2ts</code> ，json 自动转 TS 类型。</p>
+<p><code>Error Lens</code> ，行内错误提示。</p>
+<h2 id="ESLint-基本的配置"><a href="#ESLint-基本的配置" class="headerlink" title="ESLint 基本的配置"></a>ESLint 基本的配置</h2><h3 id="目标-5"><a href="#目标-5" class="headerlink" title="目标"></a>目标</h3><p>配置 ESLint，并了解其作用。</p>
+<h3 id="内容-3"><a href="#内容-3" class="headerlink" title="内容"></a>内容</h3><p> <code>.eslintrc.cjs</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">rules</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;prettier/prettier&#x27;</span>: [</span><br><span class="line">            <span class="string">&#x27;warn&#x27;</span>,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">singleQuote</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">semi</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="attr">printWidth</span>: <span class="number">80</span>,</span><br><span class="line">                <span class="attr">trailingComma</span>: <span class="string">&#x27;none&#x27;</span>,</span><br><span class="line">                <span class="attr">endOfLine</span>: <span class="string">&#x27;auto&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">&#x27;vue/multi-word-component-names&#x27;</span>: [</span><br><span class="line">            <span class="string">&#x27;warn&#x27;</span>,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">ignores</span>: [<span class="string">&#x27;index&#x27;</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">&#x27;vue/no-setup-props-destructure&#x27;</span>: [<span class="string">&#x27;off&#x27;</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>格式：单引号，没有分号，行宽度 80 字符，省略最后一个逗号，换行字符串自动（系统不一样换行符号不一样）。</p>
+</li>
+<li><p>Vue 组件需要大驼峰命名，除去 index 之外，App 是默认支持的。</p>
+</li>
+<li><p>允许对 props 进行解构，因为我们会开启解构保持响应式的语法糖。</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修复格式</span></span><br><span class="line">pnpm lint</span><br></pre></td></tr></table></figure>
+
+<p>VSCode 开启 ESLint 自动修复， <code>.vscode/settings.json</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;editor.codeActionsOnSave&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;source.fixAll&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关闭掉 VSCode 保存格式化的功能。</p>
+<img src="/resource/images/vite.png"/>
+
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>如果公司中会有自己的代码风格规则，大家只需遵守即可，<a target="_blank" rel="noopener" href="https://prettier.io/docs/en/options.html">常见规则</a>。</p>
+<h2 id="项目目录结构调整"><a href="#项目目录结构调整" class="headerlink" title="项目目录结构调整"></a>项目目录结构调整</h2><h3 id="目标-6"><a href="#目标-6" class="headerlink" title="目标"></a>目标</h3><p>了解每一个目录结构的作用。</p>
+<h3 id="内容-4"><a href="#内容-4" class="headerlink" title="内容"></a>内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">./src</span><br><span class="line">├── assets        <span class="comment"># 静态资源，图片...</span></span><br><span class="line">├── components    <span class="comment"># 通用组件</span></span><br><span class="line">├── composable    <span class="comment"># 组合功能通用函数</span></span><br><span class="line">├── icons         <span class="comment"># svg 图标</span></span><br><span class="line">├── router        <span class="comment"># 路由</span></span><br><span class="line">│   └── index.ts</span><br><span class="line">├── services      <span class="comment"># 接口服务 API</span></span><br><span class="line">├── stores        <span class="comment"># 状态仓库</span></span><br><span class="line">├── styles        <span class="comment"># 样式</span></span><br><span class="line">│   └── main.scss</span><br><span class="line">├── types         <span class="comment"># TS 类型</span></span><br><span class="line">├── utils         <span class="comment"># 工具函数</span></span><br><span class="line">├── views         <span class="comment"># 页面</span></span><br><span class="line">├── main.ts       <span class="comment"># 入口文件</span></span><br><span class="line">└──App.vue        <span class="comment"># 根组件</span></span><br></pre></td></tr></table></figure>
+
+<p>项目使用 Sass 预处理器，安装 Sass，即可支持 Scss 语法。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm add sass -D</span><br></pre></td></tr></table></figure>
+
+<p> <code>main.ts</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; createPinia &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// mark</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./styles/main.scss&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = createApp(App)</span><br><span class="line"></span><br><span class="line">app.use(createPinia())</span><br><span class="line">app.use(router)</span><br><span class="line"></span><br><span class="line">app.mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由相关代码解析"><a href="#路由相关代码解析" class="headerlink" title="路由相关代码解析"></a>路由相关代码解析</h2><h3 id="目标-7"><a href="#目标-7" class="headerlink" title="目标"></a>目标</h3><p>了解默认生成的路由代码的含义。</p>
+<h3 id="内容-5"><a href="#内容-5" class="headerlink" title="内容"></a>内容</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    createRouter,</span><br><span class="line">    createWebHistory</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// createRouter 创建路由实例</span></span><br><span class="line"><span class="comment">// createWebHistory() 是开启history模块</span></span><br><span class="line"><span class="comment">// createWebHashHistory() 是开启hash模式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// vite 的配置 import.meta.env.BASE_URL 是路由的基准地址，默认是 ’/‘</span></span><br><span class="line"><span class="comment">// https://vitejs.dev/guide/build.html#public-base-path</span></span><br><span class="line"><span class="comment">// 如果将来你部署的域名路径是：http://xxx/my-path/user</span></span><br><span class="line"><span class="comment">// vite.config.ts 添加配置 base: my-path，路由这就会加上 my-path 前缀了</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = createRouter(&#123;</span><br><span class="line">    <span class="attr">history</span>: createWebHistory(</span><br><span class="line">        <span class="keyword">import</span>.meta.env.BASE_URL),</span><br><span class="line">    <span class="attr">routes</span>: []</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>如何创建实例的方式？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">createRouter()</span><br></pre></td></tr></table></figure>
+
+<p>如何设置路由模式？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">createWebHistory()</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line">createWebHashHistory()</span><br></pre></td></tr></table></figure>
+
+<p>import.meta.env. BASE_URL 值来自哪里？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vite.config.ts 的 base 属性的值</span></span><br></pre></td></tr></table></figure>
+
+<p>base 作用是什么?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 项目的基础路径前缀，默认是 /</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="用户状态仓库"><a href="#用户状态仓库" class="headerlink" title="用户状态仓库"></a>用户状态仓库</h2><h3 id="目标-8"><a href="#目标-8" class="headerlink" title="目标"></a>目标</h3><p>完成用户信息仓库的创建，提供获取用户信息，修改用信息，删除用户信息的方法。</p>
+<h3 id="内容-6"><a href="#内容-6" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>准备用户信息的类型，<code>types/user.d.ts</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 用户信息 */</span></span><br><span class="line"><span class="keyword">export</span> type User = &#123;</span><br><span class="line">    <span class="comment">/* token令牌 */</span></span><br><span class="line">    <span class="attr">token</span>: string</span><br><span class="line">    <span class="comment">/* 用户ID */</span></span><br><span class="line">    <span class="attr">id</span>: string</span><br><span class="line">    <span class="comment">/* 用户名称 */</span></span><br><span class="line">    <span class="attr">account</span>: string</span><br><span class="line">    <span class="comment">/* 手机号 */</span></span><br><span class="line">    <span class="attr">mobile</span>: string</span><br><span class="line">    <span class="comment">/* 头像 */</span></span><br><span class="line">    <span class="attr">avatar</span>: string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>设置和删除用户信息，<code>stores/user.ts</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> type &#123;</span><br><span class="line">    User</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/user&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    defineStore</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    ref</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useUserStore = defineStore(<span class="string">&#x27;cp-user&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 用户信息</span></span><br><span class="line">    <span class="keyword">const</span> user = ref &lt; User &gt; ()</span><br><span class="line">    <span class="comment">// 设置用户，登录后使用</span></span><br><span class="line">    <span class="keyword">const</span> setUser = <span class="function">(<span class="params">u: User</span>) =&gt;</span> &#123;</span><br><span class="line">        user.value = u</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 清空用户，退出后使用</span></span><br><span class="line">    <span class="keyword">const</span> delUser = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        user.value = <span class="literal">undefined</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        user,</span><br><span class="line">        setUser,</span><br><span class="line">        delUser</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h3><p>Pinia 存储这个数据的意义？</p>
+<p>答：数据共享，提供给项目中任何位置使用。</p>
+<p>如果存储了数据，刷新页面后数据还在吗？</p>
+<p>答：不在，现在仅仅是存储在了 JS 内存中，需要进行本地存储（持久化）。</p>
+<h2 id="数据的持久化"><a href="#数据的持久化" class="headerlink" title="数据的持久化"></a>数据的持久化</h2><h3 id="目标-9"><a href="#目标-9" class="headerlink" title="目标"></a>目标</h3><p>使用 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/pinia-plugin-persistedstate">pinia-plugin-persistedstate</a> 实现 Pinia 仓库状态持久化，且完成测试。</p>
+<h3 id="内容-7"><a href="#内容-7" class="headerlink" title="内容"></a>内容</h3><img src="/resource/images/image-20220730222310940.9c1735c7.png"/>
+
+<ol>
+<li>安装。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pnpm i pinia-plugin-persistedstate</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">npm i pinia-plugin-persistedstate</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">yarn add pinia-plugin-persistedstate</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用 <code>main.ts</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> persist <span class="keyword">from</span> <span class="string">&#x27;pinia-plugin-persistedstate&#x27;</span></span><br><span class="line"><span class="keyword">const</span> app = createApp(App)</span><br><span class="line"><span class="comment">// 注意使用的方式</span></span><br><span class="line">app.use(createPinia().use(persist))</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>配置 <code>stores/user.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; User &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/user&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useUserStore = defineStore(</span><br><span class="line">    <span class="string">&#x27;cp-user&#x27;</span>,</span><br><span class="line">    <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 用户信息</span></span><br><span class="line">        <span class="keyword">const</span> user = ref&lt;User&gt;()</span><br><span class="line">        <span class="comment">// 设置用户，登录后使用</span></span><br><span class="line">        <span class="keyword">const</span> setUser = <span class="function">(<span class="params">u: User</span>) =&gt;</span> &#123;</span><br><span class="line">            user.value = u</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 清空用户，退出后使用</span></span><br><span class="line">        <span class="keyword">const</span> delUser = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            user.value = <span class="literal">undefined</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> &#123; user, setUser, delUser &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">persist</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>测试 <code>App.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// #1</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        useUserStore</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;./stores/user&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">// #2</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> store = useUserStore()</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- #3 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; store.user &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 如果这校验失败，可以修改 .eslintrc.cjs 中的 printWidth --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;store.setUser(&#123; id: &#x27;1&#x27;, mobile: &#x27;1&#x27;, account: &#x27;1&#x27;, avatar: &#x27;1&#x27;, token: &#x27;1&#x27; &#125;)&quot;</span>&gt;</span></span><br><span class="line">        登录</span><br><span class="line">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;store.delUser()&quot;</span>&gt;</span>退出<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="抽取-Pinia-代码"><a href="#抽取-Pinia-代码" class="headerlink" title="抽取 Pinia 代码"></a>抽取 Pinia 代码</h2><p>抽取 Pinia 实例代码，职能单一， <code>stores/index</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    createPinia</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="keyword">import</span> persist <span class="keyword">from</span> <span class="string">&#x27;pinia-plugin-persistedstate&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 Pinia 实例</span></span><br><span class="line"><span class="keyword">const</span> pinia = createPinia()</span><br><span class="line"><span class="comment">// 使用 Pinia 插件</span></span><br><span class="line">pinia.use(persist)</span><br><span class="line"><span class="comment">// 导出 Pinia 实例，给 main 使用</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> pinia</span><br></pre></td></tr></table></figure>
+
+<p> <code>main.ts</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> pinia <span class="keyword">from</span> <span class="string">&#x27;./stores&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./styles/main.scss&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = createApp(App)</span><br><span class="line"></span><br><span class="line"><span class="comment">// mark</span></span><br><span class="line">app.use(pinia)</span><br><span class="line">app.use(router)</span><br><span class="line">app.mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="stores-统一导出"><a href="#stores-统一导出" class="headerlink" title="stores 统一导出"></a>stores 统一导出</h2><h3 id="目标-10"><a href="#目标-10" class="headerlink" title="目标"></a>目标</h3><p>期望引入 store 处的代码更加简洁。</p>
+<h3 id="内容-8"><a href="#内容-8" class="headerlink" title="内容"></a>内容</h3><p>统一导出，代码简洁，入口唯一， <code>store/index</code> 。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写法 1</span></span><br><span class="line"><span class="comment">// import &#123; useUserStore &#125; from &#x27;./user&#x27;</span></span><br><span class="line"><span class="comment">// export &#123; useUserStore &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法 2</span></span><br><span class="line"><span class="comment">// export &#123; useUserStore &#125; from &#x27;./user&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法 3</span></span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&#x27;./user&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p> <code>App.vue</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useUserStore &#125; <span class="keyword">from</span> <span class="string">&#x27;./stores&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结-4"><a href="#小结-4" class="headerlink" title="小结"></a>小结</h3><p>统一导出是什么意思？</p>
+<p>答：一个模块下的所有资源通过 index 进行导出。</p>
+<h2 id="vant-组件库使用"><a href="#vant-组件库使用" class="headerlink" title="vant 组件库使用"></a>vant 组件库使用</h2><h3 id="目标-11"><a href="#目标-11" class="headerlink" title="目标"></a>目标</h3><p>掌握使用 <a target="_blank" rel="noopener" href="https://vant-contrib.gitee.io/vant/#/zh-CN/quickstart#dao-ru-suo-you-zu-jian-bu-tui-jian">vant</a> 组件库。</p>
+<h3 id="内容-9"><a href="#内容-9" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>安装。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Vue3 项目，安装最新版 Vant</span></span><br><span class="line">npm i vant</span><br><span class="line"><span class="comment"># 通过 yarn 安装</span></span><br><span class="line">yarn add vant</span><br><span class="line"><span class="comment"># 通过 pnpm 安装</span></span><br><span class="line">pnpm add vant</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>引入样式，<code>main.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> pinia <span class="keyword">from</span> <span class="string">&#x27;./stores&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="comment">// 样式全局使用</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;vant/lib/index.css&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./styles/main.scss&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = createApp(App)</span><br><span class="line"></span><br><span class="line">app.use(pinia)</span><br><span class="line">app.use(router)</span><br><span class="line">app.mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>组件按需使用，<code>App.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        Button <span class="keyword">as</span> VanButton</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">van-button</span>&gt;</span>按钮<span class="tag">&lt;/<span class="name">van-button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>为什么不全局使用？</li>
+</ol>
+<p>全局使用是全量加载，项目体积变大，加载慢。</p>
+<h2 id="移动端的适配"><a href="#移动端的适配" class="headerlink" title="移动端的适配"></a>移动端的适配</h2><h3 id="目标-12"><a href="#目标-12" class="headerlink" title="目标"></a>目标</h3><p>使用 vw 完成移动端适配。</p>
+<h3 id="内容-10"><a href="#内容-10" class="headerlink" title="内容"></a>内容</h3><p><a target="_blank" rel="noopener" href="https://vant-contrib.gitee.io/vant/#/zh-CN/advanced-usage#viewport-bu-ju">参考文档</a></p>
+<ol>
+<li>安装。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install postcss-px-to-viewport -D</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">yarn add -D postcss-px-to-viewport</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">pnpm add -D postcss-px-to-viewport</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置 <code>postcss.config.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eslint-disable-next-line no-undef</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attr">plugins</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;postcss-px-to-viewport&#x27;</span>: &#123;</span><br><span class="line">            <span class="comment">// 以设备宽度 375 为基准计算 vw 的值</span></span><br><span class="line">            <span class="comment">// 假如 100px 的 div</span></span><br><span class="line">            <span class="comment">// 375 宽度下，最终转换出的 vw 应该是：x / 100vw = 100px / 375px，x 等于 26.66vw</span></span><br><span class="line">            <span class="comment">// 而转换出来的 26.66vw 自然在不同的设备宽度下所表示的 div 宽度会不一样，例如 414 设备下</span></span><br><span class="line">            <span class="comment">// 26.66vw / 100vw = div 宽度 / 414px</span></span><br><span class="line">            <span class="attr">viewportWidth</span>: <span class="number">375</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>测试。</li>
+</ol>
+<img src="/resource/images/image-20220731214535978.b9be7077.png"/>
+
+<p>🧐 控制台有一个警告可忽略，或者使用 postcss-px-to-viewport-8-plugin 代替当前插件。</p>
+<h2 id="请求实例封装"><a href="#请求实例封装" class="headerlink" title="请求实例封装"></a>请求实例封装</h2><ol>
+<li>基本准备，<code>utils/request.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> instance = axios.create(&#123;</span><br><span class="line">    <span class="comment">// TODO 1. 基础地址，超时时间</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">instance.interceptors.request.use(</span><br><span class="line">    <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// TODO 2. 携带 token</span></span><br><span class="line">        <span class="keyword">return</span> config</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function">(<span class="params">err</span>) =&gt;</span> <span class="built_in">Promise</span>.reject(err)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">instance.interceptors.response.use(</span><br><span class="line">    <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// TODO 3. 处理业务失败</span></span><br><span class="line">        <span class="comment">// TODO 4. 摘取核心响应数据</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// TODO 5. 处理 401 错误</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> instance</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>基本封装。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useUserStore &#125; <span class="keyword">from</span> <span class="string">&#x27;@/stores&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;@/router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; showToast &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 新 axios 实例，基础配置</span></span><br><span class="line"><span class="keyword">const</span> baseURL = <span class="string">&#x27;https://consult-api.itheima.net/&#x27;</span></span><br><span class="line"><span class="keyword">const</span> instance = axios.create(&#123;</span><br><span class="line">    baseURL,</span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">10000</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 请求拦截器，携带 token</span></span><br><span class="line">instance.interceptors.request.use(</span><br><span class="line">    <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> store = useUserStore()</span><br><span class="line">        <span class="keyword">if</span> (store.user?.token &amp;&amp; config.headers) &#123;</span><br><span class="line">            config.headers[<span class="string">&#x27;Authorization&#x27;</span>] = <span class="string">`Bearer <span class="subst">$&#123;store.user?.token&#125;</span>`</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> config</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function">(<span class="params">err</span>) =&gt;</span> <span class="built_in">Promise</span>.reject(err)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 响应拦截器，剥离无效数据，401 拦截</span></span><br><span class="line">instance.interceptors.response.use(</span><br><span class="line">    <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 后台约定，响应成功，但是 code 不是 10000，是业务逻辑失败</span></span><br><span class="line">        <span class="keyword">if</span> (res.data?.code !== <span class="number">10000</span>) &#123;</span><br><span class="line">            showToast(res.data?.message || <span class="string">&#x27;网络异常&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(res.data)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 业务逻辑成功，返回响应数据，作为 axios 成功的结果</span></span><br><span class="line">        <span class="keyword">return</span> res.data</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (err.response.status === <span class="number">401</span>) &#123;</span><br><span class="line">            <span class="comment">// 删除用户信息</span></span><br><span class="line">            <span class="keyword">const</span> store = useUserStore()</span><br><span class="line">            store.delUser()</span><br><span class="line">            <span class="comment">// 跳转登录，带上接口失效所在页面的地址，登录完成后回跳使用</span></span><br><span class="line">            router.push(<span class="string">`/login?returnUrl=<span class="subst">$&#123;router.currentRoute.value.fullPath&#125;</span>`</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; baseURL, instance &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="请求函数封装"><a href="#请求函数封装" class="headerlink" title="请求函数封装"></a>请求函数封装</h2><h3 id="目标-13"><a href="#目标-13" class="headerlink" title="目标"></a>目标</h3><p>导出一个通用的请求工具函数，支持设置响应数据类型。</p>
+<h3 id="内容-11"><a href="#内容-11" class="headerlink" title="内容"></a>内容</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios, &#123; <span class="keyword">type</span> Method &#125; <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"><span class="comment">// 4. 请求工具函数</span></span><br><span class="line"><span class="keyword">const</span> request = <span class="function">(<span class="params">url: <span class="built_in">string</span>, method: Method = <span class="string">&#x27;get&#x27;</span>, submitData?: <span class="built_in">object</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> instance.request(&#123;</span><br><span class="line">        url,</span><br><span class="line">        method,</span><br><span class="line">        [method.toLowerCase() === <span class="string">&#x27;get&#x27;</span> ? <span class="string">&#x27;params&#x27;</span> : <span class="string">&#x27;data&#x27;</span>]: submitData</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>支持不同的接口可以得到不同的响应数据的类型（通过泛型）。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="string">&#x27;/user&#x27;</span>).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 期望 res. 是剥离之后的结果，现在并不是</span></span><br><span class="line">    res.</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>instance.request 的第二个泛型参数会被直接当做返回数据的类型。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="function">(<span class="params">url: <span class="built_in">string</span>, method: Method = <span class="string">&#x27;get&#x27;</span>, submitData?: <span class="built_in">object</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// !第二个泛型参数会被直接当做返回数据的类型</span></span><br><span class="line">    <span class="keyword">return</span> instance.request&lt;User, &#123;</span><br><span class="line">        <span class="attr">code</span>: <span class="built_in">string</span></span><br><span class="line">        <span class="attr">message</span>: <span class="built_in">string</span></span><br><span class="line">        <span class="attr">data</span>: User</span><br><span class="line">    &#125;&gt;(&#123;</span><br><span class="line">        url,</span><br><span class="line">        method,</span><br><span class="line">        [method.toLowerCase() === <span class="string">&#x27;get&#x27;</span> ? <span class="string">&#x27;params&#x27;</span> : <span class="string">&#x27;data&#x27;</span>]: submitData</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">request(<span class="string">&#x27;/user&#x27;</span>).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>User 类型肯定不能写死，继续封装 request 泛型函数。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #1</span></span><br><span class="line"><span class="keyword">const</span> request = &lt;T&gt;<span class="function">(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">    url: <span class="built_in">string</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">    method: Method = <span class="string">&#x27;get&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">    submitData?: <span class="built_in">object</span></span></span></span><br><span class="line"><span class="params"><span class="function"></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// #2</span></span><br><span class="line">    <span class="keyword">return</span> instance.request&lt;</span><br><span class="line">        T,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">code</span>: <span class="built_in">string</span></span><br><span class="line">            <span class="attr">message</span>: <span class="built_in">string</span></span><br><span class="line">            <span class="attr">data</span>: T</span><br><span class="line">        &#125;</span><br><span class="line">    &gt;(&#123;</span><br><span class="line">        url,</span><br><span class="line">        method,</span><br><span class="line">        [method.toLowerCase() === <span class="string">&#x27;get&#x27;</span> ? <span class="string">&#x27;params&#x27;</span> : <span class="string">&#x27;data&#x27;</span>]: submitData</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// #3</span></span><br><span class="line">request&lt;User&gt;(<span class="string">&#x27;/user&#x27;</span>).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.data.account</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>继续抽离第二个泛型参数为一个泛型 type。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Data&lt;T&gt; = &#123;</span><br><span class="line">    <span class="attr">code</span>: <span class="built_in">number</span></span><br><span class="line">    <span class="attr">message</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">data</span>: T</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> request = &lt;T&gt;<span class="function">(<span class="params">url: <span class="built_in">string</span>, method: Method = <span class="string">&#x27;get&#x27;</span>, submitData?: <span class="built_in">object</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> instance.request&lt;T, Data&lt;T&gt;&gt;(&#123;</span><br><span class="line">        url,</span><br><span class="line">        method,</span><br><span class="line">        [method.toLowerCase() === <span class="string">&#x27;get&#x27;</span> ? <span class="string">&#x27;params&#x27;</span> : <span class="string">&#x27;data&#x27;</span>]: submitData</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="请求函数测试"><a href="#请求函数测试" class="headerlink" title="请求函数测试"></a>请求函数测试</h2><h3 id="目标-14"><a href="#目标-14" class="headerlink" title="目标"></a>目标</h3><p>测试封装好的请求工具函数。</p>
+<h3 id="内容-12"><a href="#内容-12" class="headerlink" title="内容"></a>内容</h3><p>测试业务逻辑失败，登录的时候把密码改错？</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        Button <span class="keyword">as</span> VanButton</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        request</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> type &#123;</span></span><br><span class="line"><span class="javascript">        User</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;./types/user&#x27;</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> login = <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        request &lt; User &gt; (<span class="string">&#x27;/login/password&#x27;</span>, <span class="string">&#x27;post&#x27;</span>, &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">mobile</span>: <span class="string">&#x27;13211112222&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">password</span>: <span class="string">&#x27;abc123456&#x27;</span></span></span><br><span class="line"><span class="javascript">            &#125;)</span></span><br><span class="line"><span class="javascript">            .then(<span class="function">(<span class="params">r</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(r.data.token)</span></span><br><span class="line"><span class="javascript">            &#125;)</span></span><br><span class="line"><span class="javascript">            .catch(<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(e)</span></span><br><span class="line"><span class="javascript">            &#125;)</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">van-button</span> <span class="attr">type</span>=<span class="string">&quot;success&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;login&quot;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">van-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>正常登录成功，测试打印的结果，是不是剥离一层数据之后的（直接就是后台返回的数据）？</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        Button <span class="keyword">as</span> VanButton</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        request</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> type &#123;</span></span><br><span class="line"><span class="javascript">        User</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;./types/user&#x27;</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> login = <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        request &lt; User &gt; (<span class="string">&#x27;/login/password&#x27;</span>, <span class="string">&#x27;post&#x27;</span>, &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">mobile</span>: <span class="string">&#x27;13211112222&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">password</span>: <span class="string">&#x27;abc12345&#x27;</span></span></span><br><span class="line"><span class="javascript">            &#125;)</span></span><br><span class="line"><span class="javascript">            .then(<span class="function">(<span class="params">r</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// mark</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(r)</span></span><br><span class="line"><span class="javascript">            &#125;)</span></span><br><span class="line"><span class="javascript">            .catch(<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(e)</span></span><br><span class="line"><span class="javascript">            &#125;)</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">van-button</span> <span class="attr">type</span>=<span class="string">&quot;success&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;login&quot;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">van-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>获取用户信息，测试是否携带 token？</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        Button <span class="keyword">as</span> VanButton</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        request</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> type &#123;</span></span><br><span class="line"><span class="javascript">        User</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;./types/user&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        useUserStore</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;./stores&#x27;</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> store = useUserStore()</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> login = <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        request &lt; User &gt; (<span class="string">&#x27;/login/password&#x27;</span>, <span class="string">&#x27;post&#x27;</span>, &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">mobile</span>: <span class="string">&#x27;13211112222&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">password</span>: <span class="string">&#x27;abc12345&#x27;</span></span></span><br><span class="line"><span class="javascript">            &#125;)</span></span><br><span class="line"><span class="javascript">            .then(<span class="function">(<span class="params">r</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// #1</span></span></span><br><span class="line"><span class="javascript">                store.setUser(r.data)</span></span><br><span class="line"><span class="javascript">            &#125;)</span></span><br><span class="line"><span class="javascript">            .catch(<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(e)</span></span><br><span class="line"><span class="javascript">            &#125;)</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> getUserInfo = <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// #2</span></span></span><br><span class="line"><span class="javascript">        request(<span class="string">&#x27;/patient/myUser&#x27;</span>).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(res)</span></span><br><span class="line"><span class="javascript">        &#125;)</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">van-button</span> <span class="attr">type</span>=<span class="string">&quot;success&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;login&quot;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">van-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">van-button</span> <span class="attr">type</span>=<span class="string">&quot;success&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;getUserInfo&quot;</span>&gt;</span>获取<span class="tag">&lt;/<span class="name">van-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试 401，token 失效跳转 login 页面的情况？</p>
+<p>在此页面 <code>http://localhost:5173/user/abc</code> 清除 token，点击获取用户信息的按钮，观察地址栏效果。</p>
+<h2 id="约定路由规则"><a href="#约定路由规则" class="headerlink" title="约定路由规则"></a>约定路由规则</h2><h3 id="目标-15"><a href="#目标-15" class="headerlink" title="目标"></a>目标</h3><p>了解项目的约定路由规则。</p>
+<h3 id="内容-13"><a href="#内容-13" class="headerlink" title="内容"></a>内容</h3><table>
+<thead>
+<tr>
+<th>路由路径</th>
+<th>路由级别</th>
+<th>组件功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/login</td>
+<td>1</td>
+<td>登录</td>
+</tr>
+<tr>
+<td>/</td>
+<td>1</td>
+<td>布局容器</td>
+</tr>
+<tr>
+<td>/user</td>
+<td>②</td>
+<td>个人中心</td>
+</tr>
+<tr>
+<td>/user/patient</td>
+<td>1</td>
+<td>家庭档案</td>
+</tr>
+<tr>
+<td>/user/address</td>
+<td>1</td>
+<td>地址管理</td>
+</tr>
+<tr>
+<td>/home</td>
+<td>②</td>
+<td>首页</td>
+</tr>
+<tr>
+<td>/consult/fast</td>
+<td>1</td>
+<td>快速问诊</td>
+</tr>
+<tr>
+<td>/consult/dep</td>
+<td>1</td>
+<td>选择科室</td>
+</tr>
+<tr>
+<td>/consult/illness</td>
+<td>1</td>
+<td>病情描述</td>
+</tr>
+<tr>
+<td>/consult/pay</td>
+<td>1</td>
+<td>问诊支付</td>
+</tr>
+<tr>
+<td>/room</td>
+<td>1</td>
+<td>问诊室</td>
+</tr>
+<tr>
+<td>/user/consult</td>
+<td>1</td>
+<td>我的问诊</td>
+</tr>
+<tr>
+<td>/user/consult/:id</td>
+<td>1</td>
+<td>问诊详情</td>
+</tr>
+<tr>
+<td>/order/pay</td>
+<td>1</td>
+<td>药品订单支付</td>
+</tr>
+<tr>
+<td>/order/pay/result</td>
+<td>1</td>
+<td>药品订单支付结果</td>
+</tr>
+<tr>
+<td>/order</td>
+<td>1</td>
+<td>药品订单列表</td>
+</tr>
+<tr>
+<td>/order/:id</td>
+<td>1</td>
+<td>药品订单详情</td>
+</tr>
+<tr>
+<td>/order/logistics/:id</td>
+<td>1</td>
+<td>药品订单物流</td>
+</tr>
+<tr>
+<td>/login/callback</td>
+<td>1</td>
+<td>QQ登录回跳</td>
+</tr>
+<tr>
+<td>/article</td>
+<td>②</td>
+<td>健康百科</td>
+</tr>
+<tr>
+<td>/notify</td>
+<td>②</td>
+<td>消息通知</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/07/patient-course04/" rel="prev" title="patient-course04">
+      <i class="fa fa-chevron-left"></i> patient-course04
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/11/patient-course06/" rel="next" title="patient-course06">
+      patient-course06 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">项目介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">2.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%BD%E5%AD%A6%E5%88%B0%E4%BB%80%E4%B9%88"><span class="nav-number">3.</span> <span class="nav-text">能学到什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF"><span class="nav-number">3.2.</span> <span class="nav-text">技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1"><span class="nav-number">3.3.</span> <span class="nav-text">业务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PNPM-%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.</span> <span class="nav-text">PNPM 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-1"><span class="nav-number">4.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">4.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">5.</span> <span class="nav-text">项目的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-3"><span class="nav-number">5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-2"><span class="nav-number">5.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VSCode-%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">6.</span> <span class="nav-text">VSCode 插件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-4"><span class="nav-number">6.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%85%E8%A3%85"><span class="nav-number">6.2.</span> <span class="nav-text">必装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%80%89"><span class="nav-number">6.3.</span> <span class="nav-text">可选</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ESLint-%E5%9F%BA%E6%9C%AC%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">7.</span> <span class="nav-text">ESLint 基本的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-5"><span class="nav-number">7.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-3"><span class="nav-number">7.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-number">7.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E8%B0%83%E6%95%B4"><span class="nav-number">8.</span> <span class="nav-text">项目目录结构调整</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-6"><span class="nav-number">8.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-4"><span class="nav-number">8.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%9B%B8%E5%85%B3%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="nav-number">9.</span> <span class="nav-text">路由相关代码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-7"><span class="nav-number">9.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-5"><span class="nav-number">9.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-2"><span class="nav-number">9.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%8A%B6%E6%80%81%E4%BB%93%E5%BA%93"><span class="nav-number">10.</span> <span class="nav-text">用户状态仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-8"><span class="nav-number">10.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-6"><span class="nav-number">10.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-3"><span class="nav-number">10.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">11.</span> <span class="nav-text">数据的持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-9"><span class="nav-number">11.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-7"><span class="nav-number">11.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%BD%E5%8F%96-Pinia-%E4%BB%A3%E7%A0%81"><span class="nav-number">12.</span> <span class="nav-text">抽取 Pinia 代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stores-%E7%BB%9F%E4%B8%80%E5%AF%BC%E5%87%BA"><span class="nav-number">13.</span> <span class="nav-text">stores 统一导出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-10"><span class="nav-number">13.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-8"><span class="nav-number">13.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-4"><span class="nav-number">13.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vant-%E7%BB%84%E4%BB%B6%E5%BA%93%E4%BD%BF%E7%94%A8"><span class="nav-number">14.</span> <span class="nav-text">vant 组件库使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-11"><span class="nav-number">14.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-9"><span class="nav-number">14.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%9A%84%E9%80%82%E9%85%8D"><span class="nav-number">15.</span> <span class="nav-text">移动端的适配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-12"><span class="nav-number">15.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-10"><span class="nav-number">15.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E5%AE%9E%E4%BE%8B%E5%B0%81%E8%A3%85"><span class="nav-number">16.</span> <span class="nav-text">请求实例封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E5%87%BD%E6%95%B0%E5%B0%81%E8%A3%85"><span class="nav-number">17.</span> <span class="nav-text">请求函数封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-13"><span class="nav-number">17.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-11"><span class="nav-number">17.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E5%87%BD%E6%95%B0%E6%B5%8B%E8%AF%95"><span class="nav-number">18.</span> <span class="nav-text">请求函数测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-14"><span class="nav-number">18.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-12"><span class="nav-number">18.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A6%E5%AE%9A%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99"><span class="nav-number">19.</span> <span class="nav-text">约定路由规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-15"><span class="nav-number">19.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-13"><span class="nav-number">19.2.</span> <span class="nav-text">内容</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

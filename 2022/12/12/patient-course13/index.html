@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="第三方登录-QQ登录流程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="patient-course13">
+<meta property="og:url" content="http://example.com/2022/12/12/patient-course13/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="第三方登录-QQ登录流程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-20220902131335118.f167eac4.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220901163913209.340e94dd.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220901163349489.eeb66c45.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220905110845886.f34c2ff8.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220905111106986.8786985b.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220905111526726.4a8cdbe2.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220905111847289.57723006.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220905111952307.e5a343cb.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220905112105818.7485f76b.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220905112731150.0693477f.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220905112907762.7920d292.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220905113553768.0ac74d39.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20220905124702905.65477127.png">
+<meta property="article:published_time" content="2022-12-12T03:22:25.000Z">
+<meta property="article:modified_time" content="2023-01-04T10:11:52.323Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20220902131335118.f167eac4.png">
+
+<link rel="canonical" href="http://example.com/2022/12/12/patient-course13/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>patient-course13 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/12/patient-course13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          patient-course13
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-12-12 11:22:25" itemprop="dateCreated datePublished" datetime="2022-12-12T11:22:25+08:00">2022-12-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-01-04 18:11:52" itemprop="dateModified" datetime="2023-01-04T18:11:52+08:00">2023-01-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="第三方登录-QQ登录流程"><a href="#第三方登录-QQ登录流程" class="headerlink" title="第三方登录-QQ登录流程"></a>第三方登录-QQ登录流程</h2><span id="more"></span>
+
+<img src="/resource/images/image-20220902131335118.f167eac4.png"/>
+
+<ol>
+<li><p>需要在 <a target="_blank" rel="noopener" href="https://connect.qq.com/index.html">QQ互联</a> 平台注册。</p>
+</li>
+<li><p>需要实名身份认证，审核通过。</p>
+</li>
+<li><p>然后创建我的 web 应用，需要有网站域名，需要域名备案号，设置登录成功回跳地址，审核通过。</p>
+</li>
+<li><p>得到 appid 和 回跳地址。</p>
+</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 测试用 appid </span><br><span class="line"># <span class="number">100556005</span></span><br><span class="line"># 测试用 redirect_uri</span><br><span class="line"># http:<span class="comment">//consult-patients.itheima.net/login/callback</span></span><br></pre></td></tr></table></figure>
+
+<p>步骤如下。</p>
+<ol>
+<li><p>准备 QQ 登录按钮。</p>
+</li>
+<li><p>准备回跳页面。</p>
+</li>
+<li><p>使用 openID 进行登录。</p>
+</li>
+<li><p>登录成功，跳转到来源页面。</p>
+</li>
+<li><p>登录失败，显示绑定手机界面。</p>
+</li>
+<li><p>绑定成功，跳转到来源页面。</p>
+</li>
+</ol>
+<h2 id="第三方登录-跳转QQ登录"><a href="#第三方登录-跳转QQ登录" class="headerlink" title="第三方登录-跳转QQ登录"></a>第三方登录-跳转QQ登录</h2><ol>
+<li>引入 QQ 登录 SDK，<code>index.html</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://connect.qq.com/qc_jssdk.js&quot;</span> <span class="attr">data-appid</span>=<span class="string">&quot;102015968&quot;</span> <span class="attr">data-redirecturi</span>=<span class="string">&quot;http://consult-patients.itheima.net/login/callback&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>生成 QQ 登录跳转链接，改成直接跳转，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 临时用一下，拿到跳转链接后就可以删除啦</span></span><br><span class="line">onMounted(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 组件渲染完毕，使用 QC 生成 QQ 登录按钮，目的得到跳转链接</span></span><br><span class="line">    QC.Login(&#123;</span><br><span class="line">        <span class="attr">btnId</span>: <span class="string">&#x27;qq&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">van-divider</span>&gt;</span>第三方登录<span class="tag">&lt;/<span class="name">van-divider</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">id</span>=<span class="string">&quot;qq&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>通过审查元素拿到登录链接，改成 A 标签的 href 值进行跳转即可。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://graph.qq.com/oauth2.0/authorize?client_id=102015968&amp;response_type=token&amp;scope=all&amp;redirect_uri=http%3A%2F%2Fconsult-patients.itheima.net%2Flogin%2Fcallback&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;@/assets/qq.svg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/image-20220901163913209.340e94dd.png"/>
+
+<p>在手机访问会走 QQ 登录手机页面，点击按钮可以唤起 QQ 应用进行登录。</p>
+<p>开发中可以把谷歌手机模拟器关闭，关闭后可以可以使用手机 QQ 扫码进行登录，测试流程。</p>
+<img src="/resource/images/image-20220901163349489.eeb66c45.png"/>
+
+<ol start="4">
+<li>登录成功后，发现拦截到了 <code>/login</code>，其实我们期望的是 <code>/login/callback</code>。</li>
+</ol>
+<!-- 添加回跳地址白名单，`router/index.ts` -->
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">router.beforeEach(<span class="function">(<span class="params">to</span>) =&gt;</span> &#123;</span><br><span class="line">    NProgress.start()</span><br><span class="line">    <span class="keyword">const</span> store = useUserStore()</span><br><span class="line">    <span class="keyword">const</span> whiteList = [<span class="string">&#x27;/login&#x27;</span>, <span class="string">&#x27;/login/callback&#x27;</span>]</span><br><span class="line">    <span class="keyword">if</span> (!store.user?.token &amp;&amp; !whiteList.includes(to.path)) <span class="keyword">return</span> <span class="string">&#x27;/login&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>配置本地 host 配置 windows。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 找到 C:\Windows\System32\drivers\etc 下hosts文件</span><br><span class="line">2. 在文件中加入  127.0.0.1       consult-patients.itheima.net</span><br><span class="line">3. 保存即可。</span><br><span class="line"><span class="comment"># 如果提示没有权限</span></span><br><span class="line">1. 将hosts文件移到桌面，然后进行修改，确认保存。</span><br><span class="line">2. 将桌面hosts文件替换c盘文件</span><br></pre></td></tr></table></figure>
+
+<p>mac OS</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. 打开命令行窗口</span><br><span class="line">2. 输入：sudo vim /etc/hosts</span><br><span class="line">3. 按下：i 键</span><br><span class="line">4. 输入：127.0.0.1       consult-patients.itheima.net</span><br><span class="line">5. 按下：esc</span><br><span class="line">6. 按下：<span class="built_in">shift</span> + :</span><br><span class="line">7. 输入：wq 回车即可</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>vite 配置，<code>vite.config.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server: &#123;</span><br><span class="line">    <span class="attr">port</span>: <span class="number">80</span>,</span><br><span class="line">    <span class="attr">host</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">open</span>: <span class="literal">true</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>🤔 如果以上配置完了还是没有正确跳转，<font color=e32d40><strong>重启电脑</strong></font>。</p>
+<h2 id="第三方登录-进行登录"><a href="#第三方登录-进行登录" class="headerlink" title="第三方登录-进行登录"></a>第三方登录-进行登录</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>路由规则，加入登录白名单，基础结构。</p>
+<p>编写 QQ 登录 API 函数。</p>
+<p>提供 QC 相关的类型，使用 QQ 的 SDK 提供 QC 相关 API 获取 openId。</p>
+<p>提交三方登录的请求。</p>
+<ol>
+<li><p>如果之前没绑定，失败：需要绑定手机。</p>
+</li>
+<li><p>如果之前绑定过，成功：和之前登录成功一样的逻辑。</p>
+</li>
+<li><p>刚注册用户，属于情况 1。</p>
+</li>
+</ol>
+<h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>新建 LoginCallback 组件并配置路由规则，<code>views/Login/LoginCallback.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-page&quot;</span>&gt;</span>login-callback<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/login/callback&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/Login/LoginCallback.vue&#x27;</span>),</span><br><span class="line">    <span class="attr">meta</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;QQ登录-绑定手机&#x27;</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>编写 QQ 登录的 API 函数，<code>services/user.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> loginByQQ = <span class="function">(<span class="params">openId: <span class="built_in">string</span></span>) =&gt;</span> request&lt;User&gt;(<span class="string">&#x27;/login/thirdparty&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>, &#123; openId, <span class="attr">source</span>: <span class="string">&#x27;qq&#x27;</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>提供 QC 相关的类型，使用 QQ SDK 提供的 QC 相关 API 进行获取，<code>types/openIdenv.d.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Window &#123;</span><br><span class="line">    <span class="attr">_AMapSecurityConfig</span>: &#123;</span><br><span class="line">        <span class="attr">securityJsCode</span>: <span class="built_in">string</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="attr">QC</span>: &#123;</span><br><span class="line">        <span class="attr">Login</span>: &#123;</span><br><span class="line">            check(): <span class="built_in">boolean</span></span><br><span class="line">            getMe(cb: <span class="function">(<span class="params">openId: <span class="built_in">string</span></span>) =&gt;</span> <span class="built_in">void</span>): <span class="built_in">void</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>记录 openId 和 isBind，<code>/Login/LoginCallback.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123; onMounted, ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123; loginByQQ &#125; <span class="keyword">from</span> <span class="string">&#x27;@/services/user&#x27;</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> openId = ref(<span class="string">&#x27;&#x27;</span>)</span></span><br><span class="line"><span class="javascript"><span class="comment">// false 表示没有绑定，则需要显示绑定手机界面</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> isBind = ref(<span class="literal">true</span>)</span></span><br><span class="line"><span class="javascript">onMounted(<span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (<span class="built_in">window</span>.QC.Login.check()) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.QC.Login.getMe(<span class="function">(<span class="params">id</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        openId.value = id</span></span><br><span class="line"><span class="javascript">            <span class="comment">// QQ，登录</span></span></span><br><span class="line"><span class="javascript">            loginByQQ(id)</span></span><br><span class="line"><span class="javascript">            .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// 登录成功</span></span></span><br><span class="line"><span class="javascript">            &#125;)</span></span><br><span class="line"><span class="javascript">            .catch(<span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// 登录失败了才发现需要绑定</span></span></span><br><span class="line"><span class="javascript">                isBind.value = <span class="literal">true</span></span></span><br><span class="line"><span class="javascript">            &#125;)</span></span><br><span class="line"><span class="javascript">        &#125;)</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">&#125;)</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-page&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;isBind&quot;</span>&gt;</span>login-callback<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="第三方登录-绑定手机"><a href="#第三方登录-绑定手机" class="headerlink" title="第三方登录-绑定手机"></a>第三方登录-绑定手机</h2><ol>
+<li>准备基础页面结构，<code>views/Login/LoginCallback.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-page&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;isBind&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cp-nav-bar</span>&gt;</span><span class="tag">&lt;/<span class="name">cp-nav-bar</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-head&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h3</span>&gt;</span>手机绑定<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">van-form</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;form&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">van-field</span> <span class="attr">name</span>=<span class="string">&quot;mobile&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入手机号&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">van-field</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">van-field</span> <span class="attr">name</span>=<span class="string">&quot;code&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入验证码&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">template</span> #<span class="attr">button</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;btn-send&quot;</span>&gt;</span>发送验证码<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">van-field</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;cp-cell&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">van-button</span> <span class="attr">block</span> <span class="attr">round</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">native-type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span> 立即绑定 <span class="tag">&lt;/<span class="name">van-button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">van-form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>准备样式（和 Login 页面是一样的），提取到 <code>styles/login.scss</code>。</li>
+</ol>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.login</span> &#123;</span><br><span class="line">  &amp;-page &#123;</span><br><span class="line">    <span class="attribute">padding-top</span>: <span class="number">46px</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &amp;-head &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">30px</span> <span class="number">30px</span> <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">    <span class="attribute">align-items</span>: flex-end;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">h3</span> &#123;</span><br><span class="line">      <span class="attribute">font-weight</span>: normal;</span><br><span class="line">      <span class="attribute">font-size</span>: <span class="number">24px</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">a</span> &#123;</span><br><span class="line">      <span class="attribute">font-size</span>: <span class="number">15px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &amp;-other &#123;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">60px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">30px</span>;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.icon</span> &#123;</span><br><span class="line">      <span class="attribute">display</span>: flex;</span><br><span class="line">      <span class="attribute">justify-content</span>: center;</span><br><span class="line"></span><br><span class="line">      <span class="selector-tag">img</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">36px</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">36px</span>;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">4px</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.van-form</span> &#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">14px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.cp-cell</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">52px</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">24px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">14px</span> <span class="number">16px</span>;</span><br><span class="line">    <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.van-checkbox</span> &#123;</span><br><span class="line">      <span class="selector-tag">a</span> &#123;</span><br><span class="line">        <span class="attribute">color</span>: var(--cp-primary);</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">5px</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.btn-send</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: var(--cp-primary);</span><br><span class="line"></span><br><span class="line">    &amp;<span class="selector-class">.active</span> &#123;</span><br><span class="line">      <span class="attribute">color</span>: rgba(<span class="number">22</span>, <span class="number">194</span>, <span class="number">163</span>, <span class="number">0.5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>引入样式，<code>views/Login/index.vue</code> 和 <code>views/Login/LoginCallback.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css"><span class="keyword">@import</span> <span class="string">&#x27;@/styles/login.scss&#x27;</span>;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>表单校验，<code>views/Login/LoginCallback.vue</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; mobileRules, codeRules &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils/rules&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mobile = ref(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> code = ref(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> bind = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 校验通过</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- #1 @submit --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">van-form</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span> @<span class="attr">submit</span>=<span class="string">&quot;bind&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;form&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- #2 v-model #3 rules --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">van-field</span> <span class="attr">v-model</span>=<span class="string">&quot;mobile&quot;</span> <span class="attr">name</span>=<span class="string">&quot;mobile&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;mobileRules&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入手机号&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">van-field</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- #4 v-model #5 rules --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">van-field</span> <span class="attr">v-model</span>=<span class="string">&quot;code&quot;</span> <span class="attr">name</span>=<span class="string">&quot;code&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;codeRules&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入验证码&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">template</span> #<span class="attr">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;btn-send&quot;</span>&gt;</span>发送验证码<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">van-field</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;cp-cell&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">van-button</span> <span class="attr">block</span> <span class="attr">round</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">native-type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span> 立即绑定 <span class="tag">&lt;/<span class="name">van-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">van-form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>发送验证码。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Toast, <span class="keyword">type</span> FormInstance &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; onUnmounted, ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="comment">// ... 省略 ...</span></span><br><span class="line"><span class="keyword">const</span> form = ref&lt;FormInstance&gt;()</span><br><span class="line"><span class="keyword">const</span> time = ref(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">let</span> timeId: <span class="built_in">number</span></span><br><span class="line"><span class="keyword">const</span> send = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (time.value &gt; <span class="number">0</span>) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">await</span> form.value?.validate(<span class="string">&#x27;mobile&#x27;</span>)</span><br><span class="line">    <span class="keyword">await</span> sendMobileCode(mobile.value, <span class="string">&#x27;bindMobile&#x27;</span>)</span><br><span class="line">    Toast.success(<span class="string">&#x27;发送成功&#x27;</span>)</span><br><span class="line">    time.value = <span class="number">60</span></span><br><span class="line">    <span class="comment">// 倒计时</span></span><br><span class="line">    <span class="built_in">clearInterval</span>(timeId)</span><br><span class="line">    timeId = <span class="built_in">window</span>.setInterval(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        time.value--</span><br><span class="line">        <span class="keyword">if</span> (time.value &lt;= <span class="number">0</span>) <span class="built_in">window</span>.clearInterval(timeId)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line">onUnmounted(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">window</span>.clearInterval(timeId)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span> #<span class="attr">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;btn-send&quot;</span> <span class="attr">:class</span>=<span class="string">&quot;&#123; active: time &gt; 0 &#125;&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;send&quot;</span>&gt;</span></span><br><span class="line">        &#123;&#123; time &gt; 0 ? `$&#123;time&#125;s后再次发送` : &#x27;发送验证码&#x27; &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>进行绑定。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> bindMobile = <span class="function">(<span class="params">data: &#123; mobile: <span class="built_in">string</span>; code: <span class="built_in">string</span>; openId: <span class="built_in">string</span> &#125;</span>) =&gt;</span></span><br><span class="line">  request&lt;User&gt;(<span class="string">&#x27;/login/binding&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>, data)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; User &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/user&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 登录成功</span></span><br><span class="line"><span class="keyword">const</span> store = useUserStore()</span><br><span class="line"><span class="keyword">const</span> router = useRouter()</span><br><span class="line"><span class="keyword">const</span> loginSuccess = <span class="function">(<span class="params">res: &#123; data: User &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  store.setUser(res.data)</span><br><span class="line">  router.replace(<span class="string">&#x27;/user&#x27;</span>)</span><br><span class="line">  Toast.success(<span class="string">&#x27;登录成功&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> bind = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> bindMobile(&#123;</span><br><span class="line">    <span class="attr">mobile</span>: mobile.value,</span><br><span class="line">    <span class="attr">code</span>: code.value,</span><br><span class="line">    <span class="attr">openId</span>: openId.value</span><br><span class="line">  &#125;)</span><br><span class="line">  loginSuccess(res)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">      loginByQQ(id)</span><br><span class="line">        .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">+          loginSuccess(res)</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">          isBind.value = <span class="literal">false</span></span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>绑定成功即是登录成功，根据是否有回跳地址进行跳转 stores/modules/user.ts。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在登录页面点击 QQ 按钮进行登录的时候需要记录来源也，</span></span><br><span class="line"><span class="comment">// 根据回调地址进行跳转，如果没有默认就是个人中心</span></span><br><span class="line"><span class="comment">// 一点跳转到个人中心，之前记录的来源页数据就没有意义了</span></span><br><span class="line"><span class="comment">// 提示登录成功</span></span><br><span class="line"> <span class="keyword">const</span> returnUrl = ref(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"> <span class="keyword">const</span> setReturnUrl = <span class="function">(<span class="params">url: <span class="built_in">string</span></span>) =&gt;</span> (returnUrl.value = url)</span><br><span class="line"> <span class="keyword">return</span> &#123; user, setUser, delUser, returnUrl, setReturnUrl &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Login/index.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> + @<span class="attr">click</span>=<span class="string">&quot;store.setReturnUrl($route.query.returnUrl as string)&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://graph.qq.com/oauth2.0/authorize?client_id=102015968&amp;response_type=token&amp;scope=all&amp;redirect_uri=http%3A%2F%2Fconsult-patients.itheima.net%2Flogin%2Fcallback&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;@/assets/qq.svg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Login/LoginCallback.vue</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 登录成功</span></span><br><span class="line"><span class="keyword">const</span> loginSuccess = <span class="function">(<span class="params">res: &#123; data: User &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  store.setUser(res.data)</span><br><span class="line">  <span class="comment">// 如果有回跳地址就进行回跳，没有跳转到个人中心</span></span><br><span class="line">+  router.replace(store.returnUrl || <span class="string">&#x27;/user&#x27;</span>)</span><br><span class="line">  Toast.success(<span class="string">&#x27;登录成功&#x27;</span>)</span><br><span class="line">+  store.setReturnUrl(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="第三方登录-验证码hook封装"><a href="#第三方登录-验证码hook封装" class="headerlink" title="第三方登录-验证码hook封装"></a>第三方登录-验证码hook封装</h2><ol>
+<li>分析 hook 需要传入参数，返回哪些数据。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">参数：</span><br><span class="line"><span class="number">1.</span> 手机号</span><br><span class="line"><span class="number">2.</span> 发短信类型</span><br><span class="line"></span><br><span class="line">返回：</span><br><span class="line"><span class="number">1.</span> form 表单响应式数据</span><br><span class="line"><span class="number">2.</span> time 倒计时数据</span><br><span class="line"><span class="number">3.</span> send 发送函数</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>提取函数。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Toast, <span class="keyword">type</span> FormInstance &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; sendMobileCode &#125; <span class="keyword">from</span> <span class="string">&#x27;@/services/user&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; CodeType &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/user&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发送短信验证码吗逻辑</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useSendMobileCode = <span class="function">(<span class="params">mobile: Ref&lt;<span class="built_in">string</span>&gt;, <span class="keyword">type</span>: CodeType = <span class="string">&#x27;login&#x27;</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> form = ref&lt;FormInstance&gt;()</span><br><span class="line">  <span class="keyword">const</span> time = ref(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">let</span> timeId: <span class="built_in">number</span></span><br><span class="line">  <span class="keyword">const</span> send = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (time.value &gt; <span class="number">0</span>) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">await</span> form.value?.validate(<span class="string">&#x27;mobile&#x27;</span>)</span><br><span class="line">    <span class="keyword">await</span> sendMobileCode(mobile.value, <span class="keyword">type</span>)</span><br><span class="line">    Toast.success(<span class="string">&#x27;发送成功&#x27;</span>)</span><br><span class="line">    time.value = <span class="number">60</span></span><br><span class="line">    <span class="comment">// 倒计时</span></span><br><span class="line">    <span class="built_in">clearInterval</span>(timeId)</span><br><span class="line">    timeId = <span class="built_in">window</span>.setInterval(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      time.value--</span><br><span class="line">      <span class="keyword">if</span> (time.value &lt;= <span class="number">0</span>) <span class="built_in">window</span>.clearInterval(timeId)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  onUnmounted(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">window</span>.clearInterval(timeId)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> &#123; form, time, send &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>使用函数。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; form, time, send &#125; = useSendMobileCode(mobile, <span class="string">&#x27;bindMobile&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="第三方登录-开发生产环境"><a href="#第三方登录-开发生产环境" class="headerlink" title="第三方登录-开发生产环境"></a>第三方登录-开发生产环境</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>知道使用 什么是开发环境和生成环境？</p>
+<p>run dev 是本地开发环境，run build 是线上生产环境</p>
+<p>QQ回调地址：</p>
+<p>线上：<a target="_blank" rel="noopener" href="https://cp.itheima.net/login/callback">https://cp.itheima.net/login/callback</a></p>
+<p>本地：<a target="_blank" rel="noopener" href="http://consult-patients.itheima.net/login/callback">http://consult-patients.itheima.net/login/callback</a></p>
+<p>支付回调</p>
+<p>问诊支付</p>
+<p>线上：<a target="_blank" rel="noopener" href="https://cp.itheima.net/room">https://cp.itheima.net/room</a></p>
+<p>本地：<a target="_blank" rel="noopener" href="http://consult-patients.itheima.net/room">http://consult-patients.itheima.net/room</a></p>
+<p>药品支付</p>
+<p>线上：<a target="_blank" rel="noopener" href="https://cp.itheima.net/order/pay/result">https://cp.itheima.net/order/pay/result</a></p>
+<p>本地：<a target="_blank" rel="noopener" href="http://consult-patients.itheima.net/order/pay/result">http://consult-patients.itheima.net/order/pay/result</a></p>
+<p>标题：生产环境（优医问诊），本地环境（本地-优医问诊）</p>
+<p><code>.env.development</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VITE_APP_CALLBACK=http:<span class="comment">//consult-patients.itheima.net</span></span><br><span class="line">VITE_APP_TITLE=本地-优医问诊</span><br></pre></td></tr></table></figure>
+
+<p><code>.env.production</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VITE_APP_CALLBACK=https:<span class="comment">//cp.itheima.net</span></span><br><span class="line">VITE_APP_TITLE=优医问诊</span><br></pre></td></tr></table></figure>
+
+<p>JS 文件中，跳转 QQ 登录 <code>Login/index.vue</code>。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> qqUrl = <span class="string">`https://graph.qq.com/oauth2.0/authorize?client_id=102015968&amp;response_type=token&amp;scope=all&amp;redirect_uri=<span class="subst">$&#123;<span class="built_in">encodeURIComponent</span>(</span></span></span><br><span class="line"><span class="subst"><span class="string">  <span class="keyword">import</span>.meta.env.VITE_APP_CALLBACK + <span class="string">&#x27;/login/callback&#x27;</span></span></span></span><br><span class="line"><span class="subst"><span class="string">)&#125;</span>`</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> @<span class="attr">click</span>=<span class="string">&quot;store.setReturnUrl($route.query.returnUrl as string)&quot;</span> <span class="attr">:href</span>=<span class="string">&quot;qqUrl&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;@/assets/qq.svg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>CpPaySheet 加入动态域名。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> res = <span class="keyword">await</span> getConsultOrderPayUrl(&#123;</span><br><span class="line">    <span class="attr">orderId</span>: orderId,</span><br><span class="line">    <span class="attr">paymentMethod</span>: paymentMethod.value,</span><br><span class="line">    <span class="attr">payCallback</span>: <span class="keyword">import</span>.meta.env.VITE_APP_CALLBACK + payCallback</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>配置问诊支付回调 Consult/ConsultPay.vue User/ConsultDetail.vue。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">cp-pay-sheet</span> <span class="attr">v-model:show</span>=<span class="string">&quot;show&quot;</span> <span class="attr">:order-id</span>=<span class="string">&quot;orderId&quot;</span> <span class="attr">:actualPayment</span>=<span class="string">&quot;payInfo.actualPayment&quot;</span> <span class="attr">:onClose</span>=<span class="string">&quot;onClose&quot;</span> + <span class="attr">pay-callback</span>=<span class="string">&quot;/room&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>配置药品订单支付回调 Order/OrderPay.vue。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">cp-pay-sheet</span> <span class="attr">:orderId</span>=<span class="string">&quot;orderId&quot;</span> <span class="attr">:actualPayment</span>=<span class="string">&quot;orderPre.actualPayment&quot;</span> <span class="attr">v-model:show</span>=<span class="string">&quot;show&quot;</span> + <span class="attr">payCallback</span>=<span class="string">&quot;/order/pay/result&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>index.html 中，安装 html 模板插件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm add vite-plugin-html</span><br></pre></td></tr></table></figure>
+
+<p><code>vite.config.ts</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createHtmlPlugin &#125; <span class="keyword">from</span> <span class="string">&#x27;vite-plugin-html&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">    createHtmlPlugin()</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><code>index.html</code>，&lt;%=环境变量名%&gt; 取出值</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/favicon.ico&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">title</span>&gt;</span>&lt;%=VITE_APP_TITLE%&gt;<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;module&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/src/main.ts&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://connect.qq.com/qc_jssdk.js&quot;</span> <span class="attr">data-appid</span>=<span class="string">&quot;102015968&quot;</span> <span class="attr">data-redirecturi</span>=<span class="string">&quot;&lt;%=VITE_APP_CALLBACK%&gt;/login/callback&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="扩展-真机调试"><a href="#扩展-真机调试" class="headerlink" title="扩展-真机调试"></a>扩展-真机调试</h2><p>在 Chrome 浏览器中使用什么进行调试？</p>
+<p>控制面板，开发者工具，F12</p>
+<p>在 手机端 浏览器使用什么进行调试呢？</p>
+<p>Eruda 手机调试面板工具</p>
+<p>使用方式：<a target="_blank" rel="noopener" href="https://github.com/liriliri/eruda">https://github.com/liriliri/eruda</a></p>
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdnjs.cloudflare.com/ajax/libs/eruda/2.4.1/eruda.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    eruda.init()</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>只在开发环境使用：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if(DEV)&#123; %&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdnjs.cloudflare.com/ajax/libs/eruda/2.4.1/eruda.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    eruda.init()</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>小结：</p>
+<p>使用 vite-plugin-html 解析模板，默认支持 ejs 模板引擎语法</p>
+<h2 id="扩展-mock接口数据"><a href="#扩展-mock接口数据" class="headerlink" title="扩展-mock接口数据"></a>扩展-mock接口数据</h2><p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/vite-plugin-mock">https://www.npmjs.com/package/vite-plugin-mock</a></p>
+<p>1）安装 vite-plugin-mock mockjs</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm i vite-plugin-mock mockjs -D</span><br></pre></td></tr></table></figure>
+
+<p>2）使用插件扫描 src/mock 下文件</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; viteMockServe &#125; <span class="keyword">from</span> <span class="string">&#x27;vite-plugin-mock&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">    viteMockServe(&#123;</span><br><span class="line">      <span class="attr">mockPath</span>: <span class="string">&#x27;./src/mock&#x27;</span>,</span><br><span class="line">      <span class="attr">localEnabled</span>: <span class="literal">true</span></span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>3）mock文件 src/mock/index.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; MockMethod &#125; <span class="keyword">from</span> <span class="string">&#x27;vite-plugin-mock&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Mock <span class="keyword">from</span> <span class="string">&#x27;mockjs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> rules: MockMethod[] = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;/patient/message/list&#x27;</span>,</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;get&#x27;</span>,</span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">response</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = []</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        data.push(</span><br><span class="line">          Mock.mock(&#123;</span><br><span class="line">            <span class="attr">id</span>: <span class="string">&#x27;@id&#x27;</span>,</span><br><span class="line">            <span class="attr">avatar</span>: <span class="string">&#x27;@image(&quot;100x100&quot;)&#x27;</span>,</span><br><span class="line">            <span class="attr">title</span>: <span class="string">&#x27;@ctitle(3,10)&#x27;</span>,</span><br><span class="line">            <span class="attr">lastContent</span>: <span class="string">&#x27;@ctitle(10,40)&#x27;</span>,</span><br><span class="line">            <span class="attr">sendTime</span>: <span class="string">&#x27;@datetime()&#x27;</span></span><br><span class="line">          &#125;)</span><br><span class="line">        )</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">code</span>: <span class="number">10000</span>,</span><br><span class="line">        <span class="attr">message</span>: <span class="string">&#x27;获取数据成功&#x27;</span>,</span><br><span class="line">        data</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> rules</span><br></pre></td></tr></table></figure>
+
+<p>使用注意：这些mock接口是 vite 本地服务器提供的，请求的时候不能带上其他服务器的域名。</p>
+<h2 id="项目部署-pm2部署"><a href="#项目部署-pm2部署" class="headerlink" title="项目部署-pm2部署"></a>项目部署-pm2部署</h2><p>1）本地打包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm build</span><br></pre></td></tr></table></figure>
+
+<p>得到 dist 资源包</p>
+<p>2）上传服务器</p>
+<p>服务器一般是 linux系统，使用 XFTP 进行文件的上传和下载（这个就不赘述了）</p>
+<p>3）服务器使用pm2进行部署（本地演示） <a target="_blank" rel="noopener" href="https://pm2.keymetrics.io/docs/usage/expose/">托管静态资源</a></p>
+<p>全局安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i pm2 -g</span><br></pre></td></tr></table></figure>
+
+<p>进入dist：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pm2 serve 目录 端口  --name 服务名称</span></span><br><span class="line">pm2 serve ./ 8080 --name my-cp-server</span><br></pre></td></tr></table></figure>
+
+<p>4）history路由模式问题，如果有子路径，刷新页面 404</p>
+<p>原因：hostory 改变路由是前端切换，不会请求服务器，一旦刷新浏览器 /consult/dep按照这个地址请求服务器，是没有对应的资源的。</p>
+<p>解决：遇见子路径且没有后缀名，服务器定位到 ‘index.html’ 页面返回给前端即可。</p>
+<p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 serve --spa ./ 8080 --name my-cp-server</span><br></pre></td></tr></table></figure>
+
+<p>pm2其他命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看服务列表</span></span><br><span class="line">pm2 list</span><br><span class="line"><span class="comment"># 删除服务</span></span><br><span class="line">pm2 delete my-cp-server</span><br></pre></td></tr></table></figure>
+
+<h2 id="自动部署-腾讯云部署"><a href="#自动部署-腾讯云部署" class="headerlink" title="自动部署-腾讯云部署"></a>自动部署-腾讯云部署</h2><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/login?s_url=https://console.cloud.tencent.com/webify/index">腾讯云-Web应用托管</a></p>
+<p>注册，实名认证，才可以使用 webify 服务</p>
+<p>使用步骤演示：</p>
+<p>1）创建应用</p>
+<img src="/resource/images/image-20220905110845886.f34c2ff8.png"/>
+
+<p>2）关联码云，需要码云授权</p>
+<img src="/resource/images/image-20220905111106986.8786985b.png"/>
+
+<p>3）选择需要使用的仓库</p>
+<img src="/resource/images/image-20220905111526726.4a8cdbe2.png"/>
+
+<p>4）构建配置</p>
+<img src="/resource/images/image-20220905111847289.57723006.png"/>
+
+<img src="/resource/images/image-20220905111952307.e5a343cb.png"/>
+
+<p>5）进行构建</p>
+<img src='/resource/images/image-20220905112105818.7485f76b.png'/>
+
+<img src="/resource/images/image-20220905112731150.0693477f.png"/>
+
+<p>6）尝试访问</p>
+<img src="/resource/images/image-20220905112907762.7920d292.png"/>
+
+<p>自动部署流程：</p>
+<img src="/resource/images/image-20220905113553768.0ac74d39.png"/>
+
+<h2 id="自动部署-gitlab部署-演示"><a href="#自动部署-gitlab部署-演示" class="headerlink" title="自动部署-gitlab部署(演示)"></a>自动部署-gitlab部署(演示)</h2><img src="/resource/images/image-20220905124702905.65477127.png"/>
+
+<p>本地Vscode编写代码<br>gitlab是企业版，内部部署<br>Linux服务器<br>安装 gitlab-runner 用于拉取仓库代码<br>安装 Nodejs 用于打包项目<br>安装 pm2 用于启动静态资源托管，守护进程<br>运维使用 Nginx 进行域名代理<br>用户通过浏览器访问服务<br>依赖于gitlab-ci.yml配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">stages:</span><br><span class="line">  - build</span><br><span class="line">cache:</span><br><span class="line">  key: <span class="variable">$&#123;CI_BUILD_REF_NAME&#125;</span></span><br><span class="line">  paths:</span><br><span class="line">    - node_modules/</span><br><span class="line"></span><br><span class="line">build-140:</span><br><span class="line">  stage: build</span><br><span class="line">  only:</span><br><span class="line">    - master</span><br><span class="line">  script:</span><br><span class="line">    - rm -rf node_modules/</span><br><span class="line">    - pnpm i</span><br><span class="line">    - pnpm build</span><br><span class="line">    - rm -rf /home/patient-h5-preview</span><br><span class="line">    - mkdir /home/patient-h5-preview</span><br><span class="line">    - cp -r dist/* /home/patient-h5-preview</span><br><span class="line">    - <span class="built_in">cd</span> /home/patient-h5-preview</span><br><span class="line">    - pm2 delete patient-h5-preview || <span class="built_in">echo</span> no</span><br><span class="line">    - pm2 serve --spa ./ 8083 --name patient-h5-preview</span><br><span class="line">  tags: </span><br><span class="line">    - patient-h5-preview</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/12/patient-course12/" rel="prev" title="patient-course12">
+      <i class="fa fa-chevron-left"></i> patient-course12
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E7%99%BB%E5%BD%95-QQ%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">第三方登录-QQ登录流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E7%99%BB%E5%BD%95-%E8%B7%B3%E8%BD%ACQQ%E7%99%BB%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">第三方登录-跳转QQ登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E7%99%BB%E5%BD%95-%E8%BF%9B%E8%A1%8C%E7%99%BB%E5%BD%95"><span class="nav-number">3.</span> <span class="nav-text">第三方登录-进行登录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">3.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">3.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E7%99%BB%E5%BD%95-%E7%BB%91%E5%AE%9A%E6%89%8B%E6%9C%BA"><span class="nav-number">4.</span> <span class="nav-text">第三方登录-绑定手机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E7%99%BB%E5%BD%95-%E9%AA%8C%E8%AF%81%E7%A0%81hook%E5%B0%81%E8%A3%85"><span class="nav-number">5.</span> <span class="nav-text">第三方登录-验证码hook封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E7%99%BB%E5%BD%95-%E5%BC%80%E5%8F%91%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83"><span class="nav-number">6.</span> <span class="nav-text">第三方登录-开发生产环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">6.1.</span> <span class="nav-text">目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95"><span class="nav-number">7.</span> <span class="nav-text">扩展-真机调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-mock%E6%8E%A5%E5%8F%A3%E6%95%B0%E6%8D%AE"><span class="nav-number">8.</span> <span class="nav-text">扩展-mock接口数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2-pm2%E9%83%A8%E7%BD%B2"><span class="nav-number">9.</span> <span class="nav-text">项目部署-pm2部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2-%E8%85%BE%E8%AE%AF%E4%BA%91%E9%83%A8%E7%BD%B2"><span class="nav-number">10.</span> <span class="nav-text">自动部署-腾讯云部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2-gitlab%E9%83%A8%E7%BD%B2-%E6%BC%94%E7%A4%BA"><span class="nav-number">11.</span> <span class="nav-text">自动部署-gitlab部署(演示)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

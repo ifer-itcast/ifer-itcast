@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 掌握 CpNavBar 和 svg 图标组件的封装。 ✔ 掌握使用密码或短信登录的业务逻辑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="patient-course06">
+<meta property="og:url" content="http://example.com/2022/12/11/patient-course06/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 掌握 CpNavBar 和 svg 图标组件的封装。 ✔ 掌握使用密码或短信登录的业务逻辑。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2022-12-18_22-29-03.png">
+<meta property="article:published_time" content="2022-12-11T08:34:09.000Z">
+<meta property="article:modified_time" content="2022-12-28T01:47:09.203Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/Snipaste_2022-12-18_22-29-03.png">
+
+<link rel="canonical" href="http://example.com/2022/12/11/patient-course06/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>patient-course06 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/11/patient-course06/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          patient-course06
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-12-11 16:34:09" itemprop="dateCreated datePublished" datetime="2022-12-11T16:34:09+08:00">2022-12-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-28 09:47:09" itemprop="dateModified" datetime="2022-12-28T09:47:09+08:00">2022-12-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 掌握 CpNavBar 和 svg 图标组件的封装。</p>
+<p>✔ 掌握使用密码或短信登录的业务逻辑。</p>
+<span id="more"></span>
+
+<h2 id="登录页面配置"><a href="#登录页面配置" class="headerlink" title="登录页面配置"></a>登录页面配置</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>配置登录页面的路由。</p>
+<h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>准备页面结构，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-page&quot;</span>&gt;</span></span><br><span class="line">        登录</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置路由规则，<code>router/index.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = createRouter(&#123;</span><br><span class="line">    <span class="attr">history</span>: createWebHistory(<span class="keyword">import</span>.meta.env.BASE_URL),</span><br><span class="line">    <span class="attr">routes</span>: [</span><br><span class="line">        &#123; <span class="attr">path</span>: <span class="string">&#x27;/login&#x27;</span>, <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/Login/index.vue&#x27;</span>) &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>准备路由出口，<code>App.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="CSS-主题定制"><a href="#CSS-主题定制" class="headerlink" title="CSS 主题定制"></a>CSS 主题定制</h2><h3 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h3><p>使用 CSS 变量定制项目主题。</p>
+<h3 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>如何定义和使用 CSS 变量。</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">    --<span class="selector-tag">main</span>: <span class="number">#999</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">var</span>(--main)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>覆盖 vant <a target="_blank" rel="noopener" href="https://vant-contrib.gitee.io/vant/#/zh-CN/faq">主题色</a>， <code>styles/main.scss</code> 。</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">    // 问诊患者：色板</span><br><span class="line">    --cp-primary: <span class="number">#16c2a3</span>;</span><br><span class="line">    --cp-plain: <span class="number">#eaf8f6</span>;</span><br><span class="line">    --cp-orange: <span class="number">#fca21c</span>;</span><br><span class="line">    --cp-text1: <span class="number">#121826</span>;</span><br><span class="line">    --cp-text2: <span class="number">#3c3e42</span>;</span><br><span class="line">    --cp-text3: <span class="number">#6f6f6f</span>;</span><br><span class="line">    --cp-tag: <span class="number">#848484</span>;</span><br><span class="line">    --cp-dark: <span class="number">#979797</span>;</span><br><span class="line">    --cp-tip: <span class="number">#c3c3c5</span>;</span><br><span class="line">    --cp-disable: <span class="number">#d9dbde</span>;</span><br><span class="line">    --cp-line: <span class="number">#ededed</span>;</span><br><span class="line">    --cp-bg: <span class="number">#f6f7f9</span>;</span><br><span class="line">    --cp-price: <span class="number">#eb5757</span>;</span><br><span class="line">    // 覆盖 Vant 主体色</span><br><span class="line">    // 官方文档：ConfigProvider 全局配置</span><br><span class="line">    --van-primary-<span class="attribute">color</span>: <span class="built_in">var</span>(--cp-primary);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>测试主题色，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        Button <span class="keyword">as</span> VanButton</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-page&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">van-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>按钮<span class="tag">&lt;/<span class="name">van-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="自动按需加载"><a href="#自动按需加载" class="headerlink" title="自动按需加载"></a>自动按需加载</h2><h3 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h3><p>实现 Vant 组件的自动按需加载，<a target="_blank" rel="noopener" href="https://vant-contrib.gitee.io/vant/#/zh-CN/quickstart#an-xu-yin-ru-zu-jian-tui-jian">官方文档</a>。</p>
+<h3 id="内容-2"><a href="#内容-2" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>安装。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm add unplugin-vue-components -D</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置，<code>vite.config.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; fileURLToPath, URL &#125; <span class="keyword">from</span> <span class="string">&#x27;node:url&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vite&#x27;</span></span><br><span class="line"><span class="keyword">import</span> vue <span class="keyword">from</span> <span class="string">&#x27;@vitejs/plugin-vue&#x27;</span></span><br><span class="line"><span class="comment">// #1</span></span><br><span class="line"><span class="keyword">import</span> Components <span class="keyword">from</span> <span class="string">&#x27;unplugin-vue-components/vite&#x27;</span></span><br><span class="line"><span class="comment">// #2</span></span><br><span class="line"><span class="keyword">import</span> &#123; VantResolver &#125; <span class="keyword">from</span> <span class="string">&#x27;unplugin-vue-components/resolvers&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// https://vitejs.dev/config/</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineConfig(&#123;</span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">        vue(),</span><br><span class="line">        <span class="comment">// #3 自动导入的插件</span></span><br><span class="line">        Components(&#123;</span><br><span class="line">            <span class="comment">// #5 默认 true，开启自动生成组件的类型定义文件，而 vant 已经自带类型了，无需生成</span></span><br><span class="line">            <span class="attr">dts</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="comment">// #4 main.ts 已经引入了所有的 vant 样式，不需要自动导入样式，只需要自动导入组件即可</span></span><br><span class="line">            <span class="attr">resolvers</span>: [VantResolver(&#123; <span class="attr">importStyle</span>: <span class="literal">false</span> &#125;)]</span><br><span class="line">        &#125;)</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">resolve</span>: &#123;</span><br><span class="line">        <span class="attr">alias</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;@&#x27;</span>: fileURLToPath(<span class="keyword">new</span> URL(<span class="string">&#x27;./src&#x27;</span>, <span class="keyword">import</span>.meta.url))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>测试，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-page&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">van-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>按钮<span class="tag">&lt;/<span class="name">van-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="CpNavBar-组件封装"><a href="#CpNavBar-组件封装" class="headerlink" title="CpNavBar 组件封装"></a>CpNavBar 组件封装</h2><h3 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h3><p>掌握 <a target="_blank" rel="noopener" href="https://vant-contrib.gitee.io/vant/#/zh-CN/nav-bar">van-nav-bar</a> 组件，封装自己的 cp-nav-bar 组件。</p>
+<h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><ol>
+<li>准备组件的接口，<code>components/CpNavBar.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> onClickLeft = <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&#x27;left click&#x27;</span>)</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> onClickRight = <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&#x27;right click&#x27;</span>)</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">van-nav-bar</span> <span class="attr">title</span>=<span class="string">&quot;注册&quot;</span> <span class="attr">left-arrow</span> @<span class="attr">click-left</span>=<span class="string">&quot;onClickLeft&quot;</span> <span class="attr">fixed</span> <span class="attr">right-text</span>=<span class="string">&quot;注册&quot;</span> @<span class="attr">click-right</span>=<span class="string">&quot;onClickRight&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    ::<span class="built_in">v-deep</span>() &#123;</span></span><br><span class="line"><span class="css">        .van-nav-bar &#123;</span></span><br><span class="line"><span class="css">            &amp;__arrow &#123;</span></span><br><span class="line"><span class="css">                font-size: <span class="number">18px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">color</span>: <span class="built_in">var</span>(--cp-text1);</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            &amp;__text &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">font-size</span>: <span class="number">15px</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>测试，<code>views/Login/index.vue</code>。</li>
+</ol>
+<p>🤔 <code>components</code> 目录的组件会被 unplugin-vue-components 插件自动注册为全局的，所以可直接使用。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-page&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cp-nav-bar</span>&gt;</span><span class="tag">&lt;/<span class="name">cp-nav-bar</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><ol>
+<li><code>components/CpNavBar.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        useRouter</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> router = useRouter()</span></span><br><span class="line"><span class="javascript">    <span class="comment">// #1 点击左侧返回</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> onClickLeft = <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 判断历史记录中是否有回退记录</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (history.state?.back) &#123;</span></span><br><span class="line"><span class="javascript">            router.back()</span></span><br><span class="line"><span class="javascript">        &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">            router.push(<span class="string">&#x27;/&#x27;</span>)</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// #2 接收 title 和 rightText</span></span></span><br><span class="line"><span class="javascript">    defineProps &lt; &#123;</span></span><br><span class="line"><span class="javascript">        title ? : string</span></span><br><span class="line"><span class="javascript">        rightText ? : string</span></span><br><span class="line"><span class="javascript">    &#125; &gt; ()</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// #3 右侧的点击，让外界决定做什么事情</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> emit = defineEmits &lt; &#123;</span></span><br><span class="line"><span class="javascript">        (e: <span class="string">&#x27;click-right&#x27;</span>): <span class="keyword">void</span></span></span><br><span class="line"><span class="javascript">    &#125; &gt; ()</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> onClickRight = <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        emit(<span class="string">&#x27;click-right&#x27;</span>)</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">van-nav-bar</span> <span class="attr">left-arrow</span> @<span class="attr">click-left</span>=<span class="string">&quot;onClickLeft&quot;</span> <span class="attr">fixed</span> <span class="attr">:title</span>=<span class="string">&quot;title&quot;</span> <span class="attr">:right-text</span>=<span class="string">&quot;rightText&quot;</span> @<span class="attr">click-right</span>=<span class="string">&quot;onClickRight&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">van-nav-bar</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    ::<span class="built_in">v-deep</span>() &#123;</span></span><br><span class="line"><span class="css">        .van-nav-bar &#123;</span></span><br><span class="line"><span class="css">            &amp;__arrow &#123;</span></span><br><span class="line"><span class="css">                font-size: <span class="number">18px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">color</span>: <span class="built_in">var</span>(--cp-text1);</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            &amp;__text &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">font-size</span>: <span class="number">15px</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-page&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cp-nav-bar</span> <span class="attr">title</span>=<span class="string">&quot;登录&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">cp-nav-bar</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><p>目标：给组件添加类型，使属性和事件可以有提示。</p>
+<ol>
+<li>观察 van-nav-bar 为什么具有提示？</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 导入组件实例</span></span><br><span class="line"><span class="keyword">import</span> NavBar <span class="keyword">from</span> <span class="string">&#x27;./NavBar.vue&#x27;</span></span><br><span class="line"><span class="comment">// 2. 声明 vue 类型模块</span></span><br><span class="line"><span class="keyword">declare</span> <span class="built_in">module</span> <span class="string">&#x27;vue&#x27;</span> &#123;</span><br><span class="line">    <span class="comment">// 3. 给 vue 添加全局组件类型，interface 和之前的合并</span></span><br><span class="line">    <span class="keyword">interface</span> GlobalComponents &#123;</span><br><span class="line">        <span class="comment">// 4. 定义具体组件类型，typeof 获取到组件实例类型</span></span><br><span class="line">        <span class="attr">VanNavBar</span>: <span class="keyword">typeof</span> NavBar;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>给 cp-nav-bar 组件添加类型， <code>types/components.d.ts</code> 。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> CpNavBar <span class="keyword">from</span> <span class="string">&#x27;@/components/CpNavBar.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="built_in">module</span> <span class="string">&#x27;vue&#x27;</span> &#123;</span><br><span class="line">    <span class="keyword">interface</span> GlobalComponents &#123;</span><br><span class="line">        <span class="attr">CpNavBar</span>: <span class="keyword">typeof</span> CpNavBar</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>鼠标放上去，看看 CpNavBar 组件的属性类型提示。</li>
+</ol>
+<h2 id="页面布局-头底"><a href="#页面布局-头底" class="headerlink" title="页面布局-头底"></a>页面布局-头底</h2><h3 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h3><p>实现登录页面的基础布局。</p>
+<img src='/resource/images/Snipaste_2022-12-18_22-29-03.png' class="highlight2"/>
+
+<h3 id="内容-3"><a href="#内容-3" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>基础布局，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-page&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cp-nav-bar</span> <span class="attr">right-text</span>=<span class="string">&quot;注册&quot;</span> @<span class="attr">click-right</span>=<span class="string">&quot;$router.push(&#x27;/register&#x27;)&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">cp-nav-bar</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-head&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h3</span>&gt;</span>密码登录<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>短信验证码登录<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">van-icon</span> <span class="attr">name</span>=<span class="string">&quot;arrow&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">van-icon</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- form 表单 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-other&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">van-divider</span>&gt;</span>第三方登录<span class="tag">&lt;/<span class="name">van-divider</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;icon&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;@/assets/qq.svg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.login</span> &#123;</span></span><br><span class="line"><span class="css">        &amp;-page &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">padding-top</span>: <span class="number">46px</span>;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">        &amp;-head &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">padding</span>: <span class="number">30px</span> <span class="number">30px</span> <span class="number">50px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">            <span class="attribute">justify-content</span>: space-between;</span></span><br><span class="line"><span class="css">            <span class="attribute">align-items</span>: flex-end;</span></span><br><span class="line"><span class="css">            <span class="attribute">line-height</span>: <span class="number">1</span>;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            <span class="selector-tag">h3</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">font-weight</span>: normal;</span></span><br><span class="line"><span class="css">                <span class="attribute">font-size</span>: <span class="number">24px</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            <span class="selector-tag">a</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">font-size</span>: <span class="number">15px</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">        &amp;-other &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">margin-top</span>: <span class="number">60px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">30px</span>;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            <span class="selector-class">.icon</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">                <span class="attribute">justify-content</span>: center;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">                <span class="selector-tag">img</span> &#123;</span></span><br><span class="line"><span class="css">                    <span class="attribute">width</span>: <span class="number">36px</span>;</span></span><br><span class="line"><span class="css">                    <span class="attribute">height</span>: <span class="number">36px</span>;</span></span><br><span class="line"><span class="css">                    <span class="attribute">padding</span>: <span class="number">4px</span>;</span></span><br><span class="line"><span class="css">                &#125;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>全局样式，<code>styles/main.scss</code>。</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">var</span>(--cp-text1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">var</span>(--cp-text2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span>,</span><br><span class="line"><span class="selector-tag">h2</span>,</span><br><span class="line"><span class="selector-tag">h3</span>,</span><br><span class="line"><span class="selector-tag">h4</span>,</span><br><span class="line"><span class="selector-tag">h5</span>,</span><br><span class="line"><span class="selector-tag">h6</span>,</span><br><span class="line"><span class="selector-tag">p</span>,</span><br><span class="line"><span class="selector-tag">ul</span>,</span><br><span class="line"><span class="selector-tag">ol</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="页面布局-表单"><a href="#页面布局-表单" class="headerlink" title="页面布局-表单"></a>页面布局-表单</h2><h3 id="目标-5"><a href="#目标-5" class="headerlink" title="目标"></a>目标</h3><p>实现登录表单的绘制。</p>
+<h3 id="内容-4"><a href="#内容-4" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>CSS 变量定制表单， <code>styles/main.scss</code> 。</li>
+</ol>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 覆盖 vant 主题色</span></span><br><span class="line">--van-primary-<span class="attribute">color</span>: var(--cp-primary);</span><br><span class="line"><span class="comment">// 单元格上下间距</span></span><br><span class="line">--van-cell-vertical-<span class="attribute">padding</span>: <span class="number">14px</span>;</span><br><span class="line"><span class="comment">// 复选框大小</span></span><br><span class="line">--van-checkbox-size: <span class="number">14px</span>;</span><br><span class="line"><span class="comment">// 默认按钮文字大小</span></span><br><span class="line">--van-<span class="selector-tag">button</span>-<span class="attribute">normal</span>-<span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>组件结构， <code>views/Login/index.vue</code> 。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">const</span> agree = ref(<span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">van-form</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">van-field</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入手机号&quot;</span> <span class="attr">type</span>=<span class="string">&quot;tel&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">van-field</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">van-field</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入密码&quot;</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">van-field</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;cp-cell&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">van-checkbox</span> <span class="attr">v-model</span>=<span class="string">&quot;agree&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>我已同意<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span>用户协议<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>及<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span>隐私条款<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">van-checkbox</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;cp-cell&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">van-button</span> <span class="attr">block</span> <span class="attr">round</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>登 录<span class="tag">&lt;/<span class="name">van-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;cp-cell&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span>忘记密码？<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">van-form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.van-form</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">14px</span>;</span><br><span class="line">    <span class="selector-class">.cp-cell</span> &#123;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">52px</span>;</span><br><span class="line">        <span class="attribute">line-height</span>: <span class="number">24px</span>;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">14px</span> <span class="number">16px</span>;</span><br><span class="line">        <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">        <span class="attribute">display</span>: flex;</span><br><span class="line">        <span class="attribute">align-items</span>: center;</span><br><span class="line">        <span class="selector-class">.van-checkbox</span> &#123;</span><br><span class="line">            <span class="selector-tag">a</span> &#123;</span><br><span class="line">                <span class="attribute">color</span>: var(--cp-primary);</span><br><span class="line">                <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">5px</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="图标组件-配置-svg-地图"><a href="#图标组件-配置-svg-地图" class="headerlink" title="图标组件-配置 svg 地图"></a>图标组件-配置 svg 地图</h2><h3 id="目标-6"><a href="#目标-6" class="headerlink" title="目标"></a>目标</h3><p>把 icons 文件夹中的图标打包成 svg 雪碧图，<a target="_blank" rel="noopener" href="https://github.com/vbenjs/vite-plugin-svg-icons">参考文档</a>。</p>
+<h3 id="内容-5"><a href="#内容-5" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>安装插件。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm install vite-plugin-svg-icons -D</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置插件，<code>vite.config.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; fileURLToPath, URL &#125; <span class="keyword">from</span> <span class="string">&#x27;node:url&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vite&#x27;</span></span><br><span class="line"><span class="keyword">import</span> vue <span class="keyword">from</span> <span class="string">&#x27;@vitejs/plugin-vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Components <span class="keyword">from</span> <span class="string">&#x27;unplugin-vue-components/vite&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; VantResolver &#125; <span class="keyword">from</span> <span class="string">&#x27;unplugin-vue-components/resolvers&#x27;</span></span><br><span class="line"><span class="comment">// #1</span></span><br><span class="line"><span class="keyword">import</span> &#123; createSvgIconsPlugin &#125; <span class="keyword">from</span> <span class="string">&#x27;vite-plugin-svg-icons&#x27;</span></span><br><span class="line"><span class="comment">// #2</span></span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span></span><br><span class="line"><span class="comment">// https://vitejs.dev/config/</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineConfig(&#123;</span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">        vue(),</span><br><span class="line">        Components(&#123;</span><br><span class="line">            <span class="attr">dts</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">resolvers</span>: [VantResolver(&#123; <span class="attr">importStyle</span>: <span class="literal">false</span> &#125;)]</span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="comment">// #3</span></span><br><span class="line">        createSvgIconsPlugin(&#123;</span><br><span class="line">            <span class="attr">iconDirs</span>: [path.resolve(process.cwd(), <span class="string">&#x27;src/icons&#x27;</span>)]</span><br><span class="line">        &#125;)</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">resolve</span>: &#123;</span><br><span class="line">        <span class="attr">alias</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;@&#x27;</span>: fileURLToPath(<span class="keyword">new</span> URL(<span class="string">&#x27;./src&#x27;</span>, <span class="keyword">import</span>.meta.url))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>导入到 main.ts。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> pinia <span class="keyword">from</span> <span class="string">&#x27;./stores&#x27;</span></span><br><span class="line"><span class="comment">// mark</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;virtual:svg-icons-register&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;vant/lib/index.css&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./styles/main.scss&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = createApp(App)</span><br><span class="line"></span><br><span class="line">app.use(pinia)</span><br><span class="line">app.use(router)</span><br><span class="line"></span><br><span class="line">app.mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>使用 svg 精灵地图，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- #icon-文件夹名称-图片名称 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">use</span> <span class="attr">href</span>=<span class="string">&quot;#icon-login-eye-off&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="图标组件-封装-svg-组件"><a href="#图标组件-封装-svg-组件" class="headerlink" title="图标组件-封装 svg 组件"></a>图标组件-封装 svg 组件</h2><h3 id="目标-7"><a href="#目标-7" class="headerlink" title="目标"></a>目标</h3><p>把 svg 标签的使用封装成组件，完成密码的可见切换功能。</p>
+<h3 id="内容-6"><a href="#内容-6" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>组件 <code>components/CpIcon.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 提供 name 属性即可</span></span></span><br><span class="line"><span class="javascript">    defineProps &lt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: string</span></span><br><span class="line"><span class="javascript">    &#125; &gt; ()</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">svg</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span> <span class="attr">class</span>=<span class="string">&quot;cp-icon&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">use</span> <span class="attr">:href</span>=<span class="string">&quot;`#icon-$&#123;name&#125;`&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.cp-icon</span> &#123;</span></span><br><span class="line"><span class="css">        // 和 <span class="attribute">font-size</span> 一样大</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">1em</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">height</span>: <span class="number">1em</span>;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>类型 <code>types/components.d.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> CpNavBar <span class="keyword">from</span> <span class="string">&#x27;@/components/CpNavBar.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> CpIcon <span class="keyword">from</span> <span class="string">&#x27;@/components/CpIcon.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="built_in">module</span> <span class="string">&#x27;vue&#x27;</span> &#123;</span><br><span class="line">    <span class="keyword">interface</span> GlobalComponents &#123;</span><br><span class="line">        <span class="attr">CpNavBar</span>: <span class="keyword">typeof</span> CpNavBar</span><br><span class="line">        <span class="attr">CpIcon</span>: <span class="keyword">typeof</span> CpIcon</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>🤔 有些图标可以根据 style 中 color 的值来设置颜色，图标是否有这个功能取决于 UI 做图片时否开启。</p>
+<ol start="3">
+<li>双向绑定数据，并实现切换密码可见功能，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #1 定义表单数据</span></span><br><span class="line"><span class="keyword">const</span> mobile = ref(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> password = ref(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"><span class="comment">// #3 定义控制密码是否显示的变量</span></span><br><span class="line"><span class="keyword">const</span> show = ref(<span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- #2 v-model 进行绑定 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">van-field</span> <span class="attr">v-model</span>=<span class="string">&quot;mobile&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入手机号&quot;</span> <span class="attr">type</span>=<span class="string">&quot;tel&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">van-field</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- #4 把 show 作用于框的类型 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">van-field</span> <span class="attr">v-model</span>=<span class="string">&quot;password&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入密码&quot;</span> <span class="attr">:type</span>=<span class="string">&quot;show ? &#x27;text&#x27; : &#x27;password&#x27;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">button</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- #5 把 show 作用于图标的类型 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- #6 榜单点击事件，控制 show 的切换--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cp-icon</span> @<span class="attr">click</span>=<span class="string">&quot;show = !show&quot;</span> <span class="attr">:name</span>=<span class="string">&quot;`login-eye-$&#123;show ? &#x27;on&#x27; : &#x27;off&#x27;&#125;`&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">cp-icon</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">van-field</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="表单校验"><a href="#表单校验" class="headerlink" title="表单校验"></a>表单校验</h2><h3 id="目标-8"><a href="#目标-8" class="headerlink" title="目标"></a>目标</h3><p>对单个表单项以及整体表单进行校验。</p>
+<h3 id="内容-7"><a href="#内容-7" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>提取表单校验规则（为了其他页面复用），<code>utils/rules.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; FieldRule &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mobileRules: FieldRule[] = [</span><br><span class="line">    &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&#x27;请输入手机号&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">pattern</span>: <span class="regexp">/^1[3-9]\d&#123;9&#125;$/</span>, message: <span class="string">&#x27;手机号格式不正确&#x27;</span> &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> passwordRules = [</span><br><span class="line">    &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&#x27;请输入密码&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">pattern</span>: <span class="regexp">/^\w&#123;8,24&#125;$/</span>, message: <span class="string">&#x27;密码需8-24个字符&#x27;</span> &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; mobileRules, passwordRules &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>通过 van-field 组件上的 rules 属性对单个表单项校验，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; mobileRules, passwordRules &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils/rules&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">van-field</span> <span class="attr">:rules</span>=<span class="string">&quot;mobileRules&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入手机号&quot;</span> <span class="attr">type</span>=<span class="string">&quot;tel&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;mobile&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">van-field</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">van-field</span> <span class="attr">:rules</span>=<span class="string">&quot;passwordRules&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入密码&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;password&quot;</span> <span class="attr">:type</span>=<span class="string">&quot;show ? &#x27;text&#x27; : &#x27;password&#x27;&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>为了触发提交的行为，设置 button 组件为原生 submit 类型按钮。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">van-button</span> <span class="attr">block</span> <span class="attr">round</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">native-type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span> 登 录 <span class="tag">&lt;/<span class="name">van-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>监听表单校验成功后 submit 事件。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">van-form</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span> @<span class="attr">submit</span>=<span class="string">&quot;login&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">van-form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 表单提交</span></span><br><span class="line"><span class="keyword">const</span> login = <span class="function">() =&gt;</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>请勾选我已同意。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; showToast &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span><br><span class="line"><span class="keyword">const</span> login = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!agree.value) <span class="keyword">return</span> Toast(<span class="string">&#x27;请勾选我已同意&#x27;</span>)</span><br><span class="line">    <span class="comment">// 验证完毕，进行登录</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li><p>通过哪个属性给单个表单加校验？</p>
+</li>
+<li><p>怎么给整个表单加校验？</p>
+</li>
+</ul>
+<h2 id="密码登录"><a href="#密码登录" class="headerlink" title="密码登录"></a>密码登录</h2><h3 id="目标-9"><a href="#目标-9" class="headerlink" title="目标"></a>目标</h3><p>通过手机号和密码进行登录。</p>
+<h3 id="内容-8"><a href="#内容-8" class="headerlink" title="内容"></a>内容</h3><blockquote>
+<p>🤔 提供了 100 个测试账号，手机号：13230000001 ~ 13230000100，密码：abc12345。</p>
+</blockquote>
+<ol>
+<li>定义登录的 API 函数，<code>services/user.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; User &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/user&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; request &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 密码登录</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> loginByPassword = <span class="function">(<span class="params">mobile: <span class="built_in">string</span>, password: <span class="built_in">string</span></span>) =&gt;</span> request&lt;User&gt;(<span class="string">&#x27;/login/password&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>, &#123; mobile, password &#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>进行登录，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; loginByPassword &#125; <span class="keyword">from</span> <span class="string">&#x27;@/services/user&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useUserStore &#125; <span class="keyword">from</span> <span class="string">&#x27;@/stores&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useRoute, useRouter &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"><span class="keyword">const</span> store = useUserStore()</span><br><span class="line"><span class="keyword">const</span> router = useRouter()</span><br><span class="line"><span class="keyword">const</span> route = useRoute()</span><br><span class="line"><span class="comment">// 表单提交</span></span><br><span class="line"><span class="keyword">const</span> login = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (!agree.value) <span class="keyword">return</span> Toast(<span class="string">&#x27;请勾选我已同意&#x27;</span>)</span><br><span class="line">    <span class="comment">// 验证完毕，进行登录</span></span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> loginByPassword(mobile.value, password.value)</span><br><span class="line">    store.setUser(res.data)</span><br><span class="line">    <span class="comment">// 如果有回跳地址就进行回跳，没有跳转到个人中心</span></span><br><span class="line">    router.replace((route.query.returnUrl <span class="keyword">as</span> <span class="built_in">string</span>) || <span class="string">&#x27;/user&#x27;</span>)</span><br><span class="line">    showToast(<span class="string">&#x27;登录成功&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>测试。</li>
+</ol>
+<ul>
+<li><p>浏览器输入 <code>http://localhost:5173/login?returnUrl=/user/abc</code> ，登录后观察能否回到原页面 <code>/user/abc</code>。</p>
+</li>
+<li><p>浏览器输入 <code>http://localhost:5173/login</code> ，登录后观察是否跳转到 <code>/user</code> 页面。</p>
+</li>
+</ul>
+<h2 id="短信登录-切换效果"><a href="#短信登录-切换效果" class="headerlink" title="短信登录-切换效果"></a>短信登录-切换效果</h2><h3 id="目标-10"><a href="#目标-10" class="headerlink" title="目标"></a>目标</h3><p>添加短信登录登录的界面切换功能，添加 code 的校验。</p>
+<h3 id="内容-9"><a href="#内容-9" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>完成界面切换，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #1 定义一个切换的变量</span></span><br><span class="line"><span class="keyword">const</span> isPass = ref(<span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-head&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- #2 控制标题 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123;&#123; isPass ? &#x27;密码登录&#x27; : &#x27;短信验证码登录&#x27; &#125;&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- #4 给 a 链接绑定点击事件，修改 isPass --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;isPass = !isPass&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- #3 控制按钮内容 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123; !isPass ? &#x27;密码登录&#x27; : &#x27;短信验证码登录&#x27; &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">van-icon</span> <span class="attr">name</span>=<span class="string">&quot;arrow&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">van-icon</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>完成表单项切换。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">van-field</span> <span class="attr">v-if</span>=<span class="string">&quot;isPass&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;password&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;passwordRules&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入密码&quot;</span> <span class="attr">:type</span>=<span class="string">&quot;show ? &#x27;text&#x27; : &#x27;password&#x27;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cp-icon</span> @<span class="attr">click</span>=<span class="string">&quot;show = !show&quot;</span> <span class="attr">:name</span>=<span class="string">&quot;`login-eye-$&#123;show ? &#x27;on&#x27; : &#x27;off&#x27;&#125;`&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">cp-icon</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">van-field</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">van-field</span> <span class="attr">v-else</span> <span class="attr">placeholder</span>=<span class="string">&quot;短信验证码&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;btn-send&quot;</span>&gt;</span>发送验证码<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">van-field</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改“发送验证码”文字的颜色</span></span><br><span class="line"><span class="comment">// van-form 下添加</span></span><br><span class="line"><span class="selector-class">.btn-send</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: var(--cp-primary);</span><br><span class="line">    &amp;<span class="selector-class">.active</span> &#123;</span><br><span class="line">        <span class="attribute">color</span>: rgba(<span class="number">22</span>,<span class="number">194</span>,<span class="number">163</span>,<span class="number">0.5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>完成 code 校验，定义校验规则 <code>utils/rules.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> codeRules = [</span><br><span class="line">    &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&#x27;请输入验证码&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">pattern</span>: <span class="regexp">/^\d&#123;6&#125;$/</span>, message: <span class="string">&#x27;验证码6个数字&#x27;</span> &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; mobileRules, passwordRules, codeRules &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>使用规则，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        codeRules</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils/rules&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> code = ref(<span class="string">&#x27;&#x27;</span>)</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">van-field</span> <span class="attr">v-else</span> <span class="attr">v-model</span>=<span class="string">&quot;code&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;codeRules&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;短信验证码&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="短信登录-发送短信"><a href="#短信登录-发送短信" class="headerlink" title="短信登录-发送短信"></a>短信登录-发送短信</h2><h3 id="目标-11"><a href="#目标-11" class="headerlink" title="目标"></a>目标</h3><p>实现点击按钮发送验证码和倒计时的功能。</p>
+<h3 id="发送验证码"><a href="#发送验证码" class="headerlink" title="发送验证码"></a>发送验证码</h3><ol>
+<li>定义 CodeType 的类型，<code>types/user.d.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 短信验证码类型，登录|注册|修改手机号|忘记密码|绑定手机号</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> CodeType = <span class="string">&#x27;login&#x27;</span> | <span class="string">&#x27;register&#x27;</span> | <span class="string">&#x27;changeMobile&#x27;</span> | <span class="string">&#x27;forgetPassword&#x27;</span> | <span class="string">&#x27;bindMobile&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>封装 API 接口函数，<code>services/user.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; CodeType &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/user&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; request &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 发送验证码</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> sendMobileCode = <span class="function">(<span class="params">mobile: <span class="built_in">string</span>, <span class="keyword">type</span>: CodeType</span>) =&gt;</span> request(<span class="string">&#x27;/code&#x27;</span>, <span class="string">&#x27;GET&#x27;</span>, &#123; mobile, <span class="keyword">type</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>给发送验证码按钮绑定点击事件和回调，校验是否正在倒计时，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;btn-send&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;send&quot;</span>&gt;</span>发送验证码<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> time = ref(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">const</span> send = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 如果正在进行倒计时，此时 time.value 的值大于 0，不允许发送验证码</span></span><br><span class="line">    <span class="keyword">if</span> (time.value &gt; <span class="number">0</span>) <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>点击发送验证码时，单独校验手机表单项。</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://vant-contrib.gitee.io/vant/#/zh-CN/form#fang-fa">参考文档</a></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 绑定 name 属性 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">van-field</span> <span class="attr">v-model</span>=<span class="string">&quot;mobile&quot;</span> <span class="attr">name</span>=<span class="string">&quot;mobile&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;mobileRules&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入手机号&quot;</span> <span class="attr">type</span>=<span class="string">&quot;tel&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">van-field</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">type</span> FormInstance &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span><br><span class="line"><span class="keyword">const</span> form = ref&lt;FormInstance&gt;()</span><br><span class="line"><span class="keyword">const</span> time = ref(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">const</span> send = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (time.value &gt; <span class="number">0</span>) <span class="keyword">return</span></span><br><span class="line">    <span class="comment">// 验证不通过报错，阻止程序继续执行</span></span><br><span class="line">    <span class="keyword">await</span> form.value?.validate(<span class="string">&#x27;mobile&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 把 form 变量和 van-form 的 ref 属性进行绑定 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">van-form</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span> @<span class="attr">submit</span>=<span class="string">&quot;login&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;form&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>发送短信验证码。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;  sendMobileCode &#125; <span class="keyword">from</span> <span class="string">&#x27;@/services/user&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; showToast &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span><br><span class="line"><span class="keyword">const</span> send = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">await</span> sendMobileCode(mobile.value, <span class="string">&#x27;login&#x27;</span>)</span><br><span class="line">    showToast(<span class="string">&#x27;发送成功&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="进行倒计时"><a href="#进行倒计时" class="headerlink" title="进行倒计时"></a>进行倒计时</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> time = ref(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">const</span> form = ref&lt;FormInstance&gt;()</span><br><span class="line"><span class="comment">// #1 准备装定时器的变量</span></span><br><span class="line"><span class="keyword">let</span> timerId: <span class="built_in">number</span> = -<span class="number">1</span></span><br><span class="line"><span class="keyword">const</span> send = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (time.value &gt; <span class="number">0</span>) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">await</span> form.value?.validate(<span class="string">&#x27;mobile&#x27;</span>)</span><br><span class="line">    <span class="keyword">await</span> sendMobileCode(mobile.value, <span class="string">&#x27;login&#x27;</span>)</span><br><span class="line">    showToast(<span class="string">&#x27;发送成功&#x27;</span>)</span><br><span class="line">    <span class="comment">// #2</span></span><br><span class="line">    time.value = <span class="number">60</span></span><br><span class="line">    <span class="comment">// #3 清除前面的定时器，防止重复开启</span></span><br><span class="line">    <span class="built_in">clearInterval</span>(timerId)</span><br><span class="line">    <span class="comment">// #4 开始倒计时</span></span><br><span class="line">    timerId = <span class="built_in">window</span>.setInterval(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        time.value--</span><br><span class="line">        <span class="keyword">if</span> (time.value &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">window</span>.clearInterval(timerId)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// #5 组件销毁的时候也清理定时器</span></span><br><span class="line">onUnmounted(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">window</span>.clearInterval(timerId)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 界面展示 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;btn-send&quot;</span> <span class="attr">:class</span>=<span class="string">&quot;&#123; active: time &gt; 0 &#125;&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;send&quot;</span>&gt;</span></span><br><span class="line">    &#123;&#123; time &gt; 0 ? `$&#123;time&#125;s后再次发送` : &#x27;发送验证码&#x27; &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="短信登录-进行登录"><a href="#短信登录-进行登录" class="headerlink" title="短信登录-进行登录"></a>短信登录-进行登录</h2><h3 id="目标-12"><a href="#目标-12" class="headerlink" title="目标"></a>目标</h3><p>通过短信进行登录。</p>
+<h3 id="内容-10"><a href="#内容-10" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>封装接口 API，<code>services/user.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 短信登录</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> loginByMobile = <span class="function">(<span class="params">mobile: <span class="built_in">string</span>, code: <span class="built_in">string</span></span>) =&gt;</span> request&lt;User&gt;(<span class="string">&#x27;/login&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>, &#123; mobile, code &#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>合并短信登录，<code>views/Login/index.vue</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> login = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (!agree.value) <span class="keyword">return</span> showToast(<span class="string">&#x27;请勾选我已同意&#x27;</span>)</span><br><span class="line">    <span class="comment">// #mark</span></span><br><span class="line">    <span class="keyword">const</span> res = isPass.value ? <span class="keyword">await</span> loginByPassword(mobile.value, password.value) : <span class="keyword">await</span> loginByMobile(mobile.value, code.value)</span><br><span class="line">    store.setUser(res.data)</span><br><span class="line">    router.replace((route.query.returnUrl <span class="keyword">as</span> <span class="built_in">string</span>) || <span class="string">&#x27;/user&#x27;</span>)</span><br><span class="line">    showToast(<span class="string">&#x27;登录成功&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/08/patient-course05/" rel="prev" title="patient-course05">
+      <i class="fa fa-chevron-left"></i> patient-course05
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/11/patient-course07/" rel="next" title="patient-course07">
+      patient-course07 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">登录页面配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">2.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-%E4%B8%BB%E9%A2%98%E5%AE%9A%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">CSS 主题定制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-1"><span class="nav-number">3.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD"><span class="nav-number">4.</span> <span class="nav-text">自动按需加载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-2"><span class="nav-number">4.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CpNavBar-%E7%BB%84%E4%BB%B6%E5%B0%81%E8%A3%85"><span class="nav-number">5.</span> <span class="nav-text">CpNavBar 组件封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-3"><span class="nav-number">5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84"><span class="nav-number">5.2.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD"><span class="nav-number">5.3.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.4.</span> <span class="nav-text">类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80-%E5%A4%B4%E5%BA%95"><span class="nav-number">6.</span> <span class="nav-text">页面布局-头底</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-4"><span class="nav-number">6.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-3"><span class="nav-number">6.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80-%E8%A1%A8%E5%8D%95"><span class="nav-number">7.</span> <span class="nav-text">页面布局-表单</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-5"><span class="nav-number">7.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-4"><span class="nav-number">7.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E6%A0%87%E7%BB%84%E4%BB%B6-%E9%85%8D%E7%BD%AE-svg-%E5%9C%B0%E5%9B%BE"><span class="nav-number">8.</span> <span class="nav-text">图标组件-配置 svg 地图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-6"><span class="nav-number">8.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-5"><span class="nav-number">8.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E6%A0%87%E7%BB%84%E4%BB%B6-%E5%B0%81%E8%A3%85-svg-%E7%BB%84%E4%BB%B6"><span class="nav-number">9.</span> <span class="nav-text">图标组件-封装 svg 组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-7"><span class="nav-number">9.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-6"><span class="nav-number">9.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E6%A0%A1%E9%AA%8C"><span class="nav-number">10.</span> <span class="nav-text">表单校验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-8"><span class="nav-number">10.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-7"><span class="nav-number">10.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">10.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95"><span class="nav-number">11.</span> <span class="nav-text">密码登录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-9"><span class="nav-number">11.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-8"><span class="nav-number">11.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%95-%E5%88%87%E6%8D%A2%E6%95%88%E6%9E%9C"><span class="nav-number">12.</span> <span class="nav-text">短信登录-切换效果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-10"><span class="nav-number">12.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-9"><span class="nav-number">12.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%95-%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1"><span class="nav-number">13.</span> <span class="nav-text">短信登录-发送短信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-11"><span class="nav-number">13.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E9%80%81%E9%AA%8C%E8%AF%81%E7%A0%81"><span class="nav-number">13.2.</span> <span class="nav-text">发送验证码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E8%A1%8C%E5%80%92%E8%AE%A1%E6%97%B6"><span class="nav-number">13.3.</span> <span class="nav-text">进行倒计时</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%95-%E8%BF%9B%E8%A1%8C%E7%99%BB%E5%BD%95"><span class="nav-number">14.</span> <span class="nav-text">短信登录-进行登录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-12"><span class="nav-number">14.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-10"><span class="nav-number">14.2.</span> <span class="nav-text">内容</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
