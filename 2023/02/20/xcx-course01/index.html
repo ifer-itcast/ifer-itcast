@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 掌握微信开发者工具的使用。 ✔ 掌握 swiper、view、text 等组件的使用。 ✔ 掌握如何进行事件绑定和如何利用 setData 修改数据。 ✔ 掌握如何发布上线一个小程序。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day01_小程序基础">
+<meta property="og:url" content="http://example.com/2023/02/20/xcx-course01/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 掌握微信开发者工具的使用。 ✔ 掌握 swiper、view、text 等组件的使用。 ✔ 掌握如何进行事件绑定和如何利用 setData 修改数据。 ✔ 掌握如何发布上线一个小程序。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/picture_1.9d096873.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_3.ccff823d.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_5.aa77c93a.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_7.4126f5bd.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_9.e1918171.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_11.0b4775e1.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_13.e6f55008.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_15.7bebce75.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_17.e14a7f10.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_19.84cda6fb.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_1.c7a48a9b.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_4.1ed0905f.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_6.188b870b.jpg">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-02-21_14-37-04.png">
+<meta property="og:image" content="http://example.com/resource/images/picture_7.66516cfb.jpg">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-02-21_15-25-28.png">
+<meta property="og:image" content="http://example.com/resource/images/picture_12.f202f1e0.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_13.e96e1a3a.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_2.638360fc.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_4.9ae139af.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_5.59ac8926.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_8.348e70f3.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_10.18c37ddb.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_12.60764fa2.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_2.4a33046c.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_3.2c7550c0.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_5.cd5d07c9.jpg">
+<meta property="og:image" content="http://example.com/resource/images/picture_7.8a18ad59.jpg">
+<meta property="article:published_time" content="2023-02-20T08:18:43.000Z">
+<meta property="article:modified_time" content="2023-03-03T02:32:48.028Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/picture_1.9d096873.jpg">
+
+<link rel="canonical" href="http://example.com/2023/02/20/xcx-course01/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>day01_小程序基础 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/20/xcx-course01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          day01_小程序基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-02-20 16:18:43" itemprop="dateCreated datePublished" datetime="2023-02-20T16:18:43+08:00">2023-02-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-03 10:32:48" itemprop="dateModified" datetime="2023-03-03T10:32:48+08:00">2023-03-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 掌握微信开发者工具的使用。</p>
+<p>✔ 掌握 swiper、view、text 等组件的使用。</p>
+<p>✔ 掌握如何进行事件绑定和如何利用 setData 修改数据。</p>
+<p>✔ 掌握如何发布上线一个小程序。</p>
+<span id="more"></span>
+
+<h2 id="学习准备"><a href="#学习准备" class="headerlink" title="学习准备"></a>学习准备</h2><p>开发微信小程序之前，需要一些准备工作，主要包括了解小程序的特点、申请小程序账号、安装小程序开发者工具。</p>
+<h3 id="了解小程序"><a href="#了解小程序" class="headerlink" title="了解小程序"></a>了解小程序</h3><h4 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h4><p>了解小程序的特点。</p>
+<h4 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h4><p>小程序是一种不需要下载、安装即可使用的应用，它实现了应用触手可及的梦想，用户扫一扫或者搜一下就能打开应用，也实现了用完即走的理念，用户不用安装太多应用，应用随处可用，但又无须安装卸载。</p>
+<ul>
+<li><p>特点：无需下载（小程序体积非常小（不超过2M），用户感知不到下载的过程)。</p>
+</li>
+<li><p>理念：用完即走（用户随时退出小程序，不需要关注小程序本身）。</p>
+</li>
+<li><p>入口：扫一扫、搜一下、群聊…</p>
+</li>
+</ul>
+<h3 id="注册个账号"><a href="#注册个账号" class="headerlink" title="注册个账号"></a>注册个账号</h3><h4 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h4><p>注册个微信小程序开发者账号。</p>
+<h4 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h4><p>开发微信小程序前首先要在<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/wxamp/index/index?lang=zh_CN&token=1240209537">微信公众平台</a>申请一个小程序账号，通过这个账号对小程序的开发进行管理，点击右上角的 “立即注册” 即可进入到小程序开发账号的注册流程。</p>
+<img src="/resource/images/picture_1.9d096873.jpg"/>
+
+<ol>
+<li>选择注册的帐号类型。</li>
+</ol>
+<img src="/resource/images/picture_3.ccff823d.jpg"/>
+
+<ol start="2">
+<li>填写账号信息。</li>
+</ol>
+<img src="/resource/images/picture_5.aa77c93a.jpg"/>
+
+<p>🤔 <font color=e32d40><strong>提示：这里要注意所填写的邮箱要求曾经没有注册过小程序、服务器、订阅号。</strong></font></p>
+<ol start="3">
+<li>邮箱激活。</li>
+</ol>
+<img src="/resource/images/picture_7.4126f5bd.jpg"/>
+
+<ol start="4">
+<li>点击链接激活账号。</li>
+</ol>
+<img src="/resource/images/picture_9.e1918171.jpg"/>
+
+<ol start="5">
+<li>选择主体类型。</li>
+</ol>
+<img src="/resource/images/picture_11.0b4775e1.jpg"/>
+
+<ol start="6">
+<li>主体登记信息。</li>
+</ol>
+<img src="/resource/images/picture_13.e6f55008.jpg"/>
+
+<p>😀 提示：使用自已的微信扫码将自已设置为小程序账号的管理员，将来对小程序的开发及设置进行管理。</p>
+<h3 id="小程序信息"><a href="#小程序信息" class="headerlink" title="小程序信息"></a>小程序信息</h3><p>账号注册完毕后不能立刻使用，还需要进一步对小程序的信息进行完善，如下图所示。</p>
+<img src="/resource/images/picture_15.7bebce75.jpg"/>
+
+<p>🤔 <font color=e32d40><strong>提示：在填写小程序类目时不要选择游戏类型，否则视为小游戏开发了。</strong></font></p>
+<h3 id="获取-AppID"><a href="#获取-AppID" class="headerlink" title="获取 AppID"></a>获取 AppID</h3><p>AppID 是小程序的唯一标识，在对小程序进行开发或者上线发布时都会用到 AppID，获取方式如下图所示。</p>
+<img src="/resource/images/picture_17.e14a7f10.jpg"/>
+
+<p>🤔 提示：在开发和发布小程序时必须要填写 AppID。</p>
+<h3 id="开发者工具"><a href="#开发者工具" class="headerlink" title="开发者工具"></a>开发者工具</h3><p>微信开发者工具是官方提供的专门用于微信小程序开发调试的工具，它提供的主要功能如下。</p>
+<ul>
+<li><p>快速创建小程序项目（起到脚手架的作用）。</p>
+</li>
+<li><p>代码的查看和编辑（相当于 VSCode 作用）。</p>
+</li>
+<li><p>对小程序功能进行调试（相当于浏览器作用）。</p>
+</li>
+<li><p>小程序的预览和发布。</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html">下载</a>并安装微信开发者工具，双击下载好的微信开发者工具，然后后根据引导下一步、下一步操作直到完成，首次打开微信开发者工具时需要先进行登录（打开手机微信扫码登录）。</p>
+<img src="/resource/images/picture_19.84cda6fb.jpg"/>
+
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>小程序开发的方式与 Web 非常类似，使用 JavaScript 做为开发语言，使用 CSS 来实现页面的布局，除此之外还内置了许多功能丰富的组件，如地图、富文本、轮播图等。</p>
+<h3 id="创建小程序"><a href="#创建小程序" class="headerlink" title="创建小程序"></a>创建小程序</h3><p>通过小程序开发者工具创建一个新的项目，步骤如下图所示。</p>
+<ol>
+<li>点击 + 号，新建项目。</li>
+</ol>
+<img src="/resource/images/picture_1.c7a48a9b.jpg"/>
+
+<ol start="2">
+<li>填写项目信息。</li>
+</ol>
+<img src="/resource/images/picture_4.1ed0905f.jpg"/>
+
+<p>如上图所示填写信息时 AppID 填写各自申请的小程序账号的 AppID，不使用云开发，选择 JavaScript 基础模板。</p>
+<p>🤔 提示：创建小程序的目录必须是空目录且当前电脑要处理联网状态。</p>
+<ol start="3">
+<li>启动小程序项目。</li>
+</ol>
+<p>小程序开发者工具会自动启动创建好的小程序并初始了小程序的目录结构，如下图所示。</p>
+<img src="/resource/images/picture_6.188b870b.jpg"/>
+
+<h3 id="小程序目录"><a href="#小程序目录" class="headerlink" title="小程序目录"></a>小程序目录</h3><p>我们将从两个方面入手来介绍小程序的目录结构：文件类型和特定名称的文件。</p>
+<ol>
+<li>先来看文件类型，小程序主要提供了 4 种文件类型。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>类型名称</th>
+<th>作用</th>
+<th>是否必须存在</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.wxml</td>
+<td>用于页面的布局结构，相当于网页中 .html 文件</td>
+<td>是</td>
+</tr>
+<tr>
+<td>.wxss</td>
+<td>用于页面的样式，相当于网页中的 .css 文件</td>
+<td>否</td>
+</tr>
+<tr>
+<td>.js</td>
+<td>用于页面的逻辑</td>
+<td>是</td>
+</tr>
+<tr>
+<td>.json</td>
+<td>用于页面的配置</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<p>小程序的每个页面都是由这 4 种文件类型的文件共同构成的，并且这四个文件必须是相同的名字。</p>
+<ol start="2">
+<li>再来看一些特定名称的文件。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>作用</th>
+<th>是否必须存在</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>app.js</td>
+<td>小程序入口（首先执行的文件）</td>
+<td>是</td>
+</tr>
+<tr>
+<td>app.json</td>
+<td>小程序的全局配置</td>
+<td>是</td>
+</tr>
+<tr>
+<td>app.wxss</td>
+<td>小程序的全局样式</td>
+<td>否</td>
+</tr>
+<tr>
+<td>project.config.json</td>
+<td>小程序开发者工具配置</td>
+<td>是（会自动创建）</td>
+</tr>
+<tr>
+<td>project.private.config.json</td>
+<td>私有的配置</td>
+<td>是（会自动创建）</td>
+</tr>
+<tr>
+<td>sitemap.json</td>
+<td>小程序搜索优化</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<p>以上关于文件类型及特定文件相关的细节，后续学习过程中会逐步讲解，在此只是先对目结构有个大致的了解！</p>
+<h3 id="牛刀练一练"><a href="#牛刀练一练" class="headerlink" title="牛刀练一练"></a>牛刀练一练</h3><p>📝 需求：改变小程序页面中的内容和样式（颜色变为红色、字号变成 20px）。</p>
+<ol>
+<li><code>pages/index/index.wxml</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 第 20 ~ 22 行 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;usermotto&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;user-motto&quot;</span>&gt;</span>&#123;&#123;motto&#125;&#125;~~<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>保存代码后，页面中立刻发生了变化（刷新）。</p>
+<ol start="2">
+<li><code>pages/index/index.wxss</code>。</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 第 17 ~ 19 行 */</span></span><br><span class="line"><span class="selector-class">.usermotto</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">color</span>: red;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于 <code>.js</code> 和 <code>.json</code> 等其它内容我们后面会有专门的章节进行讲解。</p>
+<h3 id="布局小案例"><a href="#布局小案例" class="headerlink" title="布局小案例"></a>布局小案例</h3><h4 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h4><img src="/resource/images/Snipaste_2023-02-21_14-37-04.png"/>
+
+<p>通过页面导航的<a target="_blank" rel="noopener" href="https://st.jingxi.com/index.shtml?cateid=2">小案例</a>，掌握小程序中标签和样式的使用。</p>
+<h4 id="内容-2"><a href="#内容-2" class="headerlink" title="内容"></a>内容</h4><p>常见的标签如下。</p>
+<table>
+<thead>
+<tr>
+<th>组件名（标签）</th>
+<th>作用</th>
+<th>与 html 对比</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>view</td>
+<td>定义一个块级元素</td>
+<td>相当于 html 中的 div 标签</td>
+</tr>
+<tr>
+<td>text</td>
+<td>定义一个行内元素</td>
+<td>相当于 html 中的 span 标签</td>
+</tr>
+</tbody></table>
+<p>常见的选择器如下。</p>
+<table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>示例</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类选择器</td>
+<td>.navs</td>
+<td>根据类名选择元素</td>
+</tr>
+<tr>
+<td>标签选择器</td>
+<td>text、view</td>
+<td>根据标签名选择元素</td>
+</tr>
+<tr>
+<td>后代选择器</td>
+<td>.navs text</td>
+<td>根据标签的嵌套关系选择元素</td>
+</tr>
+</tbody></table>
+<ol>
+<li><p>删除默认代码，<code>pages/index/index.wxml</code> 和 <code>pages/index/index.wxss</code>。</p>
+</li>
+<li><p>准备结构，<code>pages/index/index.wxml</code>。</p>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;navs&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;active&quot;</span>&gt;</span>精选<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span>&gt;</span>手机<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span>&gt;</span>食品<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span>&gt;</span>内衣<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span>&gt;</span>生鲜<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span>&gt;</span>母婴<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>准备样式，<code>pages/index/index.wxss</code>。</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.navs</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: space-around;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">44px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">10px</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">44px</span>;</span><br><span class="line">    <span class="attribute">border-top</span>: <span class="number">1px</span> solid <span class="number">#eee</span>;</span><br><span class="line">    <span class="comment">/* background-color: pink; */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.navs</span> text &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#333</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.navs</span> <span class="selector-class">.active</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#f5a11c</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">2px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.navs</span> <span class="selector-class">.active</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">bottom</span>: <span class="number">6px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">2px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translate</span>(-<span class="number">50%</span>);</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">2px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f5a11c</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>🤔 提示：通过上述的小例子大家要体会在编写小程序页面时与网页布局几乎是一致的，不同是小程序中使用了一些特定的组件（组件），关于样式部分和 CSS 几乎完全一致；样式文件不需要引入到页面当中，它是自动引入并生效的，但是要求页面文件的名称和样式文件的名称必须要一致。</p>
+<h3 id="小程序适配"><a href="#小程序适配" class="headerlink" title="小程序适配"></a>小程序适配</h3><p>小程序主要是运行在手机端的，它也需要像移动 Web 一样来处理不同大小屏幕的适配，小程序中适配的方法非常简单，它提供了专门的长度单位 rpx，它会自动的根据屏幕的大小转换成 px。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 用 px 定义图片的尺寸 */</span></span><br><span class="line"><span class="selector-class">.preview-image</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">375px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">160px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 用 rpx 定义图片的尺寸 */</span></span><br><span class="line"><span class="selector-class">.preview-image</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">750</span>rpx;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">320</span>rpx;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>小程序的屏幕宽度为 750rpx，即一个盒子的宽度如果设置为 750rpx 时会占满整个小程序的屏幕宽度，那在实际开发中如何合理的使用 rpx 长度单位呢？</p>
+<ul>
+<li><p>如果设计稿是 750px 时，设计稿中是多少 px 在小程序中就写成多少 rpx，即 1 : 1 的关系。</p>
+</li>
+<li><p>如果设计稿是 375px 时，设计稿中是多少 px 在小程序中就写在 2 倍的 rpx，即 1 : 2 的关系。</p>
+</li>
+</ul>
+<p>实际开发当中设计稿的尺寸都是【以 750px 做为基准】，因此只需要将设计稿中看到的尺寸写成相应的 rpx 即可。</p>
+<h3 id="轮播图交互"><a href="#轮播图交互" class="headerlink" title="轮播图交互"></a>轮播图交互</h3><p>为了让大家对小程序内置组件有更多的了解，我们再来看下功能更加强大的轮播图组件。</p>
+<table>
+<thead>
+<tr>
+<th>组件名（标签）</th>
+<th>作用</th>
+<th>与 html 对比</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>swiper</td>
+<td>滑块视图容器</td>
+<td>无</td>
+</tr>
+<tr>
+<td>swiper-item</td>
+<td>可滑动的区块（用在 swiper 内部）</td>
+<td>无</td>
+</tr>
+<tr>
+<td>image</td>
+<td>加载图片</td>
+<td>img（注意名称区别）</td>
+</tr>
+</tbody></table>
+<p>通过 swiper 组件的属性对轮播图的功能进行配置，常见的属性包括。</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>indicator-dots</td>
+<td>false</td>
+<td>是否显示面板指示点</td>
+</tr>
+<tr>
+<td>autoplay</td>
+<td>false</td>
+<td>是否自动切换</td>
+</tr>
+<tr>
+<td>circular</td>
+<td>false</td>
+<td>是否采用衔接滑动</td>
+</tr>
+<tr>
+<td>indicator-color</td>
+<td>rgba(0, 0, 0, .3)</td>
+<td>指示点颜色</td>
+</tr>
+<tr>
+<td>indicator-active-color</td>
+<td>#000000</td>
+<td>当前选中的指示点颜色</td>
+</tr>
+<tr>
+<td>… 还有<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/component/swiper.html">更多</a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>🤔 swiper 提供的属性非常多，不过不用头疼，常用的就是上面几个，以后根据开发需求随用随查就可以了。</p>
+<h3 id="去定义数据"><a href="#去定义数据" class="headerlink" title="去定义数据"></a>去定义数据</h3><ol>
+<li><code>pages/index/index.js</code>，删除所有代码。</li>
+</ol>
+<img src="/resource/images/picture_7.66516cfb.jpg"/>
+
+<p>每个页面的 <code>.js</code> 文件中必须调用一个内置全局的函数 Page 并且至少要传入一个空对象做为它的参数，否则会报错，如上图所示。</p>
+<ol start="2">
+<li>在 data 选项中定义数据。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>data</td>
+<td>定义页面初始数据</td>
+<td>类似 vue 组件的 data 函数</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pages/index/index.js</span></span><br><span class="line">Page(&#123;</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">msg</span>: <span class="string">&#x27;大家好，这是我开发的第一个小程序！&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>上述代码中为 <code>pages/index/index.wxml</code> 初始了一个数据 msg，那如何才能将它渲染到页面当中呢？</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pages/index/index.wxml --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 非常简单通过插值（即一对双大括号）来将 msg 渲染到指定的页面位置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span>&#123;&#123;msg&#125;&#125;<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>定义复杂一些的数据试一试。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pages/index/index.js</span></span><br><span class="line">Page(&#123;</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">msg</span>: <span class="string">&#x27;大家好，这是我开发的第一个小程序！&#x27;</span>,</span><br><span class="line">        <span class="comment">// 初始对象类型的数据</span></span><br><span class="line">        <span class="attr">user</span>: &#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">            <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="事件监听器"><a href="#事件监听器" class="headerlink" title="事件监听器"></a>事件监听器</h3><p>小程序中绑定事件的语法有两种，分别为 <code>【bind 事件名=&quot;事件回调&quot;】</code> 和 <code>【bind: 事件名=&quot;事件回调&quot;】</code> 。</p>
+<ol>
+<li>小程序中大部分事件类型与网页中一致，如 blur、focus、change 等，也有个特殊的事件类型需要指出，点击事件在小程序中不是使用 click 事件类型，而是 tap 事件类型。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- page/index/index.wxml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">bind:tap</span>=<span class="string">&quot;sayHi&quot;</span>&gt;</span>点击一下<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上述代码中的 button 也是小程序中内置组件，通过 <code>bind:tap=&quot;sayHi&quot;</code> 添加点击事件的监听，sayHi 是一个方法会在点击按钮时被调用。</p>
+<ol start="2">
+<li>那 sayHi 这个方法我们定义了吗？</li>
+</ol>
+<p>在小程序页面的 <code>.js</code> 文件中直接定义一个方法就可以了，来看具体的用法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pages/index/index.js</span></span><br><span class="line">Page(&#123;</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">msg</span>: <span class="string">&#x27;大家好，这是我开发的第一个小程序！&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;按钮被点击了...&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>🤔 提示：做为对比 Vue 学习，Vue 中方法都是定义在 methods 属性当中，小程序页面中则是直接定义的，这点大家一定要注意区分。</p>
+<h3 id="去更新数据"><a href="#去更新数据" class="headerlink" title="去更新数据"></a>去更新数据</h3><p>📝 需求：用户在点击的时候我们希望将 msg 这个数据修改为 “Hello everybody，this is my first miniprogram!”，如何实现呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pages/index/index.js</span></span><br><span class="line">Page(&#123;</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">msg</span>: <span class="string">&#x27;大家好，这是我开发的第一个小程序！&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;按钮被点击了...&#x27;</span>)</span><br><span class="line">        <span class="comment">// 错误的写法！</span></span><br><span class="line">        <span class="comment">// this.msg = &#x27;Hello everybody，this is my first miniprogram!&#x27;</span></span><br><span class="line">        <span class="comment">// 正确的写法</span></span><br><span class="line">        <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">            <span class="attr">msg</span>: <span class="string">&#x27;Hello everybody，this is my first miniprogram!&#x27;</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>🤔 提示：这里要敲黑板了，小程序中修改数据并不是直接进行赋值，而是要通过调用 <code>this.setData</code> 方法才能实现，将需要修改的数据以对象属性/值的形式传给 <code>this.setData</code> 方法。</p>
+<h3 id="计数器案例"><a href="#计数器案例" class="headerlink" title="计数器案例"></a>计数器案例</h3><h4 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h4><img src="/resource/images/Snipaste_2023-02-21_15-25-28.png"/>
+
+<h4 id="内容-3"><a href="#内容-3" class="headerlink" title="内容"></a>内容</h4><ol>
+<li>简单布局一下页面，用到两个 button 组件和一个 input 组件。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pages/index/index.wxml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>-<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>+<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>监听 button 的点击事件，然后对数值进行加 1 或减 1 操作。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pages/index/index.wxml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">bind:tap</span>=<span class="string">&quot;decrement&quot;</span>&gt;</span>-<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">bind:tap</span>=<span class="string">&quot;increment&quot;</span>&gt;</span>+<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pages/index/index.js</span></span><br><span class="line">Page(&#123;</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="comment">// 初始值为 1</span></span><br><span class="line">        <span class="attr">num</span>: <span class="number">1</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 购物车数量加1</span></span><br><span class="line">    <span class="function"><span class="title">increment</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">            <span class="attr">num</span>: <span class="built_in">this</span>.data.num + <span class="number">1</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 购物车数量减1</span></span><br><span class="line">    <span class="function"><span class="title">decrement</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 数量最小为1</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.data.num &lt;= <span class="number">1</span>) <span class="keyword">return</span></span><br><span class="line">        <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">            <span class="attr">num</span>: <span class="built_in">this</span>.data.num - <span class="number">1</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>将按钮修改后的结果显示在 input 组件中。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">bind:tap</span>=<span class="string">&quot;increment&quot;</span>&gt;</span>-<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">value</span>=<span class="string">&quot;&#123;&#123;num&#125;&#125;&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">bind:tap</span>=<span class="string">&quot;decrement&quot;</span>&gt;</span>+<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>🤔 提示：为组件的属性绑定数据时也必须使用插值即双大括号 ，这一点与 Vue 的属性绑定不一致。</p>
+<h3 id="小程序配置"><a href="#小程序配置" class="headerlink" title="小程序配置"></a>小程序配置</h3><p>小程序的配置如窗口的颜色、标题、自定义组件、底部 tab 栏等都是通过配置文件来实现的，即 <code>.json</code> 类型的文件。</p>
+<p>配置文件又分为【全局配置 <code>app.json</code> 】和【页面配置 <code>页面.json</code> 】，我们先来学习全局的配置。</p>
+<h4 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h4><table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>类型</th>
+<th>是否必须</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pages</td>
+<td>string[]</td>
+<td>是</td>
+<td>页面路径列表</td>
+</tr>
+<tr>
+<td>window</td>
+<td>object</td>
+<td>否</td>
+<td>全局的默认窗口表现</td>
+</tr>
+<tr>
+<td>tabBar</td>
+<td>object</td>
+<td>否</td>
+<td>底部 tab 栏的表现</td>
+</tr>
+<tr>
+<td>entryPagePath</td>
+<td>string</td>
+<td>否</td>
+<td>小程序默认启动首页</td>
+</tr>
+</tbody></table>
+<h5 id="pages"><a href="#pages" class="headerlink" title="pages"></a>pages</h5><p>pages 的值是一个数组，<font color=e32d40><strong>所有页面的路径都要写在这个数组里，否则页面无法被访问到</strong></font>，数组的第一个单元为小程序的启动首页。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;pages&quot;</span>: [<span class="string">&quot;pages/index/index&quot;</span>, <span class="string">&quot;pages/logs/logs&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>新建一个文件夹，然后在此文件夹上右键选择【新建 Page】，然后输入页面名称（如：demo）然后敲回车，此时便会创建出 4 个文件，分别为 <code>demo.wxml</code>、<code>demo.js</code>、<code>demo.wxss</code>、<code>demo.json</code>，这 4 个文件共同组成了一个完整页面，并且配置文件 <code>app.json</code> 当中也会自动的将这个新建的页面路径添加进来。</li>
+</ol>
+<img src="/resource/images/picture_12.f202f1e0.jpg"/>
+
+<ol start="2">
+<li>在 <code>pages/index/index</code> 页面中添加一个链接并跳转到刚刚创建的 demo 页面。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>组件名</th>
+<th>作用</th>
+<th>与 htm 对比</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>navigator</td>
+<td>地址跳转</td>
+<td>相当于 html 中的 a 标签</td>
+</tr>
+</tbody></table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pages/index/index.wxml --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 相对路径 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">navigator</span> <span class="attr">url</span>=<span class="string">&quot;./demo&quot;</span>&gt;</span>跳转到 demo 页面<span class="tag">&lt;/<span class="name">navigator</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 绝对路径 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">navigator</span> <span class="attr">url</span>=<span class="string">&quot;/pages/index/demo&quot;</span>&gt;</span>跳转到 demo 页面<span class="tag">&lt;/<span class="name">navigator</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>🤔 提示：上述两种情况都可以正常的跳转到 demo 页面，但是如果将 <code>app.json</code> 中的 demo 页面路径删除后，则不能成功跳转了（点击跳转链接后没有任何反应），因此我们必须要把页面的路径填写到 pages 的配置项中。</p>
+<p>🤔 提示：小程序页面的跳转既支持相对路径（以 . 或 .. 开头）也支持绝对路径（以 / 开头），绝对路径 / 指的是小程序的根目录。</p>
+<h5 id="window"><a href="#window" class="headerlink" title="window"></a>window</h5><p>window 的值是一个对象，通过它可以全局配置小程序的状态栏、导航条、标题、窗口背景色。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>navigationBarTitleText</td>
+<td>string</td>
+<td>空白</td>
+<td>导航栏标题文字内容</td>
+</tr>
+<tr>
+<td>navigationBarTextStyle</td>
+<td>string</td>
+<td>black</td>
+<td>导航栏标题颜色，仅支持 black / white</td>
+</tr>
+<tr>
+<td>navigationBarBackgroundColor</td>
+<td>16 进制颜色</td>
+<td>#00000</td>
+<td>导航栏背景颜色，如 #000000</td>
+</tr>
+<tr>
+<td>navigationStyle</td>
+<td>string</td>
+<td>default</td>
+<td>导航栏样式，仅支持 default / custom</td>
+</tr>
+<tr>
+<td>enablePullDownRefresh</td>
+<td>boolean</td>
+<td>false</td>
+<td>是否开启全局的下拉刷新</td>
+</tr>
+<tr>
+<td>… 还有<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#window">更多</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;pages&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;pages/index/index&quot;</span>,</span><br><span class="line">        <span class="string">&quot;pages/logs/logs&quot;</span>,</span><br><span class="line">        <span class="string">&quot;pages/demo/demo&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;window&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;navigationBarTitleText&quot;</span>: <span class="string">&quot;小程序示例&quot;</span>,</span><br><span class="line">        <span class="string">&quot;navigationBarTextStyle&quot;</span>: <span class="string">&quot;white&quot;</span>,</span><br><span class="line">        <span class="string">&quot;navigationBarBackgroundColor&quot;</span>: <span class="string">&quot;#f5a11c&quot;</span>,</span><br><span class="line">        <span class="string">&quot;enablePullDownRefresh&quot;</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="tabBar"><a href="#tabBar" class="headerlink" title="tabBar"></a>tabBar</h5><p>tabBar 定义小程序 tab 栏的表现，如下图即所谓的 tab 栏。</p>
+<img src="/resource/images/picture_13.e96e1a3a.jpg"/>
+
+<p>定义 tab 的内容有些多，大家参照着上图和下面的表格来对小程序的 tab 栏进行配置。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>是否必须</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>list</td>
+<td>array</td>
+<td>无</td>
+<td>是</td>
+<td>tab 的列表，详见 list 属性说明，最少 2 个、最多 5 个 tab</td>
+</tr>
+<tr>
+<td>color</td>
+<td>16 进制颜色</td>
+<td>无</td>
+<td>否</td>
+<td>tab 上的文字默认颜色，仅支持十六进制颜色</td>
+</tr>
+<tr>
+<td>selectedColor</td>
+<td>16 进制颜色</td>
+<td>无</td>
+<td>否</td>
+<td>tab 上的文字选中时的颜色，仅支持十六进制颜色</td>
+</tr>
+<tr>
+<td>backgroundColor</td>
+<td>16 进制颜色</td>
+<td>无</td>
+<td>否</td>
+<td>tab 的背景色，仅只持 16 进制颜色</td>
+</tr>
+<tr>
+<td>borderStyle</td>
+<td>string</td>
+<td>black</td>
+<td>否</td>
+<td>tabbar 上边框的颜色， 仅支持 black / white</td>
+</tr>
+<tr>
+<td>position</td>
+<td>string</td>
+<td>bottom</td>
+<td>否</td>
+<td>tabBar 的位置，仅支持 bottom / top</td>
+</tr>
+</tbody></table>
+<p>上述配置中 list 具体又包含以下内容。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>是否必须</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pagePath</td>
+<td>string</td>
+<td></td>
+<td>是</td>
+<td>页面路径，必须在 pages 中先定义</td>
+</tr>
+<tr>
+<td>text</td>
+<td>string</td>
+<td></td>
+<td>是</td>
+<td>tab 上按钮文字</td>
+</tr>
+<tr>
+<td>iconPath</td>
+<td>string</td>
+<td></td>
+<td>否</td>
+<td>图片路径，icon 大小限制为 40kb，建议尺寸为 81px * 81px，不支持网络图片，当 position 为 top 时，不显示 icon</td>
+</tr>
+<tr>
+<td>selectedIconPath</td>
+<td>string</td>
+<td></td>
+<td>否</td>
+<td>选中时的图片路径，icon 大小限制为 40kb，建议尺寸为 81px * 81px，不支持网络图片，当 position 为 top 时，不显示 icon</td>
+</tr>
+</tbody></table>
+<p>以上的配置不用刻意的去背，根据需要随时查看文档就可以，以下为完整示例代码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;pages&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;pages/index/index&quot;</span>,</span><br><span class="line">        <span class="string">&quot;pages/logs/logs&quot;</span>,</span><br><span class="line">        <span class="string">&quot;pages/demo/demo&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;window&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;navigationBarTitleText&quot;</span>: <span class="string">&quot;小程序示例&quot;</span>,</span><br><span class="line">        <span class="string">&quot;navigationBarTextStyle&quot;</span>: <span class="string">&quot;white&quot;</span>,</span><br><span class="line">        <span class="string">&quot;navigationBarBackgroundColor&quot;</span>: <span class="string">&quot;#f5a11c&quot;</span>,</span><br><span class="line">        <span class="string">&quot;enablePullDownRefresh&quot;</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&quot;tabBar&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;color&quot;</span>: <span class="string">&quot;#999&quot;</span>,</span><br><span class="line">        <span class="string">&quot;selectedColor&quot;</span>: <span class="string">&quot;#e93b3d&quot;</span>,</span><br><span class="line">        <span class="string">&quot;backgroundColor&quot;</span>: <span class="string">&quot;#fff&quot;</span>,</span><br><span class="line">        <span class="string">&quot;list&quot;</span>: [&#123;</span><br><span class="line">                <span class="string">&quot;pagePath&quot;</span>: <span class="string">&quot;pages/index/index&quot;</span>,</span><br><span class="line">                <span class="string">&quot;text&quot;</span>: <span class="string">&quot;首页&quot;</span>,</span><br><span class="line">                <span class="string">&quot;iconPath&quot;</span>: <span class="string">&quot;static/tabbar/home.png&quot;</span>,</span><br><span class="line">                <span class="string">&quot;selectedIconPath&quot;</span>: <span class="string">&quot;static/tabbar/home-active.png&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">&quot;pagePath&quot;</span>: <span class="string">&quot;pages/contact/contact&quot;</span>,</span><br><span class="line">                <span class="string">&quot;text&quot;</span>: <span class="string">&quot;资讯&quot;</span>,</span><br><span class="line">                <span class="string">&quot;iconPath&quot;</span>: <span class="string">&quot;static/tabbar/contact.png&quot;</span>,</span><br><span class="line">                <span class="string">&quot;selectedIconPath&quot;</span>: <span class="string">&quot;static/tabbar/contact-active.png&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">&quot;pagePath&quot;</span>: <span class="string">&quot;pages/message/message&quot;</span>,</span><br><span class="line">                <span class="string">&quot;text&quot;</span>: <span class="string">&quot;消息&quot;</span>,</span><br><span class="line">                <span class="string">&quot;iconPath&quot;</span>: <span class="string">&quot;static/tabbar/message.png&quot;</span>,</span><br><span class="line">                <span class="string">&quot;selectedIconPath&quot;</span>: <span class="string">&quot;static/tabbar/message-active.png&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">&quot;pagePath&quot;</span>: <span class="string">&quot;pages/profile/profile&quot;</span>,</span><br><span class="line">                <span class="string">&quot;text&quot;</span>: <span class="string">&quot;我的&quot;</span>,</span><br><span class="line">                <span class="string">&quot;iconPath&quot;</span>: <span class="string">&quot;static/tabbar/profile.png&quot;</span>,</span><br><span class="line">                <span class="string">&quot;selectedIconPath&quot;</span>: <span class="string">&quot;static/tabbar/profile-active.png&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>🤔 提示：全局配置 tabBar 中的图片只能使用本地路径不支持网络路径。</p>
+<h4 id="页面配置"><a href="#页面配置" class="headerlink" title="页面配置"></a>页面配置</h4><p>页面配置只针对某个页面生效，如 <code>index.json</code> 是针对 index 页面生效， <code>demo.json</code> 是针对页面 demo 生效；页面的部分配置可以覆盖全局 <code>app.json</code> 中的配置，常见的配置如下表。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>是否必须</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>navigationBarTitleText</td>
+<td>string</td>
+<td>空白</td>
+<td>否</td>
+<td>导航栏标题文字内容</td>
+</tr>
+<tr>
+<td>navigationBarTextStyle</td>
+<td>string</td>
+<td>black</td>
+<td>否</td>
+<td>导航栏标题颜色，仅支持 black / white</td>
+</tr>
+<tr>
+<td>navigationBarBackgroundColor</td>
+<td>16 进制颜色</td>
+<td>#00000</td>
+<td>否</td>
+<td>导航栏背景颜色，如 #000000</td>
+</tr>
+<tr>
+<td>navigationStyle</td>
+<td>string</td>
+<td>default</td>
+<td>否</td>
+<td>导航栏样式，仅支持 default / custom</td>
+</tr>
+<tr>
+<td>enablePullDownRefresh</td>
+<td>boolean</td>
+<td>false</td>
+<td>否</td>
+<td>是否开启全局的下拉刷新</td>
+</tr>
+</tbody></table>
+<p>🤔 上表中的配置内容其实是全局配置中 window 部分的内容。</p>
+<h3 id="字体图标"><a href="#字体图标" class="headerlink" title="字体图标"></a>字体图标</h3><p><a target="_blank" rel="noopener" href="https://www.iconfont.cn/?spm=a313x.7781069.1998910419.d4d0a486a">iconfont</a></p>
+<p>资源管理 =&gt; 我的项目 =&gt; 新建项目 =&gt; 上传图标至项目 =&gt; 上传图标 =&gt; 去除颜色并提交 =&gt; 找到生成的链接保存至项目 =&gt; 重命名为 <code>fonts.wxss</code> =&gt; <code>app.wxss</code> 中代码如下。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* https://at.alicdn.com/t/c/font_3908367_06uboa8wraks.css?spm=a313x.7781069.1998910419.81&amp;file=font_3908367_06uboa8wraks.css */</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">&#x27;./fonts.wxss&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p> <code>pages/index/index.wxml</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;iconfont icon-yuedu&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>🤔 提示：小程序也可以使用字体图标且与网页中应用字体图标的方法一致，然而有一点要注意小程序样式中的静态资源不支持本地路径，只能使用网络路径（http 或 https）或者 base64，因此在引用字体标时不要写本地路径。</p>
+<h3 id="背景图片"><a href="#背景图片" class="headerlink" title="背景图片"></a>背景图片</h3><p>下面给大家演示一下在 <code>.wxss</code> 中是如何使用图片资源的（和字体图标同理，只能用线上或 base64）。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200</span>rpx;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200</span>rpx;</span><br><span class="line">    <span class="comment">/* 本地路径不支持 */</span></span><br><span class="line">    <span class="comment">/* background-image: url(&#x27;/assets/xxx.jpg&#x27;); */</span></span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="string">&#x27;https://xxx.com/uploads/xxx.jpg&#x27;</span>);</span><br><span class="line">    <span class="comment">/* background: url(&#x27;https://pinia.vuejs.org/logo.svg&#x27;) no-repeat; */</span></span><br><span class="line">    <span class="comment">/* background-size: contain; */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="开发调试"><a href="#开发调试" class="headerlink" title="开发调试"></a>开发调试</h2><p>任何程序开发都离不开调试，小程序开发者工具自带了调试工具，下面我们就来学习小程序开发者工具的调试功能。</p>
+<h3 id="关于调试器"><a href="#关于调试器" class="headerlink" title="关于调试器"></a>关于调试器</h3><img src="/resource/images/picture_2.638360fc.jpg"/>
+
+<p>上图中的 【Wxml】 是用来显示小程序页面的结构和样式，【Console】 控制台，【Network】 查看网络请求，【AppData】 查看组件本地数据，【终端】创建命令行窗口等。</p>
+<h3 id="预览和真机调试"><a href="#预览和真机调试" class="headerlink" title="预览和真机调试"></a>预览和真机调试</h3><p>在大部情况下我们编写的代码会在开发者工具的模拟器中查看到效果，我们还可以在真机中进行预览或调试小程序，这个功能是由小程序开发者工具提供的，如下图所示。</p>
+<img src="/resource/images/picture_4.9ae139af.jpg"/>
+
+<p>如上图所示点击预览或者真机调试等待片刻会出现一个二维码，<strong>管理员或指定的开发成员</strong>才可以扫码在真机上查看小程序，如果点击的是真机调试时还会自动打开一个调试面板对真机上的小程序进行调试。</p>
+<p>🤔 提示：在教室由于网络的原因，预览和真机调试功能的功能可能无法演示，回家后自行测试一下！</p>
+<h3 id="关于开发成员"><a href="#关于开发成员" class="headerlink" title="关于开发成员"></a>关于开发成员</h3><p>这里有个问题，指定的开发成员是什么意思呢？</p>
+<p>开发成员就是一个团队共同开发同一个小程序的情形，在小程序管理后台可以添加开发成员，添加了开发成员后大家就可以使用同一个 AppID 开发同一个小程序了。</p>
+<p>我们来学习一下如何添加开发成员，<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/wxamp/index/index?lang=zh_CN&token=1240209537">登录小程序管理后台</a>，找到【成员管理】，如下图。</p>
+<img src="/resource/images/picture_5.59ac8926.jpg"/>
+
+<p>如上图中的步骤，根据【微信号】添加成员即可，大家可以互相添加成员测试一下该功能的应用。</p>
+<h3 id="添加编译模式"><a href="#添加编译模式" class="headerlink" title="添加编译模式"></a>添加编译模式</h3><p>编译模式是允许开发者指定某个页面来单独开发调试，首先要掌握编译模式的添加步骤。</p>
+<img src="/resource/images/picture_8.348e70f3.jpg"/>
+
+<img src="/resource/images/picture_10.18c37ddb.jpg"/>
+
+<p>当添加了编译模式后，再对编译模式进行切换就可以单独针对某个页面进行开发调试了。</p>
+<h3 id="刷新和热重载"><a href="#刷新和热重载" class="headerlink" title="刷新和热重载"></a>刷新和热重载</h3><p>早期小程序开发者工具是没有刷新的功能，只有编译功能，即每次修改代码后都会将页面重新编译，这种情况下开发效率比较低，现在的小程序开发工具中支持了刷新和热重载的功能。</p>
+<img src="/resource/images/picture_12.60764fa2.jpg"/>
+
+<p>编译会对小程序重新打包，因此执行时间较长。</p>
+<p>刷新是在不重新编译的情况对当前整个页面进行刷新，而热重载是页面的局部刷新即热更新的功能。</p>
+<p>🤔 提示： <code>.json</code> 类型文件和 <code>app.js</code> 不支持热重载的功能，代码修改后会重新编译整个小程序。</p>
+<h2 id="发布上线"><a href="#发布上线" class="headerlink" title="发布上线"></a>发布上线</h2><p>小程序开发完毕后，最后一个环节就是将小程序发布到微信小程序的应用商店中。</p>
+<h3 id="上传代码"><a href="#上传代码" class="headerlink" title="上传代码"></a>上传代码</h3><p>小程序开发并调试完毕后直接点击【上传】按钮，填写版本信息后小程序会被上传到微信的服务器当中，如下图所示。</p>
+<img src="/resource/images/picture_2.4a33046c.jpg"/>
+
+<p>在上传小程序代码时有一点大家需要注意，微信官方要求小程序的体积不能超过 2M，超过 2M 时上传不会成功，要解决这个问题可以采用分包的功能，这个功能我们在后面再学习。</p>
+<h3 id="文件忽略"><a href="#文件忽略" class="headerlink" title="文件忽略"></a>文件忽略</h3><p>在小程序的开发阶段，项目目录中难免会有一些与代码逻辑无关的文件，如页面中用到的图片、文档等，这些文件会占用小程序的代码体积（不能超过 2M），导致无法实现预览、真机调试和上传等功能。</p>
+<p>我们有两个方法解决：一种是将不用的图片和文档等删除，另一个种方法是通过配置来忽略这些文件。</p>
+<p>在 <code>project.config.json</code> 中进行配置忽略文件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;miniprogramRoot&quot;</span>: <span class="string">&quot;miniprogram/&quot;</span>,</span><br><span class="line">    <span class="string">&quot;packOptions&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;ignore&quot;</span>: [&#123;</span><br><span class="line">                <span class="string">&quot;type&quot;</span>: <span class="string">&quot;folder&quot;</span>,</span><br><span class="line">                <span class="string">&quot;value&quot;</span>: <span class="string">&quot;static/uploads&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">&quot;type&quot;</span>: <span class="string">&quot;file&quot;</span>,</span><br><span class="line">                <span class="string">&quot;value&quot;</span>: <span class="string">&quot;ui.zip&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>&quot;type&quot;: &quot;folder&quot;</code> 忽略文件目录，”value” 用来指明具体忽略的文件目录。</p>
+</li>
+<li><p><code>&quot;type&quot;: &quot;file&quot;</code> 忽略文件，”value” 用来指明具体忽略的文件。</p>
+</li>
+</ul>
+<p>🤔 提示：被忽略的文件不会被打包到小程序项目当中，因此如果项目中引用了这些图片，图片将无法被加载显示。</p>
+<h3 id="体验版本"><a href="#体验版本" class="headerlink" title="体验版本"></a>体验版本</h3><p>上一步骤只是将代码上传到了小程序的官方服务器上，普通用户还是无法通过小程序商店搜索到，此时可以先将小程序设定为【体验版本】，通过添加或申请体验权限来访问小程序。</p>
+<p>每次上传新代码成功后就可以设置【体验版本】了，步骤如下图。</p>
+<img src="/resource/images/picture_3.2c7550c0.jpg"/>
+
+<p>成功设置体验版本后会后自动生成一个二维码，分享这个二维码用户可根据提示申请体验权限，小程序管理员在手机微信中允许后方可访问。</p>
+<p>针对公司内部成员如产品、测试、运营人员，可以事先在后台添加为体验成员，这样直接扫码就可以访问小程序无需再申请权限。如下图所示。</p>
+<img src="/resource/images/picture_5.cd5d07c9.jpg"/>
+
+<p>添加体验成员仍然是通过【微信号】来添加的，大家互相添加一下。</p>
+<h3 id="提交审核"><a href="#提交审核" class="headerlink" title="提交审核"></a>提交审核</h3><p>小程序全面测试完毕后还需要提交给小程序官方审核，主要是看小程序<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/community/develop/doc/000c266f094ab00976ad5c0d251809">有无违规的内容</a>。</p>
+<img src="/resource/images/picture_7.8a18ad59.jpg"/>
+
+<h3 id="发布版本"><a href="#发布版本" class="headerlink" title="发布版本"></a>发布版本</h3><p>审核通过后就可发布小程序了，发布成功后所有用户都可以在小程序应用商品中找到我们开发的小程序了。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/12/patient-course13/" rel="prev" title="patient-course13">
+      <i class="fa fa-chevron-left"></i> patient-course13
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/02/20/xcx-course02/" rel="next" title="day02_小程序进阶">
+      day02_小程序进阶 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%87%86%E5%A4%87"><span class="nav-number">2.</span> <span class="nav-text">学习准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E5%B0%8F%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.1.</span> <span class="nav-text">了解小程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">2.1.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E4%B8%AA%E8%B4%A6%E5%8F%B7"><span class="nav-number">2.2.</span> <span class="nav-text">注册个账号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF"><span class="nav-number">2.3.</span> <span class="nav-text">小程序信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96-AppID"><span class="nav-number">2.4.</span> <span class="nav-text">获取 AppID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7"><span class="nav-number">2.5.</span> <span class="nav-text">开发者工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">3.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%B0%8F%E7%A8%8B%E5%BA%8F"><span class="nav-number">3.1.</span> <span class="nav-text">创建小程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9B%AE%E5%BD%95"><span class="nav-number">3.2.</span> <span class="nav-text">小程序目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%9B%E5%88%80%E7%BB%83%E4%B8%80%E7%BB%83"><span class="nav-number">3.3.</span> <span class="nav-text">牛刀练一练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%83%E5%B1%80%E5%B0%8F%E6%A1%88%E4%BE%8B"><span class="nav-number">3.4.</span> <span class="nav-text">布局小案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">3.4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-2"><span class="nav-number">3.4.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%82%E9%85%8D"><span class="nav-number">3.5.</span> <span class="nav-text">小程序适配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AE%E6%92%AD%E5%9B%BE%E4%BA%A4%E4%BA%92"><span class="nav-number">3.6.</span> <span class="nav-text">轮播图交互</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%BB%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE"><span class="nav-number">3.7.</span> <span class="nav-text">去定义数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E5%99%A8"><span class="nav-number">3.8.</span> <span class="nav-text">事件监听器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%BB%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="nav-number">3.9.</span> <span class="nav-text">去更新数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E6%95%B0%E5%99%A8%E6%A1%88%E4%BE%8B"><span class="nav-number">3.10.</span> <span class="nav-text">计数器案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-3"><span class="nav-number">3.10.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-3"><span class="nav-number">3.10.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%85%8D%E7%BD%AE"><span class="nav-number">3.11.</span> <span class="nav-text">小程序配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE"><span class="nav-number">3.11.1.</span> <span class="nav-text">全局配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#pages"><span class="nav-number">3.11.1.1.</span> <span class="nav-text">pages</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#window"><span class="nav-number">3.11.1.2.</span> <span class="nav-text">window</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#tabBar"><span class="nav-number">3.11.1.3.</span> <span class="nav-text">tabBar</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E9%85%8D%E7%BD%AE"><span class="nav-number">3.11.2.</span> <span class="nav-text">页面配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87"><span class="nav-number">3.12.</span> <span class="nav-text">字体图标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87"><span class="nav-number">3.13.</span> <span class="nav-text">背景图片</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">开发调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E8%B0%83%E8%AF%95%E5%99%A8"><span class="nav-number">4.1.</span> <span class="nav-text">关于调试器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%A7%88%E5%92%8C%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95"><span class="nav-number">4.2.</span> <span class="nav-text">预览和真机调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%BC%80%E5%8F%91%E6%88%90%E5%91%98"><span class="nav-number">4.3.</span> <span class="nav-text">关于开发成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%BC%96%E8%AF%91%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.4.</span> <span class="nav-text">添加编译模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%B7%E6%96%B0%E5%92%8C%E7%83%AD%E9%87%8D%E8%BD%BD"><span class="nav-number">4.5.</span> <span class="nav-text">刷新和热重载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E4%B8%8A%E7%BA%BF"><span class="nav-number">5.</span> <span class="nav-text">发布上线</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E4%BB%A3%E7%A0%81"><span class="nav-number">5.1.</span> <span class="nav-text">上传代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%BF%BD%E7%95%A5"><span class="nav-number">5.2.</span> <span class="nav-text">文件忽略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%93%E9%AA%8C%E7%89%88%E6%9C%AC"><span class="nav-number">5.3.</span> <span class="nav-text">体验版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E5%AE%A1%E6%A0%B8"><span class="nav-number">5.4.</span> <span class="nav-text">提交审核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E7%89%88%E6%9C%AC"><span class="nav-number">5.5.</span> <span class="nav-text">发布版本</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
