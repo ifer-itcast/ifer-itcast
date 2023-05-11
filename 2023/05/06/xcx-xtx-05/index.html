@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 掌握 SKU 模块的业务逻辑。 ✔ 掌握购物车模块的业务逻辑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05_小兔鲜">
+<meta property="og:url" content="http://example.com/2023/05/06/xcx-xtx-05/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 掌握 SKU 模块的业务逻辑。 ✔ 掌握购物车模块的业务逻辑。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/sku_picture_1.png">
+<meta property="og:image" content="http://example.com/resource/images/sku_picture_2.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-05-09_09-08-17.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-05-09_09-44-43.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-05-09_10-19-05.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-05-09_10-37-27.png">
+<meta property="article:published_time" content="2023-05-06T00:48:06.000Z">
+<meta property="article:modified_time" content="2023-05-11T07:42:51.711Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/sku_picture_1.png">
+
+<link rel="canonical" href="http://example.com/2023/05/06/xcx-xtx-05/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>05_小兔鲜 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/06/xcx-xtx-05/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          05_小兔鲜
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-06 08:48:06" itemprop="dateCreated datePublished" datetime="2023-05-06T08:48:06+08:00">2023-05-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 15:42:51" itemprop="dateModified" datetime="2023-05-11T15:42:51+08:00">2023-05-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 掌握 SKU 模块的业务逻辑。</p>
+<p>✔ 掌握购物车模块的业务逻辑。</p>
+<span id="more"></span>
+
+<p>学会使用<a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/">插件市场</a>，下载并使用 <code>SKU</code> 组件，实现<strong>商品详情页</strong>规格展示和交互。</p>
+<h2 id="存货单位（SKU）"><a href="#存货单位（SKU）" class="headerlink" title="存货单位（SKU）"></a>存货单位（SKU）</h2><p><strong>SKU 概念</strong></p>
+<p>存货单位（Stock Keeping Unit），库存管理的最小可用单元，通常称为“单品”。</p>
+<p><code>SKU</code> 常见于电商领域，对于前端工程师而言，更多关注 <a target="_blank" rel="noopener" href="https://juejin.cn/post/7002746459456176158">SKU 算法</a> 和 <strong>用户交互体验</strong>。</p>
+<h2 id="插件市场"><a href="#插件市场" class="headerlink" title="插件市场"></a>插件市场</h2><p><code>SKU</code> 属于电商常见业务，插件市场有现成的 <code>SKU</code> 插件，我们在 <a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/">uni-app 插件市场</a> 下载并在项目中使用即可。</p>
+<p><img src="/resource/images/sku_picture_1.png" alt="插件市场"></p>
+<h3 id="下载-SKU-插件"><a href="#下载-SKU-插件" class="headerlink" title="下载 SKU 插件"></a>下载 SKU 插件</h3><p>经过综合评估，我们选择该<a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/plugin?id=2848">SKU 插件</a>，扫码可以体验。</p>
+<p><img src="/resource/images/sku_picture_2.png" alt="插件市场"></p>
+<p>Q：如何评估第三方插件的质量？</p>
+<p>A：查看插件的<strong>评分、评价、下载量、更新频率以及文档完整性</strong>，以确保插件具有良好的社区口碑、兼容性、性能和维护状况。</p>
+<h3 id="使用-SKU-插件"><a href="#使用-SKU-插件" class="headerlink" title="使用 SKU 插件"></a>使用 SKU 插件</h3><ol>
+<li><p>复制 <code>vk-data-goods-sku-popup</code> 和 <code>vk-data-input-number-box</code> 到项目的根 <code>components</code> 目录下。</p>
+</li>
+<li><p>禁用 <code>eslint</code>，<code>vk-data-goods-sku-popup.vue</code> 和 <code>vk-data-input-number-box.vue</code> 组件。</p>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="comment">/* eslint-disable */</span></span></span><br><span class="line"><span class="javascript"><span class="comment">// ...</span></span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>复制例子代码到 <code>pages/cart/cart.vue</code> 运行体验。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 静态数据演示版本 适合任何后端 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;openSkuPopup()&quot;</span>&gt;</span>打开SKU组件<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">vk-data-goods-sku-popup</span></span></span><br><span class="line"><span class="tag">      <span class="attr">ref</span>=<span class="string">&quot;skuPopup&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">v-model</span>=<span class="string">&quot;skuKey&quot;</span> </span></span><br><span class="line"><span class="tag">      <span class="attr">border-radius</span>=<span class="string">&quot;20&quot;</span> </span></span><br><span class="line"><span class="tag">      <span class="attr">:localdata</span>=<span class="string">&quot;goodsInfo&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:mode</span>=<span class="string">&quot;skuMode&quot;</span></span></span><br><span class="line"><span class="tag">      @<span class="attr">open</span>=<span class="string">&quot;onOpenSkuPopup&quot;</span></span></span><br><span class="line"><span class="tag">      @<span class="attr">close</span>=<span class="string">&quot;SkuPopup&quot;</span></span></span><br><span class="line"><span class="tag">      @<span class="attr">add-cart</span>=<span class="string">&quot;addCart&quot;</span></span></span><br><span class="line"><span class="tag">      @<span class="attr">buy-now</span>=<span class="string">&quot;buyNow&quot;</span></span></span><br><span class="line"><span class="tag">    &gt;</span><span class="tag">&lt;/<span class="name">vk-data-goods-sku-popup</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> that;                                         <span class="comment">// 当前页面对象</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 是否打开SKU弹窗</span></span></span><br><span class="line"><span class="javascript">        <span class="attr">skuKey</span>:<span class="literal">false</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// SKU弹窗模式</span></span></span><br><span class="line"><span class="javascript">        <span class="attr">skuMode</span>:<span class="number">1</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 后端返回的商品信息</span></span></span><br><span class="line"><span class="javascript">        <span class="attr">goodsInfo</span>:&#123;&#125;</span></span><br><span class="line"><span class="javascript">      &#125;</span></span><br><span class="line"><span class="javascript">    &#125;,</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 监听 - 页面每次【加载时】执行(如：前进)</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="title">onLoad</span>(<span class="params">options</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">      that = <span class="built_in">this</span>;</span></span><br><span class="line"><span class="javascript">      that.init(options);</span></span><br><span class="line"><span class="javascript">    &#125;,</span></span><br><span class="line"><span class="javascript">    <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 初始化</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="title">init</span>(<span class="params">options = &#123;&#125;</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">      &#125;,</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 获取商品信息，并打开sku弹出</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="title">openSkuPopup</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">/**</span></span></span><br><span class="line"><span class="comment"><span class="javascript">         * 获取商品信息</span></span></span><br><span class="line"><span class="comment"><span class="javascript">         * 这里可以看到每次打开SKU都会去重新请求商品信息,为的是每次打开SKU组件可以实时看到剩余库存</span></span></span><br><span class="line"><span class="comment"><span class="javascript">         */</span></span></span><br><span class="line"><span class="javascript">        <span class="comment">// 此处写接口请求，并将返回的数据进行处理成goodsInfo的数据格式，</span></span></span><br><span class="line"><span class="javascript">        <span class="comment">// goodsInfo是后端返回的数据</span></span></span><br><span class="line"><span class="javascript">        that.goodsInfo = &#123;</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;_id&quot;</span>:<span class="string">&quot;002&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;name&quot;</span>: <span class="string">&quot;迪奥香水&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;goods_thumb&quot;</span>:<span class="string">&quot;https://res.lancome.com.cn/resources/2020/9/11/15998112890781924_920X920.jpg?version=20200917220352530&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;sku_list&quot;</span>: [</span></span><br><span class="line"><span class="javascript">            &#123;</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;_id&quot;</span>: <span class="string">&quot;004&quot;</span>,</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;goods_id&quot;</span>: <span class="string">&quot;002&quot;</span>,</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;goods_name&quot;</span>: <span class="string">&quot;迪奥香水&quot;</span>,</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;image&quot;</span>: <span class="string">&quot;https://res.lancome.com.cn/resources/2020/9/11/15998112890781924_920X920.jpg?version=20200917220352530&quot;</span>,</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;price&quot;</span>: <span class="number">19800</span>,</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;sku_name_arr&quot;</span>: [<span class="string">&quot;50ml/瓶&quot;</span>],</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;stock&quot;</span>: <span class="number">100</span></span></span><br><span class="line"><span class="javascript">            &#125;,</span></span><br><span class="line"><span class="javascript">            &#123;</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;_id&quot;</span>: <span class="string">&quot;005&quot;</span>,</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;goods_id&quot;</span>: <span class="string">&quot;002&quot;</span>,</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;goods_name&quot;</span>: <span class="string">&quot;迪奥香水&quot;</span>,</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;image&quot;</span>: <span class="string">&quot;https://res.lancome.com.cn/resources/2020/9/11/15998112890781924_920X920.jpg?version=20200917220352530&quot;</span>,</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;price&quot;</span>: <span class="number">9800</span>,</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;sku_name_arr&quot;</span>: [<span class="string">&quot;70ml/瓶&quot;</span>],</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;stock&quot;</span>: <span class="number">100</span></span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">          ],</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;spec_list&quot;</span>: [</span></span><br><span class="line"><span class="javascript">            &#123;</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;list&quot;</span>: [</span></span><br><span class="line"><span class="javascript">                &#123;</span></span><br><span class="line"><span class="javascript">                  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;20ml/瓶&quot;</span></span></span><br><span class="line"><span class="javascript">                &#125;,</span></span><br><span class="line"><span class="javascript">                &#123;</span></span><br><span class="line"><span class="javascript">                  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;50ml/瓶&quot;</span></span></span><br><span class="line"><span class="javascript">                &#125;,</span></span><br><span class="line"><span class="javascript">                &#123;</span></span><br><span class="line"><span class="javascript">                  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;70ml/瓶&quot;</span></span></span><br><span class="line"><span class="javascript">                &#125;</span></span><br><span class="line"><span class="javascript">              ],</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;name&quot;</span>: <span class="string">&quot;规格&quot;</span></span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">          ]</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">        that.skuKey = <span class="literal">true</span>;</span></span><br><span class="line"><span class="javascript">      &#125;,</span></span><br><span class="line"><span class="javascript">      <span class="comment">// sku组件 开始-----------------------------------------------------------</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="title">onOpenSkuPopup</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&quot;监听 - 打开sku组件&quot;</span>);</span></span><br><span class="line"><span class="javascript">      &#125;,</span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="title">SkuPopup</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&quot;监听 - 关闭sku组件&quot;</span>);</span></span><br><span class="line"><span class="javascript">      &#125;,</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 加入购物车前的判断</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="title">addCartFn</span>(<span class="params">obj</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> &#123; selectShop &#125; = obj;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 模拟添加到购物车,请替换成你自己的添加到购物车逻辑</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> res = &#123;&#125;;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> name = selectShop.goods_name;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(selectShop.sku_name != <span class="string">&quot;默认&quot;</span>)&#123;</span></span><br><span class="line"><span class="javascript">          name += <span class="string">&quot;-&quot;</span>+selectShop.sku_name_arr;</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">        res.msg = <span class="string">`<span class="subst">$&#123;name&#125;</span> 已添加到购物车`</span>;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(<span class="keyword">typeof</span> obj.success == <span class="string">&quot;function&quot;</span>) obj.success(res);</span></span><br><span class="line"><span class="javascript">      &#125;,</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 加入购物车按钮</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="title">addCart</span>(<span class="params">selectShop</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&quot;监听 - 加入购物车&quot;</span>);</span></span><br><span class="line"><span class="javascript">        that.addCartFn(&#123;</span></span><br><span class="line"><span class="javascript">          <span class="attr">selectShop</span> : selectShop,</span></span><br><span class="line"><span class="javascript">          <span class="attr">success</span> : <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 实际业务时,请替换自己的加入购物车逻辑</span></span></span><br><span class="line"><span class="javascript">            that.toast(res.msg);</span></span><br><span class="line"><span class="javascript">            <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">              that.skuKey = <span class="literal">false</span>;</span></span><br><span class="line"><span class="javascript">            &#125;, <span class="number">300</span>);</span></span><br><span class="line"><span class="javascript">          &#125;</span></span><br><span class="line"><span class="javascript">        &#125;);</span></span><br><span class="line"><span class="javascript">      &#125;,</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 立即购买</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="title">buyNow</span>(<span class="params">selectShop</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&quot;监听 - 立即购买&quot;</span>);</span></span><br><span class="line"><span class="javascript">        that.addCartFn(&#123;</span></span><br><span class="line"><span class="javascript">          <span class="attr">selectShop</span> : selectShop,</span></span><br><span class="line"><span class="javascript">          <span class="attr">success</span> : <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 实际业务时,请替换自己的立即购买逻辑</span></span></span><br><span class="line"><span class="javascript">            that.toast(<span class="string">&quot;立即购买&quot;</span>);</span></span><br><span class="line"><span class="javascript">          &#125;</span></span><br><span class="line"><span class="javascript">        &#125;);</span></span><br><span class="line"><span class="javascript">      &#125;,</span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="title">toast</span>(<span class="params">msg</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        uni.showToast(&#123;</span></span><br><span class="line"><span class="javascript">          <span class="attr">title</span>: msg,</span></span><br><span class="line"><span class="javascript">          <span class="attr">icon</span>:<span class="string">&quot;none&quot;</span></span></span><br><span class="line"><span class="javascript">        &#125;);</span></span><br><span class="line"><span class="javascript">      &#125;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">  &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">  <span class="selector-class">.app</span> &#123;</span></span><br><span class="line"><span class="css">    <span class="attribute">padding</span>: <span class="number">30</span>rpx;</span></span><br><span class="line"><span class="css">    <span class="attribute">font-size</span>: <span class="number">28</span>rpx;</span></span><br><span class="line"><span class="css">  &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="小结一下"><a href="#小结一下" class="headerlink" title="小结一下"></a>小结一下</h3><img src="/resource/images/Snipaste_2023-05-09_09-08-17.png" class="highlight2"/>
+
+<h2 id="插件类型问题"><a href="#插件类型问题" class="headerlink" title="插件类型问题"></a>插件类型问题</h2><p>尽管该插件未采用 TS 开发，但作者提供了详细的<a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/plugin?id=2848">插件文档</a>，我们可以依据文档为插件添加 TS 类型声明文件，从而提高项目数据校验的安全性。</p>
+<p><code>src/components/vk-data-goods-sku-popup/vk-data-goods-sku-popup.d.ts</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;@uni-helper/uni-app-types&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/** SKU 弹出层 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> SkuPopup = Component&lt;SkuPopupProps&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** SKU 弹出层实例 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> SkuPopupInstance = InstanceType&lt;SkuPopup&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** SKU 弹出层属性 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> SkuPopupProps = &#123;</span><br><span class="line">  <span class="comment">/** 双向绑定，true 为打开组件，false 为关闭组件 */</span></span><br><span class="line">  <span class="attr">modelValue</span>: <span class="built_in">boolean</span></span><br><span class="line">  <span class="comment">/** 商品信息本地数据源 */</span></span><br><span class="line">  <span class="attr">localdata</span>: SkuPopupLocaldata</span><br><span class="line">  <span class="comment">/** 按钮模式 1:都显示 2:只显示购物车 3:只显示立即购买 */</span></span><br><span class="line">  mode?: <span class="number">1</span> | <span class="number">2</span> | <span class="number">3</span></span><br><span class="line">  <span class="comment">/** 该商品已抢完时的按钮文字 */</span></span><br><span class="line">  noStockText?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 库存文字 */</span></span><br><span class="line">  stockText?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 点击遮罩是否关闭组件 */</span></span><br><span class="line">  maskCloseAble?: <span class="built_in">boolean</span></span><br><span class="line">  <span class="comment">/** 顶部圆角值 */</span></span><br><span class="line">  borderRadius?: <span class="built_in">string</span> | <span class="built_in">number</span></span><br><span class="line">  <span class="comment">/** 最小购买数量 */</span></span><br><span class="line">  minBuyNum?: <span class="built_in">number</span></span><br><span class="line">  <span class="comment">/** 最大购买数量 */</span></span><br><span class="line">  maxBuyNum?: <span class="built_in">number</span></span><br><span class="line">  <span class="comment">/** 每次点击后的数量 */</span></span><br><span class="line">  stepBuyNum?: <span class="built_in">number</span></span><br><span class="line">  <span class="comment">/** 是否只能输入 step 的倍数 */</span></span><br><span class="line">  stepStrictly?: <span class="built_in">boolean</span></span><br><span class="line">  <span class="comment">/** 是否隐藏库存的显示 */</span></span><br><span class="line">  hideStock?: <span class="literal">false</span></span><br><span class="line">  <span class="comment">/** 主题风格 */</span></span><br><span class="line">  theme?: <span class="string">&#x27;default&#x27;</span> | <span class="string">&#x27;red-black&#x27;</span> | <span class="string">&#x27;black-white&#x27;</span> | <span class="string">&#x27;coffee&#x27;</span> | <span class="string">&#x27;green&#x27;</span></span><br><span class="line">  <span class="comment">/** 默认金额会除以100（即100=1元），若设置为0，则不会除以100（即1=1元） */</span></span><br><span class="line">  amountType?: <span class="number">1</span> | <span class="number">0</span></span><br><span class="line">  <span class="comment">/** 自定义获取商品信息的函数（已知支付宝不支持，支付宝请改用localdata属性） */</span></span><br><span class="line">  customAction?: <span class="function">() =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="comment">/** 是否显示右上角关闭按钮 */</span></span><br><span class="line">  showClose?: <span class="built_in">boolean</span></span><br><span class="line">  <span class="comment">/** 关闭按钮的图片地址 */</span></span><br><span class="line">  closeImage?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 价格的字体颜色 */</span></span><br><span class="line">  priceColor?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 立即购买 - 按钮的文字 */</span></span><br><span class="line">  buyNowText?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 立即购买 - 按钮的字体颜色 */</span></span><br><span class="line">  buyNowColor?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 立即购买 - 按钮的背景颜色 */</span></span><br><span class="line">  buyNowBackgroundColor?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 加入购物车 - 按钮的文字 */</span></span><br><span class="line">  addCartText?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 加入购物车 - 按钮的字体颜色 */</span></span><br><span class="line">  addCartColor?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 加入购物车 - 按钮的背景颜色 */</span></span><br><span class="line">  addCartBackgroundColor?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 商品缩略图背景颜色 */</span></span><br><span class="line">  goodsThumbBackgroundColor?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 样式 - 不可点击时,按钮的样式 */</span></span><br><span class="line">  disableStyle?: <span class="built_in">object</span></span><br><span class="line">  <span class="comment">/** 样式 - 按钮点击时的样式 */</span></span><br><span class="line">  activedStyle?: <span class="built_in">object</span></span><br><span class="line">  <span class="comment">/** 样式 - 按钮常态的样式 */</span></span><br><span class="line">  btnStyle?: <span class="built_in">object</span></span><br><span class="line">  <span class="comment">/** 字段名 - 商品表id的字段名 */</span></span><br><span class="line">  goodsIdName?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 字段名 - sku表id的字段名 */</span></span><br><span class="line">  skuIdName?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 字段名 - 商品对应的sku列表的字段名 */</span></span><br><span class="line">  skuListName?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 字段名 - 商品规格名称的字段名 */</span></span><br><span class="line">  specListName?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 字段名 - sku库存的字段名 */</span></span><br><span class="line">  stockName?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 字段名 - sku组合路径的字段名 */</span></span><br><span class="line">  skuArrName?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 字段名 - 商品缩略图字段名(未选择sku时) */</span></span><br><span class="line">  goodsThumbName?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 被选中的值 */</span></span><br><span class="line">  selectArr?: <span class="built_in">string</span>[]</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 打开弹出层 */</span></span><br><span class="line">  <span class="attr">onOpen</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="comment">/** 关闭弹出层 */</span></span><br><span class="line">  <span class="attr">onClose</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="comment">/** 点击加入购物车时（需选择完SKU才会触发）*/</span></span><br><span class="line">  <span class="attr">onAddCart</span>: <span class="function">(<span class="params">event: SkuPopupEvent</span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="comment">/** 点击立即购买时（需选择完SKU才会触发）*/</span></span><br><span class="line">  <span class="attr">onBuyNow</span>: <span class="function">(<span class="params">event: SkuPopupEvent</span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**  商品信息本地数据源 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> SkuPopupLocaldata = &#123;</span><br><span class="line">  <span class="comment">/** 商品 ID */</span></span><br><span class="line">  <span class="attr">_id</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 商品名称 */</span></span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 商品图片 */</span></span><br><span class="line">  <span class="attr">goods_thumb</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 商品规格列表 */</span></span><br><span class="line">  <span class="attr">spec_list</span>: SkuPopupSpecItem[]</span><br><span class="line">  <span class="comment">/** 商品SKU列表 */</span></span><br><span class="line">  <span class="attr">sku_list</span>: SkuPopupSkuItem[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 商品规格名称的集合 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> SkuPopupSpecItem = &#123;</span><br><span class="line">  <span class="comment">/** 规格名称 */</span></span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 规格集合 */</span></span><br><span class="line">  <span class="attr">list</span>: &#123; <span class="attr">name</span>: <span class="built_in">string</span> &#125;[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 商品SKU列表 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> SkuPopupSkuItem = &#123;</span><br><span class="line">  <span class="comment">/** SKU ID */</span></span><br><span class="line">  <span class="attr">_id</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/**  商品 ID */</span></span><br><span class="line">  <span class="attr">goods_id</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 商品名称 */</span></span><br><span class="line">  <span class="attr">goods_name</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 商品图片 */</span></span><br><span class="line">  <span class="attr">image</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** SKU 价格 * 100, 注意：需要乘以 100 */</span></span><br><span class="line">  <span class="attr">price</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="comment">/** SKU 规格组成, 注意：需要与 spec_list 数组顺序对应 */</span></span><br><span class="line">  <span class="attr">sku_name_arr</span>: <span class="built_in">string</span>[]</span><br><span class="line">  <span class="comment">/** SKU 库存 */</span></span><br><span class="line">  <span class="attr">stock</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 当前选择的sku数据 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> SkuPopupEvent = SkuPopupSkuItem &amp; &#123;</span><br><span class="line">  <span class="comment">/** 商品购买数量 */</span></span><br><span class="line">  <span class="attr">buy_num</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 全局组件类型声明 */</span></span><br><span class="line"><span class="keyword">declare</span> <span class="built_in">module</span> <span class="string">&#x27;@vue/runtime-core&#x27;</span> &#123;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">interface</span> GlobalComponents &#123;</span><br><span class="line">    <span class="string">&#x27;vk-data-goods-sku-popup&#x27;</span>: SkuPopup</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="核心业务"><a href="#核心业务" class="headerlink" title="核心业务"></a>核心业务</h2><h3 id="渲染商品规格"><a href="#渲染商品规格" class="headerlink" title="渲染商品规格"></a>渲染商品规格</h3><p><code>pages/goods/goods.vue</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #1</span></span><br><span class="line"><span class="keyword">const</span> isShowSku = ref(<span class="literal">false</span>)</span><br><span class="line"><span class="keyword">const</span> localdata = ref(&#123;&#125; <span class="keyword">as</span> SkuPopupLocaldata)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> getGoodsByIdData = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> getGoodsByIdAPI(query.id)</span><br><span class="line">  goods.value = res.result</span><br><span class="line">  <span class="comment">// #3</span></span><br><span class="line">  localdata.value = &#123;</span><br><span class="line">    <span class="attr">_id</span>: res.result.id,</span><br><span class="line">    <span class="attr">name</span>: res.result.name,</span><br><span class="line">    <span class="attr">goods_thumb</span>: res.result.mainPictures[<span class="number">0</span>],</span><br><span class="line">    <span class="attr">spec_list</span>: res.result.specs.map(<span class="function">(<span class="params">v</span>) =&gt;</span> (&#123;</span><br><span class="line">      <span class="attr">name</span>: v.name,</span><br><span class="line">      <span class="attr">list</span>: v.values</span><br><span class="line">    &#125;)),</span><br><span class="line">    <span class="attr">sku_list</span>: res.result.skus.map(<span class="function">(<span class="params">v</span>) =&gt;</span> (&#123;</span><br><span class="line">      <span class="attr">_id</span>: v.id,</span><br><span class="line">      <span class="attr">goods_id</span>: res.result.id,</span><br><span class="line">      <span class="attr">goods_name</span>: res.result.name,</span><br><span class="line">      <span class="attr">image</span>: v.picture,</span><br><span class="line">      <span class="attr">price</span>: v.price * <span class="number">100</span>, <span class="comment">// 插件要求</span></span><br><span class="line">      <span class="attr">stock</span>: v.inventory,</span><br><span class="line">      <span class="attr">sku_name_arr</span>: v.specs.map(<span class="function">(<span class="params">vv</span>) =&gt;</span> vv.valueName)</span><br><span class="line">    &#125;))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- #2 `v-model` 双向绑定，显示/隐藏组件，`localdata` 绑定商品 `SKU` 数据来源 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">vk-data-goods-sku-popup</span> <span class="attr">v-model</span>=<span class="string">&quot;isShowSku&quot;</span> <span class="attr">:localdata</span>=<span class="string">&quot;localdata&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scroll-view</span> <span class="attr">scroll-y</span> <span class="attr">class</span>=<span class="string">&quot;viewport&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">scroll-view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">vk-data-goods-sku-popup</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结一下-1"><a href="#小结一下-1" class="headerlink" title="小结一下"></a>小结一下</h3><img src="/resource/images/Snipaste_2023-05-09_09-44-43.png" class="highlight2"/>
+
+<h3 id="打开弹窗交互"><a href="#打开弹窗交互" class="headerlink" title="打开弹窗交互"></a>打开弹窗交互</h3><p>SKU 弹窗的按钮有三种形式。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="comment">// 按钮模式</span></span></span><br><span class="line"><span class="javascript">enum SkuMode &#123;</span></span><br><span class="line"><span class="javascript">  Both = <span class="number">1</span>,</span></span><br><span class="line"><span class="javascript">  Cart = <span class="number">2</span>,</span></span><br><span class="line"><span class="javascript">  Buy = <span class="number">3</span>,</span></span><br><span class="line"><span class="javascript">&#125;</span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> mode = ref&lt;SkuMode&gt;(SkuMode.Cart)</span></span><br><span class="line"><span class="javascript"><span class="comment">// 打开SKU弹窗修改按钮模式</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> openSkuPopup = <span class="function">(<span class="params">val: SkuMode</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">  <span class="comment">// 显示SKU弹窗</span></span></span><br><span class="line"><span class="javascript">  isShowSku.value = <span class="literal">true</span></span></span><br><span class="line"><span class="javascript">  <span class="comment">// 修改按钮模式</span></span></span><br><span class="line"><span class="javascript">  mode.value = val</span></span><br><span class="line"><span class="javascript">&#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- SKU弹窗组件 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">vk-data-goods-sku-popup</span></span></span><br><span class="line"><span class="tag">    <span class="attr">v-model</span>=<span class="string">&quot;isShowSku&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:localdata</span>=<span class="string">&quot;localdata&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:mode</span>=<span class="string">&quot;mode&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">add-cart-background-color</span>=<span class="string">&quot;#FFA868&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">buy-now-background-color</span>=<span class="string">&quot;#27BA9B&quot;</span></span></span><br><span class="line"><span class="tag">  /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 显示两个按钮 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> @<span class="attr">tap</span>=<span class="string">&quot;openSkuPopup(SkuMode.Both)&quot;</span> <span class="attr">class</span>=<span class="string">&quot;item arrow&quot;</span>&gt;</span>请选择商品规格<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 显示一个按钮 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> @<span class="attr">tap</span>=<span class="string">&quot;openSkuPopup(SkuMode.Cart)&quot;</span> <span class="attr">class</span>=<span class="string">&quot;addcart&quot;</span>&gt;</span> 加入购物车 <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> @<span class="attr">tap</span>=<span class="string">&quot;openSkuPopup(SkuMode.Buy)&quot;</span> <span class="attr">class</span>=<span class="string">&quot;payment&quot;</span>&gt;</span> 立即购买 <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结一下-2"><a href="#小结一下-2" class="headerlink" title="小结一下"></a>小结一下</h3><img src="/resource/images/Snipaste_2023-05-09_10-19-05.png"/>
+
+<h3 id="渲染被选中的值"><a href="#渲染被选中的值" class="headerlink" title="渲染被选中的值"></a>渲染被选中的值</h3><ol>
+<li><p>通过 <code>ref</code> 获取组件实例。</p>
+</li>
+<li><p>通过 <code>computed</code> 计算出<strong>被选中的值</strong>，渲染到界面中。</p>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> type &#123; SkuPopupInstance &#125; <span class="keyword">from</span> <span class="string">&#x27;@/components/vk-data-goods-sku-popup/vk-data-goods-sku-popup&#x27;</span></span></span><br><span class="line"><span class="javascript"><span class="comment">// SKU 组件实例</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> skuPopupRef = ref&lt;SkuPopupInstance&gt;()</span></span><br><span class="line"><span class="javascript"><span class="comment">// 计算被选中的值</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> selectArrText = computed(<span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">return</span> skuPopupRef.value?.selectArr?.join(<span class="string">&#x27; &#x27;</span>).trim() || <span class="string">&#x27;请选择商品规格&#x27;</span></span></span><br><span class="line"><span class="javascript">&#125;)</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- SKU弹窗组件 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">vk-data-goods-sku-popup</span></span></span><br><span class="line"><span class="tag">    <span class="attr">v-model</span>=<span class="string">&quot;isShowSku&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:localdata</span>=<span class="string">&quot;localdata&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:mode</span>=<span class="string">&quot;mode&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">add-cart-background-color</span>=<span class="string">&quot;#FFA868&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">buy-now-background-color</span>=<span class="string">&quot;#27BA9B&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">ref</span>=<span class="string">&quot;skuPopupRef&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:actived-style</span>=<span class="string">&quot;&#123;</span></span></span><br><span class="line"><span class="string"><span class="tag">      color: &#x27;#27BA9B&#x27;,</span></span></span><br><span class="line"><span class="string"><span class="tag">      borderColor: &#x27;#27BA9B&#x27;,</span></span></span><br><span class="line"><span class="string"><span class="tag">      backgroundColor: &#x27;#E9F8F5&#x27;,</span></span></span><br><span class="line"><span class="string"><span class="tag">    &#125;&quot;</span></span></span><br><span class="line"><span class="tag">  /&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 操作面板 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;action&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span> @<span class="attr">tap</span>=<span class="string">&quot;openSkuPopup(SkuMode.Both)&quot;</span> <span class="attr">class</span>=<span class="string">&quot;item arrow&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;label&quot;</span>&gt;</span>选择<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;text ellipsis&quot;</span>&gt;</span> &#123;&#123; selectArrText &#125;&#125; <span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，已经完成 <code>SKU</code> 组件的交互，接下来进入到购物车模块，并实现加入购物车功能。</p>
+<h3 id="小结一下-3"><a href="#小结一下-3" class="headerlink" title="小结一下"></a>小结一下</h3><img src="/resource/images/Snipaste_2023-05-09_10-37-27.png"/>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/06/xcx-xtx-04/" rel="prev" title="04_小兔鲜">
+      <i class="fa fa-chevron-left"></i> 04_小兔鲜
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/06/xcx-xtx-06/" rel="next" title="06_小兔鲜">
+      06_小兔鲜 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E8%B4%A7%E5%8D%95%E4%BD%8D%EF%BC%88SKU%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">存货单位（SKU）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%B8%82%E5%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">插件市场</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD-SKU-%E6%8F%92%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">下载 SKU 插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-SKU-%E6%8F%92%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">使用 SKU 插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">小结一下</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">插件类型问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E4%B8%9A%E5%8A%A1"><span class="nav-number">4.</span> <span class="nav-text">核心业务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E5%95%86%E5%93%81%E8%A7%84%E6%A0%BC"><span class="nav-number">4.1.</span> <span class="nav-text">渲染商品规格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93%E4%B8%80%E4%B8%8B-1"><span class="nav-number">4.2.</span> <span class="nav-text">小结一下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E5%BC%B9%E7%AA%97%E4%BA%A4%E4%BA%92"><span class="nav-number">4.3.</span> <span class="nav-text">打开弹窗交互</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93%E4%B8%80%E4%B8%8B-2"><span class="nav-number">4.4.</span> <span class="nav-text">小结一下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E8%A2%AB%E9%80%89%E4%B8%AD%E7%9A%84%E5%80%BC"><span class="nav-number">4.5.</span> <span class="nav-text">渲染被选中的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93%E4%B8%80%E4%B8%8B-3"><span class="nav-number">4.6.</span> <span class="nav-text">小结一下</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

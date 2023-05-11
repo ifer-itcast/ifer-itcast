@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 完成员工界面的交互（左树右表）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="06_人资后台">
+<meta property="og:url" content="http://example.com/2023/03/23/rz-base-new-course06/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 完成员工界面的交互（左树右表）。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_73.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_74.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_76.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_77.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_80.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_82.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_83.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_85.png">
+<meta property="article:published_time" content="2023-03-23T07:05:56.000Z">
+<meta property="article:modified_time" content="2023-05-11T07:42:51.385Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/new_rz_73.png">
+
+<link rel="canonical" href="http://example.com/2023/03/23/rz-base-new-course06/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>06_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/23/rz-base-new-course06/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          06_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-23 15:05:56" itemprop="dateCreated datePublished" datetime="2023-03-23T15:05:56+08:00">2023-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 15:42:51" itemprop="dateModified" datetime="2023-05-11T15:42:51+08:00">2023-05-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 完成员工界面的交互（左树右表）。</p>
+<span id="more"></span>
+
+<h2 id="员工管理-页面结构"><a href="#员工管理-页面结构" class="headerlink" title="员工管理-页面结构"></a>员工管理-页面结构</h2><img src="/resource/images/new_rz_73.png" class="highlight2" width="500"/>
+
+<ol>
+<li>基本的页面结构，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app-container&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-card</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">style</span>=<span class="string">&quot;margin-bottom: 10px&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">prefix-icon</span>=<span class="string">&quot;el-icon-search&quot;</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;输入员工姓名全员搜索&quot;</span> /&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 树形组件 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">class</span>=<span class="string">&quot;opeate-tools&quot;</span> <span class="attr">type</span>=<span class="string">&quot;flex&quot;</span> <span class="attr">justify</span>=<span class="string">&quot;end&quot;</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>添加员工<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span>&gt;</span>excel导入<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span>&gt;</span>excel导出<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 表格组件 --&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 分页 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-card</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span></span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.app-container</span> &#123;</span></span><br><span class="line"><span class="css">        :<span class="built_in">deep</span>(.el-card__body) &#123;</span></span><br><span class="line"><span class="css">            background: <span class="number">#fff</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.left</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">width</span>: <span class="number">280px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">padding</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">border-right</span>: <span class="number">1px</span> solid <span class="number">#eaeef4</span>;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.right</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">flex</span>: <span class="number">1</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">padding</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            <span class="selector-class">.opeate-tools</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">margin</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            <span class="selector-class">.username</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">height</span>: <span class="number">30px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">width</span>: <span class="number">30px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">line-height</span>: <span class="number">30px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="css">                <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">color</span>: <span class="number">#fff</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">background</span>: <span class="number">#04c9be</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">font-size</span>: <span class="number">12px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">display</span>: inline-block;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="员工管理-左侧树的加载"><a href="#员工管理-左侧树的加载" class="headerlink" title="员工管理-左侧树的加载"></a>员工管理-左侧树的加载</h2><!-- <img src="/resource/images/new_rz_74.png"/> -->
+
+<ol>
+<li>定义树组件需要的数据，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">depts</span>: [], <span class="comment">// 组织数据</span></span><br><span class="line">            <span class="attr">defaultProps</span>: &#123;</span><br><span class="line">                <span class="attr">label</span>: <span class="string">&#x27;name&#x27;</span>,</span><br><span class="line">                <span class="attr">children</span>: <span class="string">&#x27;children&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>放置树形组件。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-tree</span> <span class="attr">:data</span>=<span class="string">&quot;depts&quot;</span> <span class="attr">:props</span>=<span class="string">&quot;defaultProps&quot;</span> <span class="attr">default-expand-all</span> <span class="attr">:expand-on-click-node</span>=<span class="string">&quot;false&quot;</span> <span class="attr">highlight-current</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>初始化时加载数据转化树形，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    transListToTreeData</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    getDepartments</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/departments&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.getDepartment()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getDepartment</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.depts = transListToTreeData(<span class="keyword">await</span> getDepartments(), <span class="number">0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="员工管理-选中首个节点"><a href="#员工管理-选中首个节点" class="headerlink" title="员工管理-选中首个节点"></a>员工管理-选中首个节点</h2><img src="/resource/images/new_rz_76.png"/>
+
+<ol>
+<li>在 data 中声明一个记录 id 的参数，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="attr">queryParams</span>: &#123;</span><br><span class="line">                <span class="attr">departmentId</span>: <span class="literal">null</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>初始化时首个 id 节点，并且选中，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getDepartment</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.depts = transListToTreeData(<span class="keyword">await</span> getDepartments(), <span class="number">0</span>)</span><br><span class="line">            <span class="comment">// #1</span></span><br><span class="line">            <span class="built_in">this</span>.queryParams.departmentId = <span class="built_in">this</span>.depts[<span class="number">0</span>].id</span><br><span class="line">            <span class="comment">// #2 DOM 更新是异步的</span></span><br><span class="line">            <span class="built_in">this</span>.$nextTick(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">this</span>.$refs.deptTree.setCurrentKey(<span class="built_in">this</span>.queryParams.departmentId)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>给 el-tree 组件设置 node-key 属性，否则 setCurrentKey 方法不知道设置的是哪个字段的值。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-tree</span> <span class="attr">ref</span>=<span class="string">&quot;deptTree&quot;</span> <span class="attr">node-key</span>=<span class="string">&quot;id&quot;</span> <span class="attr">:data</span>=<span class="string">&quot;depts&quot;</span> <span class="attr">:props</span>=<span class="string">&quot;defaultProps&quot;</span> <span class="attr">default-expand-all</span> <span class="attr">:expand-on-click-node</span>=<span class="string">&quot;false&quot;</span> <span class="attr">highlight-current</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>监听树组件的节点切换事件并记录当前点击的 ID。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-tree</span> <span class="attr">ref</span>=<span class="string">&quot;deptTree&quot;</span> <span class="attr">node-key</span>=<span class="string">&quot;id&quot;</span> <span class="attr">:data</span>=<span class="string">&quot;depts&quot;</span> <span class="attr">:props</span>=<span class="string">&quot;defaultProps&quot;</span> <span class="attr">default-expand-all</span> <span class="attr">:expand-on-click-node</span>=<span class="string">&quot;false&quot;</span> <span class="attr">highlight-current</span> @<span class="attr">current-change</span>=<span class="string">&quot;selectNode&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">selectNode</span>(<span class="params">node</span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.queryParams.departmentId = node.id</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="员工管理-员工列表结构"><a href="#员工管理-员工列表结构" class="headerlink" title="员工管理-员工列表结构"></a>员工管理-员工列表结构</h2><img src="/resource/images/new_rz_77.png"/>
+
+<ol>
+<li>右侧列表页面结构，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 表格 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-table</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span> <span class="attr">label</span>=<span class="string">&quot;头像&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;姓名&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;手机号&quot;</span> <span class="attr">sortable</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;工号&quot;</span> <span class="attr">sortable</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;聘用形式&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;部门&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;入职时间&quot;</span> <span class="attr">sortable</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;操作&quot;</span> <span class="attr">width</span>=<span class="string">&quot;280px&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>查看<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>角色<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 分页 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-row</span> <span class="attr">style</span>=<span class="string">&quot;height: 60px&quot;</span> <span class="attr">align</span>=<span class="string">&quot;middle&quot;</span> <span class="attr">type</span>=<span class="string">&quot;flex&quot;</span> <span class="attr">justify</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-pagination</span> <span class="attr">layout</span>=<span class="string">&quot;total,prev, pager, next&quot;</span> <span class="attr">:total</span>=<span class="string">&quot;1000&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="员工管理-获取员工数据"><a href="#员工管理-获取员工数据" class="headerlink" title="员工管理-获取员工数据"></a>员工管理-获取员工数据</h2><img src="/resource/images/new_rz_80.png"/>
+
+<p>第一次加载或者是切换节点之后，都要去根据点击的节点去查询员工的数据。</p>
+<ol>
+<li>封装获取员工数据的 API，<code>src/api/employee.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getEmployeeList</span>(<span class="params">params</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/user&#x27;</span>,</span><br><span class="line">        params <span class="comment">// 地址参数 查询参数</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>声明一个 list 数组接受数据，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="attr">list</span>: []</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>初始化以及切换节点时获取右侧表格数据，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; getEmployeeList &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/employee&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getDepartment</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.depts = transListToTreeData(<span class="keyword">await</span> getDepartments(), <span class="number">0</span>)</span><br><span class="line">            <span class="built_in">this</span>.queryParams.departmentId = <span class="built_in">this</span>.depts[<span class="number">0</span>].id</span><br><span class="line">            <span class="built_in">this</span>.$nextTick(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">this</span>.$refs.deptTree.setCurrentKey(<span class="built_in">this</span>.queryParams.departmentId)</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// #1</span></span><br><span class="line">            <span class="built_in">this</span>.getEmployeeList()</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="title">selectNode</span>(<span class="params">node</span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.queryParams.departmentId = node.id</span><br><span class="line">            <span class="comment">// #2</span></span><br><span class="line">            <span class="built_in">this</span>.getEmployeeList()</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getEmployeeList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> &#123;</span><br><span class="line">                rows</span><br><span class="line">            &#125; = <span class="keyword">await</span> getEmployeeList(<span class="built_in">this</span>.queryParams)</span><br><span class="line">            <span class="built_in">this</span>.list = rows</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>绑定数据到表格，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table</span> <span class="attr">:data</span>=<span class="string">&quot;list&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">prop</span>=<span class="string">&quot;staffPhoto&quot;</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span> <span class="attr">label</span>=<span class="string">&quot;头像&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">prop</span>=<span class="string">&quot;username&quot;</span> <span class="attr">label</span>=<span class="string">&quot;姓名&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">prop</span>=<span class="string">&quot;mobile&quot;</span> <span class="attr">label</span>=<span class="string">&quot;手机号&quot;</span> <span class="attr">sortable</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">prop</span>=<span class="string">&quot;workNumber&quot;</span> <span class="attr">label</span>=<span class="string">&quot;工号&quot;</span> <span class="attr">sortable</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">prop</span>=<span class="string">&quot;formOfEmployment&quot;</span> <span class="attr">label</span>=<span class="string">&quot;聘用形式&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">prop</span>=<span class="string">&quot;departmentName&quot;</span> <span class="attr">label</span>=<span class="string">&quot;部门&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">prop</span>=<span class="string">&quot;timeOfEntry&quot;</span> <span class="attr">label</span>=<span class="string">&quot;入职时间&quot;</span> <span class="attr">sortable</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;操作&quot;</span> <span class="attr">width</span>=<span class="string">&quot;280px&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>查看<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>角色<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="员工管理-头像和聘用形式的处理"><a href="#员工管理-头像和聘用形式的处理" class="headerlink" title="员工管理-头像和聘用形式的处理"></a>员工管理-头像和聘用形式的处理</h2><img src="/resource/images/new_rz_82.png"/>
+
+<p>头像。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span> <span class="attr">label</span>=<span class="string">&quot;头像&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot</span>=<span class="string">&quot;&#123; row &#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-avatar</span> <span class="attr">v-if</span>=<span class="string">&quot;row.staffPhoto&quot;</span> <span class="attr">:src</span>=<span class="string">&quot;row.staffPhoto&quot;</span> <span class="attr">:size</span>=<span class="string">&quot;30&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">v-else</span> <span class="attr">class</span>=<span class="string">&quot;username&quot;</span>&gt;</span>&#123;&#123; row.username?.charAt(0) &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>聘用形式。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;聘用形式&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot</span>=<span class="string">&quot;&#123; row &#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">v-if</span>=<span class="string">&quot;row.formOfEmployment === 1&quot;</span>&gt;</span>正式<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">v-else-if</span>=<span class="string">&quot;row.formOfEmployment === 2&quot;</span>&gt;</span>非正式<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">v-else</span>&gt;</span>无<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="员工管理-员工分页处理"><a href="#员工管理-员工分页处理" class="headerlink" title="员工管理-员工分页处理"></a>员工管理-员工分页处理</h2><img src="/resource/images/new_rz_83.png"/>
+
+<ol>
+<li>定义分页参数，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="attr">queryParams</span>: &#123;</span><br><span class="line">                <span class="attr">departmentId</span>: <span class="literal">null</span>,</span><br><span class="line">                <span class="attr">page</span>: <span class="number">1</span>, <span class="comment">// 当前页码</span></span><br><span class="line">                <span class="attr">pagesize</span>: <span class="number">10</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">total</span>: <span class="number">0</span>, <span class="comment">// 记录员工的总数</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getEmployeeList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> &#123;</span><br><span class="line">                rows,</span><br><span class="line">                total</span><br><span class="line">            &#125; = <span class="keyword">await</span> getEmployeeList(<span class="built_in">this</span>.queryParams)</span><br><span class="line">            <span class="built_in">this</span>.list = rows</span><br><span class="line">            <span class="comment">// #mark</span></span><br><span class="line">            <span class="built_in">this</span>.total = total</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>绑定分页参数。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-pagination</span> <span class="attr">layout</span>=<span class="string">&quot;total,prev, pager, next&quot;</span> <span class="attr">:total</span>=<span class="string">&quot;total&quot;</span> <span class="attr">:current-page</span>=<span class="string">&quot;queryParams.page&quot;</span> <span class="attr">:page-size</span>=<span class="string">&quot;queryParams.pagesize&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>切换页码事件。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-pagination</span> <span class="attr">layout</span>=<span class="string">&quot;total,prev, pager, next&quot;</span> <span class="attr">:total</span>=<span class="string">&quot;total&quot;</span> <span class="attr">:current-page</span>=<span class="string">&quot;queryParams.page&quot;</span> <span class="attr">:page-size</span>=<span class="string">&quot;queryParams.pagesize&quot;</span> @<span class="attr">current-change</span>=<span class="string">&quot;changePage&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">changePage</span>(<span class="params">newPage</span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.queryParams.page = newPage <span class="comment">// 赋值新页码</span></span><br><span class="line">            <span class="built_in">this</span>.getEmployeeList() <span class="comment">// 查询数据</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>切换部门时，查询第一页数据。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">selectNode</span>(<span class="params">node</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.queryParams.departmentId = node.id</span><br><span class="line">    <span class="comment">// mark</span></span><br><span class="line">    <span class="built_in">this</span>.queryParams.page = <span class="number">1</span></span><br><span class="line">    <span class="built_in">this</span>.getEmployeeList()</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h2 id="员工管理-员工模糊搜索"><a href="#员工管理-员工模糊搜索" class="headerlink" title="员工管理-员工模糊搜索"></a>员工管理-员工模糊搜索</h2><img src="/resource/images/new_rz_85.png"/>
+
+<ol>
+<li>设置模糊搜索的参数字段，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="attr">queryParams</span>: &#123;</span><br><span class="line">                <span class="attr">departmentId</span>: <span class="literal">null</span>,</span><br><span class="line">                <span class="attr">page</span>: <span class="number">1</span>,</span><br><span class="line">                <span class="attr">pagesize</span>: <span class="number">10</span>,</span><br><span class="line">                <span class="attr">keyword</span>: <span class="string">&#x27;&#x27;</span> <span class="comment">// 模糊搜索字段</span></span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>双向绑定 input 输入框，监听值改变事件，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;queryParams.keyword&quot;</span> <span class="attr">style</span>=<span class="string">&quot;margin-bottom: 10px&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">prefix-icon</span>=<span class="string">&quot;el-icon-search&quot;</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;输入员工姓名全员搜索&quot;</span> @<span class="attr">input</span>=<span class="string">&quot;changeValue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>值改变查询数据-支持防抖查询，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">changeValue</span>(<span class="params">v</span>)</span> &#123;</span><br><span class="line">            <span class="built_in">clearTimeout</span>(<span class="built_in">this</span>.timer)</span><br><span class="line">            <span class="built_in">this</span>.timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">this</span>.queryParams.page = <span class="number">1</span></span><br><span class="line">                <span class="built_in">this</span>.getEmployeeList()</span><br><span class="line">            &#125;, <span class="number">300</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course05/" rel="prev" title="05_人资后台">
+      <i class="fa fa-chevron-left"></i> 05_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course07/" rel="next" title="07_人资后台">
+      07_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-%E9%A1%B5%E9%9D%A2%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">员工管理-页面结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-%E5%B7%A6%E4%BE%A7%E6%A0%91%E7%9A%84%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.</span> <span class="nav-text">员工管理-左侧树的加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-%E9%80%89%E4%B8%AD%E9%A6%96%E4%B8%AA%E8%8A%82%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">员工管理-选中首个节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-%E5%91%98%E5%B7%A5%E5%88%97%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">员工管理-员工列表结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-%E8%8E%B7%E5%8F%96%E5%91%98%E5%B7%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">5.</span> <span class="nav-text">员工管理-获取员工数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-%E5%A4%B4%E5%83%8F%E5%92%8C%E8%81%98%E7%94%A8%E5%BD%A2%E5%BC%8F%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">员工管理-头像和聘用形式的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-%E5%91%98%E5%B7%A5%E5%88%86%E9%A1%B5%E5%A4%84%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">员工管理-员工分页处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-%E5%91%98%E5%B7%A5%E6%A8%A1%E7%B3%8A%E6%90%9C%E7%B4%A2"><span class="nav-number">8.</span> <span class="nav-text">员工管理-员工模糊搜索</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

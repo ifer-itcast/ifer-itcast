@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 掌握登录功能的业务流程。 ✔ 能够持久化 token 到 Vuex 中。 ✔ 掌握响应拦截器处的业务处理过程。 ✔ 掌握界面访问控制&#x2F;登录拦截的业务逻辑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02_人资后台">
+<meta property="og:url" content="http://example.com/2023/03/23/rz-base-new-course02/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 掌握登录功能的业务流程。 ✔ 能够持久化 token 到 Vuex 中。 ✔ 掌握响应拦截器处的业务处理过程。 ✔ 掌握界面访问控制&#x2F;登录拦截的业务逻辑。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-20230315095735621.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200826110754199.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200811022013103.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-03-25_11-34-31.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-03-25_11-40-56.png">
+<meta property="og:image" content="http://example.com/resource/images/vuexxxx.png">
+<meta property="og:image" content="http://example.com/resource/images/action.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200812020656210.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200714093601730.png">
+<meta property="article:published_time" content="2023-03-23T07:01:56.000Z">
+<meta property="article:modified_time" content="2023-05-11T07:42:51.018Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20230315095735621.png">
+
+<link rel="canonical" href="http://example.com/2023/03/23/rz-base-new-course02/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>02_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/23/rz-base-new-course02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          02_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-23 15:01:56" itemprop="dateCreated datePublished" datetime="2023-03-23T15:01:56+08:00">2023-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 15:42:51" itemprop="dateModified" datetime="2023-05-11T15:42:51+08:00">2023-05-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 掌握登录功能的业务流程。</p>
+<p>✔ 能够持久化 token 到 Vuex 中。</p>
+<p>✔ 掌握响应拦截器处的业务处理过程。</p>
+<p>✔ 掌握界面访问控制/登录拦截的业务逻辑。</p>
+<span id="more"></span>
+
+<h2 id="分析登录的业务流程"><a href="#分析登录的业务流程" class="headerlink" title="分析登录的业务流程"></a>分析登录的业务流程</h2><img src="/resource/images/image-20230315095735621.png"/>
+
+<p>传统登录流程：校验通过之后，直接调用接口获取 token，然后跳转到主页，而 vue-element-admin 登录流程如下。</p>
+<ol>
+<li><p>登录表单校验通过。</p>
+</li>
+<li><p>调用 Vuex 提供的登录 action。</p>
+</li>
+<li><p>登录的 action 中会调用登录接口。</p>
+</li>
+<li><p>登录接口如果成功执行，会返回 token。</p>
+</li>
+<li><p>利用 Vuex 的特性，将 token 共享的到 Vuex 中，别的地方可以很方便访问。</p>
+</li>
+<li><p>登录接口会调用单独封装的请求函数。</p>
+</li>
+<li><p>请求函数中又会使用用到 Axios 封装的请求工具。</p>
+</li>
+<li><p>请求工具需要考虑区分开发环境和生产环境的问题。</p>
+</li>
+<li><p>请求时还要考虑前后端分离项目产生的跨域问题，可以使用代理解决。</p>
+</li>
+</ol>
+<h2 id="配置代理服务器跨域"><a href="#配置代理服务器跨域" class="headerlink" title="配置代理服务器跨域"></a>配置代理服务器跨域</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>通过配置 Vue CLI 的代理解决跨域访问的问题。</p>
+<h3 id="为什么会出现跨域"><a href="#为什么会出现跨域" class="headerlink" title="为什么会出现跨域"></a>为什么会出现跨域</h3><p>浏览器处于安全性的考虑而做出的同源策略的限制，协议、域名、端口号任一不同则会跨域。</p>
+<p><img src="/resource/images/image-20200826110754199.png" alt="image-20200826110754199"></p>
+<h3 id="怎么解决这种跨域"><a href="#怎么解决这种跨域" class="headerlink" title="怎么解决这种跨域"></a>怎么解决这种跨域</h3><p><img src="/resource/images/image-20200811022013103.png" alt="image-20200811022013103"></p>
+<ol>
+<li>后端通过 CORS 处理，即通过设置响应头 <code>Access-Control-Allow-Origin</code> 来允许某些域名访问，代码演示如下。</li>
+</ol>
+<p> <code>views/login/index.vue</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"><span class="function"><span class="title">handleLogin</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.$refs.loginForm.validate(<span class="keyword">async</span> (valid) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (valid) &#123;</span><br><span class="line">            <span class="keyword">const</span> res = <span class="keyword">await</span> axios(&#123;</span><br><span class="line">                <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">                <span class="attr">url</span>: <span class="string">&#x27;http://ihrm-java.itheima.net/api/sys/login&#x27;</span>,</span><br><span class="line">                <span class="attr">data</span>: <span class="built_in">this</span>.loginForm</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="built_in">console</span>.log(res)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/Snipaste_2023-03-25_11-34-31.png"/>
+
+<ol start="2">
+<li>前端通过代理服务器处理。</li>
+</ol>
+<p>换一个登录接口，演示跨域， <code>views/login/index.vue</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">handleLogin</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.$refs.form.validate(<span class="keyword">async</span> (isOK) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (isOK) &#123;</span><br><span class="line">            <span class="keyword">const</span> res = <span class="keyword">await</span> axios(&#123;</span><br><span class="line">                <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">                <span class="attr">url</span>: <span class="string">&#x27;https://heimahr.itheima.net/api/sys/login&#x27;</span>,</span><br><span class="line">                <span class="attr">data</span>: <span class="built_in">this</span>.loginForm</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="built_in">console</span>.log(res)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/Snipaste_2023-03-25_11-40-56.png"/>
+
+<p> <code>vue.config.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">proxy</span>: &#123;</span><br><span class="line">        <span class="comment">// 当我们的本地的请求有 /api 的时候，就会代理我们的请求地址向另外一个服务器发出请求</span></span><br><span class="line">        <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">            <span class="attr">target</span>: <span class="string">&#x27;https://heimahr.itheima.net/&#x27;</span>, <span class="comment">// 跨域请求的地址</span></span><br><span class="line">            <span class="attr">changeOrigin</span>: <span class="literal">true</span> <span class="comment">// 开启跨域</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>记得修改登录页的代码如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"><span class="function"><span class="title">handleLogin</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.$refs.loginForm.validate(<span class="keyword">async</span> (valid) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (valid) &#123;</span><br><span class="line">            <span class="keyword">const</span> res = <span class="keyword">await</span> axios(&#123;</span><br><span class="line">                <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">                <span class="comment">// 下面的 url 等价于 http://localhost:8888/api/sys/login，这样的话才会走本地代理服务器</span></span><br><span class="line">                <span class="attr">url</span>: <span class="string">&#x27;/api/sys/login&#x27;</span>,</span><br><span class="line">                <span class="attr">data</span>: <span class="built_in">this</span>.loginForm</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="built_in">console</span>.log(res)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>🤔 注意： <code>vue.config.js</code> 的改动如果要生效，需要进行重启服务。</p>
+<h3 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h3><p>配置 Vue CLI 的代理，实现后端接口的跨域访问。</p>
+<h2 id="封装单独的登录接口"><a href="#封装单独的登录接口" class="headerlink" title="封装单独的登录接口"></a>封装单独的登录接口</h2><h3 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h3><p>在单独请求模块中，单独封装登录接口。</p>
+<h3 id="设置-baseURL"><a href="#设置-baseURL" class="headerlink" title="设置 baseURL"></a>设置 baseURL</h3><ol>
+<li>整理和分析请求文件的代码，<code>utils/request.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> request = axios.create(&#123;</span><br><span class="line">    <span class="comment">// 如果执行 npm run dev，值为 /api</span></span><br><span class="line">    <span class="comment">// 如果执行 npm run build，值为 /prod-api，运维应该在上线的时候给你配置上 /prod-api的代理</span></span><br><span class="line">    <span class="attr">baseURL</span>: process.env.VUE_APP_BASE_API,</span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">5000</span>, <span class="comment">// 定义 5 秒超时</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 删掉其他代码...</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> request</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>设置开发的环境变量，<code>.env.development</code>。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开发环境的基础地址</span></span><br><span class="line"><span class="comment"># 环境变量中的数据要以 VUE_APP_ 开头，否则 Webpack 中能读取，但是页面中读取不到（可以在 main.js 打印 process.env 尝试）</span></span><br><span class="line">VUE_APP_BASE_API = <span class="string">&#x27;/api&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>设置生产的环境变量，<code>.env.production</code>。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生产环境的基础地址</span></span><br><span class="line">VUE_APP_BASE_API = <span class="string">&#x27;/prod-api&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h3><p>我们习惯性的将所有的网络请求放置在 api 目录下统一管理，按照模块进行划分，例如 <code>api/user.js</code>，使用了封装的 request 工具，每个接口的请求都单独导出了一个方法，这样做的好处就是，任何位置需要请求的话，可以直接引用。</p>
+<p> <code>api/user.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/login&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">        data,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="处理登录的业务流程"><a href="#处理登录的业务流程" class="headerlink" title="处理登录的业务流程"></a>处理登录的业务流程</h2><h3 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h3><p>希望把 token 设置到 Vuex，方便获取。</p>
+<h3 id="使用流程"><a href="#使用流程" class="headerlink" title="使用流程"></a>使用流程</h3><h4 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h4><p>Vuex 的触发流程：视图 dispatch ➡ action ➡ action 中发请求 ➡ 请求结果到达之后 ➡ commit mutation ➡ mutation 中把 token 存储到 state。</p>
+<img src="/resource/images/vuexxxx.png"/>
+
+<h4 id="具体使用"><a href="#具体使用" class="headerlink" title="具体使用"></a>具体使用</h4><p>具体存储 token 的业务流程如下。</p>
+<img src="/resource/images/action.png"/>
+
+<h3 id="初始化模块"><a href="#初始化模块" class="headerlink" title="初始化模块"></a>初始化模块</h3><p> <code>store/modules/user.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">    <span class="attr">token</span>: <span class="literal">null</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> mutations = &#123;&#125;</span><br><span class="line"><span class="keyword">const</span> actions = &#123;&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">namespaced</span>: <span class="literal">true</span>,</span><br><span class="line">    state,</span><br><span class="line">    mutations,</span><br><span class="line">    actions,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="token-的快捷访问"><a href="#token-的快捷访问" class="headerlink" title="token 的快捷访问"></a>token 的快捷访问</h3><p><code>store/getters.js</code> ，创建 token 的快捷访问。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getters = &#123;</span><br><span class="line">    <span class="attr">sidebar</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.app.sidebar,</span><br><span class="line">    <span class="attr">device</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.app.device,</span><br><span class="line">    <span class="attr">token</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.user.token,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> getters</span><br></pre></td></tr></table></figure>
+
+<h3 id="封装登录的-Action"><a href="#封装登录的-Action" class="headerlink" title="封装登录的 Action"></a>封装登录的 Action</h3><p>登录 action 要做的事情，调用登录接口，成功后设置 token 到 Vuex， <code>store/modules/user.js</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    login</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/user&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    Message</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;element-ui&#x27;</span></span><br><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="title">login</span>(<span class="params">context, data</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> result = <span class="keyword">await</span> login(data)</span><br><span class="line">        <span class="keyword">if</span> (result.data.success) &#123;</span><br><span class="line">            context.commit(<span class="string">&#x27;setToken&#x27;</span>, result.data.data)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Message.error(result.data.message)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="封装登录的-Mutation"><a href="#封装登录的-Mutation" class="headerlink" title="封装登录的 Mutation"></a>封装登录的 Mutation</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">    <span class="attr">token</span>: <span class="literal">null</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">    <span class="function"><span class="title">setToken</span>(<span class="params">state, token</span>)</span> &#123;</span><br><span class="line">        state.token = token</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">removeToken</span>(<span class="params">state</span>)</span> &#123;</span><br><span class="line">        state.token = <span class="literal">null</span></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="视图中触发"><a href="#视图中触发" class="headerlink" title="视图中触发"></a>视图中触发</h3><p> <code>views/login/index.vue</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    mapActions</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        ...mapActions([<span class="string">&#x27;user/login&#x27;</span>]),</span><br><span class="line">        <span class="comment">// ...mapActions(&#x27;user&#x27;, [&#x27;login&#x27;]),</span></span><br><span class="line">        <span class="function"><span class="title">handleLogin</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.$refs.loginForm.validate(<span class="function">(<span class="params">isOk</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (isOk) &#123;</span><br><span class="line">                    <span class="built_in">this</span>[<span class="string">&#x27;user/login&#x27;</span>](<span class="built_in">this</span>.loginForm)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="持久化-Token-到-Vuex"><a href="#持久化-Token-到-Vuex" class="headerlink" title="持久化 Token 到 Vuex"></a>持久化 Token 到 Vuex</h2><ol>
+<li>封装持久化 token 的方法。</li>
+</ol>
+<p>后续设置到 Vuex 中的数据刷新会丢失，可以结合 Cookie 进行持久化， <code>utils/auth.js</code> 中已经为我们提供了 获取 token、设置 token、删除 token 的方法，可以直接使用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Cookies <span class="keyword">from</span> <span class="string">&#x27;js-cookie&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> TokenKey = <span class="string">&#x27;ifer-elser-47&#x27;</span> <span class="comment">// 设定一个独一无二的 key</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getToken</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Cookies.get(TokenKey)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">setToken</span>(<span class="params">token</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Cookies.set(TokenKey, token)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">removeToken</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Cookies.remove(TokenKey)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>初始化 token 状态，<code>store/modules/user.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    getToken,</span><br><span class="line">    setToken,</span><br><span class="line">    removeToken</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils/auth&#x27;</span></span><br><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">    <span class="attr">token</span>: getToken(),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>setToken 时，本地也存一份，removeToken 时，本地的也删除。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">    <span class="function"><span class="title">setToken</span>(<span class="params">state, token</span>)</span> &#123;</span><br><span class="line">        state.token = token</span><br><span class="line">        setToken(token)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">removeToken</span>(<span class="params">state</span>)</span> &#123;</span><br><span class="line">        state.token = <span class="literal">null</span></span><br><span class="line">        removeToken()</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过响应拦截优化接口"><a href="#通过响应拦截优化接口" class="headerlink" title="通过响应拦截优化接口"></a>通过响应拦截优化接口</h2><ol>
+<li>问题：获取数据麻烦和业务逻辑重复的问题，<code>store/modules/user.js</code> 。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="title">login</span>(<span class="params">context, data</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> result = <span class="keyword">await</span> login(data)</span><br><span class="line">        <span class="comment">// 业务逻辑重复：每次都要判断 result.data.success</span></span><br><span class="line">        <span class="keyword">if</span> (result.data.success) &#123;</span><br><span class="line">            <span class="comment">// 获取数据麻烦：成功通过 result.data.data 获取数据</span></span><br><span class="line">            context.commit(<span class="string">&#x27;setToken&#x27;</span>, result.data.data)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 业务逻辑重复：失败通过 result.data.message 给出提示</span></span><br><span class="line">            Message.error(result.data.message)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>解决，<code>utils/request.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Message &#125; <span class="keyword">from</span> <span class="string">&#x27;element-ui&#x27;</span></span><br><span class="line">service.interceptors.response.use(</span><br><span class="line">    <span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// Axios 默认加了一层 data</span></span><br><span class="line">        <span class="keyword">const</span> &#123;</span><br><span class="line">            success,</span><br><span class="line">            data,</span><br><span class="line">            message</span><br><span class="line">        &#125; = response.data</span><br><span class="line">        <span class="comment">// 要根据 success 的成功与否决定下面的操作</span></span><br><span class="line">        <span class="keyword">if</span> (success) &#123;</span><br><span class="line">            <span class="keyword">return</span> data</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Message.error(message)</span><br><span class="line">            <span class="comment">// 返回一个错误的 Promise</span></span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(message))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">        Message.error(error.message) <span class="comment">// 提示错误信息</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error) <span class="comment">// 返回执行错误 让当前的执行链跳出成功 直接进入 catch</span></span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>改造 <code>store/modules/user.js</code> 。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="title">login</span>(<span class="params">context, data</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> result = <span class="keyword">await</span> login(data)</span><br><span class="line">        context.commit(<span class="string">&#x27;setToken&#x27;</span>, result)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/resource/images/image-20200812020656210.png" alt="image-20200812020656210"></p>
+<h2 id="处理登录成功后的逻辑"><a href="#处理登录成功后的逻辑" class="headerlink" title="处理登录成功后的逻辑"></a>处理登录成功后的逻辑</h2><ol>
+<li>引入 mapActions 辅助函数。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    mapActions</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>引入 user 模块中的 login 方法。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">    ...mapActions([<span class="string">&#x27;user/login&#x27;</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>调用 action。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$refs.loginForm.validate(<span class="keyword">async</span> (isOK) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (isOK) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 注意这儿要加 await</span></span><br><span class="line">            <span class="keyword">await</span> <span class="built_in">this</span>[<span class="string">&#x27;user/login&#x27;</span>](<span class="built_in">this</span>.loginForm)</span><br><span class="line">            <span class="comment">// 提示</span></span><br><span class="line">            Message.success(<span class="string">&#x27;登录成功&#x27;</span>)</span><br><span class="line">            <span class="comment">// 跳转到首页</span></span><br><span class="line">            <span class="built_in">this</span>.$router.push(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(error)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>给登录按钮添加 loading。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #1 data 中准备 loading，默认值为 false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">this</span>.$refs.loginForm.validate(<span class="keyword">async</span> (isOK) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (isOK) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// #2</span></span><br><span class="line">            <span class="built_in">this</span>.loading = <span class="literal">true</span></span><br><span class="line">            <span class="keyword">await</span> <span class="built_in">this</span>[<span class="string">&#x27;user/login&#x27;</span>](<span class="built_in">this</span>.loginForm)</span><br><span class="line">            Message.success(<span class="string">&#x27;登录成功&#x27;</span>)</span><br><span class="line">            <span class="built_in">this</span>.$router.push(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(error)</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">// #3 不论执行 try 还是 catch 都去关闭 loading</span></span><br><span class="line">            <span class="built_in">this</span>.loading = <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">:loading</span>=<span class="string">&quot;loading&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:350px&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;handleLogin&quot;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="界面访问控制登录拦截"><a href="#界面访问控制登录拦截" class="headerlink" title="界面访问控制登录拦截"></a>界面访问控制登录拦截</h2><h3 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h3><p>根据 token 处理主页的访问权限问题（目前的问题是没有登录竟然也能访问首页）。</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p><img src="/resource/images/image-20200714093601730.png" alt="image-20200714093601730"></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p> <code>src/permission.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;@/router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;@/store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> NProgress <span class="keyword">from</span> <span class="string">&#x27;nprogress&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;nprogress/nprogress.css&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> whiteList = [<span class="string">&#x27;/login&#x27;</span>, <span class="string">&#x27;/404&#x27;</span>] <span class="comment">// 定义白名单（即没有登录也能访问的页面）</span></span><br><span class="line"><span class="comment">// 路由全局前置导航守卫</span></span><br><span class="line">router.beforeEach(<span class="function"><span class="keyword">function</span>(<span class="params">to, <span class="keyword">from</span>, next</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 开启进度条</span></span><br><span class="line">    NProgress.start()</span><br><span class="line">    <span class="comment">// 如果有 token</span></span><br><span class="line">    <span class="keyword">if</span> (store.getters.token) &#123;</span><br><span class="line">        <span class="comment">// 继续判断是不是去登录页</span></span><br><span class="line">        <span class="keyword">if</span> (to.path === <span class="string">&#x27;/login&#x27;</span>) &#123;</span><br><span class="line">            <span class="comment">// 表示去的是登录页，则跳到主页</span></span><br><span class="line">            next(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 否则直接放行</span></span><br><span class="line">            next()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果没有 token</span></span><br><span class="line">        <span class="keyword">if</span> (whiteList.indexOf(to.path) &gt; -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">// 在白名单，也放行</span></span><br><span class="line">            next()</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 否则拦截到登录页</span></span><br><span class="line">            next(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 注意：如果在路由全局前置导航守卫中，通过 next 拦截到了其他页面，后置守卫不会被触发</span></span><br><span class="line">    NProgress.done()</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 后置守卫</span></span><br><span class="line">router.afterEach(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 关闭进度条</span></span><br><span class="line">    NProgress.done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="任务-1"><a href="#任务-1" class="headerlink" title="任务"></a>任务</h3><p>完成界面访问控制的功能。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course01/" rel="prev" title="01_人资后台">
+      <i class="fa fa-chevron-left"></i> 01_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course03/" rel="next" title="03_人资后台">
+      03_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E7%99%BB%E5%BD%95%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">分析登录的业务流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B7%A8%E5%9F%9F"><span class="nav-number">3.</span> <span class="nav-text">配置代理服务器跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0%E8%B7%A8%E5%9F%9F"><span class="nav-number">3.2.</span> <span class="nav-text">为什么会出现跨域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E8%BF%99%E7%A7%8D%E8%B7%A8%E5%9F%9F"><span class="nav-number">3.3.</span> <span class="nav-text">怎么解决这种跨域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.4.</span> <span class="nav-text">任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E5%8D%95%E7%8B%AC%E7%9A%84%E7%99%BB%E5%BD%95%E6%8E%A5%E5%8F%A3"><span class="nav-number">4.</span> <span class="nav-text">封装单独的登录接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-baseURL"><span class="nav-number">4.2.</span> <span class="nav-text">设置 baseURL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85"><span class="nav-number">4.3.</span> <span class="nav-text">封装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E7%99%BB%E5%BD%95%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">处理登录的业务流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">5.2.</span> <span class="nav-text">使用流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="nav-number">5.2.1.</span> <span class="nav-text">整体流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E4%BD%BF%E7%94%A8"><span class="nav-number">5.2.2.</span> <span class="nav-text">具体使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%A8%A1%E5%9D%97"><span class="nav-number">5.3.</span> <span class="nav-text">初始化模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#token-%E7%9A%84%E5%BF%AB%E6%8D%B7%E8%AE%BF%E9%97%AE"><span class="nav-number">5.4.</span> <span class="nav-text">token 的快捷访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E7%99%BB%E5%BD%95%E7%9A%84-Action"><span class="nav-number">5.5.</span> <span class="nav-text">封装登录的 Action</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E7%99%BB%E5%BD%95%E7%9A%84-Mutation"><span class="nav-number">5.6.</span> <span class="nav-text">封装登录的 Mutation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E4%B8%AD%E8%A7%A6%E5%8F%91"><span class="nav-number">5.7.</span> <span class="nav-text">视图中触发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96-Token-%E5%88%B0-Vuex"><span class="nav-number">6.</span> <span class="nav-text">持久化 Token 到 Vuex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E4%BC%98%E5%8C%96%E6%8E%A5%E5%8F%A3"><span class="nav-number">7.</span> <span class="nav-text">通过响应拦截优化接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F%E5%90%8E%E7%9A%84%E9%80%BB%E8%BE%91"><span class="nav-number">8.</span> <span class="nav-text">处理登录成功后的逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E7%99%BB%E5%BD%95%E6%8B%A6%E6%88%AA"><span class="nav-number">9.</span> <span class="nav-text">界面访问控制登录拦截</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-3"><span class="nav-number">9.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">9.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">9.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1-1"><span class="nav-number">9.4.</span> <span class="nav-text">任务</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

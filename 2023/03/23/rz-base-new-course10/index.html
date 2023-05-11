@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 掌握 echarts 的基本使用。 ✔ 了解项目打包上线的基本流程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="10_人资后台">
+<meta property="og:url" content="http://example.com/2023/03/23/rz-base-new-course10/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 掌握 echarts 的基本使用。 ✔ 了解项目打包上线的基本流程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_160.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_161.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_162.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_163.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_164.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_165.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_166.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_168.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_169.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_180.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_183.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_184.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_185.png">
+<meta property="article:published_time" content="2023-03-23T07:09:56.000Z">
+<meta property="article:modified_time" content="2023-05-11T07:42:51.488Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/new_rz_160.png">
+
+<link rel="canonical" href="http://example.com/2023/03/23/rz-base-new-course10/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>10_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/23/rz-base-new-course10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          10_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-23 15:09:56" itemprop="dateCreated datePublished" datetime="2023-03-23T15:09:56+08:00">2023-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 15:42:51" itemprop="dateModified" datetime="2023-05-11T15:42:51+08:00">2023-05-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 掌握 echarts 的基本使用。</p>
+<p>✔ 了解项目打包上线的基本流程。</p>
+<span id="more"></span>
+
+<h2 id="首页-echarts图表的应用"><a href="#首页-echarts图表的应用" class="headerlink" title="首页-echarts图表的应用"></a>首页-echarts图表的应用</h2><p><a target="_blank" rel="noopener" href="https://echarts.apache.org/examples/zh/editor.html?c=area-basic">基础面积图</a></p>
+<img src="/resource/images/new_rz_160.png" class="highlight2"/>
+
+<img src="/resource/images/new_rz_161.png"/>
+
+<ol>
+<li>安装 echarts 包。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i echarts </span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>放置两个图表的 div，并给定高宽，<code>src/views/dashboard/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;chart&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 图表 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">ref</span>=<span class="string">&quot;social&quot;</span> <span class="attr">style</span>=<span class="string">&quot; width: 100%; height:100% &quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;chart&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 图表 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">ref</span>=<span class="string">&quot;provident&quot;</span> <span class="attr">style</span>=<span class="string">&quot; width: 100%; height:100% &quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在 mounted 中初始化图表， <code>src/views/dashboard/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> CountTo <span class="keyword">from</span> <span class="string">&#x27;vue-count-to&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    mapGetters</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    getHomeData,</span><br><span class="line">    getMessageList</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/home&#x27;</span></span><br><span class="line"><span class="comment">// #1</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> echarts <span class="keyword">from</span> <span class="string">&#x27;echarts&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">components</span>: &#123;</span><br><span class="line">        CountTo</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">homeData</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">list</span>: []</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        ...mapGetters([<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;avatar&#x27;</span>, <span class="string">&#x27;company&#x27;</span>, <span class="string">&#x27;departmentName&#x27;</span>])</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">watch</span>: &#123;</span><br><span class="line">        <span class="comment">// #3</span></span><br><span class="line">        <span class="function"><span class="title">homeData</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.social.setOption(&#123;</span><br><span class="line">                <span class="attr">xAxis</span>: &#123;</span><br><span class="line">                    <span class="attr">type</span>: <span class="string">&#x27;category&#x27;</span>,</span><br><span class="line">                    <span class="comment">// https://echarts.apache.org/zh/option.html#xAxis.boundaryGap</span></span><br><span class="line">                    <span class="comment">// 坐标轴两边的空白策略</span></span><br><span class="line">                    <span class="attr">boundaryGap</span>: <span class="literal">false</span>,</span><br><span class="line">                    <span class="attr">data</span>: <span class="built_in">this</span>.homeData.socialInsurance?.xAxis</span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">yAxis</span>: &#123;</span><br><span class="line">                    <span class="attr">type</span>: <span class="string">&#x27;value&#x27;</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">series</span>: [&#123;</span><br><span class="line">                    <span class="attr">data</span>: <span class="built_in">this</span>.homeData.socialInsurance?.yAxis,</span><br><span class="line">                    <span class="attr">type</span>: <span class="string">&#x27;line&#x27;</span>,</span><br><span class="line">                    <span class="attr">areaStyle</span>: &#123;</span><br><span class="line">                        <span class="attr">color</span>: <span class="string">&#x27;#04c9be&#x27;</span> <span class="comment">// 填充颜色</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="attr">lineStyle</span>: &#123;</span><br><span class="line">                        <span class="attr">color</span>: <span class="string">&#x27;#04c9be&#x27;</span> <span class="comment">// 线的颜色</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="built_in">this</span>.provident.setOption(&#123;</span><br><span class="line">                <span class="attr">xAxis</span>: &#123;</span><br><span class="line">                    <span class="attr">type</span>: <span class="string">&#x27;category&#x27;</span>,</span><br><span class="line">                    <span class="attr">boundaryGap</span>: <span class="literal">false</span>,</span><br><span class="line">                    <span class="attr">data</span>: <span class="built_in">this</span>.homeData.providentFund?.xAxis</span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">yAxis</span>: &#123;</span><br><span class="line">                    <span class="attr">type</span>: <span class="string">&#x27;value&#x27;</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">series</span>: [&#123;</span><br><span class="line">                    <span class="attr">data</span>: <span class="built_in">this</span>.homeData.providentFund?.yAxis,</span><br><span class="line">                    <span class="attr">type</span>: <span class="string">&#x27;line&#x27;</span>,</span><br><span class="line">                    <span class="attr">areaStyle</span>: &#123;</span><br><span class="line">                        <span class="attr">color</span>: <span class="string">&#x27;#04c9be&#x27;</span> <span class="comment">// 填充颜色</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="attr">lineStyle</span>: &#123;</span><br><span class="line">                        <span class="attr">color</span>: <span class="string">&#x27;#04c9be&#x27;</span> <span class="comment">// 线的颜色</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.getHomeData()</span><br><span class="line">        <span class="built_in">this</span>.getMessageList()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// #2</span></span><br><span class="line">    <span class="function"><span class="title">mounted</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.social = echarts.init(<span class="built_in">this</span>.$refs.social)</span><br><span class="line">        <span class="built_in">this</span>.provident = echarts.init(<span class="built_in">this</span>.$refs.provident)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getHomeData</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.homeData = <span class="keyword">await</span> getHomeData()</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getMessageList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.list = <span class="keyword">await</span> getMessageList()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="首页-echarts图表的按需导入"><a href="#首页-echarts图表的按需导入" class="headerlink" title="首页-echarts图表的按需导入"></a>首页-echarts图表的按需导入</h2><img src="/resource/images/new_rz_162.png"/>
+
+<img src="/resource/images/new_rz_163.png"/>
+
+<p>echarts 图表的按需导入， <code>src/views/dashboard/index.vue</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入核心包，注意这儿是从 &#x27;echarts/core&#x27; 引入的</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> echarts <span class="keyword">from</span> <span class="string">&#x27;echarts/core&#x27;</span></span><br><span class="line"><span class="comment">// 引入折线图</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    LineChart</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;echarts/charts&#x27;</span></span><br><span class="line"><span class="comment">// 引入组件</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    GridComponent</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;echarts/components&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    CanvasRenderer</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;echarts/renderers&#x27;</span></span><br><span class="line">echarts.use([</span><br><span class="line">    LineChart,</span><br><span class="line">    GridComponent,</span><br><span class="line">    CanvasRenderer</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由模式-将路由改成history模式"><a href="#路由模式-将路由改成history模式" class="headerlink" title="路由模式-将路由改成history模式"></a>路由模式-将路由改成history模式</h2><img src="/resource/images/new_rz_164.png"/>
+
+<ul>
+<li><p>hash模式带#，#后面的地址变化不会引起页面的刷新</p>
+</li>
+<li><p>history没有#，地址变化会引起页面刷新，更符合页面地址的规范（开发环境不刷新-webpack配置）</p>
+</li>
+<li><p>将路由模式修改成history模式，<code>src/router/index.js</code></p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> createRouter = <span class="function">() =&gt;</span> <span class="keyword">new</span> Router(&#123;</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;history&#x27;</span>, <span class="comment">// require service support</span></span><br><span class="line">    <span class="attr">scrollBehavior</span>: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">        <span class="attr">y</span>: <span class="number">0</span></span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="attr">routes</span>: constantRoutes <span class="comment">// 默认引入静态路由</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="打包分析-分析"><a href="#打包分析-分析" class="headerlink" title="打包分析-分析"></a>打包分析-分析</h2><img src="/resource/images/new_rz_165.png"/>
+
+<p>打包分析代码。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run preview -- --report</span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/new_rz_166.png"/>
+
+<h2 id="CDN加速"><a href="#CDN加速" class="headerlink" title="CDN加速"></a>CDN加速</h2><img src="/resource/images/new_rz_168.png"/>
+
+<p>将几个比较大的多在打包时排除，这样可以缩小整体打包的大小，保证 js 的加载速度，排除的包采用 cdn 的方式用外链去引入，cdn 本名为分发服务器，意为更近的访问区间更快的访问速度将所需要的文件返回给客户端。</p>
+<ol>
+<li>webpack 排除打包， <code>vue.config.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">configureWebpack: &#123;</span><br><span class="line">    <span class="comment">// provide the app&#x27;s title in webpack&#x27;s name field, so that</span></span><br><span class="line">    <span class="comment">// it can be accessed in index.html to inject the correct title.</span></span><br><span class="line">    <span class="attr">name</span>: name,</span><br><span class="line">    <span class="attr">resolve</span>: &#123;</span><br><span class="line">        <span class="attr">alias</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;@&#x27;</span>: resolve(<span class="string">&#x27;src&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 配置需要排出的包</span></span><br><span class="line">    <span class="attr">externals</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;vue&#x27;</span>: <span class="string">&#x27;Vue&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;element-ui&#x27;</span>: <span class="string">&#x27;ELEMENT&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;cos-js-sdk-v5&#x27;</span>: <span class="string">&#x27;COS&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在 html 中采用外链引入排除的文件， <code>public/index.html</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge,chrome=1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&lt;%= BASE_URL %&gt;favicon.ico&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>&lt;%= webpackConfig.name %&gt;<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.13/theme-chalk/index.min.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">noscript</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">strong</span>&gt;</span>We&#x27;re sorry but &lt;%= webpackConfig.name %&gt; doesn&#x27;t work properly without JavaScript enabled. Please enable it to continue.<span class="tag">&lt;/<span class="name">strong</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- built files will be auto injected --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.13/index.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/cos-js-sdk-v5/dist/cos-js-sdk-v5.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="项目打包-安装nginx"><a href="#项目打包-安装nginx" class="headerlink" title="项目打包-安装nginx"></a>项目打包-安装nginx</h2><img src="/resource/images/new_rz_169.png"/>
+
+<ol>
+<li>执行打包命令，得到 dist 文件包。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build:prod</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>安装 nginx，双击 <code>nginx.exe</code> 启动服务。</li>
+</ol>
+<ol start="3">
+<li>windows 下停止服务。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nginx -s stop</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>把 dist 中的代码放到 html 目录下。</p>
+</li>
+<li><p>清空 Cookie，浏览器地址栏输入 <code>http://localhost/login</code>。</p>
+</li>
+</ol>
+<h2 id="nginx解决history的404问题"><a href="#nginx解决history的404问题" class="headerlink" title="nginx解决history的404问题"></a>nginx解决history的404问题</h2><img src="/resource/images/new_rz_180.png"/>
+
+<p>修改 windows 配置文件，<code>conf/nginx.conf</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    <span class="comment"># 设置不论请求什么地址，都返回 index.html</span></span><br><span class="line">    try_files <span class="variable">$uri</span> <span class="variable">$uri</span>/ /index.html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重启服务。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<h2 id="nginx配置代理解决生产环境跨域问题"><a href="#nginx配置代理解决生产环境跨域问题" class="headerlink" title="nginx配置代理解决生产环境跨域问题"></a>nginx配置代理解决生产环境跨域问题</h2><img src="/resource/images/new_rz_183.png"/>
+
+<img src="/resource/images/new_rz_184.png"/>
+
+<p>nginx解决生产环境跨域</p>
+<img src="/resource/images/new_rz_185.png"/>
+
+<p>修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /prod-api  &#123;</span><br><span class="line">  proxy_pass https://heimahr-t.itheima.net;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>windows重启服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nginx -s reload</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course09/" rel="prev" title="09_人资后台">
+      <i class="fa fa-chevron-left"></i> 09_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/04/xcx-xtx-01/" rel="next" title="01_小兔鲜">
+      01_小兔鲜 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5-echarts%E5%9B%BE%E8%A1%A8%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">首页-echarts图表的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5-echarts%E5%9B%BE%E8%A1%A8%E7%9A%84%E6%8C%89%E9%9C%80%E5%AF%BC%E5%85%A5"><span class="nav-number">2.</span> <span class="nav-text">首页-echarts图表的按需导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8F-%E5%B0%86%E8%B7%AF%E7%94%B1%E6%94%B9%E6%88%90history%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">路由模式-将路由改成history模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%88%86%E6%9E%90-%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">打包分析-分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CDN%E5%8A%A0%E9%80%9F"><span class="nav-number">5.</span> <span class="nav-text">CDN加速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85-%E5%AE%89%E8%A3%85nginx"><span class="nav-number">6.</span> <span class="nav-text">项目打包-安装nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx%E8%A7%A3%E5%86%B3history%E7%9A%84404%E9%97%AE%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text">nginx解决history的404问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E8%A7%A3%E5%86%B3%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">nginx配置代理解决生产环境跨域问题</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

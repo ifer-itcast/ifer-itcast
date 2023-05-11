@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 掌握员工头像上传的业务逻辑。 ✔ 掌握给用户分配角色，给角色分配权限的操作（RBAC）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="08_人资后台">
+<meta property="og:url" content="http://example.com/2023/03/23/rz-base-new-course08/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 掌握员工头像上传的业务逻辑。 ✔ 掌握给用户分配角色，给角色分配权限的操作（RBAC）。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_106.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_107.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_108.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_109.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-04-14_10-50-20.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-04-14_10-55-54.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-04-14_10-58-36.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-04-14_11-02-37.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_117.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_118.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_121.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_122.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_123.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_124.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_127.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_128.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_129.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_130.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_133.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_134.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_136.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_138.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_139.png">
+<meta property="article:published_time" content="2023-03-23T07:07:56.000Z">
+<meta property="article:modified_time" content="2023-05-11T07:42:51.445Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/new_rz_106.png">
+
+<link rel="canonical" href="http://example.com/2023/03/23/rz-base-new-course08/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>08_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/23/rz-base-new-course08/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          08_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-23 15:07:56" itemprop="dateCreated datePublished" datetime="2023-03-23T15:07:56+08:00">2023-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 15:42:51" itemprop="dateModified" datetime="2023-05-11T15:42:51+08:00">2023-05-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 掌握员工头像上传的业务逻辑。</p>
+<p>✔ 掌握给用户分配角色，给角色分配权限的操作（RBAC）。</p>
+<span id="more"></span>
+
+<h2 id="员工详情-封装员工头像组件"><a href="#员工详情-封装员工头像组件" class="headerlink" title="员工详情-封装员工头像组件"></a>员工详情-封装员工头像组件</h2><img src="/resource/images/new_rz_106.png" width="300" class="highlight2"/>
+
+<img src="/resource/images/new_rz_107.png"/>
+
+<ol>
+<li>创建 image-upload 组件，<code>src/views/employee/components/image-upload.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-upload</span> <span class="attr">class</span>=<span class="string">&quot;avatar-uploader&quot;</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">:show-file-list</span>=<span class="string">&quot;false&quot;</span> <span class="attr">:before-upload</span>=<span class="string">&quot;beforeAvatarUpload&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- (自动上传)action是上传地址 人资项目不需要 人资项目(手动上传)  --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- show-file-list不展示列表 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">v-if</span>=<span class="string">&quot;value&quot;</span> <span class="attr">:src</span>=<span class="string">&quot;value&quot;</span> <span class="attr">class</span>=<span class="string">&quot;avatar&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">i</span> <span class="attr">v-else</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-plus avatar-uploader-icon&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-upload</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">props</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="attr">value</span>: &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">type</span>: <span class="built_in">String</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">default</span>: <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 检查函数 判断文件的类型还有大小 return  true(继续上传)/false(停止上传)</span></span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">beforeAvatarUpload</span>(<span class="params">file</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// jpeg png gif bmp</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">                <span class="keyword">const</span> isJPG = [<span class="string">&#x27;image/jpeg&#x27;</span>, <span class="string">&#x27;image/png&#x27;</span>, <span class="string">&#x27;image/gif&#x27;</span>, <span class="string">&#x27;image/bmp&#x27;</span>].includes(file.type)</span></span><br><span class="line"><span class="javascript">                <span class="keyword">const</span> isLt5M = file.size / <span class="number">1024</span> / <span class="number">1024</span> &lt; <span class="number">5</span> <span class="comment">// 5M</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">                <span class="keyword">if</span> (!isJPG) &#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">this</span>.$message.error(<span class="string">&#x27;上传头像图片只能是 JPG PNG GIF BMP 格式!&#x27;</span>)</span></span><br><span class="line"><span class="javascript">                &#125;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">if</span> (!isLt5M) &#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">this</span>.$message.error(<span class="string">&#x27;上传头像图片大小不能超过 5MB!&#x27;</span>)</span></span><br><span class="line"><span class="javascript">                &#125;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">return</span> isJPG &amp;&amp; isLt5M</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.avatar-uploader</span> <span class="selector-class">.el-upload</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">border</span>: <span class="number">1px</span> dashed <span class="number">#d9d9d9</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">border-radius</span>: <span class="number">6px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">cursor</span>: pointer;</span></span><br><span class="line"><span class="css">        <span class="attribute">position</span>: relative;</span></span><br><span class="line"><span class="css">        <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.avatar-uploader</span> <span class="selector-class">.el-upload</span><span class="selector-pseudo">:hover</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">border-color</span>: <span class="number">#409EFF</span>;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.avatar-uploader-icon</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">font-size</span>: <span class="number">28px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">color</span>: <span class="number">#8c939d</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">178px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">height</span>: <span class="number">178px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">line-height</span>: <span class="number">178px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.avatar</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">178px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">height</span>: <span class="number">178px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在父组件中应用，<code>src/views/employee/detail.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">image-upload</span> <span class="attr">v-model</span>=<span class="string">&quot;userInfo.staffPhoto&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="员工详情-上传图片-创建腾讯云存储桶"><a href="#员工详情-上传图片-创建腾讯云存储桶" class="headerlink" title="员工详情-上传图片-创建腾讯云存储桶"></a>员工详情-上传图片-创建腾讯云存储桶</h2><img src="/resource/images/new_rz_108.png"/>
+
+<img src="/resource/images/new_rz_109.png"/>
+
+<ol>
+<li><p>注册腾讯云账号（课前完成 <a target="_blank" rel="noopener" href="https://cloud.tencent.com/login">https://cloud.tencent.com/login</a>）。</p>
+</li>
+<li><p>创建腾讯云存储桶。</p>
+</li>
+<li><p>得到应用密钥和应用标识。</p>
+</li>
+</ol>
+<ul>
+<li>创建存储桶</li>
+</ul>
+<p>先点击头像左边的【控制台】。</p>
+<img src="/resource/images/Snipaste_2023-04-14_10-50-20.png"/>
+
+<img src="/resource/images/Snipaste_2023-04-14_10-55-54.png"/>
+
+<img src="/resource/images/Snipaste_2023-04-14_10-58-36.png"/>
+
+<h2 id="获取存储桶相关信息"><a href="#获取存储桶相关信息" class="headerlink" title="获取存储桶相关信息"></a>获取存储桶相关信息</h2><img src="/resource/images/Snipaste_2023-04-14_11-02-37.png"/>
+
+<p>将存储桶和所属地域拷贝下来，备用。获取应用标识 <a target="_blank" rel="noopener" href="https://console.cloud.tencent.com/cam/capi">https://console.cloud.tencent.com/cam/capi</a>。</p>
+<img src="/resource/images/new_rz_117.png"/>
+
+<p>将 SecretId 和 SecretKey 拷贝下来，备用。</p>
+<h2 id="员工详情-使用cos-sdk完成上传"><a href="#员工详情-使用cos-sdk完成上传" class="headerlink" title="员工详情-使用cos-sdk完成上传"></a>员工详情-使用cos-sdk完成上传</h2><img src="/resource/images/new_rz_118.png"/>
+
+<ol>
+<li>安装腾讯云 js-sdk。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i cos-js-sdk-v5 </span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用 el-upload 自定义上传，<code>src/views/employee/components/image-upload.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-upload</span> <span class="attr">class</span>=<span class="string">&quot;avatar-uploader&quot;</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">:show-file-list</span>=<span class="string">&quot;false&quot;</span> <span class="attr">:before-upload</span>=<span class="string">&quot;beforeAvatarUpload&quot;</span> <span class="attr">:http-request</span>=<span class="string">&quot;uploadImage&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- (自动上传)action是上传地址 人资项目不需要 人资项目(手动上传)  --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- show-file-list不展示列表 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">v-if</span>=<span class="string">&quot;value&quot;</span> <span class="attr">:src</span>=<span class="string">&quot;value&quot;</span> <span class="attr">class</span>=<span class="string">&quot;avatar&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">i</span> <span class="attr">v-else</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-plus avatar-uploader-icon&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-upload</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>实现上传方法。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> COS <span class="keyword">from</span> <span class="string">&#x27;cos-js-sdk-v5&#x27;</span></span><br><span class="line"><span class="comment">// 选择图片上传</span></span><br><span class="line"><span class="function"><span class="title">uploadImage</span>(<span class="params">params</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(params.file)</span><br><span class="line">    <span class="keyword">const</span> cos = <span class="keyword">new</span> COS(&#123;</span><br><span class="line">        <span class="attr">SecretId</span>: <span class="string">&#x27;AKIDQmu0HrSQcZeU3cqA4iCcmgYidIhrQr4jy7&#x27;</span>,</span><br><span class="line">        <span class="attr">SecretKey</span>: <span class="string">&#x27;jDRPmTx8rrdBTWXINPltwjKvJRmqfEYl&#x27;</span></span><br><span class="line">    &#125;) <span class="comment">// 完成 COS 对象的初始化</span></span><br><span class="line">    cos.putObject(&#123;</span><br><span class="line">        <span class="attr">Bucket</span>: <span class="string">&#x27;ifer-1253924894&#x27;</span>, <span class="comment">// 存储桶名称</span></span><br><span class="line">        <span class="attr">Region</span>: <span class="string">&#x27;ap-nanjing&#x27;</span>, <span class="comment">// 地域名称</span></span><br><span class="line">        <span class="attr">Key</span>: params.file.name, <span class="comment">// 文件名称</span></span><br><span class="line">        <span class="attr">StorageClass</span>: <span class="string">&#x27;STANDARD&#x27;</span>, <span class="comment">// 固定值</span></span><br><span class="line">        <span class="attr">Body</span>: params.file <span class="comment">// 文件对象</span></span><br><span class="line">    &#125;, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (data.statusCode === <span class="number">200</span> &amp;&amp; data.Location) &#123;</span><br><span class="line">            <span class="comment">// 拿到了腾讯云返回的地址</span></span><br><span class="line">            <span class="comment">// 通过 input 自定义事件将地址传出去</span></span><br><span class="line">            <span class="built_in">this</span>.$emit(<span class="string">&#x27;input&#x27;</span>, <span class="string">&#x27;http://&#x27;</span> + data.Location) <span class="comment">// 将地址返回了</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.$message.error(err.Message) <span class="comment">// 上传失败提示消息</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="权限管理-搭建权限页面"><a href="#权限管理-搭建权限页面" class="headerlink" title="权限管理-搭建权限页面"></a>权限管理-搭建权限页面</h2><img src="/resource/images/new_rz_121.png" class="highlight2"/>
+
+<p>实现权限管理的页面结构， <code>src/views/permission/index.vue</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app-container&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-card</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">class</span>=<span class="string">&quot;btn-add&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>添加权限<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-table</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;名称&quot;</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;标识&quot;</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;描述&quot;</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;操作&quot;</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>添加<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>编辑<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">el-table</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-card</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;Permission&#x27;</span></span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.btn-add</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">margin</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="权限管理-获取数据转化树形"><a href="#权限管理-获取数据转化树形" class="headerlink" title="权限管理-获取数据转化树形"></a>权限管理-获取数据转化树形</h2><img src="/resource/images/new_rz_122.png"/>
+
+<ol>
+<li>封装获取权限 API，<code>src/api/permission.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getPermissionList</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/permission&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>获取数据-转化树形-控制二级权限不显示添加按钮，<code>src/views/permission/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app-container&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-card</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">class</span>=<span class="string">&quot;btn-add&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>添加权限<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-table</span> <span class="attr">default-expand-all</span> <span class="attr">:data</span>=<span class="string">&quot;list&quot;</span> <span class="attr">row-key</span>=<span class="string">&quot;id&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">prop</span>=<span class="string">&quot;name&quot;</span> <span class="attr">label</span>=<span class="string">&quot;名称&quot;</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">prop</span>=<span class="string">&quot;code&quot;</span> <span class="attr">label</span>=<span class="string">&quot;标识&quot;</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">prop</span>=<span class="string">&quot;description&quot;</span> <span class="attr">label</span>=<span class="string">&quot;描述&quot;</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;操作&quot;</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot</span>=<span class="string">&quot;&#123; row &#125;&quot;</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">v-if</span>=<span class="string">&quot;row.type === 1&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>添加<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>编辑<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">el-table</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-card</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        getPermissionList</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/permission&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        transListToTreeData</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;Permission&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">list</span>: []</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.getPermissionList()</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">async</span> <span class="function"><span class="title">getPermissionList</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.list = transListToTreeData(<span class="keyword">await</span> getPermissionList(), <span class="number">0</span>) <span class="comment">// 将列表数据转化成树形结构</span></span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.btn-add</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">margin</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="权限管理-作业"><a href="#权限管理-作业" class="headerlink" title="权限管理-作业"></a>权限管理-作业</h2><p>基于权限接口和线上效果，完成权限点的新增、删除、编辑功能。</p>
+<img src="/resource/images/new_rz_123.png" width="500" class="highlight2"/>
+
+<img src="/resource/images/new_rz_124.png" width="500" class="highlight2"/>
+
+<p>作业要求如下。</p>
+<ul>
+<li><p>实现新增-删除-编辑功能。</p>
+</li>
+<li><p>编辑模式不做限制-弹层-行内-跳转都可。</p>
+</li>
+<li><p>注意：二级权限和一级权限的区别为 type，当 type 为 1 时，为一级权限，当 type 为 2 时，为二级权限。</p>
+</li>
+<li><p>二级权限应该添加在一级权限下，二者是通过 id 和 pid 进行关联的，其类似于组织架构中的添加子部门。</p>
+</li>
+</ul>
+<ol>
+<li>封装权限管理的 API 接口，<code>src/api/permission.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 新增权限</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">addPermission</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/permission&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">        data</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更新权限</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">updatePermission</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`/sys/permission/<span class="subst">$&#123;data.id&#125;</span>`</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;put&#x27;</span>,</span><br><span class="line">        data</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除权限</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">delPermission</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`/sys/permission/<span class="subst">$&#123;id&#125;</span>`</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;delete&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取权限详情</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getPermissionDetail</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`/sys/permission/<span class="subst">$&#123;id&#125;</span>`</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>新增编辑权限的弹层，<code>src/views/permission/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 放置一个弹层 用来编辑新增节点 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">:title</span>=<span class="string">&quot;`$&#123;showText&#125;权限点`&quot;</span> <span class="attr">:visible</span>=<span class="string">&quot;showDialog&quot;</span> @<span class="attr">close</span>=<span class="string">&quot;btnCancel&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 表单 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form</span> <span class="attr">ref</span>=<span class="string">&quot;perForm&quot;</span> <span class="attr">:model</span>=<span class="string">&quot;formData&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;rules&quot;</span> <span class="attr">label-width</span>=<span class="string">&quot;120px&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;权限名称&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;name&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;formData.name&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:90%&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;权限标识&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;code&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;formData.code&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:90%&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;权限描述&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;formData.description&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:90%&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;开启&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-switch</span> <span class="attr">v-model</span>=<span class="string">&quot;formData.enVisible&quot;</span> <span class="attr">active-value</span>=<span class="string">&quot;1&quot;</span> <span class="attr">inactive-value</span>=<span class="string">&quot;0&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">slot</span>=<span class="string">&quot;footer&quot;</span> <span class="attr">type</span>=<span class="string">&quot;flex&quot;</span> <span class="attr">justify</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;btnOK&quot;</span>&gt;</span>确定<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;btnCancel&quot;</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>声明控制弹层需要的变量、表单数据和校验规则，<code>src/views/permission/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    getPermissionList,</span><br><span class="line">    updatePermission,</span><br><span class="line">    addPermission,</span><br><span class="line">    getPermissionDetail,</span><br><span class="line">    delPermission</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/permission&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    transListToTreeData</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">list</span>: [],</span><br><span class="line">            <span class="attr">formData</span>: &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 名称</span></span><br><span class="line">                <span class="attr">code</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 标识</span></span><br><span class="line">                <span class="attr">description</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 描述</span></span><br><span class="line">                <span class="attr">type</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 类型，该类型不需要显示，点击添加的时候直接传递接口（路由级别的权限为 1，按钮级别的为 2）</span></span><br><span class="line">                <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 因为做的是树，需要知道添加到哪个节点下了</span></span><br><span class="line">                <span class="attr">enVisible</span>: <span class="string">&quot;0&quot;</span> <span class="comment">// 默认关闭</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">rules</span>: &#123;</span><br><span class="line">                <span class="attr">name</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;权限名称不能为空&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;],</span><br><span class="line">                <span class="attr">code</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;权限标识不能为空&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">showDialog</span>: <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        <span class="function"><span class="title">showText</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.formData.id ? <span class="string">&#x27;编辑&#x27;</span> : <span class="string">&#x27;新增&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.getPermissionList()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getPermissionList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.list = transListToTreeData(<span class="keyword">await</span> getPermissionList(), <span class="number">0</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="title">btnOK</span>(<span class="params"></span>)</span> &#123;&#125;,</span><br><span class="line">        <span class="function"><span class="title">btnCancel</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>实现一级权限新增-二级权限新增， <code>src/views/permission/index.vue</code>。</li>
+</ol>
+<p>注意：一级添加的 type 为 1， 二级添加的 type 为 2。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">class</span>=<span class="string">&quot;btn-add&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;addPermission(0, 1)&quot;</span>&gt;</span>添加权限<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;操作&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot</span>=<span class="string">&quot;&#123; row &#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">v-if</span>=<span class="string">&quot;row.type === 1&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;addPermission(row.id, 2)&quot;</span>&gt;</span>添加<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>点击添加按钮显示弹框，并记录 pid 和 type。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">addPermission</span>(<span class="params">pid, type</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.formData.pid = pid</span><br><span class="line">    <span class="built_in">this</span>.formData.type = type</span><br><span class="line">    <span class="built_in">this</span>.showDialog = <span class="literal">true</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>点击确定按钮调用添加接口、取消按钮操作。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Permission&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">btnOK</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.$refs.perForm.validate().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">this</span>.formData.id) &#123;</span><br><span class="line">                    <span class="keyword">return</span> updatePermission(<span class="built_in">this</span>.formData)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> addPermission(<span class="built_in">this</span>.formData)</span><br><span class="line">            &#125;).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="comment">//  提示消息</span></span><br><span class="line">                <span class="built_in">this</span>.$message.success(<span class="string">&#x27;新增成功&#x27;</span>)</span><br><span class="line">                <span class="built_in">this</span>.getPermissionList()</span><br><span class="line">                <span class="built_in">this</span>.showDialog = <span class="literal">false</span></span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="title">btnCancel</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.formData = &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 名称</span></span><br><span class="line">                <span class="attr">code</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 标识</span></span><br><span class="line">                <span class="attr">description</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 描述</span></span><br><span class="line">                <span class="attr">type</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 类型 该类型 不需要显示 因为点击添加的时候已经知道类型了</span></span><br><span class="line">                <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 因为做的是树 需要知道添加到哪个节点下了</span></span><br><span class="line">                <span class="attr">enVisible</span>: <span class="string">&#x27;0&#x27;</span> <span class="comment">// 默认关闭</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">this</span>.$refs.perForm.resetFields()</span><br><span class="line">            <span class="built_in">this</span>.showDialog = <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>实现编辑功能。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;editPermission(row.id)&quot;</span>&gt;</span>编辑<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Permission&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">editPermission</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">            <span class="comment">// 根据获取id获取详情</span></span><br><span class="line">            <span class="built_in">this</span>.formData = <span class="keyword">await</span> getPermissionDetail(id)</span><br><span class="line">            <span class="built_in">this</span>.showDialog = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="9">
+<li>实现删除功能。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;delPermission(row.id)&quot;</span>&gt;</span> 删除<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Permission&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">delPermission</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">await</span> <span class="built_in">this</span>.$confirm(<span class="string">&#x27;确定要删除该数据吗&#x27;</span>)</span><br><span class="line">                <span class="keyword">await</span> delPermission(id)</span><br><span class="line">                <span class="built_in">this</span>.getPermissionList()</span><br><span class="line">                <span class="built_in">this</span>.$message.success(<span class="string">&#x27;删除成功&#x27;</span>)</span><br><span class="line">            &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(error)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="权限应用-权限概念"><a href="#权限应用-权限概念" class="headerlink" title="权限应用-权限概念"></a>权限应用-权限概念</h2><img src="/resource/images/new_rz_127.png"/>
+
+<img src="/resource/images/new_rz_128.png"/>
+
+<p>权限是通过角色这个中间人实现，首先员工拥有角色，角色拥有权限，那么员工也就自动拥有了角色所对应的权限。</p>
+<p>所以接下来，我们需要实现给员工分配角色，给角色分配权限。</p>
+<p>给员工分角色，<code>views/employee/index.vue</code>。</p>
+<img src="/resource/images/new_rz_129.png"/>
+
+<p>给角色分权限，<code>views/role/index.vue</code>。</p>
+<img src="/resource/images/new_rz_130.png"/>
+
+<h2 id="权限应用-员工分配角色-弹出层"><a href="#权限应用-员工分配角色-弹出层" class="headerlink" title="权限应用-员工分配角色-弹出层"></a>权限应用-员工分配角色-弹出层</h2><img src="/resource/images/new_rz_133.png"/>
+
+<ol>
+<li>封装获取所有角色的 API， <code>src/api/employee.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取可用的角色</span></span><br><span class="line"><span class="comment"> * **/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getEnableRoleList</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/role/list/enabled&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>声明相关变量， <code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">showRoleDialog</span>: <span class="literal">false</span>, <span class="comment">// 用来控制角色弹层的显示</span></span><br><span class="line">        <span class="attr">roleList</span>: [], <span class="comment">// 接收角色列表</span></span><br><span class="line">        <span class="attr">roleIds</span>: [] <span class="comment">// 用来双向绑定数据的</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>点击角色按钮，获取角色列表， <code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; getEnableRoleList &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/employee&#x27;</span></span><br><span class="line"><span class="comment">// 点击角色按钮弹出层</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">btnRole</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.showRoleDialog = <span class="literal">true</span></span><br><span class="line">    <span class="built_in">this</span>.roleList = <span class="keyword">await</span> getEnableRoleList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>放置弹层，绑定变量和渲染 checkbox， <code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">:visible.sync</span>=<span class="string">&quot;showRoleDialog&quot;</span> <span class="attr">title</span>=<span class="string">&quot;分配角色&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 弹层内容 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- checkbox --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-checkbox-group</span> <span class="attr">v-model</span>=<span class="string">&quot;roleIds&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 放置n个的checkbox  要执行checkbox的存储值 item.id--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-checkbox</span> <span class="attr">v-for</span>=<span class="string">&quot;item in roleList&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item.id&quot;</span> <span class="attr">:label</span>=<span class="string">&quot;item.id&quot;</span>&gt;</span>&#123;&#123; item.name &#125;&#125;<span class="tag">&lt;/<span class="name">el-checkbox</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-checkbox-group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="权限应用-员工分配角色-回显数据并提交"><a href="#权限应用-员工分配角色-回显数据并提交" class="headerlink" title="权限应用-员工分配角色-回显数据并提交"></a>权限应用-员工分配角色-回显数据并提交</h2><img src="/resource/images/new_rz_134.png"/>
+
+<ol>
+<li>封装给员工分配角色的接口， <code>src/api/employee.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 分配员工角色</span></span><br><span class="line"><span class="comment"> * ***/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">assignRole</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/user/assignRoles&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;put&#x27;</span>,</span><br><span class="line">        data</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>点击角色按钮时，录当前点击的用户 id，并获取员工已经拥有的角色， <code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">currentUserId</span>: <span class="literal">null</span> <span class="comment">// 用来记录当前点击的用户id</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">btnRole</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.roleList = <span class="keyword">await</span> getEnableRoleList()</span><br><span class="line">    <span class="comment">// 记录当前点击的id 因为后边 确定取消要存取给对应的用户</span></span><br><span class="line">    <span class="built_in">this</span>.currentUserId = id</span><br><span class="line">    <span class="keyword">const</span> &#123;</span><br><span class="line">        roleIds</span><br><span class="line">    &#125; = <span class="keyword">await</span> getEmployeeDetail(id)</span><br><span class="line">    <span class="built_in">this</span>.roleIds = roleIds</span><br><span class="line">    <span class="built_in">this</span>.showRoleDialog = <span class="literal">true</span> <span class="comment">// 调整了顺序</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>点击确定实现给用户分配角色， <code>src/views/employee/index.vue</code></li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-row</span> <span class="attr">slot</span>=<span class="string">&quot;footer&quot;</span> <span class="attr">type</span>=<span class="string">&quot;flex&quot;</span> <span class="attr">justify</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;6&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;btnRoleOK&quot;</span>&gt;</span>确定<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;showRoleDialog = false&quot;</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 点击角色的确定</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">btnRoleOK</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> assignRole(&#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="built_in">this</span>.currentUserId,</span><br><span class="line">        <span class="attr">roleIds</span>: <span class="built_in">this</span>.roleIds</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">this</span>.$message.success(<span class="string">&#x27;分配用户角色成功&#x27;</span>)</span><br><span class="line">    <span class="built_in">this</span>.showRoleDialog = <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="权限应用-给角色分配权限-弹出层"><a href="#权限应用-给角色分配权限-弹出层" class="headerlink" title="权限应用-给角色分配权限-弹出层"></a>权限应用-给角色分配权限-弹出层</h2><img src="/resource/images/new_rz_136.png"/>
+
+<ol>
+<li>声明控制弹层显示和接收权限数据的变量， <code>src/views/role/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">showPermissionDialog</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">permissionData</span>: []</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>点击分配权限-弹出层-获取数据并转化树形， <code>src/views/role/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;btnPermission&quot;</span>&gt;</span>分配权限<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; transListToTreeData &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; getPermissionList &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/permission&#x27;</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">btnPermission</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.showPermissionDialog = <span class="literal">true</span></span><br><span class="line">    <span class="built_in">this</span>.permissionData = transListToTreeData(<span class="keyword">await</span> getPermissionList(), <span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>放置弹层和树组件， <code>src/views/role/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 放置权限弹层 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">:visible.sync</span>=<span class="string">&quot;showPermissionDialog&quot;</span> <span class="attr">title</span>=<span class="string">&quot;分配权限&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 放置权限数据 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-tree</span> <span class="attr">:data</span>=<span class="string">&quot;permissionData&quot;</span> <span class="attr">:props</span>=<span class="string">&quot;&#123; label: &#x27;name&#x27; &#125;&quot;</span> <span class="attr">show-checkbox</span> <span class="attr">default-expand-all</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="权限应用-角色分配权限-显示已有权限数据"><a href="#权限应用-角色分配权限-显示已有权限数据" class="headerlink" title="权限应用-角色分配权限-显示已有权限数据"></a>权限应用-角色分配权限-显示已有权限数据</h2><img src="/resource/images/new_rz_138.png"/>
+
+<ol>
+<li>获取当前角色的权限， <code>src/api/role.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getRoleDetail</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`/sys/role/<span class="subst">$&#123;id&#125;</span>`</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>声明变量，记录当前点击的角色 id 和角色所拥有的权限数据， <code>src/views/role/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">currentRoleId</span>: <span class="literal">null</span>,</span><br><span class="line">        <span class="attr">permIds</span>: []</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>点击分配权限按钮时传递角色 id，并根据 id 获取该角色所拥有的权限， <code>src/views/role/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;btnPermission(row.id)&quot;</span>&gt;</span>分配权限<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">btnPermission</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.currentRoleId = id</span><br><span class="line">    <span class="keyword">const</span> &#123;</span><br><span class="line">        permIds</span><br><span class="line">    &#125; = <span class="keyword">await</span> getRoleDetail(id)</span><br><span class="line">    <span class="built_in">this</span>.permIds = permIds</span><br><span class="line">    <span class="built_in">this</span>.permissionData = transListToTreeData(<span class="keyword">await</span> getPermissionList(), <span class="number">0</span>)</span><br><span class="line">    <span class="built_in">this</span>.showPermissionDialog = <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>设置 el-tree 组件的属性 node-key 和当前选中数据， <code>src/views/role/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-tree</span> <span class="attr">check-strictly</span> <span class="attr">node-key</span>=<span class="string">&quot;id&quot;</span> <span class="attr">:data</span>=<span class="string">&quot;permissionData&quot;</span> <span class="attr">:props</span>=<span class="string">&quot;&#123; label: &#x27;name&#x27; &#125;&quot;</span> <span class="attr">show-checkbox</span> <span class="attr">default-expand-all</span> <span class="attr">:default-checked-keys</span>=<span class="string">&quot;permIds&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>default-checked-keys</code> 的属性是设置当前选中的节点，但是必须配合 <code>node-key</code> 属性，因为 permIds 变量中存储的都是 id，必须让 el-tree 组件知道 key 是哪个字段，所以设置 <code>node-key=&quot;id&quot;</code>。</p>
+<p><code>check-strictly</code> 表示父子不关联。</p>
+<h2 id="权限应用-角色分配权限-确定提交"><a href="#权限应用-角色分配权限-确定提交" class="headerlink" title="权限应用-角色分配权限-确定提交"></a>权限应用-角色分配权限-确定提交</h2><img src="/resource/images/new_rz_139.png"/>
+
+<ol>
+<li>封装分配权限的接口 API，<code>src/api/role.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 给角色分配权限</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * ***/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">assignPerm</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/role/assignPrem&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;put&#x27;</span>,</span><br><span class="line">        data</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>确定和取消事件， <code>src/views/role/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-row</span> <span class="attr">slot</span>=<span class="string">&quot;footer&quot;</span> <span class="attr">type</span>=<span class="string">&quot;flex&quot;</span> <span class="attr">justify</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;6&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;btnPermissionOK&quot;</span>&gt;</span>确定<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;cancelPermDialog&quot;</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 点击确定时触发</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">btnPermissionOK</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> assignPerm(&#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="built_in">this</span>.currentRoleId,</span><br><span class="line">        <span class="comment">// 记得给 el-tree 组件添加 ref=&quot;permTree&quot;</span></span><br><span class="line">        <span class="attr">permIds</span>: <span class="built_in">this</span>.$refs.permTree.getCheckedKeys()</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">this</span>.$message.success(<span class="string">&#x27;角色分配权限成功&#x27;</span>)</span><br><span class="line">    <span class="built_in">this</span>.showPermissionDialog = <span class="literal">false</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="function"><span class="title">cancelPermDialog</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.showPermissionDialog = <span class="literal">false</span></span><br><span class="line">    <span class="built_in">this</span>.permIds = []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 绑定了 @close 事件，.sync 修饰符没有要了 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">:visible</span>=<span class="string">&quot;showPermissionDialog&quot;</span> <span class="attr">title</span>=<span class="string">&quot;分配权限&quot;</span> @<span class="attr">close</span>=<span class="string">&quot;cancelPermDialog&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course07/" rel="prev" title="07_人资后台">
+      <i class="fa fa-chevron-left"></i> 07_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course09/" rel="next" title="09_人资后台">
+      09_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E8%AF%A6%E6%83%85-%E5%B0%81%E8%A3%85%E5%91%98%E5%B7%A5%E5%A4%B4%E5%83%8F%E7%BB%84%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">员工详情-封装员工头像组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E8%AF%A6%E6%83%85-%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87-%E5%88%9B%E5%BB%BA%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AD%98%E5%82%A8%E6%A1%B6"><span class="nav-number">2.</span> <span class="nav-text">员工详情-上传图片-创建腾讯云存储桶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%AD%98%E5%82%A8%E6%A1%B6%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF"><span class="nav-number">3.</span> <span class="nav-text">获取存储桶相关信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E8%AF%A6%E6%83%85-%E4%BD%BF%E7%94%A8cos-sdk%E5%AE%8C%E6%88%90%E4%B8%8A%E4%BC%A0"><span class="nav-number">4.</span> <span class="nav-text">员工详情-使用cos-sdk完成上传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86-%E6%90%AD%E5%BB%BA%E6%9D%83%E9%99%90%E9%A1%B5%E9%9D%A2"><span class="nav-number">5.</span> <span class="nav-text">权限管理-搭建权限页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86-%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E8%BD%AC%E5%8C%96%E6%A0%91%E5%BD%A2"><span class="nav-number">6.</span> <span class="nav-text">权限管理-获取数据转化树形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86-%E4%BD%9C%E4%B8%9A"><span class="nav-number">7.</span> <span class="nav-text">权限管理-作业</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E5%BA%94%E7%94%A8-%E6%9D%83%E9%99%90%E6%A6%82%E5%BF%B5"><span class="nav-number">8.</span> <span class="nav-text">权限应用-权限概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E5%BA%94%E7%94%A8-%E5%91%98%E5%B7%A5%E5%88%86%E9%85%8D%E8%A7%92%E8%89%B2-%E5%BC%B9%E5%87%BA%E5%B1%82"><span class="nav-number">9.</span> <span class="nav-text">权限应用-员工分配角色-弹出层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E5%BA%94%E7%94%A8-%E5%91%98%E5%B7%A5%E5%88%86%E9%85%8D%E8%A7%92%E8%89%B2-%E5%9B%9E%E6%98%BE%E6%95%B0%E6%8D%AE%E5%B9%B6%E6%8F%90%E4%BA%A4"><span class="nav-number">10.</span> <span class="nav-text">权限应用-员工分配角色-回显数据并提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E5%BA%94%E7%94%A8-%E7%BB%99%E8%A7%92%E8%89%B2%E5%88%86%E9%85%8D%E6%9D%83%E9%99%90-%E5%BC%B9%E5%87%BA%E5%B1%82"><span class="nav-number">11.</span> <span class="nav-text">权限应用-给角色分配权限-弹出层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E5%BA%94%E7%94%A8-%E8%A7%92%E8%89%B2%E5%88%86%E9%85%8D%E6%9D%83%E9%99%90-%E6%98%BE%E7%A4%BA%E5%B7%B2%E6%9C%89%E6%9D%83%E9%99%90%E6%95%B0%E6%8D%AE"><span class="nav-number">12.</span> <span class="nav-text">权限应用-角色分配权限-显示已有权限数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E5%BA%94%E7%94%A8-%E8%A7%92%E8%89%B2%E5%88%86%E9%85%8D%E6%9D%83%E9%99%90-%E7%A1%AE%E5%AE%9A%E6%8F%90%E4%BA%A4"><span class="nav-number">13.</span> <span class="nav-text">权限应用-角色分配权限-确定提交</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

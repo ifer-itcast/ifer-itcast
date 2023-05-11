@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 掌握 el-tree 组件的使用。 ✔ 完成组织架构的增删改查功能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="04_人资后台">
+<meta property="og:url" content="http://example.com/2023/03/23/rz-base-new-course04/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 掌握 el-tree 组件的使用。 ✔ 完成组织架构的增删改查功能。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-20200828105046683.png">
+<meta property="og:image" content="http://example.com/resource/images/zzjg.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-03-26_11-43-02.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-03-27_08-53-43.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200721010931214.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_56.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_47.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_50.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_51.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_52.png">
+<meta property="article:published_time" content="2023-03-23T07:03:56.000Z">
+<meta property="article:modified_time" content="2023-05-11T07:42:51.332Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20200828105046683.png">
+
+<link rel="canonical" href="http://example.com/2023/03/23/rz-base-new-course04/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>04_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/23/rz-base-new-course04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          04_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-23 15:03:56" itemprop="dateCreated datePublished" datetime="2023-03-23T15:03:56+08:00">2023-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 15:42:51" itemprop="dateModified" datetime="2023-05-11T15:42:51+08:00">2023-05-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 掌握 el-tree 组件的使用。</p>
+<p>✔ 完成组织架构的增删改查功能。</p>
+<span id="more"></span>
+
+<h2 id="组织架构树形结构布局"><a href="#组织架构树形结构布局" class="headerlink" title="组织架构树形结构布局"></a>组织架构树形结构布局</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>使用 ElementUI 组件布局组织架构的基本布局。</p>
+<h3 id="认识组织架构"><a href="#认识组织架构" class="headerlink" title="认识组织架构"></a>认识组织架构</h3><p><img src="/resource/images/image-20200828105046683.png" alt="image-20200828105046683"></p>
+<p>一个企业的组织架构是该企业的灵魂，组织架构通常采用树形金字塔式结构，本章节，我们布局出页面的基本结构。</p>
+<p><img src="/resource/images/zzjg.png" alt="image-20200720010954202"></p>
+<h3 id="树形组件认识"><a href="#树形组件认识" class="headerlink" title="树形组件认识"></a>树形组件认识</h3><p>接下来，实现树形的结构，采用 Element UI 的 <a target="_blank" rel="noopener" href="https://element.eleme.cn/#/zh-CN/component/tree">tree 组件</a>，相关属性如下。</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">说明</th>
+<th align="left">类型</th>
+<th align="left">可选值</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">default-expand-all</td>
+<td align="left">是否默认展开所有节点</td>
+<td align="left">boolean</td>
+<td align="left">—</td>
+<td align="left">—</td>
+</tr>
+<tr>
+<td align="left">data</td>
+<td align="left">展示数据</td>
+<td align="left">array</td>
+<td align="left">—</td>
+<td align="left">—</td>
+</tr>
+<tr>
+<td align="left">node-key</td>
+<td align="left">每个树节点用来作为唯一标识的属性，在整棵树中应该是唯一的</td>
+<td align="left">String</td>
+<td align="left">—</td>
+<td align="left">—</td>
+</tr>
+<tr>
+<td align="left">props</td>
+<td align="left">配置选项，具体看下表</td>
+<td align="left">object</td>
+<td align="left">—</td>
+<td align="left">—</td>
+</tr>
+</tbody></table>
+<p>props 对象的配置信息如下。</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">说明</th>
+<th align="left">类型</th>
+<th align="left">可选值</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">label</td>
+<td align="left">指定节点标签为节点对象的某个属性值</td>
+<td align="left">string, function(data, node)</td>
+<td align="left">—</td>
+<td align="left">—</td>
+</tr>
+<tr>
+<td align="left">children</td>
+<td align="left">指定子树为节点对象的某个属性值</td>
+<td align="left">string</td>
+<td align="left">—</td>
+<td align="left">—</td>
+</tr>
+<tr>
+<td align="left">disabled</td>
+<td align="left">指定节点选择框是否禁用为节点对象的某个属性值</td>
+<td align="left">boolean, function(data, node)</td>
+<td align="left">—</td>
+<td align="left">—</td>
+</tr>
+</tbody></table>
+<p><strong>data 属性</strong>是组成树形数据的关键，演示它的使用，<a target="_blank" rel="noopener" href="https://element.eleme.cn/#/zh-CN/component/tree#ji-chu-yong-fa">官网</a>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-card</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-row</span>&gt;</span><span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-tree</span> <span class="attr">:data</span>=<span class="string">&quot;departs&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-tree</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-card</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/Snipaste_2023-03-26_11-43-02.png" width="500" class="highlight2"/>
+
+<h3 id="改造树形组件的数据和结构"><a href="#改造树形组件的数据和结构" class="headerlink" title="改造树形组件的数据和结构"></a>改造树形组件的数据和结构</h3><p>📝 目标：根据固定数据，完成下面的效果，掌握  <a target="_blank" rel="noopener" href="https://element.eleme.cn/#/zh-CN/component/tree#scoped-slot">tree</a> props 属性和作用域插槽的使用。</p>
+<img src="/resource/images/Snipaste_2023-03-27_08-53-43.png" class="highlight2"/>
+
+<p><code>views/department/index.vue</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app-container&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-card</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-tree</span> <span class="attr">:data</span>=<span class="string">&quot;departs&quot;</span> <span class="attr">:props</span>=<span class="string">&quot;defaultProps&quot;</span> <span class="attr">:default-expand-all</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- #1 el-row --&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 作用域插槽 slot-scope=&quot;obj&quot;，接收传递给插槽的数据，obj.data 是每个节点的数据对象--&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- &lt;el-row slot-scope=&quot;&#123; data &#125;&quot; type=&quot;flex&quot; align=&quot;middle&quot; style=&quot;height: 40px; width: 100%&quot;&gt; --&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 或者 &lt;template v-slot=&quot;&#123; data &#125;&quot;&gt;&lt;/template&gt; --&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 或者 &lt;template v-slot:default=&quot;&#123; data &#125;&quot;&gt;&lt;/template&gt; --&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 或者 &lt;template #default=&quot;&#123; data &#125;&quot;&gt;&lt;/template&gt; --&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">default</span>=<span class="string">&quot;&#123; data &#125;&quot;</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">type</span>=<span class="string">&quot;flex&quot;</span> <span class="attr">align</span>=<span class="string">&quot;middle&quot;</span> <span class="attr">style</span>=<span class="string">&quot;height: 40px; width: 100%&quot;</span>&gt;</span></span><br><span class="line">                            <span class="comment">&lt;!-- #2 左侧内容 --&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-col</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123; data.name &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">                            <span class="comment">&lt;!-- #3 右侧内容 --&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;4&quot;</span>&gt;</span></span><br><span class="line">                                <span class="comment">&lt;!-- #4 el-row --&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">type</span>=<span class="string">&quot;flex&quot;</span>&gt;</span></span><br><span class="line">                                    <span class="comment">&lt;!-- #5 left --&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">el-col</span>&gt;</span>&#123;&#123; data.managerName &#125;&#125;<span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">                                    <span class="comment">&lt;!-- #6 right --&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">el-col</span>&gt;</span></span><br><span class="line">                                        <span class="comment">&lt;!-- #7 --&gt;</span></span><br><span class="line">                                        <span class="comment">&lt;!-- 放置下拉菜单 --&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;<span class="name">el-dropdown</span>&gt;</span></span><br><span class="line">                                            <span class="comment">&lt;!-- #8 标题 --&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;<span class="name">span</span>&gt;</span>操作<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-arrow-down&quot;</span> /&gt;</span> <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                                            <span class="comment">&lt;!-- #9 内容，具名插槽 --&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;<span class="name">el-dropdown-menu</span> <span class="attr">slot</span>=<span class="string">&quot;dropdown&quot;</span>&gt;</span></span><br><span class="line">                                                <span class="comment">&lt;!-- 下拉选项 --&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;<span class="name">el-dropdown-item</span>&gt;</span>添加子部门<span class="tag">&lt;/<span class="name">el-dropdown-item</span>&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;<span class="name">el-dropdown-item</span>&gt;</span>编辑部门<span class="tag">&lt;/<span class="name">el-dropdown-item</span>&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;<span class="name">el-dropdown-item</span>&gt;</span>删除部门<span class="tag">&lt;/<span class="name">el-dropdown-item</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;/<span class="name">el-dropdown-menu</span>&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;/<span class="name">el-dropdown</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">el-tree</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-card</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;Department&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">departs</span>: [&#123;</span></span><br><span class="line"><span class="javascript">                        <span class="attr">name</span>: <span class="string">&#x27;总裁办&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                        <span class="attr">managerName</span>: <span class="string">&#x27;zs&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                        <span class="attr">children</span>: [&#123;</span></span><br><span class="line"><span class="javascript">                            <span class="attr">name</span>: <span class="string">&#x27;董事会&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                            <span class="attr">managerName</span>: <span class="string">&#x27;ls&#x27;</span></span></span><br><span class="line"><span class="javascript">                        &#125;]</span></span><br><span class="line"><span class="javascript">                    &#125;,</span></span><br><span class="line"><span class="javascript">                    &#123;</span></span><br><span class="line"><span class="javascript">                        <span class="attr">name</span>: <span class="string">&#x27;行政部&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                        <span class="attr">managerName</span>: <span class="string">&#x27;ww&#x27;</span></span></span><br><span class="line"><span class="javascript">                    &#125;,</span></span><br><span class="line"><span class="javascript">                    &#123;</span></span><br><span class="line"><span class="javascript">                        <span class="attr">name</span>: <span class="string">&#x27;人事部&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                        <span class="attr">managerName</span>: <span class="string">&#x27;zl&#x27;</span></span></span><br><span class="line"><span class="javascript">                    &#125;</span></span><br><span class="line"><span class="javascript">                ],</span></span><br><span class="line"><span class="javascript">                <span class="attr">defaultProps</span>: &#123;</span></span><br><span class="line"><span class="javascript">                    <span class="attr">label</span>: <span class="string">&#x27;name&#x27;</span> <span class="comment">// 表示显示这个属性对应的值</span></span></span><br><span class="line"><span class="javascript">                &#125;</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h3><p>完成树形结构的显示。</p>
+<h2 id="获取加工组织架构数据"><a href="#获取加工组织架构数据" class="headerlink" title="获取加工组织架构数据"></a>获取加工组织架构数据</h2><h3 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h3><p>获取真实的组织架构数据，并将其转化成树形数据显示在页面上。</p>
+<h3 id="封装-API-接口"><a href="#封装-API-接口" class="headerlink" title="封装 API 接口"></a>封装 API 接口</h3><ol>
+<li>封装获取组织架构的请求，<code>api/departments.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"><span class="comment">// 获取组织架构数据</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getDepartments</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/company/department&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在钩子函数中调用接口，<code>views/departments/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #1</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    getDepartments</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/departments&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Department&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="comment">// #4 删除初始的数据</span></span><br><span class="line">            <span class="attr">departs</span>: [],</span><br><span class="line">            <span class="attr">defaultProps</span>: &#123;</span><br><span class="line">                <span class="attr">label</span>: <span class="string">&#x27;name&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// #2</span></span><br><span class="line">        <span class="built_in">this</span>.getDepartments()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// #3</span></span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getDepartments</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> result = <span class="keyword">await</span> getDepartments()</span><br><span class="line">            <span class="built_in">this</span>.departs = result</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="将数组数据转化成树形结构"><a href="#将数组数据转化成树形结构" class="headerlink" title="将数组数据转化成树形结构"></a>将数组数据转化成树形结构</h3><p><img src="/resource/images/image-20200721010931214.png" alt="image-20200721010931214"></p>
+<ol>
+<li>封装一个工具方法，<code>utils/index.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 其他删除...</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">transListToTreeData</span>(<span class="params">list, rootValue</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> arr = []</span><br><span class="line">    list.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (item.pid === rootValue) &#123;</span><br><span class="line">            <span class="comment">// 找到之后，就要去找 item 下面有没有子节点</span></span><br><span class="line">            <span class="keyword">const</span> children = transListToTreeData(list, item.id)</span><br><span class="line">            <span class="keyword">if</span> (children.length) &#123;</span><br><span class="line">                <span class="comment">// 如果 children 的长度大于 0，说明找到了子节点</span></span><br><span class="line">                item.children = children</span><br><span class="line">            &#125;</span><br><span class="line">            arr.push(item) <span class="comment">// 将内容加入到数组中</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>调用转化方法，转化树形结构，<code>src/views/department/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// #1</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    transListToTreeData</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getDepartments</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="comment">// #2</span></span><br><span class="line">            <span class="built_in">this</span>.departs = transListToTreeData(result, <span class="number">0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="array-to-tree"><a href="#array-to-tree" class="headerlink" title="array to tree"></a>array to tree</h3><h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原始数组</span></span><br><span class="line"><span class="keyword">const</span> list = [&#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;a&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;总裁办&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;b&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;行政部&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;财务部&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;d&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;财务核算部&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;e&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;税务管理部&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;f&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;e&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;税务管理 A 部&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;g&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;e&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;税务管理 B 部&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 期望结果</span></span><br><span class="line"><span class="keyword">const</span> list = [&#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;a&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;总裁办&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;b&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;行政部&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;财务部&#x27;</span>,</span><br><span class="line">        <span class="attr">children</span>: [&#123;</span><br><span class="line">                <span class="attr">id</span>: <span class="string">&#x27;d&#x27;</span>,</span><br><span class="line">                <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;财务核算部&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">id</span>: <span class="string">&#x27;e&#x27;</span>,</span><br><span class="line">                <span class="attr">pid</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;税务管理部&#x27;</span>,</span><br><span class="line">                <span class="attr">children</span>: [&#123;</span><br><span class="line">                        <span class="attr">id</span>: <span class="string">&#x27;f&#x27;</span>,</span><br><span class="line">                        <span class="attr">pid</span>: <span class="string">&#x27;e&#x27;</span>,</span><br><span class="line">                        <span class="attr">name</span>: <span class="string">&#x27;税务管理 A 部&#x27;</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">id</span>: <span class="string">&#x27;g&#x27;</span>,</span><br><span class="line">                        <span class="attr">pid</span>: <span class="string">&#x27;e&#x27;</span>,</span><br><span class="line">                        <span class="attr">name</span>: <span class="string">&#x27;税务管理 B 部&#x27;</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                ],</span><br><span class="line">            &#125;,</span><br><span class="line">        ],</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h4 id="确定-ROOT-ID"><a href="#确定-ROOT-ID" class="headerlink" title="确定 ROOT_ID"></a>确定 ROOT_ID</h4><p>🍜 先确定 ROOT_ID 为 <code>&#39;&#39;</code> ，把 pid 等于 ROOT_ID 的添加到新数组的第一层。</p>
+<p>🤔 思路：封装方法 fn1，从 list 中查找，【谁】（数组的某一项 item）的 pid 等于根 id 的（根 id 就是 ROOT_ID），就把这个【谁】添加到数组中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ROOT_ID = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> arr = []</span><br><span class="line">    list.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (item.pid === ROOT_ID) &#123;</span><br><span class="line">            arr.push(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查找条件可能会变化，为了方便后续的处理，改造上面代码如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ROOT_ID = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params">list, id = ROOT_ID</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> arr = []</span><br><span class="line">    <span class="comment">// 从 list 中继续找，谁的 pid 等于根 id 的</span></span><br><span class="line">    list.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (item.pid === id) &#123;</span><br><span class="line">            arr.push(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> result = fn1(list)</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br></pre></td></tr></table></figure>
+
+<h4 id="找-item-的-children"><a href="#找-item-的-children" class="headerlink" title="找 item 的 children"></a>找 item 的 children</h4><p>🤔 添加进去的 item 项可能还有 children，所以添加之前先找添加进去的这个 item 有没有 children，有 children 的话就把这个 children 挂到 item 上之后再进行添加。</p>
+<p>🤔 那么怎么找 children 呢？</p>
+<p>😀 思路：封装方法 fn2，从 list 中查找，【谁】的 pid 等于 <font color=e32d40><strong>item 的 id</strong></font> 的，就把这个【谁】添加到数组中，最后把整个数组作为添加进去的 item 的 children。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ROOT_ID = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params">list, id = ROOT_ID</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> arr = []</span><br><span class="line">    list.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (item.pid === id) &#123;</span><br><span class="line">            <span class="keyword">const</span> children = fn2(list, item.id)</span><br><span class="line">            <span class="keyword">if</span> (children.length) &#123;</span><br><span class="line">                item.children = children</span><br><span class="line">            &#125;</span><br><span class="line">            arr.push(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params">list, id</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> arr = []</span><br><span class="line">    list.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (item.pid === id) &#123;</span><br><span class="line">            arr.push(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result = fn1(list, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br></pre></td></tr></table></figure>
+
+<h4 id="找-item-的-children-1"><a href="#找-item-的-children-1" class="headerlink" title="找 item 的 children"></a>找 item 的 children</h4><p>添加进去的 item 项可能还有 children，所以添加之前先找有没有 children，怎么找 children 呢？</p>
+<p>思路：封装方法 fn3，从 list 中查找，【谁】的 pid 等于 <font color=e32d40><strong>item 的 id</strong></font> 的，就把这个【谁】添加到数组中，最后把整个数组作为添加进去的 item 的 children。</p>
+<h4 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ROOT_ID = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">list, id = ROOT_ID</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> arr = []</span><br><span class="line">    list.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (item.pid === id) &#123;</span><br><span class="line">            <span class="keyword">const</span> children = fn(list, item.id)</span><br><span class="line">            <span class="keyword">if</span> (children.length) &#123;</span><br><span class="line">                item.children = children</span><br><span class="line">            &#125;</span><br><span class="line">            arr.push(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> arr = fn(list)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br></pre></td></tr></table></figure>
+
+<h4 id="performant-array-to-tree"><a href="#performant-array-to-tree" class="headerlink" title="performant-array-to-tree"></a>performant-array-to-tree</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    arrayToTree</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;performant-array-to-tree&#x27;</span></span><br><span class="line">arrayToTree(arr, &#123;</span><br><span class="line">    <span class="attr">parentId</span>: <span class="string">&#x27;pid&#x27;</span>,</span><br><span class="line">    <span class="attr">dataField</span>: <span class="literal">null</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="组织架构删除部门功能"><a href="#组织架构删除部门功能" class="headerlink" title="组织架构删除部门功能"></a>组织架构删除部门功能</h2><h3 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h3><p>实现操作功能的删除功能。</p>
+<img src="/resource/images/new_rz_56.png"/>
+
+<h3 id="封装删除部门接口"><a href="#封装删除部门接口" class="headerlink" title="封装删除部门接口"></a>封装删除部门接口</h3><p>封装删除功能模块， <code>api/departments.js</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">delDepartments</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`/company/department/<span class="subst">$&#123;id&#125;</span>`</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;delete&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="注册下拉菜单事件"><a href="#注册下拉菜单事件" class="headerlink" title="注册下拉菜单事件"></a>注册下拉菜单事件</h3><p>监听下拉菜单的点击事件并传递相关参数， <code>views/departments/index.vue</code> 。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- #1 @command --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-dropdown</span> @<span class="attr">command</span>=<span class="string">&quot;operateDepts($event, data.id)&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span> 操作<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-arrow-down&quot;</span> /&gt;</span> <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-dropdown-menu</span> <span class="attr">slot</span>=<span class="string">&quot;dropdown&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- #2 command --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-dropdown-item</span> <span class="attr">command</span>=<span class="string">&quot;add&quot;</span>&gt;</span>添加子部门<span class="tag">&lt;/<span class="name">el-dropdown-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-dropdown-item</span> <span class="attr">command</span>=<span class="string">&quot;edit&quot;</span>&gt;</span>编辑部门<span class="tag">&lt;/<span class="name">el-dropdown-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-dropdown-item</span> <span class="attr">command</span>=<span class="string">&quot;del&quot;</span>&gt;</span>删除部门<span class="tag">&lt;/<span class="name">el-dropdown-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-dropdown-menu</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-dropdown</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Department&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">operateDepts</span>(<span class="params">type, id</span>)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (type === <span class="string">&#x27;add&#x27;</span>) &#123;</span><br><span class="line">                <span class="comment">// 添加子部门的操作</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;edit&#x27;</span>) &#123;</span><br><span class="line">                <span class="comment">// 编辑部门的操作</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 删除操作</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="调用删除部门接口"><a href="#调用删除部门接口" class="headerlink" title="调用删除部门接口"></a>调用删除部门接口</h3><p>删除之前，提示用户是否删除，然后调用删除接口。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    delDepartments</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/departments&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Department&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">operateDepts</span>(<span class="params">type</span>)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (type === <span class="string">&#x27;add&#x27;</span>) &#123;&#125; <span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;edit&#x27;</span>) &#123;&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 删除操作</span></span><br><span class="line">                <span class="built_in">this</span>.$confirm(<span class="string">&#x27;确定要删除该部门吗&#x27;</span>).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// 如果点击了确定就会进入then</span></span><br><span class="line">                    <span class="keyword">return</span> delDepartments(id) <span class="comment">// 返回 promise 对象</span></span><br><span class="line">                &#125;).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// 如果删除成功了，就会进入这里</span></span><br><span class="line">                    <span class="built_in">this</span>.getDepartments()</span><br><span class="line">                &#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// 取消走这儿</span></span><br><span class="line">                    <span class="built_in">console</span>.log(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="组织架构新增部门弹框"><a href="#组织架构新增部门弹框" class="headerlink" title="组织架构新增部门弹框"></a>组织架构新增部门弹框</h2><h3 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h3><p>实现新增部门功能的组件创建。</p>
+<h3 id="封装新增接口"><a href="#封装新增接口" class="headerlink" title="封装新增接口"></a>封装新增接口</h3><p>封装新增部门的 api 模块， <code>api/departments.js</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">addDepartments</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/company/department&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">        data,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="新建新增弹层"><a href="#新建新增弹层" class="headerlink" title="新建新增弹层"></a>新建新增弹层</h3><ol>
+<li>构建一个新增部门的窗体组件，<code>views/department/components/add-dept.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 新增部门的弹层 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">title</span>=<span class="string">&quot;新增部门&quot;</span> <span class="attr">visible</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 表单组件 el-form，通过 label-width 设置 label 的宽度  --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 匿名插槽 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form</span> <span class="attr">label-width</span>=<span class="string">&quot;120px&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;部门名称&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">style</span>=<span class="string">&quot;width:80%&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;1-50个字符&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;部门编码&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">style</span>=<span class="string">&quot;width:80%&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;1-50个字符&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;部门负责人&quot;</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- &lt;el-select style=&quot;width:80%&quot; placeholder=&quot;请选择&quot; /&gt; --&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;部门介绍&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">style</span>=<span class="string">&quot;width:80%&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;1-300个字符&quot;</span> <span class="attr">type</span>=<span class="string">&quot;textarea&quot;</span> <span class="attr">:rows</span>=<span class="string">&quot;3&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- el-dialog 有专门放置底部操作栏的插槽，具名插槽 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">slot</span>=<span class="string">&quot;footer&quot;</span> <span class="attr">type</span>=<span class="string">&quot;flex&quot;</span> <span class="attr">justify</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 列被分为 24 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;6&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span>&gt;</span>确定<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>引入新增弹框组件，<code>departments/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> AddDept <span class="keyword">from</span> <span class="string">&#x27;./components/add-dept&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">components</span>: &#123;</span><br><span class="line">        AddDept</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app-container&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">add-dept</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="点击显示弹层"><a href="#点击显示弹层" class="headerlink" title="点击显示弹层"></a>点击显示弹层</h3><p>📝 目标：点击新增子部门时显示弹层组件。</p>
+<ol>
+<li>用外界传递过来的 showDialog 属性控制组件的显示或者隐藏，<code>views/departments/components/add-dept.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 需要传入一个 props 变量来控制显示或者隐藏</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;AddDept&#x27;</span>,</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">showDialog</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="built_in">Boolean</span>,</span><br><span class="line">            <span class="attr">default</span>: <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>把 showDialog 变量和 el-dialog 组件的 visible 属性进行绑定。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">title</span>=<span class="string">&quot;新增部门&quot;</span> <span class="attr">:visible</span>=<span class="string">&quot;showDialog&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>父组件定义并传递控制窗体显示的变量 <code>showDialog</code>，<code>views/departments/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">add-dept</span> <span class="attr">:show-dialog</span>=<span class="string">&quot;showDialog&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Department&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="attr">showDialog</span>: <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>当点击新增部门时，弹出组件，<code>views/departments/tree-tools.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Department&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">operateDepts</span>(<span class="params">type, id</span>)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (type === <span class="string">&#x27;add&#x27;</span>) &#123;</span><br><span class="line">                <span class="comment">// 显示弹框</span></span><br><span class="line">                <span class="built_in">this</span>.showDialog = <span class="literal">true</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;edit&#x27;</span>) &#123;</span><br><span class="line">                <span class="comment">// ...</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// ...</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>关闭弹框。</li>
+</ol>
+<p>给 el-dialog 组件绑定 @close 事件， <code>src/views/department/components/add-dept.vue</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">title</span>=<span class="string">&quot;新增部门&quot;</span> <span class="attr">:visible</span>=<span class="string">&quot;showDialog&quot;</span> @<span class="attr">close</span>=<span class="string">&quot;btnCancel&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;AddDept&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="function"><span class="title">btnCancel</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.$emit(<span class="string">&#x27;update:showDialog&#x27;</span>, <span class="literal">false</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>父组件添加 <code>.sync</code> 修饰符（可以简化事件监听和赋值的操作）， <code>src/views/department/index.vue</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">add-dept</span> <span class="attr">:show-dialog.sync</span>=<span class="string">&quot;showDialog&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="组织架构新增部门校验"><a href="#组织架构新增部门校验" class="headerlink" title="组织架构新增部门校验"></a>组织架构新增部门校验</h2><h3 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h3><p>完成新增部门功能的规则校验和数据提交部分。</p>
+<h3 id="数据收集和基础校验"><a href="#数据收集和基础校验" class="headerlink" title="数据收集和基础校验"></a>数据收集和基础校验</h3><ol>
+<li>准备变量和规则，<code>views/departments/components/add-dept.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;AddDept&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="comment">// 定义表单数据</span></span><br><span class="line">            <span class="attr">formData</span>: &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 部门名称，必填 1-50 个字符，同级部门中禁止出现重复部门</span></span><br><span class="line">                <span class="attr">code</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 部门编码，必填 1-50 个字符，部门编码在整个模块中都不允许重复</span></span><br><span class="line">                <span class="attr">managerId</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 部门管理者，必填</span></span><br><span class="line">                <span class="attr">introduce</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 部门介绍，必填 1-300 个字符</span></span><br><span class="line">                <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment">// 定义校验规则</span></span><br><span class="line">            <span class="attr">rules</span>: &#123;</span><br><span class="line">                <span class="attr">name</span>: [&#123;</span><br><span class="line">                        <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                        <span class="attr">message</span>: <span class="string">&#x27;部门名称不能为空&#x27;</span>,</span><br><span class="line">                        <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">min</span>: <span class="number">1</span>,</span><br><span class="line">                        <span class="attr">max</span>: <span class="number">50</span>,</span><br><span class="line">                        <span class="attr">message</span>: <span class="string">&#x27;部门名称要求1-50个字符&#x27;</span>,</span><br><span class="line">                        <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ],</span><br><span class="line">                <span class="attr">code</span>: [&#123;</span><br><span class="line">                        <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                        <span class="attr">message</span>: <span class="string">&#x27;部门编码不能为空&#x27;</span>,</span><br><span class="line">                        <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">min</span>: <span class="number">1</span>,</span><br><span class="line">                        <span class="attr">max</span>: <span class="number">50</span>,</span><br><span class="line">                        <span class="attr">message</span>: <span class="string">&#x27;部门编码要求1-50个字符&#x27;</span>,</span><br><span class="line">                        <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ],</span><br><span class="line">                <span class="attr">managerId</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;部门负责人不能为空&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;change&#x27;</span></span><br><span class="line">                &#125;],</span><br><span class="line">                <span class="attr">introduce</span>: [&#123;</span><br><span class="line">                        <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                        <span class="attr">message</span>: <span class="string">&#x27;部门介绍不能为空&#x27;</span>,</span><br><span class="line">                        <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span>,</span><br><span class="line">                        <span class="attr">min</span>: <span class="number">1</span>,</span><br><span class="line">                        <span class="attr">max</span>: <span class="number">300</span>,</span><br><span class="line">                        <span class="attr">message</span>: <span class="string">&#x27;部门介绍要求1-50个字符&#x27;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>把上面的数据和规则与视图进行绑定。</li>
+</ol>
+<ul>
+<li><p>  给 <code>el-form</code> 组件配置 model 和 rules 属性。</p>
+</li>
+<li><p>  给 <code>el-form-item</code> 组件配置 prop 属性。</p>
+</li>
+<li><p>  给表单组件 <code>el-input</code> 等进行 v-model 双向绑定。</p>
+</li>
+</ul>
+<h3 id="部门名称和部门编码"><a href="#部门名称和部门编码" class="headerlink" title="部门名称和部门编码"></a>部门名称和部门编码</h3><p>📝 目标：完成部门名称和部门编码的自定义校验，部门名称不能和 <code>同级别</code> 的重复。</p>
+<p>🤔 思考：添加时，部门名称的规则是什么？部门编码的规则是什么？</p>
+<img src="/resource/images/new_rz_47.png"/>
+
+<ol>
+<li>获取最新的部门数据，判断是否重复。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    getDepartments</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/departments&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;AddDept&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> checkNameRepeat = <span class="keyword">async</span> (rule, value, callback) =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> result = <span class="keyword">await</span> getDepartments()</span><br><span class="line">            <span class="keyword">const</span> isRepeat = result.some(<span class="function">(<span class="params">item</span>) =&gt;</span> item.name === value)</span><br><span class="line">            isRepeat ? callback(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`当前已经有<span class="subst">$&#123;value&#125;</span>的部门了`</span>)) : callback()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="comment">// 定义校验规则</span></span><br><span class="line">            <span class="attr">rules</span>: &#123;</span><br><span class="line">                <span class="comment">// ...</span></span><br><span class="line">                <span class="attr">name</span>: [</span><br><span class="line">                    <span class="comment">// ...</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span>,</span><br><span class="line">                        <span class="attr">validator</span>: checkNameRepeat</span><br><span class="line">                    &#125;</span><br><span class="line">                ],</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>检查部门编码的过程同理。</li>
+</ol>
+<h2 id="获取部门负责人的数据"><a href="#获取部门负责人的数据" class="headerlink" title="获取部门负责人的数据"></a>获取部门负责人的数据</h2><h3 id="目标-5"><a href="#目标-5" class="headerlink" title="目标"></a>目标</h3><p>获取新增表单中的部门负责人下拉数据。</p>
+<h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>封装获取部门负责人的接口，<code>api/departments.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getManagerList</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/user/simple&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>组件初始化完毕后调用获取员工列表的方法，<code>views/departments/add-dept.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #1</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    getManagerList</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/departments&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;AddDept&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="comment">// #2</span></span><br><span class="line">            <span class="attr">managerList</span>: [],</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.getManagerList()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="comment">// #3 获取员工简单列表数据</span></span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getManagerList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.managerList = <span class="keyword">await</span> getManagerList()</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>渲染数据。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-select</span> <span class="attr">v-model</span>=<span class="string">&quot;formData.managerId&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:80%&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请选择&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 需要循环生成选项，显示的是用户名，存的也是用户名--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-option</span> <span class="attr">v-for</span>=<span class="string">&quot;item in managerList&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item.id&quot;</span> <span class="attr">:label</span>=<span class="string">&quot;item.username&quot;</span> <span class="attr">:value</span>=<span class="string">&quot;item.id&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="记录当前点击的数据项"><a href="#记录当前点击的数据项" class="headerlink" title="记录当前点击的数据项"></a>记录当前点击的数据项</h2><img src="/resource/images/new_rz_50.png" width="500" class="highlight2"/>
+
+<ol>
+<li>点击添加子部门按钮时进行记录，<code>src/views/department/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Department&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">currentNodeId</span>: <span class="literal">null</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">operateDepts</span>(<span class="params">type, id</span>)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (type === <span class="string">&#x27;add&#x27;</span>) &#123;</span><br><span class="line">                <span class="built_in">this</span>.currentNodeId = id</span><br><span class="line">                <span class="built_in">this</span>.showDialog = <span class="literal">true</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;edit&#x27;</span>) &#123;</span><br><span class="line">                <span class="comment">// ...</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// ...</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>传递 currentNodeId 到新增的子组件，<code>src/views/department/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">add-dept</span> <span class="attr">:show-dialog.sync</span>=<span class="string">&quot;showDialog&quot;</span> <span class="attr">:current-node-id</span>=<span class="string">&quot;currentNodeId&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>子组件进行接收数据，<code>src/views/department/components/add-dept.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;AddDept&#x27;</span>,</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="attr">currentNodeId</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="built_in">Number</span>,</span><br><span class="line">            <span class="attr">default</span>: <span class="literal">null</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="组织架构新增部门功能"><a href="#组织架构新增部门功能" class="headerlink" title="组织架构新增部门功能"></a>组织架构新增部门功能</h2><img src="/resource/images/new_rz_51.png"/>
+
+<ol>
+<li>给 el-form 定义一个 ref 属性，<code>views/departments/components/add-dept.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form</span> <span class="attr">ref</span>=<span class="string">&quot;deptForm&quot;</span> <span class="attr">:model</span>=<span class="string">&quot;formData&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;rules&quot;</span> <span class="attr">label-width</span>=<span class="string">&quot;120px&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 点击确定时触发</span></span><br><span class="line"><span class="function"><span class="title">btnOK</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.$refs.deptForm.validate(<span class="function"><span class="params">isOK</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isOK) &#123;</span><br><span class="line">            <span class="comment">// 表示可以提交了</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>校验通过时，调用新增接口，因为是添加子部门，所以子部门的 pid 应该等于当前点击部门的 id。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    addDepartments</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/departments&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;AddDept&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">btnOK</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.$refs.deptForm.validate(<span class="keyword">async</span> isOK =&gt; &#123;</span><br><span class="line">                <span class="keyword">if</span> (isOK) &#123;</span><br><span class="line">                    <span class="comment">// 表示可以提交了</span></span><br><span class="line">                    <span class="keyword">await</span> addDepartments(&#123;</span><br><span class="line">                        ...this.formData,</span><br><span class="line">                        <span class="attr">pid</span>: <span class="built_in">this</span>.currentNodeId</span><br><span class="line">                    &#125;)</span><br><span class="line">                    <span class="built_in">this</span>.$emit(<span class="string">&#x27;updateDepartment&#x27;</span>)</span><br><span class="line">                    <span class="built_in">this</span>.$message.success(<span class="string">&#x27;新增部门成功&#x27;</span>)</span><br><span class="line">                    <span class="built_in">this</span>.btnCancel()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>父组件监听 updateDepartment，<code>views/departments/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">add-dept</span> <span class="attr">:show-dialog.sync</span>=<span class="string">&quot;showDialog&quot;</span> <span class="attr">:current-node-id</span>=<span class="string">&quot;currentNodeId&quot;</span> @<span class="attr">updateDepartment</span>=<span class="string">&quot;getDepartments&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>关闭弹框时，重置表单和校验规则。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;AddDept&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">btnCancel</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="comment">// 重置内容，并清空校验规则</span></span><br><span class="line">            <span class="built_in">this</span>.$refs.deptForm.resetFields()</span><br><span class="line">            <span class="comment">// 关闭</span></span><br><span class="line">            <span class="built_in">this</span>.$emit(<span class="string">&#x27;update:showDialog&#x27;</span>, <span class="literal">false</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编辑部门功能数据回写"><a href="#编辑部门功能数据回写" class="headerlink" title="编辑部门功能数据回写"></a>编辑部门功能数据回写</h2><h3 id="目标-6"><a href="#目标-6" class="headerlink" title="目标"></a>目标</h3><p>实现编辑部门的功能。</p>
+<h3 id="填充数据"><a href="#填充数据" class="headerlink" title="填充数据"></a>填充数据</h3><p>📝 目标：点击编辑按钮时，父组件调用子组件获取详情方法来填充数据。</p>
+<img src="/resource/images/new_rz_52.png" class="highlight2"/>
+
+<ol>
+<li>封装获取部门信息的接口，<code>api/departments.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取部门详情</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getDepartDetail</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`/company/department/<span class="subst">$&#123;id&#125;</span>`</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>添加部门的组件中定义获取详情的方法，并把结果赋值给 formData，<code>views/departments/components/add-dept.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    getDepartDetail</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/departments&#x27;</span></span><br><span class="line"><span class="comment">// 获取部门详情</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">getDepartDetail</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.formData = <span class="keyword">await</span> getDepartDetail(<span class="built_in">this</span>.currentNodeId)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>父组件中，点击编辑部门按钮时，调用子组件的方法，<code>views/departments/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Department&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="function"><span class="title">operateDepts</span>(<span class="params">type, id</span>)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (type === <span class="string">&#x27;add&#x27;</span>) &#123;</span><br><span class="line">                <span class="comment">// ...</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;edit&#x27;</span>) &#123;</span><br><span class="line">                <span class="built_in">this</span>.currentNodeId = id</span><br><span class="line">                <span class="built_in">this</span>.showDialog = <span class="literal">true</span></span><br><span class="line">                <span class="built_in">this</span>.$refs.addDept.getDepartDetail()</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// ...</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>处理 props 传递数据异步的问题。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$nextTick(<span class="built_in">this</span>.$refs.addDept.getDepartDetail)</span><br></pre></td></tr></table></figure>
+
+<h3 id="根据计算属性显示控制标题"><a href="#根据计算属性显示控制标题" class="headerlink" title="根据计算属性显示控制标题"></a>根据计算属性显示控制标题</h3><ol>
+<li>根据有无 ID，利用计算属性，区分编辑和添加的弹框标题，<code>views/departments/components/add-dept.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">    <span class="function"><span class="title">showTitle</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.formData.id ? <span class="string">&#x27;编辑部门&#x27;</span> : <span class="string">&#x27;新增子部门&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>绑定。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">:title</span>=<span class="string">&quot;showTitle&quot;</span> <span class="attr">:visible</span>=<span class="string">&quot;showDialog&quot;</span> @<span class="attr">close</span>=<span class="string">&quot;btnCancel&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>el-form 中的 resetFields 不能重置非表单中的数据，导致 formData.id 残留，所以在取消的时候手动重置数据。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">btnCancel</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">// resetFields 只能重置表单上的数据，非表单上的比如 id 则不能被重置</span></span><br><span class="line">    <span class="built_in">this</span>.formData = &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">code</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">managerId</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">introduce</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">pid</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 重置内容，并清空校验规则</span></span><br><span class="line">    <span class="built_in">this</span>.$refs.deptForm.resetFields()</span><br><span class="line">    <span class="comment">// 关闭</span></span><br><span class="line">    <span class="built_in">this</span>.$emit(<span class="string">&#x27;update:showDialog&#x27;</span>, <span class="literal">false</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="封装并调用编辑的接口"><a href="#封装并调用编辑的接口" class="headerlink" title="封装并调用编辑的接口"></a>封装并调用编辑的接口</h2><p>🤔 思考：点击确定按钮时，如何区分是新增和编辑？</p>
+<ol>
+<li>封装编辑部门接口，<code>api/departments.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 编辑部门</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">updateDepartments</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`/company/department/<span class="subst">$&#123;data.id&#125;</span>`</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;put&#x27;</span>,</span><br><span class="line">        data,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>点击确定时，进行场景区分，<code>views/departments/components/add-dept.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;AddDept&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">btnOK</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.$refs.deptForm.validate(<span class="keyword">async</span> isOK =&gt; &#123;</span><br><span class="line">                <span class="keyword">if</span> (isOK) &#123;</span><br><span class="line">                    <span class="comment">// 表示可以提交了</span></span><br><span class="line">                    <span class="keyword">if</span> (<span class="built_in">this</span>.formData.id) &#123;</span><br><span class="line">                        <span class="keyword">await</span> updateDepartments(<span class="built_in">this</span>.formData)</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">await</span> addDepartments(&#123;</span><br><span class="line">                            ...this.formData,</span><br><span class="line">                            <span class="attr">pid</span>: <span class="built_in">this</span>.currentNodeId</span><br><span class="line">                        &#125;)</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="built_in">this</span>.$emit(<span class="string">&#x27;updateDepartment&#x27;</span>)</span><br><span class="line">                    <span class="built_in">this</span>.$message.success(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.formData.id ? <span class="string">&#x27;编辑&#x27;</span> : <span class="string">&#x27;新增&#x27;</span>&#125;</span>部门成功`</span>)</span><br><span class="line">                    <span class="built_in">this</span>.btnCancel()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="校验规则支持编辑场景"><a href="#校验规则支持编辑场景" class="headerlink" title="校验规则支持编辑场景"></a>校验规则支持编辑场景</h2><p>发现原来的校验规则和编辑部门有些冲突，所以需要进一步处理，编辑时 name 和 code 的校验规则应该是怎样的？</p>
+<p> <code>views/departments/components/add-dept.vue</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> checkNameRepeat = <span class="keyword">async</span> (rule, value, callback) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="keyword">await</span> getDepartments()</span><br><span class="line">    <span class="comment">// 编辑场景</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.formData.id) &#123;</span><br><span class="line">        result = result.filter(<span class="function"><span class="params">item</span> =&gt;</span> item.id !== <span class="built_in">this</span>.formData.id)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> isRepeat = result.some(<span class="function">(<span class="params">item</span>) =&gt;</span> item.name === value)</span><br><span class="line">    isRepeat ? callback(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`当前已经有<span class="subst">$&#123;value&#125;</span>的部门了`</span>)) : callback()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> checkCodeRepeat = <span class="keyword">async</span> (rule, value, callback) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="keyword">await</span> getDepartments()</span><br><span class="line">    <span class="comment">// 编辑场景</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.formData.id) &#123;</span><br><span class="line">        result = result.filter(<span class="function"><span class="params">item</span> =&gt;</span> item.id !== <span class="built_in">this</span>.formData.id)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> isRepeat = result.some(<span class="function">(<span class="params">item</span>) =&gt;</span> item.code === value)</span><br><span class="line">    isRepeat ? callback(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`当前已经有<span class="subst">$&#123;value&#125;</span>的编码了`</span>)) : callback()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此，整个组织架构，我们完成了读取 / 新增部门 / 删除部门 / 编辑部门。</p>
+<h2 id="给数据获取添加进度条"><a href="#给数据获取添加进度条" class="headerlink" title="给数据获取添加进度条"></a>给数据获取添加进度条</h2><h3 id="目标-7"><a href="#目标-7" class="headerlink" title="目标"></a>目标</h3><p>由于获取数据的延迟性，为了更好的体验，可以利用 Element UI 提供的 v-loading 指令给页面加一个进度提示。</p>
+<h3 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>定义 loading 变量，<code>views/departments/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">loading</span>: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>获取数据前后设置变量。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">getDepartments</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.loading = <span class="literal">true</span></span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> getDepartments()</span><br><span class="line">    <span class="built_in">this</span>.departs = transListToTreeData(result.depts, <span class="number">0</span>)</span><br><span class="line">    <span class="built_in">this</span>.loading = <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>赋值变量给 v-loading 指令。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-card</span> <span class="attr">v-loading</span>=<span class="string">&quot;loading&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-card</span>&gt;</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course03/" rel="prev" title="03_人资后台">
+      <i class="fa fa-chevron-left"></i> 03_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course05/" rel="next" title="05_人资后台">
+      05_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E7%BB%87%E6%9E%B6%E6%9E%84%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84%E5%B8%83%E5%B1%80"><span class="nav-number">2.</span> <span class="nav-text">组织架构树形结构布局</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E8%AF%86%E7%BB%84%E7%BB%87%E6%9E%B6%E6%9E%84"><span class="nav-number">2.2.</span> <span class="nav-text">认识组织架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%91%E5%BD%A2%E7%BB%84%E4%BB%B6%E8%AE%A4%E8%AF%86"><span class="nav-number">2.3.</span> <span class="nav-text">树形组件认识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E9%80%A0%E6%A0%91%E5%BD%A2%E7%BB%84%E4%BB%B6%E7%9A%84%E6%95%B0%E6%8D%AE%E5%92%8C%E7%BB%93%E6%9E%84"><span class="nav-number">2.4.</span> <span class="nav-text">改造树形组件的数据和结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.5.</span> <span class="nav-text">任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%8A%A0%E5%B7%A5%E7%BB%84%E7%BB%87%E6%9E%B6%E6%9E%84%E6%95%B0%E6%8D%AE"><span class="nav-number">3.</span> <span class="nav-text">获取加工组织架构数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85-API-%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.2.</span> <span class="nav-text">封装 API 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E6%95%B0%E7%BB%84%E6%95%B0%E6%8D%AE%E8%BD%AC%E5%8C%96%E6%88%90%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84"><span class="nav-number">3.3.</span> <span class="nav-text">将数组数据转化成树形结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array-to-tree"><span class="nav-number">3.4.</span> <span class="nav-text">array to tree</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%80%E6%B1%82"><span class="nav-number">3.4.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A-ROOT-ID"><span class="nav-number">3.4.2.</span> <span class="nav-text">确定 ROOT_ID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%BE-item-%E7%9A%84-children"><span class="nav-number">3.4.3.</span> <span class="nav-text">找 item 的 children</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%BE-item-%E7%9A%84-children-1"><span class="nav-number">3.4.4.</span> <span class="nav-text">找 item 的 children</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%92%E5%BD%92"><span class="nav-number">3.4.5.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#performant-array-to-tree"><span class="nav-number">3.4.6.</span> <span class="nav-text">performant-array-to-tree</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E7%BB%87%E6%9E%B6%E6%9E%84%E5%88%A0%E9%99%A4%E9%83%A8%E9%97%A8%E5%8A%9F%E8%83%BD"><span class="nav-number">4.</span> <span class="nav-text">组织架构删除部门功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E5%88%A0%E9%99%A4%E9%83%A8%E9%97%A8%E6%8E%A5%E5%8F%A3"><span class="nav-number">4.2.</span> <span class="nav-text">封装删除部门接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E4%B8%8B%E6%8B%89%E8%8F%9C%E5%8D%95%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.3.</span> <span class="nav-text">注册下拉菜单事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E5%88%A0%E9%99%A4%E9%83%A8%E9%97%A8%E6%8E%A5%E5%8F%A3"><span class="nav-number">4.4.</span> <span class="nav-text">调用删除部门接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E7%BB%87%E6%9E%B6%E6%9E%84%E6%96%B0%E5%A2%9E%E9%83%A8%E9%97%A8%E5%BC%B9%E6%A1%86"><span class="nav-number">5.</span> <span class="nav-text">组织架构新增部门弹框</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-3"><span class="nav-number">5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E6%96%B0%E5%A2%9E%E6%8E%A5%E5%8F%A3"><span class="nav-number">5.2.</span> <span class="nav-text">封装新增接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E6%96%B0%E5%A2%9E%E5%BC%B9%E5%B1%82"><span class="nav-number">5.3.</span> <span class="nav-text">新建新增弹层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%B9%E5%87%BB%E6%98%BE%E7%A4%BA%E5%BC%B9%E5%B1%82"><span class="nav-number">5.4.</span> <span class="nav-text">点击显示弹层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E7%BB%87%E6%9E%B6%E6%9E%84%E6%96%B0%E5%A2%9E%E9%83%A8%E9%97%A8%E6%A0%A1%E9%AA%8C"><span class="nav-number">6.</span> <span class="nav-text">组织架构新增部门校验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-4"><span class="nav-number">6.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86%E5%92%8C%E5%9F%BA%E7%A1%80%E6%A0%A1%E9%AA%8C"><span class="nav-number">6.2.</span> <span class="nav-text">数据收集和基础校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E9%97%A8%E5%90%8D%E7%A7%B0%E5%92%8C%E9%83%A8%E9%97%A8%E7%BC%96%E7%A0%81"><span class="nav-number">6.3.</span> <span class="nav-text">部门名称和部门编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E9%83%A8%E9%97%A8%E8%B4%9F%E8%B4%A3%E4%BA%BA%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">7.</span> <span class="nav-text">获取部门负责人的数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-5"><span class="nav-number">7.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">7.2.</span> <span class="nav-text">内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E5%BD%93%E5%89%8D%E7%82%B9%E5%87%BB%E7%9A%84%E6%95%B0%E6%8D%AE%E9%A1%B9"><span class="nav-number">8.</span> <span class="nav-text">记录当前点击的数据项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E7%BB%87%E6%9E%B6%E6%9E%84%E6%96%B0%E5%A2%9E%E9%83%A8%E9%97%A8%E5%8A%9F%E8%83%BD"><span class="nav-number">9.</span> <span class="nav-text">组织架构新增部门功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E9%83%A8%E9%97%A8%E5%8A%9F%E8%83%BD%E6%95%B0%E6%8D%AE%E5%9B%9E%E5%86%99"><span class="nav-number">10.</span> <span class="nav-text">编辑部门功能数据回写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-6"><span class="nav-number">10.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A1%AB%E5%85%85%E6%95%B0%E6%8D%AE"><span class="nav-number">10.2.</span> <span class="nav-text">填充数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E6%98%BE%E7%A4%BA%E6%8E%A7%E5%88%B6%E6%A0%87%E9%A2%98"><span class="nav-number">10.3.</span> <span class="nav-text">根据计算属性显示控制标题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E5%B9%B6%E8%B0%83%E7%94%A8%E7%BC%96%E8%BE%91%E7%9A%84%E6%8E%A5%E5%8F%A3"><span class="nav-number">11.</span> <span class="nav-text">封装并调用编辑的接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%A1%E9%AA%8C%E8%A7%84%E5%88%99%E6%94%AF%E6%8C%81%E7%BC%96%E8%BE%91%E5%9C%BA%E6%99%AF"><span class="nav-number">12.</span> <span class="nav-text">校验规则支持编辑场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%99%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96%E6%B7%BB%E5%8A%A0%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="nav-number">13.</span> <span class="nav-text">给数据获取添加进度条</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-7"><span class="nav-number">13.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-1"><span class="nav-number">13.2.</span> <span class="nav-text">内容</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

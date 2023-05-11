@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 了解 vue-element-admin。 ✔ 了解项目结构和重要文件的作用。 ✔ 完成登录页面的效果和表单校验。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01_人资后台">
+<meta property="og:url" content="http://example.com/2023/03/23/rz-base-new-course01/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 了解 vue-element-admin。 ✔ 了解项目结构和重要文件的作用。 ✔ 完成登录页面的效果和表单校验。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_1.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_3.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200708010741325.png">
+<meta property="og:image" content="http://example.com/resource/images/vetur2.png">
+<meta property="og:image" content="http://example.com/resource/images/eslinta.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_4.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200811013813693.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_5.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_186.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200710162221402.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_6.png">
+<meta property="og:image" content="http://example.com/resource/images/image233.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_7.png">
+<meta property="article:published_time" content="2023-03-23T07:00:56.000Z">
+<meta property="article:modified_time" content="2023-05-11T07:42:50.999Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/new_rz_1.png">
+
+<link rel="canonical" href="http://example.com/2023/03/23/rz-base-new-course01/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>01_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/23/rz-base-new-course01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          01_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-23 15:00:56" itemprop="dateCreated datePublished" datetime="2023-03-23T15:00:56+08:00">2023-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 15:42:50" itemprop="dateModified" datetime="2023-05-11T15:42:50+08:00">2023-05-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 了解 <a target="_blank" rel="noopener" href="https://panjiachen.gitee.io/vue-element-admin-site/zh/">vue-element-admin</a>。</p>
+<p>✔ 了解项目结构和重要文件的作用。</p>
+<p>✔ 完成登录页面的效果和表单校验。</p>
+<span id="more"></span>
+
+<h2 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h2><h3 id="基本内容"><a href="#基本内容" class="headerlink" title="基本内容"></a>基本内容</h3><p>项目名称：人力资源管理系统。是企业的后台管理系统，对企业内部信息进行管理。</p>
+<p>项目演示：<a target="_blank" rel="noopener" href="https://heimahr-t.itheima.net/login">https://heimahr-t.itheima.net/login</a></p>
+<p>项目技术：基于 vue-element-admin 二次开发（不是从 0 开始），使用 <a target="_blank" rel="noopener" href="http://es6.ruanyifeng.com/">ES2015+</a>、<a target="_blank" rel="noopener" href="https://cn.vuejs.org/index.html">vue</a>、<a target="_blank" rel="noopener" href="https://vuex.vuejs.org/zh-cn/">vuex</a>、<a target="_blank" rel="noopener" href="https://router.vuejs.org/zh-cn/">vue-router</a> 、<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-cli">vue-cli</a> 、<a target="_blank" rel="noopener" href="https://github.com/axios/axios">axios</a> 和 <a target="_blank" rel="noopener" href="https://github.com/ElemeFE/element">element-ui</a> 等技术。</p>
+<ul>
+<li><p>vue-element-admin 官网：<a target="_blank" rel="noopener" href="https://panjiachen.gitee.io/vue-element-admin-site/zh/">https://panjiachen.gitee.io/vue-element-admin-site/zh/</a></p>
+</li>
+<li><p>vue-element-admin 代码：<a target="_blank" rel="noopener" href="https://gitee.com/panjiachen/vue-element-admin">https://gitee.com/panjiachen/vue-element-admin</a></p>
+</li>
+<li><p>vue-element-admin 效果：<a target="_blank" rel="noopener" href="https://panjiachen.gitee.io/vue-element-admin/#/login?redirect=%2Fdashboard">https://panjiachen.gitee.io/vue-element-admin/#/login?redirect=%2Fdashboard</a></p>
+</li>
+</ul>
+<p>业务难点：权限控制（不同的人进入系统可以看到的菜单是不同的），表单校验，复杂数据处理，excel 导入导出等。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><img src="/resource/images/new_rz_1.png"/>
+
+<h3 id="获得能力"><a href="#获得能力" class="headerlink" title="获得能力"></a>获得能力</h3><img src="/resource/images/new_rz_3.png"/>
+
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>Node 环境和 NPM 命令行工具。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v <span class="comment"># 查看 Node 版本，必须 12.x 以上，课上的版本是 16.14.2，不要是最新的 18.x 的版本</span></span><br><span class="line">npm -v <span class="comment"># 查看 NPM 版本，课上的版本是 8.5.4</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Git 版本控制。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version <span class="comment"># 查看 Git 版本，2.21.0</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>NPM 淘宝镜像。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npmmirror.com/ <span class="comment"># 设置淘宝镜像地址</span></span><br><span class="line">npm config get registry <span class="comment"># 查看镜像地址</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Vue CLI。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># npm i @vue/cli -g</span></span><br><span class="line">vue -V <span class="comment"># 5.0.8</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h3><p>大家检查各自的开发环境和资源，尤其是 NPM 的淘宝镜像额外需要注意。</p>
+<h2 id="启动项目"><a href="#启动项目" class="headerlink" title="启动项目"></a>启动项目</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>拉取基础模板并启动项目。</p>
+<p>代码：<a target="_blank" rel="noopener" href="https://gitee.com/panjiachen/vue-admin-template">https://gitee.com/panjiachen/vue-admin-template</a></p>
+<p>效果：<a target="_blank" rel="noopener" href="https://panjiachen.gitee.io/vue-admin-template/#/login?redirect=%2Fdashboard">https://panjiachen.gitee.io/vue-admin-template/#/login?redirect=%2Fdashboard</a></p>
+<h3 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h3><ol>
+<li>克隆源码。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取基础模板到 hrsaas 目录</span></span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/panjiachen/vue-admin-template hrsaas</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>调整 <code>core-js</code> 的版本。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i core-js@3.25.5 <span class="comment"># npm</span></span><br><span class="line"><span class="comment"># yarn add core-js@3.25.5 # yarn</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>定位到项目目录下，安装项目依赖。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> hrsaas <span class="comment"># 进入 hrsaas 目录</span></span><br><span class="line">npm install <span class="comment"># 安装依赖</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>启动项目。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev <span class="comment"># 启动开发模式的服务</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/resource/images/image-20200708010741325.png" alt="image-20200708010741325"></p>
+<p>😀 项目运行完毕，浏览器会自动打开基础模板的登录页，如上图。</p>
+<h3 id="任务-1"><a href="#任务-1" class="headerlink" title="任务"></a>任务</h3><p>按照操作和讲解步骤，进行拉取代码，安装依赖，运行项目。</p>
+<h2 id="VSCode-插件编辑器配置"><a href="#VSCode-插件编辑器配置" class="headerlink" title="VSCode 插件编辑器配置"></a>VSCode 插件编辑器配置</h2><p>Vetur 是基于单文件组件开发的支持插件，ESLint 是 基于代码校验的插件工具。</p>
+<p><img src="/resource/images/vetur2.png" alt="image-20200706134607517"></p>
+<p><img src="/resource/images/eslinta.png" alt="image-20200706134614330"></p>
+<p>除此之外，ESLint 需要在 VSCode 中进行一些参数的配置，设置 =&gt; Workspace =&gt; 打开配置文件 =&gt; 把下面配置粘贴进去。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;eslint.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;eslint.run&quot;</span>: <span class="string">&quot;onType&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;eslint.options&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;extensions&quot;</span>: [<span class="string">&quot;.js&quot;</span>, <span class="string">&quot;.vue&quot;</span>, <span class="string">&quot;.jsx&quot;</span>, <span class="string">&quot;.tsx&quot;</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;editor.codeActionsOnSave&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;source.fixAll.eslint&quot;</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>🤔 如果 <code>.env</code> 开头的文件内容没有高亮，VSCode 可以安装 DotENV 插件。</p>
+<h2 id="项目目录和入口文件介绍"><a href="#项目目录和入口文件介绍" class="headerlink" title="项目目录和入口文件介绍"></a>项目目录和入口文件介绍</h2><ol>
+<li>此时，你可能会眼花缭乱，因为生成的目录里面有太多的文件，我们在做项目时，其中最关注的就是 <code>src</code> 目录，里面是所有的源代码和资源，至于其他目录，都是对项目的环境和工具的配置，下面是整个项目的目录结构。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">├── build                      <span class="comment"># 构建相关</span></span><br><span class="line">├── mock                       <span class="comment"># 项目 mock 模拟数据</span></span><br><span class="line">├── public                     <span class="comment"># 静态资源</span></span><br><span class="line">│   │── favicon.ico            <span class="comment"># favicon 图标</span></span><br><span class="line">│   └── index.html             <span class="comment"># html 模板</span></span><br><span class="line">├── src                        <span class="comment"># 源代码</span></span><br><span class="line">│   ├── api                    <span class="comment"># 所有请求</span></span><br><span class="line">│   ├── assets                 <span class="comment"># 主题 字体等静态资源</span></span><br><span class="line">│   ├── components             <span class="comment"># 全局公用组件</span></span><br><span class="line">│   ├── icons                  <span class="comment"># 项目所有 svg icons</span></span><br><span class="line">│   ├── layout                 <span class="comment"># 全局 layout</span></span><br><span class="line">│   ├── router                 <span class="comment"># 路由</span></span><br><span class="line">│   ├── store                  <span class="comment"># 全局 store 管理</span></span><br><span class="line">│   ├── styles                 <span class="comment"># 全局样式</span></span><br><span class="line">│   ├── utils                  <span class="comment"># 全局公用方法</span></span><br><span class="line">│   ├── vendor                 <span class="comment"># 公用 vendor</span></span><br><span class="line">│   ├── views                  <span class="comment"># views 所有页面</span></span><br><span class="line">│   ├── App.vue                <span class="comment"># 入口页面</span></span><br><span class="line">│   ├── main.js                <span class="comment"># 入口文件 加载组件 初始化等</span></span><br><span class="line">│   └── permission.js          <span class="comment"># 权限管理</span></span><br><span class="line">│   └── settings.js            <span class="comment"># 配置文件</span></span><br><span class="line">├── tests                      <span class="comment"># 测试</span></span><br><span class="line">├── .env.xxx                   <span class="comment"># 环境变量配置，相同的变量，根据环境的不同可能会有不同的取值</span></span><br><span class="line">├── .eslintrc.js               <span class="comment"># eslint 配置项</span></span><br><span class="line">├── .babelrc                   <span class="comment"># babel-loader 配置</span></span><br><span class="line">├── .travis.yml                <span class="comment"># 自动化CI配置</span></span><br><span class="line">├── vue.config.js              <span class="comment"># vue-cli 配置</span></span><br><span class="line">├── postcss.config.js          <span class="comment"># postcss 配置</span></span><br><span class="line">└── package.json               <span class="comment"># package.json</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>分析 <code>main.js</code> 中的核心代码。</li>
+</ol>
+<img src="/resource/images/new_rz_4.png" width="500"/>
+
+<ol start="3">
+<li>我们开发的时候用不到模拟数据，请注释掉 mock 数据的部分，删除 src 下的 mock 文件夹，如图。</li>
+</ol>
+<img src="/resource/images/image-20200811013813693.png"/>
+
+<ol start="4">
+<li>同时，请注释掉 <code>vue.config.js</code> 中的 <code>before: require(&#39;./mock/mock-server.js&#39;)</code>。</li>
+</ol>
+<h2 id="项目运行机制和代码解析"><a href="#项目运行机制和代码解析" class="headerlink" title="项目运行机制和代码解析"></a>项目运行机制和代码解析</h2><h3 id="App-vue"><a href="#App-vue" class="headerlink" title="App.vue"></a>App.vue</h3><img src="/resource/images/new_rz_5.png" width="500"/>
+
+<p>分析 Layout 组件的结构布局， <code>src/layout/index.vue</code> 。</p>
+<p>分析二级路由出口的组件， <code>src/layout/components/AppMain.vue</code> 。</p>
+<img src="/resource/images/new_rz_186.png"/>
+
+<h3 id="permission-js"><a href="#permission-js" class="headerlink" title="permission.js"></a>permission.js</h3><p><code>src/permission.js</code> ：控制页面登录权限的文件，后续会从 0 到 1 重新编写，所以先<font color=e32d40><strong>清空里面的所有代码</strong></font>。</p>
+<h3 id="settings-js"><a href="#settings-js" class="headerlink" title="settings.js"></a>settings.js</h3><p><code>src/settings.js</code> ：是项目基本信息的配置文件，里面有三个属性 title（项目名称）、fixedHeader（固定头部）、sidebarLogo（显示左侧菜单 logo）。</p>
+<h3 id="port"><a href="#port" class="headerlink" title="port"></a>port</h3><p>📝 目标：能够通过环境变量配置项目的端口号。</p>
+<p><code>vue.config.js</code></p>
+<p><img src="/resource/images/image-20200710162221402.png" alt="image-20200710162221402"></p>
+<ul>
+<li><p>  <code>process.env</code> 是 Node 的语法，可以获取到环境变量。</p>
+</li>
+<li><p>  执行 <code>npm run dev</code>，此时会加载执行 <code>.env.development</code> 文件内容。</p>
+</li>
+<li><p>  执行 <code>npm run build:prod</code>，会加载执行 <code>.env.production</code> 文件内容。</p>
+</li>
+<li><p>  所以，如果想要设置开发环境的接口，直接在 <code>.env.development</code> 中写入对于 port 变量的赋值即可。</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置端口号</span></span><br><span class="line">port = 8888</span><br></pre></td></tr></table></figure>
+
+<p>🤔 注意：修改服务的配置文件，想要生效的话，必须要重新启动服务，值 8888 后面不能留有空格。</p>
+<h3 id="vuex"><a href="#vuex" class="headerlink" title="vuex"></a>vuex</h3><p>当前的 Vuex 结构采用了模块化的形式进行管理，可以通过调试工具观察模块中相关属性的作用。</p>
+<img src="/resource/images/new_rz_6.png"/>
+
+<p><code>store/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    <span class="attr">modules</span>: &#123;</span><br><span class="line">        app, <span class="comment">// 折叠展开（功能完备，无需修改）</span></span><br><span class="line">        settings, <span class="comment">// logo/头部（功能完备，无需修改）</span></span><br><span class="line">        user <span class="comment">// 用户信息（后期重点开发）</span></span><br><span class="line">    &#125;,</span><br><span class="line">    getters <span class="comment">// 快捷访问</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>app.js</code> 模块和 <code>settings.js</code> 模块，功能已经完备，不需要再进行修改，<code>user.js</code> 模块是我们后期需要重点开发的内容，所以这里我们将 <code>user.js</code> 里面的内容删除，并且导出一个默认配置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">namespaced</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">state</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">mutations</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">actions</span>: &#123;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时，由于 getters 中引用了 user 中的状态，所以我们将 getters 中的状态改为。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getters = &#123;</span><br><span class="line">    <span class="attr">sidebar</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.app.sidebar,</span><br><span class="line">    <span class="attr">device</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.app.device,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> getters</span><br></pre></td></tr></table></figure>
+
+<h3 id="icons"><a href="#icons" class="headerlink" title="icons"></a>icons</h3><ol>
+<li>svg 可以当做普通图片来使用，例如。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;./eye.svg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 我们后续项目中用到的是 svg-sprites（svg 精灵图），通过 id 来标记定义到哪一个，更加方便 --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>或如下方式使用。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">class</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">use</span> <span class="attr">xlink:href</span>=<span class="string">&quot;#icon-eye-open&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><code>icons/index.js</code> 文件中，默认注册了 svg-icon 组件，将来可以如下的方式使用。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg-icon</span> <span class="attr">icon-class</span>=<span class="string">&quot;eye-open&quot;</span> <span class="attr">class-name</span>=<span class="string">&quot;pink&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>导入样式资源。</li>
+</ol>
+<p>📝 把素材中的 assets、styles、icons 三个目录粘贴到项目的 src，后续使用。</p>
+<h2 id="建立远程-Git-仓库并提交"><a href="#建立远程-Git-仓库并提交" class="headerlink" title="建立远程 Git 仓库并提交"></a>建立远程 Git 仓库并提交</h2><h3 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h3><p>在 <a target="_blank" rel="noopener" href="https://gitee.com/">码云</a> 或者 <a target="_blank" rel="noopener" href="https://github.com/">Github</a> 上建立相应远程仓库，并将代码提交。</p>
+<h3 id="内容-2"><a href="#内容-2" class="headerlink" title="内容"></a>内容</h3><img src="/resource/images/image233.png"/>
+
+<p>注意：由于我们之前的项目是直接从 vue-element-admin 克隆而来，里面拥有原来的提交记录，为了避免冲突，先将原来的 <code>.git</code> 文件夹删除掉。</p>
+<p>然后对项目进行 Git 初始化。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init <span class="comment"># 初始化项目</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add . <span class="comment"># 将修改添加到暂存</span></span><br><span class="line">git commit -m <span class="string">&#x27;人资项目初始化&#x27;</span> <span class="comment"># 将暂存提到本地仓库</span></span><br></pre></td></tr></table></figure>
+
+<p>查看版本日志。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> <span class="comment"># 查看版本日志</span></span><br></pre></td></tr></table></figure>
+
+<p>添加远程仓库地址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin &lt;远程仓库地址&gt;  <span class="comment"># 添加远程仓库地址</span></span><br></pre></td></tr></table></figure>
+
+<p>推送 master 分支到远程仓库。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master <span class="comment"># 将 master 分支推送到 origin 所代表的远程仓库地址</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="任务-2"><a href="#任务-2" class="headerlink" title="任务"></a>任务</h3><p>提交代码到远端。</p>
+<h2 id="实现登录页的结构和表单"><a href="#实现登录页的结构和表单" class="headerlink" title="实现登录页的结构和表单"></a>实现登录页的结构和表单</h2><img src="/resource/images/new_rz_7.png" width="500"/>
+
+<h3 id="静态结构和样式"><a href="#静态结构和样式" class="headerlink" title="静态结构和样式"></a>静态结构和样式</h3><p>拷贝静态结构和样式，<code>src/views/login/index.vue</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-container&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;logo&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h1</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-card</span> <span class="attr">shadow</span>=<span class="string">&quot;never&quot;</span> <span class="attr">class</span>=<span class="string">&quot;login-card&quot;</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!--登录表单--&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-card</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&quot;Login&quot;</span></span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.login-container</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">        <span class="attribute">align-items</span>: stretch;</span></span><br><span class="line"><span class="css">        <span class="attribute">height</span>: <span class="number">100vh</span>;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.logo</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">flex</span>: <span class="number">3</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">38</span>, <span class="number">72</span>, <span class="number">176</span>) <span class="built_in">url</span>(<span class="string">../../assets/common/login_back.png</span>) no-repeat center / cover;</span></span><br><span class="line"><span class="css">            <span class="attribute">border-top-right-radius</span>: <span class="number">60px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">            <span class="attribute">flex-direction</span>: column;</span></span><br><span class="line"><span class="css">            <span class="attribute">align-items</span>: flex-end;</span></span><br><span class="line"><span class="css">            <span class="attribute">justify-content</span>: center;</span></span><br><span class="line"><span class="css">            <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">100px</span>;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            <span class="selector-class">.icon</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">../../assets/common/logo.png</span>) no-repeat <span class="number">70px</span> center / contain;</span></span><br><span class="line"><span class="css">                <span class="attribute">width</span>: <span class="number">300px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">height</span>: <span class="number">50px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">margin-bottom</span>: <span class="number">50px</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">color</span>: <span class="number">#fff</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">font-size</span>: <span class="number">18px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">margin-top</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">width</span>: <span class="number">300px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.form</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">flex</span>: <span class="number">2</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">            <span class="attribute">flex-direction</span>: column;</span></span><br><span class="line"><span class="css">            <span class="attribute">justify-content</span>: center;</span></span><br><span class="line"><span class="css">            <span class="attribute">padding-left</span>: <span class="number">176px</span>;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            <span class="selector-class">.el-card</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">border</span>: none;</span></span><br><span class="line"><span class="css">                <span class="attribute">padding</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            <span class="selector-tag">h1</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">padding-left</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">font-size</span>: <span class="number">24px</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            <span class="selector-class">.el-input</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">width</span>: <span class="number">350px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">height</span>: <span class="number">44px</span>;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">                <span class="selector-class">.el-input__inner</span> &#123;</span></span><br><span class="line"><span class="css">                    <span class="attribute">background</span>: <span class="number">#f4f5fb</span>;</span></span><br><span class="line"><span class="css">                &#125;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            <span class="selector-class">.el-checkbox</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">color</span>: <span class="number">#606266</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用表单的组件"><a href="#使用表单的组件" class="headerlink" title="使用表单的组件"></a>使用表单的组件</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-card</span> <span class="attr">shadow</span>=<span class="string">&quot;never&quot;</span> <span class="attr">class</span>=<span class="string">&quot;login-card&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--登录表单--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- el-form &gt; el-form-item &gt; el-input --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入手机号&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入密码&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-checkbox</span>&gt;</span></span><br><span class="line">                用户平台使用协议</span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-checkbox</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">style</span>=<span class="string">&quot;width:350px&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-card</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="定义数据和校验规则"><a href="#定义数据和校验规则" class="headerlink" title="定义数据和校验规则"></a>定义数据和校验规则</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Login&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">loginForm</span>: &#123;</span><br><span class="line">                <span class="attr">mobile</span>: <span class="string">&#x27;13912345678&#x27;</span>,</span><br><span class="line">                <span class="attr">password</span>: <span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">                <span class="attr">isAgree</span>: <span class="literal">true</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">loginRules</span>: &#123;</span><br><span class="line">                <span class="attr">mobile</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;请输入手机号&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    <span class="attr">pattern</span>: <span class="regexp">/^1[3-9]\d&#123;9&#125;$/</span>,</span><br><span class="line">                    message: <span class="string">&#x27;手机号格式不正确&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line"></span><br><span class="line">                &#125;],</span><br><span class="line">                <span class="attr">password</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;请输入密码&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    <span class="attr">min</span>: <span class="number">6</span>,</span><br><span class="line">                    <span class="attr">max</span>: <span class="number">16</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;密码长度应该为6-16位之间&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line"></span><br><span class="line">                &#125;],</span><br><span class="line">                <span class="comment">// required 只能检查 null &quot;&quot; undefined</span></span><br><span class="line">                <span class="attr">isAgree</span>: [&#123;</span><br><span class="line">                    <span class="attr">validator</span>: <span class="function">(<span class="params">rule, value, callback</span>) =&gt;</span> &#123;</span><br><span class="line">                        <span class="comment">// rule规则</span></span><br><span class="line">                        <span class="comment">// value检查的数据 true/false</span></span><br><span class="line">                        <span class="comment">// callback 函数 执行这个函数</span></span><br><span class="line">                        <span class="comment">// 成功执行callback 失败也执行callback(错误对象 new Error(错误信息))</span></span><br><span class="line">                        value ? callback() : callback(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;没有勾选用户平台协议&#x27;</span>))</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="function"><span class="title">handleLogin</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.$refs.form.validate(<span class="function">(<span class="params">isOK</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (isOK) &#123;</span><br><span class="line">                    alert(<span class="string">&#x27;校验通过&#x27;</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="绑定数据规则到组件"><a href="#绑定数据规则到组件" class="headerlink" title="绑定数据规则到组件"></a>绑定数据规则到组件</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form</span> <span class="attr">ref</span>=<span class="string">&quot;form&quot;</span> <span class="attr">:model</span>=<span class="string">&quot;loginForm&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;loginRules&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">prop</span>=<span class="string">&quot;mobile&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;loginForm.mobile&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入手机号&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">prop</span>=<span class="string">&quot;password&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;loginForm.password&quot;</span> <span class="attr">show-password</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入密码&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">prop</span>=<span class="string">&quot;isAgree&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-checkbox</span> <span class="attr">v-model</span>=<span class="string">&quot;loginForm.isAgree&quot;</span>&gt;</span></span><br><span class="line">            用户平台使用协议</span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-checkbox</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">style</span>=<span class="string">&quot;width:350px&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;handleLogin&quot;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/06/xcx-course04/" rel="prev" title="04_小程序品优购项目">
+      <i class="fa fa-chevron-left"></i> 04_小程序品优购项目
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course02/" rel="next" title="02_人资后台">
+      02_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">项目介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9"><span class="nav-number">2.1.</span> <span class="nav-text">基本内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%BE%97%E8%83%BD%E5%8A%9B"><span class="nav-number">2.3.</span> <span class="nav-text">获得能力</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="nav-number">3.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">3.1.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.2.</span> <span class="nav-text">任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E9%A1%B9%E7%9B%AE"><span class="nav-number">4.</span> <span class="nav-text">启动项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-1"><span class="nav-number">4.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1-1"><span class="nav-number">4.3.</span> <span class="nav-text">任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VSCode-%E6%8F%92%E4%BB%B6%E7%BC%96%E8%BE%91%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">VSCode 插件编辑器配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E5%92%8C%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-number">6.</span> <span class="nav-text">项目目录和入口文件介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="nav-number">7.</span> <span class="nav-text">项目运行机制和代码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#App-vue"><span class="nav-number">7.1.</span> <span class="nav-text">App.vue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#permission-js"><span class="nav-number">7.2.</span> <span class="nav-text">permission.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#settings-js"><span class="nav-number">7.3.</span> <span class="nav-text">settings.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#port"><span class="nav-number">7.4.</span> <span class="nav-text">port</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vuex"><span class="nav-number">7.5.</span> <span class="nav-text">vuex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#icons"><span class="nav-number">7.6.</span> <span class="nav-text">icons</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E8%BF%9C%E7%A8%8B-Git-%E4%BB%93%E5%BA%93%E5%B9%B6%E6%8F%90%E4%BA%A4"><span class="nav-number">8.</span> <span class="nav-text">建立远程 Git 仓库并提交</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">8.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-2"><span class="nav-number">8.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1-2"><span class="nav-number">8.3.</span> <span class="nav-text">任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%99%BB%E5%BD%95%E9%A1%B5%E7%9A%84%E7%BB%93%E6%9E%84%E5%92%8C%E8%A1%A8%E5%8D%95"><span class="nav-number">9.</span> <span class="nav-text">实现登录页的结构和表单</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E7%BB%93%E6%9E%84%E5%92%8C%E6%A0%B7%E5%BC%8F"><span class="nav-number">9.1.</span> <span class="nav-text">静态结构和样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%A1%A8%E5%8D%95%E7%9A%84%E7%BB%84%E4%BB%B6"><span class="nav-number">9.2.</span> <span class="nav-text">使用表单的组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E5%92%8C%E6%A0%A1%E9%AA%8C%E8%A7%84%E5%88%99"><span class="nav-number">9.3.</span> <span class="nav-text">定义数据和校验规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%91%E5%AE%9A%E6%95%B0%E6%8D%AE%E8%A7%84%E5%88%99%E5%88%B0%E7%BB%84%E4%BB%B6"><span class="nav-number">9.4.</span> <span class="nav-text">绑定数据规则到组件</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

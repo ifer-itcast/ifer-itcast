@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 能够通过 HBuilderX 和命令行创建 uni-app 项目。 ✔ 能够配置和使用 uni-ui 库。 ✔ 掌握 http 请求函数的封装。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01_小兔鲜">
+<meta property="og:url" content="http://example.com/2023/05/04/xcx-xtx-01/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 能够通过 HBuilderX 和命令行创建 uni-app 项目。 ✔ 能够配置和使用 uni-ui 库。 ✔ 掌握 http 请求函数的封装。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/index_picture_1.png">
+<meta property="og:image" content="http://example.com/resource/images/uniapp_picture_1.png">
+<meta property="og:image" content="http://example.com/resource/images/uniapp_picture_2.png">
+<meta property="og:image" content="http://example.com/resource/images/uniapp_picture_3.png">
+<meta property="og:image" content="http://example.com/resource/images/uniapp_picture_4.png">
+<meta property="og:image" content="http://example.com/resource/images/uniapp_picture_5.png">
+<meta property="og:image" content="http://example.com/resource/images/uniapp_picture_6.png">
+<meta property="og:image" content="http://example.com/resource/images/uniapp_picture_7.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504110053624.png">
+<meta property="og:image" content="http://example.com/resource/images/uniapp_case_1.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504110125720.png">
+<meta property="og:image" content="http://example.com/resource/images/uniapp_case_2.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504102640100.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504110206484.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504110348681.png">
+<meta property="og:image" content="http://example.com/resource/images/uniapp_picture_8.png">
+<meta property="og:image" content="http://example.com/resource/images/uniapp_picture_7.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504110440804.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504111029953.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504111254443.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504112007172.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504112148210.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504113140112.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504113912491.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20230504114702424.png">
+<meta property="og:image" content="http://example.com/resource/images/index_picture_2.png">
+<meta property="article:published_time" content="2023-05-04T06:31:22.000Z">
+<meta property="article:modified_time" content="2023-05-11T07:42:51.690Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/index_picture_1.png">
+
+<link rel="canonical" href="http://example.com/2023/05/04/xcx-xtx-01/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>01_小兔鲜 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/04/xcx-xtx-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          01_小兔鲜
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-04 14:31:22" itemprop="dateCreated datePublished" datetime="2023-05-04T14:31:22+08:00">2023-05-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 15:42:51" itemprop="dateModified" datetime="2023-05-11T15:42:51+08:00">2023-05-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 能够通过 HBuilderX 和命令行创建 uni-app 项目。</p>
+<p>✔ 能够配置和使用 uni-ui 库。</p>
+<p>✔ 掌握 http 请求函数的封装。</p>
+<span id="more"></span>
+
+<h2 id="项目架构"><a href="#项目架构" class="headerlink" title="项目架构"></a>项目架构</h2><p><img src="/resource/images/index_picture_1.png" alt="项目架构图"></p>
+<h2 id="创建-uni-app-项目"><a href="#创建-uni-app-项目" class="headerlink" title="创建 uni-app 项目"></a>创建 uni-app 项目</h2><p>uni-app 支持两种方式创建项目，分别如下。</p>
+<ol>
+<li><p>通过 HBuilderX 创建。</p>
+</li>
+<li><p>通过命令行创建（更推荐）。</p>
+</li>
+</ol>
+<h2 id="通过-HBuilderX-创建"><a href="#通过-HBuilderX-创建" class="headerlink" title="通过 HBuilderX 创建"></a>通过 HBuilderX 创建</h2><ol>
+<li>下载安装 HbuilderX 编辑器。</li>
+</ol>
+<p><img src="/resource/images/uniapp_picture_1.png" alt="下载安装 HbuilderX 编辑器"></p>
+<ol start="2">
+<li>通过 HbuilderX 创建 uni-app vue3 项目。</li>
+</ol>
+<p><img src="/resource/images/uniapp_picture_2.png" alt="通过 HbuilderX 创建 uni-app vue3 项目"></p>
+<ol start="3">
+<li>安装 uni-app vue3 编译器插件。</li>
+</ol>
+<p><img src="/resource/images/uniapp_picture_3.png" alt="安装 uni-app vue3 编译器插件"></p>
+<ol start="4">
+<li>编译成微信小程序端代码。</li>
+</ol>
+<p><img src="/resource/images/uniapp_picture_4.png" alt="编译成微信小程序端代码"></p>
+<ol start="5">
+<li>开启服务端口。</li>
+</ol>
+<p><img src="/resource/images/uniapp_picture_5.png" alt="开启服务端口"></p>
+<p>😀 小技巧分享：模拟器窗口分离和置顶。</p>
+<p><img src="/resource/images/uniapp_picture_6.png" alt="模拟器窗口分离和置顶"></p>
+<p><strong>Hbuildex 和 微信开发者工具 关系</strong></p>
+<p><img src="/resource/images/uniapp_picture_7.png" alt="Hbuildex 和 微信开发者工具 关系"></p>
+<p>温馨提示：<strong>Hbuildex</strong> 和 <strong>uni-app</strong> 都属于 <a target="_blank" rel="noopener" href="https://dcloud.io/">DCloud</a> 公司的产品。</p>
+<h2 id="pages-json-和-tabBar-案例"><a href="#pages-json-和-tabBar-案例" class="headerlink" title="pages.json 和 tabBar 案例"></a>pages.json 和 tabBar 案例</h2><h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p>我们先来认识 uni-app 项目的目录结构。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">├─pages            业务页面文件存放的目录</span><br><span class="line">│  └─index</span><br><span class="line">│     └─index.vue  index页面</span><br><span class="line">├─static           存放应用引用的本地静态资源的目录(注意：静态资源只能存放于此)</span><br><span class="line">├─unpackage        非工程代码，一般存放运行或发行的编译结果</span><br><span class="line">├─index.html       H5端页面</span><br><span class="line">├─main.js          Vue初始化入口文件</span><br><span class="line">├─App.vue          配置App全局样式、监听应用生命周期</span><br><span class="line">├─pages.json       配置页面路由、导航栏、tabBar等页面类信息</span><br><span class="line">├─manifest.json    配置appid、应用名称、logo、版本等打包信息</span><br><span class="line">└─uni.scss         uni-app内置的常用样式变量</span><br></pre></td></tr></table></figure>
+
+<h3 id="解读-pages-json"><a href="#解读-pages-json" class="headerlink" title="解读 pages.json"></a>解读 pages.json</h3><p>用于配置页面路由、导航栏、tabBar 等页面类信息。</p>
+<p><img src="/resource/images/image-20230504110053624.png" alt="image-20230504110053624"></p>
+<h3 id="案例练习"><a href="#案例练习" class="headerlink" title="案例练习"></a>案例练习</h3><p><img src="/resource/images/uniapp_case_1.png" alt="案例练习"></p>
+<p><code>pages.json</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">// 页面路由</span></span><br><span class="line">  <span class="attr">&quot;pages&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;pages/index/index&quot;</span>,</span><br><span class="line">      <span class="comment">// 页面样式配置</span></span><br><span class="line">      <span class="attr">&quot;style&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;navigationBarTitleText&quot;</span>: <span class="string">&quot;首页&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;pages/my/my&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;style&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;navigationBarTitleText&quot;</span>: <span class="string">&quot;我的&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">// 全局样式配置</span></span><br><span class="line">  <span class="attr">&quot;globalStyle&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;navigationBarTextStyle&quot;</span>: <span class="string">&quot;white&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;navigationBarTitleText&quot;</span>: <span class="string">&quot;uni-app&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;navigationBarBackgroundColor&quot;</span>: <span class="string">&quot;#27BA9B&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;backgroundColor&quot;</span>: <span class="string">&quot;#F8F8F8&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// tabBar 配置</span></span><br><span class="line">  <span class="attr">&quot;tabBar&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;selectedColor&quot;</span>: <span class="string">&quot;#27BA9B&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;list&quot;</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">&quot;pagePath&quot;</span>: <span class="string">&quot;pages/index/index&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;text&quot;</span>: <span class="string">&quot;首页&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;iconPath&quot;</span>: <span class="string">&quot;static/tabs/home_default.png&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;selectedIconPath&quot;</span>: <span class="string">&quot;static/tabs/home_selected.png&quot;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">&quot;pagePath&quot;</span>: <span class="string">&quot;pages/my/my&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;text&quot;</span>: <span class="string">&quot;我的&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;iconPath&quot;</span>: <span class="string">&quot;static/tabs/user_default.png&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;selectedIconPath&quot;</span>: <span class="string">&quot;static/tabs/user_selected.png&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="uni-app-和原生小程序区别"><a href="#uni-app-和原生小程序区别" class="headerlink" title="uni-app 和原生小程序区别"></a>uni-app 和原生小程序区别</h2><p><img src="/resource/images/image-20230504110125720.png" alt="image-20230504110125720"></p>
+<h3 id="主要区别"><a href="#主要区别" class="headerlink" title="主要区别"></a>主要区别</h3><p>uni-app 项目每个页面是一个 <code>.vue</code> 文件，数据绑定及事件处理同 <code>Vue.js</code> 规范。</p>
+<ol>
+<li><p>属性绑定 <code>src=&quot;&#123; &#123; url &#125;&#125;&quot;</code> 升级成 <code>:src=&quot;url&quot;</code>。</p>
+</li>
+<li><p>事件绑定 <code>bindtap=&quot;eventName&quot;</code> 升级成 <code>@tap=&quot;eventName&quot;</code>，<strong>支持（）传参</strong>。</p>
+</li>
+<li><p>支持 Vue 常用<strong>指令</strong> <code>v-for</code>、<code>v-if</code>、<code>v-show</code>、<code>v-model</code> 等。</p>
+</li>
+</ol>
+<h3 id="其他区别补充"><a href="#其他区别补充" class="headerlink" title="其他区别补充"></a>其他区别补充</h3><ol>
+<li><p>调用接口能力，<strong>建议</strong>前缀 <code>wx</code> 替换为 <code>uni</code> ，养成好习惯，这样支持多端开发。</p>
+</li>
+<li><p><code>&lt;style&gt;&lt;/style&gt;</code> 样式不需要写 <code>scoped</code>。</p>
+</li>
+</ol>
+<h3 id="案例练习-1"><a href="#案例练习-1" class="headerlink" title="案例练习"></a>案例练习</h3><p>主要功能：滑动轮播图；点击大图预览。</p>
+<p><img src="/resource/images/uniapp_case_2.png" alt="案例练习"></p>
+<p><code>pages/index/index.vue</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">swiper</span> <span class="attr">class</span>=<span class="string">&quot;banner&quot;</span> <span class="attr">indicator-dots</span> <span class="attr">circular</span> <span class="attr">:autoplay</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">swiper-item</span> <span class="attr">v-for</span>=<span class="string">&quot;item in pictures&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item.id&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">image</span> @<span class="attr">tap</span>=<span class="string">&quot;onPreviewImage(item.url)&quot;</span> <span class="attr">:src</span>=<span class="string">&quot;item.url&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">swiper-item</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">swiper</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 轮播图数据</span></span></span><br><span class="line"><span class="javascript">      <span class="attr">pictures</span>: [</span></span><br><span class="line"><span class="javascript">        &#123;</span></span><br><span class="line"><span class="javascript">          <span class="attr">id</span>: <span class="string">&#x27;1&#x27;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">url</span>: <span class="string">&#x27;https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/goods_preview_1.jpg&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        &#123;</span></span><br><span class="line"><span class="javascript">          <span class="attr">id</span>: <span class="string">&#x27;2&#x27;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">url</span>: <span class="string">&#x27;https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/goods_preview_2.jpg&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        &#123;</span></span><br><span class="line"><span class="javascript">          <span class="attr">id</span>: <span class="string">&#x27;3&#x27;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">url</span>: <span class="string">&#x27;https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/goods_preview_3.jpg&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        &#123;</span></span><br><span class="line"><span class="javascript">          <span class="attr">id</span>: <span class="string">&#x27;4&#x27;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">url</span>: <span class="string">&#x27;https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/goods_preview_4.jpg&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        &#123;</span></span><br><span class="line"><span class="javascript">          <span class="attr">id</span>: <span class="string">&#x27;5&#x27;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">url</span>: <span class="string">&#x27;https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/goods_preview_5.jpg&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">      ],</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">  &#125;,</span></span><br><span class="line"><span class="javascript">  <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="title">onPreviewImage</span>(<span class="params">url</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 大图预览</span></span></span><br><span class="line"><span class="javascript">      uni.previewImage(&#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">urls</span>: <span class="built_in">this</span>.pictures.map(<span class="function">(<span class="params">v</span>) =&gt;</span> v.url),</span></span><br><span class="line"><span class="javascript">        <span class="attr">current</span>: url,</span></span><br><span class="line"><span class="javascript">      &#125;)</span></span><br><span class="line"><span class="javascript">    &#125;,</span></span><br><span class="line"><span class="javascript">  &#125;,</span></span><br><span class="line"><span class="javascript">&#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css"><span class="selector-class">.banner</span>,</span></span><br><span class="line"><span class="css"><span class="selector-class">.banner</span> image &#123;</span></span><br><span class="line"><span class="css">  <span class="attribute">width</span>: <span class="number">750</span>rpx;</span></span><br><span class="line"><span class="css">  <span class="attribute">height</span>: <span class="number">750</span>rpx;</span></span><br><span class="line"><span class="css">&#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="用命令行创建-uni-app-项目"><a href="#用命令行创建-uni-app-项目" class="headerlink" title="用命令行创建 uni-app 项目"></a>用命令行创建 uni-app 项目</h2><p><img src="/resource/images/image-20230504102640100.png" alt="image-20230504102640100"></p>
+<p>优势：通过命令行创建 uni-app 项目，<strong>不必依赖 HBuilderX</strong>，TypeScript 类型支持友好。</p>
+<p>下面是 <code>vue3 + ts</code> 版，创建其他版本可查看：<a target="_blank" rel="noopener" href="https://uniapp.dcloud.net.cn/quickstart-cli.html">uni-app 官网</a>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx degit dcloudio/uni-preset-vue#vite-ts 项目名称</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>安装依赖 <code>pnpm install</code>。</p>
+</li>
+<li><p>编译成微信小程序 <code>pnpm dev:mp-weixin</code>。</p>
+</li>
+<li><p>导入微信开发者工具。</p>
+</li>
+</ol>
+<p>😚 温馨提示：在 <code>manifest.json</code> 文件添加小程序 <code>appid</code> 方便真机预览。</p>
+<h2 id="VSCode-开发-uni-app-项目"><a href="#VSCode-开发-uni-app-项目" class="headerlink" title="VSCode 开发 uni-app 项目"></a>VSCode 开发 uni-app 项目</h2><h3 id="为什么选择-VSCode"><a href="#为什么选择-VSCode" class="headerlink" title="为什么选择 VSCode"></a>为什么选择 VSCode</h3><ul>
+<li><p>👍 VSCode 对 <strong>TS 类型支持友好</strong>，前端开发者<strong>熟悉的编辑器</strong>。</p>
+</li>
+<li><p>👀 HbuilderX 对 TS 类型支持暂不完善，期待官方完善。</p>
+</li>
+</ul>
+<p><img src="/resource/images/image-20230504110206484.png" alt="image-20230504110206484"></p>
+<h3 id="用-VSCode-开发配置"><a href="#用-VSCode-开发配置" class="headerlink" title="用 VSCode 开发配置"></a>用 VSCode 开发配置</h3><p><img src="/resource/images/image-20230504110348681.png" alt="image-20230504110348681"></p>
+<ul>
+<li><p>安装 uni-app 插件。</p>
+<ul>
+<li><p><strong>uni-create-view</strong>：快速创建 uni-app 页面。</p>
+</li>
+<li><p><strong>uni-helper</strong>：代码提示。</p>
+</li>
+<li><p><strong>uniapp 小程序扩展</strong>：鼠标悬停查文档。</p>
+</li>
+</ul>
+</li>
+<li><p>TS 类型校验。</p>
+<ul>
+<li><p>安装类型声明文件 <code>pnpm i -D @types/wechat-miniprogram @uni-helper/uni-app-types</code>。</p>
+</li>
+<li><p>配置 <code>tsconfig.json</code> 中的 <code>compilerOptions.types</code> 选项。</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;extends&quot;</span>: <span class="string">&quot;@vue/tsconfig/tsconfig.json&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;sourceMap&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;baseUrl&quot;</span>: <span class="string">&quot;.&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;paths&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;@/*&quot;</span>: [<span class="string">&quot;./src/*&quot;</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;lib&quot;</span>: [<span class="string">&quot;esnext&quot;</span>, <span class="string">&quot;dom&quot;</span>],</span><br><span class="line">    <span class="attr">&quot;types&quot;</span>: [<span class="string">&quot;@dcloudio/types&quot;</span>, <span class="string">&quot;@types/wechat-miniprogram&quot;</span>, <span class="string">&quot;@uni-helper/uni-app-types&quot;</span>]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;include&quot;</span>: [<span class="string">&quot;src/**/*.ts&quot;</span>, <span class="string">&quot;src/**/*.d.ts&quot;</span>, <span class="string">&quot;src/**/*.tsx&quot;</span>, <span class="string">&quot;src/**/*.vue&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>JSON 注释问题，搜索 <code>Associations</code>。</p>
+<ul>
+<li>设置文件关联，把 <code>manifest.json</code> 和 <code>pages.json</code> 设置为 <code>jsonc</code>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="开发工具回顾"><a href="#开发工具回顾" class="headerlink" title="开发工具回顾"></a>开发工具回顾</h2><p>选择自己习惯的编辑器开发 uni-app 项目即可。</p>
+<p>VSCode 和 微信开发者工具 关系。</p>
+<p><img src="/resource/images/uniapp_picture_8.png" alt="VSCode 和 微信开发者工具 关系"></p>
+<p>HbuilderX 和 微信开发者工具 关系。</p>
+<p><img src="/resource/images/uniapp_picture_7.png" alt="HbuilderX 和 微信开发者工具 关系"></p>
+<h2 id="用-VSCode-开发课后练习"><a href="#用-VSCode-开发课后练习" class="headerlink" title="用 VSCode 开发课后练习"></a>用 VSCode 开发课后练习</h2><p>使用 <code>VSCode</code> 编辑器写代码，实现 tabBar 案例 + 轮播图案例。</p>
+<p>温馨提示：<code>VSCode</code> 可通过快捷键 <code>Ctrl + i</code> 唤起代码提示。</p>
+<h2 id="拉取项目模板代码"><a href="#拉取项目模板代码" class="headerlink" title="拉取项目模板代码"></a>拉取项目模板代码</h2><p>项目模板包含：目录结构，项目素材，代码风格。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone http://git.itcast.cn/heimaqianduan/erabbit-uni-app-vue3-ts.git heima-shop</span><br></pre></td></tr></table></figure>
+
+<p>😚 提示：在 <code>manifest.json</code> 中添加微信小程序的 <code>appid</code>。</p>
+<h2 id="引入-uni-ui-组件库"><a href="#引入-uni-ui-组件库" class="headerlink" title="引入 uni-ui 组件库"></a>引入 uni-ui 组件库</h2><p><img src="/resource/images/image-20230504110440804.png" alt="image-20230504110440804"></p>
+<ol>
+<li>安装 <a target="_blank" rel="noopener" href="https://uniapp.dcloud.net.cn/component/uniui/quickstart.html#npm%E5%AE%89%E8%A3%85">uni-ui 组件库</a>。</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pnpm i @dcloudio/uni-ui</span><br><span class="line">pnpm i sass -D</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置自动导入组件，<code>pages.json</code>。</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// 组件自动导入</span></span><br><span class="line">  <span class="attr">&quot;easycom&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;autoscan&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;custom&quot;</span>: &#123;</span><br><span class="line">      <span class="comment">// uni-ui 规则如下配置</span></span><br><span class="line">      <span class="attr">&quot;^uni-(.*)&quot;</span>: <span class="string">&quot;@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>测试，<code>pages/index/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uni-card</span> <span class="attr">title</span>=<span class="string">&quot;基础卡片&quot;</span> <span class="attr">sub-title</span>=<span class="string">&quot;副标题&quot;</span> <span class="attr">extra</span>=<span class="string">&quot;额外信息&quot;</span> <span class="attr">thumbnail</span>=<span class="string">&quot;https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">text</span>&gt;</span>这是一个带头像和双标题的基础卡片，此示例展示了一个完整的卡片。<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">uni-card</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>鼠标悬停到 <code>uni-card</code> 显示 any，安装类型声明文件并配置。</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm i -D @uni-helper/uni-ui-types</span><br></pre></td></tr></table></figure>
+
+<p><code>tsconfig.json</code>，在 types 中添加最后一个配置项。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">&quot;types&quot;</span>: [<span class="string">&quot;@dcloudio/types&quot;</span>, <span class="string">&quot;@types/wechat-miniprogram&quot;</span>, <span class="string">&quot;@uni-helper/uni-app-types&quot;</span>, <span class="string">&quot;@uni-helper/uni-ui-types&quot;</span>]</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小程序-Pinia-持久化"><a href="#小程序-Pinia-持久化" class="headerlink" title="小程序 Pinia 持久化"></a>小程序 Pinia 持久化</h2><p>说明：项目中 Pinia 用法平时完全一致，主要解决持久化插件<strong>兼容性</strong>问题。</p>
+<p><img src="/resource/images/image-20230504111029953.png" alt="image-20230504111029953"></p>
+<ol>
+<li>持久化存储插件： <a target="_blank" rel="noopener" href="https://prazdevs.github.io/pinia-plugin-persistedstate/guide/config.html#storage">pinia-plugin-persistedstate</a>。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm i pinia-plugin-persistedstate</span><br></pre></td></tr></table></figure>
+
+<p><code>stores/index.ts</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createPinia &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="comment">// #1</span></span><br><span class="line"><span class="keyword">import</span> persist <span class="keyword">from</span> <span class="string">&#x27;pinia-plugin-persistedstate&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建pinia实例</span></span><br><span class="line"><span class="keyword">const</span> pinia = createPinia()</span><br><span class="line"><span class="comment">// #2</span></span><br><span class="line">pinia.use(persist)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出pinia实例，给main使用</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> pinia</span><br><span class="line"><span class="comment">// #3</span></span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&#x27;./modules/member&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123; useMemberStore &#125; <span class="keyword">from</span> <span class="string">&#x27;@/stores&#x27;</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> memberStore = useMemberStore()</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;my&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;my&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">view</span>&gt;</span>会员信息：&#123;&#123; memberStore.profile &#125;&#125;<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> @<span class="attr">tap</span>=<span class="string">&quot;memberStore.setProfile(&#123; nickname: &#x27;黑马先锋&#x27; &#125;)&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">plain</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>保存用户信息<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> @<span class="attr">tap</span>=<span class="string">&quot;memberStore.clearProfile()&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">plain</span> <span class="attr">type</span>=<span class="string">&quot;warn&quot;</span>&gt;</span>清理用户信息<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span>&gt;</span></span><br><span class="line">//</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>插件默认使用 <code>localStorage</code> 实现持久化，小程序端不兼容，需要替换持久化 API，<code>store/modules/member.ts</code>。</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useMemberStore = defineStore(</span><br><span class="line">  <span class="string">&#x27;member&#x27;</span>,</span><br><span class="line">  <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// 配置持久化</span></span><br><span class="line">    <span class="attr">persist</span>: &#123;</span><br><span class="line">      <span class="comment">// 调整为兼容多端的API</span></span><br><span class="line">      <span class="attr">storage</span>: &#123;</span><br><span class="line">        <span class="function"><span class="title">setItem</span>(<span class="params">key, value</span>)</span> &#123;</span><br><span class="line">          uni.setStorageSync(key, value)</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="title">getItem</span>(<span class="params">key</span>)</span> &#123;</span><br><span class="line">          <span class="keyword">return</span> uni.getStorageSync(key)</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>我的 <code>.vscode/settings.json</code> 参考。</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;eslint.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;eslint.run&quot;</span>: <span class="string">&quot;onType&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;eslint.options&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;extensions&quot;</span>: [</span><br><span class="line">      <span class="string">&quot;.js&quot;</span>,</span><br><span class="line">      <span class="string">&quot;.vue&quot;</span>,</span><br><span class="line">      <span class="string">&quot;.jsx&quot;</span>,</span><br><span class="line">      <span class="string">&quot;.tsx&quot;</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;editor.codeActionsOnSave&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;source.fixAll.eslint&quot;</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 配置语言的文件关联</span></span><br><span class="line">  <span class="attr">&quot;files.associations&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;pages.json&quot;</span>: <span class="string">&quot;jsonc&quot;</span>, <span class="comment">// pages.json 可以写注释</span></span><br><span class="line">    <span class="attr">&quot;manifest.json&quot;</span>: <span class="string">&quot;jsonc&quot;</span> <span class="comment">// manifest.json 可以写注释</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="uni-request-请求封装"><a href="#uni-request-请求封装" class="headerlink" title="uni.request 请求封装"></a>uni.request 请求封装</h2><p><img src="/resource/images/image-20230504111254443.png" alt="image-20230504111254443"></p>
+<p><img src="/resource/images/image-20230504112007172.png" alt="image-20230504112007172"></p>
+<h3 id="添加请求和上传文件拦截器"><a href="#添加请求和上传文件拦截器" class="headerlink" title="添加请求和上传文件拦截器"></a>添加请求和上传文件拦截器</h3><ol>
+<li><p>uni-app 拦截器：<a target="_blank" rel="noopener" href="https://uniapp.dcloud.net.cn/api/interceptor.html">uni.addInterceptor</a>。</p>
+</li>
+<li><p>接口说明：<a target="_blank" rel="noopener" href="https://www.apifox.cn/apidoc/shared-0e6ee326-d646-41bd-9214-29dbf47648fa/doc-1521513">接口文档</a></p>
+</li>
+<li><p>参考代码如下，<code>src/utils/http.ts</code>。</p>
+</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useMemberStore &#125; <span class="keyword">from</span> <span class="string">&#x27;@/stores&#x27;</span></span><br><span class="line"><span class="keyword">const</span> baseURL = <span class="string">&#x27;https://pcapi-xiaotuxian-front-devtest.itheima.net&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> httpInterceptor = &#123;</span><br><span class="line">  <span class="comment">// 拦截前触发</span></span><br><span class="line">  <span class="function"><span class="title">invoke</span>(<span class="params">options: UniApp.RequestOptions</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// 1. 非 http 开头需拼接地址</span></span><br><span class="line">    <span class="keyword">if</span> (!options.url.startsWith(<span class="string">&#x27;http&#x27;</span>)) &#123;</span><br><span class="line">      options.url = baseURL + options.url</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 2. 请求超时</span></span><br><span class="line">    options.timeout = <span class="number">10000</span></span><br><span class="line">    <span class="comment">// 3. 添加小程序端请求头标识</span></span><br><span class="line">    options.header = &#123;</span><br><span class="line">      ...options.header,</span><br><span class="line">      <span class="string">&#x27;source-client&#x27;</span>: <span class="string">&#x27;miniapp&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 4. 添加 token 请求头标识</span></span><br><span class="line">    <span class="keyword">const</span> memberStore = useMemberStore()</span><br><span class="line">    <span class="keyword">const</span> token = memberStore.profile?.token</span><br><span class="line">    <span class="keyword">if</span> (token) &#123;</span><br><span class="line">      options.header.Authorization = token</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 拦截 request 请求</span></span><br><span class="line">uni.addInterceptor(<span class="string">&#x27;request&#x27;</span>, httpInterceptor)</span><br><span class="line"><span class="comment">// 拦截 uploadFile 文件上传</span></span><br><span class="line">uni.addInterceptor(<span class="string">&#x27;uploadFile&#x27;</span>, httpInterceptor)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>测试，<code>pages/my/my.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useMemberStore &#125; <span class="keyword">from</span> <span class="string">&#x27;@/stores&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@/utils/http&#x27;</span></span><br><span class="line"><span class="keyword">const</span> memberStore = useMemberStore()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> getData = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> r = <span class="keyword">await</span> uni.request(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;/home/banner&#x27;</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">console</span>.log(r)</span><br><span class="line">&#125;</span><br><span class="line">getData()</span><br></pre></td></tr></table></figure>
+
+<h3 id="封装-Promise-请求函数"><a href="#封装-Promise-请求函数" class="headerlink" title="封装 Promise 请求函数"></a>封装 Promise 请求函数</h3><p> <img src="/resource/images/image-20230504112148210.png" alt="image-20230504112148210"></p>
+<ol>
+<li>封装基础的 http 函数，返回 Promise 对象，<code>utils/http.ts</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> http = <span class="function">(<span class="params">options: UniApp.RequestOptions</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    uni.request(&#123;</span><br><span class="line">      ...options,</span><br><span class="line">      <span class="function"><span class="title">success</span>(<span class="params">res</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 成功，resolve 并提取数据</span></span><br><span class="line">        resolve(res.data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试，<code>pages/my/my.vue</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useMemberStore &#125; <span class="keyword">from</span> <span class="string">&#x27;@/stores&#x27;</span></span><br><span class="line"><span class="comment">// #1</span></span><br><span class="line"><span class="keyword">import</span> &#123; http &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils/http&#x27;</span></span><br><span class="line"><span class="keyword">const</span> memberStore = useMemberStore()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> getData = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// #2</span></span><br><span class="line">  <span class="keyword">const</span> r = <span class="keyword">await</span> http(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;/home/banner&#x27;</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">console</span>.log(r)</span><br><span class="line">&#125;</span><br><span class="line">getData()</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>给 http 函数添加泛型。</li>
+</ol>
+<p><img src="/resource/images/image-20230504113140112.png" alt="image-20230504113140112"></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Data&lt;T&gt; &#123;</span><br><span class="line">  <span class="attr">code</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">msg</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">result</span>: T</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> http = &lt;T&gt;<span class="function">(<span class="params">options: UniApp.RequestOptions</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>&lt;Data&lt;T&gt;&gt;(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    uni.request(&#123;</span><br><span class="line">      ...options,</span><br><span class="line">      <span class="function"><span class="title">success</span>(<span class="params">res</span>)</span> &#123;</span><br><span class="line">        resolve(res.data <span class="keyword">as</span> Data&lt;T&gt;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试，<code>pages/my/my.vue</code>。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useMemberStore &#125; <span class="keyword">from</span> <span class="string">&#x27;@/stores&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; http &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils/http&#x27;</span></span><br><span class="line"><span class="keyword">const</span> memberStore = useMemberStore()</span><br><span class="line"></span><br><span class="line"><span class="comment">// #1</span></span><br><span class="line"><span class="keyword">interface</span> IBannerItem &#123;</span><br><span class="line">  <span class="attr">hrefUrl</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">id</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">imgUrl</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">type</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> getData = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// #2</span></span><br><span class="line">  <span class="keyword">const</span> r = <span class="keyword">await</span> http&lt;IBannerItem[]&gt;(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;/home/banner&#x27;</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">console</span>.log(r.result[<span class="number">0</span>].hrefUrl)</span><br><span class="line">&#125;</span><br><span class="line">getData()</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>处理失败的情况。</li>
+</ol>
+<p><img src="/resource/images/image-20230504113912491.png" alt="image-20230504113912491"></p>
+<p><img src="/resource/images/image-20230504114702424.png" alt="image-20230504114702424"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 请求函数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  </span>UniApp.RequestOptions</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns <span class="variable">Promise</span></span></span></span><br><span class="line"><span class="comment"> *  1. 返回 Promise 对象</span></span><br><span class="line"><span class="comment"> *  2. 获取数据成功</span></span><br><span class="line"><span class="comment"> *    2.1 提取核心数据 res.data</span></span><br><span class="line"><span class="comment"> *    2.2 添加类型，支持泛型</span></span><br><span class="line"><span class="comment"> *  3. 获取数据失败</span></span><br><span class="line"><span class="comment"> *    3.1 401错误  -&gt; 清理用户信息，跳转到登录页</span></span><br><span class="line"><span class="comment"> *    3.2 其他错误 -&gt; 根据后端错误信息轻提示</span></span><br><span class="line"><span class="comment"> *    3.3 网络错误 -&gt; 提示用户换网络</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">type Data&lt;T&gt; = &#123;</span><br><span class="line">  <span class="attr">code</span>: string</span><br><span class="line">  <span class="attr">msg</span>: string</span><br><span class="line">  <span class="attr">result</span>: T</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 2.2 添加类型，支持泛型</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> http = &lt;T&gt;<span class="function">(<span class="params">options: UniApp.RequestOptions</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 1. 返回 Promise 对象</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>&lt;Data&lt;T&gt;&gt;(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    uni.request(&#123;</span><br><span class="line">      ...options,</span><br><span class="line">      <span class="comment">// 响应成功</span></span><br><span class="line">      <span class="function"><span class="title">success</span>(<span class="params">res</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 状态码 2xx， axios 就是这样设计的</span></span><br><span class="line">        <span class="keyword">if</span> (res.statusCode &gt;= <span class="number">200</span> &amp;&amp; res.statusCode &lt; <span class="number">300</span>) &#123;</span><br><span class="line">          <span class="comment">// 2.1 提取核心数据 res.data</span></span><br><span class="line">          resolve(res.data <span class="keyword">as</span> Data&lt;T&gt;)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (res.statusCode === <span class="number">401</span>) &#123;</span><br><span class="line">          <span class="comment">// 401错误  -&gt; 清理用户信息，跳转到登录页</span></span><br><span class="line">          <span class="keyword">const</span> memberStore = useMemberStore()</span><br><span class="line">          memberStore.clearProfile()</span><br><span class="line">          uni.navigateTo(&#123; <span class="attr">url</span>: <span class="string">&#x27;/pages/login/login&#x27;</span> &#125;)</span><br><span class="line">          reject(res)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">// 其他错误 -&gt; 根据后端错误信息轻提示</span></span><br><span class="line">          uni.showToast(&#123;</span><br><span class="line">            <span class="attr">icon</span>: <span class="string">&#x27;none&#x27;</span>,</span><br><span class="line">            <span class="attr">title</span>: (res.data <span class="keyword">as</span> Data&lt;T&gt;).msg || <span class="string">&#x27;请求错误&#x27;</span>,</span><br><span class="line">          &#125;)</span><br><span class="line">          reject(res)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// 响应失败</span></span><br><span class="line">      <span class="function"><span class="title">fail</span>(<span class="params">err</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 测试：修改 options.timeout = 1000，并切换 network 为 Slow 3G</span></span><br><span class="line">        uni.showToast(&#123;</span><br><span class="line">          <span class="attr">icon</span>: <span class="string">&#x27;none&#x27;</span>,</span><br><span class="line">          <span class="attr">title</span>: <span class="string">&#x27;网络错误，换个网络试试&#x27;</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">        reject(err)</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>测试 401，<code>pages/my/my.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">tap</span>=<span class="string">&quot;getProfile&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">plain</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span></span><br><span class="line">  获取个人信息</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getProfile = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> r = <span class="keyword">await</span> http(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;/member/profile&#x27;</span>,</span><br><span class="line">    <span class="attr">header</span>: &#123;&#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">console</span>.log(r)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其他错误测试。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getProfile = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> r = <span class="keyword">await</span> http(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">    <span class="comment">// 这儿把 url 清空了</span></span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    <span class="attr">header</span>: &#123;&#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">console</span>.log(r)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="【拓展】了解代码规范"><a href="#【拓展】了解代码规范" class="headerlink" title="【拓展】了解代码规范"></a>【拓展】了解代码规范</h2><p>为什么需要代码规范？</p>
+<p>如果没有统一代码风格，团队协作不便于查看代码提交时所做的修改。</p>
+<p><img src="/resource/images/index_picture_2.png" alt="diff"></p>
+<h3 id="统一代码风格"><a href="#统一代码风格" class="headerlink" title="统一代码风格"></a>统一代码风格</h3><ul>
+<li>安装 <code>eslint</code> + <code>prettier</code>。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm i -D eslint prettier eslint-plugin-vue @vue/eslint-config-prettier @vue/eslint-config-typescript @rushstack/eslint-patch @vue/tsconfig</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>新建 <code>.eslintrc.cjs</code> 文件，添加以下 <code>eslint</code> 配置。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* eslint-env node */</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;@rushstack/eslint-patch/modern-module-resolution&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="attr">root</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">extends</span>: [</span><br><span class="line">    <span class="string">&#x27;plugin:vue/vue3-essential&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;eslint:recommended&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;@vue/eslint-config-typescript&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;@vue/eslint-config-prettier&#x27;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">// 小程序全局变量</span></span><br><span class="line">  <span class="attr">globals</span>: &#123;</span><br><span class="line">    <span class="attr">uni</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">wx</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">WechatMiniprogram</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">getCurrentPages</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">UniApp</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">UniHelper</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">parserOptions</span>: &#123;</span><br><span class="line">    <span class="attr">ecmaVersion</span>: <span class="string">&#x27;latest&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;prettier/prettier&#x27;</span>: [</span><br><span class="line">      <span class="string">&#x27;warn&#x27;</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">singleQuote</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">semi</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">printWidth</span>: <span class="number">100</span>,</span><br><span class="line">        <span class="attr">trailingComma</span>: <span class="string">&#x27;all&#x27;</span>,</span><br><span class="line">        <span class="attr">endOfLine</span>: <span class="string">&#x27;auto&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&#x27;vue/multi-word-component-names&#x27;</span>: [<span class="string">&#x27;off&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;vue/no-setup-props-destructure&#x27;</span>: [<span class="string">&#x27;off&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;vue/no-deprecated-html-element-is&#x27;</span>: [<span class="string">&#x27;off&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;@typescript-eslint/no-unused-vars&#x27;</span>: [<span class="string">&#x27;off&#x27;</span>],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置 <code>package.json</code>。</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;script&quot;</span>: &#123;</span><br><span class="line">    <span class="comment">// ... 省略 ...</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span>: <span class="string">&quot;eslint . --ext .vue,.js,.ts --fix --ignore-path .gitignore&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>运行。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm lint</span><br></pre></td></tr></table></figure>
+
+<p>到此，你已完成 <code>eslint</code> + <code>prettier</code> 的配置。</p>
+<h3 id="Git-工作流规范"><a href="#Git-工作流规范" class="headerlink" title="Git 工作流规范"></a>Git 工作流规范</h3><ul>
+<li>安装并初始化 <code>husky</code>。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm dlx husky-init</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装 <code>lint-staged</code>。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm i lint-staged -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置 <code>package.json</code>。</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;script&quot;</span>: &#123;</span><br><span class="line">    <span class="comment">// ... 省略 ...</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;lint-staged&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;*.&#123;vue,ts,js&#125;&quot;</span>: [<span class="string">&quot;eslint --fix&quot;</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>.husky/pre-commit</code> 文件。</li>
+</ul>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm test   // [!code --]</span><br><span class="line">pnpm lint-staged     // [!code ++]</span><br></pre></td></tr></table></figure>
+
+<p>到此，你已完成 <code>husky</code> + <code>lint-staged</code> 的配置。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course10/" rel="prev" title="10_人资后台">
+      <i class="fa fa-chevron-left"></i> 10_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/05/xcx-xtx-02/" rel="next" title="02_小兔鲜">
+      02_小兔鲜 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">项目架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-uni-app-%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">创建 uni-app 项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-HBuilderX-%E5%88%9B%E5%BB%BA"><span class="nav-number">3.</span> <span class="nav-text">通过 HBuilderX 创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pages-json-%E5%92%8C-tabBar-%E6%A1%88%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">pages.json 和 tabBar 案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">4.1.</span> <span class="nav-text">目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB-pages-json"><span class="nav-number">4.2.</span> <span class="nav-text">解读 pages.json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E7%BB%83%E4%B9%A0"><span class="nav-number">4.3.</span> <span class="nav-text">案例练习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uni-app-%E5%92%8C%E5%8E%9F%E7%94%9F%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">uni-app 和原生小程序区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%8C%BA%E5%88%AB"><span class="nav-number">5.1.</span> <span class="nav-text">主要区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%8C%BA%E5%88%AB%E8%A1%A5%E5%85%85"><span class="nav-number">5.2.</span> <span class="nav-text">其他区别补充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E7%BB%83%E4%B9%A0-1"><span class="nav-number">5.3.</span> <span class="nav-text">案例练习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA-uni-app-%E9%A1%B9%E7%9B%AE"><span class="nav-number">6.</span> <span class="nav-text">用命令行创建 uni-app 项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VSCode-%E5%BC%80%E5%8F%91-uni-app-%E9%A1%B9%E7%9B%AE"><span class="nav-number">7.</span> <span class="nav-text">VSCode 开发 uni-app 项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-VSCode"><span class="nav-number">7.1.</span> <span class="nav-text">为什么选择 VSCode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8-VSCode-%E5%BC%80%E5%8F%91%E9%85%8D%E7%BD%AE"><span class="nav-number">7.2.</span> <span class="nav-text">用 VSCode 开发配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E5%9B%9E%E9%A1%BE"><span class="nav-number">8.</span> <span class="nav-text">开发工具回顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8-VSCode-%E5%BC%80%E5%8F%91%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0"><span class="nav-number">9.</span> <span class="nav-text">用 VSCode 开发课后练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%89%E5%8F%96%E9%A1%B9%E7%9B%AE%E6%A8%A1%E6%9D%BF%E4%BB%A3%E7%A0%81"><span class="nav-number">10.</span> <span class="nav-text">拉取项目模板代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%85%A5-uni-ui-%E7%BB%84%E4%BB%B6%E5%BA%93"><span class="nav-number">11.</span> <span class="nav-text">引入 uni-ui 组件库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F-Pinia-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">12.</span> <span class="nav-text">小程序 Pinia 持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uni-request-%E8%AF%B7%E6%B1%82%E5%B0%81%E8%A3%85"><span class="nav-number">13.</span> <span class="nav-text">uni.request 请求封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%AF%B7%E6%B1%82%E5%92%8C%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-number">13.1.</span> <span class="nav-text">添加请求和上传文件拦截器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85-Promise-%E8%AF%B7%E6%B1%82%E5%87%BD%E6%95%B0"><span class="nav-number">13.2.</span> <span class="nav-text">封装 Promise 请求函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E6%8B%93%E5%B1%95%E3%80%91%E4%BA%86%E8%A7%A3%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83"><span class="nav-number">14.</span> <span class="nav-text">【拓展】了解代码规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC"><span class="nav-number">14.1.</span> <span class="nav-text">统一代码风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-%E5%B7%A5%E4%BD%9C%E6%B5%81%E8%A7%84%E8%8C%83"><span class="nav-number">14.2.</span> <span class="nav-text">Git 工作流规范</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="✔ 完成员工的 excel 导入导出&#x2F;下载功能。 ✔ 完成员工的增删改查功能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="07_人资后台">
+<meta property="og:url" content="http://example.com/2023/03/23/rz-base-new-course07/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="✔ 完成员工的 excel 导入导出&#x2F;下载功能。 ✔ 完成员工的增删改查功能。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_87.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-04-11_11-51-28.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_89.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_91.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_93.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_94.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_95.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_96.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_97.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_98.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_99.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_100.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_101.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_102.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_103.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_104.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_105.png">
+<meta property="article:published_time" content="2023-03-23T07:06:56.000Z">
+<meta property="article:modified_time" content="2023-05-11T07:42:51.411Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/new_rz_87.png">
+
+<link rel="canonical" href="http://example.com/2023/03/23/rz-base-new-course07/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>07_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/23/rz-base-new-course07/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          07_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-23 15:06:56" itemprop="dateCreated datePublished" datetime="2023-03-23T15:06:56+08:00">2023-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 15:42:51" itemprop="dateModified" datetime="2023-05-11T15:42:51+08:00">2023-05-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>✔ 完成员工的 excel 导入导出/下载功能。</p>
+<p>✔ 完成员工的增删改查功能。</p>
+<span id="more"></span>
+
+<h2 id="员工管理-导出excel"><a href="#员工管理-导出excel" class="headerlink" title="员工管理-导出excel"></a>员工管理-导出excel</h2><img src="/resource/images/new_rz_87.png"/>
+
+<ol>
+<li>axios 配置 responseType 为 blob，接收的二进制流文件为 Blob 格式，<code>src/api/employee.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 导出员工的 excel</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">exportEmployee</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/user/export&#x27;</span>,</span><br><span class="line">        <span class="comment">// 改变接收数据的类型</span></span><br><span class="line">        <span class="attr">responseType</span>: <span class="string">&#x27;blob&#x27;</span> <span class="comment">// 使用 blob 接收二进制文件流</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>响应拦截器判断是不是 blob 类型，如果是直接返回数据，不再进行解构， <code>src/utils/request.js</code> 。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">service.interceptors.response.use(</span><br><span class="line">    <span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// mark</span></span><br><span class="line">        <span class="keyword">if</span> (response.data <span class="keyword">instanceof</span> Blob) <span class="keyword">return</span> response.data</span><br><span class="line">        <span class="keyword">const</span> &#123;</span><br><span class="line">            success,</span><br><span class="line">            data,</span><br><span class="line">            message</span><br><span class="line">        &#125; = response.data</span><br><span class="line">        <span class="keyword">if</span> (success) &#123;</span><br><span class="line">            <span class="keyword">return</span> data</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Message.error(message)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(message))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">async</span> (error) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (error.response.status === <span class="number">401</span>) &#123;</span><br><span class="line">            Message(&#123;</span><br><span class="line">                <span class="attr">type</span>: <span class="string">&#x27;warning&#x27;</span>,</span><br><span class="line">                <span class="attr">message</span>: <span class="string">&#x27;token 超时了&#x27;</span></span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">await</span> store.dispatch(<span class="string">&#x27;user/logout&#x27;</span>)</span><br><span class="line">            router.push(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">        &#125;</span><br><span class="line">        Message.error(error.message)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>安装 file-saver。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i file-saver</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>点击按钮调用接口，使用 file-saver 将 blob 转化成文件下载， <code>src/views/employee/index.vue</code> 。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;exportEmployee&quot;</span>&gt;</span>excel导出<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> FileSaver <span class="keyword">from</span> <span class="string">&#x27;file-saver&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    exportEmployee</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/employee&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">exportEmployee</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> result = <span class="keyword">await</span> exportEmployee()</span><br><span class="line">            <span class="comment">// FileSaver.saveAs(blob对象, 文件名称)</span></span><br><span class="line">            FileSaver.saveAs(result, <span class="string">&#x27;员工信息表.xlsx&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="员工管理-excel导入"><a href="#员工管理-excel导入" class="headerlink" title="员工管理-excel导入"></a>员工管理-excel导入</h2><img src="/resource/images/Snipaste_2023-04-11_11-51-28.png" class="highlight2"/>
+
+<img src="/resource/images/new_rz_89.png"/>
+
+<ol>
+<li>创建员工导入组件，<code>src/views/employee/components/import-excel.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">width</span>=<span class="string">&quot;500px&quot;</span> <span class="attr">title</span>=<span class="string">&quot;员工导入&quot;</span> <span class="attr">:visible</span>=<span class="string">&quot;showExcelDialog&quot;</span> @<span class="attr">close</span>=<span class="string">&quot;$emit(&#x27;update:showExcelDialog&#x27;, false)&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">type</span>=<span class="string">&quot;flex&quot;</span> <span class="attr">justify</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;upload-excel&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">ref</span>=<span class="string">&quot;excel-upload-input&quot;</span> <span class="attr">class</span>=<span class="string">&quot;excel-upload-input&quot;</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">accept</span>=<span class="string">&quot;.xlsx, .xls&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;drop&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-upload&quot;</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>下载导入模板<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">span</span>&gt;</span>将文件拖到此处或</span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>点击上传<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">type</span>=<span class="string">&quot;flex&quot;</span> <span class="attr">justify</span>=<span class="string">&quot;end&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- update:props属性名，值 直接修改 .sync修饰符的属性值 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;$emit(&#x27;update:showExcelDialog&#x27;, false)&quot;</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">props</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="attr">showExcelDialog</span>: &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">type</span>: <span class="built_in">Boolean</span>,</span></span><br><span class="line"><span class="javascript">                <span class="attr">default</span>: <span class="literal">false</span></span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.upload-excel</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">        <span class="attribute">justify-content</span>: center;</span></span><br><span class="line"><span class="css">        <span class="attribute">margin</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">360px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">height</span>: <span class="number">180px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">align-items</span>: center;</span></span><br><span class="line"><span class="css">        <span class="attribute">color</span>: <span class="number">#697086</span>;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.excel-upload-input</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">display</span>: none;</span></span><br><span class="line"><span class="css">            <span class="attribute">z-index</span>: -<span class="number">9999</span>;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.btn-upload</span>,</span></span><br><span class="line"><span class="css">        <span class="selector-class">.drop</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">border</span>: <span class="number">1px</span> dashed <span class="number">#dcdfe6</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="css">            <span class="attribute">line-height</span>: <span class="number">160px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">border-radius</span>: <span class="number">8px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">            <span class="attribute">flex-direction</span>: column;</span></span><br><span class="line"><span class="css">            <span class="attribute">justify-content</span>: center;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.drop</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">line-height</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">color</span>: <span class="number">#bbb</span>;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            <span class="selector-tag">i</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">font-size</span>: <span class="number">60px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">                <span class="attribute">color</span>: <span class="number">#c0c4cc</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在员工管理页面-导入该组件并注册使用，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ImportExcel <span class="keyword">from</span> <span class="string">&#x27;./components/import-excel.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">components</span>: &#123;</span><br><span class="line">        ImportExcel</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>声明一个控制该弹层的变量，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">showExcelDialog</span>: <span class="literal">false</span> <span class="comment">// 控制excel的弹层显示和隐藏</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>使用该组件，并且应用变量，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">import-excel</span> <span class="attr">:show-excel-dialog.sync</span>=<span class="string">&quot;showExcelDialog&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>点击员工展示导入弹出层，<code>src/views/employee/index.vue</code> 。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;showExcelDialog = true&quot;</span>&gt;</span>excel导入<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="员工管理-下载导入模板"><a href="#员工管理-下载导入模板" class="headerlink" title="员工管理-下载导入模板"></a>员工管理-下载导入模板</h2><img src="/resource/images/new_rz_91.png"/>
+
+<ol>
+<li>封装下载模板的 API，<code>src/api/employee.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 下载员工导入模版</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getExportTemplate</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/user/import/template&#x27;</span>,</span><br><span class="line">        <span class="attr">responseType</span>: <span class="string">&#x27;blob&#x27;</span> <span class="comment">// 二进制文件流</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>点击按钮进行下载模板，<code>src/views/employee/components/import-excel.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;getTemplate&quot;</span>&gt;</span>下载导入模板<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    getExportTemplate</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/employee&#x27;</span></span><br><span class="line"><span class="keyword">import</span> FileSaver <span class="keyword">from</span> <span class="string">&#x27;file-saver&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;ImportExcel&#x27;</span>,</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">showExcelDialog</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="built_in">Boolean</span>,</span><br><span class="line">            <span class="attr">default</span>: <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getTemplate</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> data = <span class="keyword">await</span> getExportTemplate()</span><br><span class="line">            FileSaver.saveAs(data, <span class="string">&#x27;员工导入模版.xlsx&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="员工管理-员工导入-上传excel"><a href="#员工管理-员工导入-上传excel" class="headerlink" title="员工管理-员工导入-上传excel"></a>员工管理-员工导入-上传excel</h2><img src="/resource/images/new_rz_93.png"/>
+
+<ol>
+<li>封装上传 excel 的 API，<code>src/api/employee.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 上传用户的 excel</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">uploadExcel</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/user/import&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">        data <span class="comment">// form-data 类型，因为要上传文件类型</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>点击上传，弹出文件选择框，<code>src/views/employee/components/import-excel.vue</code> 。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;handleUpload&quot;</span>&gt;</span>点击上传<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">handleUpload</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.$refs[<span class="string">&#x27;excel-upload-input&#x27;</span>].click() <span class="comment">// this.$refs.属性名 和 this.$refs[属性名] 等价</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>监听文件改变-上传 excel-关闭弹层，<code>src/views/employee/components/import-excel.vue</code> 。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">ref</span>=<span class="string">&quot;excel-upload-input&quot;</span> <span class="attr">class</span>=<span class="string">&quot;excel-upload-input&quot;</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">accept</span>=<span class="string">&quot;.xlsx, .xls&quot;</span> @<span class="attr">change</span>=<span class="string">&quot;uploadChange&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;ImportExcel&#x27;</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">uploadChange</span>(<span class="params">event</span>)</span> &#123;</span><br><span class="line">            <span class="comment">// 调用上传接口</span></span><br><span class="line">            <span class="comment">// uploadExcel() // 参数  form-data 需要文件 file</span></span><br><span class="line">            <span class="keyword">const</span> files = event.target.files <span class="comment">// input 的文件列表</span></span><br><span class="line">            <span class="keyword">if</span> (files.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// 大于0 说明有文件要上传</span></span><br><span class="line">                <span class="keyword">const</span> data = <span class="keyword">new</span> FormData()</span><br><span class="line">                <span class="comment">// file: file类型</span></span><br><span class="line">                data.append(<span class="string">&#x27;file&#x27;</span>, files[<span class="number">0</span>]) <span class="comment">// 将文件参数加入到formData中</span></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">await</span> uploadExcel(data)</span><br><span class="line">                    <span class="comment">// 成功</span></span><br><span class="line">                    <span class="built_in">this</span>.$emit(<span class="string">&#x27;uploadSuccess&#x27;</span>) <span class="comment">// 通知父组件 我上传成功</span></span><br><span class="line">                    <span class="built_in">this</span>.$emit(<span class="string">&#x27;update:showExcelDialog&#x27;</span>, <span class="literal">false</span>) <span class="comment">// 关闭弹层</span></span><br><span class="line">                    <span class="comment">// this.$refs[&#x27;excel-upload-input&#x27;].value = &#x27;&#x27;</span></span><br><span class="line">                &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">                    <span class="comment">// 捕获失败</span></span><br><span class="line">                    <span class="comment">// this.$refs[&#x27;excel-upload-input&#x27;].value = &#x27;&#x27;</span></span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    <span class="comment">// 不论成功或者失败都会执行finally</span></span><br><span class="line">                    <span class="built_in">this</span>.$refs[<span class="string">&#x27;excel-upload-input&#x27;</span>].value = <span class="string">&#x27;&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里为什么不管成功或者失败都要清空文件选择器中的内容呢？ 因为不论成功或者失败，再点击上传都会去选择一个新的excel，所以这里使用finally等到最后，将内容清空。</p>
+<p>父组件需要监听上传成功的事件， <code>src/views/employee/index.vue</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">import-excel</span> <span class="attr">:show-excel-dialog.sync</span>=<span class="string">&quot;showExcelDialog&quot;</span> @<span class="attr">uploadSuccess</span>=<span class="string">&quot;getEmployeeList&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="员工管理-删除员工"><a href="#员工管理-删除员工" class="headerlink" title="员工管理-删除员工"></a>员工管理-删除员工</h2><img src="/resource/images/new_rz_94.png" width="400"/>
+
+<img src="/resource/images/new_rz_95.png"/>
+
+<ol>
+<li>封装删除员工的 API，<code>src/api/employee.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除员工</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">delEmployee</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;delete&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`/sys/user/<span class="subst">$&#123;id&#125;</span>`</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>放置气泡框确认框，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span> #<span class="attr">default</span>=<span class="string">&quot;&#123;row&#125;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-popconfirm</span> <span class="attr">title</span>=<span class="string">&quot;确认删除该行数据吗？&quot;</span> @<span class="attr">onConfirm</span>=<span class="string">&quot;confirmDel(row.id)&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">slot</span>=<span class="string">&quot;reference&quot;</span> <span class="attr">style</span>=<span class="string">&quot;margin-left:10px&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-popconfirm</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>删除方法实现，<code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 删除员工方法</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">confirmDel</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> delEmployee(id)</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.list.length === <span class="number">1</span> &amp;&amp; <span class="built_in">this</span>.queryParams.page &gt; <span class="number">1</span>) <span class="built_in">this</span>.queryParams.page--</span><br><span class="line">    <span class="built_in">this</span>.getEmployeeList()</span><br><span class="line">    <span class="built_in">this</span>.$message.success(<span class="string">&#x27;删除员工成功&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加员工和路由"><a href="#添加员工和路由" class="headerlink" title="添加员工和路由"></a>添加员工和路由</h2><img src="/resource/images/new_rz_96.png" width="500" class="highlight2"/>
+
+<ol>
+<li>创建一个员工详情页面（直接拷贝），<code>src/views/employee/detail.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app-container&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-card</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;edit-form&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-form</span> <span class="attr">ref</span>=<span class="string">&quot;userForm&quot;</span> <span class="attr">label-width</span>=<span class="string">&quot;220px&quot;</span>&gt;</span></span><br><span class="line">                        <span class="comment">&lt;!-- 姓名 部门 --&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;姓名&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;username&quot;</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">                        <span class="comment">&lt;!-- 工号 入职时间 --&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;工号&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;workNumber&quot;</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">                        <span class="comment">&lt;!--手机 聘用形式  --&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;手机&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;mobile&quot;</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;部门&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;departmentId&quot;</span>&gt;</span></span><br><span class="line">                                    <span class="comment">&lt;!-- 放置及联部门组件 --&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;聘用形式&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;formOfEmployment&quot;</span>&gt;</span></span><br><span class="line">                                    <span class="comment">&lt;!-- &lt;el-select size=&quot;mini&quot; class=&quot;inputW&quot; /&gt; --&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;入职时间&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;timeOfEntry&quot;</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">el-date-picker</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;date&quot;</span> <span class="attr">value-format</span>=<span class="string">&quot;yyyy-MM-dd&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;转正时间&quot;</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">el-date-picker</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;date&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">                        <span class="comment">&lt;!-- 员工照片 --&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;员工头像&quot;</span>&gt;</span></span><br><span class="line">                                    <span class="comment">&lt;!-- 放置上传图片 --&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">                        <span class="comment">&lt;!-- 保存个人信息 --&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">type</span>=<span class="string">&quot;flex&quot;</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span> <span class="attr">style</span>=<span class="string">&quot;margin-left:220px&quot;</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>保存更新<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-card</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;EmployeeDetail&#x27;</span></span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.edit-form</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">background</span>: <span class="number">#fff</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">padding</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.inputW</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">width</span>: <span class="number">380px</span></span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置员工详情的路由信息，<code>src/router/modules/employee.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> layout <span class="keyword">from</span> <span class="string">&#x27;@/layout&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/employee&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: layout,</span><br><span class="line">    <span class="attr">children</span>: [&#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;employee&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/employee&#x27;</span>),</span><br><span class="line">        <span class="attr">meta</span>: &#123;</span><br><span class="line">            <span class="attr">title</span>: <span class="string">&#x27;员工&#x27;</span>,</span><br><span class="line">            <span class="attr">icon</span>: <span class="string">&#x27;people&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;/employee/detail&#x27;</span>, <span class="comment">// 员工详情的地址</span></span><br><span class="line">        <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/employee/detail.vue&#x27;</span>),</span><br><span class="line">        <span class="attr">hidden</span>: <span class="literal">true</span>, <span class="comment">// 表示隐藏在左侧菜单</span></span><br><span class="line">        <span class="attr">meta</span>: &#123;</span><br><span class="line">            <span class="attr">title</span>: <span class="string">&#x27;员工详情&#x27;</span> <span class="comment">// 显示在导航的文本</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>点击添加员工跳转到详情页， <code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;$router.push(&#x27;/employee/detail&#x27;)&quot;</span>&gt;</span>添加员工<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="添加员工-表单数据校验"><a href="#添加员工-表单数据校验" class="headerlink" title="添加员工-表单数据校验"></a>添加员工-表单数据校验</h2><img src="/resource/images/new_rz_97.png" width="500"/>
+
+<img src="/resource/images/new_rz_98.png" width="500"/>
+
+<p>表单校验规则如下。</p>
+<ul>
+<li><p>姓名：必填；1~4 个字符。</p>
+</li>
+<li><p>手机号：必填。</p>
+</li>
+<li><p>部门：必填。</p>
+</li>
+<li><p>聘用形式：必填。</p>
+</li>
+<li><p>入职时间：必填。</p>
+</li>
+<li><p>转正时间：必填；不能小于入职时间。</p>
+</li>
+</ul>
+<ol>
+<li>定义数据和规则，<code>src/views/employee/detail.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">userInfo</span>: &#123;</span><br><span class="line">                <span class="attr">username</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 用户名</span></span><br><span class="line">                <span class="attr">mobile</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 手机号</span></span><br><span class="line">                <span class="attr">workNumber</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 工号</span></span><br><span class="line">                <span class="attr">formOfEmployment</span>: <span class="literal">null</span>, <span class="comment">// 聘用形式</span></span><br><span class="line">                <span class="attr">departmentId</span>: <span class="literal">null</span>, <span class="comment">// 部门 id</span></span><br><span class="line">                <span class="attr">timeOfEntry</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 入职时间</span></span><br><span class="line">                <span class="attr">correctionTime</span>: <span class="string">&#x27;&#x27;</span> <span class="comment">// 转正时间</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">rules</span>: &#123;</span><br><span class="line">                <span class="attr">username</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;请输入姓名&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    <span class="attr">min</span>: <span class="number">1</span>,</span><br><span class="line">                    <span class="attr">max</span>: <span class="number">4</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;姓名为1-4位&#x27;</span></span><br><span class="line">                &#125;],</span><br><span class="line">                <span class="attr">mobile</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;请输入手机号&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    <span class="comment">//   pattern 正则表达式</span></span><br><span class="line">                    <span class="attr">pattern</span>: <span class="regexp">/^1[3-9]\d&#123;9&#125;$/</span>,</span><br><span class="line">                    message: <span class="string">&#x27;手机号格式不正确&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;],</span><br><span class="line">                <span class="attr">formOfEmployment</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;请选择聘用形式&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;],</span><br><span class="line">                <span class="attr">departmentId</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;请选择部门&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;],</span><br><span class="line">                <span class="attr">timeOfEntry</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;请选择入职时间&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;],</span><br><span class="line">                <span class="attr">correctionTime</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;请选择转正时间&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    <span class="attr">validator</span>: <span class="function">(<span class="params">rule, value, callback</span>) =&gt;</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (<span class="built_in">this</span>.userInfo.timeOfEntry) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (<span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">this</span>.userInfo.timeOfEntry) &gt; <span class="keyword">new</span> <span class="built_in">Date</span>(value)) &#123;</span><br><span class="line">                                callback(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;转正时间不能小于入职时间&#x27;</span>))</span><br><span class="line">                                <span class="keyword">return</span></span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        callback()</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="function"><span class="title">saveData</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.$refs.userForm.validate()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>绑定表单数据和属性， <code>src/views/employee/detail.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form</span> <span class="attr">ref</span>=<span class="string">&quot;userForm&quot;</span> <span class="attr">:model</span>=<span class="string">&quot;userInfo&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;rules&quot;</span> <span class="attr">label-width</span>=<span class="string">&quot;220px&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 姓名 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;姓名&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;username&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;userInfo.username&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 工号 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;工号&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;workNumber&quot;</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 工号是系统生成的  禁用这个组件--&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;userInfo.workNumber&quot;</span> <span class="attr">disabled</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 手机 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;手机&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;mobile&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;userInfo.mobile&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;部门&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;departmentId&quot;</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 放置及联部门组件 会单独封装--&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;聘用形式&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;formOfEmployment&quot;</span>&gt;</span></span><br><span class="line">               <span class="comment">&lt;!-- mark --&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">el-select</span> <span class="attr">v-model</span>=<span class="string">&quot;userInfo.formOfEmployment&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">el-option</span> <span class="attr">label</span>=<span class="string">&quot;正式&quot;</span> <span class="attr">:value</span>=<span class="string">&quot;1&quot;</span> /&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">el-option</span> <span class="attr">label</span>=<span class="string">&quot;非正式&quot;</span> <span class="attr">:value</span>=<span class="string">&quot;2&quot;</span> /&gt;</span></span><br><span class="line">               <span class="tag">&lt;/<span class="name">el-select</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;入职时间&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;timeOfEntry&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-date-picker</span> <span class="attr">v-model</span>=<span class="string">&quot;userInfo.timeOfEntry&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;date&quot;</span> <span class="attr">value-format</span>=<span class="string">&quot;yyyy-MM-dd&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;转正时间&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;correctionTime&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-date-picker</span> <span class="attr">v-model</span>=<span class="string">&quot;userInfo.correctionTime&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;date&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 员工照片 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;员工头像&quot;</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 放置上传图片 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 保存个人信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">type</span>=<span class="string">&quot;flex&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span> <span class="attr">style</span>=<span class="string">&quot;margin-left:220px&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;saveData&quot;</span>&gt;</span>保存更新<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="添加员工-封装部门级联组件"><a href="#添加员工-封装部门级联组件" class="headerlink" title="添加员工-封装部门级联组件"></a>添加员工-封装部门级联组件</h2><img src="/resource/images/new_rz_99.png"/>
+
+<img src="/resource/images/new_rz_100.png"/>
+
+<p>Cascader 级联组件常用的属性如下。</p>
+<ul>
+<li><p>options 为一个树形结构的数据源。</p>
+</li>
+<li><p>props 可以设置数据源中的字段如 label（展示），value（存取）。</p>
+</li>
+<li><p>separator 为展示的分隔符。</p>
+</li>
+</ul>
+<ol>
+<li>创建 select-tree 组件，<code>src/views/employee/components/select-tree.vue</code></li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- element-ui级联组件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-cascader</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">:options</span>=<span class="string">&quot;treeData&quot;</span> <span class="attr">:props</span>=<span class="string">&quot;props&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;-&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        getDepartments</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/departments&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="javascript">        transListToTreeData</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">from</span> <span class="string">&#x27;@/utils&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="attr">name</span>: <span class="string">&#x27;SelectTree&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="attr">treeData</span>: [], <span class="comment">// 赋值给 级联组件的options</span></span></span><br><span class="line"><span class="javascript">                <span class="attr">props</span>: &#123;</span></span><br><span class="line"><span class="javascript">                    <span class="attr">label</span>: <span class="string">&#x27;name&#x27;</span>, <span class="comment">// 要展示的字段</span></span></span><br><span class="line"><span class="javascript">                    <span class="attr">value</span>: <span class="string">&#x27;id&#x27;</span> <span class="comment">// 要存储的字段</span></span></span><br><span class="line"><span class="javascript">                &#125;</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.getDepartments()</span></span><br><span class="line"><span class="javascript">        &#125;,</span></span><br><span class="line"><span class="javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">async</span> <span class="function"><span class="title">getDepartments</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.treeData = transListToTreeData(<span class="keyword">await</span> getDepartments(), <span class="number">0</span>) <span class="comment">// 将组织架构的数据 转化树形赋值给treeData</span></span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用 select-tree 组件， <code>src/views/employee/detail.vue</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入组件</span></span><br><span class="line"><span class="keyword">import</span> SelectTree <span class="keyword">from</span> <span class="string">&#x27;./components/select-tree.vue&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;EmployeeDetail&#x27;</span>,</span><br><span class="line">    <span class="attr">components</span>: &#123;</span><br><span class="line">        SelectTree</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;部门&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;departmentId&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 放置级联部门组件会单独封装--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- inputW 样式会给到 selectTree 中，template 第一层的组件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select-tree</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="添加员工-级联组件-双向绑定"><a href="#添加员工-级联组件-双向绑定" class="headerlink" title="添加员工-级联组件-双向绑定"></a>添加员工-级联组件-双向绑定</h2><img src="/resource/images/new_rz_101.png"/>
+
+<ol>
+<li>接收 value 属性， <code>src/views/employee/components/select-tree.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">value</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="built_in">Number</span>, <span class="comment">// 存储的是部门的 id 3 4 5</span></span><br><span class="line">            <span class="attr">default</span>: <span class="literal">null</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>级联改变触发input事件， <code>src/views/employee/components/select-tree.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-cascader</span> <span class="attr">:value</span>=<span class="string">&quot;value&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">:options</span>=<span class="string">&quot;treeData&quot;</span> <span class="attr">:props</span>=<span class="string">&quot;props&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;-&quot;</span> @<span class="attr">change</span>=<span class="string">&quot;changeValue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">changeValue</span>(<span class="params">list</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// 取到数组的最后一次</span></span><br><span class="line">    <span class="keyword">if</span> (list.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.$emit(<span class="string">&#x27;input&#x27;</span>, list[list.length - <span class="number">1</span>]) <span class="comment">// 将最后一位的 id 取出来 传出去</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.$emit(<span class="string">&#x27;input&#x27;</span>, <span class="literal">null</span>) <span class="comment">// 如果长度为 0 说明值为空</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在父组件使用 v-model 双向绑定， <code>src/views/employee/detail.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select-tree</span> <span class="attr">v-model</span>=<span class="string">&quot;userInfo.departmentId&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="添加员工-新增员工"><a href="#添加员工-新增员工" class="headerlink" title="添加员工-新增员工"></a>添加员工-新增员工</h2><img src="/resource/images/new_rz_102.png"/>
+
+<ol>
+<li>封装新增员工 API， <code>src/api/employee.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">addEmployee</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/user&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">        data</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>点击保存按钮进行新增， <code>src/views/employee/detail.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; addEmployee &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/employee&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">saveData</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.$refs.userForm.validate(<span class="keyword">async</span> isOK =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (isOK) &#123;</span><br><span class="line">            <span class="comment">// 校验通过</span></span><br><span class="line">            <span class="keyword">await</span> addEmployee(<span class="built_in">this</span>.userInfo)</span><br><span class="line">            <span class="built_in">this</span>.$message.success(<span class="string">&#x27;新增员工成功&#x27;</span>)</span><br><span class="line">            <span class="built_in">this</span>.$router.push(<span class="string">&#x27;/employee&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编辑员工-查看员工"><a href="#编辑员工-查看员工" class="headerlink" title="编辑员工-查看员工"></a>编辑员工-查看员工</h2><img src="/resource/images/new_rz_103.png"/>
+
+<img src="/resource/images/new_rz_104.png"/>
+
+<ol>
+<li>封装获取员工详情的 API， <code>src/api/employee.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取员工详情</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getEmployeeDetail</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`/sys/user/<span class="subst">$&#123;id&#125;</span>`</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>点击查看时跳转到详情携带 id， <code>src/views/employee/index.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;$router.push(`/employee/detail/$&#123;row.id&#125;`)&quot;</span>&gt;</span>查看<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>配置详情的路由支持新增模式和编辑模式， <code>src/router/modules/employee.js</code>。</li>
+</ol>
+<p>? 表示可有可无，可以传 id 也可以选择不传，页面都能正确显示。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/employee&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: layout,</span><br><span class="line">    <span class="attr">children</span>: [&#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;employee&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/employee&#x27;</span>),</span><br><span class="line">        <span class="attr">meta</span>: &#123;</span><br><span class="line">            <span class="attr">title</span>: <span class="string">&#x27;员工&#x27;</span>,</span><br><span class="line">            <span class="attr">icon</span>: <span class="string">&#x27;people&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;/employee/detail/:id?&#x27;</span>, <span class="comment">// 员工详情的地址</span></span><br><span class="line">        <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/employee/detail.vue&#x27;</span>),</span><br><span class="line">        <span class="attr">hidden</span>: <span class="literal">true</span>, <span class="comment">// 表示隐藏在左侧菜单</span></span><br><span class="line">        <span class="attr">meta</span>: &#123;</span><br><span class="line">            <span class="attr">title</span>: <span class="string">&#x27;员工详情&#x27;</span> <span class="comment">// 显示在导航的文本</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>员工详情页判断是否有 id，有 id 就查询详情数据， <code>src/views/employee/detail.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; getEmployeeDetail &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/employee&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;EmployeeDetail&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 如何获取路由参数中的 id</span></span><br><span class="line">        <span class="built_in">this</span>.$route.params.id &amp;&amp; <span class="built_in">this</span>.getEmployeeDetail()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">getEmployeeDetail</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.userInfo = <span class="keyword">await</span> getEmployeeDetail(<span class="built_in">this</span>.$route.params.id)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编辑员工-保存员工"><a href="#编辑员工-保存员工" class="headerlink" title="编辑员工-保存员工"></a>编辑员工-保存员工</h2><img src="/resource/images/new_rz_105.png"/>
+
+<ol>
+<li>封装更新员工的 API， <code>src/api/employee.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">updateEmployee</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">`/sys/user/<span class="subst">$&#123;data.id&#125;</span>`</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;put&#x27;</span>,</span><br><span class="line">        data</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>保存时区分保存和新增场景， <code>src/views/employee/detail.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; updateEmployee &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/employee&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">saveData</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.$refs.userForm.validate(<span class="keyword">async</span> isOK =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (isOK) &#123;</span><br><span class="line">            <span class="comment">// 编辑模式</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">this</span>.$route.params.id) &#123;</span><br><span class="line">                <span class="comment">// 编辑模式</span></span><br><span class="line">                <span class="keyword">await</span> updateEmployee(<span class="built_in">this</span>.userInfo)</span><br><span class="line">                <span class="built_in">this</span>.$message.success(<span class="string">&#x27;更新员工成功&#x27;</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 新增模式</span></span><br><span class="line">                <span class="comment">// 校验通过</span></span><br><span class="line">                <span class="keyword">await</span> addEmployee(<span class="built_in">this</span>.userInfo)</span><br><span class="line">                <span class="built_in">this</span>.$message.success(<span class="string">&#x27;新增员工成功&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">this</span>.$router.push(<span class="string">&#x27;/employee&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>编辑模式下，手机号和工号不可编辑， <code>src/views/employee/detail.vue</code></li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 工号 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 手机号 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;userInfo.mobile&quot;</span> <span class="attr">:disabled</span>=<span class="string">&quot;!!$route.params.id&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inputW&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course06/" rel="prev" title="06_人资后台">
+      <i class="fa fa-chevron-left"></i> 06_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course08/" rel="next" title="08_人资后台">
+      08_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-%E5%AF%BC%E5%87%BAexcel"><span class="nav-number">1.</span> <span class="nav-text">员工管理-导出excel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-excel%E5%AF%BC%E5%85%A5"><span class="nav-number">2.</span> <span class="nav-text">员工管理-excel导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-%E4%B8%8B%E8%BD%BD%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF"><span class="nav-number">3.</span> <span class="nav-text">员工管理-下载导入模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-%E5%91%98%E5%B7%A5%E5%AF%BC%E5%85%A5-%E4%B8%8A%E4%BC%A0excel"><span class="nav-number">4.</span> <span class="nav-text">员工管理-员工导入-上传excel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%AE%A1%E7%90%86-%E5%88%A0%E9%99%A4%E5%91%98%E5%B7%A5"><span class="nav-number">5.</span> <span class="nav-text">员工管理-删除员工</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%91%98%E5%B7%A5%E5%92%8C%E8%B7%AF%E7%94%B1"><span class="nav-number">6.</span> <span class="nav-text">添加员工和路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%91%98%E5%B7%A5-%E8%A1%A8%E5%8D%95%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C"><span class="nav-number">7.</span> <span class="nav-text">添加员工-表单数据校验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%91%98%E5%B7%A5-%E5%B0%81%E8%A3%85%E9%83%A8%E9%97%A8%E7%BA%A7%E8%81%94%E7%BB%84%E4%BB%B6"><span class="nav-number">8.</span> <span class="nav-text">添加员工-封装部门级联组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%91%98%E5%B7%A5-%E7%BA%A7%E8%81%94%E7%BB%84%E4%BB%B6-%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A"><span class="nav-number">9.</span> <span class="nav-text">添加员工-级联组件-双向绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%91%98%E5%B7%A5-%E6%96%B0%E5%A2%9E%E5%91%98%E5%B7%A5"><span class="nav-number">10.</span> <span class="nav-text">添加员工-新增员工</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E5%91%98%E5%B7%A5-%E6%9F%A5%E7%9C%8B%E5%91%98%E5%B7%A5"><span class="nav-number">11.</span> <span class="nav-text">编辑员工-查看员工</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E5%91%98%E5%B7%A5-%E4%BF%9D%E5%AD%98%E5%91%98%E5%B7%A5"><span class="nav-number">12.</span> <span class="nav-text">编辑员工-保存员工</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

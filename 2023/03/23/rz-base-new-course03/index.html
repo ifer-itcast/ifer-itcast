@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今日目标✔ 掌握获取用户资料的业务逻辑。 ✔ 掌握 token 过期的处理逻辑。 ✔ 完成修改密码的功能。 ✔ 熟悉左侧菜单的展示逻辑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03_人资后台">
+<meta property="og:url" content="http://example.com/2023/03/23/rz-base-new-course03/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="今日目标✔ 掌握获取用户资料的业务逻辑。 ✔ 掌握 token 过期的处理逻辑。 ✔ 完成修改密码的功能。 ✔ 熟悉左侧菜单的展示逻辑。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-20200715233339927.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200716000203862.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200827111324564.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_21.png">
+<meta property="og:image" content="http://example.com/resource/images/image-20200716012120619.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_22.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_23.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_24.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_25.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-03-25_17-14-57.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_27.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_29.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_28.png">
+<meta property="og:image" content="http://example.com/resource/images/Snipaste_2023-03-25_17-29-34.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_33.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_34.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_35.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_36.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_37.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_38.png">
+<meta property="og:image" content="http://example.com/resource/images/new_rz_39.png">
+<meta property="article:published_time" content="2023-03-23T07:02:56.000Z">
+<meta property="article:modified_time" content="2023-05-11T07:42:51.295Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-20200715233339927.png">
+
+<link rel="canonical" href="http://example.com/2023/03/23/rz-base-new-course03/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>03_人资后台 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/23/rz-base-new-course03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          03_人资后台
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-23 15:02:56" itemprop="dateCreated datePublished" datetime="2023-03-23T15:02:56+08:00">2023-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 15:42:51" itemprop="dateModified" datetime="2023-05-11T15:42:51+08:00">2023-05-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><p>✔ 掌握获取用户资料的业务逻辑。</p>
+<p>✔ 掌握 token 过期的处理逻辑。</p>
+<p>✔ 完成修改密码的功能。</p>
+<p>✔ 熟悉左侧菜单的展示逻辑。</p>
+<span id="more"></span>
+
+<h2 id="获取资料并存储到-Vuex"><a href="#获取资料并存储到-Vuex" class="headerlink" title="获取资料并存储到 Vuex"></a>获取资料并存储到 Vuex</h2><h3 id="封装用户资料的接口"><a href="#封装用户资料的接口" class="headerlink" title="封装用户资料的接口"></a>封装用户资料的接口</h3><h4 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h4><p>封装获取用户资料的接口，并在请求拦截器处统一携带 token。</p>
+<h4 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h4><ol>
+<li><code>api/user.js</code>，封装获取用户资料的方法。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getUserInfo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/profile&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>携带 token。</li>
+</ol>
+<p>每一次请求都携带。</p>
+<p><img src="/resource/images/image-20200715233339927.png" alt="image-20200715233339927"></p>
+<p>在请求拦截器处统一携带。</p>
+<p><img src="/resource/images/image-20200716000203862.png" alt="image-20200716000203862"></p>
+<p> <code>utils/request.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;@/store&#x27;</span></span><br><span class="line">service.interceptors.request.use(</span><br><span class="line">    <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 在这个位置需要统一的去注入 token</span></span><br><span class="line">        <span class="keyword">if</span> (store.getters.token) &#123;</span><br><span class="line">            <span class="comment">// 如果 token 存在，注入 token</span></span><br><span class="line">            config.headers[<span class="string">&#x27;Authorization&#x27;</span>] = <span class="string">`Bearer <span class="subst">$&#123;store.getters.token&#125;</span>`</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 必须返回配置</span></span><br><span class="line">        <span class="keyword">return</span> config</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h4><p>完成获取用户资料接口和 token 注入。</p>
+<h3 id="准备调用接口的-Action"><a href="#准备调用接口的-Action" class="headerlink" title="准备调用接口的 Action"></a>准备调用接口的 Action</h3><h4 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h4><p>在用户的 Vuex 模块中封装获取用户资料的 action，并创建设置 state 的 mutation。</p>
+<h4 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h4><p>获取用户状态的操作会在后续的开发中频繁用到，所以我们将其封装到 action 中。</p>
+<p><img src="/resource/images/image-20200827111324564.png" alt="image-20200827111324564"></p>
+<p> <code>store/modules/user.js</code></p>
+<ol>
+<li>初始化 state 中的 userInfo 为空对象。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">    <span class="attr">token</span>: getToken(),</span><br><span class="line">    <span class="comment">// 定义一个空的对象，不要是 null，因为后边要获取 userInfo 的属性使用，例如 userInfo.name</span></span><br><span class="line">    <span class="attr">userInfo</span>: &#123;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>编写获取用户信息的 action。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    getUserInfo</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/user&#x27;</span></span><br><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="title">getUserInfo</span>(<span class="params">context</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 获取返回值</span></span><br><span class="line">        <span class="keyword">const</span> result = <span class="keyword">await</span> getUserInfo()</span><br><span class="line">        <span class="comment">// 将整个的个人信息设置到用户的 Vuex 数据中</span></span><br><span class="line">        context.commit(<span class="string">&#x27;setUserInfo&#x27;</span>, result)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>编写设置和删除用户信息的 mutations。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">mutations</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="comment">// 设置用户信息</span></span><br><span class="line">        <span class="function"><span class="title">setUserInfo</span>(<span class="params">state, userInfo</span>)</span> &#123;</span><br><span class="line">            state.userInfo = userInfo</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// 删除用户信息</span></span><br><span class="line">        <span class="function"><span class="title">removeUserInfo</span>(<span class="params">state</span>)</span> &#123;</span><br><span class="line">            state.userInfo = &#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>测试：<code>layout/components/Navbar.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.getUserInfo()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        ...mapActions(<span class="string">&#x27;user&#x27;</span>, [<span class="string">&#x27;getUserInfo&#x27;</span>])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="任务-1"><a href="#任务-1" class="headerlink" title="任务"></a>任务</h4><p>封装获取用户资料的 action 和修改用户信息的 mutation。</p>
+<h3 id="调整调用-Action-的位置"><a href="#调整调用-Action-的位置" class="headerlink" title="调整调用 Action 的位置"></a>调整调用 Action 的位置</h3><h4 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h4><p>在权限拦截处调用 action。</p>
+<h4 id="内容-2"><a href="#内容-2" class="headerlink" title="内容"></a>内容</h4><p>🤔 思考：在 NavBar 组件调用获取用户信息的接口是最合适的吗？</p>
+<p>为什么权限拦截器调用 action 呢？</p>
+<ul>
+<li><p>  能保证进入页面前用户信息已经获取好了，进入页面时能马上看到信息。</p>
+</li>
+<li><p>  后续要做权限相关的处理，不同用户进入页面看到的内容会不一样，所以，在不知道用户详细信息的情况下（管理员、普通员工），放用户进来是不合适的。</p>
+</li>
+</ul>
+<img src="/resource/images/new_rz_21.png"/>
+
+<ol>
+<li>注释掉 <code>layout/components/Navbar.vue</code> 中的调用。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">// this.getUserInfo()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在 Vuex 中的 getters 中设置一个快捷访问 <code>store/getters.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getters = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">userId</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.user.userInfo.userId,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> getters</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>有 token 的情况下获取用户资料，<code>permission.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (store.getters.token) &#123;</span><br><span class="line">    <span class="keyword">if</span> (to.path === <span class="string">&#x27;/login&#x27;</span>) &#123;</span><br><span class="line">        next(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果没有 id 这个值，才会调用 Vuex 的获取资料的 action</span></span><br><span class="line">        <span class="comment">// 否则每次做路由切换的时候都会调用接口，性能浪费</span></span><br><span class="line">        <span class="keyword">if</span> (!store.getters.userId) &#123;</span><br><span class="line">            <span class="keyword">await</span> store.dispatch(<span class="string">&#x27;user/getUserInfo&#x27;</span>)</span><br><span class="line">            <span class="comment">// 为什么要写 await，因为我们想获取完资料后再放行</span></span><br><span class="line">        &#125;</span><br><span class="line">        next()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>通过 DevTools 工具在控制台清楚的看到数据已经获取。</li>
+</ol>
+<p><img src="/resource/images/image-20200716012120619.png" alt="image-20200716012120619"></p>
+<h2 id="显示用户头像和用户名"><a href="#显示用户头像和用户名" class="headerlink" title="显示用户头像和用户名"></a>显示用户头像和用户名</h2><img src="/resource/images/new_rz_22.png"/>
+
+<p>解析一下顶部组件的内部位置。</p>
+<img src="/resource/images/new_rz_23.png"/>
+
+<ol>
+<li>建立用户名的快捷访问，<code>store/getters.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getters = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">avatar</span>: <span class="function"><span class="params">state</span> =&gt;</span> state.user.userInfo.staffPhoto,</span><br><span class="line">    <span class="attr">name</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.user.userInfo.username, <span class="comment">// 建立用户名称的映射</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> getters</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>layout/components/Navbar.vue</code> 中获取 avatar 和 name 进行渲染。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        ...mapGetters([</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="string">&#x27;avatar&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;name&#x27;</span></span><br><span class="line">        ])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;avatar-wrapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;avatar&quot;</span> <span class="attr">class</span>=<span class="string">&quot;user-avatar&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;name&quot;</span>&gt;</span>&#123;&#123; name &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-setting&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>调整样式。</li>
+</ol>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.avatar-wrapper</span> &#123;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">5px</span>;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="comment">// #1</span></span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">    <span class="comment">// #2 用户名称距离右侧距离</span></span><br><span class="line">    <span class="selector-class">.name</span> &#123;</span><br><span class="line">        <span class="attribute">margin-right</span>: <span class="number">10px</span>;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// #5 后续的，显示用户名的第一个字</span></span><br><span class="line">    <span class="selector-class">.username</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">30px</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">30px</span>;</span><br><span class="line">        <span class="attribute">text-align</span>: center;</span><br><span class="line">        <span class="attribute">line-height</span>: <span class="number">30px</span>;</span><br><span class="line">        <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">        <span class="attribute">background</span>: <span class="number">#04c9be</span>;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">        <span class="attribute">margin-right</span>: <span class="number">4px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// #3</span></span><br><span class="line">    <span class="selector-class">.el-icon-setting</span> &#123;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// #4</span></span><br><span class="line">    <span class="selector-class">.user-avatar</span> &#123;</span><br><span class="line">        <span class="attribute">cursor</span>: pointer;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">30px</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">30px</span>;</span><br><span class="line">        <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.el-icon-caret-bottom</span> &#123;</span><br><span class="line">        <span class="attribute">cursor</span>: pointer;</span><br><span class="line">        <span class="attribute">position</span>: absolute;</span><br><span class="line">        <span class="attribute">right</span>: -<span class="number">20px</span>;</span><br><span class="line">        <span class="attribute">top</span>: <span class="number">25px</span>;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="处理头像为空时的场景"><a href="#处理头像为空时的场景" class="headerlink" title="处理头像为空时的场景"></a>处理头像为空时的场景</h2><p>不是所有用户都有头像的，当用户没有头像时要显示对应的内容。</p>
+<img src="/resource/images/new_rz_24.png"/>
+
+<p> <code>src/layout/components/NavBar.vue</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;avatar-wrapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 头像 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">v-if</span>=<span class="string">&quot;avatar&quot;</span> <span class="attr">:src</span>=<span class="string">&quot;avatar&quot;</span> <span class="attr">class</span>=<span class="string">&quot;user-avatar&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">v-else</span> <span class="attr">class</span>=<span class="string">&quot;username&quot;</span>&gt;</span>&#123;&#123; name?.charAt(0) &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 用户名称 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;name&quot;</span>&gt;</span>&#123;&#123; name &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 图标 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-setting&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里我们使用了可选链操作符 <code>?</code> ，它的意思是当 ? 前面的变量为空时，则不会继续往下执行，防止报错，如 <code>null?.name</code> ，但是我们当前的版本不支持对 ? 的编译，所以需要升级一下对应的版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i vue@2.7.0  vue-template-compiler@2.7.0 <span class="comment"># 升级vue版本️</span></span><br></pre></td></tr></table></figure>
+
+<p>升级完成后，重启服务就可以啦。</p>
+<h2 id="处理-token-失效的问题"><a href="#处理-token-失效的问题" class="headerlink" title="处理 token 失效的问题"></a>处理 token 失效的问题</h2><p>token 是有时效性的，当超时时，我们需要做一下处理。</p>
+<img src="/resource/images/new_rz_25.png"/>
+
+<p> <code>src/utils/request.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">service.interceptors.response.use(</span><br><span class="line">    <span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123;</span><br><span class="line">            success,</span><br><span class="line">            data,</span><br><span class="line">            message</span><br><span class="line">        &#125; = response.data</span><br><span class="line">        <span class="keyword">if</span> (success) &#123;</span><br><span class="line">            <span class="keyword">return</span> data</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Message.error(message)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(message))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">async</span> (error) =&gt; &#123;</span><br><span class="line">        <span class="comment">// #1 判断状态码</span></span><br><span class="line">        <span class="keyword">if</span> (error.response.status === <span class="number">401</span>) &#123;</span><br><span class="line">            <span class="comment">// #2 给出提示</span></span><br><span class="line">            Message(&#123;</span><br><span class="line">                <span class="attr">type</span>: <span class="string">&#x27;warning&#x27;</span>,</span><br><span class="line">                <span class="attr">message</span>: <span class="string">&#x27;token 超时了&#x27;</span></span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="comment">// #3 退出登录</span></span><br><span class="line">            <span class="keyword">await</span> store.dispatch(<span class="string">&#x27;user/logout&#x27;</span>)</span><br><span class="line">            <span class="comment">// #4 跳转到登录页</span></span><br><span class="line">            router.push(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">            <span class="comment">// #5 返回错误的 Promise</span></span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">        &#125;</span><br><span class="line">        Message.error(error.message)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p> <code>src/store/modules/user.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">actions</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">logout</span>(<span class="params">context</span>)</span> &#123;</span><br><span class="line">            context.commit(<span class="string">&#x27;removeToken&#x27;</span>)</span><br><span class="line">            context.commit(<span class="string">&#x27;setUserInfo&#x27;</span>, &#123;&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实现退出登录界面功能"><a href="#实现退出登录界面功能" class="headerlink" title="实现退出登录界面功能"></a>实现退出登录界面功能</h2><img src="/resource/images/Snipaste_2023-03-25_17-14-57.png"/>
+
+<p><code>layout/components/Navbar.vue</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right-menu&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-dropdown</span> <span class="attr">class</span>=<span class="string">&quot;avatar-container&quot;</span> <span class="attr">trigger</span>=<span class="string">&quot;click&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;avatar-wrapper&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">img</span> <span class="attr">v-if</span>=<span class="string">&quot;avatar&quot;</span> <span class="attr">:src</span>=<span class="string">&quot;avatar&quot;</span> <span class="attr">class</span>=<span class="string">&quot;user-avatar&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">v-else</span> <span class="attr">class</span>=<span class="string">&quot;username&quot;</span>&gt;</span>&#123;&#123; name?.charAt(0) &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;name&quot;</span>&gt;</span>&#123;&#123; name &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-setting&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-dropdown-menu</span> <span class="attr">slot</span>=<span class="string">&quot;dropdown&quot;</span> <span class="attr">class</span>=<span class="string">&quot;user-dropdown&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-dropdown-item</span>&gt;</span></span><br><span class="line">                    首页</span><br><span class="line">                <span class="tag">&lt;/<span class="name">el-dropdown-item</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://github.com/PanJiaChen/vue-admin-template/&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-dropdown-item</span>&gt;</span>项目地址<span class="tag">&lt;/<span class="name">el-dropdown-item</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-dropdown-item</span>&gt;</span>修改密码<span class="tag">&lt;/<span class="name">el-dropdown-item</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-dropdown-item</span> <span class="attr">divided</span> @<span class="attr">click.native</span>=<span class="string">&quot;logout&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;display:block;&quot;</span>&gt;</span>登出<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-dropdown-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-dropdown-menu</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-dropdown</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>退出登录流程。</li>
+</ol>
+<img src="/resource/images/new_rz_27.png"/>
+
+<ol start="2">
+<li>给退出按钮绑定点击事件，<code>src/layout/components/NavBar.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-dropdown-item</span> @<span class="attr">click.native</span>=<span class="string">&quot;logout&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;display:block;&quot;</span>&gt;</span>登出<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-dropdown-item</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在事件回调中调用退出的 action，<code>src/layout/components/NavBar.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="keyword">async</span> <span class="function"><span class="title">logout</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="comment">// 调用退出登录的action</span></span><br><span class="line">            <span class="keyword">await</span> <span class="built_in">this</span>.$store.dispatch(<span class="string">&#x27;user/logout&#x27;</span>)</span><br><span class="line">            <span class="built_in">this</span>.$router.push(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改密码按钮功能实现"><a href="#修改密码按钮功能实现" class="headerlink" title="修改密码按钮功能实现"></a>修改密码按钮功能实现</h2><img src="/resource/images/new_rz_29.png"/>
+
+<img src="/resource/images/new_rz_28.png" width="500" class="highlight2"/>
+
+<h3 id="点击控制弹层的显示"><a href="#点击控制弹层的显示" class="headerlink" title="点击控制弹层的显示"></a>点击控制弹层的显示</h3><ol>
+<li>给修改密码按钮绑定点击事件，<code>src/layout/components/NavBar.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- prevent阻止默认事件 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> @<span class="attr">click.prevent</span>=<span class="string">&quot;updatePassword&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-dropdown-item</span>&gt;</span>修改密码<span class="tag">&lt;/<span class="name">el-dropdown-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>声明变量和方法控制弹层显示，<code>src/layout/components/NavBar.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Navbar&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">showDialog</span>: <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="function"><span class="title">updatePassword</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.showDialog = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>放置弹层组件，<code>src/layout/components/NavBar.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- .sync 可以接收到子组件传过来的事件和值，this.$emit(&#x27;update:visible&#x27;, false) --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">width</span>=<span class="string">&quot;500px&quot;</span> <span class="attr">title</span>=<span class="string">&quot;修改密码&quot;</span> <span class="attr">:visible.sync</span>=<span class="string">&quot;showDialog&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="准备表单结构和校验"><a href="#准备表单结构和校验" class="headerlink" title="准备表单结构和校验"></a>准备表单结构和校验</h3><img src="/resource/images/Snipaste_2023-03-25_17-29-34.png" width="500" class="highlight2"/>
+
+<ol>
+<li>准备表单结构。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form</span> <span class="attr">label-width</span>=<span class="string">&quot;120px&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;旧密码&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">show-password</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;新密码&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">show-password</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;重复密码&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">show-password</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>确认修改<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>进行表单校验，<code>src/layout/components/NavBar.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">passForm</span>: &#123;</span><br><span class="line">                <span class="attr">oldPassword</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 旧密码</span></span><br><span class="line">                <span class="attr">newPassword</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 新密码</span></span><br><span class="line">                <span class="attr">confirmPassword</span>: <span class="string">&#x27;&#x27;</span> <span class="comment">// 确认密码字段</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">rules</span>: &#123;</span><br><span class="line">                <span class="attr">oldPassword</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;旧密码不能为空&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;], <span class="comment">// 旧密码</span></span><br><span class="line">                <span class="attr">newPassword</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;新密码不能为空&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span>,</span><br><span class="line">                    <span class="attr">min</span>: <span class="number">6</span>,</span><br><span class="line">                    <span class="attr">max</span>: <span class="number">16</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;新密码的长度为6-16位之间&#x27;</span></span><br><span class="line">                &#125;], <span class="comment">// 新密码</span></span><br><span class="line">                <span class="attr">confirmPassword</span>: [&#123;</span><br><span class="line">                    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;重复密码不能为空&#x27;</span>,</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span>,</span><br><span class="line">                    <span class="attr">validator</span>: <span class="function">(<span class="params">rule, value, callback</span>) =&gt;</span> &#123;</span><br><span class="line">                        <span class="comment">// 新密码 === 新输入的</span></span><br><span class="line">                        <span class="keyword">if</span> (<span class="built_in">this</span>.passForm.newPassword === value) &#123;</span><br><span class="line">                            callback()</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            callback(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;重复密码和新密码输入不一致&#x27;</span>))</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;] <span class="comment">// 确认密码字段</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>绑定属性，<code>src/layout/components/NavBar.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form</span> <span class="attr">ref</span>=<span class="string">&quot;passForm&quot;</span> <span class="attr">label-width</span>=<span class="string">&quot;120px&quot;</span> <span class="attr">:model</span>=<span class="string">&quot;passForm&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;rules&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;旧密码&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;oldPassword&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;passForm.oldPassword&quot;</span> <span class="attr">show-password</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;新密码&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;newPassword&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;passForm.newPassword&quot;</span> <span class="attr">show-password</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;重复密码&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;confirmPassword&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;passForm.confirmPassword&quot;</span> <span class="attr">show-password</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>确认修改<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="确定和取消功能实现"><a href="#确定和取消功能实现" class="headerlink" title="确定和取消功能实现"></a>确定和取消功能实现</h3><img src="/resource/images/new_rz_33.png"/>
+
+<ol>
+<li>封装修改密码的方法，<code>src/api/user.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 更新密码</span></span><br><span class="line"><span class="comment"> * **/</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">updatePassword</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;/sys/user/updatePass&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;put&#x27;</span>,</span><br><span class="line">        data</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>给弹框中的确定和取消按钮绑定点击事件。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;btnOK&quot;</span>&gt;</span>确认修改<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;btnCancel&quot;</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>确定方法，<code>src/layout/components/NavBar.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; updatePassword &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/user&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="comment">// 确定</span></span><br><span class="line">        <span class="function"><span class="title">btnOK</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.$refs.passForm.validate(<span class="keyword">async</span> isOK =&gt; &#123;</span><br><span class="line">                <span class="keyword">if</span> (isOK) &#123;</span><br><span class="line">                    <span class="comment">// 调用接口</span></span><br><span class="line">                    <span class="keyword">await</span> updatePassword(<span class="built_in">this</span>.passForm)</span><br><span class="line">                    <span class="built_in">this</span>.$message.success(<span class="string">&#x27;修改密码成功&#x27;</span>)</span><br><span class="line">                    <span class="built_in">this</span>.btnCancel()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="title">btnCancel</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.$refs.passForm.resetFields() <span class="comment">// 重置表单</span></span><br><span class="line">            <span class="comment">// 关闭弹层</span></span><br><span class="line">            <span class="built_in">this</span>.showDialog = <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>监听弹层关闭事件。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-dialog</span> @<span class="attr">close</span>=<span class="string">&quot;btnCancel&quot;</span> <span class="attr">width</span>=<span class="string">&quot;500px&quot;</span> <span class="attr">title</span>=<span class="string">&quot;修改密码&quot;</span> <span class="attr">:visible.sync</span>=<span class="string">&quot;showDialog&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>有同学可能有疑惑，用了 <code>.sync</code> 修饰符可以直接关闭弹层，为何还要监听 close 事件？</p>
+<p>这是因为 <code>.sync</code> 修饰符只能关闭弹层，之前打开弹层可能修改了一半或者残留一些校验信息，我们还需要将表单进行重置，所以这里用监听事件的目的是再重置一下表单，保证功能的体验和完整性。</p>
+<p>😚 可以去<a target="_blank" rel="noopener" href="https://heimahr.itheima.net/login">线上</a>找普通员工的账号去测试，初始密码是 <code>123456</code> 。</p>
+<h2 id="清理和创建组件和路由"><a href="#清理和创建组件和路由" class="headerlink" title="清理和创建组件和路由"></a>清理和创建组件和路由</h2><h3 id="清理"><a href="#清理" class="headerlink" title="清理"></a>清理</h3><img src="/resource/images/new_rz_34.png" width="500"/>
+
+<img src="/resource/images/new_rz_35.png" width="500"/>
+
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><p>人力资源项目需要如下这些模块。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">├── approval            <span class="comment"># 审批管理</span></span><br><span class="line">├── attendance          <span class="comment"># 考勤管理</span></span><br><span class="line">├── department          <span class="comment"># 组织架构</span></span><br><span class="line">├── employee            <span class="comment"># 员工管理</span></span><br><span class="line">├── permission          <span class="comment"># 权限管理</span></span><br><span class="line">├── role                <span class="comment"># 角色管理</span></span><br><span class="line">├── salary              <span class="comment"># 工资管理</span></span><br><span class="line">├── social              <span class="comment"># 社保管理</span></span><br></pre></td></tr></table></figure>
+
+<img src="/resource/images/new_rz_36.png"/>
+
+<ol>
+<li><p>拷贝 <code>素材/day03/路由和页面/views</code> 中的所有文件到项目的 <code>src/views</code> 目录。</p>
+</li>
+<li><p>拷贝 <code>素材/day03/路由和页面/modules</code> 中的所有文件到项目的 <code>src/router/modules</code> 目录。</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> layout <span class="keyword">from</span> <span class="string">&#x27;@/layout&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// 一级路由</span></span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/department&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: layout,</span><br><span class="line">    <span class="attr">children</span>: [&#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 默认子路由</span></span><br><span class="line">        <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/department&#x27;</span>),</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;department&#x27;</span>, <span class="comment">// 标记路由，可以用来跳转</span></span><br><span class="line">        <span class="comment">// 路由元信息，存储数据的</span></span><br><span class="line">        <span class="attr">meta</span>: &#123;</span><br><span class="line">            <span class="attr">icon</span>: <span class="string">&#x27;tree&#x27;</span>, <span class="comment">// 图标</span></span><br><span class="line">            <span class="attr">title</span>: <span class="string">&#x27;组织&#x27;</span> <span class="comment">// 标题</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>导入路由，<code>src/router/index.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #1</span></span><br><span class="line"><span class="keyword">import</span> departmentRouter <span class="keyword">from</span> <span class="string">&#x27;@/router/modules/department&#x27;</span></span><br><span class="line"><span class="keyword">import</span> roleRouter <span class="keyword">from</span> <span class="string">&#x27;@/router/modules/role&#x27;</span></span><br><span class="line"><span class="keyword">import</span> employeeRouter <span class="keyword">from</span> <span class="string">&#x27;@/router/modules/employee&#x27;</span></span><br><span class="line"><span class="keyword">import</span> permissionRouter <span class="keyword">from</span> <span class="string">&#x27;@/router/modules/permission&#x27;</span></span><br><span class="line"><span class="keyword">import</span> salaryRouter <span class="keyword">from</span> <span class="string">&#x27;@/router/modules/salary&#x27;</span></span><br><span class="line"><span class="keyword">import</span> socialRouter <span class="keyword">from</span> <span class="string">&#x27;@/router/modules/social&#x27;</span></span><br><span class="line"><span class="keyword">import</span> attendanceRouter <span class="keyword">from</span> <span class="string">&#x27;@/router/modules/attendance&#x27;</span></span><br><span class="line"><span class="keyword">import</span> approvalRouter <span class="keyword">from</span> <span class="string">&#x27;@/router/modules/approval&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// #2</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> asyncRoutes = [</span><br><span class="line">  departmentRouter,</span><br><span class="line">  roleRouter,</span><br><span class="line">  employeeRouter,</span><br><span class="line">  permissionRouter,</span><br><span class="line">  salaryRouter,</span><br><span class="line">  socialRouter,</span><br><span class="line">  attendanceRouter,</span><br><span class="line">  approvalRouter</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> constantRoutes = [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// #3</span></span><br><span class="line">    ...asyncRoutes,</span><br><span class="line">    <span class="comment">// 404 page must be placed at the end !!!</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;*&#x27;</span>,</span><br><span class="line">        <span class="attr">redirect</span>: <span class="string">&#x27;/404&#x27;</span>,</span><br><span class="line">        <span class="attr">hidden</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="扩展解析左侧菜单原理"><a href="#扩展解析左侧菜单原理" class="headerlink" title="扩展解析左侧菜单原理"></a>扩展解析左侧菜单原理</h2><img src="/resource/images/new_rz_37.png"/>
+
+<p>左侧菜单的数据来源于路由模块的信息，会根据路由信息的 hidden 属性来判断是否显示该路由信息到菜单，菜单属性中的图表和标题来源于路由 meta 中的 icon 和 title 属性，分析过程如下。</p>
+<ol>
+<li>Sidebar 组件引入路由信息，<code>src/layout/components/Sidebar/index.vue</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="function"><span class="title">routes</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.$router.options.routes</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>循环渲染路由信息。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sidebar-item</span> <span class="attr">v-for</span>=<span class="string">&quot;route in routes&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;route.path&quot;</span> <span class="attr">:item</span>=<span class="string">&quot;route&quot;</span> <span class="attr">:base-path</span>=<span class="string">&quot;route.path&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>SidebarItem 组件根据条件渲染，传递 icon 和 title 属性给 item 组件。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 判断是否渲染 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">&quot;!item.hidden&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-if</span>=<span class="string">&quot;hasOneShowingChild(item.children,item) &amp;&amp; (!onlyOneChild.children||onlyOneChild.noShowingChildren)&amp;&amp;!item.alwaysShow&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">app-link</span> <span class="attr">v-if</span>=<span class="string">&quot;onlyOneChild.meta&quot;</span> <span class="attr">:to</span>=<span class="string">&quot;resolvePath(onlyOneChild.path)&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-menu-item</span> <span class="attr">:index</span>=<span class="string">&quot;resolvePath(onlyOneChild.path)&quot;</span> <span class="attr">:class</span>=<span class="string">&quot;&#123;&#x27;submenu-title-noDropdown&#x27;:!isNest&#125;&quot;</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 传递 meta 中的 title 和 icon --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">item</span> <span class="attr">:icon</span>=<span class="string">&quot;onlyOneChild.meta.icon||(item.meta&amp;&amp;item.meta.icon)&quot;</span> <span class="attr">:title</span>=<span class="string">&quot;onlyOneChild.meta.title&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-menu-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">app-link</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Item 组件接收 icon 和 title 属性，使用函数型组件完成渲染。</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;MenuItem&#x27;</span>,</span><br><span class="line">    <span class="attr">functional</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">icon</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="built_in">String</span>,</span><br><span class="line">            <span class="attr">default</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">title</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="built_in">String</span>,</span><br><span class="line">            <span class="attr">default</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params">h, context</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; icon, title &#125; = context.props</span><br><span class="line">        <span class="keyword">const</span> vnodes = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (icon) &#123;</span><br><span class="line">            <span class="keyword">if</span> (icon.includes(<span class="string">&#x27;el-icon&#x27;</span>)) &#123;</span><br><span class="line">                vnodes.push(<span class="xml"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&#123;[icon,</span> &#x27;<span class="attr">sub-el-icon</span>&#x27;]&#125; /&gt;</span></span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 渲染图标</span></span><br><span class="line">                vnodes.push(<span class="xml"><span class="tag">&lt;<span class="name">svg-icon</span> <span class="attr">icon-class</span>=<span class="string">&#123;icon&#125;/</span>&gt;</span></span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (title) &#123;</span><br><span class="line">            <span class="comment">// 渲染标题</span></span><br><span class="line">            vnodes.push(<span class="xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">slot</span>=<span class="string">&#x27;title&#x27;</span>&gt;</span>&#123;(title)&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> vnodes</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="左侧菜单显示个-logo"><a href="#左侧菜单显示个-logo" class="headerlink" title="左侧菜单显示个 logo"></a>左侧菜单显示个 logo</h2><p>logo 有两种展示形态，当菜单展开时，显示大图，当菜单折叠时，显示小图。</p>
+<img src="/resource/images/new_rz_38.png" width="500" class="highlight2"/>
+
+<img src="/resource/images/new_rz_39.png"/>
+
+<ol>
+<li>显示 logo，<code>src/settings.js</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line"></span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;人力资源后台管理系统&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@type <span class="type">&#123;boolean&#125;</span> </span>true | false</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@description </span>Whether fix the header</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">fixedHeader</span>: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@type <span class="type">&#123;boolean&#125;</span> </span>true | false</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@description </span>Whether show the logo in sidebar</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">sidebarLogo</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>调整 logo 的页面结构，<code>src/layout/components/Sidebar/Logo.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;sidebar-logo-container&quot;</span> <span class="attr">:class</span>=<span class="string">&quot;&#123;&#x27;collapse&#x27;:collapse&#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">transition</span> <span class="attr">name</span>=<span class="string">&quot;sidebarLogoFade&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">key</span>=<span class="string">&quot;collapse&quot;</span> <span class="attr">class</span>=<span class="string">&quot;sidebar-logo-link&quot;</span> <span class="attr">to</span>=<span class="string">&quot;/&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;@/assets/common/logo.png&quot;</span> <span class="attr">class</span>=<span class="string">&quot;sidebar-logo&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>调整 logo 样式，<code>src/layout/components/Sidebar/Logo.vue</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.sidebarLogoFade-enter-active</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">transition</span>: opacity <span class="number">1.5s</span>;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.sidebarLogoFade-enter</span>,</span></span><br><span class="line"><span class="css">    <span class="selector-class">.sidebarLogoFade-leave-to</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">opacity</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.sidebar-logo-container</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">position</span>: relative;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">height</span>: <span class="number">50px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">line-height</span>: <span class="number">50px</span>;</span></span><br><span class="line"><span class="css">        // <span class="selector-id">#1</span></span></span><br><span class="line"><span class="css">        <span class="comment">/* background: #2b2f3a; */</span></span></span><br><span class="line"><span class="css">        <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="css">        <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">        &amp; <span class="selector-class">.sidebar-logo-link</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            &amp; <span class="selector-class">.sidebar-logo</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="comment">/* #2 */</span></span></span><br><span class="line"><span class="css">                <span class="attribute">width</span>: <span class="number">140px</span>;</span></span><br><span class="line"><span class="css">                <span class="comment">/* height: 32px; */</span></span></span><br><span class="line"><span class="css">                <span class="attribute">vertical-align</span>: middle;</span></span><br><span class="line"><span class="css">                <span class="attribute">margin-right</span>: <span class="number">12px</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">            &amp; <span class="selector-class">.sidebar-title</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">display</span>: inline-block;</span></span><br><span class="line"><span class="css">                <span class="attribute">margin</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">color</span>: <span class="number">#fff</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">font-weight</span>: <span class="number">600</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">line-height</span>: <span class="number">50px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">font-size</span>: <span class="number">14px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">font-family</span>: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;</span></span><br><span class="line"><span class="css">                <span class="attribute">vertical-align</span>: middle;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">        &amp;<span class="selector-class">.collapse</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.sidebar-logo</span> &#123;</span></span><br><span class="line"><span class="css">                <span class="attribute">margin-right</span>: <span class="number">0px</span>;</span></span><br><span class="line"><span class="css">                <span class="comment">/* #3 */</span></span></span><br><span class="line"><span class="css">                <span class="attribute">width</span>: <span class="number">32px</span>;</span></span><br><span class="line"><span class="css">                <span class="attribute">height</span>: <span class="number">32px</span>;</span></span><br><span class="line"><span class="css">            &#125;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course02/" rel="prev" title="02_人资后台">
+      <i class="fa fa-chevron-left"></i> 02_人资后台
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/23/rz-base-new-course04/" rel="next" title="04_人资后台">
+      04_人资后台 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%B5%84%E6%96%99%E5%B9%B6%E5%AD%98%E5%82%A8%E5%88%B0-Vuex"><span class="nav-number">2.</span> <span class="nav-text">获取资料并存储到 Vuex</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E7%94%A8%E6%88%B7%E8%B5%84%E6%96%99%E7%9A%84%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.1.</span> <span class="nav-text">封装用户资料的接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">2.1.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.1.3.</span> <span class="nav-text">任务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E8%B0%83%E7%94%A8%E6%8E%A5%E5%8F%A3%E7%9A%84-Action"><span class="nav-number">2.2.</span> <span class="nav-text">准备调用接口的 Action</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">任务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E8%B0%83%E7%94%A8-Action-%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">2.3.</span> <span class="nav-text">调整调用 Action 的位置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">内容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E7%94%A8%E6%88%B7%E5%A4%B4%E5%83%8F%E5%92%8C%E7%94%A8%E6%88%B7%E5%90%8D"><span class="nav-number">3.</span> <span class="nav-text">显示用户头像和用户名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%A4%B4%E5%83%8F%E4%B8%BA%E7%A9%BA%E6%97%B6%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="nav-number">4.</span> <span class="nav-text">处理头像为空时的场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86-token-%E5%A4%B1%E6%95%88%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">处理 token 失效的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E9%80%80%E5%87%BA%E7%99%BB%E5%BD%95%E7%95%8C%E9%9D%A2%E5%8A%9F%E8%83%BD"><span class="nav-number">6.</span> <span class="nav-text">实现退出登录界面功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E6%8C%89%E9%92%AE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="nav-number">7.</span> <span class="nav-text">修改密码按钮功能实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%B9%E5%87%BB%E6%8E%A7%E5%88%B6%E5%BC%B9%E5%B1%82%E7%9A%84%E6%98%BE%E7%A4%BA"><span class="nav-number">7.1.</span> <span class="nav-text">点击控制弹层的显示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E8%A1%A8%E5%8D%95%E7%BB%93%E6%9E%84%E5%92%8C%E6%A0%A1%E9%AA%8C"><span class="nav-number">7.2.</span> <span class="nav-text">准备表单结构和校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E5%92%8C%E5%8F%96%E6%B6%88%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="nav-number">7.3.</span> <span class="nav-text">确定和取消功能实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E7%90%86%E5%92%8C%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6%E5%92%8C%E8%B7%AF%E7%94%B1"><span class="nav-number">8.</span> <span class="nav-text">清理和创建组件和路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E7%90%86"><span class="nav-number">8.1.</span> <span class="nav-text">清理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA"><span class="nav-number">8.2.</span> <span class="nav-text">创建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E8%A7%A3%E6%9E%90%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E5%8E%9F%E7%90%86"><span class="nav-number">9.</span> <span class="nav-text">扩展解析左侧菜单原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E6%98%BE%E7%A4%BA%E4%B8%AA-logo"><span class="nav-number">10.</span> <span class="nav-text">左侧菜单显示个 logo</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
