@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="uni-app（神领物流）项目实战 - 第3天学习目标：  能够独立完成任务通知、公告、任务列表的功能 能够在 uni-app 中实现下拉刷新的交互功能 能够在 uni-app 中实现上拉分页的交互功能 能够配合 v-if 和 v-show 实现组件缓存的功能 能够独立完成任务详情展示的功能 能够利用条件编译控制页面内容的展示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="slwl-course03">
+<meta property="og:url" content="http://example.com/2023/07/23/slwl-course03/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="uni-app（神领物流）项目实战 - 第3天学习目标：  能够独立完成任务通知、公告、任务列表的功能 能够在 uni-app 中实现下拉刷新的交互功能 能够在 uni-app 中实现上拉分页的交互功能 能够配合 v-if 和 v-show 实现组件缓存的功能 能够独立完成任务详情展示的功能 能够利用条件编译控制页面内容的展示">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-23T14:40:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T14:50:05.749Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/07/23/slwl-course03/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>slwl-course03 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/07/23/slwl-course03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          slwl-course03
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-07-23 22:40:00 / 修改时间：22:50:05" itemprop="dateCreated datePublished" datetime="2023-07-23T22:40:00+08:00">2023-07-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="uni-app（神领物流）项目实战-第3天"><a href="#uni-app（神领物流）项目实战-第3天" class="headerlink" title="uni-app（神领物流）项目实战 - 第3天"></a>uni-app（神领物流）项目实战 - 第3天</h2><p><strong>学习目标：</strong></p>
+<ul>
+<li>能够独立完成任务通知、公告、任务列表的功能</li>
+<li>能够在 uni-app 中实现下拉刷新的交互功能</li>
+<li>能够在 uni-app 中实现上拉分页的交互功能</li>
+<li>能够配合 v-if 和 v-show 实现组件缓存的功能</li>
+<li>能够独立完成任务详情展示的功能</li>
+<li>能够利用条件编译控制页面内容的展示</li>
+</ul>
+<span id="more"></span>
+
+
+<h3 id="一、【神领物流】消息"><a href="#一、【神领物流】消息" class="headerlink" title="一、【神领物流】消息"></a>一、【神领物流】消息</h3><p>在 uni-app 跨端开发时，小程序不支持<a target="_blank" rel="noopener" href="https://zh.uniapp.dcloud.io/component/vue-component.html">内置组件</a> Component 和 Keep-Alive，在实现类似标签页切换的功能时就变得十分的麻烦，在本项目中采用的是组合 <code>v-if</code> 和 <code>v-show</code> 指令来实现。</p>
+<ul>
+<li><code>v-if</code> 指令保证组件只被加载一次</li>
+<li><code>v-show</code> 指令控制组件的显示/隐藏</li>
+</ul>
+<p>关于这部分交互的代码逻辑我已经添加到项目中了，在这里特别给大家交待的目的是要大家知道 uni-app 在跨端开发的时候需要考虑到一些兼容性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, reactive &#125; from &#x27;vue&#x27;</span><br><span class="line">  </span><br><span class="line">  import slNotify from &#x27;./components/notify&#x27;</span><br><span class="line">  import slAnnounce from &#x27;./components/announce&#x27;</span><br><span class="line"></span><br><span class="line">  // Tab 标签页索引</span><br><span class="line">  const tabIndex = ref(0)</span><br><span class="line">  const tabMetas = reactive([</span><br><span class="line">    &#123;title: &#x27;任务通知&#x27;,rendered: true&#125;,</span><br><span class="line">    &#123; title: &#x27;公告&#x27;,rendered: false&#125;,</span><br><span class="line">  ])</span><br><span class="line">  // 切换标签页</span><br><span class="line">  function onTabChange(index) &#123;</span><br><span class="line">    tabMetas[index].rendered = true</span><br><span class="line">    tabIndex.value = index</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;view v-show=&quot;tabIndex === 0&quot; v-if=&quot;tabMetas[0].rendered&quot; class=&quot;message-list&quot;&gt;</span><br><span class="line">      &lt;sl-notify /&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">    &lt;view v-show=&quot;tabIndex === 1&quot; v-if=&quot;tabMetas[1].rendered&quot; class=&quot;message-list&quot;&gt;</span><br><span class="line">      &lt;sl-announce /&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>rendered</code> 属性为 <code>true</code> 表明组件加载过，配合 <code>v-if</code> 来使用</li>
+<li><code>tabIndex</code> 变量控制当前显示哪个组件，配合 <code>v-show</code> 来使用</li>
+</ul>
+<h4 id="1-1-任务通知"><a href="#1-1-任务通知" class="headerlink" title="1.1 任务通知"></a>1.1 任务通知</h4><p>任务通知是后台系统给司机推送的运输任务，除了获取通知列表外还包含了一系列的交互，如下拉刷新、上拉分页，我们分别来实现。</p>
+<h5 id="1-1-1-通知列表"><a href="#1-1-1-通知列表" class="headerlink" title="1.1.1 通知列表"></a>1.1.1 通知列表</h5><p>根据文档调用接口即可获取到通知列表数据，将数据渲染到页面当中即可，这一步相对要容易实现一些，文档的详细说明在<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1/api-71262339">这里</a>，分成两个步骤实现：</p>
+<ol>
+<li>到 <code>apis</code> 目录中添加一个专门用于消息的接口请求模块</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/message.js</span></span><br><span class="line"><span class="comment">// 引入网络请求模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; uniFetch &#125; <span class="keyword">from</span> <span class="string">&#x27;./uni-fetch&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 消息列表</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@property <span class="type">&#123;string&#125;</span> <span class="variable">contentType</span></span> - 消息类型</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@property <span class="type">&#123;string&#125;</span> <span class="variable">page</span></span> - 消息数据对应的页码</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@property <span class="type">&#123;string&#125;</span> <span class="variable">pageSize</span></span> - 每页包含消息数据的条数</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="title">list</span>(<span class="params">contentType, page = <span class="number">1</span>, pageSize = <span class="number">10</span></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!contentType) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">return</span> uniFetch.get(<span class="string">&#x27;/driver/messages/page&#x27;</span>, &#123; contentType, page, pageSize &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>到消息列表页面中调用 API 来获取列表数据并渲染</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/components/notify.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import messageApi from &#x27;@/apis/message&#x27;</span><br><span class="line"></span><br><span class="line">  // 任务列表数据</span><br><span class="line">  const notifyList = ref([])</span><br><span class="line">  // 下一页页码</span><br><span class="line">  const nextPage = ref(1)</span><br><span class="line">  // 每页包含数据条数</span><br><span class="line">  const pageSize = ref(5)</span><br><span class="line">  // 是否为空列表</span><br><span class="line">  const isEmpty = ref(false)</span><br><span class="line">	</span><br><span class="line">  // 生命周期</span><br><span class="line">  onMounted(() =&gt; &#123;</span><br><span class="line">    getNotifyList()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 任务列表</span><br><span class="line">  async function getNotifyList(page = 1, pageSize = 10) &#123;</span><br><span class="line">    const &#123; code, data &#125; = await messageApi.list(201, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取通知失败，稍后重试!&#x27;)</span><br><span class="line">    // 渲染数据</span><br><span class="line">    notifyList.value = data.items || []</span><br><span class="line">    // 是否为空列表</span><br><span class="line">    isEmpty.value = notifyList.value.length === 0</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view class=&quot;scroll-view&quot; refresher-enabled scroll-y&gt;</span><br><span class="line">    &lt;view class=&quot;scroll-view-wrapper&quot;&gt;</span><br><span class="line">      &lt;view class=&quot;message-action&quot;&gt;</span><br><span class="line">        &lt;text class=&quot;iconfont icon-clear&quot;&gt;&lt;/text&gt; 全部已读</span><br><span class="line">      &lt;/view&gt;</span><br><span class="line">      &lt;uni-card</span><br><span class="line">        v-for=&quot;notify in notifyList&quot;</span><br><span class="line">        :key=&quot;notify.id&quot;</span><br><span class="line">        :border=&quot;false&quot;</span><br><span class="line">        :is-shadow=&quot;false&quot;</span><br><span class="line">      &gt;</span><br><span class="line">        &lt;view class=&quot;brief&quot;&gt;&#123;&#123; notify.content &#125;&#125;&lt;/view&gt;</span><br><span class="line">        &lt;view class=&quot;extra&quot;&gt;</span><br><span class="line">          &lt;text class=&quot;time&quot;&gt;&#123;&#123; notify.created &#125;&#125;&lt;/text&gt;</span><br><span class="line">          &lt;navigator</span><br><span class="line">            hover-class=&quot;none&quot;</span><br><span class="line">            class=&quot;link&quot;</span><br><span class="line">            :url=&quot;`/subpkg_task/detail/index?id=$&#123;notify.id&#125;`&quot;</span><br><span class="line">          &gt;查看详情&lt;/navigator&gt;</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line">        &lt;template v-slot:title&gt;</span><br><span class="line">          &lt;view :class=&quot;&#123; unread: !notify.isRead &#125;&quot; class=&quot;title unread&quot;</span><br><span class="line">            &gt;您有新的运输任务&lt;/view</span><br><span class="line">          &gt;</span><br><span class="line">        &lt;/template&gt;</span><br><span class="line">      &lt;/uni-card&gt;</span><br><span class="line">      &lt;view v-if=&quot;isEmpty&quot; class=&quot;message-blank&quot;&gt;暂无消息&lt;/view&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在对数据渲染时需要注意以下几个关键数据：</p>
+<ul>
+<li><code>isEmpty</code> 变量，判断列表数据是否为空，如果为空则显示一个占位提示信息</li>
+<li><code>isRead</code> 属性，判断当前任务数据是否为已读，值为1表示已读，值为0表示未读</li>
+</ul>
+<p>另外还有一点大家要注意，在上述代码中关于生命命周期的使用，由于是在组件中使用所以我们用的是 Vue 的生命周期函数 <code>onMounted</code>（用其它的也可以）。</p>
+<h5 id="1-1-2-上拉分页"><a href="#1-1-2-上拉分页" class="headerlink" title="1.1.2 上拉分页"></a>1.1.2 上拉分页</h5><p>在大多的项目中列表数据都会支持分页获取数据，在移动设备是常常配合页面的滚动来分页获取数据，在 <code>scroll-view</code> 组件中通过 <code>scrolltolower</code> 监听页面是否滚动到达底部，进而触发新的请求来获取分页的数据。</p>
+<ol>
+<li>监听 <code>scrolltolower</code> 事件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/components/notify.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import messageApi from &#x27;@/apis/message&#x27;</span><br><span class="line"></span><br><span class="line">  // 任务列表数据</span><br><span class="line">  const notifyList = ref([])</span><br><span class="line">  // 下一页页码</span><br><span class="line">  const nextPage = ref(1)</span><br><span class="line">  // 每页包含数据条数</span><br><span class="line">  const pageSize = ref(5)</span><br><span class="line">  // 是否为空列表</span><br><span class="line">  const isEmpty = ref(false)</span><br><span class="line"></span><br><span class="line">  onMounted(() =&gt; &#123;</span><br><span class="line">    getNotifyList()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 上拉分页</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 获取下一页数据</span><br><span class="line">    getNotifyList()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 任务列表</span><br><span class="line">  async function getNotifyList(page = 1, pageSize = 10) &#123;</span><br><span class="line">    // 省略中间部分代码...</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">    refresher-enabled</span><br><span class="line">    scroll-y</span><br><span class="line">  &gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>计算下一页页码</li>
+</ol>
+<p>页码是数字具具有连续性，我们只需要热行加 1 操作即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/components/notify.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import messageApi from &#x27;@/apis/message&#x27;</span><br><span class="line"></span><br><span class="line">  // 任务列表数据</span><br><span class="line">  const notifyList = ref([])</span><br><span class="line">  // 下一页页码</span><br><span class="line">  const nextPage = ref(1)</span><br><span class="line">  // 每页包含数据条数</span><br><span class="line">  const pageSize = ref(5)</span><br><span class="line"></span><br><span class="line">  onMounted(() =&gt; &#123;</span><br><span class="line">    getNotifyList()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 上拉分页</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 获取下一页数据</span><br><span class="line">    getNotifyList(nextPage.value)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 任务列表</span><br><span class="line">  async function getNotifyList(page = 1, pageSize = 10) &#123;</span><br><span class="line">    const &#123; code, data &#125; = await messageApi.list(201, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取通知失败，稍后重试!&#x27;)</span><br><span class="line">    // 渲染数据</span><br><span class="line">    notifyList.value = [...notifyList.value, ...(data.items || [])]</span><br><span class="line">    // 更新下一页页码</span><br><span class="line">    nextPage.value = ++data.page</span><br><span class="line">    // 是否为空列表</span><br><span class="line">    isEmpty.value = notifyList.value.length === 0</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>上述代码中有两点需要注意：</p>
+<ul>
+<li>更新页面是根据返回数据中的 <code>page</code> 加 1 的方式处理的</li>
+<li>分页请求来的下一页数据需要追加到原数组中，在这里用的 <code>...</code> 运算符，也可以使用数组的 <code>concat</code> 方法</li>
+</ul>
+<ol start="3">
+<li> 判断是否还有更多的数据</li>
+</ol>
+<p>如果没有更多数据，滚动页面到达底部时无需请求数据。<strong>通过对比总的页码与当前页面的大小来判断。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/components/notify.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import messageApi from &#x27;@/apis/message&#x27;</span><br><span class="line"></span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">  // 是否还有更多数据</span><br><span class="line">  const hasMore = ref(true)</span><br><span class="line">	</span><br><span class="line">	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 上拉分页</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    if(!hasMore.value) return</span><br><span class="line">    // 获取下一页数据</span><br><span class="line">    getNotifyList(nextPage.value)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 任务列表</span><br><span class="line">  async function getNotifyList(page = 1, pageSize = 10) &#123;</span><br><span class="line">    const &#123; code, data &#125; = await messageApi.list(201, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取通知失败，稍后重试!&#x27;)</span><br><span class="line">    // 渲染数据</span><br><span class="line">    notifyList.value = [...notifyList.value, ...(data.items || [])]</span><br><span class="line">    // 更新下一页页码</span><br><span class="line">    nextPage.value = ++data.page</span><br><span class="line">    // 是否还有更多数据</span><br><span class="line">    hasMore.value = nextPage.value &lt;= data.pages</span><br><span class="line">    // 是否为空列表</span><br><span class="line">    isEmpty.value = notifyList.value.length === 0</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中需要注意判断还有没有更多数据，是根据接口返回数据中的总页码 <code>pages</code> 进行判断的，如果下一页的页码 <code>nextPage</code> 小于等于总页码 <code>data.page</code> 时，表明还有更多的数据，否则没有更多数据了。</p>
+<h5 id="1-1-3-下拉刷新"><a href="#1-1-3-下拉刷新" class="headerlink" title="1.1.3 下拉刷新"></a>1.1.3 下拉刷新</h5><p>下拉刷新帮助用户入时获取最新的数据，在 <code>scroll-view</code> 中监听 <code>refresherrefresh</code> 事件，能够知道用户是否执行了下拉的动作，进而重新获取页面的数据。</p>
+<ol>
+<li>监听用户的下拉操作，通过监听 <code>refresherrefresh</code> 事件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/components/notify.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import messageApi from &#x27;@/apis/message&#x27;</span><br><span class="line"></span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 下拉刷新</span><br><span class="line">  async function onScrollViewRefresh() &#123;</span><br><span class="line">    await getNotifyList()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 上拉分页</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 省略中间部分代码...</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 任务列表</span><br><span class="line">  async function getNotifyList(page = 1, pageSize = 10) &#123;</span><br><span class="line">    const &#123; code, data &#125; = await messageApi.list(201, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取通知失败，稍后重试!&#x27;)</span><br><span class="line">    // 清空原始的数据</span><br><span class="line">    if (page === 1) notifyList.value = []</span><br><span class="line">    // 渲染数据</span><br><span class="line">    notifyList.value = [...notifyList.value, ...(data.items || [])]</span><br><span class="line">    // 更新下一页页码</span><br><span class="line">    nextPage.value = ++data.page</span><br><span class="line">    // 是否为空列表</span><br><span class="line">    isEmpty.value = notifyList.value.length === 0</span><br><span class="line">    // 是否有更多数据</span><br><span class="line">    hasMore.value = nextPage.value &lt;= data.pages</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @refresherrefresh=&quot;onScrollViewRefresh&quot;</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">    refresher-enabled</span><br><span class="line">    scroll-y</span><br><span class="line">  &gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中需要关注的两个方面：</p>
+<ul>
+<li>刷新请求实际上是重新请求第 1 页的数据</li>
+<li>在进行数据渲染时需要清空原列表中的数据</li>
+</ul>
+<ol start="2">
+<li>关闭下拉刷新的动画交互</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/components/notify.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import messageApi from &#x27;@/apis/message&#x27;</span><br><span class="line"></span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">	</span><br><span class="line">  // 是否加载完成</span><br><span class="line">  const isTriggered = ref(false)</span><br><span class="line"></span><br><span class="line">	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 下拉刷新</span><br><span class="line">  async function onScrollViewRefresh() &#123;</span><br><span class="line">    isTriggered.value = true</span><br><span class="line">    await getNotifyList()</span><br><span class="line">    isTriggered.value = false</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 上拉分页</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 省略中间部分代码...</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 任务列表</span><br><span class="line">  async function getNotifyList(page = 1, pageSize = 10) &#123;</span><br><span class="line">    // 省略中间部分代码...</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @refresherrefresh=&quot;onScrollViewRefresh&quot;</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    :refresher-triggered=&quot;isTriggered&quot;</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">    refresher-enabled</span><br><span class="line">    scroll-y</span><br><span class="line">  &gt;</span><br><span class="line">  ...   </span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中要注意:</p>
+<ul>
+<li><code>scroll-view</code> 下拉刷新的动画交互需要通过 <code>refresher-triggiered</code> 来打开或关闭，如果值为 <code>true</code> 时打开，值为 <code>false</code> 时关闭</li>
+<li>需要为调用方法指定 <code>async/await</code> 在请求结束后再关闭动画交互</li>
+</ul>
+<h5 id="1-1-4-全部已读"><a href="#1-1-4-全部已读" class="headerlink" title="1.1.4 全部已读"></a>1.1.4 全部已读</h5><p>作业题（自已完成）</p>
+<h4 id="1-2-公告"><a href="#1-2-公告" class="headerlink" title="1.2 公告"></a>1.2 公告</h4><p>公告是后台系统给司机发送的能知，如公司的政策、节假日注意事项等，其所包含的功能逻辑与消息通知非常类似。</p>
+<h5 id="1-2-1-公告列表"><a href="#1-2-1-公告列表" class="headerlink" title="1.2.1 公告列表"></a>1.2.1 公告列表</h5><p>根据文档调用接口即可获取到公告列表数据，将数据渲染到页面当中即可，文档的详细说明在<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1/api-71262339">这里</a>，不难发现公告和任务通知是共用相同的接口，只是传递的参数值不同，<code>contentType</code> 值为 <code>201</code> 时表示任务通知，值为 <code>200</code> 时表示公告。</p>
+<ol>
+<li>到页面中调接口获取数据并渲染</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/components/announce.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import messageApi from &#x27;@/apis/message&#x27;</span><br><span class="line"></span><br><span class="line">  // 任务列表数据</span><br><span class="line">  const announceList = ref([])</span><br><span class="line">  // 下一页页码</span><br><span class="line">  const nextPage = ref(1)</span><br><span class="line">  // 每页包含数据条数</span><br><span class="line">  const pageSize = ref(5)</span><br><span class="line"></span><br><span class="line">  // 生命周期</span><br><span class="line">  onMounted(() =&gt; &#123;</span><br><span class="line">    getAnnounceList()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 任务列表</span><br><span class="line">  async function getAnnounceList(page = 1, pageSize = 10) &#123;</span><br><span class="line">    const &#123; code, data &#125; = await messageApi.list(200, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取通知失败，稍后重试!&#x27;)</span><br><span class="line">    // 渲染数据</span><br><span class="line">    announceList.value = data.items || []</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view class=&quot;scroll-view&quot; refresher-enabled scroll-y&gt;</span><br><span class="line">    &lt;view class=&quot;scroll-view-wrapper&quot;&gt;</span><br><span class="line">      &lt;view class=&quot;message-action&quot;&gt;</span><br><span class="line">        &lt;text class=&quot;iconfont icon-clear&quot;&gt;&lt;/text&gt;</span><br><span class="line">        全部已读</span><br><span class="line">      &lt;/view&gt;</span><br><span class="line">      &lt;uni-list :border=&quot;false&quot;&gt;</span><br><span class="line">        &lt;uni-list-item</span><br><span class="line">          v-for=&quot;announce in announceList&quot;</span><br><span class="line">          :key=&quot;announce.id&quot;</span><br><span class="line">          :to=&quot;`/subpkg_message/content/index?id=$&#123;announce.id&#125;`&quot;</span><br><span class="line">          ellipsis=&quot;1&quot;</span><br><span class="line">          :title=&quot;announce.title&quot;</span><br><span class="line">          :right-text=&quot;announce.created&quot;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;template v-slot:header&gt;</span><br><span class="line">            &lt;text v-if=&quot;!announce.isRead&quot; class=&quot;dot&quot;&gt;&lt;/text&gt;</span><br><span class="line">          &lt;/template&gt;</span><br><span class="line">        &lt;/uni-list-item&gt;</span><br><span class="line">      &lt;/uni-list&gt;</span><br><span class="line">      &lt;view v-if=&quot;isEmpty&quot; class=&quot;message-blank&quot;&gt;暂无消息&lt;/view&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>和任务通知一样，在对数据渲染时需要注意以下几个关键数据：</p>
+<ul>
+<li><code>isEmpty</code> 变量，判断列表数据是否为空，如果为空则显示一个占位提示信息</li>
+<li><code>isRead</code> 属性，判断当前任务数据是否为已读，值为1表示已读，值为0表示未读</li>
+</ul>
+<h5 id="1-2-2-上拉分页"><a href="#1-2-2-上拉分页" class="headerlink" title="1.2.2 上拉分页"></a>1.2.2 上拉分页</h5><p>此时实现上拉分面加载的思路与任务通知完全一样，先去监听 <code>scrolltolower</code> 事件，然后发起请求，再然后判断是否有更多数据。</p>
+<ol>
+<li>监听 <code>scrolltolower</code> 事件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/components/announce.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import messageApi from &#x27;@/apis/message&#x27;</span><br><span class="line"></span><br><span class="line">	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 上拉分页</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 获取下一页数据</span><br><span class="line">    getAnnounceList()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 任务列表</span><br><span class="line">  async function getAnnounceList(page = 1, pageSize = 10) &#123;</span><br><span class="line">    // 省略中间部分代码</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">    refresher-enabled</span><br><span class="line">    scroll-y</span><br><span class="line">  &gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>计算下一页页码</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/components/announce.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import messageApi from &#x27;@/apis/message&#x27;</span><br><span class="line"></span><br><span class="line">	// 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">  const nextPage = ref(1)</span><br><span class="line"></span><br><span class="line">	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 上拉分页</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 获取下一页数据</span><br><span class="line">    getAnnounceList(nextPage.value)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 任务列表</span><br><span class="line">  async function getAnnounceList(page = 1, pageSize = 10) &#123;</span><br><span class="line">		const &#123; code, data &#125; = await messageApi.list(200, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取通知失败，稍后重试!&#x27;)</span><br><span class="line">    // 渲染数据</span><br><span class="line">    announceList.value = [...announceList.value, ...(data.items || [])]</span><br><span class="line">    // 更新下一页页码</span><br><span class="line">    nextPage.value = ++data.page</span><br><span class="line">    // 是否为空列表</span><br><span class="line">    isEmpty.value = announceList.value.length === 0</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">    refresher-enabled</span><br><span class="line">    scroll-y</span><br><span class="line">  &gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中有两点需要注意：</p>
+<ul>
+<li>更新页面是根据返回数据中的 <code>page</code> 加 1 的方式处理的</li>
+<li>分页请求来的下一页数据需要追加到原数组中，在这里用的 <code>...</code> 运算符，也可以使用数组的 <code>concat</code> 方法</li>
+</ul>
+<ol start="3">
+<li>判断还有没有更多的数据</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/components/announce.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import messageApi from &#x27;@/apis/message&#x27;</span><br><span class="line"></span><br><span class="line">	// 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">  const nextPage = ref(1)</span><br><span class="line">  const hasMore = ref(true)</span><br><span class="line"></span><br><span class="line">	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 上拉分页</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    if(!hasMore.value) return</span><br><span class="line">    // 获取下一页数据</span><br><span class="line">    getAnnounceList(nextPage.value)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 任务列表</span><br><span class="line">  async function getAnnounceList(page = 1, pageSize = 10) &#123;</span><br><span class="line">		const &#123; code, data &#125; = await messageApi.list(200, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取通知失败，稍后重试!&#x27;)</span><br><span class="line">    // 渲染数据</span><br><span class="line">    announceList.value = [...announceList.value, ...(data.items || [])]</span><br><span class="line">    // 更新下一页页码</span><br><span class="line">    nextPage.value = ++data.page</span><br><span class="line">    // 是否为空列表</span><br><span class="line">    isEmpty.value = announceList.value.length === 0</span><br><span class="line">    // 是否有更多数据</span><br><span class="line">    hasMore.value = nextPage.value &lt;= data.pages</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">    refresher-enabled</span><br><span class="line">    scroll-y</span><br><span class="line">  &gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中需要注意判断还有没有更多数据，是根据接口返回数据中的总页码 <code>pages</code> 进行判断的，如果下一页的页码 <code>nextPage</code> 小于等于总页码 <code>data.page</code> 时，表明还有更多的数据，否则没有更多数据了。</p>
+<h5 id="1-2-3-下拉刷新"><a href="#1-2-3-下拉刷新" class="headerlink" title="1.2.3 下拉刷新"></a>1.2.3 下拉刷新</h5><p>下拉刷新的实现也与任务通知一致，监听 <code>refresherrefresh</code> 事件，在用执行下拉操作时重新请求数据，通过 <code>refresher-triggered</code>  属性来控制下拉交互的开关。</p>
+<ol>
+<li>监听用户的下拉操作，通过监听 <code>refresherrefresh</code> 事件实现</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/components/announce.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import messageApi from &#x27;@/apis/message&#x27;</span><br><span class="line"></span><br><span class="line"> 	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 下拉刷新</span><br><span class="line">  async function onScrollViewRefresh() &#123;</span><br><span class="line">    // 重新请求第1页数据</span><br><span class="line">    await getAnnounceList()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 上拉分页</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 省略中间部分代码</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 任务列表</span><br><span class="line">  async function getAnnounceList(page = 1, pageSize = 10) &#123;</span><br><span class="line">    const &#123; code, data &#125; = await messageApi.list(201, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取通知失败，稍后重试!&#x27;)</span><br><span class="line">    if (page === 1) announceList.value = []</span><br><span class="line">    // 渲染数据</span><br><span class="line">    announceList.value = [...announceList.value, ...(data.items || [])]</span><br><span class="line">    // 更新下一页页码</span><br><span class="line">    nextPage.value = ++data.page</span><br><span class="line">    // 是否为空列表</span><br><span class="line">    isEmpty.value = announceList.value.length === 0</span><br><span class="line">    // 是否有更多数据</span><br><span class="line">    hasMore.value = nextPage.value &lt;= data.pages</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @refresherrefresh=&quot;onScrollViewRefresh&quot;</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">    refresher-enabled</span><br><span class="line">    scroll-y</span><br><span class="line">  &gt;</span><br><span class="line">  	...</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中需要关注的两个方面：</p>
+<ul>
+<li>刷新请求实际上是重新请求第 1 页的数据</li>
+<li>在进行数据渲染时需要清空原列表中的数据</li>
+</ul>
+<ol start="2">
+<li>关闭下拉刷新的动画交互</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/message/components/announce.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import messageApi from &#x27;@/apis/message&#x27;</span><br><span class="line"></span><br><span class="line"> 	// 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">  // 是否加载完成</span><br><span class="line">  const isTriggered = ref(false)</span><br><span class="line"></span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 下拉刷新</span><br><span class="line">  async function onScrollViewRefresh() &#123;</span><br><span class="line">    // 重新请求第1页数据</span><br><span class="line">    isTriggered.value = true</span><br><span class="line">    await getAnnounceList()</span><br><span class="line">    isTriggered.value = false</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 上拉分页</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 省略中间部分代码</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 任务列表</span><br><span class="line">  async function getAnnounceList(page = 1, pageSize = 10) &#123;</span><br><span class="line">    const &#123; code, data &#125; = await messageApi.list(201, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取通知失败，稍后重试!&#x27;)</span><br><span class="line">    if (page === 1) getAnnounceList.value = []</span><br><span class="line">    // 渲染数据</span><br><span class="line">    getAnnounceList.value = [...announceList.value, ...(data.items || [])]</span><br><span class="line">    // 更新下一页页码</span><br><span class="line">    nextPage.value = ++data.page</span><br><span class="line">    // 是否为空列表</span><br><span class="line">    isEmpty.value = getAnnounceList.value.length === 0</span><br><span class="line">    // 是否有更多数据</span><br><span class="line">    hasMore.value = nextPage.value &lt;= data.pages</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @refresherrefresh=&quot;onScrollViewRefresh&quot;</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    :refresher-triggered=&quot;isTriggered&quot;</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">    refresher-enabled</span><br><span class="line">    scroll-y</span><br><span class="line">  &gt;</span><br><span class="line">  	...</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中要注意:</p>
+<ul>
+<li><code>scroll-view</code> 下拉刷新的动画交互需要通过 <code>refresher-triggiered</code> 来打开或关闭，如果值为 <code>true</code> 时打开，值为 <code>false</code> 时关闭</li>
+<li>需要为调用方法指定 <code>async/await</code> 在请求结束后再关闭动画交互</li>
+</ul>
+<h5 id="1-2-4-全部已读"><a href="#1-2-4-全部已读" class="headerlink" title="1.2.4 全部已读"></a>1.2.4 全部已读</h5><p>作业题（自已完成）</p>
+<h3 id="二、【神领物流】任务"><a href="#二、【神领物流】任务" class="headerlink" title="二、【神领物流】任务"></a>二、【神领物流】任务</h3><p>本项目中最核心的功能模块即任务模块，该模块的主要功能是后台系统给司机派发运输任务，司机看到运输任务后完成提货、交付、登记等运输流程。</p>
+<h4 id="2-1-待提货"><a href="#2-1-待提货" class="headerlink" title="2.1 待提货"></a>2.1 待提货</h4><p>当司机收到运输任务后，初始为待提货的状态，等待司机去现场装车提货，司机核对始发地和终点地后按时间去指定的地点提货。</p>
+<h5 id="2-1-1-任务列表"><a href="#2-1-1-任务列表" class="headerlink" title="2.1.1 任务列表"></a>2.1.1 任务列表</h5><p>待提货是以列表的形式呈现的，通过调用后端提供的接口获取数据然后渲染到页面即可，接口文档的详细说明在<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1/api-71286660">这里</a>，分成两个步骤来实现。</p>
+<ol>
+<li>封装调用接口的方法</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/task.js</span></span><br><span class="line"><span class="comment">// 引入网络请求模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; uniFetch &#125; <span class="keyword">from</span> <span class="string">&#x27;./uni-fetch&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 任务列表</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">status</span></span> - 任务状态</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;string&#125;</span> <span class="variable">page</span></span> - 数据页码</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;string&#125;</span> <span class="variable">pageSize</span></span> - 每页数据条件</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="title">list</span>(<span class="params">status, page = <span class="number">1</span>, pageSize = <span class="number">10</span></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> uniFetch.get(<span class="string">&#x27;/driver/tasks/list&#x27;</span>, &#123; status, page, pageSize &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>到任务页面中调用接口</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/task/components/pickup.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import taskApi from &#x27;@/apis/task&#x27;</span><br><span class="line"></span><br><span class="line">  // 任务列表数据</span><br><span class="line">  const pickUpList = ref([])</span><br><span class="line">  // 下一页页码</span><br><span class="line">  const nextPage = ref(1)</span><br><span class="line">  // 每页包含数据条数</span><br><span class="line">  const pageSize = ref(5)</span><br><span class="line">  // 是否为空列表</span><br><span class="line">  const isEmpty = ref(false)</span><br><span class="line"></span><br><span class="line">  // 生命周期（也可以用其它的生命周期）</span><br><span class="line">  onMounted(() =&gt; &#123;</span><br><span class="line">    getPickUpList()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 获取任务列表</span><br><span class="line">  async function getPickUpList(page = 1, pageSize = 5) &#123;</span><br><span class="line">    const &#123; code, data &#125; = await taskApi.list(1, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取列表失败，稍后重试！&#x27;)</span><br><span class="line">    // 渲染任务列表</span><br><span class="line">    pickUpList.value = data.items || []</span><br><span class="line">    // 判断列表是否为空</span><br><span class="line">    isEmpty.value = pickUpList.value.length === 0</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view scroll-y refresher-enabled class=&quot;scroll-view&quot;&gt;</span><br><span class="line">    &lt;view class=&quot;scroll-view-wrapper&quot;&gt;</span><br><span class="line">      &lt;view v-for=&quot;pickup in pickUpList&quot; :key=&quot;pickup.id&quot; class=&quot;task-card&quot;&gt;</span><br><span class="line">        &lt;navigator</span><br><span class="line">          hover-class=&quot;none&quot;</span><br><span class="line">          :url=&quot;`/subpkg_task/detail/index?id=$&#123;pickup.id&#125;`&quot;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;view class=&quot;header&quot;&gt;</span><br><span class="line">            &lt;text class=&quot;no&quot;&gt;任务编号: &#123;&#123; pickup.transportTaskId &#125;&#125;&lt;/text&gt;</span><br><span class="line">            &lt;!-- &lt;text class=&quot;status&quot;&gt;已延迟&lt;/text&gt; --&gt;</span><br><span class="line">          &lt;/view&gt;</span><br><span class="line">          &lt;view class=&quot;body&quot;&gt;</span><br><span class="line">            &lt;view class=&quot;timeline&quot;&gt;</span><br><span class="line">              &lt;view class=&quot;line&quot;&gt;&#123;&#123; pickup.startAddress &#125;&#125;&lt;/view&gt;</span><br><span class="line">              &lt;view class=&quot;line&quot;&gt;&#123;&#123; pickup.endAddress &#125;&#125;&lt;/view&gt;</span><br><span class="line">            &lt;/view&gt;</span><br><span class="line">          &lt;/view&gt;</span><br><span class="line">        &lt;/navigator&gt;</span><br><span class="line">        &lt;view class=&quot;footer&quot;&gt;</span><br><span class="line">          &lt;view class=&quot;label&quot;&gt;提货时间&lt;/view&gt;</span><br><span class="line">          &lt;view class=&quot;time&quot;&gt;&#123;&#123; pickup.planDepartureTime &#125;&#125;&lt;/view&gt;</span><br><span class="line">          &lt;navigator</span><br><span class="line">            v-if=&quot;pickup.enablePickUp&quot;</span><br><span class="line">            hover-class=&quot;none&quot;</span><br><span class="line">            :url=&quot;`/subpkg_task/pickup/index?id=$&#123;pickup.id&#125;`&quot;</span><br><span class="line">            class=&quot;action&quot;</span><br><span class="line">          &gt;</span><br><span class="line">            提货</span><br><span class="line">          &lt;/navigator&gt;</span><br><span class="line">          &lt;navigator v-else hover-class=&quot;none&quot; url=&quot; &quot; class=&quot;action disabled&quot;&gt;</span><br><span class="line">            提货</span><br><span class="line">          &lt;/navigator&gt;</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line">      &lt;/view&gt;</span><br><span class="line">      &lt;view v-if=&quot;isEmpty&quot; class=&quot;task-blank&quot;&gt;无待提货物&lt;/view&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在对数据进行渲染时有两个地方需要注意：</p>
+<ul>
+<li>跳转到详情和提货页面时地址传的参数为 <code>id</code></li>
+<li>根据 <code>enablePickUp</code> 判断当前任务是否允许提货</li>
+</ul>
+<p><strong>兼容性：提货按钮在微信小程序样式禁用时未生效，由原来的 disabled 属性控制样式</strong></p>
+<p><strong>改成通过通过类名来控制，修改原来的样式文件</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* pages/task/components/style.scss */</span></span><br><span class="line"><span class="selector-class">.action</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">64</span>rpx;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">40</span>rpx;</span><br><span class="line">  <span class="attribute">background-color</span>: $uni-primary;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: $uni-font-size-small;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">64</span>rpx;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(<span class="number">0</span>, -<span class="number">50%</span>);</span><br><span class="line">  </span><br><span class="line">  &amp;<span class="selector-class">.disabled</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#fadcd9</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="2-1-2-上拉分页"><a href="#2-1-2-上拉分页" class="headerlink" title="2.1.2 上拉分页"></a>2.1.2 上拉分页</h5><p>上拉分页的功能与前面小节中学习的消息列表中的实现是一致的，实现的思路与步骤也完全一致。</p>
+<ol>
+<li>监听页面是否滚动到了底部，监听事件 <code>scrolltolower</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/task/components/pickup.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  </span><br><span class="line">  // 这里省略了中间的代码...</span><br><span class="line">  </span><br><span class="line">  // 监听页面是否滚动到底部</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 获取下一页数据</span><br><span class="line">    getPickUpList()</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 获取任务列表</span><br><span class="line">  async function getPickUpList(page = 1, pageSize = 5) &#123;</span><br><span class="line">    // 省略中间部分代码...</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    scroll-y</span><br><span class="line">    refresher-enabled</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    ...</span><br><span class="line">	&lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>计算下一页的页码</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/task/components/pickup.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import taskApi from &#x27;@/apis/task&#x27;</span><br><span class="line">  </span><br><span class="line">  // 省略了中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 下一页页码</span><br><span class="line">  const nextPage = ref(1)</span><br><span class="line">  </span><br><span class="line">  // 省略了中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 监听页面是否滚动到底部</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 获取下一页数据</span><br><span class="line">    getPickUpList(nextPage.value)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 获取任务列表</span><br><span class="line">  async function getPickUpList(page = 1, pageSize = 5) &#123;</span><br><span class="line">    const &#123; code, data &#125; = await taskApi.list(1, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取列表失败，稍后重试！&#x27;)</span><br><span class="line">    // 渲染任务列表</span><br><span class="line">    // pickUpList.value = data.items</span><br><span class="line">    pickUpList.value = [...pickUpList.value, ...(data.items || [])]</span><br><span class="line">    // 计算下一页页码</span><br><span class="line">    nextPage.value = ++data.page</span><br><span class="line">    // 判断列表是否为空</span><br><span class="line">    isEmpty.value = pickUpList.value.length === 0</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    scroll-y</span><br><span class="line">    refresher-enabled</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中有两点需要注意：</p>
+<ul>
+<li>更新页面是根据返回数据中的 <code>page</code> 加 1 的方式处理的</li>
+<li>分页请求来的下一页数据需要追加到原数组中，在这里用的 <code>...</code> 运算符，也可以使用数组的 <code>concat</code> 方法</li>
+</ul>
+<ol start="3">
+<li>判断还没有更多的数据</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/task/components/pickup.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import taskApi from &#x27;@/apis/task&#x27;</span><br><span class="line">  </span><br><span class="line">  // 省略了中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 下一页页码</span><br><span class="line">  const nextPage = ref(1)</span><br><span class="line">  </span><br><span class="line">  // 省略了中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 生命周期（也可以用其它的生命周期）</span><br><span class="line">  onMounted(() =&gt; &#123;</span><br><span class="line">    getPickUpList()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 监听页面是否滚动到底部</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 没有更多数据时则不需要再请求了</span><br><span class="line">    if (!hasMore.value) return</span><br><span class="line">    // 获取下一页数据</span><br><span class="line">    getPickUpList(nextPage.value)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 获取任务列表</span><br><span class="line">  async function getPickUpList(page = 1, pageSize = 5) &#123;</span><br><span class="line">    const &#123; code, data &#125; = await taskApi.list(1, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取列表失败，稍后重试！&#x27;)</span><br><span class="line">    // 渲染任务列表</span><br><span class="line">    // pickUpList.value = data.items</span><br><span class="line">    pickUpList.value = [...pickUpList.value, ...(data.items || [])]</span><br><span class="line">    // 计算下一页页码</span><br><span class="line">    nextPage.value = ++data.page</span><br><span class="line">    // 判断列表是否为空</span><br><span class="line">    isEmpty.value = pickUpList.value.length === 0</span><br><span class="line">    // 判断还有没有更多的数据</span><br><span class="line">    hasMore.value = nextPage.value &lt;= data.pages</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    scroll-y</span><br><span class="line">    refresher-enabled</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中需要注意判断还有没有更多数据，是根据接口返回数据中的总页码 <code>pages</code> 进行判断的，如果下一页的页码 <code>nextPage</code> 小于等于总页码 <code>data.page</code> 时，表明还有更多的数据，否则没有更多数据了。</p>
+<h5 id="2-1-3-下拉刷新"><a href="#2-1-3-下拉刷新" class="headerlink" title="2.1.3 下拉刷新"></a>2.1.3 下拉刷新</h5><p>下拉刷新的交互也与消息列表中是一致的，实现思路和步骤也是一模一样的。</p>
+<ol>
+<li>监听用户的下拉操作，通过监听 <code>refresherrefresh</code>  来实现</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/task/components/pickup.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import taskApi from &#x27;@/apis/task&#x27;</span><br><span class="line">  </span><br><span class="line">  // 省略了中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 监听页面是否滚动到底部</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 省略中间部分代码</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 监听用户的下拉操作</span><br><span class="line">  async function onScrollViewRefresh() &#123;</span><br><span class="line">    await getPickUpList()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 获取任务列表</span><br><span class="line">  async function getPickUpList(page = 1, pageSize = 5) &#123;</span><br><span class="line">    const &#123; code, data &#125; = await taskApi.list(1, page, pageSize)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取列表失败，稍后重试！&#x27;)</span><br><span class="line">    // 页面为 1 时，清空数组</span><br><span class="line">    if (page === 1) pickUpList.value = []</span><br><span class="line">    // 渲染任务列表</span><br><span class="line">    // pickUpList.value = data.items</span><br><span class="line">    pickUpList.value = [...pickUpList.value, ...(data.items || [])]</span><br><span class="line">    // 计算下一页页码</span><br><span class="line">    nextPage.value = ++data.page</span><br><span class="line">    // 判断列表是否为空</span><br><span class="line">    isEmpty.value = pickUpList.value.length === 0</span><br><span class="line">    // 判断还有没有更多的数据</span><br><span class="line">    hasMore.value = nextPage.value &lt;= data.pages</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    @refresherrefresh=&quot;onScrollViewRefresh&quot;</span><br><span class="line">    scroll-y</span><br><span class="line">    refresher-enabled</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中需要关注的两个方面：</p>
+<ul>
+<li>刷新请求实际上是重新请求第 1 页的数据</li>
+<li>在进行数据渲染时需要清空原列表中的数据</li>
+</ul>
+<ol start="2">
+<li>关闭下拉刷新的动画交互</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/task/components/pickup.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import taskApi from &#x27;@/apis/task&#x27;</span><br><span class="line">  </span><br><span class="line">  // 省略了中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 监听页面是否滚动到底部</span><br><span class="line">  function onScrollToLower() &#123;</span><br><span class="line">    // 省略中间部分代码</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 监听用户的下拉操作</span><br><span class="line">  async function onScrollViewRefresh() &#123;</span><br><span class="line">    isTriggered.value = true</span><br><span class="line">    await getPickUpList()</span><br><span class="line">    // 关闭动画交互</span><br><span class="line">    isTriggered.value = false</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 获取任务列表</span><br><span class="line">  async function getPickUpList(page = 1, pageSize = 5) &#123;</span><br><span class="line">    // 省略中间部分代码...</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view</span><br><span class="line">    @scrolltolower=&quot;onScrollToLower&quot;</span><br><span class="line">    @refresherrefresh=&quot;onScrollViewRefresh&quot;</span><br><span class="line">    :refresher-triggered=&quot;isTriggered&quot;</span><br><span class="line">    scroll-y</span><br><span class="line">    refresher-enabled</span><br><span class="line">    class=&quot;scroll-view&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中要注意:</p>
+<ul>
+<li><code>scroll-view</code> 下拉刷新的动画交互需要通过 <code>refresher-triggiered</code> 来打开或关闭，如果值为 <code>true</code> 时打开，值为 <code>false</code> 时关闭</li>
+<li>需要为调用方法指定 <code>async/await</code> 在请求结束后再关闭动画交互</li>
+</ul>
+<h4 id="2-2-任务详情"><a href="#2-2-任务详情" class="headerlink" title="2.2 任务详情"></a>2.2 任务详情</h4><p>在任务详情页面展示任务的全部信息，包含运输起点/终点、提货/交付对接人、运输异常、运输凭证图片等。根据任务的 ID 调用<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1/api-71281847">接口</a>即可获取相应的数据。</p>
+<h5 id="2-2-1-获取任务ID"><a href="#2-2-1-获取任务ID" class="headerlink" title="2.2.1 获取任务ID"></a>2.2.1 获取任务ID</h5><p>在待提货列表章节我们已经拼凑到地址上了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/detail/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line"></span><br><span class="line">  // 获取地址参数</span><br><span class="line">  onLoad((params) =&gt; &#123;</span><br><span class="line">    console.log(params.id)</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-2-获取任务详情"><a href="#2-2-2-获取任务详情" class="headerlink" title="2.2.2 获取任务详情"></a>2.2.2 获取任务详情</h5><ol>
+<li>封装调用接口的方法，接口的详细说明在<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1/api-71281847">这里</a></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/task.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 引入网络请求模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; uniFetch &#125; <span class="keyword">from</span> <span class="string">&#x27;./uni-fetch&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	<span class="comment">// 省略了中间部分代码...</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 任务详情</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;string&#125;</span> <span class="variable">id</span></span> - 任务ID</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="title">detail</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(!id) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">return</span> uniFetch.get(<span class="string">`/driver/tasks/details/<span class="subst">$&#123;id&#125;</span>`</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>到页面中调用接口获取任务详情的数据</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/detail/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line">  import taskApi from &#x27;@/apis/task&#x27;</span><br><span class="line"></span><br><span class="line">  // 任务详情</span><br><span class="line">  const taskDetail = ref(&#123;&#125;)</span><br><span class="line"></span><br><span class="line">  // 获取地址参数</span><br><span class="line">  onLoad((params) =&gt; &#123;</span><br><span class="line">    // 获取任务 ID 并获取详情数据</span><br><span class="line">    getTaskDetail(params.id)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 获取任务详情数据</span><br><span class="line">  async function getTaskDetail(id) &#123;</span><br><span class="line">    if (!id) return</span><br><span class="line">    const &#123; code, data &#125; = await taskApi.detail(id)</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;获取数据失败, 稍后重试 !&#x27;)</span><br><span class="line">    // 渲染数据</span><br><span class="line">    taskDetail.value = data</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-3-详情数据渲染"><a href="#2-2-3-详情数据渲染" class="headerlink" title="2.2.3 详情数据渲染"></a>2.2.3 详情数据渲染</h5><p>在对详情数据进行渲染时需要注意不同的任务状态所展示的内存在着差异，通过 <code>v-if</code> 条件来控制展示的内容，有以下几部分需要注意：</p>
+<ul>
+<li>任务的状态 <code>status</code> 值可能 <code>1</code>、<code>2</code>、<code>4</code>、<code>6</code>，分别对应待提货、在途、已交付、已完成</li>
+<li>待提货对应的操作为【延迟提货】和【提货】</li>
+<li>在途对应的操作为【异常上报】和【交付】</li>
+<li>已交付对应的操作为【回车登记】</li>
+<li>异常上报和回车登记传递的 id 参数为 <code>transportTaskId</code></li>
+<li>异常信息、提货信息、交付信息在待【提货状态】均为空</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/detail/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    &lt;view class=&quot;search-bar&quot;&gt;</span><br><span class="line">      &lt;text class=&quot;iconfont icon-scan&quot;&gt;&lt;/text&gt;</span><br><span class="line">      &lt;input class=&quot;input&quot; type=&quot;text&quot; placeholder=&quot;输入运单号&quot; /&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">    &lt;scroll-view scroll-y class=&quot;task-detail&quot;&gt;</span><br><span class="line">      &lt;view class=&quot;scroll-view-wrapper&quot;&gt;</span><br><span class="line">        &lt;view class=&quot;basic-info panel&quot;&gt;</span><br><span class="line">          &lt;view class=&quot;panel-title&quot;&gt;基本信息&lt;/view&gt;</span><br><span class="line">          &lt;view class=&quot;timeline&quot;&gt;</span><br><span class="line">            &lt;view class=&quot;line&quot;&gt;&#123;&#123; taskDetail.startAddress &#125;&#125;&lt;/view&gt;</span><br><span class="line">            &lt;view class=&quot;line&quot;&gt;&#123;&#123; taskDetail.endAddress &#125;&#125;&lt;/view&gt;</span><br><span class="line">            &lt;navigator</span><br><span class="line">              hover-class=&quot;none&quot;</span><br><span class="line">              url=&quot;/subpkg_task/guide/index&quot;</span><br><span class="line">              class=&quot;guide&quot;</span><br><span class="line">            &gt;</span><br><span class="line">              &lt;text class=&quot;iconfont icon-guide&quot;&gt;&lt;/text&gt;</span><br><span class="line">              &lt;text&gt;开始导航&lt;/text&gt;</span><br><span class="line">            &lt;/navigator&gt;</span><br><span class="line">          &lt;/view&gt;</span><br><span class="line">          &lt;view class=&quot;info-list&quot;&gt;</span><br><span class="line">            &lt;view class=&quot;info-list-item&quot;&gt;</span><br><span class="line">              &lt;text class=&quot;label&quot;&gt;任务编号&lt;/text&gt;</span><br><span class="line">              &lt;text class=&quot;value&quot;&gt;&#123;&#123; taskDetail.transportTaskId &#125;&#125;&lt;/text&gt;</span><br><span class="line">            &lt;/view&gt;</span><br><span class="line"></span><br><span class="line">            &lt;!-- 待提货展示数据 --&gt;</span><br><span class="line">            &lt;template v-if=&quot;taskDetail.status === 1&quot;&gt;</span><br><span class="line">              &lt;view class=&quot;info-list-item&quot;&gt;</span><br><span class="line">                &lt;text class=&quot;label&quot;&gt;联系人&lt;/text&gt;</span><br><span class="line">                &lt;text class=&quot;value&quot;&gt;&#123;&#123; taskDetail.startHandoverName &#125;&#125;&lt;/text&gt;</span><br><span class="line">              &lt;/view&gt;</span><br><span class="line">              &lt;view class=&quot;info-list-item&quot;&gt;</span><br><span class="line">                &lt;text class=&quot;label&quot;&gt;联系电话&lt;/text&gt;</span><br><span class="line">                &lt;text class=&quot;value&quot;&gt;&#123;&#123; taskDetail.startHandoverPhone &#125;&#125;&lt;/text&gt;</span><br><span class="line">              &lt;/view&gt;</span><br><span class="line">              &lt;view class=&quot;info-list-item&quot;&gt;</span><br><span class="line">                &lt;text class=&quot;label&quot;&gt;预计提货时间&lt;/text&gt;</span><br><span class="line">                &lt;text class=&quot;value&quot;&gt;&#123;&#123; taskDetail.planDepartureTime &#125;&#125;&lt;/text&gt;</span><br><span class="line">              &lt;/view&gt;</span><br><span class="line">               &lt;view class=&quot;info-list-item&quot;&gt;</span><br><span class="line">                &lt;text class=&quot;label&quot;&gt;实际提货时间&lt;/text&gt;</span><br><span class="line">                &lt;text class=&quot;value&quot;&gt;&#123;&#123; taskDetail.actualDepartureTime &#125;&#125;&lt;/text&gt;</span><br><span class="line">              &lt;/view&gt;</span><br><span class="line">            &lt;/template&gt;</span><br><span class="line"></span><br><span class="line">            &lt;!-- 在途展示数据 --&gt;</span><br><span class="line">            &lt;template v-if=&quot;taskDetail.status === 2&quot;&gt;</span><br><span class="line">              &lt;view class=&quot;info-list-item&quot;&gt;</span><br><span class="line">                &lt;text class=&quot;label&quot;&gt;交付联系人&lt;/text&gt;</span><br><span class="line">                &lt;text class=&quot;value&quot;&gt;&#123;&#123; taskDetail.finishHandoverName &#125;&#125;&lt;/text&gt;</span><br><span class="line">              &lt;/view&gt;</span><br><span class="line">              &lt;view class=&quot;info-list-item&quot;&gt;</span><br><span class="line">                &lt;text class=&quot;label&quot;&gt;联系电话&lt;/text&gt;</span><br><span class="line">                &lt;text class=&quot;value&quot;&gt;&#123;&#123; taskDetail.finishHandoverPhone &#125;&#125;&lt;/text&gt;</span><br><span class="line">              &lt;/view&gt;</span><br><span class="line">              &lt;view class=&quot;info-list-item&quot;&gt;</span><br><span class="line">                &lt;text class=&quot;label&quot;&gt;预计送达时间&lt;/text&gt;</span><br><span class="line">                &lt;text class=&quot;value&quot;&gt;&#123;&#123; taskDetail.planArrivalTime &#125;&#125;&lt;/text&gt;</span><br><span class="line">              &lt;/view&gt;</span><br><span class="line">              &lt;view class=&quot;info-list-item&quot;&gt;</span><br><span class="line">                &lt;text class=&quot;label&quot;&gt;实际送达时间&lt;/text&gt;</span><br><span class="line">                &lt;text class=&quot;value&quot;&gt;&#123;&#123; taskDetail.actualArrivalTime &#125;&#125;&lt;/text&gt;</span><br><span class="line">              &lt;/view&gt;</span><br><span class="line">            &lt;/template&gt;</span><br><span class="line">          &lt;/view&gt;</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line"></span><br><span class="line">        &lt;view class=&quot;except-info panel&quot;&gt;</span><br><span class="line">          &lt;view class=&quot;panel-title&quot;&gt;异常信息&lt;/view&gt;</span><br><span class="line">          ....</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line"></span><br><span class="line">        &lt;view class=&quot;panel pickup-info&quot;&gt;</span><br><span class="line">          &lt;view class=&quot;panel-title&quot;&gt;提货信息&lt;/view&gt;</span><br><span class="line">          ...</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line"></span><br><span class="line">        &lt;view class=&quot;delivery-info panel&quot;&gt;</span><br><span class="line">          &lt;view class=&quot;panel-title&quot;&gt;交货信息&lt;/view&gt;</span><br><span class="line">          ...</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line">      &lt;/view&gt;</span><br><span class="line">    &lt;/scroll-view&gt;</span><br><span class="line"></span><br><span class="line">    &lt;view class=&quot;toolbar&quot; v-if=&quot;true&quot;&gt;</span><br><span class="line">      &lt;navigator</span><br><span class="line">        :url=&quot;`/subpkg_task/delay/index?id=$&#123;taskDetail.id&#125;`&quot;</span><br><span class="line">        hover-class=&quot;none&quot;</span><br><span class="line">        class=&quot;button secondary&quot;&gt;</span><br><span class="line">        延迟提货</span><br><span class="line">      &lt;/navigator&gt;</span><br><span class="line">      &lt;navigator</span><br><span class="line">        :url=&quot;`/subpkg_task/pickup/index?id=$&#123;taskDetail.id&#125;`&quot;</span><br><span class="line">        hover-class=&quot;none&quot;</span><br><span class="line">        class=&quot;button primary&quot;&gt;</span><br><span class="line">        提货</span><br><span class="line">      &lt;/navigator&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">    &lt;view class=&quot;toolbar&quot;v-if=&quot;taskDetail.status === 2&quot;&gt;</span><br><span class="line">      &lt;navigator</span><br><span class="line">        :url=&quot;`/subpkg_task/except/index?transportTaskId=$&#123;taskDetail.transportTaskId&#125;`&quot;</span><br><span class="line">        hover-class=&quot;none&quot;</span><br><span class="line">        class=&quot;button secondary&quot;&gt;</span><br><span class="line">        异常上报</span><br><span class="line">      &lt;/navigator&gt;</span><br><span class="line">      &lt;navigator</span><br><span class="line">        :url=&quot;`/subpkg_task/delivery/index?id=$&#123;taskDetail.id&#125;`&quot;</span><br><span class="line">        hover-class=&quot;none&quot;</span><br><span class="line">        class=&quot;button primary&quot;&gt;</span><br><span class="line">        支付</span><br><span class="line">      &lt;/navigator&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">    &lt;view class=&quot;toolbar&quot; v-if=&quot;taskDetail.status === 4&quot;&gt;</span><br><span class="line">      &lt;navigator</span><br><span class="line">        :url=&quot;`/subpkg_task/record/index?transportTaskId=$&#123;taskDetail.transportTaskId&#125;`&quot;</span><br><span class="line">        hover-class=&quot;none&quot;</span><br><span class="line">        class=&quot;button primary block&quot;&gt;</span><br><span class="line">        回车登记</span><br><span class="line">      &lt;/navigator&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-4-条件编译应用"><a href="#2-2-4-条件编译应用" class="headerlink" title="2.2.4 条件编译应用"></a>2.2.4 条件编译应用</h5><p>在任务详情页面中包含了一个根据任务 ID 查询商品的功能，该功能可扩展为通过扫码来读取任务ID，但是 H5 端扫码的功能是受限的，因此可以通过条件编译的方式来针对不同的平台展示不同的页面内容。注：具体的扫码功能暂时还没有支持。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/detail/index.vue --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    &lt;view class=&quot;search-bar&quot;&gt;</span><br><span class="line">      &lt;!-- #ifdef H5 --&gt;</span><br><span class="line">      &lt;text class=&quot;iconfont icon-search&quot;&gt;&lt;/text&gt;</span><br><span class="line">      &lt;!-- #endif --&gt;</span><br><span class="line">      &lt;!-- #ifdef APP-PLUS | MP --&gt;</span><br><span class="line">      &lt;text class=&quot;iconfont icon-scan&quot;&gt;&lt;/text&gt;</span><br><span class="line">      &lt;!-- #endif --&gt;</span><br><span class="line">      &lt;input class=&quot;input&quot; type=&quot;text&quot; placeholder=&quot;输入运单号&quot; /&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">    &lt;scroll-view scroll-y class=&quot;task-detail&quot;&gt;</span><br><span class="line">      ...</span><br><span class="line">    &lt;/scroll-view&gt;</span><br><span class="line">    &lt;view class=&quot;toolbar&quot; v-if=&quot;true&quot;&gt;</span><br><span class="line">      ...</span><br><span class="line">  	&lt;/view&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>以上代码中的编译条件：</p>
+<ul>
+<li>H5 对应浏览器端</li>
+<li>APP-PLUS 对应 App 端</li>
+<li>MP 对应所有小程序端</li>
+</ul>
+<h3 id="三、作业"><a href="#三、作业" class="headerlink" title="三、作业"></a>三、作业</h3><p>完成今天各小节标注的作业</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/23/slwl-course02/" rel="prev" title="slwl-course02">
+      <i class="fa fa-chevron-left"></i> slwl-course02
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/23/slwl-course04/" rel="next" title="slwl-course04">
+      slwl-course04 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#uni-app%EF%BC%88%E7%A5%9E%E9%A2%86%E7%89%A9%E6%B5%81%EF%BC%89%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%AC%AC3%E5%A4%A9"><span class="nav-number">1.</span> <span class="nav-text">uni-app（神领物流）项目实战 - 第3天</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E3%80%90%E7%A5%9E%E9%A2%86%E7%89%A9%E6%B5%81%E3%80%91%E6%B6%88%E6%81%AF"><span class="nav-number">1.1.</span> <span class="nav-text">一、【神领物流】消息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E4%BB%BB%E5%8A%A1%E9%80%9A%E7%9F%A5"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 任务通知</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-1-%E9%80%9A%E7%9F%A5%E5%88%97%E8%A1%A8"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1.1 通知列表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-2-%E4%B8%8A%E6%8B%89%E5%88%86%E9%A1%B5"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.1.2 上拉分页</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-3-%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.1.3 下拉刷新</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-4-%E5%85%A8%E9%83%A8%E5%B7%B2%E8%AF%BB"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">1.1.4 全部已读</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E5%85%AC%E5%91%8A"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 公告</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-1-%E5%85%AC%E5%91%8A%E5%88%97%E8%A1%A8"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1.2.1 公告列表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-2-%E4%B8%8A%E6%8B%89%E5%88%86%E9%A1%B5"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">1.2.2 上拉分页</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-3-%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">1.2.3 下拉刷新</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-4-%E5%85%A8%E9%83%A8%E5%B7%B2%E8%AF%BB"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">1.2.4 全部已读</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E3%80%90%E7%A5%9E%E9%A2%86%E7%89%A9%E6%B5%81%E3%80%91%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.2.</span> <span class="nav-text">二、【神领物流】任务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%BE%85%E6%8F%90%E8%B4%A7"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 待提货</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">2.1.1 任务列表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-%E4%B8%8A%E6%8B%89%E5%88%86%E9%A1%B5"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">2.1.2 上拉分页</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-3-%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">2.1.3 下拉刷新</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E4%BB%BB%E5%8A%A1%E8%AF%A6%E6%83%85"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 任务详情</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1ID"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">2.2.1 获取任务ID</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E8%AF%A6%E6%83%85"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2.2.2 获取任务详情</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-3-%E8%AF%A6%E6%83%85%E6%95%B0%E6%8D%AE%E6%B8%B2%E6%9F%93"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">2.2.3 详情数据渲染</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-4-%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91%E5%BA%94%E7%94%A8"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">2.2.4 条件编译应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.3.</span> <span class="nav-text">三、作业</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

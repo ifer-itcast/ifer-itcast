@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="uni-app（神领物流）项目实战 - 第6天学习目标：  知道如何生成 Android 证书  知道如何配置 App 端地图服务平台  知道如何实现实人认证的功能  知道如何实现一键登录的功能  知道如何实现消息推送的功能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="slwl-course06">
+<meta property="og:url" content="http://example.com/2023/07/23/slwl-course06/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="uni-app（神领物流）项目实战 - 第6天学习目标：  知道如何生成 Android 证书  知道如何配置 App 端地图服务平台  知道如何实现实人认证的功能  知道如何实现一键登录的功能  知道如何实现消息推送的功能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/d6image-1.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-2.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-3.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-4.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-5.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-6.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-7.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-8.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-9.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-10.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-18.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-11.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-12.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-13.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-14.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-15.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-16.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-17.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-21.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-22.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-23.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-20.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-24.png">
+<meta property="og:image" content="http://example.com/resource/images/d6image-25.png">
+<meta property="article:published_time" content="2023-07-23T14:40:09.000Z">
+<meta property="article:modified_time" content="2023-07-23T14:50:25.226Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/d6image-1.png">
+
+<link rel="canonical" href="http://example.com/2023/07/23/slwl-course06/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>slwl-course06 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/07/23/slwl-course06/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          slwl-course06
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-07-23 22:40:09 / 修改时间：22:50:25" itemprop="dateCreated datePublished" datetime="2023-07-23T22:40:09+08:00">2023-07-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="uni-app（神领物流）项目实战-第6天"><a href="#uni-app（神领物流）项目实战-第6天" class="headerlink" title="uni-app（神领物流）项目实战 - 第6天"></a>uni-app（神领物流）项目实战 - 第6天</h2><p><strong>学习目标：</strong></p>
+<ul>
+<li><p>知道如何生成 Android 证书</p>
+</li>
+<li><p>知道如何配置 App 端地图服务平台</p>
+</li>
+<li><p>知道如何实现实人认证的功能</p>
+</li>
+<li><p>知道如何实现一键登录的功能</p>
+</li>
+<li><p>知道如何实现消息推送的功能</p>
+</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="一、自定义调试基座"><a href="#一、自定义调试基座" class="headerlink" title="一、自定义调试基座"></a>一、自定义调试基座</h3><p>在使用 HBuilderX 运行到 App 端时，官方提供的 Android 包（标准基座）来对项目进行打包，标准基座提供了日常开发的一系列功能，能够满足大部分日常的业务开发，但是当涉及到一些特殊需求时时就需要自定义调试基座，如消息推送、一键登录、人脸识别等。</p>
+<p>生成自定义基座时及<strong>正式发布 App 应用</strong>时需要使用自有证书，然后再由 HBuilderX 提供的云打包服务生成安卓 APK 安装程序。</p>
+<h4 id="1-1-安卓证书"><a href="#1-1-安卓证书" class="headerlink" title="1.1 安卓证书"></a>1.1 安卓证书</h4><p>安卓证书是一种数字签名技术，安卓系统要求安装到系统上的 App 必须要使用证书进行签名。签名相当于是 App 的身份证书，该证书能够证明 App 的归属者及合法性。</p>
+<p>安卓证书的生成规则是由 Google 公司规定的，由开发者自助生成且免费。</p>
+<h5 id="1-1-1-JRE-环境"><a href="#1-1-1-JRE-环境" class="headerlink" title="1.1.1 JRE 环境"></a>1.1.1 JRE 环境</h5><ol>
+<li>安装 JRE 环境</li>
+</ol>
+<p><img src="/resource/images/d6image-1.png"></p>
+<p><img src="/resource/images/d6image-2.png"></p>
+<p><img src="/resource/images/d6image-3.png"></p>
+<ol start="2">
+<li>配置环境变量</li>
+</ol>
+<p><img src="/resource/images/d6image-4.png"></p>
+<p><img src="/resource/images/d6image-5.png"></p>
+<p><img src="/resource/images/d6image-6.png"></p>
+<p><img src="/resource/images/d6image-7.png"></p>
+<p>注：大家在安装 JRE 时默认安装到了 <code>C:\Program Files\Java\jre-1.8\bin</code> 目录当中，因此环境变量添加的路径也是该目录对应的路径。</p>
+<ol start="3">
+<li>验证 JRE 是否安装成功</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开命令行窗口</span></span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<p><img src="/resource/images/d6image-8.png"></p>
+<h5 id="1-1-2-生成证书"><a href="#1-1-2-生成证书" class="headerlink" title="1.1.2 生成证书"></a>1.1.2 生成证书</h5><p>HBuilderX 给出了<a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/article/35777">证书生成</a>的步骤说明：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开命令行工具</span></span><br><span class="line">keytool -genkey -<span class="built_in">alias</span> 证书别名 -keyalg RSA -keysize 2048 -validity 36500 -keystore 证书名字.keystore</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>testalias</code> 是证书别名，可修改为自己想设置的字符，建议使用英文字母和数字</li>
+<li><code>test.keystore</code> 是证书文件名称，可修改为自己想设置的文件名称，也可以指定完整文件路径</li>
+<li><code>36500</code> 是证书的有效期，表示100年有效期，单位天，建议时间设置长一点，避免证书过期</li>
+</ul>
+<p>回车后会提示：</p>
+<p><img src="/resource/images/d6image-9.png"></p>
+<p><strong>！！！大家务必记住证书别名和密码！！！</strong></p>
+<p>创建完证书后给出了一个警告，复制警告中的代码到命令行中执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自已复制自已提示出来的警告代码</span></span><br><span class="line">keytool -importkeystore -srckeystore test.keystore -destkeystore test.keystore -deststoretype pkcs12</span><br></pre></td></tr></table></figure>
+
+<p><img src="/resource/images/d6image-10.png"></p>
+<p>此时在执行命令的目录中就生成了一个 <code>xxxxx.keystore</code> 文件，即安卓证书了，同时还有一个 <code>xxxxx.keystore.old</code> 的备份文件，这个文件执行警告代码之前的证书文件，我们将这两个文件放在一起保管就可以了。</p>
+<h5 id="1-1-3-云端证书"><a href="#1-1-3-云端证书" class="headerlink" title="1.1.3 云端证书"></a>1.1.3 云端证书</h5><p>云端证书是由 DCloud 平台提供的生成证书的服务，登录到 <a target="_blank" rel="noopener" href="https://dev.dcloud.net.cn/">DCloud 开者中心</a>平台</p>
+<p><img src="/resource/images/d6image-18.png"></p>
+<h4 id="1-2-云打包"><a href="#1-2-云打包" class="headerlink" title="1.2 云打包"></a>1.2 云打包</h4><p><strong>生成好的证书即可以用来打正式的 APK 包，也可以用于自定义调试基座。</strong></p>
+<h5 id="1-2-1-自定义基座"><a href="#1-2-1-自定义基座" class="headerlink" title="1.2.1 自定义基座"></a>1.2.1 自定义基座</h5><p><img src="/resource/images/d6image-11.png"></p>
+<p><img src="/resource/images/d6image-12.png"></p>
+<h5 id="1-2-2-正式打包"><a href="#1-2-2-正式打包" class="headerlink" title="1.2.2 正式打包"></a>1.2.2 正式打包</h5><p><img src="/resource/images/d6image-13.png"></p>
+<p>正式包与自定义调试基座的区别在于，自定义调试基座用于开发环境，正式包用于上线到安卓应用商店，如360、小米、华为应用商店等。</p>
+<p><strong>注意：正式包与自定义调试基座的包名要一致！</strong></p>
+<h4 id="1-3-地图服务"><a href="#1-3-地图服务" class="headerlink" title="1.3 地图服务"></a>1.3 地图服务</h4><p>在 uni-app 中使用地图服务时，需要注意兼容性：</p>
+<table>
+<thead>
+<tr>
+<th>地图服务商</th>
+<th>App</th>
+<th>H5</th>
+<th>小程序</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>高德</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>Google</td>
+<td>仅nvue页面</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>腾讯</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody></table>
+<p>H5 和小程序平台咱们选择的是<a target="_blank" rel="noopener" href="https://lbs.qq.com/">腾讯地图</a>服务平台，App 咱们选择<a target="_blank" rel="noopener" href="https://lbs.amap.com/">高德地图</a>服务平台，自行注册高德地图开发者账号并创建应用。</p>
+<h5 id="1-3-1-创建应用Key"><a href="#1-3-1-创建应用Key" class="headerlink" title="1.3.1 创建应用Key"></a>1.3.1 创建应用Key</h5><p><img src="/resource/images/d6image-14.png"></p>
+<ul>
+<li><code>PackageName</code> 是在自定义调试基座和正式包时定义的包名</li>
+<li><code>SHA1</code> 值的获取方式如下所示</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到你保管证书的目录中，打开命令行工具</span></span><br><span class="line">keytool -list -v -keystore 你的证名名.keystore </span><br></pre></td></tr></table></figure>
+
+<p><img src="/resource/images/d6image-15.png"></p>
+<h5 id="1-3-2-配置神领物流"><a href="#1-3-2-配置神领物流" class="headerlink" title="1.3.2 配置神领物流"></a>1.3.2 配置神领物流</h5><p><img src="/resource/images/d6image-16.png"></p>
+<p>把在高德地图创建的 Key 填写到图示位置，IOS 的 key 可以省略也可以随便填写一个，然后重新打包自定义基座，打包后运行 App 项目，验证上报异常位置时是否可以打开地图。</p>
+<p>注意：没有配置 key 的情况下打包自定义基座运行，打开地图时会报如下错误：</p>
+<p><img src="/resource/images/d6image-17.png"></p>
+<h3 id="二、uniCloud-开发"><a href="#二、uniCloud-开发" class="headerlink" title="二、uniCloud 开发"></a>二、uniCloud 开发</h3><p>uniCloud 是 DCloud 联合阿里云、腾讯云，为开发者提供的基于 serverless 模式和 js 编程的云开发平台。提供了许多高效实用的业务解决方案，如消息推送、一键登录、实人认证等。</p>
+<p><strong>注：在下列的功能开发过程中所应用到的证书即可以是 DCloud 平台的云端证书，也可以是本地自定义生成的证书，无论选择哪一种切忌不要混用！作为新手建议大家就使用 DCloud 平台的云端证书。</strong></p>
+<h4 id="2-1-消息推送"><a href="#2-1-消息推送" class="headerlink" title="2.1 消息推送"></a>2.1 消息推送</h4><p>消息推送是服务端管理后台主动向安装了 App 的用户发送消息功能，分为离线推送和在线推送两种。</p>
+<h5 id="2-1-1-应用信息"><a href="#2-1-1-应用信息" class="headerlink" title="2.1.1 应用信息"></a>2.1.1 应用信息</h5><p>完善平台信息，填写 MD5、SHA1、SHA256 信息。</p>
+<p><img src="/resource/images/d6image-21.png"></p>
+<p><img src="/resource/images/d6image-22.png"></p>
+<p>IOS 平台信息也需要完善，只需要填写一个包名就行</p>
+<p><img src="/resource/images/d6image-23.png"></p>
+<p>然后找到 uniPush 选择 2.0（支持全端推送）</p>
+<p><img src="/resource/images/d6image-20.png"></p>
+<h5 id="2-1-2-离线推送"><a href="#2-1-2-离线推送" class="headerlink" title="2.1.2 离线推送"></a>2.1.2 离线推送</h5><p>离线推送即厂商推送设置，这种方式不需要在 App 中添加代码（不引入 SDK）即可实现消息推送的功能。这种方式的弊端是要为不同品品牌的手机分别设置参数。</p>
+<p>以华为手机为例，首先注册成为<a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/agconnect">华为开发者账号</a>，需要完成身份认证，华为手机用户可以使用自身的华为账号登录。</p>
+<p>个推服务平台<a target="_blank" rel="noopener" href="https://docs.getui.com/getui/mobile/vendor/vendor_open/">文档说明</a></p>
+<h5 id="2-1-3-配置神领物流"><a href="#2-1-3-配置神领物流" class="headerlink" title="2.1.3 配置神领物流"></a>2.1.3 配置神领物流</h5><p><img src="/resource/images/d6image-24.png"></p>
+<p>配置完成后重新打包。</p>
+<h5 id="2-1-4-发送消息"><a href="#2-1-4-发送消息" class="headerlink" title="2.1.4 发送消息"></a>2.1.4 发送消息</h5><p><img src="/resource/images/d6image-25.png"></p>
+<p>没有安卓机的同学可以使用 WeTest 平台提供的<a target="_blank" rel="noopener" href="https://wetest.qq.com/products/cloud-phone">云手机</a>进行测试，注意选择华为品牌的手机。</p>
+<h4 id="2-2-一键登录"><a href="#2-2-一键登录" class="headerlink" title="2.2 一键登录"></a>2.2 一键登录</h4><h4 id="2-3-实人认证"><a href="#2-3-实人认证" class="headerlink" title="2.3 实人认证"></a>2.3 实人认证</h4>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/23/slwl-course05/" rel="prev" title="slwl-course05">
+      <i class="fa fa-chevron-left"></i> slwl-course05
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/23/slwl-course07/" rel="next" title="slwl-course07">
+      slwl-course07 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#uni-app%EF%BC%88%E7%A5%9E%E9%A2%86%E7%89%A9%E6%B5%81%EF%BC%89%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%AC%AC6%E5%A4%A9"><span class="nav-number">1.</span> <span class="nav-text">uni-app（神领物流）项目实战 - 第6天</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E8%B0%83%E8%AF%95%E5%9F%BA%E5%BA%A7"><span class="nav-number">1.1.</span> <span class="nav-text">一、自定义调试基座</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E5%AE%89%E5%8D%93%E8%AF%81%E4%B9%A6"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 安卓证书</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-1-JRE-%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1.1 JRE 环境</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-2-%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.1.2 生成证书</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-3-%E4%BA%91%E7%AB%AF%E8%AF%81%E4%B9%A6"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.1.3 云端证书</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E4%BA%91%E6%89%93%E5%8C%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 云打包</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-1-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%BA%E5%BA%A7"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1.2.1 自定义基座</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-2-%E6%AD%A3%E5%BC%8F%E6%89%93%E5%8C%85"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">1.2.2 正式打包</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E5%9C%B0%E5%9B%BE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 地图服务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-1-%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8Key"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">1.3.1 创建应用Key</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-2-%E9%85%8D%E7%BD%AE%E7%A5%9E%E9%A2%86%E7%89%A9%E6%B5%81"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">1.3.2 配置神领物流</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81uniCloud-%E5%BC%80%E5%8F%91"><span class="nav-number">1.2.</span> <span class="nav-text">二、uniCloud 开发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 消息推送</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-%E5%BA%94%E7%94%A8%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">2.1.1 应用信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-%E7%A6%BB%E7%BA%BF%E6%8E%A8%E9%80%81"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">2.1.2 离线推送</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-3-%E9%85%8D%E7%BD%AE%E7%A5%9E%E9%A2%86%E7%89%A9%E6%B5%81"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">2.1.3 配置神领物流</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-4-%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">2.1.4 发送消息</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 一键登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E5%AE%9E%E4%BA%BA%E8%AE%A4%E8%AF%81"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 实人认证</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

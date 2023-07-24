@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="uni-app（神领物流）项目实战 - 第4天学习目标：  能够独立完成任务提货、异常上报、在途的功能  能够使用 uniCloud 实现上传文件到云存储的功能  能够配置地图服务平台的 Key 获取地址理位置  能够使用 uni-file-picker 和 uni-popup 扩展组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="slwl-course04">
+<meta property="og:url" content="http://example.com/2023/07/23/slwl-course04/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="uni-app（神领物流）项目实战 - 第4天学习目标：  能够独立完成任务提货、异常上报、在途的功能  能够使用 uniCloud 实现上传文件到云存储的功能  能够配置地图服务平台的 Key 获取地址理位置  能够使用 uni-file-picker 和 uni-popup 扩展组件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/d4image-1.png">
+<meta property="og:image" content="http://example.com/resource/images/d4image-2.png">
+<meta property="og:image" content="http://example.com/resource/images/d4image-3.png">
+<meta property="og:image" content="http://example.com/resource/images/d4image-4.png">
+<meta property="og:image" content="http://example.com/resource/images/d4image-5.png">
+<meta property="og:image" content="http://example.com/resource/images/d4image-6.png">
+<meta property="og:image" content="http://example.com/resource/images/d4image-7.png">
+<meta property="og:image" content="http://example.com/resource/images/d4image-8.png">
+<meta property="og:image" content="http://example.com/resource/images/d4image-9.png">
+<meta property="article:published_time" content="2023-07-23T14:40:03.000Z">
+<meta property="article:modified_time" content="2023-07-23T14:50:11.943Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/d4image-1.png">
+
+<link rel="canonical" href="http://example.com/2023/07/23/slwl-course04/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>slwl-course04 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/07/23/slwl-course04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          slwl-course04
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-07-23 22:40:03 / 修改时间：22:50:11" itemprop="dateCreated datePublished" datetime="2023-07-23T22:40:03+08:00">2023-07-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="uni-app（神领物流）项目实战-第4天"><a href="#uni-app（神领物流）项目实战-第4天" class="headerlink" title="uni-app（神领物流）项目实战 - 第4天"></a>uni-app（神领物流）项目实战 - 第4天</h2><p><strong>学习目标：</strong></p>
+<ul>
+<li><p>能够独立完成任务提货、异常上报、在途的功能</p>
+</li>
+<li><p>能够使用 uniCloud 实现上传文件到云存储的功能</p>
+</li>
+<li><p>能够配置地图服务平台的 Key 获取地址理位置</p>
+</li>
+<li><p>能够使用 uni-file-picker 和 uni-popup 扩展组件</p>
+</li>
+</ul>
+<span id="more"></span>
+<h3 id="一、【神领物流】任务"><a href="#一、【神领物流】任务" class="headerlink" title="一、【神领物流】任务"></a>一、【神领物流】任务</h3><p>继续来开发任务模块剩下的其它功能。</p>
+<h4 id="1-1-延迟提货"><a href="#1-1-延迟提货" class="headerlink" title="1.1 延迟提货"></a>1.1 延迟提货</h4><p>在司机接收到运输任务后，可以根据自身的情况调整去现场提货的时间，但是要提交申请并说明延迟提货的原因，即延迟提货的功能。</p>
+<h5 id="1-1-1-获取参数"><a href="#1-1-1-获取参数" class="headerlink" title="1.1.1 获取参数"></a>1.1.1 获取参数</h5><p>延迟提货的操作入口在【任务详情】页面当中，在跳转到延迟提货页面时地址携带的参数为当前【任务的 ID】 和【原计划提货的时间】。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/subpkg_task/detail.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  // ...</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;view class=&quot;toolbar&quot; v-if=&quot;taskDetail.status === 1&quot;&gt;</span><br><span class="line">      &lt;navigator</span><br><span class="line">        :url=&quot;`/subpkg_task/delay/index?id=$&#123;taskDetail.id&#125;&amp;planDepartureTime=$&#123;taskDetail.planDepartureTime&#125;`&quot;</span><br><span class="line">        hover-class=&quot;none&quot;</span><br><span class="line">        class=&quot;button secondary&quot;</span><br><span class="line">      &gt;</span><br><span class="line">        延迟提货</span><br><span class="line">      &lt;/navigator&gt;</span><br><span class="line">      &lt;navigator</span><br><span class="line">        :url=&quot;`/subpkg_task/pickup/index?id=$&#123;taskDetail.id&#125;`&quot;</span><br><span class="line">        hover-class=&quot;none&quot;</span><br><span class="line">        class=&quot;button primary&quot;</span><br><span class="line">      &gt;</span><br><span class="line">        提货</span><br><span class="line">      &lt;/navigator&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接下来到延迟提货页面获取地址中传递的参数</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/delay/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line"></span><br><span class="line">  // 原计划提货时间</span><br><span class="line">  const planDepartureTime = ref(&#x27;&#x27;)</span><br><span class="line">  // 延迟提货任务的ID</span><br><span class="line">  const id = ref(&#x27;&#x27;)</span><br><span class="line"></span><br><span class="line">  // 获取地址上的参数</span><br><span class="line">  onLoad((query) =&gt; &#123;</span><br><span class="line">    // 原计划提货时间</span><br><span class="line">    planDepartureTime.value = query.planDepartureTime</span><br><span class="line">    // 延迟提货任务的ID</span><br><span class="line">    id.value = query.id</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-1-2-表单数据"><a href="#1-1-2-表单数据" class="headerlink" title="1.1.2 表单数据"></a>1.1.2 表单数据</h5><p>表单数据有两个，分别为【延迟时间】和【延迟的原因】</p>
+<ol>
+<li>延迟时间</li>
+</ol>
+<p>用户在填写延迟时间时用到是内置组件 <code>picker</code> 将其 <code>mode</code> 属性指定为 <code>time</code>，用户进行选择后会触发 <code>change</code> 事件，监听该事件即可得到用户选择的时间。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/delay/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line"></span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">  // 延迟提货时间</span><br><span class="line">  const delayTime = ref(&#x27;&#x27;)</span><br><span class="line"></span><br><span class="line"> 	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 监听用户选择时间</span><br><span class="line">  function onPickerChange(ev) &#123;</span><br><span class="line">    // 延迟提货时间，需要拼接日期</span><br><span class="line">    const [date] = planDepartureTime.value.split(&#x27; &#x27;)</span><br><span class="line">    delayTime.value = `$&#123;date&#125; $&#123;ev.detail.value&#125;`</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">			...</span><br><span class="line">      &lt;uni-list-item title=&quot;延迟时间&quot; showArrow&gt;</span><br><span class="line">        &lt;template v-slot:footer&gt;</span><br><span class="line">          &lt;picker @change=&quot;onPickerChange&quot; class=&quot;time-picker&quot; mode=&quot;time&quot;&gt;</span><br><span class="line">            &lt;text v-if=&quot;!delayTime&quot;&gt;不可超过2个小时&lt;/text&gt;</span><br><span class="line">            &lt;text v-else&gt;&#123;&#123; delayTime + &#x27;:00&#x27; &#125;&#125;&lt;/text&gt;</span><br><span class="line">          &lt;/picker&gt;</span><br><span class="line">        &lt;/template&gt;</span><br><span class="line">      &lt;/uni-list-item&gt;</span><br><span class="line">			...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在上述代码中需要注意时间的拼凑方式：</p>
+<ul>
+<li>日期部分要与原计划提货日期对应，原因在于只能延迟提货2个小时，所以必然在同一天当中</li>
+</ul>
+<ol start="2">
+<li>延迟原因</li>
+</ol>
+<p>直接使用 <code>v-model</code> 来获取即可，除了获取数据还需要对字数进行统计</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/delay/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line"></span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">  // 延迟原因</span><br><span class="line">  const delayReason = ref(&#x27;&#x27;)</span><br><span class="line"></span><br><span class="line"> 	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    	...</span><br><span class="line">      &lt;uni-list-item direction=&quot;column&quot;&gt;</span><br><span class="line">        &lt;template v-slot:body&gt;</span><br><span class="line">          &lt;view class=&quot;textarea-wrapper&quot;&gt;</span><br><span class="line">            &lt;textarea</span><br><span class="line">              class=&quot;textarea&quot;</span><br><span class="line">              v-model=&quot;delayReason&quot;</span><br><span class="line">              placeholder-style=&quot;color: #818181&quot;</span><br><span class="line">              placeholder=&quot;请输入延迟提货原因&quot;</span><br><span class="line">            &gt;&lt;/textarea&gt;</span><br><span class="line">            &lt;text class=&quot;words-count&quot;&gt;0/50&lt;/text&gt;</span><br><span class="line">          &lt;/view&gt;</span><br><span class="line">        &lt;/template&gt;</span><br><span class="line">      &lt;/uni-list-item&gt;</span><br><span class="line">      ...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>通过计算属性来统计延迟原因的字数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/delay/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line"></span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">  // 延迟原因</span><br><span class="line">  const delayReason = ref(&#x27;&#x27;)</span><br><span class="line">  // 统计输入的字数</span><br><span class="line">  const wordsCount = computed(() =&gt; delayReason.value.length)</span><br><span class="line"></span><br><span class="line"> 	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    	...</span><br><span class="line">      &lt;uni-list-item direction=&quot;column&quot;&gt;</span><br><span class="line">        &lt;template v-slot:body&gt;</span><br><span class="line">          &lt;view class=&quot;textarea-wrapper&quot;&gt;</span><br><span class="line">            &lt;textarea</span><br><span class="line">              class=&quot;textarea&quot;</span><br><span class="line">              v-model=&quot;delayReason&quot;</span><br><span class="line">              placeholder-style=&quot;color: #818181&quot;</span><br><span class="line">              placeholder=&quot;请输入延迟提货原因&quot;</span><br><span class="line">            &gt;&lt;/textarea&gt;</span><br><span class="line">            &lt;text class=&quot;words-count&quot;&gt;&#123;&#123; wordsCount &#125;&#125;/50&lt;/text&gt;</span><br><span class="line">          &lt;/view&gt;</span><br><span class="line">        &lt;/template&gt;</span><br><span class="line">      &lt;/uni-list-item&gt;</span><br><span class="line">      ...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>数据验证</li>
+</ol>
+<p>通过计算属性来验证填写的数据是否符合要求，延迟时不允许超过原计划时间2个小时，延迟原因不超过50个字。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/delay/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line"></span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">  // 延迟提货时间</span><br><span class="line">  const delayTime = ref(&#x27;&#x27;)</span><br><span class="line">  // 验证延迟时间</span><br><span class="line">  const delayTimeValid = computed(() =&gt; &#123;</span><br><span class="line">    // 延迟时间不超过2小时</span><br><span class="line">    const start = new Date(planDepartureTime.value)</span><br><span class="line">    const end = new Date(delayTime.value)</span><br><span class="line">    // 时间差区间在 0 ~ 7200 * 1000 毫秒</span><br><span class="line">    return end - start &gt; 0 &amp;&amp; end - start &lt; 7200 * 1000</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 延迟原因</span><br><span class="line">  const delayReason = ref(&#x27;&#x27;)</span><br><span class="line">  // 统计输入的字数</span><br><span class="line">  const wordsCount = computed(() =&gt; delayReason.value.length)</span><br><span class="line">  // 验证延迟原因</span><br><span class="line">  const delayReasonValid = computed(() =&gt; &#123;</span><br><span class="line">    return wordsCount.value &lt;= 50 &amp;&amp; wordsCount.value &gt; 0</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line"> 	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    	...</span><br><span class="line">      &lt;uni-list-item title=&quot;延迟时间&quot; showArrow&gt;</span><br><span class="line">        &lt;template v-slot:footer&gt;</span><br><span class="line">          &lt;picker @change=&quot;onPickerChange&quot; class=&quot;time-picker&quot; mode=&quot;time&quot;&gt;</span><br><span class="line">            &lt;text v-if=&quot;!delayTime&quot;&gt;不可超过2个小时&lt;/text&gt;</span><br><span class="line">            &lt;text :class=&quot;&#123; error: !delayTimeValid &#125;&quot;&gt;&#123;&#123; delayTime + &#x27;:00&#x27; &#125;&#125;&lt;/text&gt;</span><br><span class="line">          &lt;/picker&gt;</span><br><span class="line">        &lt;/template&gt;</span><br><span class="line">      &lt;/uni-list-item&gt;</span><br><span class="line">      &lt;uni-list-item direction=&quot;column&quot;&gt;</span><br><span class="line">        &lt;template v-slot:body&gt;</span><br><span class="line">          &lt;view class=&quot;textarea-wrapper&quot;&gt;</span><br><span class="line">            &lt;textarea</span><br><span class="line">              class=&quot;textarea&quot;</span><br><span class="line">              v-model=&quot;delayReason&quot;</span><br><span class="line">              placeholder-style=&quot;color: #818181&quot;</span><br><span class="line">              placeholder=&quot;请输入延迟提货原因&quot;</span><br><span class="line">            &gt;&lt;/textarea&gt;</span><br><span class="line">            &lt;text :class=&quot;&#123; error: wordsCount &gt; 50 &#125;&quot; class=&quot;words-count&quot;&gt;</span><br><span class="line">              &#123;&#123; wordsCount &#125;&#125;/50</span><br><span class="line">            &lt;/text&gt;</span><br><span class="line">          &lt;/view&gt;</span><br><span class="line">        &lt;/template&gt;</span><br><span class="line">      &lt;/uni-list-item&gt;</span><br><span class="line">      ...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-1-3-提交数据"><a href="#1-1-3-提交数据" class="headerlink" title="1.1.3 提交数据"></a>1.1.3 提交数据</h5><p>接下来需要调用接口来提交表单数据，接口文档的详细说明在<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1/api-71276847">这里</a>。</p>
+<ol>
+<li>禁用/开启表单提交，如果表单验证未通过时不允许用户点击按钮来提交表单</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/delay/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line"></span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 是否允许提交表单</span><br><span class="line">  const enableSubmit = computed(() =&gt; &#123;</span><br><span class="line">    return !delayReasonValid.value || !delayTimeValid.value</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line"> 	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    	...</span><br><span class="line">      &lt;uni-list-item :border=&quot;false&quot;&gt;</span><br><span class="line">        &lt;template v-slot:body&gt;</span><br><span class="line">          &lt;button :disabled=&quot;enableSubmit&quot; class=&quot;button&quot;&gt;提交&lt;/button&gt;</span><br><span class="line">        &lt;/template&gt;</span><br><span class="line">      &lt;/uni-list-item&gt;</span><br><span class="line">      ...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>封装调用接口的方法</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/task.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="comment">// 省略中间部分代码...</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 延迟提货</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;Object&#125;</span> <span class="variable">data</span></span> - 接口参数</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="title">delay</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(!data.id) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">return</span> uniFetch.put(<span class="string">&#x27;/driver/tasks/delay&#x27;</span>, data);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>调用接口提交数据</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/delay/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line">  import taskApi from &#x27;@/apis/task&#x27;</span><br><span class="line"></span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  async function onSubmitForm() &#123;</span><br><span class="line">    // 待提交的表单数据</span><br><span class="line">    const formData = &#123;</span><br><span class="line">      id: id.value,</span><br><span class="line">      delayTime: delayTime.value,</span><br><span class="line">      delayReason: delayReason.value,</span><br><span class="line">    &#125;</span><br><span class="line">    const &#123; code &#125; = await taskApi.delay(formData)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;提交数据失败，稍后重试！&#x27;)</span><br><span class="line">    // 跳转到任务列表</span><br><span class="line">    uni.reLaunch(&#123; url: &#x27;/pages/task/index&#x27; &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    	...</span><br><span class="line">      &lt;uni-list-item :border=&quot;false&quot;&gt;</span><br><span class="line">        &lt;template v-slot:body&gt;</span><br><span class="line">          &lt;button @click=&quot;onSubmitForm&quot; :disabled=&quot;enableSubmit&quot; class=&quot;button&quot;&gt;</span><br><span class="line">            提交</span><br><span class="line">          &lt;/button&gt;</span><br><span class="line">        &lt;/template&gt;</span><br><span class="line">      &lt;/uni-list-item&gt;</span><br><span class="line">      ...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="1-2-提货"><a href="#1-2-提货" class="headerlink" title="1.2 提货"></a>1.2 提货</h4><p>司机到现场提货完成后需要上传相关的单据和现场货品的照片，即本小节要实现的功能，在本节上传图片会用到 uniCloud 提供的<a target="_blank" rel="noopener" href="https://unicloud.dcloud.net.cn/pages/login/login?uniIdRedirectUrl=%252Fpages%252Findex%252Findex">云开发</a>服务。</p>
+<p>uni-app 提供了文件上传的<a target="_blank" rel="noopener" href="https://zh.uniapp.dcloud.io/component/uniui/uni-file-picker.html">扩展组件</a> <code>uni-file-picker</code>，通过该组件可以轻松的将图片上传到云空间，在使用 <code>uni-file-picker</code> 组件之前先来开通免费的云空间。</p>
+<h5 id="1-2-1-uniCloud"><a href="#1-2-1-uniCloud" class="headerlink" title="1.2.1 uniCloud"></a>1.2.1 uniCloud</h5><ol>
+<li>使用注册前面课程中注册好的账号来登录 uniCloud 的控制台</li>
+</ol>
+<p><img src="/resource/images/d4image-1.png" alt="uniCloud"></p>
+<ol start="2">
+<li>新建服务空间</li>
+</ol>
+<p><img src="/resource/images/d4image-2.png" alt="服务空间"></p>
+<ol start="3">
+<li>新建 uniCloud 开发环境</li>
+</ol>
+<p><img src="/resource/images/d4image-3.png" alt="uniCloud开发环境"></p>
+<ol start="4">
+<li>关联服务空间</li>
+</ol>
+<p><img src="/resource/images/d4image-4.png" alt="关联服务空间"></p>
+<p><img src="/resource/images/d4image-5.png"></p>
+<ol start="5">
+<li>获取 AppID</li>
+</ol>
+<p><img src="/resource/images/d4image-6.png"></p>
+<ol start="6">
+<li>重新启动项目，<strong>！！！非常重要！！！</strong></li>
+</ol>
+<h5 id="1-2-2-uni-file-picker"><a href="#1-2-2-uni-file-picker" class="headerlink" title="1.2.2 uni-file-picker"></a>1.2.2 uni-file-picker</h5><p><code>uni-file-picker</code> 是 uni-app 的扩展组件，用于实现文件上传的功能。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/pickup/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">	// &quot;https://mp-664d2554-cfa5-4427-9adf-d14025991d5f.cdn.bspapp.com/cloudstorage/40edf9ed-9f29-48b7-ab29-425abe351dea.jpg&quot;</span><br><span class="line">  </span><br><span class="line">  // 提货凭证图片</span><br><span class="line">  const receiptPictrues = ref([])</span><br><span class="line">  // 货品图片</span><br><span class="line">  const goodsPictrues = ref([])</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    &lt;view class=&quot;receipt-info&quot;&gt;</span><br><span class="line">      &lt;uni-file-picker</span><br><span class="line">        v-model=&quot;receiptPictrues&quot;</span><br><span class="line">        file-extname=&quot;jpg,webp,gif,png&quot;</span><br><span class="line">        limit=&quot;3&quot;</span><br><span class="line">        title=&quot;请拍照上传回单凭证&quot;</span><br><span class="line">      &gt;&lt;/uni-file-picker&gt;</span><br><span class="line">      &lt;uni-file-picker</span><br><span class="line">        file-extname=&quot;jpg,webp,gif,png&quot;</span><br><span class="line">        limit=&quot;3&quot;</span><br><span class="line">        title=&quot;请拍照上传货品照片&quot;</span><br><span class="line">      &gt;&lt;/uni-file-picker&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">    &lt;button disabled class=&quot;button&quot;&gt;提交&lt;/button&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>title</code> 属性定义标题用于提示上传文件的内容</li>
+<li><code>limit</code> 限制上传文件的数量</li>
+<li><code>file-extname</code> 限制上传文件的类型</li>
+<li><code>v-model</code> 用于回显上传的图片</li>
+<li><code>@success</code> 上传成功的回调（了解即可）</li>
+<li><code>@fail</code> 上传失败的回调（了解即可）</li>
+</ul>
+<h5 id="1-2-3-数据验证"><a href="#1-2-3-数据验证" class="headerlink" title="1.2.3 数据验证"></a>1.2.3 数据验证</h5><p>每种类型的图片最少1张，最多3张图片，通过计算属性来进行验证。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/pickup/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">	</span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">  // 数据验证</span><br><span class="line">  const enableSubmit = computed(() =&gt; &#123;</span><br><span class="line">    return goodsPictrues.value.length &gt; 0 &amp;&amp; receiptPictrues.value.length &gt; 0</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;button :disabled=&quot;!enableSubmit&quot; class=&quot;button&quot;&gt;提交&lt;/button&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-2-4-提交表单"><a href="#1-2-4-提交表单" class="headerlink" title="1.2.4 提交表单"></a>1.2.4 提交表单</h5><p>将上传到云空间的图片地址发送给后端接口，详细接口说明<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1/api-71297181">文档在这里</a>。</p>
+<ol>
+<li>准备表单数据</li>
+</ol>
+<ul>
+<li>任务ID是通地址参数传递的</li>
+<li><code>cargoPickUpPictureList</code> 数组只包含 <code>url</code> 属性</li>
+<li><code>cargoPictureList</code> 数组只包含 <code>url</code> 属性</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/pickup/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line">	</span><br><span class="line">  // 任务ID</span><br><span class="line">  const id = ref(&#x27;&#x27;)</span><br><span class="line">  // 提货凭证图片</span><br><span class="line">  const receiptPictrues = ref([])</span><br><span class="line">  // 数据二次处理，只保留 url 属性</span><br><span class="line">  const cargoPickUpPictureList = computed(() =&gt; &#123;</span><br><span class="line">    return receiptPictrues.value.map((&#123; url &#125;) =&gt; &#123;</span><br><span class="line">      return &#123; url &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 货品图片</span><br><span class="line">  const goodsPictrues = ref([])</span><br><span class="line">  // 数据二次处理，只保留 url 属性</span><br><span class="line">  const cargoPictureList = computed(() =&gt; &#123;</span><br><span class="line">    return goodsPictrues.value.map((&#123; url &#125;) =&gt; &#123;</span><br><span class="line">      return &#123; url &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  onLoad((query) =&gt; &#123;</span><br><span class="line">    // 获取任务ID</span><br><span class="line">    id.value = query.id</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">	// 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;button :disabled=&quot;!enableSubmit&quot; class=&quot;button&quot;&gt;提交&lt;/button&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>封装接口调用接口的方法</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/task.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="comment">// 省略中间部分代码...</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 提货</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@property <span class="type">&#123;Object&#125;</span> <span class="variable">data</span></span> - 接口参数</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="title">pickup</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!data.id) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">return</span> uniFetch.post(<span class="string">&#x27;/driver/tasks/takeDelivery&#x27;</span>, data);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>到页面中调用接品提交表单数据</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/pickup/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line">	import taskApi from &#x27;@/apis/task&#x27;</span><br><span class="line">    </span><br><span class="line">	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 提交表单数据</span><br><span class="line">  async function onSubmitForm() &#123;</span><br><span class="line">    // 表单数据</span><br><span class="line">    const formData = &#123;</span><br><span class="line">      id: id.value,</span><br><span class="line">      cargoPickUpPictureList: cargoPickUpPictureList.value,</span><br><span class="line">      cargoPictureList: cargoPictureList.value,</span><br><span class="line">    &#125;</span><br><span class="line">    const &#123; code &#125; = await taskApi.pickup(formData)</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;提交数据失败！&#x27;)</span><br><span class="line">    // 去到任务列表</span><br><span class="line">    uni.reLaunch(&#123; url: &#x27;/subpkg_task/detail/index?id=&#x27; + id.value &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;button @click=&quot;onSubmitForm&quot; :disabled=&quot;!enableSubmit&quot; class=&quot;button&quot;&gt;提交&lt;/button&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="1-3-在途"><a href="#1-3-在途" class="headerlink" title="1.3 在途"></a>1.3 在途</h4><p>司机完成提货后，运输的任务状态即 <code>status</code> 的值会变成 2，获取在途列表的数据时所使用的接口与待提货是相同的，区别是传入的状态值有差异。</p>
+<h5 id="1-3-1-任务列表"><a href="#1-3-1-任务列表" class="headerlink" title="1.3.1 任务列表"></a>1.3.1 任务列表</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/task/components/delivery.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  import taskApi from &#x27;@/apis/task&#x27;</span><br><span class="line"></span><br><span class="line">  // 在途任务列表</span><br><span class="line">  const deliveryList = ref([])</span><br><span class="line">  // 在途列任务列表是否为空</span><br><span class="line">  const isEmpty = ref(false)</span><br><span class="line"></span><br><span class="line">  // 生命周期（获取数据）</span><br><span class="line">  onMounted(() =&gt; &#123;</span><br><span class="line">    getDeliveryList()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 在途任务列表</span><br><span class="line">  async function getDeliveryList() &#123;</span><br><span class="line">    const &#123; code, data &#125; = await taskApi.list(2)</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;在途任务获取失败！&#x27;)</span><br><span class="line">    // 渲染数据</span><br><span class="line">    deliveryList.value = data.items || []</span><br><span class="line">    isEmpty.value = deliveryList.value.length === 0</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;scroll-view scroll-y class=&quot;scroll-view&quot;&gt;</span><br><span class="line">    &lt;view class=&quot;scroll-view-wrapper&quot;&gt;</span><br><span class="line">      &lt;view</span><br><span class="line">        v-for=&quot;delivery in deliveryList&quot;</span><br><span class="line">        :key=&quot;delivery.id&quot;</span><br><span class="line">        class=&quot;task-card&quot;</span><br><span class="line">      &gt;</span><br><span class="line">        &lt;navigator</span><br><span class="line">          hover-class=&quot;none&quot;</span><br><span class="line">          :url=&quot;`/subpkg_task/detail/index?id=$&#123;delivery.id&#125;`&quot;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;view class=&quot;header&quot;&gt;</span><br><span class="line">            &lt;text class=&quot;no&quot;&gt;任务编号: &#123;&#123; delivery.transportTaskId &#125;&#125;&lt;/text&gt;</span><br><span class="line">          &lt;/view&gt;</span><br><span class="line">          &lt;view class=&quot;body&quot;&gt;</span><br><span class="line">            &lt;view class=&quot;timeline&quot;&gt;</span><br><span class="line">              &lt;view class=&quot;line&quot;&gt;&#123;&#123; delivery.startAddress &#125;&#125;&lt;/view&gt;</span><br><span class="line">              &lt;view class=&quot;line&quot;&gt;&#123;&#123; delivery.endAddress &#125;&#125;&lt;/view&gt;</span><br><span class="line">            &lt;/view&gt;</span><br><span class="line">          &lt;/view&gt;</span><br><span class="line">        &lt;/navigator&gt;</span><br><span class="line">        &lt;view class=&quot;footer&quot;&gt;</span><br><span class="line">          &lt;view class=&quot;label&quot;&gt;到货时间&lt;/view&gt;</span><br><span class="line">          &lt;view class=&quot;time&quot;&gt;&#123;&#123; delivery.planArrivalTime &#125;&#125;&lt;/view&gt;</span><br><span class="line">          &lt;navigator</span><br><span class="line">            hover-class=&quot;none&quot;</span><br><span class="line">            :url=&quot;`/subpkg_task/delivery/index?id=$&#123;delivery.id&#125;`&quot;</span><br><span class="line">            class=&quot;action&quot;</span><br><span class="line">          &gt;</span><br><span class="line">            交付</span><br><span class="line">          &lt;/navigator&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/view&gt;</span><br><span class="line">      &lt;/view&gt;</span><br><span class="line">      &lt;view v-if=&quot;isEmpty&quot; class=&quot;task-blank&quot;&gt;无在途货物&lt;/view&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">  &lt;/scroll-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-3-2-任务详情"><a href="#1-3-2-任务详情" class="headerlink" title="1.3.2 任务详情"></a>1.3.2 任务详情</h5><p>当任务状态处于在途时，已经完成了提货的操作，因此在详情面面需要展示提货时提交的照片。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/detail/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  // </span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">		...</span><br><span class="line">    &lt;scroll-view scroll-y class=&quot;task-detail&quot;&gt;</span><br><span class="line">      &lt;view class=&quot;scroll-view-wrapper&quot;&gt;</span><br><span class="line">				...</span><br><span class="line">        &lt;view v-if=&quot;taskDetail.status &gt;= 2&quot; class=&quot;panel pickup-info&quot;&gt;</span><br><span class="line">          &lt;view class=&quot;panel-title&quot;&gt;提货信息&lt;/view&gt;</span><br><span class="line">          &lt;view class=&quot;label&quot;&gt;提货凭证&lt;/view&gt;</span><br><span class="line">          &lt;view class=&quot;pictures&quot;&gt;</span><br><span class="line">            &lt;image</span><br><span class="line">              v-for=&quot;receipt in taskDetail.cargoPictureList&quot;</span><br><span class="line">              :key=&quot;receipt.url&quot;</span><br><span class="line">              class=&quot;picture&quot;</span><br><span class="line">              :src=&quot;receipt.url&quot;</span><br><span class="line">            /&gt;</span><br><span class="line">          &lt;/view&gt;</span><br><span class="line">          &lt;view class=&quot;label&quot;&gt;货品照片&lt;/view&gt;</span><br><span class="line">          &lt;view class=&quot;pictures&quot;&gt;</span><br><span class="line">            &lt;image</span><br><span class="line">              v-for=&quot;goods in taskDetail.cargoPickUpPictureList&quot;</span><br><span class="line">              :key=&quot;goods.url&quot;</span><br><span class="line">              class=&quot;picture&quot;</span><br><span class="line">              :src=&quot;goods.url&quot;</span><br><span class="line">            /&gt;</span><br><span class="line">          &lt;/view&gt;</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line">				...</span><br><span class="line">      &lt;/view&gt;</span><br><span class="line">    &lt;/scroll-view&gt;</span><br><span class="line">		...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>任务详情中的数据：</p>
+<ul>
+<li><code>cargoPictureList</code> 提供凭证的照片</li>
+<li><code>cargoPickUpPictureList</code> 提货商品的照片</li>
+</ul>
+<h4 id="1-4-异常上报"><a href="#1-4-异常上报" class="headerlink" title="1.4 异常上报"></a>1.4 异常上报</h4><p>异常上报是指司机在运输途中遇到的一些突发状况，这些突发状可能会导致运输到达时间有所延迟，司机需要将遇到的突发情况及时上报，方便管理端进行管理。</p>
+<p>异常上报功能模块中包含交互相对要多一些，略为复杂一些，大家一定要耐心。</p>
+<h5 id="1-4-1-异常时间"><a href="#1-4-1-异常时间" class="headerlink" title="1.4.1 异常时间"></a>1.4.1 异常时间</h5><p>异常时间的获取用到了 uni-app 的扩展组件 <code>uni-datetime-picker</code> 和 <code>uni-list</code> </p>
+<ul>
+<li><code>v-model</code> 获取用户选择的时间</li>
+<li><code>v-slot:footer</code> 插槽用于自定义 <code>uni-list-item</code> 右侧展示的内容</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/except/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">  </span><br><span class="line">  // 省略了中间部分代码...</span><br><span class="line">  </span><br><span class="line">  // 获取异常时间</span><br><span class="line">  const exceptionTime = computed(() =&gt; &#123;</span><br><span class="line">    return timePicker.value || &#x27;请选择&#x27;</span><br><span class="line">  &#125;)</span><br><span class="line">  // 扩展组件时间初始值</span><br><span class="line">  const timePicker = ref(&#x27;&#x27;)</span><br><span class="line">  </span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    &lt;scroll-view class=&quot;scroll-view&quot; scroll-y&gt;</span><br><span class="line">      &lt;view class=&quot;scroll-view-wrapper&quot;&gt;</span><br><span class="line">        &lt;uni-list :border=&quot;false&quot;&gt;</span><br><span class="line">          &lt;uni-list-item show-arrow title=&quot;异常时间&quot;&gt;</span><br><span class="line">            &lt;template v-slot:footer&gt;</span><br><span class="line">              &lt;uni-datetime-picker v-model=&quot;timePicker&quot;&gt;</span><br><span class="line">                &lt;view class=&quot;picker-value&quot;&gt;&#123;&#123; exceptionTime &#125;&#125;&lt;/view&gt;</span><br><span class="line">              &lt;/uni-datetime-picker&gt;</span><br><span class="line">            &lt;/template&gt;</span><br><span class="line">          &lt;/uni-list-item&gt;</span><br><span class="line">					...</span><br><span class="line">        &lt;/uni-list&gt;</span><br><span class="line">      &lt;/view&gt;</span><br><span class="line">    &lt;/scroll-view&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-4-2-上报位置"><a href="#1-4-2-上报位置" class="headerlink" title="1.4.2 上报位置"></a>1.4.2 上报位置</h5><p>上报位置需要调用 <code>wx.chooseLocation</code> 来获取用户所在位置信息，在 uni-app 中调用 <code>wx.chooseLocation</code> 时需要指定地图服务平台申请的 key，并且地图的使用存在一定的兼容性。</p>
+<table>
+<thead>
+<tr>
+<th>地图服务商</th>
+<th>App</th>
+<th>H5</th>
+<th>小程序</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>高德</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>Google</td>
+<td>仅nvue页面</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>腾讯</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody></table>
+<p>对比后我们选择腾讯位置服务平台，之前在享+生活中介绍过如何创建应用以及申请 key，这里文档就不再缀述了。</p>
+<p><img src="/resource/images/d4image-7.png"></p>
+<p><img src="/resource/images/d4image-8.png"></p>
+<p>注：支持 App 端需要指定其它地图服务商，在课堂就不演示其注册的流程了，大家可自行注册并申请 key。</p>
+<p>另外微信小程序要求在使用 <code>wx.chooseLocation</code> 位置接口时必须要通过 <code>requiredPrivateInfos </code> 进行配置，在 uni-app 中<a target="_blank" rel="noopener" href="https://zh.uniapp.dcloud.io/collocation/manifest.html#mp-weixin">设置 <code>requiredPrivateInfos</code> 需要</a>在 <code>manifest.json</code> 的源码视图中完成。</p>
+<p><img src="/resource/images/d4image-9.png"></p>
+<p>以上均是相关的配置准备工作，目的是保证 <code>uni.chooseLocation</code> 能够成功调用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/except/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">  // 上报位置数据</span><br><span class="line">  const exceptionPlace = ref(&#x27;&#x27;)</span><br><span class="line">  // 打开地图，选择位置</span><br><span class="line">  async function onLocationChoose() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      // 获取位置</span><br><span class="line">      const &#123; address &#125; = await uni.chooseLocation(&#123;&#125;)</span><br><span class="line">      exceptionPlace.value = address</span><br><span class="line">    &#125; catch (err) &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    &lt;scroll-view class=&quot;scroll-view&quot; scroll-y&gt;</span><br><span class="line">      &lt;view class=&quot;scroll-view-wrapper&quot;&gt;</span><br><span class="line">        &lt;uni-list :border=&quot;false&quot;&gt;</span><br><span class="line">          ...</span><br><span class="line">					&lt;uni-list-item</span><br><span class="line">            show-arrow</span><br><span class="line">            clickable</span><br><span class="line">            ellipsis=&quot;1&quot;</span><br><span class="line">            @click=&quot;onLocationChoose&quot;</span><br><span class="line">            title=&quot;上报位置&quot;</span><br><span class="line">            :right-text=&quot;exceptionPlace || &#x27;请选择&#x27;&quot;</span><br><span class="line">          /&gt;</span><br><span class="line">        &lt;/uni-list&gt;</span><br><span class="line">      &lt;/view&gt;</span><br><span class="line">    &lt;/scroll-view&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-4-3-异常类型"><a href="#1-4-3-异常类型" class="headerlink" title="1.4.3 异常类型"></a>1.4.3 异常类型</h5><p>异常类型使用到了uni-app的<a target="_blank" rel="noopener" href="https://uniapp.dcloud.net.cn/component/uniui/uni-popup.html">扩展组件</a> <code>uni-popup</code>。</p>
+<ol>
+<li>在实现相关逻辑之前先来整理下 <code>uni-popup</code> 所展示的数据</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/except/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed, reactive &#125; from &#x27;vue&#x27;</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">    // 定义 popup 组件展示的数据</span><br><span class="line">  const exceptionTypes = reactive([</span><br><span class="line">    &#x27;发动机启动困难&#x27;,</span><br><span class="line">    &#x27;不着车，漏油&#x27;,</span><br><span class="line">    &#x27;照明失灵&#x27;,</span><br><span class="line">    &#x27;排烟异常、温度异常&#x27;,</span><br><span class="line">    &#x27;其他问题&#x27;,</span><br><span class="line">  ])</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;uni-popup ref=&quot;popup&quot; type=&quot;bottom&quot;&gt;</span><br><span class="line">      &lt;uni-list class=&quot;popup-action-sheet&quot;&gt;</span><br><span class="line">        ...</span><br><span class="line">        &lt;uni-list-item</span><br><span class="line">          v-for=&quot;exceptionType in exceptionTypes&quot;</span><br><span class="line">          :key=&quot;exceptionType&quot;</span><br><span class="line">          :title=&quot;exceptionType&quot;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;template v-slot:footer&gt;</span><br><span class="line">            &lt;checkbox-group class=&quot;checkbox&quot;&gt;</span><br><span class="line">              &lt;checkbox :value=&quot;exceptionType&quot; color=&quot;#EF4F3F&quot; /&gt;</span><br><span class="line">            &lt;/checkbox-group&gt;</span><br><span class="line">          &lt;/template&gt;</span><br><span class="line">        &lt;/uni-list-item&gt;</span><br><span class="line">        ...</span><br><span class="line">      &lt;/uni-list&gt;</span><br><span class="line">    &lt;/uni-popup&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>选择并获取异常的类型，允许多选，选项之间使用 <code>|</code> 拼接</li>
+</ol>
+<p>在用户选择了 <code>checkbox</code> 内置组件后会触发 <code>change</code> 事件，进而获取所选择的内容，由于允许多选所以先将用户选择的异常类型存一个临时数组中，当用户在点击确定时再将这个临时数组使用 <code>|</code> 拼凑成一个字符串。</p>
+<ul>
+<li>将用户选择的异常类型存入数组，注意 <code>change</code> 事件要监听在 <code>checkbox-group</code> 组件上</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/except/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">    // 定义 popup 组件展示的数据</span><br><span class="line">  const exceptionTypes = reactive([</span><br><span class="line">    &#x27;发动机启动困难&#x27;,</span><br><span class="line">    &#x27;不着车，漏油&#x27;,</span><br><span class="line">    &#x27;照明失灵&#x27;,</span><br><span class="line">    &#x27;排烟异常、温度异常&#x27;,</span><br><span class="line">    &#x27;其他问题&#x27;,</span><br><span class="line">  ])</span><br><span class="line">  </span><br><span class="line">  // 临时记录异常类型选项（可以不必是响应式）</span><br><span class="line">  const tempException = []</span><br><span class="line">  // 监听用户的选择操作</span><br><span class="line">  function onCheckboxChange(ev) &#123;</span><br><span class="line">    // 将用户选择的异常类型存储到数组中</span><br><span class="line">    tempException.push(ev.detail.value)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;uni-popup ref=&quot;popup&quot; type=&quot;bottom&quot;&gt;</span><br><span class="line">      &lt;uni-list class=&quot;popup-action-sheet&quot;&gt;</span><br><span class="line">        ...</span><br><span class="line">        &lt;uni-list-item</span><br><span class="line">          v-for=&quot;exceptionType in exceptionTypes&quot;</span><br><span class="line">          :key=&quot;exceptionType&quot;</span><br><span class="line">          :title=&quot;exceptionType&quot;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;template v-slot:footer&gt;</span><br><span class="line">            &lt;checkbox-group @change=&quot;onCheckboxChange&quot; class=&quot;checkbox&quot;&gt;</span><br><span class="line">              &lt;checkbox :value=&quot;exceptionType&quot; color=&quot;#EF4F3F&quot; /&gt;</span><br><span class="line">            &lt;/checkbox-group&gt;</span><br><span class="line">          &lt;/template&gt;</span><br><span class="line">        &lt;/uni-list-item&gt;</span><br><span class="line">        ...</span><br><span class="line">      &lt;/uni-list&gt;</span><br><span class="line">    &lt;/uni-popup&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在用户点击弹层 <code>uni-popup</code> 上的按钮后，不仅要关闭弹层还要将用户选择的异常类型使用 <code>|</code> 拼凑成字符串</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/except/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">    // 定义 popup 组件展示的数据</span><br><span class="line">  const exceptionTypes = reactive([</span><br><span class="line">    &#x27;发动机启动困难&#x27;,</span><br><span class="line">    &#x27;不着车，漏油&#x27;,</span><br><span class="line">    &#x27;照明失灵&#x27;,</span><br><span class="line">    &#x27;排烟异常、温度异常&#x27;,</span><br><span class="line">    &#x27;其他问题&#x27;,</span><br><span class="line">  ])</span><br><span class="line">  </span><br><span class="line">  // 异常类型，多个选项间使用 | 拼接</span><br><span class="line">  const exceptionType = ref(&#x27;&#x27;)</span><br><span class="line">  </span><br><span class="line">  // 临时记录异常类型选项（可以不必是响应式）</span><br><span class="line">  const tempException = []</span><br><span class="line">  // 监听用户的选择操作</span><br><span class="line">  function onCheckboxChange(ev) &#123;</span><br><span class="line">    // 将用户选择的异常类型存储到数组中</span><br><span class="line">    tempException.push(ev.detail.value)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 用户点击 popup 确定按钮</span><br><span class="line">  function onPopupConfirm() &#123;</span><br><span class="line">    // 关闭 popup 弹层</span><br><span class="line">    popup.value.close()</span><br><span class="line">    // 将获取的异常类型拼凑成字符串</span><br><span class="line">    exceptionType.value = tempException.join(&#x27;|&#x27;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    &lt;scroll-view class=&quot;scroll-view&quot; scroll-y&gt;</span><br><span class="line">      &lt;view class=&quot;scroll-view-wrapper&quot;&gt;</span><br><span class="line">        &lt;uni-list :border=&quot;false&quot;&gt;</span><br><span class="line">    			...</span><br><span class="line">          &lt;uni-list-item</span><br><span class="line">            show-arrow</span><br><span class="line">            clickable</span><br><span class="line">            @click=&quot;onPopupOpen&quot;</span><br><span class="line">            title=&quot;异常类型&quot;</span><br><span class="line">            :right-text=&quot;exceptionType || &#x27;请选择&#x27;&quot;</span><br><span class="line">          /&gt;</span><br><span class="line">  			&lt;/uni-list&gt;</span><br><span class="line">  		&lt;/view&gt;</span><br><span class="line">  	&lt;/scroll-view&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;uni-popup ref=&quot;popup&quot; type=&quot;bottom&quot;&gt;</span><br><span class="line">      &lt;uni-list class=&quot;popup-action-sheet&quot;&gt;</span><br><span class="line">        ...</span><br><span class="line">        &lt;uni-list-item&gt;</span><br><span class="line">          &lt;template v-slot:body&gt;</span><br><span class="line">            &lt;button @click=&quot;onPopupConfirm&quot; class=&quot;button&quot;&gt;确定&lt;/button&gt;</span><br><span class="line">          &lt;/template&gt;</span><br><span class="line">        &lt;/uni-list-item&gt;</span><br><span class="line">      &lt;/uni-list&gt;</span><br><span class="line">    &lt;/uni-popup&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>=======================================================================================</p>
+<p>上述代码存在着bug，下面代码部分为修复优化的代码，只保留了与切换选中状态相关的代码</p>
+<p>=======================================================================================</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/except/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed, reactive &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line">  import taskApi from &#x27;@/apis/task&#x27;</span><br><span class="line"></span><br><span class="line">  // 组件 ref</span><br><span class="line">  const popup = ref(null)</span><br><span class="line">  // 异常日期</span><br><span class="line">  const timePicker = ref(&#x27;&#x27;)</span><br><span class="line"></span><br><span class="line">  // 定义 popup 组件展示的数据</span><br><span class="line">  const exceptionTypes = reactive([</span><br><span class="line">    &#123; text: &#x27;发动机启动困难&#x27;, checked: true &#125;,</span><br><span class="line">    &#123; text: &#x27;不着车，漏油&#x27;, checked: false &#125;,</span><br><span class="line">    &#123; text: &#x27;照明失灵&#x27;, checked: false &#125;,</span><br><span class="line">    &#123; text: &#x27;排烟异常、温度异常&#x27;, checked: false &#125;,</span><br><span class="line">    &#123; text: &#x27;其他问题&#x27;, checked: false &#125;,</span><br><span class="line">  ])</span><br><span class="line"></span><br><span class="line">	// 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">  // 异常的类型</span><br><span class="line">  const exceptionType = ref(&#x27;&#x27;)</span><br><span class="line"></span><br><span class="line">	// 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 监听用户选择类型</span><br><span class="line">  function onCheckboxChange(index) &#123;</span><br><span class="line">    // 切换选中状态</span><br><span class="line">    exceptionTypes[index].checked = !exceptionTypes[index].checked</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">	// 省略了中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 关闭弹层</span><br><span class="line">  function onPopupClose() &#123;</span><br><span class="line">    popup.value.close()</span><br><span class="line"></span><br><span class="line">    // 获取用户选择的类型并回显到页面，即将 checked 属性为 true 单元取出</span><br><span class="line">    exceptionType.value = exceptionTypes</span><br><span class="line">      .filter((type) =&gt; &#123;</span><br><span class="line">        return type.checked // 过滤出选中的类型</span><br><span class="line">      &#125;)</span><br><span class="line">      .map((type) =&gt; &#123;</span><br><span class="line">        return type.text // 只保留 text 属性</span><br><span class="line">      &#125;)</span><br><span class="line">      .join(&#x27;|&#x27;) // 将选择的类型用 | 拼接并回显</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>由于改变了 <code>exceptionTypes</code> 数组的结构，与之对应的模板也要相对应的调整</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/except/index.vue --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">		...</span><br><span class="line">    &lt;uni-popup ref=&quot;popup&quot; type=&quot;bottom&quot;&gt;</span><br><span class="line">      &lt;uni-list class=&quot;popup-action-sheet&quot;&gt;</span><br><span class="line">				...</span><br><span class="line">        &lt;uni-list-item</span><br><span class="line">          v-for=&quot;(exceptionType, index) in exceptionTypes&quot;</span><br><span class="line">          :key=&quot;exceptionType.text&quot;</span><br><span class="line">          :title=&quot;exceptionType.text&quot;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;template v-slot:footer&gt;</span><br><span class="line">            &lt;checkbox-group @change=&quot;onCheckboxChange(index)&quot; class=&quot;checkbox&quot;&gt;</span><br><span class="line">              &lt;checkbox :checked=&quot;exceptionType.checked&quot; color=&quot;#EF4F3F&quot; /&gt;</span><br><span class="line">            &lt;/checkbox-group&gt;</span><br><span class="line">          &lt;/template&gt;</span><br><span class="line">        &lt;/uni-list-item&gt;</span><br><span class="line">        &lt;uni-list-item&gt;</span><br><span class="line">          &lt;template v-slot:body&gt;</span><br><span class="line">            &lt;button @click=&quot;onPopupClose&quot; class=&quot;button&quot;&gt;确定&lt;/button&gt;</span><br><span class="line">          &lt;/template&gt;</span><br><span class="line">        &lt;/uni-list-item&gt;</span><br><span class="line">      &lt;/uni-list&gt;</span><br><span class="line">    &lt;/uni-popup&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-4-4-异常描述"><a href="#1-4-4-异常描述" class="headerlink" title="1.4.4 异常描述"></a>1.4.4 异常描述</h5><p>在获取异常描述时只需要通过 <code>v-model</code> 即可，同时对异常描述的字数进行统计。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/except/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 异常描述</span><br><span class="line">  const exceptionDescribe = ref(&#x27;&#x27;)</span><br><span class="line">  // 异常描述字数统计</span><br><span class="line">  const wordsCount = computed(() =&gt; &#123;</span><br><span class="line">    return exceptionDescribe.value.length</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    &lt;scroll-view class=&quot;scroll-view&quot; scroll-y&gt;</span><br><span class="line">      &lt;view class=&quot;scroll-view-wrapper&quot;&gt;</span><br><span class="line">        &lt;uni-list :border=&quot;false&quot;&gt;</span><br><span class="line">    			...</span><br><span class="line">					&lt;uni-list-item direction=&quot;column&quot; title=&quot;异常描述&quot;&gt;</span><br><span class="line">            &lt;template v-slot:footer&gt;</span><br><span class="line">              &lt;view class=&quot;textarea-wrapper&quot;&gt;</span><br><span class="line">                &lt;textarea</span><br><span class="line">                  v-model=&quot;exceptionDescribe&quot;</span><br><span class="line">                  class=&quot;textarea&quot;</span><br><span class="line">                  placeholder=&quot;请输入异常描述&quot;</span><br><span class="line">                /&gt;&lt;/textarea&gt;</span><br><span class="line">                &lt;view class=&quot;words-count&quot;&gt;&#123;&#123; wordsCount &#125;&#125;/50&lt;/view&gt;</span><br><span class="line">              &lt;/view&gt;</span><br><span class="line">            &lt;/template&gt;</span><br><span class="line">          &lt;/uni-list-item&gt;</span><br><span class="line">  			&lt;/uni-list&gt;</span><br><span class="line">  		&lt;/view&gt;</span><br><span class="line">  	&lt;/scroll-view&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注：异常描述的字数限制为50，关于字数的验证在延迟提货的章节已经实现过了，大家可以去参考下。</p>
+<h5 id="1-4-5-现场照片"><a href="#1-4-5-现场照片" class="headerlink" title="1.4.5 现场照片"></a>1.4.5 现场照片</h5><p>获取现场照片需要司机上传图片到云存储，然后将云存储中的图片地址发送给服务端接口，该部分的实现逻辑与提货是一致的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/except/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line"></span><br><span class="line">  // 货品图片</span><br><span class="line">  const goodsPictrues = ref([])</span><br><span class="line">  // 数据二次处理，只保留 url 属性</span><br><span class="line">  const exceptionImagesList = computed(() =&gt; &#123;</span><br><span class="line">    return goodsPictrues.value.map((&#123; url &#125;) =&gt; &#123;</span><br><span class="line">      return &#123; url &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    &lt;scroll-view class=&quot;scroll-view&quot; scroll-y&gt;</span><br><span class="line">      &lt;view class=&quot;scroll-view-wrapper&quot;&gt;</span><br><span class="line">        ...</span><br><span class="line">        &lt;uni-list class=&quot;upload-picture&quot;&gt;</span><br><span class="line">          &lt;uni-list-item direction=&quot;column&quot; title=&quot;上传图片（最多3张）&quot;&gt;</span><br><span class="line">            &lt;template v-slot:footer&gt;</span><br><span class="line">              &lt;uni-file-picker</span><br><span class="line">                v-model=&quot;goodsPictrues&quot;</span><br><span class="line">                file-extname=&quot;jpg,webp,gif,png&quot;</span><br><span class="line">                limit=&quot;3&quot;</span><br><span class="line">              &gt;&lt;/uni-file-picker&gt;</span><br><span class="line">            &lt;/template&gt;</span><br><span class="line">          &lt;/uni-list-item&gt;</span><br><span class="line">        &lt;/uni-list&gt;</span><br><span class="line">  		&lt;/view&gt;</span><br><span class="line">  	&lt;/scroll-view&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-4-6-提交数据"><a href="#1-4-6-提交数据" class="headerlink" title="1.4.6 提交数据"></a>1.4.6 提交数据</h5><p>将全部的异常数据获取完毕后提交数据给服务端接口，<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1/api-91494222">接口文档</a>的详细说明在这里。</p>
+<ol>
+<li>封装调用接口的方法</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/task.js</span></span><br><span class="line"><span class="comment">// 引入网络请求模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; uniFetch &#125; <span class="keyword">from</span> <span class="string">&#x27;./uni-fetch&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="comment">// 省略中间部分代码...</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 上报异常</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;Object&#125;</span> <span class="variable">data</span></span> - 接口数据</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="title">except</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> uniFetch.post(<span class="string">&#x27;/driver/tasks/reportException&#x27;</span>, data)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>监听用户点击提交按钮</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/except/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, computed, reactive &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line">  import taskApi from &#x27;@/apis/task&#x27;</span><br><span class="line">  </span><br><span class="line">  // 中间省略部分代码...</span><br><span class="line">  </span><br><span class="line">  // 运输任务ID</span><br><span class="line">  const transportTaskId = ref(&#x27;&#x27;)</span><br><span class="line">  onLoad((query) =&gt; &#123;</span><br><span class="line">    transportTaskId.value = query.transportTaskId</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  // 中间省略部分代码...</span><br><span class="line">  </span><br><span class="line">  // 提交数据</span><br><span class="line">  async function onFormSubmit() &#123;</span><br><span class="line">    // 待提交的数据</span><br><span class="line">    const formData = &#123;</span><br><span class="line">      transportTaskId: transportTaskId.value,</span><br><span class="line">      exceptionTime: exceptionTime.value,</span><br><span class="line">      exceptionPlace: exceptionPlace.value,</span><br><span class="line">      exceptionType: exceptionType.value,</span><br><span class="line">      exceptionDescribe: exceptionDescribe.value,</span><br><span class="line">      exceptionImagesList: exceptionImagesList.value,</span><br><span class="line">    &#125;</span><br><span class="line">    const &#123; code &#125; = await taskApi.except(formData)</span><br><span class="line">    // 检测接口是否调用成功</span><br><span class="line">    if (code !== 200) return uni.utils.toast(&#x27;上报数据失败！&#x27;)</span><br><span class="line">    // 跳转到任务列表页面</span><br><span class="line">    uni.reLaunch(&#123; url: &#x27;/pages/task/index&#x27; &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 省略中间部分代码...</span><br><span class="line">  </span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    &lt;scroll-view class=&quot;scroll-view&quot; scroll-y&gt;</span><br><span class="line">      ...</span><br><span class="line">  	&lt;/scroll-view&gt;</span><br><span class="line">    &lt;view class=&quot;fixbar&quot;&gt;</span><br><span class="line">      &lt;button @click=&quot;onFormSubmit&quot; class=&quot;button disable&quot;&gt;提交&lt;/button&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-4-7-任务详情"><a href="#1-4-7-任务详情" class="headerlink" title="1.4.7 任务详情"></a>1.4.7 任务详情</h5><p>司机上报异常后，到任务详情当中即可看到上报的异常信息，我来到任务详情中来补充这部分数据的显示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_task/detail/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  // </span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">		...</span><br><span class="line">    &lt;scroll-view scroll-y class=&quot;task-detail&quot;&gt;</span><br><span class="line">      &lt;view class=&quot;scroll-view-wrapper&quot;&gt;</span><br><span class="line">				...</span><br><span class="line">        &lt;view v-if=&quot;taskDetail.exceptionList&quot; class=&quot;except-info panel&quot;&gt;</span><br><span class="line">          &lt;view class=&quot;panel-title&quot;&gt;异常信息&lt;/view&gt;</span><br><span class="line">          &lt;view</span><br><span class="line">            v-for=&quot;exception in taskDetail.exceptionList&quot;</span><br><span class="line">            :key=&quot;exception.exceptionType&quot;</span><br><span class="line">            class=&quot;info-list&quot;</span><br><span class="line">          &gt;</span><br><span class="line">            &lt;view class=&quot;info-list-item&quot;&gt;</span><br><span class="line">              &lt;text class=&quot;label&quot;&gt;上报时间&lt;/text&gt;</span><br><span class="line">              &lt;text class=&quot;value&quot;&gt;&#123;&#123; exception.exceptionTime &#125;&#125;&lt;/text&gt;</span><br><span class="line">            &lt;/view&gt;</span><br><span class="line">            &lt;view class=&quot;info-list-item&quot;&gt;</span><br><span class="line">              &lt;text class=&quot;label&quot;&gt;异常类型&lt;/text&gt;</span><br><span class="line">              &lt;text class=&quot;value&quot;&gt;&#123;&#123; exception.exceptionType &#125;&#125;&lt;/text&gt;</span><br><span class="line">            &lt;/view&gt;</span><br><span class="line">            &lt;view class=&quot;info-list-item&quot;&gt;</span><br><span class="line">              &lt;text class=&quot;label&quot;&gt;处理结果&lt;/text&gt;</span><br><span class="line">              &lt;text class=&quot;value&quot;&gt;&#123;&#123; exception.handleResult &#125;&#125;&lt;/text&gt;</span><br><span class="line">            &lt;/view&gt;</span><br><span class="line">          &lt;/view&gt;</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line">				...</span><br><span class="line">      &lt;/view&gt;</span><br><span class="line">    &lt;/scroll-view&gt;</span><br><span class="line">		...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>由于异常数据可能有也可能没有，因此在进行渲染前需要通过 <code>v-if</code> 条件判断，<code>exceptionList</code> 对应上报的异常数据。</p>
+<h3 id="二、作业"><a href="#二、作业" class="headerlink" title="二、作业"></a>二、作业</h3><p>完成今天各小节标注的作业</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/23/slwl-course03/" rel="prev" title="slwl-course03">
+      <i class="fa fa-chevron-left"></i> slwl-course03
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/23/slwl-course05/" rel="next" title="slwl-course05">
+      slwl-course05 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#uni-app%EF%BC%88%E7%A5%9E%E9%A2%86%E7%89%A9%E6%B5%81%EF%BC%89%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%AC%AC4%E5%A4%A9"><span class="nav-number">1.</span> <span class="nav-text">uni-app（神领物流）项目实战 - 第4天</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E3%80%90%E7%A5%9E%E9%A2%86%E7%89%A9%E6%B5%81%E3%80%91%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.1.</span> <span class="nav-text">一、【神领物流】任务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E5%BB%B6%E8%BF%9F%E6%8F%90%E8%B4%A7"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 延迟提货</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-1-%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1.1 获取参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-2-%E8%A1%A8%E5%8D%95%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.1.2 表单数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-3-%E6%8F%90%E4%BA%A4%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.1.3 提交数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E6%8F%90%E8%B4%A7"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 提货</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-1-uniCloud"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1.2.1 uniCloud</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-2-uni-file-picker"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">1.2.2 uni-file-picker</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-3-%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">1.2.3 数据验证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-4-%E6%8F%90%E4%BA%A4%E8%A1%A8%E5%8D%95"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">1.2.4 提交表单</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E5%9C%A8%E9%80%94"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 在途</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-1-%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">1.3.1 任务列表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-2-%E4%BB%BB%E5%8A%A1%E8%AF%A6%E6%83%85"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">1.3.2 任务详情</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-%E5%BC%82%E5%B8%B8%E4%B8%8A%E6%8A%A5"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 异常上报</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-1-%E5%BC%82%E5%B8%B8%E6%97%B6%E9%97%B4"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">1.4.1 异常时间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-2-%E4%B8%8A%E6%8A%A5%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">1.4.2 上报位置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-3-%E5%BC%82%E5%B8%B8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">1.4.3 异常类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-4-%E5%BC%82%E5%B8%B8%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.4.4.</span> <span class="nav-text">1.4.4 异常描述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-5-%E7%8E%B0%E5%9C%BA%E7%85%A7%E7%89%87"><span class="nav-number">1.1.4.5.</span> <span class="nav-text">1.4.5 现场照片</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-6-%E6%8F%90%E4%BA%A4%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.4.6.</span> <span class="nav-text">1.4.6 提交数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-7-%E4%BB%BB%E5%8A%A1%E8%AF%A6%E6%83%85"><span class="nav-number">1.1.4.7.</span> <span class="nav-text">1.4.7 任务详情</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.2.</span> <span class="nav-text">二、作业</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

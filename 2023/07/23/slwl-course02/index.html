@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="uni-app（神领物流）项目实战 - 第2天学习目标：  能够对 Pinia 进行初始化操作 掌握创建 Store 及数据操作的步骤 能够对 Pinia 数据进行持久化的处理 掌握 uniForm 表单验证的使用方法 能够根据业务需求配置请求&#x2F;响应拦截器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="slwl-course02">
+<meta property="og:url" content="http://example.com/2023/07/23/slwl-course02/index.html">
+<meta property="og:site_name" content="危险">
+<meta property="og:description" content="uni-app（神领物流）项目实战 - 第2天学习目标：  能够对 Pinia 进行初始化操作 掌握创建 Store 及数据操作的步骤 能够对 Pinia 数据进行持久化的处理 掌握 uniForm 表单验证的使用方法 能够根据业务需求配置请求&#x2F;响应拦截器">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/resource/images/image-1-66.png">
+<meta property="article:published_time" content="2023-07-23T14:39:55.000Z">
+<meta property="article:modified_time" content="2023-07-23T14:49:58.113Z">
+<meta property="article:author" content="Ifer">
+<meta property="article:tag" content="React,Redux,Mobx,Saga,Dva,Umi,AntD,TS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/resource/images/image-1-66.png">
+
+<link rel="canonical" href="http://example.com/2023/07/23/slwl-course02/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>slwl-course02 | 危险</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">危险</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为之则易，不为则难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/07/23/slwl-course02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/49337922.png">
+      <meta itemprop="name" content="Ifer">
+      <meta itemprop="description" content="React 全家桶 <span style='position:relative;top:-2px;'>✍</span>">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="危险">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          slwl-course02
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-07-23 22:39:55 / 修改时间：22:49:58" itemprop="dateCreated datePublished" datetime="2023-07-23T22:39:55+08:00">2023-07-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="uni-app（神领物流）项目实战-第2天"><a href="#uni-app（神领物流）项目实战-第2天" class="headerlink" title="uni-app（神领物流）项目实战 - 第2天"></a>uni-app（神领物流）项目实战 - 第2天</h2><p><strong>学习目标：</strong></p>
+<ul>
+<li>能够对 Pinia 进行初始化操作</li>
+<li>掌握创建 Store 及数据操作的步骤</li>
+<li>能够对 Pinia 数据进行持久化的处理</li>
+<li>掌握 uniForm 表单验证的使用方法</li>
+<li>能够根据业务需求配置请求/响应拦截器</li>
+</ul>
+<span id="more"></span>
+
+
+
+<h3 id="一、【神领物流】项目启动"><a href="#一、【神领物流】项目启动" class="headerlink" title="一、【神领物流】项目启动"></a>一、【神领物流】项目启动</h3><p>本节的主要任务是获取项目的静态页面、配置基本的网络请求和公共方法的封装。</p>
+<h4 id="1-1-拉取代码"><a href="#1-1-拉取代码" class="headerlink" title="1.1 拉取代码"></a>1.1 拉取代码</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取仓库代码</span></span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/lotjol/shenling-driver.git</span><br></pre></td></tr></table></figure>
+
+<p>本阶段课程中不专门针对 Git 的内容进行讲解，因此大家可以选择将目录中的 <code>.git</code> 删除，也可以在删除 <code>.git</code> 目录，重新初始化仓库自行练习 Git 的使用。</p>
+<p>拿到代码后打开 HBuilderX以导入的方式打开项目（也可以通过拖入的方式打开项目）：</p>
+<p><img src="/resource/images/image-1-66.png" alt="导入项目"></p>
+<p>关于该项目大家需要了解的是配置了 3 个分包:</p>
+<ul>
+<li><code>subpkg_message</code> 对应消息的模板的内容</li>
+<li><code>subpkg_task</code> 对应任务模块的内容</li>
+<li><code>subpkg_user</code> 对应用户模块的内容</li>
+</ul>
+<p>在 H5 端启动项目可以看到项目当前只是完成了静态页面部分的开发，数据接口与业务逻辑部分都尚未实现，这也是接下来我们即将学习的内容。</p>
+<h4 id="1-2-公共封装"><a href="#1-2-公共封装" class="headerlink" title="1.2 公共封装"></a>1.2 公共封装</h4><h5 id="1-2-1-网络请求"><a href="#1-2-1-网络请求" class="headerlink" title="1.2.1 网络请求"></a>1.2.1 网络请求</h5><p>在 uni-app 中通过 <code>uni.request</code> 发起网络请求，在实际的应用中需要结合一些业务场景进行二次封装，比如配置 baseURL、拦截器等，社区有许多封装好的库，我们在项目中可以拿过来直接使用。</p>
+<p><code>uni-app-fetch</code> 是对 <code>uni.request</code> 的封装，通过 npm 来安装该模块</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 uni-app-fetch 模块</span></span><br><span class="line">npm install uni-app-fetch</span><br></pre></td></tr></table></figure>
+
+<p>然后根据自身的业务需求来配置 <code>uni-app-fetch</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/uni-fetch.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 导入安装好的 uni-app-fetch 模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; createUniFetch &#125; <span class="keyword">from</span> <span class="string">&#x27;uni-app-fetch&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置符合自身业务的请求对象</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> uniFetch = createUniFetch(&#123;</span><br><span class="line">	<span class="attr">loading</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;正在加载...&#x27;</span> &#125;,</span><br><span class="line">	<span class="attr">baseURL</span>: <span class="string">&#x27;https://slwl-api.itheima.net&#x27;</span>,</span><br><span class="line">	<span class="attr">intercept</span>: &#123;</span><br><span class="line">		<span class="comment">// 请求拦截器</span></span><br><span class="line">		<span class="function"><span class="title">request</span>(<span class="params">options</span>)</span> &#123;</span><br><span class="line">			<span class="comment">// 后续补充实际逻辑</span></span><br><span class="line">      <span class="keyword">return</span> options</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="comment">// 响应拦截器</span></span><br><span class="line">		<span class="function"><span class="title">response</span>(<span class="params">result</span>)</span> &#123;</span><br><span class="line">			<span class="comment">// 后续补充实际逻辑</span></span><br><span class="line">      <span class="keyword">return</span> result</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><code>uni-app-fetch</code> 更详细的使用<a target="_blank" rel="noopener" href="https://github.com/lotjol/uni-app-fetch#readme">文档</a>在这里，它的使用逻辑是仿照 <code>axios</code> 来实现的，只是各别具体的用法稍有差异，在具体的应用中会给大家进行说明。</p>
+<ul>
+<li>loading 是否启动请求加载提示</li>
+<li>baseURL 配置请求接口的基地址</li>
+<li>intercept 配置请求和响应拦截器</li>
+</ul>
+<p>配置完成后到项目首页（任务）测试是否请求能够发出，在测试时需要求【神领物流】全部接口都需要登录才能访问到数据，因此在测试请求时只要能发出请求即可，不关注返回结果是否有数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/task/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  // 导入根据业务需要封装好的网络请求模块</span><br><span class="line">	import &#123; uniFetch &#125; from &#x27;@/apis/uni-fetch&#x27;</span><br><span class="line">	// 不关注请求结果是否有数据</span><br><span class="line">	uniFetch(&#123;</span><br><span class="line">		url: &#x27;/driver/tasks/list&#x27;,</span><br><span class="line">	&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>神领物流接口文档地址在<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1">这里</a>。</p>
+<h5 id="1-2-2-轻提示"><a href="#1-2-2-轻提示" class="headerlink" title="1.2.2 轻提示"></a>1.2.2 轻提示</h5><p>为了提升用户的体验，在项目的运行过程中需要给用户一些及时的反馈，比如数据验证错误、接口调用失败等，uni-app 中通过调用 <code>uni.showToast</code> 即可实现，但为了保证其使用的便捷性咱们也对它稍做封装处理。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utils/utils.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 项目中会用的一系列的工具方法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> utils = &#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 用户反馈（轻提示）</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param <span class="type">&#123;string&#125;</span> </span>title 提示文字内容</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param <span class="type">&#123;string&#125;</span> </span>icon 提示图标类型</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="title">toast</span>(<span class="params">title = <span class="string">&#x27;数据加载失败！&#x27;</span>, icon = <span class="string">&#x27;none&#x27;</span></span>)</span> &#123;</span><br><span class="line">		uni.showToast(&#123;</span><br><span class="line">			title,</span><br><span class="line">			icon,</span><br><span class="line">			<span class="attr">mask</span>: <span class="literal">true</span>,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方便全局进行引用</span></span><br><span class="line">uni.utils = utils</span><br></pre></td></tr></table></figure>
+
+<p>在项目入口 <code>main.js</code> 中导入封装好的工具模块</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@/utils/utils&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略了其它部分代码...</span></span><br></pre></td></tr></table></figure>
+
+<p>到项目中测试工具方法是否可用，还是在首页面（task）中测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// pages/task/index.vue</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  // 导入根据业务需要封装好的网络请求模块</span><br><span class="line">	import &#123; uniFetch &#125; from &#x27;@/apis/uni-fetch&#x27;</span><br><span class="line">	// 不关注请求结果是否有数据</span><br><span class="line">	uniFetch(&#123;</span><br><span class="line">		url: &#x27;/driver/tasks/list&#x27;</span><br><span class="line">	&#125;).then((result) =&gt; &#123;</span><br><span class="line">    if(result.statusCode !== 200) uni.utils.toast()</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>通过上述代码的演示我们还可以证实一个结论：<code>uni-app-fetch</code> 返加的是 Promise 对象，将来可配合 <code>async/await</code> 来使用。</p>
+<h3 id="二、【神领物流】用户登录"><a href="#二、【神领物流】用户登录" class="headerlink" title="二、【神领物流】用户登录"></a>二、【神领物流】用户登录</h3><p>【神领物流】所有接口的调用都必须是登录状态才可以，因此我们要实现的第一个功能模块就是用户的登录。</p>
+<h4 id="2-1-Pinia-状态管理"><a href="#2-1-Pinia-状态管理" class="headerlink" title="2.1 Pinia 状态管理"></a>2.1 Pinia 状态管理</h4><p>用户登录后需要将登录状态（token）信息记录下来，在 Vue2 的项目中使用 Vuex3 来实现，但是在 Vue3 的项目中需要使用 Vuex4 或者 Pinia 来实现。</p>
+<p><a target="_blank" rel="noopener" href="https://pinia.vuejs.org/zh/">Pinia</a> 是 Vue 专属于状态管理库，是 Vuex 状态管理工具的替代品，其具有一个特点：</p>
+<ul>
+<li>提供了更简单的 API（去掉了 mutation）</li>
+<li>提供组合式风格的 API</li>
+<li>去掉了 modules 的概念，每一个 store 都是独立的模块</li>
+<li>配合 TypeScript 更加友好，提供可靠的类型推断</li>
+</ul>
+<h5 id="2-1-1-安装-Pinia"><a href="#2-1-1-安装-Pinia" class="headerlink" title="2.1.1 安装 Pinia"></a>2.1.1 安装 Pinia</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 pinia 到项目当中</span></span><br><span class="line">npm install pinia</span><br></pre></td></tr></table></figure>
+
+<p>在这里大家需要注意一下，在 uni-app 中内置集成了 Pinia 的支持，因此可以省略掉安装这个步骤，但如果是在非 uni-app 的 Vue3 项目使用 Pinia 时必须要安装后再使用。</p>
+<h5 id="2-1-2-Pinia-初始化"><a href="#2-1-2-Pinia-初始化" class="headerlink" title="2.1.2 Pinia 初始化"></a>2.1.2 Pinia 初始化</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; createSSRApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="comment">// 引入 Pinia</span></span><br><span class="line"><span class="keyword">import</span> &#123; createPinia &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@/utils/utils&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createApp</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> app = createSSRApp(App)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 实例化Pinia</span></span><br><span class="line">  <span class="keyword">const</span> pinia = createPinia()</span><br><span class="line">  <span class="comment">// 传递给项目应用</span></span><br><span class="line">  app.use(pinia)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; app &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-3-定义-Store"><a href="#2-1-3-定义-Store" class="headerlink" title="2.1.3 定义 Store"></a>2.1.3 定义 Store</h5><p>在 Vuex 中我们已经知道 了 <code>store</code> 本质上就是在【定义数据】及【处理数据】的方法，在 Pinia 中 <code>store</code> 也是用来【定义数据】和【处理数据】的方法的，所不同的是定义的方式不同。</p>
+<ul>
+<li><code>ref()</code> 就是 <code>state</code></li>
+<li><code>computed</code> 就是 <code>getters</code></li>
+<li><code>function()</code> 就是 <code>actions</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stores/counter.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useCounterStore = defineStore(<span class="string">&#x27;counter&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 状态数据（相当于 state）</span></span><br><span class="line">  <span class="keyword">const</span> count = ref(<span class="number">0</span>)</span><br><span class="line">  <span class="comment">// 定义方法（相当于 actions）</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">increment</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    count.value++</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">decrement</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    count.value--</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 一定要将定义的数据和方法返回</span></span><br><span class="line">  <span class="keyword">return</span> &#123; count, increment, decrement &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>接下来将定义好的状态数据应用于 Vue 的组件中，只需要将将 Pinia 定义的 Store 当成普通模块来使用就可以了，详见下面代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/pinia/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; useCounterStore &#125; from &#x27;@/stores/counter&#x27;</span><br><span class="line">  // 获取 store 对象</span><br><span class="line">  const store = useCounterStore()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;counter&quot;&gt;</span><br><span class="line">    &lt;button @click=&quot;store.decrement&quot; class=&quot;button&quot; type=&quot;primary&quot;&gt;-&lt;/button&gt;</span><br><span class="line">    &lt;input class=&quot;input&quot; v-model=&quot;store.count&quot; type=&quot;text&quot; /&gt;</span><br><span class="line">    &lt;button @click=&quot;store.increment&quot; class=&quot;button&quot; type=&quot;primary&quot;&gt;+&lt;/button&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2.1.4 storeToRefs </p>
+<p>使用 storeToRefs 函数可以辅助保持数据（state + getter）的响应式结构，<strong>即对数据进行解构处理后仍然能保持响应式的特性。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/pinia/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; storeToRefs &#125; from &#x27;pinia&#x27;</span><br><span class="line">  import &#123; useCounterStore &#125; from &#x27;@/stores/counter&#x27;</span><br><span class="line"></span><br><span class="line">  // 获取 store 对象</span><br><span class="line">  const store = useCounterStore()</span><br><span class="line">  const &#123; count &#125; = storeToRefs(store)</span><br><span class="line">  const &#123; increment, decrement &#125; = store</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;counter&quot;&gt;</span><br><span class="line">    &lt;button @click=&quot;decrement&quot; class=&quot;button&quot; type=&quot;primary&quot;&gt;-&lt;/button&gt;</span><br><span class="line">    &lt;input class=&quot;input&quot; v-model=&quot;count&quot; type=&quot;text&quot; /&gt;</span><br><span class="line">    &lt;button @click=&quot;increment&quot; class=&quot;button&quot; type=&quot;primary&quot;&gt;+&lt;/button&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-5-持久化"><a href="#2-1-5-持久化" class="headerlink" title="2.1.5 持久化"></a>2.1.5 持久化</h5><p>在实际的开发过程中有部分的业务数据需要长时间的保存，即所谓的持久化，例如标识用户登录状态的 <code>token</code> 通常需要长时间的保存起来，在 Pinia 中管理数据状态的同时要实现数据的持久化，需要引入<code>pinia-plugin-persistedstate</code> <a target="_blank" rel="noopener" href="https://prazdevs.github.io/pinia-plugin-persistedstate/zh/">插件</a>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 pinia-plugin-persistedstate 插件</span></span><br><span class="line">npm i pinia-plugin-persistedstate</span><br></pre></td></tr></table></figure>
+
+<p>分成3个步骤来使用 <code>pinia-plugin-persistedstate</code></p>
+<ol>
+<li>将插件添加到 pinia 实例上</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; createSSRApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; createPinia &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="keyword">import</span> piniaPluginPersistedstate <span class="keyword">from</span> <span class="string">&#x27;pinia-plugin-persistedstate&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略中间部分代码...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createApp</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> app = createSSRApp(App)</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 实例化Pinia</span></span><br><span class="line">  <span class="keyword">const</span> pinia = createPinia()</span><br><span class="line">  <span class="comment">// Pinia 持久化插件</span></span><br><span class="line">  pinia.use(piniaPluginPersistedstate)</span><br><span class="line">	</span><br><span class="line">  <span class="comment">// 省略部分代码...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置需要持久化的数据，创建 Store 时，将 <code>persist</code> 选项设置为 <code>true</code></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useCounterStore = defineStore(<span class="string">&#x27;counter&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 状态数据（相当于 state）</span></span><br><span class="line">  <span class="keyword">const</span> count = ref(<span class="number">0</span>)</span><br><span class="line">  </span><br><span class="line">	<span class="comment">// 省略部分代码...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 一定要将定义的数据和方法返回</span></span><br><span class="line">  <span class="keyword">return</span> &#123; count, increment, decrement &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">persist</span>: &#123;</span><br><span class="line">    <span class="attr">paths</span>: [<span class="string">&#x27;count&#x27;</span>],</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>当把 <code>persist</code> 设置为 <code>true</code> 表示当前 Store 中全部数据都会被持久化处理， 除此之外还可以通过 <code>paths</code> 来特别指定要持久化的数据。</p>
+<ol start="3">
+<li> 自定义存储方法（针对 uni-app的处理）</li>
+</ol>
+<p>小程序中和H5中实现本地存储的方法不同，为了解决这个问题需要自定义本地存储的逻辑。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stores/persist.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; createPersistedState &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia-plugin-persistedstate&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> piniaPluginPersistedstate = createPersistedState(&#123;</span><br><span class="line">  <span class="attr">key</span>: <span class="function">(<span class="params">id</span>) =&gt;</span> <span class="string">`__persisted__<span class="subst">$&#123;id&#125;</span>`</span>,</span><br><span class="line">  <span class="attr">storage</span>: &#123;</span><br><span class="line">    <span class="attr">getItem</span>: <span class="function">(<span class="params">key</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> uni.getStorageSync(key)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">setItem</span>: <span class="function">(<span class="params">key, value</span>) =&gt;</span> &#123;</span><br><span class="line">      uni.setStorageSync(key, value)</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>使用 uni-app 的 API <code>uni.getStorageSync</code> 和 <code>uni.setStorageSync</code> 能够同时兼容 H5、小程序以及 App，<strong>然后需要调整原来在 <code>main.js</code> 中的部分代码</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; createSSRApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; createPinia &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="comment">// import piniaPluginPersistedstate from &#x27;pinia-plugin-persistedstate&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; piniaPluginPersistedstate &#125; <span class="keyword">from</span> <span class="string">&#x27;@/stores/persist&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略中间部分代码...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createApp</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> app = createSSRApp(App)</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 实例化Pinia</span></span><br><span class="line">  <span class="keyword">const</span> pinia = createPinia()</span><br><span class="line">  <span class="comment">// Pinia 持久化插件</span></span><br><span class="line">  pinia.use(piniaPluginPersistedstate)</span><br><span class="line">	</span><br><span class="line">  <span class="comment">// 省略部分代码...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-uniForm-表单验证"><a href="#2-2-uniForm-表单验证" class="headerlink" title="2.2 uniForm 表单验证"></a>2.2 uniForm 表单验证</h4><p>通常在提交表数据时需要对用户填写的内容进行校验，在 uni-app 的扩展组件中提供了关于<a target="_blank" rel="noopener" href="https://zh.uniapp.dcloud.io/component/uniui/uni-forms.html#%E4%BB%8B%E7%BB%8D">表单数据验证</a>的功能，我们来学习一下它的使用步骤：</p>
+<h5 id="2-2-1-表单数据"><a href="#2-2-1-表单数据" class="headerlink" title="2.2.1 表单数据"></a>2.2.1 表单数据</h5><p>定义表单的数据，指定 <code>v-model</code> 获取用户的数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/login/components/account.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, reactive &#125; from &#x27;vue&#x27;</span><br><span class="line">  </span><br><span class="line">  // 表单数据</span><br><span class="line">  const formData = reactive(&#123;</span><br><span class="line">    account: &#x27;&#x27;,</span><br><span class="line">    password: &#x27;&#x27;,</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;uni-forms class=&quot;login-form&quot; :model=&quot;formData&quot;&gt;</span><br><span class="line">    &lt;uni-forms-item name=&quot;account&quot;&gt;</span><br><span class="line">      &lt;input</span><br><span class="line">        type=&quot;text&quot;</span><br><span class="line">        v-model=&quot;formData.account&quot;</span><br><span class="line">        placeholder=&quot;请输入账号&quot;</span><br><span class="line">        class=&quot;uni-input-input&quot;</span><br><span class="line">        placeholder-style=&quot;color: #818181&quot;</span><br><span class="line">      /&gt;</span><br><span class="line">    &lt;/uni-forms-item&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/uni-forms&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-2-验证规则"><a href="#2-2-2-验证规则" class="headerlink" title="2.2.2 验证规则"></a>2.2.2 验证规则</h5><p>uni-app 的表单验证功能需要单独定义验证的规则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/login/components/account.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, reactive &#125; from &#x27;vue&#x27;</span><br><span class="line">  </span><br><span class="line">  // 表单数据</span><br><span class="line">  const formData = reactive(&#123;</span><br><span class="line">    account: &#x27;&#x27;,</span><br><span class="line">    password: &#x27;&#x27;,</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  // 定义表单数据验证规则</span><br><span class="line">  const accountRules = reactive(&#123;</span><br><span class="line">    account: &#123;</span><br><span class="line">      rules: [</span><br><span class="line">        &#123; required: true, errorMessage: &#x27;请输入登录账号&#x27; &#125;,</span><br><span class="line">        &#123; pattern: &#x27;^[a-zA-Z0-9]&#123;6,8&#125;$&#x27;, errorMessage: &#x27;登录账号格式不正确&#x27; &#125;,</span><br><span class="line">      ],</span><br><span class="line">    &#125;,</span><br><span class="line">    password: &#123;</span><br><span class="line">      rules: [</span><br><span class="line">        &#123; required: true, errorMessage: &#x27;请输入登录密码&#x27; &#125;,</span><br><span class="line">        &#123; pattern: &#x27;^\\d&#123;6&#125;$&#x27;, errorMessage: &#x27;登录密码格式不正确&#x27; &#125;,</span><br><span class="line">      ],</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;uni-forms class=&quot;login-form&quot; :rules=&quot;accountRules&quot; :model=&quot;formData&quot;&gt;</span><br><span class="line">    &lt;uni-forms-item name=&quot;account&quot;&gt;</span><br><span class="line">      &lt;input</span><br><span class="line">        type=&quot;text&quot;</span><br><span class="line">        v-model=&quot;formData.account&quot;</span><br><span class="line">        placeholder=&quot;请输入账号&quot;</span><br><span class="line">        class=&quot;uni-input-input&quot;</span><br><span class="line">        placeholder-style=&quot;color: #818181&quot;</span><br><span class="line">      /&gt;</span><br><span class="line">    &lt;/uni-forms-item&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/uni-forms&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在定义 <code>accountRules</code> 时，对象中的 <code>key</code> 对应的是待验证的数据项目，如 <code>account</code> 表示要验证表单数据 <code>account</code>，<code>rules</code> 用来指验证的条件和错误信息提示。</p>
+<h5 id="2-2-3-触发验证"><a href="#2-2-3-触发验证" class="headerlink" title="2.2.3 触发验证"></a>2.2.3 触发验证</h5><p>调用 <code>validate</code> 方法触发表单验单</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/login/components/account.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, reactive &#125; from &#x27;vue&#x27;</span><br><span class="line">  </span><br><span class="line"> 	// 表单元素的 ref 属性</span><br><span class="line">  const accountForm = ref()</span><br><span class="line">  </span><br><span class="line">  // 表单数据</span><br><span class="line">  const formData = reactive(&#123;</span><br><span class="line">    account: &#x27;&#x27;,</span><br><span class="line">    password: &#x27;&#x27;,</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  // 定义表单数据验证规则</span><br><span class="line">  const accountRules = reactive(&#123;</span><br><span class="line">    account: &#123;</span><br><span class="line">      rules: [</span><br><span class="line">        &#123; required: true, errorMessage: &#x27;请输入登录账号&#x27; &#125;,</span><br><span class="line">        &#123; pattern: &#x27;^[a-zA-Z0-9]&#123;6,8&#125;$&#x27;, errorMessage: &#x27;登录账号格式不正确&#x27; &#125;,</span><br><span class="line">      ],</span><br><span class="line">    &#125;,</span><br><span class="line">    password: &#123;</span><br><span class="line">      rules: [</span><br><span class="line">        &#123; required: true, errorMessage: &#x27;请输入登录密码&#x27; &#125;,</span><br><span class="line">        &#123; pattern: &#x27;^\\d&#123;6&#125;$&#x27;, errorMessage: &#x27;登录密码格式不正确&#x27; &#125;,</span><br><span class="line">      ],</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  // 监听表单的提交</span><br><span class="line">  async function onFormSubmit() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      // 验证通过</span><br><span class="line">      const formData = await accountForm.value.validate()</span><br><span class="line">      // 表单的数据</span><br><span class="line">      console.log(formData)</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      // 验证失败</span><br><span class="line">      console.log(err)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;uni-forms</span><br><span class="line">    class=&quot;login-form&quot;</span><br><span class="line">    ref=&quot;accountForm&quot;</span><br><span class="line">    :rules=&quot;accountRules&quot;</span><br><span class="line">    :model=&quot;formData&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    &lt;uni-forms-item name=&quot;account&quot;&gt;</span><br><span class="line">      &lt;input</span><br><span class="line">        type=&quot;text&quot;</span><br><span class="line">        v-model=&quot;formData.account&quot;</span><br><span class="line">        placeholder=&quot;请输入账号&quot;</span><br><span class="line">        class=&quot;uni-input-input&quot;</span><br><span class="line">        placeholder-style=&quot;color: #818181&quot;</span><br><span class="line">      /&gt;</span><br><span class="line">    &lt;/uni-forms-item&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;button @click=&quot;onFormSubmit&quot; class=&quot;submit-button&quot;&gt;登录&lt;/button&gt;</span><br><span class="line">  &lt;/uni-forms&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-登录实现"><a href="#2-3-登录实现" class="headerlink" title="2.3 登录实现"></a>2.3 登录实现</h4><p>完整的登录功能包含也以下几个小的步骤，我们一步一步来实现。</p>
+<h5 id="2-3-1-调用接口"><a href="#2-3-1-调用接口" class="headerlink" title="2.3.1 调用接口"></a>2.3.1 调用接口</h5><p>在验证用户数据通过后就可以调用接口来完成登录的操作了，登录接口的文档地址在<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1/api-71252494">这里</a>。</p>
+<p>为了方便接口调用的管理和维护我们将接口调用的逻辑封到独立的模块中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/user.js</span></span><br><span class="line"><span class="comment">// 引入网络请求模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; uniFetch &#125; <span class="keyword">from</span> <span class="string">&#x27;./uni-fetch&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;Object&#125;</span> </span>data 用户账号和用户密码</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="title">login</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!data.account || !data.password) <span class="keyword">return</span></span><br><span class="line">    <span class="comment">// 根据接口文档来调用接口</span></span><br><span class="line">    <span class="keyword">return</span> uniFetch.post(<span class="string">&#x27;/driver/login/account&#x27;</span>, data)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来就可以在用户点击登录时调用模块中封装好的 <code>login</code> 方法了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/login/components/account.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, reactive &#125; from &#x27;vue&#x27;</span><br><span class="line">  import userApi from &#x27;@/apis/user&#x27;</span><br><span class="line">  </span><br><span class="line">  // 中间部分代码省略了...</span><br><span class="line">  </span><br><span class="line">  async function onFormSubmit() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      // 验证表单数据且通过</span><br><span class="line">      const formData = await accountForm.value.validate()</span><br><span class="line">      // 调用登录接口</span><br><span class="line">      const &#123; code &#125; = await userApi.login(formData)</span><br><span class="line">      // 记录用户登录成功后的状态</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      // 验证失败</span><br><span class="line">      console.log(err)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-2-拦截器"><a href="#2-3-2-拦截器" class="headerlink" title="2.3.2 拦截器"></a>2.3.2 拦截器</h5><p>用户登录成功后，再次调用其它的接口时就需要将登录状态通过自定义请求头的方式传递给接口服务器了，这个功能我们通过请求拦截器来实现，分成两个步骤来实现：</p>
+<ol>
+<li>通过 Pinia 来记录并持久化 <code>token</code></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stores/users.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useUserStore = defineStore(<span class="string">&#x27;user&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 登录状态</span></span><br><span class="line">  <span class="keyword">const</span> token = ref(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; token &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">persist</span>: &#123;</span><br><span class="line">    <span class="attr">paths</span>: [<span class="string">&#x27;token&#x27;</span>],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中定义了与用户（user）相关的 Store，并定义了数据 <code>token</code>，用来记录用户的登录状态。</p>
+<p>接下来在调用登录接口成功后 <code>token</code> 通过 Pinia 存储起来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/login/components/account.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, reactive &#125; from &#x27;vue&#x27;</span><br><span class="line">  import userApi from &#x27;@/apis/user&#x27;</span><br><span class="line">  import &#123; useUserStore &#125; from &#x27;@/stores/user&#x27;</span><br><span class="line">  const userStore = useUserStore()</span><br><span class="line">  </span><br><span class="line">  // 中间部分代码省略了...</span><br><span class="line">  </span><br><span class="line">  async function onFormSubmit() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      // 验证表单数据且通过</span><br><span class="line">      const formData = await accountForm.value.validate()</span><br><span class="line">      // 调用登录接口</span><br><span class="line">      const &#123; code &#125; = await userApi.login(formData)</span><br><span class="line">      </span><br><span class="line">      // 检测接口是否调用成功</span><br><span class="line">      if (code !== 200) return uni.utils.toast(&#x27;登录失败，请重试！&#x27;)</span><br><span class="line">      // 持久化存储用户登录状态</span><br><span class="line">      userStore.token = data</span><br><span class="line">      </span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      // 验证失败</span><br><span class="line">      console.log(err)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置请求拦截器</li>
+</ol>
+<p>登录成功后，当再次调用其它接口里需要将用户的登录状态以自定义头信息的方式发送到服务端，配置请求拦截器来实此功能。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/uni-fetch.js</span></span><br><span class="line"><span class="comment">// 导入安装好的 uni-app-fetch 模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; createUniFetch &#125; <span class="keyword">from</span> <span class="string">&#x27;uni-app-fetch&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useUserStore &#125; <span class="keyword">from</span> <span class="string">&#x27;@/stores/user&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置符合自身业务的请求对象</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> uniFetch = createUniFetch(&#123;</span><br><span class="line">  <span class="attr">loading</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;正在加载...&#x27;</span> &#125;,</span><br><span class="line">  <span class="attr">baseURL</span>: <span class="string">&#x27;https://slwl-api.itheima.net&#x27;</span>,</span><br><span class="line">  <span class="attr">intercept</span>: &#123;</span><br><span class="line">    <span class="comment">// 请求拦截器</span></span><br><span class="line">    <span class="function"><span class="title">request</span>(<span class="params">options</span>)</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> userState = useUserStore()</span><br><span class="line">      <span class="comment">// 全局公共头信息</span></span><br><span class="line">      <span class="keyword">const</span> defaultHeaders = &#123;</span><br><span class="line">        <span class="attr">Authorization</span>: userState.token,</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 自定义头信息（token）</span></span><br><span class="line">      options.header = <span class="built_in">Object</span>.assign(&#123;&#125;, defaultHeaders, options.header, )</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> options</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 响应拦截器</span></span><br><span class="line">    <span class="function"><span class="title">response</span>(<span class="params">&#123; data &#125;</span>)</span> &#123;</span><br><span class="line">      <span class="comment">// 过滤多余的数据</span></span><br><span class="line">      <span class="keyword">return</span> data</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>回到首页面（task）当中，之前测试过任务列表接口的调用，现在给它传必须的参数 <code>status</code>、<code>page</code>、<code>pageSize</code> 然后可以看到接口能返回数据了，原因就在于自定义头信息 <code>Authorization</code> 携带了用户的登录状态 <code>token</code>，也就证明了咱们关于请求拦截器的配置生效了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/task/index.vue --&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; uniFetch &#125; from &#x27;@/apis/uni-fetch&#x27;</span><br><span class="line"></span><br><span class="line">  uniFetch(&#123;</span><br><span class="line">    url: &#x27;/driver/tasks/list&#x27;,</span><br><span class="line">    // 传入该接口必要的参数</span><br><span class="line">    data: &#123; status: 1, page: 1, pageSize: 10 &#125;,</span><br><span class="line">  &#125;).then((result) =&gt; &#123;</span><br><span class="line">    if (result.statusCode) uni.utils.toast()</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-3-地址重定向"><a href="#2-3-3-地址重定向" class="headerlink" title="2.3.3 地址重定向"></a>2.3.3 地址重定向</h5><p>与登录相关的重定向有两个方面，一是用户登录成功后需要到跳转到新页面，另一个是当检测到用户的 <code>token</code> 失效后跳转到登录页生新进行登录，因此我们分成两个步骤来学习。<strong>注：当前项目的 <code>token</code> 12个小时后会失效。</strong></p>
+<ol>
+<li>在响应拦截器检测请求响应的状态码是否为 <code>401</code> ，状态码 <code>401</code> 表示当前 <code>token</code> 失效了，需要重新登录</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/uni-fetch.js</span></span><br><span class="line"><span class="comment">// 导入安装好的 uni-app-fetch 模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; createUniFetch &#125; <span class="keyword">from</span> <span class="string">&#x27;uni-app-fetch&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useUserStore &#125; <span class="keyword">from</span> <span class="string">&#x27;@/stores/user&#x27;</span></span><br><span class="line"><span class="comment">// 定义 tabBar 的路径</span></span><br><span class="line"><span class="keyword">const</span> tabBarPagePaths = [</span><br><span class="line">  <span class="string">&#x27;pages/task/index&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;pages/message/index&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;pages/my/index&#x27;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置符合自身业务的请求对象</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> uniFetch = createUniFetch(&#123;</span><br><span class="line">  <span class="attr">loading</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;正在加载...&#x27;</span> &#125;,</span><br><span class="line">  <span class="attr">baseURL</span>: <span class="string">&#x27;https://slwl-api.itheima.net&#x27;</span>,</span><br><span class="line">  <span class="attr">intercept</span>: &#123;</span><br><span class="line">    <span class="comment">// 请求拦截器</span></span><br><span class="line">    <span class="function"><span class="title">request</span>(<span class="params">options</span>)</span> &#123;</span><br><span class="line">  		<span class="comment">// 省略中间部分代码...</span></span><br><span class="line">      <span class="keyword">return</span> options</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 响应拦截器</span></span><br><span class="line">    <span class="function"><span class="title">response</span>(<span class="params">&#123; statusCode, data &#125;</span>)</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (statusCode === <span class="number">401</span>) &#123;</span><br><span class="line">        <span class="comment">// 页面栈</span></span><br><span class="line">        <span class="keyword">const</span> pageStack = getCurrentPages()</span><br><span class="line">        <span class="comment">// 当前页面地址</span></span><br><span class="line">        <span class="keyword">const</span> redirectURL = pageStack[pageStack.length - <span class="number">1</span>].route</span><br><span class="line">        <span class="comment">// tabBar 页面需要使用 switchTab 跳转</span></span><br><span class="line">        <span class="keyword">const</span> routeType = tabBarPagePaths.includes(redirectURL)</span><br><span class="line">          ? <span class="string">&#x27;switchTab&#x27;</span></span><br><span class="line">          : <span class="string">&#x27;redirectTo&#x27;</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> uni.redirectTo(&#123;</span><br><span class="line">          <span class="attr">url</span>: <span class="string">`/pages/login/index?routeType=<span class="subst">$&#123;routeType&#125;</span>&amp;redirectURL=/<span class="subst">$&#123;redirectURL&#125;</span>`</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      <span class="keyword">return</span> data</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上述代码需重点需要注意判断调用接口的页面是否为 tabBar 的页面，目的是下个步骤登录成功后能够成功的回跳到当前这个页面中，tabBar 的页面使用 <code>uni.switchTab</code> 跳转，否则使用 <code>wx.redirectTo</code> 跳转。</p>
+<ol start="2">
+<li>当用户登录成功能跳回来原来的页面</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/login/components/account.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref, reactive &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line">	</span><br><span class="line">  // 省略中间部分代码</span><br><span class="line"></span><br><span class="line">  // 回跳地址</span><br><span class="line">  const redirectURL = ref(&#x27;&#x27;)</span><br><span class="line">  // 跳转地址方式</span><br><span class="line">  const routeType = ref(&#x27;&#x27;)</span><br><span class="line"></span><br><span class="line">  // 获取地址中的参数</span><br><span class="line">  onLoad((query) =&gt; &#123;</span><br><span class="line">    redirectURL.value = query.redirectURL</span><br><span class="line">    routeType.value = query.routeType</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 监听表单提交</span><br><span class="line">  async function onFormSubmit() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">			// 省略部分代码...</span><br><span class="line">      </span><br><span class="line">      // 地址重定向或switchTab</span><br><span class="line">      uni[routeType.value](&#123; url: redirectURL.value &#125;)</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      // 验证失败</span><br><span class="line">      console.log(err)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、【神领物流】我的"><a href="#三、【神领物流】我的" class="headerlink" title="三、【神领物流】我的"></a>三、【神领物流】我的</h3><p>我的模块中有 3 个独立的接口调用，需要大家自已来完成。</p>
+<h4 id="3-1-个人信息查询"><a href="#3-1-个人信息查询" class="headerlink" title="3.1 个人信息查询"></a>3.1 个人信息查询</h4><p>个人信息查询即在【我的】页面中展示当前登录司机的个人信息，包括头像、名称、编号。</p>
+<p>接口文档的说明在<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1/api-71325815">这里</a>，分成 2 个步骤来实现：</p>
+<ol>
+<li>定义接口调用的方法，在 <code>apis/user.js</code> 中新增获取司机信息的接口</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/user.js</span></span><br><span class="line"><span class="comment">// 引入网络请求模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; uniFetch &#125; <span class="keyword">from</span> <span class="string">&#x27;./uni-fetch&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	<span class="comment">// 省略中间部分代码...</span></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 个人资料</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="title">profile</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> uniFetch.get(<span class="string">&#x27;/driver/users&#x27;</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在【我的】页面中获取数据并渲染</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/my/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line">  import userApi from &#x27;@/apis/user&#x27;</span><br><span class="line"></span><br><span class="line">  // 用户信息</span><br><span class="line">  const userProfile = ref(&#123;&#125;)</span><br><span class="line"></span><br><span class="line">  onLoad(() =&gt; &#123;</span><br><span class="line">    getUserProfile()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 用户信息接口</span><br><span class="line">  async function getUserProfile() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      const &#123; code, data &#125; = await userApi.profile()</span><br><span class="line">      // 检测接口否调用成功</span><br><span class="line">      if (code !== 200) return uni.utils.toast()</span><br><span class="line">      // 渲染请求来的数据</span><br><span class="line">      userProfile.value = data</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      console.log(err)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    &lt;view class=&quot;user-profile&quot;&gt;</span><br><span class="line">      &lt;image class=&quot;avatar&quot; :src=&quot;userProfile.avatar&quot; mode=&quot;&quot;&gt;&lt;/image&gt;</span><br><span class="line">      &lt;text class=&quot;username&quot;&gt;&#123;&#123; userProfile.name &#125;&#125;&lt;/text&gt;</span><br><span class="line">      &lt;text class=&quot;no&quot;&gt;司机编号：&#123;&#123; userProfile.phone &#125;&#125;&lt;/text&gt;</span><br><span class="line">      &lt;text class=&quot;mobile&quot;&gt;手机号码：&#123;&#123; userProfile.number &#125;&#125;&lt;/text&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line"> 		...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-任务数据查询"><a href="#3-2-任务数据查询" class="headerlink" title="3.2 任务数据查询"></a>3.2 任务数据查询</h4><p>任务数据查询也是在在【我的】页面中进行展示，展示的内容包括3项，分别是任务总量、完成任务量、运输时程。<strong>注：这些数据初始为 0 ，后续开发完【任务】模块后这里的数据会发生更新。</strong></p>
+<p>接口文档的说明在<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1/api-71327680">这里</a>，分成 2 个步骤来实现：</p>
+<ol>
+<li>定义接口调用的方法，在 <code>apis/user.js</code> 中新增获取任务数据的接口</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/user.js</span></span><br><span class="line"><span class="comment">// 引入网络请求模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; uniFetch &#125; <span class="keyword">from</span> <span class="string">&#x27;./uni-fetch&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	<span class="comment">// 省略中间部分代码...</span></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 任务数据</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;string&#125;</span> <span class="variable">year</span></span> - 任务数据的年份</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;string&#125;</span> <span class="variable">month</span></span> - 任务数据的月份</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="title">task</span>(<span class="params">year, month</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> uniFetch.get(<span class="string">&#x27;/driver/users/taskReport&#x27;</span>, &#123; year, month &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在【我的】页面中获取数据并渲染</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- pages/my/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line">  import userApi from &#x27;@/apis/user&#x27;</span><br><span class="line"></span><br><span class="line">  // 用户信息</span><br><span class="line">  const userProfile = ref(&#123;&#125;)</span><br><span class="line">  // 任务数据</span><br><span class="line">  const taskInfo = ref(&#123;&#125;)</span><br><span class="line"></span><br><span class="line">  onLoad(() =&gt; &#123;</span><br><span class="line">    getUserProfile()</span><br><span class="line">    getTaskInfo()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 用户信息接口</span><br><span class="line">  async function getUserProfile() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      const &#123; code, data &#125; = await userApi.profile()</span><br><span class="line">      // 检测接口否调用成功</span><br><span class="line">      if (code !== 200) return uni.utils.toast()</span><br><span class="line">      // 渲染请求来的数据</span><br><span class="line">      userProfile.value = data</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      console.log(err)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 任务数据</span><br><span class="line">  async function getTaskInfo() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      const &#123; code, data &#125; = await userApi.task(&#x27;2023&#x27;, &#x27;07&#x27;)</span><br><span class="line">      // 检测接口否调用成功</span><br><span class="line">      if (code !== 200) return uni.utils.toast()</span><br><span class="line">      // 渲染请求来的数据</span><br><span class="line">      taskInfo.value = data</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      console.log(err)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;view class=&quot;month-overview&quot;&gt;</span><br><span class="line">      &lt;view class=&quot;title&quot;&gt;本月任务&lt;/view&gt;</span><br><span class="line">      &lt;view class=&quot;content&quot;&gt;</span><br><span class="line">        &lt;view class=&quot;item&quot;&gt;</span><br><span class="line">          &lt;text class=&quot;volumn&quot;&gt;&#123;&#123; taskInfo.taskAmounts &#125;&#125;&lt;/text&gt;</span><br><span class="line">          &lt;text class=&quot;label&quot;&gt;任务总量&lt;/text&gt;</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line">        &lt;view class=&quot;item&quot;&gt;</span><br><span class="line">          &lt;text class=&quot;volumn&quot;&gt;&#123;&#123; taskInfo.completedAmounts &#125;&#125;&lt;/text&gt;</span><br><span class="line">          &lt;text class=&quot;label&quot;&gt;完成任务量&lt;/text&gt;</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line">        &lt;view class=&quot;item&quot;&gt;</span><br><span class="line">          &lt;text class=&quot;volumn&quot;&gt;&#123;&#123; taskInfo.transportMileage &#125;&#125;&lt;/text&gt;</span><br><span class="line">          &lt;text class=&quot;label&quot;&gt;运输里程(km)&lt;/text&gt;</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line">      &lt;/view&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-车辆信息查询"><a href="#3-3-车辆信息查询" class="headerlink" title="3.3 车辆信息查询"></a>3.3 车辆信息查询</h4><p>查询当前司机所驾驶车辆的相关信息，展示的内容包括车辆照片、车牌号、车型等信息。</p>
+<p>接口文档的说明在<a target="_blank" rel="noopener" href="https://apifox.com/apidoc/shared-4b036830-59b1-4526-b00a-61df2b3d4ae1/api-71329158">这里</a>，分成两个步骤来实现：</p>
+<ol>
+<li>定义接口调用的方法，在 <code>apis/user.js</code> 中新增获取车辆信息的接口</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apis/user.js</span></span><br><span class="line"><span class="comment">// 引入网络请求模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; uniFetch &#125; <span class="keyword">from</span> <span class="string">&#x27;./uni-fetch&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	<span class="comment">// 省略中间部分代码...</span></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 车辆信息</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="title">truck</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> uniFetch.get(<span class="string">&#x27;/driver/users/truck&#x27;</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在【车辆信息】页面中获取数据并渲染</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- subpkg_user/truck/index.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">  import &#123; onLoad &#125; from &#x27;@dcloudio/uni-app&#x27;</span><br><span class="line">  import userApi from &#x27;@/apis/user&#x27;</span><br><span class="line"></span><br><span class="line">  // 车辆信息</span><br><span class="line">  const truchInfo = ref(&#123;&#125;)</span><br><span class="line"></span><br><span class="line">  onLoad(() =&gt; &#123;</span><br><span class="line">    getTruckInfo()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 获取车辆信息</span><br><span class="line">  async function getTruckInfo() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      const &#123; code, data &#125; = await userApi.truck()</span><br><span class="line">      // 检测接口否调用成功</span><br><span class="line">      if (code !== 200) return uni.utils.toast()</span><br><span class="line">      // 渲染请求来的数据</span><br><span class="line">      truchInfo.value = data</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      console.log(err)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;view class=&quot;page-container&quot;&gt;</span><br><span class="line">    &lt;swiper</span><br><span class="line">      class=&quot;truck-pictures&quot;</span><br><span class="line">      indicator-active-color=&quot;#fff&quot;</span><br><span class="line">      circular</span><br><span class="line">      indicator-dots</span><br><span class="line">    &gt;</span><br><span class="line">      &lt;swiper-item v-for=&quot;picture in truchInfo.pictureList&quot; :key=&quot;picture.url&quot;&gt;</span><br><span class="line">        &lt;image class=&quot;picture&quot; mode=&quot;aspectFill&quot; :src=&quot;picture.url&quot;&gt;&lt;/image&gt;</span><br><span class="line">      &lt;/swiper-item&gt;</span><br><span class="line">    &lt;/swiper&gt;</span><br><span class="line">    &lt;view class=&quot;truck-meta&quot;&gt;</span><br><span class="line">      &lt;uni-list :border=&quot;false&quot;&gt;</span><br><span class="line">        &lt;uni-list-item</span><br><span class="line">          :border=&quot;false&quot;</span><br><span class="line">          title=&quot;车辆编号&quot;</span><br><span class="line">          :right-text=&quot;truchInfo.id&quot;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;uni-list-item</span><br><span class="line">          :border=&quot;false&quot;</span><br><span class="line">          title=&quot;车辆号牌&quot;</span><br><span class="line">          :right-text=&quot;truchInfo.licensePlate&quot;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;uni-list-item</span><br><span class="line">          :border=&quot;false&quot;</span><br><span class="line">          title=&quot;车型&quot;</span><br><span class="line">          :right-text=&quot;truchInfo.truckType&quot;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;uni-list-item</span><br><span class="line">          :border=&quot;false&quot;</span><br><span class="line">          title=&quot;所属机构&quot;</span><br><span class="line">          :right-text=&quot;truchInfo.currentOrganName&quot;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;uni-list-item</span><br><span class="line">          :border=&quot;false&quot;</span><br><span class="line">          title=&quot;载重&quot;</span><br><span class="line">          :right-text=&quot;truchInfo.allowableLoad&quot;</span><br><span class="line">        /&gt;</span><br><span class="line">      &lt;/uni-list&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">  &lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="四、作业"><a href="#四、作业" class="headerlink" title="四、作业"></a>四、作业</h3><p>独立完成第3章节3个接口的调用</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/23/slwl-course01/" rel="prev" title="slwl-course01">
+      <i class="fa fa-chevron-left"></i> slwl-course01
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/23/slwl-course03/" rel="next" title="slwl-course03">
+      slwl-course03 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#uni-app%EF%BC%88%E7%A5%9E%E9%A2%86%E7%89%A9%E6%B5%81%EF%BC%89%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%AC%AC2%E5%A4%A9"><span class="nav-number">1.</span> <span class="nav-text">uni-app（神领物流）项目实战 - 第2天</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E3%80%90%E7%A5%9E%E9%A2%86%E7%89%A9%E6%B5%81%E3%80%91%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8"><span class="nav-number">1.1.</span> <span class="nav-text">一、【神领物流】项目启动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 拉取代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E5%85%AC%E5%85%B1%E5%B0%81%E8%A3%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 公共封装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-1-%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1.2.1 网络请求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-2-%E8%BD%BB%E6%8F%90%E7%A4%BA"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">1.2.2 轻提示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E3%80%90%E7%A5%9E%E9%A2%86%E7%89%A9%E6%B5%81%E3%80%91%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95"><span class="nav-number">1.2.</span> <span class="nav-text">二、【神领物流】用户登录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Pinia-%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Pinia 状态管理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-%E5%AE%89%E8%A3%85-Pinia"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">2.1.1 安装 Pinia</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-Pinia-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">2.1.2 Pinia 初始化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-3-%E5%AE%9A%E4%B9%89-Store"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">2.1.3 定义 Store</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-5-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">2.1.5 持久化</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-uniForm-%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 uniForm 表单验证</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-%E8%A1%A8%E5%8D%95%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">2.2.1 表单数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-%E9%AA%8C%E8%AF%81%E8%A7%84%E5%88%99"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2.2.2 验证规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-3-%E8%A7%A6%E5%8F%91%E9%AA%8C%E8%AF%81"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">2.2.3 触发验证</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E7%99%BB%E5%BD%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 登录实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-1-%E8%B0%83%E7%94%A8%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">2.3.1 调用接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">2.3.2 拦截器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-3-%E5%9C%B0%E5%9D%80%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">2.3.3 地址重定向</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E3%80%90%E7%A5%9E%E9%A2%86%E7%89%A9%E6%B5%81%E3%80%91%E6%88%91%E7%9A%84"><span class="nav-number">1.3.</span> <span class="nav-text">三、【神领物流】我的</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 个人信息查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E4%BB%BB%E5%8A%A1%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 任务数据查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E8%BD%A6%E8%BE%86%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 车辆信息查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.4.</span> <span class="nav-text">四、作业</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ifer"
+      src="/images/49337922.png">
+  <p class="site-author-name" itemprop="name">Ifer</p>
+  <div class="site-description" itemprop="description">React 全家桶 <span style='position:relative;top:-2px;'>✍</span></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.bilibili.com/video/BV1iW4y1k7Ci?spm_id_from=333.337.search-card.all.click" title="😚 → https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1iW4y1k7Ci?spm_id_from&#x3D;333.337.search-card.all.click" rel="noopener" target="_blank"><i class="a fa-fw"></i>😚</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/weixiantx" title="😙 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;weixiantx" rel="noopener" target="_blank"><i class="a fa-fw"></i>😙</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ifer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
